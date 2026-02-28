@@ -1,27 +1,30 @@
 import { useState, useCallback, useEffect } from "react";
 import useEmblaCarousel from "embla-carousel-react";
+import Autoplay from "embla-carousel-autoplay";
 import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
 
 const testimonials = [
   {
-    quote: "Empowered DLD has been a game-changer for our family. We finally have the tools and confidence to support our daughter's language development.",
-    author: "Sarah M.",
+    quote: "Finding Empowered DLD Parenting changed everything for our family. Before discovering this group, my son's DLD felt like a mystery I was trying to solve alone. These books, resources, podcast and courses finally gave us language--not just vocabulary, but understanding. You helped me see my son clearly, without shame or confusion, and gave me practical tools that actually work for him. Your work gave me confidence, hope, and a roadmap when I desperately needed both.",
+    author: "Becca",
     role: "Parent",
   },
   {
-    quote: "The classroom resources are incredibly practical. My students with DLD are more engaged and confident than ever before.",
-    author: "Jessica T.",
-    role: "3rd Grade Teacher",
+    quote: "It's a lonely world parenting a child with DLD. It's an 'invisible disability' in that most people don't understand or even think it's real. My son looks fine, but he struggles with pretty much every social interaction and all of his learning and processing. His teachers think he's just not paying attention or trying most of the time. I used to think that too. Now I know it's not his fault and I can advocate for him. But it's exhausting. Empowered DLD parenting helps me feel I'm not alone.",
+    author: "Stacie",
+    role: "Parent",
   },
   {
-    quote: "As an SLP, I recommend Empowered DLD to every family I work with. The resources are evidence-based and beautifully designed.",
-    author: "Dr. Karen L.",
-    role: "Speech-Language Pathologist",
+    quote: "As a US-based SLP who specializes in DLD and literacy disorders, your products and the community you have created have been a tremendous boost to this highly underserved and under-recognized population. One of my goals is to create awareness and community for individuals with DLD in my state and your products have been such a beautiful addition. I have a middle school Black girl starting with me next week and I'm so excited for her to see herself represented in your materials.",
+    author: "Brianne",
+    role: "Speech Language Pathologist",
   },
 ];
 
 const TestimonialBand = () => {
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
+    Autoplay({ delay: 6000, stopOnInteraction: true }),
+  ]);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
@@ -35,15 +38,15 @@ const TestimonialBand = () => {
   }, [emblaApi]);
 
   return (
-    <section className="bg-deep-purple text-deep-purple-foreground py-14 md:py-18">
-      <div className="container max-w-[620px] text-center relative">
-        <Quote className="w-8 h-8 text-primary-foreground/12 mx-auto mb-4 rotate-180 stroke-[1.2]" />
+    <section className="bg-deep-purple text-deep-purple-foreground py-20 md:py-28">
+      <div className="container max-w-[900px] text-center relative">
+        <Quote className="w-16 h-16 text-primary-foreground/12 mx-auto mb-6 rotate-180 stroke-[1]" />
 
         <div className="overflow-hidden" ref={emblaRef}>
           <div className="flex">
             {testimonials.map((t, i) => (
-              <div key={i} className="flex-[0_0_100%] min-w-0 px-4">
-                <blockquote className="text-[16px] md:text-[18px] leading-[1.65] mb-5 font-light tracking-[-0.01em]">
+              <div key={i} className="flex-[0_0_100%] min-w-0 px-8">
+                <blockquote className="text-[15px] md:text-[17px] leading-[1.75] mb-6 font-light tracking-[-0.01em]">
                   "{t.quote}"
                 </blockquote>
                 <p className="font-semibold text-[13px] tracking-wide">{t.author}</p>
@@ -58,14 +61,14 @@ const TestimonialBand = () => {
           className="absolute left-0 top-1/2 -translate-y-1/2 p-2 text-primary-foreground/25 hover:text-primary-foreground transition-colors duration-200"
           aria-label="Previous testimonial"
         >
-          <ChevronLeft className="w-5 h-5 stroke-[1.5]" />
+          <ChevronLeft className="w-7 h-7 stroke-[1.5]" />
         </button>
         <button
           onClick={scrollNext}
           className="absolute right-0 top-1/2 -translate-y-1/2 p-2 text-primary-foreground/25 hover:text-primary-foreground transition-colors duration-200"
           aria-label="Next testimonial"
         >
-          <ChevronRight className="w-5 h-5 stroke-[1.5]" />
+          <ChevronRight className="w-7 h-7 stroke-[1.5]" />
         </button>
 
         <div className="flex justify-center gap-2 mt-7">
