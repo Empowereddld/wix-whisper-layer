@@ -3,7 +3,7 @@ import familyReading from "@/assets/family-reading.png";
 
 const NotAloneSection = () => {
   return (
-    <section className="bg-[hsl(0_0%_85%)] p-8 md:p-12">
+    <section className="bg-[#E8E6E6] p-8 md:p-12">
       <div className="max-w-[1200px] mx-auto">
         <div className="bg-background overflow-hidden grid grid-cols-1 md:grid-cols-[1fr_0.8fr] min-h-[340px] md:min-h-[420px] shadow-[0_2px_12px_hsl(258_50%_50%/0.06)]">
           <div className="p-10 md:p-14 lg:p-16 flex flex-col justify-center">
