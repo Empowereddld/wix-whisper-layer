@@ -32,7 +32,7 @@ const BookShowcase = () => {
             <p className="text-muted-foreground text-[14px] mb-6 leading-[1.65] max-w-[380px]">
               Four characters impacted by DLD in different ways who learn to understand DLD, what supports work for them, and how to self-advocate with confidence.
             </p>
-            <Button className="h-[46px] px-7 rounded-lg text-[11px] font-bold uppercase tracking-[0.14em] shadow-[0_2px_8px_hsl(258_50%_50%/0.2)] hover:shadow-[0_4px_14px_hsl(258_50%_50%/0.25)] hover:brightness-[0.96] transition-all duration-300">
+            <Button className="w-fit h-[46px] px-7 rounded-lg text-[11px] font-bold uppercase tracking-[0.14em] shadow-[0_2px_8px_hsl(258_50%_50%/0.2)] hover:shadow-[0_4px_14px_hsl(258_50%_50%/0.25)] hover:brightness-[0.96] transition-all duration-300">
               SHOP ALL
             </Button>
 
