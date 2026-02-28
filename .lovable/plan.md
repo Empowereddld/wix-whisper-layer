@@ -1,80 +1,121 @@
 
-# Empowered DLD Homepage — Implementation Plan
 
-## Brand System
-- **Primary purple**: #6241BE
-- **Deep purple**: #3B2772
-- **Light lavender**: #F6EFFF
-- Applied consistently across buttons, icons, links, footer, accents
+# Exact Copy Correction Pass
 
-## Pages & Sections (in order, matching Wix screenshot)
+## Problem
+Multiple text strings across the site don't match the original Wix homepage. Navigation structure, section labels, card titles, descriptions, and button text all need correction.
 
-### 1. Sticky Header (72px)
-- White background, bottom border
-- Logo left-aligned ("Empowered DLD" text logo)
-- Navigation links right-aligned
-- Purple "Login" button
+---
 
-### 2. Hero Section
-- Two-column layout (58% image / 42% text on desktop, stacked on mobile)
-- Large headline (44–48px, bold): placeholder text about DLD awareness
-- Subtext paragraph in muted gray
-- Purple CTA button ("Discover Our Resources")
-- Placeholder hero image with rounded corners
+## Section-by-Section Text Corrections
 
-### 3. Stat Band
-- Near-black (#111) background, white text
-- Left-aligned stat ("What affects 1 in 14 people?") with supporting text
-- 120–140px height
+### 1. Header Navigation (`Header.tsx`)
+The Wix site uses **7 flat navigation links** -- no dropdown submenus.
 
-### 4. "Start Here" — Choose Your Path Cards
-- 4-column grid (desktop), 2 (tablet), 1 (mobile)
-- Cards: light lavender (#F6EFFF) background, border, rounded, icons, title, description, small purple button
-- Audiences: Parents/Caregivers, Providers/Clinicians, Teachers/Support Staff, Schools/Organizations
-- Subtle hover lift + shadow
+| Current (wrong) | Wix (correct) |
+|---|---|
+| HOME, WHO WE SERVE (dropdown), SHOP (dropdown), RESOURCES (dropdown), WORK WITH US (dropdown), ABOUT DLD, BLOG, CONTACT | HOME, ABOUT DLD, RESOURCES, FOR PARENTS, ARTICLES, BOOKS, CONTACT |
 
-### 5. "How We Support Children with DLD" Feature Grid
-- 3-column grid (desktop), 2 (tablet), 1 (mobile)
-- 9 feature cards: white background, light border, icon + title + description
-- Clean, minimal styling
+**Changes**: Remove all `submenu` arrays. Replace nav links with the 7 flat links from the Wix site. Keep cart icon and LOGIN button.
 
-### 6. Book Showcase ("Stories that celebrate brave kids with DLD")
-- Left text block (45%) + right 2-column book card grid (55%)
-- Book cards: white, light shadow, rounded, cover image placeholder
-- Hover: slight lift
+---
 
-### 7. Trust Section ("Created by an SLP and teacher")
-- Two-column: text left, founder image right
-- Purple check icon bullet points
-- Purple CTA button
+### 2. Hero Section (`HeroSection.tsx`)
 
-### 8. Testimonial Band
-- Deep purple (#3B2772) background, white text
-- Centered quote, max-width 800px
-- Carousel with fade transition, dots + arrows
+| Current | Wix |
+|---|---|
+| "SUPPORTING CHILDREN WITH DLD" | "SUPPORT FOR CHILDREN WITH DLD" |
+| Body: "We partner with families, educators, clinicians, and organizations to bring clear, practical DLD resources into homes, schools, and communities." | Body: "We partner with families, educators, clinicians and organizations to bring clear, practical DLD resources into homes, schools and communities." (minor comma differences) |
 
-### 9. "You Are Not Alone" Section
-- Two-column: text left, warm family image right
-- Light neutral background
-- CTA button
+**Changes**: Update subhead text. Adjust body copy to remove Oxford commas to match Wix exactly.
 
-### 10. Contact Section (with working form)
-- Two-column: form left (50%), text panel right (50%)
-- Form fields: name, email, message with validation (Zod)
-- **Lovable Cloud backend**: edge function to store submissions in Supabase database
-- Purple submit button, full-width on mobile
+---
 
-### 11. Footer
-- Deep purple (#3B2772) background, white text
-- 4-column layout (desktop), stacked on mobile
-- Newsletter email input field
-- Social media icon links
-- Logo + tagline
+### 3. Stat Band (`StatBand.tsx`)
+Text appears to match. **No changes needed.**
 
-## Technical Approach
-- All placeholder content — text and images will use clean placeholders you can replace later
-- Fully responsive: desktop, tablet, mobile breakpoints
-- Accessibility: 16px min body text, focus states, reduced-motion support, alt text, explicit button labels
-- Performance: lazy-loaded images below fold, optimized layout to prevent CLS
-- Lovable Cloud for contact form submissions (database table + edge function)
-- Testimonial carousel built with Embla (already installed)
+---
+
+### 4. Choose Your Path (`ChoosePathSection.tsx`)
+
+| Card | Current Title | Wix Title |
+|---|---|---|
+| Card 2 | "For Therapists / Clinicians" | "For Providers/Clinicians" |
+| Card 3 | "For Educators and Support Staff" | "For Teachers and Support Staff" |
+
+Card descriptions also need review -- the Wix descriptions may differ slightly. Will update to match the visible text from the reference.
+
+**Changes**: Fix card 2 and card 3 titles. Review and correct descriptions.
+
+---
+
+### 5. Support Section (`SupportSection.tsx`)
+
+The Wix reference shows the right-side paragraph text. Current text: "Our comprehensive approach addresses every aspect of a child's language journey -- from evidence-based tools for families to professional development for educators."
+
+This appears close but may have minor wording differences. Will verify and correct.
+
+The 9th card title in Wix appears to read "All Resources for Miners" (or similar -- hard to read at this resolution). Will update if discrepancy is confirmed.
+
+**Changes**: Correct any description text mismatches.
+
+---
+
+### 6. Book Showcase (`BookShowcase.tsx`)
+
+Book titles and body copy appear to match. **Minimal or no changes needed.**
+
+---
+
+### 7. Trust Section (`TrustSection.tsx`)
+
+The body copy paragraphs and bullet points need verification against the Wix reference. Current text may be paraphrased rather than exact.
+
+**Changes**: Verify and correct body paragraphs and bullet point text.
+
+---
+
+### 8. Not Alone Section (`NotAloneSection.tsx`)
+
+Current body: "Join a warm, supportive community of families and professionals who understand your journey."
+
+The Wix reference text appears to read something like: "Join a warm, supportive community for parents and families." (exact text hard to read at resolution).
+
+**Changes**: Update body text to match Wix.
+
+---
+
+### 9. Contact Section (`ContactSection.tsx`)
+
+Body text current: "Have a question or want to learn more? We'd love to hear from you."
+
+Wix reference may have different body copy. Will verify and correct.
+
+**Changes**: Update body text if different.
+
+---
+
+### 10. Footer (`Footer.tsx`)
+
+The Wix footer's 4th column is labeled **"Contact"** (with contact info like address and email), not "Subscribe to our Newsletter". The newsletter subscription appears below the main columns.
+
+**Changes**: 
+- Rename 4th column from "Subscribe to our Newsletter" to "Contact"
+- Add contact details (address, email, phone)
+- Move newsletter subscription to a separate row or below the contact column
+
+---
+
+## Technical Summary
+
+**Files to modify (7):**
+1. `src/components/Header.tsx` -- Replace nav with 7 flat links, remove all dropdown submenus
+2. `src/components/HeroSection.tsx` -- Fix subhead text
+3. `src/components/ChoosePathSection.tsx` -- Fix card 2 and card 3 titles
+4. `src/components/SupportSection.tsx` -- Fix any description mismatches
+5. `src/components/TrustSection.tsx` -- Verify and correct body copy
+6. `src/components/NotAloneSection.tsx` -- Fix body text
+7. `src/components/Footer.tsx` -- Restructure 4th column to "Contact" with contact info
+
+**No new dependencies required. No layout changes -- text and navigation structure only.**
+
