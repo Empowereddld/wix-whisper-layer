@@ -17,7 +17,7 @@ const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 h-[72px] bg-secondary backdrop-blur-md border-b border-border/20">
+    <header className="sticky top-0 z-50 h-[90px] bg-background backdrop-blur-md border-b border-border/20">
       <div className="container h-full flex items-center justify-between gap-6">
         <a href="/" className="flex-shrink-0 ml-4">
           <img src={logoImage} alt="EmpoweredDLD" className="h-[183px] w-auto" />
@@ -28,14 +28,14 @@ const Header = () => {
             <a
               key={link.label}
               href={link.href}
-              className="text-[12px] font-medium tracking-[0.02em] text-foreground/80 hover:text-primary transition-colors duration-200"
+              className="text-[13px] font-medium tracking-[0.04em] text-foreground/80 hover:text-primary transition-colors duration-200"
             >
               {link.label}
             </a>
           ))}
 
           <button className="relative text-primary hover:text-primary/80 transition-colors duration-200 ml-2" aria-label="Shopping cart">
-            <ShoppingBag className="w-[22px] h-[22px] stroke-[1.5]" fill="hsl(var(--primary))" color="hsl(var(--primary))" />
+            <ShoppingBag className="w-[26px] h-[26px] stroke-[1.5]" fill="hsl(var(--primary))" color="hsl(var(--primary))" />
             <span className="absolute top-[-2px] right-[-2px] text-[9px] text-primary-foreground bg-primary rounded-full w-[14px] h-[14px] flex items-center justify-center font-bold leading-none">
               0
             </span>
