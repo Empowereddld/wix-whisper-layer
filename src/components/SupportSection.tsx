@@ -24,33 +24,33 @@ const features = [
 
 const SupportSection = () => {
   return (
-    <section className="py-18 md:py-22 bg-muted/25" id="about">
+    <section className="py-14 md:py-18 bg-muted/25" id="about">
       <div className="container">
-        <div className="grid grid-cols-1 lg:grid-cols-[38%_62%] gap-10 lg:gap-16 items-start mb-10">
+        <div className="grid grid-cols-1 lg:grid-cols-[38%_62%] gap-8 lg:gap-14 items-start mb-8">
           <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-primary mb-2.5 opacity-80">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-primary mb-2 opacity-80">
               What We Offer
             </p>
-            <h2 className="text-[26px] md:text-[32px] font-bold text-foreground leading-[1.1]">
+            <h2 className="text-[26px] md:text-[30px] font-bold text-foreground leading-[1.1]">
               How we support children with DLD
             </h2>
           </div>
-          <p className="text-muted-foreground text-[15px] leading-[1.7] lg:pt-7 max-w-xl">
+          <p className="text-muted-foreground text-[14px] leading-[1.65] lg:pt-6 max-w-lg">
             Our comprehensive approach addresses every aspect of a child's language journey — from evidence-based tools for families to professional development for educators.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
           {features.map((f) => (
             <div
               key={f.title}
-              className="bg-background border border-primary/[0.05] rounded-xl p-5 premium-card"
+              className="bg-background border border-primary/[0.04] rounded-xl px-4 py-4 shadow-[0_1px_2px_hsl(258_50%_50%/0.04)] hover:shadow-[0_5px_18px_-4px_hsl(258_50%_50%/0.09)] hover:-translate-y-[1px] transition-all duration-300"
             >
-              <div className="w-10 h-10 rounded-lg bg-lavender flex items-center justify-center mb-3">
-                <f.icon className="w-[18px] h-[18px] text-primary stroke-[1.4]" />
+              <div className="w-9 h-9 rounded-lg bg-lavender flex items-center justify-center mb-2.5">
+                <f.icon className="w-[17px] h-[17px] text-primary stroke-[1.4]" />
               </div>
-              <h3 className="text-[14px] font-semibold text-foreground mb-1">{f.title}</h3>
-              <p className="text-[13px] text-muted-foreground leading-[1.6]">{f.description}</p>
+              <h3 className="text-[13px] font-semibold text-foreground mb-0.5">{f.title}</h3>
+              <p className="text-[12px] text-muted-foreground leading-[1.55] max-w-[260px]">{f.description}</p>
             </div>
           ))}
         </div>

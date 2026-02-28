@@ -35,19 +35,19 @@ const TestimonialBand = () => {
   }, [emblaApi]);
 
   return (
-    <section className="bg-deep-purple text-deep-purple-foreground py-18 md:py-22">
-      <div className="container max-w-[680px] text-center relative">
-        <Quote className="w-9 h-9 text-primary-foreground/15 mx-auto mb-5 rotate-180 stroke-[1.2]" />
+    <section className="bg-deep-purple text-deep-purple-foreground py-14 md:py-18">
+      <div className="container max-w-[620px] text-center relative">
+        <Quote className="w-8 h-8 text-primary-foreground/12 mx-auto mb-4 rotate-180 stroke-[1.2]" />
 
         <div className="overflow-hidden" ref={emblaRef}>
           <div className="flex">
             {testimonials.map((t, i) => (
               <div key={i} className="flex-[0_0_100%] min-w-0 px-4">
-                <blockquote className="text-[17px] md:text-[19px] leading-[1.7] mb-6 font-light tracking-[-0.01em]">
+                <blockquote className="text-[16px] md:text-[18px] leading-[1.65] mb-5 font-light tracking-[-0.01em]">
                   "{t.quote}"
                 </blockquote>
-                <p className="font-semibold text-[14px] tracking-wide">{t.author}</p>
-                <p className="text-[12px] text-primary-foreground/40 mt-0.5">{t.role}</p>
+                <p className="font-semibold text-[13px] tracking-wide">{t.author}</p>
+                <p className="text-[11px] text-primary-foreground/40 mt-0.5">{t.role}</p>
               </div>
             ))}
           </div>

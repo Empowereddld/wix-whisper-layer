@@ -4,9 +4,9 @@ import { Facebook, Instagram, Youtube } from "lucide-react";
 
 const Footer = () => {
   return (
-    <footer className="bg-deep-purple text-deep-purple-foreground pt-14 pb-10">
+    <footer className="bg-deep-purple text-deep-purple-foreground pt-12 pb-8">
       <div className="container">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
           {/* Brand */}
           <div>
             <p className="font-sans text-lg font-bold mb-3">

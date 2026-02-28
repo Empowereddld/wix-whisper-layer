@@ -45,11 +45,11 @@ const ContactSection = () => {
   };
 
   return (
-    <section className="py-18 md:py-22 bg-foreground text-background" id="contact">
+    <section className="py-14 md:py-18 bg-foreground text-background" id="contact">
       <div className="container">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14 items-start">
           {/* Left - image area */}
-          <div className="rounded-2xl overflow-hidden h-[260px] lg:h-[380px] bg-muted/10 shadow-[0_8px_32px_-8px_hsl(0_0%_0%/0.3)]">
+          <div className="rounded-2xl overflow-hidden h-[240px] lg:h-[360px] bg-muted/10 shadow-[0_6px_24px_-6px_hsl(0_0%_0%/0.3)]">
             <img
               src="/placeholder.svg"
               alt="DLD resources and community"
@@ -63,10 +63,10 @@ const ContactSection = () => {
             <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-primary-foreground/40 mb-2.5">
               For Organizations
             </p>
-            <h2 className="text-[26px] md:text-[32px] font-bold text-background mb-3 leading-[1.1]">
+            <h2 className="text-[26px] md:text-[30px] font-bold text-background mb-2.5 leading-[1.08]">
               Bring DLD Resources to Your Organization
             </h2>
-            <p className="text-background/50 text-[15px] mb-7 leading-[1.7] max-w-md">
+            <p className="text-background/50 text-[14px] mb-6 leading-[1.65] max-w-[380px]">
               Whether you're a school, clinic, or organization — we'd love to partner with you to bring DLD awareness and resources to your community.
             </p>
 
