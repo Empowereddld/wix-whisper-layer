@@ -50,11 +50,11 @@ const BookShowcase = () => {
                 key={book.title}
                 className="bg-background rounded-xl border border-primary/[0.04] overflow-hidden shadow-[0_1px_2px_hsl(258_50%_50%/0.04)] hover:shadow-[0_5px_18px_-4px_hsl(258_50%_50%/0.1)] hover:-translate-y-[1px] transition-all duration-300"
               >
-                <div className="h-36 lg:h-44 bg-secondary/30">
+                <div className="h-44 lg:h-56 bg-secondary/30 flex items-center justify-center p-3">
                   <img
                     src={book.image}
                     alt={`Cover of ${book.title}`}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-contain"
                     loading="lazy"
                   />
                 </div>
