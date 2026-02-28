@@ -17,18 +17,18 @@ const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 h-[80px] bg-background backdrop-blur-md border-b border-border/20 overflow-visible">
+    <header className="sticky top-0 z-50 h-[90px] bg-background backdrop-blur-md border-b border-border/20">
       <div className="container h-full flex items-center justify-between gap-6">
         <a href="/" className="flex-shrink-0 ml-4">
-          <img src={logoImage} alt="EmpoweredDLD" className="h-[120px] w-auto max-w-[200px] object-contain object-left" />
+          <img src={logoImage} alt="EmpoweredDLD" className="h-[183px] w-auto" />
         </a>
 
-        <nav className="hidden lg:flex items-center gap-5">
+        <nav className="hidden lg:flex items-center gap-6">
           {navLinks.map((link) => (
             <a
               key={link.label}
               href={link.href}
-              className="text-[13px] font-medium tracking-[0.04em] text-foreground/80 hover:text-primary transition-colors duration-200 whitespace-nowrap"
+              className="text-[13px] font-medium tracking-[0.04em] text-foreground/80 hover:text-primary transition-colors duration-200"
             >
               {link.label}
             </a>
