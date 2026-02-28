@@ -8,25 +8,25 @@ const paths = [
   {
     icon: iconParents,
     title: "For Parents and Caregivers",
-    description: "Find practical, family-friendly tools to support your child's communication at home.",
+    description: "Help your child understand DLD, build confidence, and feel supported at home and school using stories and strategies, that strengthen communication.",
     cta: "LEARN MORE",
   },
   {
     icon: iconSlps,
-    title: "For Providers/Clinicians",
-    description: "Access evidence-based tools, printable resources, and intervention supports for DLD.",
+    title: "For Therapists/Clinicians",
+    description: "Time saving, evidence-based resources you can use right away, plus family friendly materials to share with confidence.",
     cta: "LEARN MORE",
   },
   {
     icon: iconEducators,
     title: "For Teachers and Support Staff",
-    description: "Use clear classroom strategies and accommodations that help students with DLD thrive.",
+    description: "Classroom-ready tools that support language, learning, and inclusion. Make DLD visible in your classroom and school community.",
     cta: "LEARN MORE",
   },
   {
     icon: iconOrganizations,
     title: "For Schools, Clinics, and Organizations",
-    description: "Bring DLD training and structured resources to teams, programs, and communities.",
+    description: "Bulk orders, implementation support, and professional development to equip your team with evidence-based DLD resources.",
     cta: "LEARN MORE",
   },
 ];
@@ -36,12 +36,12 @@ const ChoosePathSection = () => {
     <section className="py-14 md:py-18" id="resources">
       <div className="container">
         <div className="mb-10">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-primary mb-2 opacity-80">
-            Choose Your Path
+          <p className="text-[14px] font-bold uppercase tracking-[0.18em] text-foreground mb-3">
+            CHOOSE YOUR PATH
           </p>
-          <h2 className="text-[32px] md:text-[40px] font-bold text-foreground mb-2">Start Here</h2>
-          <p className="text-muted-foreground text-[14px] max-w-lg leading-[1.65]">
-            Choose the path that fits you best. We have resources tailored for every role.
+          <h2 className="text-[40px] md:text-[52px] font-black text-foreground mb-3 leading-[1.1]">Start Here</h2>
+          <p className="text-muted-foreground text-[15px] leading-[1.65]">
+            Each section has resources designed specifically for you.
           </p>
         </div>
 
@@ -54,14 +54,13 @@ const ChoosePathSection = () => {
               <img
                 src={path.icon}
                 alt={path.title}
-                className="w-16 h-16 object-contain mb-4"
+                className="w-16 h-16 object-contain mb-5"
               />
-              <h3 className="text-[14px] font-semibold text-foreground mb-1.5 leading-[1.3]">{path.title}</h3>
-              <p className="text-[12.5px] text-muted-foreground mb-5 flex-1 leading-[1.6]">{path.description}</p>
+              <h3 className="text-[18px] md:text-[20px] font-bold text-foreground mb-2 leading-[1.25]">{path.title}</h3>
+              <p className="text-[13px] text-muted-foreground mb-6 flex-1 leading-[1.65]">{path.description}</p>
               <Button
-                variant="outline"
                 size="sm"
-                className="h-9 rounded-lg text-[10px] font-bold uppercase tracking-[0.12em] border-primary/30 text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300"
+                className="h-10 px-6 rounded-sm text-[11px] font-bold uppercase tracking-[0.12em] bg-deep-purple text-deep-purple-foreground hover:bg-deep-purple/90 shadow-[0_1px_3px_hsl(262_49%_30%/0.2)] transition-all duration-300"
               >
                 {path.cta}
               </Button>
