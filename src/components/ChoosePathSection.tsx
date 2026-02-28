@@ -10,13 +10,13 @@ const paths = [
   },
   {
     icon: Stethoscope,
-    title: "For Therapists / Clinicians",
+    title: "For Providers/Clinicians",
     description: "Access evidence-based tools, printable resources, and intervention supports for DLD.",
     cta: "START HERE",
   },
   {
     icon: GraduationCap,
-    title: "For Educators and Support Staff",
+    title: "For Teachers and Support Staff",
     description: "Use clear classroom strategies and accommodations that help students with DLD thrive.",
     cta: "START HERE",
   },

@@ -67,7 +67,7 @@ const ContactSection = () => {
               Bring DLD Resources to Your Organization
             </h2>
             <p className="text-background/55 text-[15px] mb-7 leading-[1.7]">
-              Have a question or want to learn more? We'd love to hear from you.
+              Whether you're a school, clinic, or organization — we'd love to partner with you to bring DLD awareness and resources to your community.
             </p>
 
             <Form {...form}>

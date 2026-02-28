@@ -22,13 +22,13 @@ const HeroSection = () => {
           {/* Text side */}
           <div className="order-2 lg:col-start-2 py-14 lg:py-20 lg:pl-14 text-center lg:text-left">
             <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-primary mb-6">
-              SUPPORTING CHILDREN WITH DLD
+              SUPPORT FOR CHILDREN WITH DLD
             </p>
             <h1 className="text-[34px] sm:text-[40px] lg:text-[46px] leading-[1.1] font-semibold text-foreground mb-7">
               Every child with DLD deserves to feel seen.
             </h1>
             <p className="text-[15px] lg:text-[16px] leading-[1.75] text-muted-foreground mb-10 max-w-[510px] mx-auto lg:mx-0">
-              We partner with families, educators, clinicians, and organizations to bring clear, practical DLD resources into homes, schools, and communities.
+              We partner with families, educators, clinicians and organizations to bring clear, practical DLD resources into homes, schools and communities.
             </p>
             <Button
               size="lg"
