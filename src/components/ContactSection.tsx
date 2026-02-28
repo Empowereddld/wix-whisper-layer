@@ -8,14 +8,23 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
+import workshopBg from "@/assets/workshop-bg.png";
 
 const contactSchema = z.object({
-  name: z.string().trim().min(1, "Name is required").max(100),
+  first_name: z.string().trim().min(1, "First name is required").max(100),
+  last_name: z.string().trim().min(1, "Last name is required").max(100),
+  company_name: z.string().trim().min(1, "Company name is required").max(200),
   email: z.string().trim().email("Please enter a valid email").max(255),
-  message: z.string().trim().min(1, "Message is required").max(1000),
+  position: z.string().trim().max(100).optional().or(z.literal("")),
+  questions: z.string().trim().min(1, "Questions field is required").max(2000),
 });
 
 type ContactFormValues = z.infer<typeof contactSchema>;
+
+const inputClass =
+  "h-11 rounded-none border-0 border-b border-foreground/20 bg-transparent px-0 text-[14px] text-foreground placeholder:text-foreground/40 focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-foreground/60";
+
+const labelClass = "text-[11px] font-bold uppercase tracking-[0.12em] text-foreground/70";
 
 const ContactSection = () => {
   const [submitting, setSubmitting] = useState(false);
@@ -23,16 +32,19 @@ const ContactSection = () => {
 
   const form = useForm<ContactFormValues>({
     resolver: zodResolver(contactSchema),
-    defaultValues: { name: "", email: "", message: "" },
+    defaultValues: { first_name: "", last_name: "", company_name: "", email: "", position: "", questions: "" },
   });
 
   const onSubmit = async (data: ContactFormValues) => {
     setSubmitting(true);
     try {
       const { error } = await supabase.from("contact_submissions").insert({
-        name: data.name,
+        first_name: data.first_name,
+        last_name: data.last_name || null,
+        company_name: data.company_name,
         email: data.email,
-        message: data.message,
+        position: data.position || null,
+        questions: data.questions,
       });
       if (error) throw error;
       toast({ title: "Message sent!", description: "We'll get back to you soon." });
@@ -45,81 +57,141 @@ const ContactSection = () => {
   };
 
   return (
-    <section className="py-14 md:py-18 bg-foreground text-background" id="contact">
-      <div className="container">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14 items-start">
-          {/* Left - image area */}
-          <div className="rounded-2xl overflow-hidden h-[240px] lg:h-[360px] bg-muted/10 shadow-[0_6px_24px_-6px_hsl(0_0%_0%/0.3)]">
-            <img
-              src="/placeholder.svg"
-              alt="DLD resources and community"
-              className="w-full h-full object-cover opacity-80"
-              loading="lazy"
-            />
-          </div>
+    <section className="relative min-h-[520px]" id="contact">
+      {/* Background image + overlay */}
+      <div className="absolute inset-0">
+        <img
+          src={workshopBg}
+          alt=""
+          className="w-full h-full object-cover"
+          loading="lazy"
+        />
+        <div className="absolute inset-0 bg-[hsl(258_55%_18%/0.82)]" />
+      </div>
 
-          {/* Right - text + form */}
-          <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-primary-foreground/40 mb-2.5">
-              For Organizations
-            </p>
-            <h2 className="text-[26px] md:text-[30px] font-bold text-background mb-2.5 leading-[1.08]">
-              Bring DLD Resources to Your Organization
-            </h2>
-            <p className="text-background/50 text-[14px] mb-6 leading-[1.65] max-w-[380px]">
-              Whether you're a school, clinic, or organization — we'd love to partner with you to bring DLD awareness and resources to your community.
-            </p>
-
+      {/* Content */}
+      <div className="relative z-10 container py-16 md:py-20">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
+          {/* Left – white form card */}
+          <div className="bg-background rounded-none p-8 md:p-10 lg:p-12">
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3.5">
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                {/* First + Last name row */}
+                <div className="grid grid-cols-2 gap-5">
+                  <FormField
+                    control={form.control}
+                    name="first_name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className={labelClass}>First Name *</FormLabel>
+                        <FormControl>
+                          <Input placeholder="First name here" className={inputClass} {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="last_name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className={labelClass}>Last Name *</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Last name here" className={inputClass} {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
+                {/* Company name */}
                 <FormField
                   control={form.control}
-                  name="name"
+                  name="company_name"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-background/60 text-[12px] font-medium">Name</FormLabel>
+                      <FormLabel className={labelClass}>Company name *</FormLabel>
                       <FormControl>
-                        <Input placeholder="Your name" className="h-10 rounded-lg bg-background/8 border-background/15 text-background placeholder:text-background/30 focus-visible:ring-background/30 text-[14px]" {...field} />
+                        <Input className={inputClass} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
+
+                {/* Email + Position row */}
+                <div className="grid grid-cols-2 gap-5">
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className={labelClass}>Email *</FormLabel>
+                        <FormControl>
+                          <Input type="email" placeholder="Add email" className={inputClass} {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="position"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className={labelClass}>Position</FormLabel>
+                        <FormControl>
+                          <Input className={inputClass} {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
+                {/* Questions */}
                 <FormField
                   control={form.control}
-                  name="email"
+                  name="questions"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-background/60 text-[12px] font-medium">Email</FormLabel>
+                      <FormLabel className={labelClass}>Questions *</FormLabel>
                       <FormControl>
-                        <Input type="email" placeholder="you@example.com" className="h-10 rounded-lg bg-background/8 border-background/15 text-background placeholder:text-background/30 focus-visible:ring-background/30 text-[14px]" {...field} />
+                        <Textarea
+                          placeholder="Insert text here"
+                          className="min-h-[100px] rounded-none border border-foreground/20 bg-transparent px-3 py-2.5 text-[14px] text-foreground placeholder:text-foreground/40 focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-foreground/60"
+                          {...field}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
-                <FormField
-                  control={form.control}
-                  name="message"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-background/60 text-[12px] font-medium">Message</FormLabel>
-                      <FormControl>
-                        <Textarea placeholder="How can we help?" className="min-h-[80px] rounded-lg bg-background/8 border-background/15 text-background placeholder:text-background/30 focus-visible:ring-background/30 text-[14px]" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+
                 <Button
                   type="submit"
                   disabled={submitting}
-                  className="h-[48px] px-8 rounded-lg text-[12px] font-bold uppercase tracking-[0.14em] shadow-[var(--shadow-button)] hover:shadow-[var(--shadow-elevated)] hover:brightness-95 transition-all duration-300"
+                  className="h-[48px] px-8 rounded-none bg-[hsl(258_55%_25%)] hover:bg-[hsl(258_55%_20%)] text-background text-[12px] font-bold uppercase tracking-[0.14em] transition-all duration-300"
                 >
-                  {submitting ? "Sending..." : "Apply Now"}
+                  {submitting ? "Sending..." : "Send Message"}
                 </Button>
               </form>
             </Form>
+          </div>
+
+          {/* Right – text content */}
+          <div className="flex flex-col justify-center lg:pt-8">
+            <p className="text-[12px] font-bold uppercase tracking-[0.2em] text-background/60 mb-4">
+              Partner With Us
+            </p>
+            <h2 className="text-[36px] md:text-[46px] lg:text-[52px] font-bold text-background leading-[1.08] mb-5">
+              Bring DLD Resources to Your Organization
+            </h2>
+            <p className="text-background/70 text-[15px] leading-[1.7] max-w-[480px]">
+              Ready to bring DLD support to your community? From one-time workshops to ongoing training, we'll help you find the right approach for your organization. Reach out to explore what's possible.
+            </p>
           </div>
         </div>
       </div>
