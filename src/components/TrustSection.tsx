@@ -1,48 +1,53 @@
 import { Button } from "@/components/ui/button";
-import { CheckCircle } from "lucide-react";
-
-const bullets = [
-  "Speech-Language Pathologist with 15+ years of experience",
-  "Certified educator and classroom teacher",
-  "Published author of children's books about DLD",
-  "Trusted by families and professionals across the country",
-];
 
 const TrustSection = () => {
   return (
-    <section className="py-24 md:py-32">
+    <section className="py-20 md:py-28">
       <div className="container">
+        <p className="text-xs font-semibold uppercase tracking-[0.15em] text-primary mb-3">
+          Why Empowered DLD?
+        </p>
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Text */}
           <div>
-            <h2 className="text-[28px] md:text-[34px] font-semibold text-foreground mb-4">
-              Created by an SLP and Teacher Who Understands
+            <h2 className="text-[28px] md:text-[34px] font-semibold text-foreground mb-4 leading-tight">
+              Created by an SLP and teacher
             </h2>
-            <p className="text-muted-foreground text-base mb-7 leading-[1.7]">
+            <p className="text-muted-foreground text-base mb-6 leading-[1.7]">
               Every resource on Empowered DLD is created with deep expertise and genuine care for children with Developmental Language Disorder.
             </p>
-            <ul className="space-y-3.5 mb-9">
-              {bullets.map((b) => (
-                <li key={b} className="flex items-start gap-3">
-                  <CheckCircle className="w-5 h-5 text-primary mt-0.5 shrink-0" />
-                  <span className="text-foreground text-base leading-[1.7]">{b}</span>
+            <p className="text-muted-foreground text-base mb-8 leading-[1.7]">
+              As a Speech-Language Pathologist and certified teacher with over 15 years of experience, our founder understands the unique challenges families and educators face when supporting children with DLD.
+            </p>
+
+            <p className="text-sm font-semibold text-foreground mb-3">What makes us different:</p>
+            <ul className="space-y-2 mb-8">
+              {[
+                "Speech-Language Pathologist with 15+ years of experience",
+                "Certified educator and classroom teacher",
+                "Published author of children's books about DLD",
+                "Trusted by families and professionals across the country",
+              ].map((b) => (
+                <li key={b} className="flex items-start gap-2.5 text-sm text-muted-foreground leading-[1.7]">
+                  <span className="text-primary mt-0.5">•</span>
+                  {b}
                 </li>
               ))}
             </ul>
-            <Button className="h-12 px-7 rounded-lg text-base font-medium hover:brightness-95 transition-all">
+
+            <Button className="h-11 px-7 rounded-lg text-sm font-semibold hover:brightness-95 transition-all">
               Learn More About Us
             </Button>
           </div>
 
-          {/* Founder image */}
-          <div>
-            <div className="bg-secondary rounded-2xl overflow-hidden shadow-sm h-[360px] lg:h-[440px]">
-              <img
-                src="/placeholder.svg"
-                alt="Founder of Empowered DLD"
-                className="w-full h-full object-cover"
-                loading="lazy"
-              />
+          {/* Image grid */}
+          <div className="grid grid-cols-2 gap-4">
+            <div className="bg-secondary rounded-2xl overflow-hidden h-[200px] lg:h-[260px]">
+              <img src="/placeholder.svg" alt="Founder working with children" className="w-full h-full object-cover" loading="lazy" />
+            </div>
+            <div className="bg-secondary rounded-2xl overflow-hidden h-[200px] lg:h-[260px] mt-8">
+              <img src="/placeholder.svg" alt="Classroom activity" className="w-full h-full object-cover" loading="lazy" />
             </div>
           </div>
         </div>
