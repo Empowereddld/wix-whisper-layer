@@ -1,10 +1,15 @@
 import { Button } from "@/components/ui/button";
+import bookPaperAirplane from "@/assets/book-paper-airplane.png";
+import bookMakeFriends from "@/assets/book-make-friends.png";
+import bookBirthdayParty from "@/assets/book-birthday-party.png";
+import bookTheatreExchange from "@/assets/book-theatre-exchange.png";
+import kidsReading from "@/assets/kids-reading.png";
 
 const books = [
-  { title: "Brave Twilight Style", subtitle: "A story about finding confidence" },
-  { title: "Words with Tyler Ideas", subtitle: "Celebrating kids who communicate differently" },
-  { title: "Brave Youth Style for...", subtitle: "An adventure in words and pictures" },
-  { title: "Brave Youth Style...", subtitle: "A tale of perseverance and pride" },
+  { title: "Dan and the Paper Airplane", subtitle: "Living Life With Developmental Language Disorder", image: bookPaperAirplane },
+  { title: "Dan & Daria Make Friends", subtitle: "Living Life With Developmental Language Disorder", image: bookMakeFriends },
+  { title: "Dan & Daria Go to a Birthday Party", subtitle: "Living Life With Developmental Language Disorder", image: bookBirthdayParty },
+  { title: "Dan & Daria and the Theatre Exchange", subtitle: "Living Life With Developmental Language Disorder", image: bookTheatreExchange },
 ];
 
 const BookShowcase = () => {
@@ -28,11 +33,11 @@ const BookShowcase = () => {
               SHOP ALL
             </Button>
 
-            <div className="mt-8 rounded-2xl overflow-hidden h-[200px] lg:h-[240px] bg-gradient-to-br from-secondary to-lavender shadow-[0_2px_8px_hsl(258_50%_50%/0.06)]">
+            <div className="mt-8 rounded-2xl overflow-hidden h-[200px] lg:h-[240px] shadow-[0_2px_8px_hsl(258_50%_50%/0.06)]">
               <img
-                src="/placeholder.svg"
+                src={kidsReading}
                 alt="Children reading together"
-                className="w-full h-full object-cover mix-blend-multiply"
+                className="w-full h-full object-cover"
                 loading="lazy"
               />
             </div>
@@ -45,11 +50,11 @@ const BookShowcase = () => {
                 key={book.title}
                 className="bg-background rounded-xl border border-primary/[0.04] overflow-hidden shadow-[0_1px_2px_hsl(258_50%_50%/0.04)] hover:shadow-[0_5px_18px_-4px_hsl(258_50%_50%/0.1)] hover:-translate-y-[1px] transition-all duration-300"
               >
-                <div className="bg-gradient-to-br from-secondary to-lavender h-36 lg:h-44">
+                <div className="h-36 lg:h-44 bg-secondary/30">
                   <img
-                    src="/placeholder.svg"
+                    src={book.image}
                     alt={`Cover of ${book.title}`}
-                    className="w-full h-full object-cover mix-blend-multiply"
+                    className="w-full h-full object-cover"
                     loading="lazy"
                   />
                 </div>
