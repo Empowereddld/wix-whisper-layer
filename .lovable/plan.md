@@ -1,44 +1,39 @@
 
 
-## Update Footer to Match Wix Reference
+## Problem
 
-Rebuild the footer to pixel-match the Wix reference screenshots. The uploaded logo image (`empowered_logo_26.png`) appears to be a white version of the EmpoweredDLD logo for use on the dark background.
+The logo PNG (`empowered-logo-white.png`) contains significant transparent padding baked into the image file. Every time we increase `h-48`, the invisible padding grows proportionally, pushing elements down and making alignment with "Quick Links" impossible via negative margins alone.
 
-### Layout (from reference)
+## Solution
 
-The footer has two main rows on a deep purple background:
+Instead of fighting the image padding, place the logo inside a **fixed-height clipping container** (e.g. 40px tall) with `overflow-hidden`, and let the oversized image be positioned so only the visible "EmpoweredDLD" text shows through, aligned with the column headings.
 
-**Row 1 -- Top section (4-column grid):**
-- **Column 1 (Brand):** EmpoweredDLD logo image (use uploaded `empowered_logo_26.png`), followed by body text: "Supporting 4,000+ families and professionals with evidence-based resources, multilingual materials, and community connection for children with Developmental Language Disorder."
-- **Column 2 (Quick Links):** Bold heading "Quick Links", links: Home, About, Services, Contact Us
-- **Column 3 (Useful Links):** Bold heading "Useful Links", links: Privacy Policy, Terms & Conditions, Disclaimer, Support
-- **Column 4 (Contact):** Bold heading "Contact", with a mail icon + "hello@empowereddldparenting.com"
+### Technical Changes
 
-**Row 2 -- Bottom section (split into left + right):**
-- **Left:** Social icons (Facebook, WhatsApp, Instagram) -- large, white, ~32px
-- **Right:** "Subscribe to Our Newsletter" heading (serif/italic style), two stacked input fields with white borders on dark bg, and a white-outlined "SUBSCRIBE" button
+**File: `src/components/Footer.tsx`** (line 29-30)
 
-### Key Styling Differences from Current
-- Logo is an image, not text
-- Brand description text is updated
-- Quick Links changed to: Home, About, Services, Contact Us
-- Useful Links changed to: Privacy Policy, Terms & Conditions, Disclaimer, Support
-- Contact email changed to hello@empowereddldparenting.com (with mail icon)
-- Social icons are larger (~32px), white, and include WhatsApp instead of YouTube
-- Newsletter section is right-aligned with a serif italic heading, two separate input fields stacked, and a bordered "SUBSCRIBE" button
-- No bottom copyright bar visible in reference
-- Newsletter inputs have white border, transparent bg styling
+Replace the current logo `<img>` with a clipping wrapper:
 
-### Technical Details
+```tsx
+{/* Brand */}
+<div>
+  <div className="h-10 mb-5 overflow-hidden">
+    <img 
+      src={logoWhite} 
+      alt="EmpoweredDLD logo" 
+      className="h-48 -mt-[4.7rem] -ml-4" 
+      style={{ objectFit: 'contain', objectPosition: 'left' }} 
+    />
+  </div>
+  <p className="text-[13px] ...">
+    Supporting 4,000+ families ...
+  </p>
+</div>
+```
 
-**File:** `src/assets/empowered-logo-white.png` -- Copy uploaded logo
-**File:** `src/components/Footer.tsx` -- Full rewrite to match reference layout
+- The outer `div` (`h-10 overflow-hidden`) acts as a viewport/crop window -- only ~40px of the logo is visible
+- The inner `img` stays at `h-48` but is shifted with `-mt-[4.7rem]` to position the actual text into the visible crop area
+- The crop container's height matches the line height of "Quick Links", so they align perfectly
+- No more pushing other elements -- the logo is fully contained
 
-- Replace text logo with imported image logo
-- Update grid to 4 columns: brand (wider), Quick Links, Useful Links, Contact
-- Update link lists to match reference exactly
-- Replace bottom bar with two-column layout: social icons (left) + newsletter (right)
-- Use `MessageCircle` or a WhatsApp SVG icon for WhatsApp
-- Newsletter heading uses `font-serif italic` styling
-- Input fields use `bg-transparent border border-white/50` styling
-- SUBSCRIBE button: white border, transparent bg, uppercase tracking
+The exact `-mt` value may need fine-tuning (I'll test visually), but this approach guarantees the logo doesn't affect surrounding layout.
