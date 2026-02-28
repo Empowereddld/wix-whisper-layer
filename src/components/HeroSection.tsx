@@ -2,34 +2,35 @@ import { Button } from "@/components/ui/button";
 
 const HeroSection = () => {
   return (
-    <section className="py-24 md:py-32 lg:py-40">
+    <section className="relative bg-secondary overflow-hidden">
       <div className="container">
-        <div className="grid grid-cols-1 lg:grid-cols-[58%_42%] gap-10 lg:gap-20 items-center">
-          {/* Hero Image */}
-          <div className="order-1 lg:order-1">
-            <div className="bg-secondary rounded-3xl overflow-hidden h-[300px] sm:h-[420px] lg:h-[540px]">
-              <img
-                src="/placeholder.svg"
-                alt="Children learning and communicating together"
-                className="w-full h-full object-cover"
-                loading="eager"
-              />
-            </div>
+        <div className="grid grid-cols-1 lg:grid-cols-[58%_42%] min-h-[520px] lg:min-h-[600px] items-center">
+          {/* Image side */}
+          <div className="order-1 lg:order-1 h-[320px] sm:h-[400px] lg:h-full lg:absolute lg:left-0 lg:top-0 lg:w-[58%]">
+            <img
+              src="/placeholder.svg"
+              alt="Children learning and communicating together"
+              className="w-full h-full object-cover"
+              loading="eager"
+            />
           </div>
 
-          {/* Hero Text */}
-          <div className="order-2 lg:order-2 text-center lg:text-left max-w-[460px] mx-auto lg:mx-0">
-            <h1 className="text-[30px] sm:text-[36px] lg:text-[42px] leading-[1.25] font-semibold text-foreground mb-7">
-              Helping Every Child Find Their Voice with DLD Support
+          {/* Text side */}
+          <div className="order-2 lg:order-2 lg:col-start-2 py-16 lg:py-24 lg:pl-12 text-center lg:text-left">
+            <p className="text-xs font-semibold uppercase tracking-[0.15em] text-primary mb-5">
+              Support for Children with DLD
+            </p>
+            <h1 className="text-[32px] sm:text-[38px] lg:text-[44px] leading-[1.15] font-semibold text-foreground mb-6">
+              Every child with DLD deserves to feel seen.
             </h1>
-            <p className="text-base lg:text-[17px] leading-[1.7] text-muted-foreground mb-11">
-              Empowering families, educators, and clinicians with the resources and community they need to support children with Developmental Language Disorder.
+            <p className="text-base lg:text-[17px] leading-[1.7] text-muted-foreground mb-10 max-w-[420px] mx-auto lg:mx-0">
+              We provide families, educators, and clinicians with the resources and community they need to support children with Developmental Language Disorder.
             </p>
             <Button
               size="lg"
-              className="h-12 px-7 rounded-lg text-base font-medium hover:brightness-95 transition-all"
+              className="h-12 px-8 rounded-lg text-sm font-semibold uppercase tracking-wider hover:brightness-95 transition-all"
             >
-              Discover Our Resources
+              Choose Your Path
             </Button>
           </div>
         </div>

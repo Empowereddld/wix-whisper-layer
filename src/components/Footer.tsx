@@ -1,27 +1,29 @@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Facebook, Instagram, Twitter, Youtube } from "lucide-react";
+import { Facebook, Instagram, Youtube } from "lucide-react";
 
 const Footer = () => {
   return (
-    <footer className="bg-deep-purple text-deep-purple-foreground pt-16 pb-12">
+    <footer className="bg-deep-purple text-deep-purple-foreground pt-14 pb-10">
       <div className="container">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-10">
           {/* Brand */}
           <div>
-            <p className="font-sans text-xl font-bold mb-3">Empowered DLD</p>
-            <p className="text-sm text-white/60 leading-relaxed">
+            <p className="font-sans text-lg font-bold mb-3">
+              Empowered<span className="text-lavender">DLD</span>
+            </p>
+            <p className="text-sm text-primary-foreground/50 leading-relaxed">
               Empowering families, educators, and clinicians to support children with Developmental Language Disorder.
             </p>
           </div>
 
           {/* Quick links */}
           <div>
-            <p className="font-semibold text-sm mb-4 uppercase tracking-wider text-white/80">Quick Links</p>
+            <p className="font-semibold text-sm mb-4 text-primary-foreground/70">Quick Links</p>
             <ul className="space-y-2">
               {["About DLD", "Resources", "Books", "Contact"].map((link) => (
                 <li key={link}>
-                  <a href={`#${link.toLowerCase().replace(/ /g, "-")}`} className="text-sm text-white/60 hover:text-white transition-colors">
+                  <a href={`#${link.toLowerCase().replace(/ /g, "-")}`} className="text-sm text-primary-foreground/50 hover:text-primary-foreground transition-colors">
                     {link}
                   </a>
                 </li>
@@ -29,13 +31,13 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Resources */}
+          {/* Useful Links */}
           <div>
-            <p className="font-semibold text-sm mb-4 uppercase tracking-wider text-white/80">Resources</p>
+            <p className="font-semibold text-sm mb-4 text-primary-foreground/70">Useful Links</p>
             <ul className="space-y-2">
               {["For Parents", "For Teachers", "For Clinicians", "Blog"].map((link) => (
                 <li key={link}>
-                  <a href="#" className="text-sm text-white/60 hover:text-white transition-colors">
+                  <a href="#" className="text-sm text-primary-foreground/50 hover:text-primary-foreground transition-colors">
                     {link}
                   </a>
                 </li>
@@ -45,17 +47,16 @@ const Footer = () => {
 
           {/* Newsletter */}
           <div>
-            <p className="font-semibold text-sm mb-4 uppercase tracking-wider text-white/80">Stay Updated</p>
-            <p className="text-sm text-white/60 mb-3">Get the latest DLD resources delivered to your inbox.</p>
+            <p className="font-semibold text-sm mb-4 text-primary-foreground/70">Subscribe to our Newsletter</p>
             <div className="flex gap-2">
               <Input
                 type="email"
                 placeholder="Your email"
-                className="h-11 rounded-md bg-white/10 border-white/20 text-white placeholder:text-white/40 focus-visible:ring-white/40"
+                className="h-10 rounded-md bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground placeholder:text-primary-foreground/30 focus-visible:ring-primary-foreground/40 text-sm"
               />
               <Button
                 variant="secondary"
-                className="h-11 px-5 rounded-md font-semibold shrink-0"
+                className="h-10 px-4 rounded-md font-semibold shrink-0 text-sm"
               >
                 Subscribe
               </Button>
@@ -64,20 +65,20 @@ const Footer = () => {
         </div>
 
         {/* Bottom bar */}
-        <div className="border-t border-white/15 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-white/50">© 2026 Empowered DLD. All rights reserved.</p>
+        <div className="border-t border-primary-foreground/10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-4">
-            {[Facebook, Instagram, Twitter, Youtube].map((Icon, i) => (
+            {[Facebook, Instagram, Youtube].map((Icon, i) => (
               <a
                 key={i}
                 href="#"
-                className="text-white/50 hover:text-white transition-colors"
-                aria-label={`Visit our ${Icon.displayName || "social media"} page`}
+                className="text-primary-foreground/40 hover:text-primary-foreground transition-colors"
+                aria-label={`Social media link`}
               >
                 <Icon className="w-5 h-5" />
               </a>
             ))}
           </div>
+          <p className="text-xs text-primary-foreground/40">© 2026 Empowered DLD. All rights reserved.</p>
         </div>
       </div>
     </footer>
