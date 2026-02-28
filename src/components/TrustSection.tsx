@@ -10,33 +10,33 @@ const bullets = [
 
 const TrustSection = () => {
   return (
-    <section className="py-16 md:py-24">
+    <section className="py-20 md:py-28">
       <div className="container">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Text */}
           <div>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+            <h2 className="text-[28px] md:text-[34px] font-normal text-foreground mb-4">
               Created by an SLP and Teacher Who Understands
             </h2>
-            <p className="text-muted-foreground text-base mb-6 leading-relaxed">
+            <p className="text-muted-foreground text-base mb-7 leading-[1.75]">
               Every resource on Empowered DLD is created with deep expertise and genuine care for children with Developmental Language Disorder.
             </p>
-            <ul className="space-y-3 mb-8">
+            <ul className="space-y-3.5 mb-9">
               {bullets.map((b) => (
                 <li key={b} className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-primary mt-0.5 shrink-0" />
-                  <span className="text-foreground text-base leading-[1.7]">{b}</span>
+                  <span className="text-foreground text-base leading-[1.75]">{b}</span>
                 </li>
               ))}
             </ul>
-            <Button className="h-12 px-6 rounded-md text-base font-semibold hover:brightness-90 transition-all">
+            <Button className="h-12 px-7 rounded-lg text-base font-medium hover:brightness-95 transition-all">
               Learn More About Us
             </Button>
           </div>
 
           {/* Founder image */}
           <div>
-            <div className="bg-secondary rounded-xl overflow-hidden shadow-md h-[360px] lg:h-[440px]">
+            <div className="bg-secondary rounded-2xl overflow-hidden shadow-sm h-[360px] lg:h-[440px]">
               <img
                 src="/placeholder.svg"
                 alt="Founder of Empowered DLD"

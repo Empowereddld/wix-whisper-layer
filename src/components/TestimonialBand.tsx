@@ -35,45 +35,43 @@ const TestimonialBand = () => {
   }, [emblaApi]);
 
   return (
-    <section className="bg-deep-purple text-deep-purple-foreground py-20 md:py-[120px]">
+    <section className="bg-deep-purple text-deep-purple-foreground py-24 md:py-32">
       <div className="container max-w-[800px] text-center relative">
         <div className="overflow-hidden" ref={emblaRef}>
           <div className="flex">
             {testimonials.map((t, i) => (
               <div key={i} className="flex-[0_0_100%] min-w-0 px-4">
-                <blockquote className="text-lg md:text-xl leading-relaxed mb-6 italic">
+                <blockquote className="text-lg md:text-xl leading-[1.75] mb-7 italic font-light">
                   "{t.quote}"
                 </blockquote>
-                <p className="font-semibold text-base">{t.author}</p>
-                <p className="text-sm text-white/60">{t.role}</p>
+                <p className="font-medium text-base">{t.author}</p>
+                <p className="text-sm text-white/55">{t.role}</p>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Arrows */}
         <button
           onClick={scrollPrev}
-          className="absolute left-0 top-1/2 -translate-y-1/2 p-2 text-white/70 hover:text-white transition-colors"
+          className="absolute left-0 top-1/2 -translate-y-1/2 p-2 text-white/60 hover:text-white transition-colors"
           aria-label="Previous testimonial"
         >
           <ChevronLeft className="w-6 h-6" />
         </button>
         <button
           onClick={scrollNext}
-          className="absolute right-0 top-1/2 -translate-y-1/2 p-2 text-white/70 hover:text-white transition-colors"
+          className="absolute right-0 top-1/2 -translate-y-1/2 p-2 text-white/60 hover:text-white transition-colors"
           aria-label="Next testimonial"
         >
           <ChevronRight className="w-6 h-6" />
         </button>
 
-        {/* Dots */}
-        <div className="flex justify-center gap-2 mt-8">
+        <div className="flex justify-center gap-2 mt-9">
           {testimonials.map((_, i) => (
             <button
               key={i}
               className={`w-2.5 h-2.5 rounded-full transition-colors ${
-                i === selectedIndex ? "bg-white" : "bg-white/30"
+                i === selectedIndex ? "bg-white" : "bg-white/25"
               }`}
               onClick={() => emblaApi?.scrollTo(i)}
               aria-label={`Go to testimonial ${i + 1}`}

@@ -46,13 +46,13 @@ const ContactSection = () => {
   };
 
   return (
-    <section className="py-16 md:py-24" id="contact">
+    <section className="py-20 md:py-28" id="contact">
       <div className="container">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
           {/* Form */}
           <div>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-3">Get in Touch</h2>
-            <p className="text-muted-foreground text-base mb-8">
+            <h2 className="text-[28px] md:text-[34px] font-normal text-foreground mb-3">Get in Touch</h2>
+            <p className="text-muted-foreground text-base mb-9 leading-relaxed">
               Have a question or want to learn more? We'd love to hear from you.
             </p>
 
@@ -65,11 +65,7 @@ const ContactSection = () => {
                     <FormItem>
                       <FormLabel>Name</FormLabel>
                       <FormControl>
-                        <Input
-                          placeholder="Your name"
-                          className="h-11 rounded-md border-[#ccc] focus-visible:ring-primary"
-                          {...field}
-                        />
+                        <Input placeholder="Your name" className="h-11 rounded-lg border-border/60 focus-visible:ring-primary" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -82,12 +78,7 @@ const ContactSection = () => {
                     <FormItem>
                       <FormLabel>Email</FormLabel>
                       <FormControl>
-                        <Input
-                          type="email"
-                          placeholder="you@example.com"
-                          className="h-11 rounded-md border-[#ccc] focus-visible:ring-primary"
-                          {...field}
-                        />
+                        <Input type="email" placeholder="you@example.com" className="h-11 rounded-lg border-border/60 focus-visible:ring-primary" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -100,11 +91,7 @@ const ContactSection = () => {
                     <FormItem>
                       <FormLabel>Message</FormLabel>
                       <FormControl>
-                        <Textarea
-                          placeholder="How can we help?"
-                          className="min-h-[120px] rounded-md border-[#ccc] focus-visible:ring-primary"
-                          {...field}
-                        />
+                        <Textarea placeholder="How can we help?" className="min-h-[120px] rounded-lg border-border/60 focus-visible:ring-primary" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -113,7 +100,7 @@ const ContactSection = () => {
                 <Button
                   type="submit"
                   disabled={submitting}
-                  className="w-full lg:w-auto h-12 px-8 rounded-md text-base font-semibold hover:brightness-90 transition-all"
+                  className="w-full lg:w-auto h-12 px-8 rounded-lg text-base font-medium hover:brightness-95 transition-all"
                 >
                   {submitting ? "Sending..." : "Send Message"}
                 </Button>
@@ -123,7 +110,7 @@ const ContactSection = () => {
 
           {/* Info panel */}
           <div className="flex flex-col justify-center">
-            <div className="bg-lavender rounded-xl p-8 lg:p-10">
+            <div className="bg-lavender rounded-2xl p-8 lg:p-10">
               <h3 className="font-sans text-xl font-semibold text-foreground mb-6">
                 We're Here to Help
               </h3>
