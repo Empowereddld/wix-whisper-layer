@@ -79,7 +79,7 @@ const SupportSection = () => {
           {features.map((f) => (
             <div
               key={f.title}
-              className="bg-background border border-border rounded-md px-6 py-7 hover:shadow-[0_5px_18px_-4px_hsl(258_50%_50%/0.09)] hover:-translate-y-[1px] transition-all duration-300 flex flex-col items-start"
+              className="bg-lavender border border-border rounded-md px-6 py-7 hover:shadow-[0_5px_18px_-4px_hsl(258_50%_50%/0.09)] hover:-translate-y-[1px] transition-all duration-300 flex flex-col items-start"
             >
               <f.icon className="w-12 h-12 text-foreground stroke-[1.2] mb-5" />
               <h3 className="text-[18px] font-bold text-foreground mb-2">{f.title}</h3>
