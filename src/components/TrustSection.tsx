@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Check } from "lucide-react";
 import foundersPhoto from "@/assets/founders-photo.png";
 import boyReading from "@/assets/boy-reading.png";
 
@@ -6,7 +7,7 @@ const TrustSection = () => {
   return (
     <section className="py-14 md:py-18" id="why">
       <div className="container">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-primary mb-2 opacity-80">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-primary mb-1 opacity-80">
           Why Empowered DLD?
         </p>
 
@@ -32,7 +33,7 @@ const TrustSection = () => {
                 "Easy to share with families and school teams",
               ].map((b) => (
                 <li key={b} className="flex items-start gap-2 text-[12px] text-muted-foreground leading-[1.55]">
-                  <span className="text-primary mt-0.5 text-[9px]">●</span>
+                  <Check className="text-primary mt-0.5 w-3.5 h-3.5 shrink-0" strokeWidth={3} />
                   {b}
                 </li>
               ))}
@@ -48,17 +49,17 @@ const TrustSection = () => {
             <img
               src={foundersPhoto}
               alt="Jinean and Camesha, founders of Empowered DLD"
-              className="w-full h-full object-cover object-[center_15%]"
+              className="w-full h-full object-cover object-[center_10%]"
               loading="lazy"
             />
           </div>
 
-          {/* Column 3 – Boy reading photo (cropped from top) */}
+          {/* Column 3 – Boy reading photo */}
           <div className="rounded-2xl overflow-hidden h-[340px] lg:h-full min-h-[340px] bg-gradient-to-br from-lavender to-secondary shadow-[0_2px_8px_hsl(258_50%_50%/0.06)]">
             <img
               src={boyReading}
               alt="Boy reading a book about DLD"
-              className="w-full h-full object-cover object-bottom"
+              className="w-full h-full object-cover object-[center_30%]"
               loading="lazy"
             />
           </div>
