@@ -20,9 +20,9 @@ const BookShowcase = () => {
           Our Books
         </p>
 
-        <div className="grid grid-cols-1 lg:grid-cols-[44%_56%] gap-8 lg:gap-12 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-[44%_56%] gap-8 lg:gap-12 items-stretch">
           {/* Text + large image */}
-          <div>
+          <div className="flex flex-col">
             <h2 className="text-[26px] md:text-[30px] font-bold text-foreground mb-3.5 leading-[1.1]">
               Stories that celebrate brave kids with DLD
             </h2>
@@ -33,7 +33,7 @@ const BookShowcase = () => {
               SHOP ALL
             </Button>
 
-            <div className="mt-8 rounded-2xl overflow-hidden h-[200px] lg:h-[240px] shadow-[0_2px_8px_hsl(258_50%_50%/0.06)]">
+            <div className="mt-8 rounded-2xl overflow-hidden flex-1 min-h-[200px] shadow-[0_2px_8px_hsl(258_50%_50%/0.06)]">
               <img
                 src={kidsReading}
                 alt="Children reading together"
