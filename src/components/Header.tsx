@@ -5,22 +5,22 @@ import logoImage from "@/assets/empowered-logo.png";
 
 const navLinks = [
   { label: "HOME", href: "/" },
+  { label: "WHO WE SERVE", href: "#who-we-serve" },
+  { label: "RESOURSES", href: "#resources" },
+  { label: "SHOP", href: "#shop" },
+  { label: "WORK WITH US", href: "#work-with-us" },
   { label: "ABOUT DLD", href: "#about" },
-  { label: "RESOURCES", href: "#resources" },
-  { label: "FOR PARENTS", href: "#resources" },
-  { label: "ARTICLES", href: "#" },
-  { label: "BOOKS", href: "#books" },
-  { label: "CONTACT", href: "#contact" },
+  { label: "BLOGS", href: "#blogs" },
 ];
 
 const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 h-[64px] bg-background/97 backdrop-blur-md border-b border-border/20 shadow-[0_1px_3px_hsl(0_0%_0%/0.04)]">
+    <header className="sticky top-0 z-50 h-[76px] bg-background/97 backdrop-blur-md border-b border-border/20 shadow-[0_1px_3px_hsl(0_0%_0%/0.04)]">
       <div className="container h-full flex items-center justify-between gap-4">
         <a href="/" className="flex-shrink-0">
-          <img src={logoImage} alt="EmpoweredDLD" className="h-[28px] w-auto" />
+          <img src={logoImage} alt="EmpoweredDLD" className="h-[40px] w-auto" />
         </a>
 
         <nav className="hidden lg:flex items-center gap-5">
@@ -34,14 +34,14 @@ const Header = () => {
             </a>
           ))}
 
-          <button className="relative text-muted-foreground hover:text-foreground transition-colors duration-200 ml-1" aria-label="Shopping cart">
-            <ShoppingBag className="w-[17px] h-[17px] stroke-[1.6]" />
+          <button className="relative text-primary hover:text-primary/80 transition-colors duration-200 ml-1" aria-label="Shopping cart">
+            <ShoppingBag className="w-[20px] h-[20px] stroke-[1.6]" />
             <span className="absolute -top-1.5 -right-1.5 text-[9px] bg-primary text-primary-foreground rounded-full w-3.5 h-3.5 flex items-center justify-center font-bold">
               0
             </span>
           </button>
 
-          <Button size="default" className="rounded-md h-9 px-5 text-[11px] font-bold tracking-[0.1em] shadow-[var(--shadow-button)] hover:shadow-[var(--shadow-card-hover)] transition-all duration-300 ml-1">
+          <Button variant="outline" size="default" className="rounded-md h-9 px-6 text-[11px] font-bold tracking-[0.1em] border-foreground/20 hover:bg-accent transition-all duration-300 ml-1">
             LOGIN
           </Button>
         </nav>
