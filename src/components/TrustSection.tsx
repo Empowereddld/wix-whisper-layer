@@ -7,7 +7,7 @@ const TrustSection = () => {
   return (
     <section className="py-14 md:py-18" id="why">
       <div className="container">
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1fr_1fr] gap-6 lg:gap-8 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1fr_1fr] gap-6 lg:gap-8 items-stretch">
           {/* Column 1 – Text */}
           <div className="flex flex-col">
             <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-primary mb-3 opacity-80">
@@ -54,11 +54,11 @@ const TrustSection = () => {
           </div>
 
           {/* Column 3 – Boy reading photo */}
-          <div className="rounded-2xl overflow-hidden h-[340px] lg:h-full min-h-[340px] bg-gradient-to-br from-lavender to-secondary shadow-[0_2px_8px_hsl(258_50%_50%/0.06)]">
+          <div className="rounded-2xl overflow-hidden bg-gradient-to-br from-lavender to-secondary shadow-[0_2px_8px_hsl(258_50%_50%/0.06)]">
             <img
               src={boyReading}
               alt="Boy reading a book about DLD"
-              className="w-full h-full object-cover object-[center_30%]"
+              className="w-full h-full object-cover object-[center_45%]"
               loading="lazy"
             />
           </div>
