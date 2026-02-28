@@ -17,10 +17,10 @@ const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 h-[72px] bg-background backdrop-blur-md border-b border-border/40">
+    <header className="sticky top-0 z-50 h-[72px] bg-secondary backdrop-blur-md border-b border-border/20">
       <div className="container h-full flex items-center justify-between gap-6">
         <a href="/" className="flex-shrink-0">
-          <img src={logoImage} alt="EmpoweredDLD" className="h-[38px] w-auto" />
+          <img src={logoImage} alt="EmpoweredDLD" className="h-[48px] w-auto" />
         </a>
 
         <nav className="hidden lg:flex items-center gap-6">
