@@ -25,7 +25,7 @@ const BookShowcase = () => {
               Our books are written to help children with DLD see themselves as the heroes of their own stories. Each book celebrates courage, resilience, and the unique ways children communicate.
             </p>
             <Button className="h-[46px] px-7 rounded-lg text-[12px] font-semibold uppercase tracking-[0.12em] hover:brightness-95 transition-all shadow-sm">
-              Shop All
+              SHOP ALL
             </Button>
 
             <div className="mt-10 rounded-2xl overflow-hidden h-[200px] lg:h-[260px] bg-gradient-to-br from-secondary to-lavender">

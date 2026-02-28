@@ -1,30 +1,30 @@
 import { Button } from "@/components/ui/button";
-import { Heart, Stethoscope, GraduationCap, Building2 } from "lucide-react";
+import { Users, Stethoscope, GraduationCap, Building2 } from "lucide-react";
 
 const paths = [
   {
-    icon: Heart,
+    icon: Users,
     title: "For Parents and Caregivers",
-    description: "Learn how to support your child's language development at home with practical strategies and resources.",
-    cta: "Start Here",
+    description: "Find practical, family-friendly tools to support your child’s communication at home.",
+    cta: "START HERE",
   },
   {
     icon: Stethoscope,
-    title: "For Providers/ Clinicians",
-    description: "Access clinical tools, research summaries, and therapy resources for your DLD clients.",
-    cta: "Start Here",
+    title: "For Therapists / Clinicians",
+    description: "Access evidence-based tools, printable resources, and intervention supports for DLD.",
+    cta: "START HERE",
   },
   {
     icon: GraduationCap,
-    title: "For Teachers and Support Staff",
-    description: "Discover classroom strategies and accommodations to help students with DLD thrive in school.",
-    cta: "Start Here",
+    title: "For Educators and Support Staff",
+    description: "Use clear classroom strategies and accommodations that help students with DLD thrive.",
+    cta: "START HERE",
   },
   {
     icon: Building2,
     title: "For Schools, Clinics, and Organizations",
-    description: "Find training programs and resources to build DLD awareness across your organization.",
-    cta: "Start Here",
+    description: "Bring DLD training and structured resources to teams, programs, and communities.",
+    cta: "START HERE",
   },
 ];
 

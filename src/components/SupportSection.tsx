@@ -1,17 +1,25 @@
 import {
-  BookOpen, MessageCircle, Users, Brain, Puzzle, Star, HandHeart, Target, Lightbulb,
+  BookOpen,
+  Download,
+  FolderOpen,
+  BookMarked,
+  FileText,
+  Image,
+  UserCog,
+  Rocket,
+  LayoutGrid,
 } from "lucide-react";
 
 const features = [
-  { icon: BookOpen, title: "Core Evidence Series", description: "Curated materials grounded in the latest DLD research and clinical best practices." },
-  { icon: MessageCircle, title: "Free Downloadable Resources", description: "Practical techniques to support language development in everyday interactions." },
-  { icon: Users, title: "Documentation Kits", description: "Connect with other families, educators, and professionals navigating DLD together." },
-  { icon: Brain, title: "Education DLD Guides", description: "Clear, accessible information about what DLD is and how it impacts children." },
-  { icon: Puzzle, title: "Family Documents", description: "Ready-to-use accommodations and strategies for inclusive learning environments." },
-  { icon: Star, title: "Infographics", description: "Resources that focus on what children with DLD can do, not just their challenges." },
-  { icon: HandHeart, title: "Professional Development", description: "Supporting the social-emotional needs of children with language difficulties." },
-  { icon: Target, title: "New Product Launches", description: "Tools for setting meaningful, achievable language and communication goals." },
-  { icon: Lightbulb, title: "All Resources for Miners", description: "Training and workshops for educators and therapists working with DLD." },
+  { icon: BookOpen, title: "Core DLD Book Series", description: "Signature books designed to build confidence, language growth, and DLD awareness." },
+  { icon: Download, title: "Free Downloadable Resources", description: "Printable tools and guides families and professionals can use right away." },
+  { icon: FolderOpen, title: "Documentation Kits", description: "Organized forms and supports for meetings, planning, and student documentation." },
+  { icon: BookMarked, title: "Educational DLD Guides", description: "Easy-to-understand guides that explain DLD clearly for home and school settings." },
+  { icon: FileText, title: "Family Documents", description: "Ready-to-use family-facing documents that support communication and advocacy." },
+  { icon: Image, title: "Infographics", description: "Visual resources that make key DLD concepts simple to share and teach." },
+  { icon: UserCog, title: "Professional Development", description: "Training content for educators and clinicians working with children with DLD." },
+  { icon: Rocket, title: "New Product Launches", description: "Be first to access newly released tools, workshops, and practical supports." },
+  { icon: LayoutGrid, title: "All Resources", description: "Browse the full collection of DLD resources in one place." },
 ];
 
 const SupportSection = () => {
