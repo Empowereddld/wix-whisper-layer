@@ -1,29 +1,27 @@
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Facebook, Instagram, Youtube } from "lucide-react";
+import { Facebook, Instagram, Mail, MessageCircle } from "lucide-react";
+import logoWhite from "@/assets/empowered-logo-white.png";
 
 const Footer = () => {
   return (
-    <footer className="bg-deep-purple text-deep-purple-foreground pt-12 pb-8">
+    <footer className="bg-deep-purple text-deep-purple-foreground pt-14 pb-10">
       <div className="container">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+        {/* Row 1 – 4-column grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr] gap-10 mb-12">
           {/* Brand */}
           <div>
-            <p className="font-sans text-lg font-bold mb-3">
-              Empowered<span className="text-lavender">DLD</span>
-            </p>
-            <p className="text-[13px] text-primary-foreground/45 leading-relaxed">
-              Empowering families, educators, and clinicians to support children with Developmental Language Disorder.
+            <img src={logoWhite} alt="EmpoweredDLD logo" className="h-12 mb-4" />
+            <p className="text-[13px] text-primary-foreground/50 leading-relaxed">
+              Supporting 4,000+ families and professionals with evidence-based resources, multilingual materials, and community connection for children with Developmental Language Disorder.
             </p>
           </div>
 
-          {/* Quick links */}
+          {/* Quick Links */}
           <div>
-            <p className="font-bold text-[12px] uppercase tracking-[0.1em] mb-4 text-primary-foreground/60">Quick Links</p>
-            <ul className="space-y-1.5">
-              {["HOME", "WHO WE SERVE", "RESOURCES", "SHOP", "WORK WITH US", "ABOUT DLD", "BLOG", "CONTACT"].map((link) => (
+            <p className="font-bold text-[13px] uppercase tracking-[0.1em] mb-4 text-primary-foreground/70">Quick Links</p>
+            <ul className="space-y-2">
+              {["Home", "About", "Services", "Contact Us"].map((link) => (
                 <li key={link}>
-                  <a href="#" className="text-[13px] text-primary-foreground/45 hover:text-primary-foreground transition-colors duration-200">
+                  <a href="#" className="text-[13px] text-primary-foreground/50 hover:text-primary-foreground transition-colors duration-200">
                     {link}
                   </a>
                 </li>
@@ -33,11 +31,11 @@ const Footer = () => {
 
           {/* Useful Links */}
           <div>
-            <p className="font-bold text-[12px] uppercase tracking-[0.1em] mb-4 text-primary-foreground/60">Useful Links</p>
-            <ul className="space-y-1.5">
-              {["For Parents", "For SLPs", "For Educators and Schools", "For Organizations"].map((link) => (
+            <p className="font-bold text-[13px] uppercase tracking-[0.1em] mb-4 text-primary-foreground/70">Useful Links</p>
+            <ul className="space-y-2">
+              {["Privacy Policy", "Terms & Conditions", "Disclaimer", "Support"].map((link) => (
                 <li key={link}>
-                  <a href="#" className="text-[13px] text-primary-foreground/45 hover:text-primary-foreground transition-colors duration-200">
+                  <a href="#" className="text-[13px] text-primary-foreground/50 hover:text-primary-foreground transition-colors duration-200">
                     {link}
                   </a>
                 </li>
@@ -47,47 +45,56 @@ const Footer = () => {
 
           {/* Contact */}
           <div>
-            <p className="font-bold text-[12px] uppercase tracking-[0.1em] mb-4 text-primary-foreground/60">Contact</p>
-            <ul className="space-y-1.5 text-[13px] text-primary-foreground/45">
-              <li>info@empowereddld.com</li>
-              <li>United States</li>
-            </ul>
-          </div>
-        </div>
-
-        {/* Newsletter row */}
-        <div className="mb-10 flex flex-col sm:flex-row items-start sm:items-center gap-3">
-          <p className="text-[12px] text-primary-foreground/60 font-bold uppercase tracking-[0.1em] shrink-0">Subscribe to our Newsletter</p>
-          <div className="flex gap-2 w-full sm:w-auto">
-            <Input
-              type="email"
-              placeholder="Your email"
-              className="h-9 rounded-md bg-primary-foreground/8 border-primary-foreground/15 text-primary-foreground placeholder:text-primary-foreground/25 focus-visible:ring-primary-foreground/30 text-[13px]"
-            />
-            <Button
-              variant="secondary"
-              className="h-9 px-4 rounded-md font-bold shrink-0 text-[12px] tracking-[0.05em]"
+            <p className="font-bold text-[13px] uppercase tracking-[0.1em] mb-4 text-primary-foreground/70">Contact</p>
+            <a
+              href="mailto:hello@empowereddldparenting.com"
+              className="inline-flex items-center gap-2 text-[13px] text-primary-foreground/50 hover:text-primary-foreground transition-colors duration-200"
             >
-              Subscribe
-            </Button>
+              <Mail className="w-4 h-4 shrink-0" />
+              hello@empowereddldparenting.com
+            </a>
           </div>
         </div>
 
-        {/* Bottom bar */}
-        <div className="border-t border-primary-foreground/8 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-4">
-            {[Facebook, Instagram, Youtube].map((Icon, i) => (
+        {/* Row 2 – Social icons (left) + Newsletter (right) */}
+        <div className="border-t border-primary-foreground/10 pt-8 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
+          {/* Social icons */}
+          <div className="flex items-center gap-5">
+            {[
+              { Icon: Facebook, label: "Facebook" },
+              { Icon: MessageCircle, label: "WhatsApp" },
+              { Icon: Instagram, label: "Instagram" },
+            ].map(({ Icon, label }) => (
               <a
-                key={i}
+                key={label}
                 href="#"
-                className="text-primary-foreground/35 hover:text-primary-foreground transition-colors duration-200"
-                aria-label={`Social media link`}
+                className="text-primary-foreground/80 hover:text-primary-foreground transition-colors duration-200"
+                aria-label={label}
               >
-                <Icon className="w-[18px] h-[18px]" />
+                <Icon className="w-8 h-8" strokeWidth={1.5} />
               </a>
             ))}
           </div>
-          <p className="text-[11px] text-primary-foreground/35">© 2026 Empowered DLD. All rights reserved.</p>
+
+          {/* Newsletter */}
+          <div className="flex flex-col items-start lg:items-end gap-4 w-full lg:w-auto">
+            <p className="font-serif italic text-lg text-primary-foreground/90">Subscribe to Our Newsletter</p>
+            <div className="flex flex-col gap-3 w-full lg:w-72">
+              <input
+                type="email"
+                placeholder="Email"
+                className="h-10 w-full bg-transparent border border-primary-foreground/30 rounded-sm px-3 text-[13px] text-primary-foreground placeholder:text-primary-foreground/30 focus:outline-none focus:border-primary-foreground/60 transition-colors"
+              />
+              <input
+                type="text"
+                placeholder="Name"
+                className="h-10 w-full bg-transparent border border-primary-foreground/30 rounded-sm px-3 text-[13px] text-primary-foreground placeholder:text-primary-foreground/30 focus:outline-none focus:border-primary-foreground/60 transition-colors"
+              />
+              <button className="h-10 w-full border border-primary-foreground/50 bg-transparent text-primary-foreground text-[12px] font-bold uppercase tracking-[0.15em] rounded-sm hover:bg-primary-foreground/10 transition-colors duration-200">
+                Subscribe
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </footer>
