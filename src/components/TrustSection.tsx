@@ -43,22 +43,22 @@ const TrustSection = () => {
             </Button>
           </div>
 
-          {/* Column 2 – Founders photo (tall) */}
-          <div className="rounded-2xl overflow-hidden h-[340px] lg:h-full min-h-[340px] bg-gradient-to-br from-secondary to-lavender shadow-[0_2px_8px_hsl(258_50%_50%/0.06)]">
+          {/* Column 2 – Founders photo (head to waist) */}
+          <div className="rounded-2xl overflow-hidden h-[300px] lg:h-[420px] bg-gradient-to-br from-secondary to-lavender shadow-[0_2px_8px_hsl(258_50%_50%/0.06)]">
             <img
               src={foundersPhoto}
               alt="Jinean and Camesha, founders of Empowered DLD"
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover object-[center_15%]"
               loading="lazy"
             />
           </div>
 
-          {/* Column 3 – Boy reading photo */}
+          {/* Column 3 – Boy reading photo (cropped from top) */}
           <div className="rounded-2xl overflow-hidden h-[340px] lg:h-full min-h-[340px] bg-gradient-to-br from-lavender to-secondary shadow-[0_2px_8px_hsl(258_50%_50%/0.06)]">
             <img
               src={boyReading}
               alt="Boy reading a book about DLD"
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover object-bottom"
               loading="lazy"
             />
           </div>
