@@ -70,7 +70,7 @@ const SupportSection = () => {
               How we support children with DLD
             </h2>
           </div>
-          <p className="text-muted-foreground text-[15px] leading-[1.7] lg:pt-6">
+          <p className="text-muted-foreground text-[15px] leading-[1.7] lg:pt-6 max-w-[540px]">
             DLD is a condition that makes communication challenging, impacting learning, friendships, and everyday communication. Our resources help kids understand how their brains work, recognize what supports work for them, while celebrating their beautiful strengths.
           </p>
         </div>
