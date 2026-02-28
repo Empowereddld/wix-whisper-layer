@@ -36,8 +36,8 @@ const TrustSection = () => {
               ))}
             </ul>
 
-            <Button className="h-[46px] px-7 rounded-lg text-[12px] font-semibold hover:brightness-95 transition-all shadow-sm">
-              Learn More About Us
+            <Button className="h-[46px] px-7 rounded-lg text-[12px] font-semibold uppercase tracking-[0.12em] hover:brightness-95 transition-all shadow-sm">
+              READ FULL STORY
             </Button>
           </div>
 

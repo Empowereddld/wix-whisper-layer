@@ -21,9 +21,9 @@ const Footer = () => {
           <div>
             <p className="font-semibold text-sm mb-4 text-primary-foreground/70">Quick Links</p>
             <ul className="space-y-2">
-              {["About DLD", "Resources", "Books", "Contact"].map((link) => (
+              {["HOME", "WHO WE SERVE", "RESOURCES", "SHOP", "WORK WITH US", "ABOUT DLD", "BLOG", "CONTACT"].map((link) => (
                 <li key={link}>
-                  <a href={`#${link.toLowerCase().replace(/ /g, "-")}`} className="text-sm text-primary-foreground/50 hover:text-primary-foreground transition-colors">
+                  <a href="#" className="text-sm text-primary-foreground/50 hover:text-primary-foreground transition-colors">
                     {link}
                   </a>
                 </li>
@@ -35,7 +35,7 @@ const Footer = () => {
           <div>
             <p className="font-semibold text-sm mb-4 text-primary-foreground/70">Useful Links</p>
             <ul className="space-y-2">
-              {["For Parents", "For Teachers", "For Clinicians", "Blog"].map((link) => (
+              {["For Parents", "For SLPs", "For Educators and Schools", "For Organizations"].map((link) => (
                 <li key={link}>
                   <a href="#" className="text-sm text-primary-foreground/50 hover:text-primary-foreground transition-colors">
                     {link}
