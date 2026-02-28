@@ -7,13 +7,12 @@ const TrustSection = () => {
   return (
     <section className="py-14 md:py-18" id="why">
       <div className="container">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-primary mb-1 opacity-80">
-          Why Empowered DLD?
-        </p>
-
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1fr_1fr] gap-6 lg:gap-8 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1fr_1fr] gap-6 lg:gap-8 items-start">
           {/* Column 1 – Text */}
-          <div className="flex flex-col justify-center">
+          <div className="flex flex-col">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-primary mb-3 opacity-80">
+              Why Empowered DLD?
+            </p>
             <h2 className="text-[26px] md:text-[30px] font-bold text-foreground mb-3.5 leading-[1.08]">
               Created by an SLP and teacher
             </h2>
@@ -44,7 +43,7 @@ const TrustSection = () => {
             </Button>
           </div>
 
-          {/* Column 2 – Founders photo (head to waist) */}
+          {/* Column 2 – Founders photo */}
           <div className="rounded-2xl overflow-hidden h-[300px] lg:h-[420px] bg-gradient-to-br from-secondary to-lavender shadow-[0_2px_8px_hsl(258_50%_50%/0.06)]">
             <img
               src={foundersPhoto}
