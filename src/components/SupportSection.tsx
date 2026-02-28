@@ -59,7 +59,7 @@ const features = [
 
 const SupportSection = () => {
   return (
-    <section className="py-14 md:py-18" id="about">
+    <section className="py-14 md:py-18 bg-lavender" id="about">
       <div className="container">
         <div className="grid grid-cols-1 lg:grid-cols-[40%_60%] gap-8 lg:gap-14 items-start mb-12">
           <div>
