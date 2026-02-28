@@ -6,10 +6,10 @@ import bookTheatreExchange from "@/assets/book-theatre-exchange.png";
 import kidsReading from "@/assets/kids-reading.png";
 
 const books = [
-  { title: "Dan and the Paper Airplane", subtitle: "Living Life With Developmental Language Disorder", image: bookPaperAirplane },
-  { title: "Dan & Daria Make Friends", subtitle: "Living Life With Developmental Language Disorder", image: bookMakeFriends },
-  { title: "Dan & Daria Go to a Birthday Party", subtitle: "Living Life With Developmental Language Disorder", image: bookBirthdayParty },
-  { title: "Dan & Daria and the Theatre Exchange", subtitle: "Living Life With Developmental Language Disorder", image: bookTheatreExchange },
+  { title: "Dan and the Paper Airplane", subtitle: "Dan discovers DLD is why he struggles and starts helpful speech therapy.", image: bookPaperAirplane },
+  { title: "Dan and Daria Make Friends", subtitle: "Two kids with DLD discover they're not alone anymore.", image: bookMakeFriends },
+  { title: "Dan and Daria Go To a Birthday Party", subtitle: "Daria learns speaking up makes the party better for everyone.", image: bookBirthdayParty },
+  { title: "Dan and Daria and The Theatre Exchange", subtitle: "Three DLD kids stop masking and navigate a school play confidently.", image: bookTheatreExchange },
 ];
 
 const BookShowcase = () => {
@@ -26,8 +26,11 @@ const BookShowcase = () => {
             <h2 className="text-[26px] md:text-[30px] font-bold text-foreground mb-3.5 leading-[1.1]">
               Stories that celebrate brave kids with DLD
             </h2>
+            <p className="text-muted-foreground text-[14px] mb-1 leading-[1.65] max-w-[380px]">
+              Meet Dan, Daria, Ming, and Millen!
+            </p>
             <p className="text-muted-foreground text-[14px] mb-6 leading-[1.65] max-w-[380px]">
-              Our books are written to help children with DLD see themselves as the heroes of their own stories. Each book celebrates courage, resilience, and the unique ways children communicate.
+              Four characters impacted by DLD in different ways who learn to understand DLD, what supports work for them, and how to self-advocate with confidence.
             </p>
             <Button className="h-[46px] px-7 rounded-lg text-[11px] font-bold uppercase tracking-[0.14em] shadow-[0_2px_8px_hsl(258_50%_50%/0.2)] hover:shadow-[0_4px_14px_hsl(258_50%_50%/0.25)] hover:brightness-[0.96] transition-all duration-300">
               SHOP ALL
