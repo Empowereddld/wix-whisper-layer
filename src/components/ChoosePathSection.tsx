@@ -12,13 +12,13 @@ const paths = [
     cta: "LEARN MORE",
   },
   {
-    icon: iconEducators,
+    icon: iconSlps,
     title: "For Therapists/Clinicians",
     description: "Time saving, evidence-based resources you can use right away, plus family friendly materials to share with confidence.",
     cta: "LEARN MORE",
   },
   {
-    icon: iconSlps,
+    icon: iconEducators,
     title: "For Teachers and Support Staff",
     description: "Classroom-ready tools that support language, learning, and inclusion. Make DLD visible in your classroom and school community.",
     cta: "LEARN MORE",
