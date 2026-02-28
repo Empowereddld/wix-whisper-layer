@@ -16,31 +16,31 @@ const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 h-[68px] bg-background/95 backdrop-blur-sm border-b border-border/30">
+    <header className="sticky top-0 z-50 h-[64px] bg-background/97 backdrop-blur-md border-b border-border/20 shadow-[0_1px_3px_hsl(0_0%_0%/0.04)]">
       <div className="container h-full flex items-center justify-between gap-4">
-        <a href="/" className="text-[18px] text-foreground font-bold tracking-tight whitespace-nowrap">
+        <a href="/" className="text-[17px] text-foreground font-bold tracking-tight whitespace-nowrap">
           Empowered<span className="text-primary font-bold">DLD</span>
         </a>
 
-        <nav className="hidden lg:flex items-center gap-4">
+        <nav className="hidden lg:flex items-center gap-5">
           {navLinks.map((link) => (
             <a
               key={link.label}
               href={link.href}
-              className="text-[12px] font-semibold tracking-[0.02em] text-foreground/90 hover:text-primary transition-colors"
+              className="text-[11px] font-semibold tracking-[0.04em] text-foreground/75 hover:text-primary transition-colors duration-200"
             >
               {link.label}
             </a>
           ))}
 
-          <button className="relative text-muted-foreground hover:text-foreground transition-colors" aria-label="Shopping cart">
-            <ShoppingBag className="w-[18px] h-[18px] stroke-[1.6]" />
-            <span className="absolute -top-2 -right-2 text-[10px] bg-primary text-primary-foreground rounded-full w-4 h-4 flex items-center justify-center">
+          <button className="relative text-muted-foreground hover:text-foreground transition-colors duration-200 ml-1" aria-label="Shopping cart">
+            <ShoppingBag className="w-[17px] h-[17px] stroke-[1.6]" />
+            <span className="absolute -top-1.5 -right-1.5 text-[9px] bg-primary text-primary-foreground rounded-full w-3.5 h-3.5 flex items-center justify-center font-bold">
               0
             </span>
           </button>
 
-          <Button size="default" className="rounded-md h-10 px-6 text-[12px] font-semibold tracking-[0.08em]">
+          <Button size="default" className="rounded-md h-9 px-5 text-[11px] font-bold tracking-[0.1em] shadow-[var(--shadow-button)] hover:shadow-[var(--shadow-card-hover)] transition-all duration-300 ml-1">
             LOGIN
           </Button>
         </nav>
@@ -55,7 +55,7 @@ const Header = () => {
       </div>
 
       {mobileOpen && (
-        <nav className="lg:hidden bg-background border-b border-border/30 px-5 pb-5 pt-2 flex flex-col gap-3 max-h-[75vh] overflow-y-auto">
+        <nav className="lg:hidden bg-background border-b border-border/20 px-5 pb-5 pt-2 flex flex-col gap-3 max-h-[75vh] overflow-y-auto shadow-[var(--shadow-elevated)]">
           {navLinks.map((link) => (
             <a
               key={link.label}
@@ -66,7 +66,7 @@ const Header = () => {
               {link.label}
             </a>
           ))}
-          <Button className="w-full font-semibold text-[13px] tracking-[0.08em]">LOGIN</Button>
+          <Button className="w-full font-bold text-[12px] tracking-[0.1em]">LOGIN</Button>
         </nav>
       )}
     </header>
