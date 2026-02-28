@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
-import foundersPhoto from "@/assets/founders-photo.png";
+import foundersPhoto from "@/assets/founders-circle.png";
 import boyReading from "@/assets/boy-reading.png";
 
 const TrustSection = () => {
@@ -43,12 +43,12 @@ const TrustSection = () => {
             </Button>
           </div>
 
-          {/* Column 2 – Founders photo */}
-          <div className="rounded-2xl overflow-hidden h-[300px] lg:h-[420px] bg-gradient-to-br from-secondary to-lavender shadow-[0_2px_8px_hsl(258_50%_50%/0.06)]">
+          {/* Column 2 – Founders photo (circle) */}
+          <div className="flex items-center justify-center">
             <img
               src={foundersPhoto}
               alt="Jinean and Camesha, founders of Empowered DLD"
-              className="w-full h-full object-cover object-[center_10%]"
+              className="w-full max-w-[380px] h-auto"
               loading="lazy"
             />
           </div>
