@@ -45,22 +45,31 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Newsletter */}
+          {/* Contact */}
           <div>
-            <p className="font-semibold text-sm mb-4 text-primary-foreground/70">Subscribe to our Newsletter</p>
-            <div className="flex gap-2">
-              <Input
-                type="email"
-                placeholder="Your email"
-                className="h-10 rounded-md bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground placeholder:text-primary-foreground/30 focus-visible:ring-primary-foreground/40 text-sm"
-              />
-              <Button
-                variant="secondary"
-                className="h-10 px-4 rounded-md font-semibold shrink-0 text-sm"
-              >
-                Subscribe
-              </Button>
-            </div>
+            <p className="font-semibold text-sm mb-4 text-primary-foreground/70">Contact</p>
+            <ul className="space-y-2 text-sm text-primary-foreground/50">
+              <li>info@empowereddld.com</li>
+              <li>United States</li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Newsletter row */}
+        <div className="mb-10 flex flex-col sm:flex-row items-start sm:items-center gap-3">
+          <p className="text-sm text-primary-foreground/70 font-semibold shrink-0">Subscribe to our Newsletter</p>
+          <div className="flex gap-2 w-full sm:w-auto">
+            <Input
+              type="email"
+              placeholder="Your email"
+              className="h-10 rounded-md bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground placeholder:text-primary-foreground/30 focus-visible:ring-primary-foreground/40 text-sm"
+            />
+            <Button
+              variant="secondary"
+              className="h-10 px-4 rounded-md font-semibold shrink-0 text-sm"
+            >
+              Subscribe
+            </Button>
           </div>
         </div>
 

@@ -10,7 +10,7 @@ const NotAloneSection = () => {
               You are not alone.
             </h2>
             <p className="text-muted-foreground text-[15px] mb-7 leading-[1.7] max-w-md">
-              Join a warm, supportive community of families and professionals who understand your journey.
+              Join a warm, supportive community for parents and families.
             </p>
             <Button className="h-[44px] px-7 w-fit rounded-sm text-[12px] font-semibold uppercase tracking-[0.12em] hover:brightness-95 transition-all shadow-sm">
               JOIN US
