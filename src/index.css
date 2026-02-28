@@ -41,6 +41,12 @@
 
     --lavender: 266 100% 97%;
 
+    /* Premium shadow tokens */
+    --shadow-card: 0 1px 3px 0 hsl(258 50% 50% / 0.04), 0 1px 2px -1px hsl(258 50% 50% / 0.03);
+    --shadow-card-hover: 0 8px 24px -4px hsl(258 50% 50% / 0.1), 0 4px 8px -2px hsl(258 50% 50% / 0.04);
+    --shadow-elevated: 0 12px 32px -8px hsl(258 50% 50% / 0.12), 0 4px 12px -4px hsl(258 50% 50% / 0.06);
+    --shadow-button: 0 1px 3px 0 hsl(258 50% 50% / 0.15), 0 1px 2px -1px hsl(258 50% 50% / 0.1);
+
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
     --sidebar-primary: 240 5.9% 10%;
@@ -99,10 +105,35 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1 {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -0.025em;
+  }
+
+  h2 {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  h3, h4, h5, h6 {
     font-family: 'DM Sans', sans-serif;
     font-weight: 600;
-    line-height: 1.12;
+    line-height: 1.2;
     letter-spacing: -0.01em;
+  }
+}
+
+@layer utilities {
+  .premium-card {
+    box-shadow: var(--shadow-card);
+    transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .premium-card:hover {
+    box-shadow: var(--shadow-card-hover);
+    transform: translateY(-2px);
   }
 }

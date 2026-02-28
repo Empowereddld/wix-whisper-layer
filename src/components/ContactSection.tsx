@@ -45,11 +45,11 @@ const ContactSection = () => {
   };
 
   return (
-    <section className="py-20 md:py-24 bg-foreground text-background" id="contact">
+    <section className="py-18 md:py-22 bg-foreground text-background" id="contact">
       <div className="container">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
           {/* Left - image area */}
-          <div className="rounded-2xl overflow-hidden h-[260px] lg:h-[380px] bg-muted/10">
+          <div className="rounded-2xl overflow-hidden h-[260px] lg:h-[380px] bg-muted/10 shadow-[0_8px_32px_-8px_hsl(0_0%_0%/0.3)]">
             <img
               src="/placeholder.svg"
               alt="DLD resources and community"
@@ -60,26 +60,26 @@ const ContactSection = () => {
 
           {/* Right - text + form */}
           <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-primary-foreground/50 mb-3">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-primary-foreground/40 mb-2.5">
               For Organizations
             </p>
-            <h2 className="text-[26px] md:text-[32px] font-semibold text-background mb-3 leading-[1.12]">
+            <h2 className="text-[26px] md:text-[32px] font-bold text-background mb-3 leading-[1.1]">
               Bring DLD Resources to Your Organization
             </h2>
-            <p className="text-background/55 text-[15px] mb-7 leading-[1.7]">
+            <p className="text-background/50 text-[15px] mb-7 leading-[1.7] max-w-md">
               Whether you're a school, clinic, or organization — we'd love to partner with you to bring DLD awareness and resources to your community.
             </p>
 
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3.5">
                 <FormField
                   control={form.control}
                   name="name"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-background/70 text-[13px]">Name</FormLabel>
+                      <FormLabel className="text-background/60 text-[12px] font-medium">Name</FormLabel>
                       <FormControl>
-                        <Input placeholder="Your name" className="h-10 rounded-lg bg-background/8 border-background/15 text-background placeholder:text-background/35 focus-visible:ring-background/30 text-[14px]" {...field} />
+                        <Input placeholder="Your name" className="h-10 rounded-lg bg-background/8 border-background/15 text-background placeholder:text-background/30 focus-visible:ring-background/30 text-[14px]" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -90,9 +90,9 @@ const ContactSection = () => {
                   name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-background/70 text-[13px]">Email</FormLabel>
+                      <FormLabel className="text-background/60 text-[12px] font-medium">Email</FormLabel>
                       <FormControl>
-                        <Input type="email" placeholder="you@example.com" className="h-10 rounded-lg bg-background/8 border-background/15 text-background placeholder:text-background/35 focus-visible:ring-background/30 text-[14px]" {...field} />
+                        <Input type="email" placeholder="you@example.com" className="h-10 rounded-lg bg-background/8 border-background/15 text-background placeholder:text-background/30 focus-visible:ring-background/30 text-[14px]" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -103,9 +103,9 @@ const ContactSection = () => {
                   name="message"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-background/70 text-[13px]">Message</FormLabel>
+                      <FormLabel className="text-background/60 text-[12px] font-medium">Message</FormLabel>
                       <FormControl>
-                        <Textarea placeholder="How can we help?" className="min-h-[90px] rounded-lg bg-background/8 border-background/15 text-background placeholder:text-background/35 focus-visible:ring-background/30 text-[14px]" {...field} />
+                        <Textarea placeholder="How can we help?" className="min-h-[80px] rounded-lg bg-background/8 border-background/15 text-background placeholder:text-background/30 focus-visible:ring-background/30 text-[14px]" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -114,7 +114,7 @@ const ContactSection = () => {
                 <Button
                   type="submit"
                   disabled={submitting}
-                  className="h-[46px] px-8 rounded-lg text-[12px] font-semibold uppercase tracking-[0.1em] hover:brightness-95 transition-all shadow-sm"
+                  className="h-[48px] px-8 rounded-lg text-[12px] font-bold uppercase tracking-[0.14em] shadow-[var(--shadow-button)] hover:shadow-[var(--shadow-elevated)] hover:brightness-95 transition-all duration-300"
                 >
                   {submitting ? "Sending..." : "Apply Now"}
                 </Button>
