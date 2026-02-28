@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import iconParents from "@/assets/icon-parents.png";
-import iconSlps from "@/assets/icon-slps.png";
 import iconEducators from "@/assets/icon-educators.png";
+import iconSlps from "@/assets/icon-slps.png";
 import iconOrganizations from "@/assets/icon-organizations.png";
 
 const paths = [
@@ -12,13 +12,13 @@ const paths = [
     cta: "LEARN MORE",
   },
   {
-    icon: iconSlps,
+    icon: iconEducators,
     title: "For Therapists/Clinicians",
     description: "Time saving, evidence-based resources you can use right away, plus family friendly materials to share with confidence.",
     cta: "LEARN MORE",
   },
   {
-    icon: iconEducators,
+    icon: iconSlps,
     title: "For Teachers and Support Staff",
     description: "Classroom-ready tools that support language, learning, and inclusion. Make DLD visible in your classroom and school community.",
     cta: "LEARN MORE",
@@ -45,22 +45,22 @@ const ChoosePathSection = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {paths.map((path) => (
             <div
               key={path.title}
-              className="border border-border rounded-xl px-5 py-6 text-left flex flex-col items-start hover:shadow-[0_6px_20px_-4px_hsl(258_50%_50%/0.1)] hover:-translate-y-[2px] transition-all duration-300"
+              className="bg-lavender border border-border rounded-md px-6 py-7 text-left flex flex-col items-start hover:shadow-[0_6px_20px_-4px_hsl(258_50%_50%/0.1)] hover:-translate-y-[2px] transition-all duration-300"
             >
               <img
                 src={path.icon}
                 alt={path.title}
-                className="w-16 h-16 object-contain mb-5"
+                className="w-[72px] h-[72px] object-contain mb-5"
               />
               <h3 className="text-[18px] md:text-[20px] font-bold text-foreground mb-2 leading-[1.25]">{path.title}</h3>
               <p className="text-[13px] text-muted-foreground mb-6 flex-1 leading-[1.65]">{path.description}</p>
               <Button
                 size="sm"
-                className="h-10 px-6 rounded-sm text-[11px] font-bold uppercase tracking-[0.12em] bg-deep-purple text-deep-purple-foreground hover:bg-deep-purple/90 shadow-[0_1px_3px_hsl(262_49%_30%/0.2)] transition-all duration-300"
+                className="h-10 px-6 rounded-lg text-[11px] font-bold uppercase tracking-[0.12em] bg-deep-purple text-deep-purple-foreground hover:bg-deep-purple/90 shadow-[0_1px_3px_hsl(262_49%_30%/0.2)] transition-all duration-300"
               >
                 {path.cta}
               </Button>
