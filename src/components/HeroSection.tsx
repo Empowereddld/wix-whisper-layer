@@ -12,7 +12,7 @@ const HeroSection = () => {
       />
 
       {/* Layer 2: White-lavender overlay — slightly more transparent to show hallway */}
-      <div className="absolute inset-0 bg-[hsl(270_60%_98%/0.82)]" />
+      <div className="absolute inset-0 bg-[hsl(270_60%_98%/0.72)]" />
 
       {/* Layer 3: Content */}
         <div className="relative z-10 h-full min-h-[calc(100vh-90px)] flex items-center">
