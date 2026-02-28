@@ -27,8 +27,8 @@ const Footer = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr] gap-10 mb-8 items-start">
           {/* Brand */}
           <div>
-            <div className="h-10 mb-5 overflow-hidden">
-              <img src={logoWhite} alt="EmpoweredDLD logo" className="h-48 -mt-[4.7rem] -ml-4" style={{ objectFit: 'contain', objectPosition: 'left' }} />
+            <div className="h-12 mb-5 overflow-hidden">
+              <img src={logoWhite} alt="EmpoweredDLD logo" className="h-48 -mt-[4.35rem] -ml-4" style={{ objectFit: 'contain', objectPosition: 'left' }} />
             </div>
             <p className="text-[13px] text-primary-foreground/50 leading-relaxed">
               Supporting 4,000+ families and professionals with evidence-based resources, multilingual materials, and community connection for children with Developmental Language Disorder.
