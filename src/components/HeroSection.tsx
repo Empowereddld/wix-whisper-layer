@@ -2,12 +2,12 @@ import { Button } from "@/components/ui/button";
 
 const HeroSection = () => {
   return (
-    <section className="py-20 md:py-28 lg:py-36">
+    <section className="py-24 md:py-32 lg:py-40">
       <div className="container">
-        <div className="grid grid-cols-1 lg:grid-cols-[58%_42%] gap-12 lg:gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-[58%_42%] gap-10 lg:gap-20 items-center">
           {/* Hero Image */}
           <div className="order-1 lg:order-1">
-            <div className="bg-secondary rounded-2xl overflow-hidden h-[300px] sm:h-[400px] lg:h-[520px]">
+            <div className="bg-secondary rounded-3xl overflow-hidden h-[300px] sm:h-[420px] lg:h-[540px]">
               <img
                 src="/placeholder.svg"
                 alt="Children learning and communicating together"
@@ -18,11 +18,11 @@ const HeroSection = () => {
           </div>
 
           {/* Hero Text */}
-          <div className="order-2 lg:order-2 text-center lg:text-left max-w-[480px] mx-auto lg:mx-0">
-            <h1 className="text-[32px] sm:text-[38px] lg:text-[44px] leading-[1.2] font-normal text-foreground mb-6">
+          <div className="order-2 lg:order-2 text-center lg:text-left max-w-[460px] mx-auto lg:mx-0">
+            <h1 className="text-[30px] sm:text-[36px] lg:text-[42px] leading-[1.25] font-semibold text-foreground mb-7">
               Helping Every Child Find Their Voice with DLD Support
             </h1>
-            <p className="text-base lg:text-[17px] leading-[1.75] text-muted-foreground mb-10">
+            <p className="text-base lg:text-[17px] leading-[1.7] text-muted-foreground mb-11">
               Empowering families, educators, and clinicians with the resources and community they need to support children with Developmental Language Disorder.
             </p>
             <Button

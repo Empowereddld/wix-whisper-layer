@@ -35,7 +35,7 @@ const TestimonialBand = () => {
   }, [emblaApi]);
 
   return (
-    <section className="bg-deep-purple text-deep-purple-foreground py-24 md:py-32">
+    <section className="bg-deep-purple text-deep-purple-foreground py-28 md:py-36">
       <div className="container max-w-[800px] text-center relative">
         <div className="overflow-hidden" ref={emblaRef}>
           <div className="flex">

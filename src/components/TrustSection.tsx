@@ -10,22 +10,22 @@ const bullets = [
 
 const TrustSection = () => {
   return (
-    <section className="py-20 md:py-28">
+    <section className="py-24 md:py-32">
       <div className="container">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Text */}
           <div>
-            <h2 className="text-[28px] md:text-[34px] font-normal text-foreground mb-4">
+            <h2 className="text-[28px] md:text-[34px] font-semibold text-foreground mb-4">
               Created by an SLP and Teacher Who Understands
             </h2>
-            <p className="text-muted-foreground text-base mb-7 leading-[1.75]">
+            <p className="text-muted-foreground text-base mb-7 leading-[1.7]">
               Every resource on Empowered DLD is created with deep expertise and genuine care for children with Developmental Language Disorder.
             </p>
             <ul className="space-y-3.5 mb-9">
               {bullets.map((b) => (
                 <li key={b} className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-primary mt-0.5 shrink-0" />
-                  <span className="text-foreground text-base leading-[1.75]">{b}</span>
+                  <span className="text-foreground text-base leading-[1.7]">{b}</span>
                 </li>
               ))}
             </ul>

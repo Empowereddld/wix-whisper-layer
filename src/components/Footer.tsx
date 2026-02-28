@@ -9,7 +9,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
           {/* Brand */}
           <div>
-            <p className="font-serif text-xl font-bold mb-3">Empowered DLD</p>
+            <p className="font-sans text-xl font-bold mb-3">Empowered DLD</p>
             <p className="text-sm text-white/60 leading-relaxed">
               Empowering families, educators, and clinicians to support children with Developmental Language Disorder.
             </p>

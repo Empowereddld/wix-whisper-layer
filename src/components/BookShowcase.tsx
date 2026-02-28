@@ -9,15 +9,15 @@ const books = [
 
 const BookShowcase = () => {
   return (
-    <section className="py-20 md:py-28" id="books">
+    <section className="py-24 md:py-32" id="books">
       <div className="container">
-        <div className="grid grid-cols-1 lg:grid-cols-[45%_55%] gap-12 lg:gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-[45%_55%] gap-12 lg:gap-20 items-center">
           {/* Text */}
           <div>
-            <h2 className="text-[28px] md:text-[34px] font-normal text-foreground mb-4">
+            <h2 className="text-[28px] md:text-[34px] font-semibold text-foreground mb-4">
               Stories That Celebrate Brave Kids with DLD
             </h2>
-            <p className="text-muted-foreground text-base mb-8 leading-[1.75]">
+            <p className="text-muted-foreground text-base mb-9 leading-[1.7]">
               Our books are written to help children with DLD see themselves as the heroes of their own stories. Each book celebrates courage, resilience, and the unique ways children communicate.
             </p>
             <Button className="h-12 px-7 rounded-lg text-base font-medium hover:brightness-95 transition-all">
@@ -26,11 +26,11 @@ const BookShowcase = () => {
           </div>
 
           {/* Book grid */}
-          <div className="grid grid-cols-2 gap-7">
+          <div className="grid grid-cols-2 gap-8">
             {books.map((book) => (
               <div
                 key={book.title}
-                className="bg-background rounded-xl shadow-sm border border-border/50 overflow-hidden hover:-translate-y-[1px] hover:shadow-md transition-all duration-200"
+                className="bg-background rounded-xl shadow-sm border border-border/30 overflow-hidden hover:-translate-y-px hover:shadow-md transition-all duration-200"
               >
                 <div className="bg-secondary h-48">
                   <img

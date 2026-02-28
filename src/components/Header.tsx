@@ -15,7 +15,7 @@ const Header = () => {
   return (
     <header className="sticky top-0 z-50 h-[72px] bg-background border-b border-border/60">
       <div className="container h-full flex items-center justify-between">
-        <a href="/" className="font-serif text-2xl text-primary font-bold tracking-tight">
+        <a href="/" className="font-sans text-2xl text-primary font-bold tracking-tight">
           Empowered DLD
         </a>
 
