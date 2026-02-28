@@ -35,19 +35,19 @@ const TestimonialBand = () => {
   }, [emblaApi]);
 
   return (
-    <section className="bg-deep-purple text-deep-purple-foreground py-24 md:py-32">
-      <div className="container max-w-[780px] text-center relative">
-        <Quote className="w-10 h-10 text-primary-foreground/30 mx-auto mb-8 rotate-180" />
+    <section className="bg-deep-purple text-deep-purple-foreground py-20 md:py-24">
+      <div className="container max-w-[720px] text-center relative">
+        <Quote className="w-8 h-8 text-primary-foreground/20 mx-auto mb-6 rotate-180 stroke-[1.2]" />
 
         <div className="overflow-hidden" ref={emblaRef}>
           <div className="flex">
             {testimonials.map((t, i) => (
               <div key={i} className="flex-[0_0_100%] min-w-0 px-4">
-                <blockquote className="text-lg md:text-xl leading-[1.75] mb-8 font-light">
+                <blockquote className="text-[17px] md:text-[19px] leading-[1.7] mb-7 font-light">
                   "{t.quote}"
                 </blockquote>
-                <p className="font-medium text-base">{t.author}</p>
-                <p className="text-sm text-primary-foreground/50 mt-1">{t.role}</p>
+                <p className="font-medium text-[15px]">{t.author}</p>
+                <p className="text-[13px] text-primary-foreground/45 mt-0.5">{t.role}</p>
               </div>
             ))}
           </div>
@@ -55,25 +55,25 @@ const TestimonialBand = () => {
 
         <button
           onClick={scrollPrev}
-          className="absolute left-0 top-1/2 -translate-y-1/2 p-2 text-primary-foreground/40 hover:text-primary-foreground transition-colors"
+          className="absolute left-0 top-1/2 -translate-y-1/2 p-2 text-primary-foreground/30 hover:text-primary-foreground transition-colors"
           aria-label="Previous testimonial"
         >
-          <ChevronLeft className="w-6 h-6" />
+          <ChevronLeft className="w-5 h-5 stroke-[1.5]" />
         </button>
         <button
           onClick={scrollNext}
-          className="absolute right-0 top-1/2 -translate-y-1/2 p-2 text-primary-foreground/40 hover:text-primary-foreground transition-colors"
+          className="absolute right-0 top-1/2 -translate-y-1/2 p-2 text-primary-foreground/30 hover:text-primary-foreground transition-colors"
           aria-label="Next testimonial"
         >
-          <ChevronRight className="w-6 h-6" />
+          <ChevronRight className="w-5 h-5 stroke-[1.5]" />
         </button>
 
-        <div className="flex justify-center gap-2 mt-10">
+        <div className="flex justify-center gap-2 mt-8">
           {testimonials.map((_, i) => (
             <button
               key={i}
-              className={`w-2.5 h-2.5 rounded-full transition-colors ${
-                i === selectedIndex ? "bg-primary-foreground" : "bg-primary-foreground/25"
+              className={`w-2 h-2 rounded-full transition-colors ${
+                i === selectedIndex ? "bg-primary-foreground" : "bg-primary-foreground/20"
               }`}
               onClick={() => emblaApi?.scrollTo(i)}
               aria-label={`Go to testimonial ${i + 1}`}
