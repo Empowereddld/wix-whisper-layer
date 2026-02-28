@@ -2,16 +2,16 @@ import { Button } from "@/components/ui/button";
 
 const NotAloneSection = () => {
   return (
-    <section className="py-20 md:py-28">
+    <section className="py-20 md:py-24">
       <div className="container">
-        <div className="bg-muted/50 rounded-3xl p-10 md:p-16 text-center max-w-[800px] mx-auto">
-          <h2 className="text-[28px] md:text-[34px] font-semibold text-foreground mb-4">
+        <div className="bg-lavender rounded-2xl p-10 md:p-14 text-center max-w-[760px] mx-auto">
+          <h2 className="text-[26px] md:text-[32px] font-semibold text-foreground mb-3">
             You are not alone.
           </h2>
-          <p className="text-muted-foreground text-base mb-8 leading-[1.7] max-w-lg mx-auto">
+          <p className="text-muted-foreground text-[15px] mb-7 leading-[1.7] max-w-md mx-auto">
             Join a warm, supportive community of families and professionals who understand your journey.
           </p>
-          <Button className="h-11 px-7 rounded-lg text-sm font-semibold hover:brightness-95 transition-all">
+          <Button className="h-[46px] px-7 rounded-lg text-[12px] font-semibold hover:brightness-95 transition-all shadow-sm">
             Join Our Community
           </Button>
         </div>
