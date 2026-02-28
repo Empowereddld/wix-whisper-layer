@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Menu, X, ShoppingBag } from "lucide-react";
 import { useState } from "react";
+import logoImage from "@/assets/empowered-logo.png";
 
 const navLinks = [
   { label: "HOME", href: "/" },
@@ -18,8 +19,8 @@ const Header = () => {
   return (
     <header className="sticky top-0 z-50 h-[64px] bg-background/97 backdrop-blur-md border-b border-border/20 shadow-[0_1px_3px_hsl(0_0%_0%/0.04)]">
       <div className="container h-full flex items-center justify-between gap-4">
-        <a href="/" className="text-[17px] text-foreground font-bold tracking-tight whitespace-nowrap">
-          Empowered<span className="text-primary font-bold">DLD</span>
+        <a href="/" className="flex-shrink-0">
+          <img src={logoImage} alt="EmpoweredDLD" className="h-[28px] w-auto" />
         </a>
 
         <nav className="hidden lg:flex items-center gap-5">
