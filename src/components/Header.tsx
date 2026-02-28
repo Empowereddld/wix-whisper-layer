@@ -20,7 +20,7 @@ const Header = () => {
     <header className="sticky top-0 z-50 h-[72px] bg-secondary backdrop-blur-md border-b border-border/20">
       <div className="container h-full flex items-center justify-between gap-6">
         <a href="/" className="flex-shrink-0 ml-4">
-          <img src={logoImage} alt="EmpoweredDLD" className="h-[101px] w-auto" />
+          <img src={logoImage} alt="EmpoweredDLD" className="h-[141px] w-auto" />
         </a>
 
         <nav className="hidden lg:flex items-center gap-6">

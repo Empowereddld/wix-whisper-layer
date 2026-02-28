@@ -15,10 +15,10 @@ const HeroSection = () => {
       <div className="absolute inset-0 bg-[hsl(266_100%_97%/0.82)]" />
 
       {/* Layer 3: Content */}
-      <div className="relative z-10 h-full min-h-[calc(100vh-72px)] flex items-center">
-        <div className="w-full grid grid-cols-1 lg:grid-cols-[52%_48%] items-end lg:items-center min-h-[calc(100vh-72px)]">
+        <div className="relative z-10 h-full min-h-[calc(100vh-72px)] flex items-center">
+        <div className="w-full grid grid-cols-1 md:grid-cols-[52%_48%] items-end md:items-center min-h-[calc(100vh-72px)]">
           {/* Girls image — LEFT side, bleeds to left edge */}
-          <div className="order-1 flex items-end justify-start h-[380px] sm:h-[480px] lg:h-[calc(100vh-72px)] overflow-hidden">
+          <div className="order-1 flex items-end justify-start h-[50vh] md:h-[calc(100vh-72px)] overflow-hidden">
             <img
               src={heroImage}
               alt="Two girls laughing together"
@@ -28,11 +28,11 @@ const HeroSection = () => {
           </div>
 
           {/* Text — RIGHT side, vertically centered */}
-          <div className="order-2 py-12 lg:py-0 px-8 lg:px-14 xl:px-20 text-left flex flex-col justify-center">
+          <div className="order-2 py-12 md:py-0 px-8 md:px-14 xl:px-20 text-left flex flex-col justify-center">
             <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-foreground/70 mb-5">
               SUPPORTING CHILDREN WITH DLD
             </p>
-            <h1 className="text-[44px] sm:text-[54px] lg:text-[66px] xl:text-[74px] leading-[1.05] font-black text-foreground mb-6 max-w-[500px] tracking-[-0.02em]">
+            <h1 className="text-[44px] sm:text-[54px] md:text-[66px] xl:text-[74px] leading-[1.05] font-black text-foreground mb-6 max-w-[500px] tracking-[-0.02em]">
               Every child with DLD deserves to feel seen.
             </h1>
             <p className="text-[15px] leading-[1.7] text-foreground/55 mb-9 max-w-[420px]">
