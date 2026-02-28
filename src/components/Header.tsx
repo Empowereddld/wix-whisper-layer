@@ -17,31 +17,31 @@ const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 h-[76px] bg-background/97 backdrop-blur-md border-b border-border/20 shadow-[0_1px_3px_hsl(0_0%_0%/0.04)]">
-      <div className="container h-full flex items-center justify-between gap-4">
+    <header className="sticky top-0 z-50 h-[72px] bg-background backdrop-blur-md border-b border-border/40">
+      <div className="container h-full flex items-center justify-between gap-6">
         <a href="/" className="flex-shrink-0">
-          <img src={logoImage} alt="EmpoweredDLD" className="h-[40px] w-auto" />
+          <img src={logoImage} alt="EmpoweredDLD" className="h-[38px] w-auto" />
         </a>
 
-        <nav className="hidden lg:flex items-center gap-5">
+        <nav className="hidden lg:flex items-center gap-6">
           {navLinks.map((link) => (
             <a
               key={link.label}
               href={link.href}
-              className="text-[11px] font-semibold tracking-[0.04em] text-foreground/75 hover:text-primary transition-colors duration-200"
+              className="text-[12px] font-medium tracking-[0.02em] text-foreground/80 hover:text-primary transition-colors duration-200"
             >
               {link.label}
             </a>
           ))}
 
-          <button className="relative text-primary hover:text-primary/80 transition-colors duration-200 ml-1" aria-label="Shopping cart">
-            <ShoppingBag className="w-[20px] h-[20px] stroke-[1.6]" />
-            <span className="absolute -top-1.5 -right-1.5 text-[9px] bg-primary text-primary-foreground rounded-full w-3.5 h-3.5 flex items-center justify-center font-bold">
+          <button className="relative text-primary hover:text-primary/80 transition-colors duration-200 ml-2" aria-label="Shopping cart">
+            <ShoppingBag className="w-[22px] h-[22px] stroke-[1.5]" fill="hsl(var(--primary))" color="hsl(var(--primary))" />
+            <span className="absolute top-[-2px] right-[-2px] text-[9px] text-primary-foreground bg-primary rounded-full w-[14px] h-[14px] flex items-center justify-center font-bold leading-none">
               0
             </span>
           </button>
 
-          <Button variant="outline" size="default" className="rounded-md h-9 px-6 text-[11px] font-bold tracking-[0.1em] border-foreground/20 hover:bg-accent transition-all duration-300 ml-1">
+          <Button variant="outline" size="default" className="rounded-md h-10 px-7 text-[12px] font-semibold tracking-[0.08em] border-foreground/30 hover:bg-accent transition-all duration-300 ml-2">
             LOGIN
           </Button>
         </nav>
@@ -56,7 +56,7 @@ const Header = () => {
       </div>
 
       {mobileOpen && (
-        <nav className="lg:hidden bg-background border-b border-border/20 px-5 pb-5 pt-2 flex flex-col gap-3 max-h-[75vh] overflow-y-auto shadow-[var(--shadow-elevated)]">
+        <nav className="lg:hidden bg-background border-b border-border/30 px-5 pb-5 pt-2 flex flex-col gap-3 max-h-[75vh] overflow-y-auto shadow-[var(--shadow-elevated)]">
           {navLinks.map((link) => (
             <a
               key={link.label}
