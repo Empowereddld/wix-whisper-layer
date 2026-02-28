@@ -30,24 +30,24 @@ const paths = [
 
 const ChoosePathSection = () => {
   return (
-    <section className="py-20 md:py-28" id="resources">
+    <section className="py-24 md:py-32" id="resources">
       <div className="container">
-        <div className="text-center mb-14">
-          <h2 className="text-[28px] md:text-[34px] font-normal text-foreground mb-3">Start Here</h2>
-          <p className="text-muted-foreground text-base max-w-2xl mx-auto leading-relaxed">
+        <div className="text-center mb-16">
+          <h2 className="text-[28px] md:text-[34px] font-semibold text-foreground mb-3">Start Here</h2>
+          <p className="text-muted-foreground text-base max-w-2xl mx-auto leading-[1.7]">
             Choose the path that fits you best. We have resources tailored for every role.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-7">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {paths.map((path) => (
             <div
               key={path.title}
-              className="bg-lavender border border-border/50 rounded-xl p-6 text-left min-h-[200px] flex flex-col hover:shadow-sm hover:-translate-y-[1px] transition-all duration-200"
+              className="bg-lavender border border-border/30 rounded-xl p-6 text-left min-h-[220px] flex flex-col hover:shadow-sm hover:-translate-y-px transition-all duration-200"
             >
-              <path.icon className="w-9 h-9 text-primary mb-4 stroke-[1.5]" />
+              <path.icon className="w-9 h-9 text-primary mb-5 stroke-[1.5]" />
               <h3 className="font-sans text-[17px] font-semibold text-foreground mb-2">{path.title}</h3>
-              <p className="text-sm text-muted-foreground mb-6 flex-1 leading-relaxed">{path.description}</p>
+              <p className="text-sm text-muted-foreground mb-6 flex-1 leading-[1.7]">{path.description}</p>
               <Button size="sm" className="w-fit h-9 rounded-lg text-sm font-medium">
                 {path.cta}
               </Button>

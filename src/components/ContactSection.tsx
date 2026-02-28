@@ -46,13 +46,13 @@ const ContactSection = () => {
   };
 
   return (
-    <section className="py-20 md:py-28" id="contact">
+    <section className="py-24 md:py-32" id="contact">
       <div className="container">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
           {/* Form */}
           <div>
-            <h2 className="text-[28px] md:text-[34px] font-normal text-foreground mb-3">Get in Touch</h2>
-            <p className="text-muted-foreground text-base mb-9 leading-relaxed">
+            <h2 className="text-[28px] md:text-[34px] font-semibold text-foreground mb-3">Get in Touch</h2>
+            <p className="text-muted-foreground text-base mb-9 leading-[1.7]">
               Have a question or want to learn more? We'd love to hear from you.
             </p>
 
