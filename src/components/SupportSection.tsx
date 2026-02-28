@@ -16,25 +16,25 @@ const features = [
 
 const SupportSection = () => {
   return (
-    <section className="py-16 md:py-24 bg-muted/30" id="about">
+    <section className="py-20 md:py-28 bg-muted/30" id="about">
       <div className="container">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-3">
+        <div className="text-center mb-14">
+          <h2 className="text-[28px] md:text-[34px] font-normal text-foreground mb-3">
             How We Support Children with DLD
           </h2>
-          <p className="text-muted-foreground text-base max-w-2xl mx-auto">
+          <p className="text-muted-foreground text-base max-w-2xl mx-auto leading-relaxed">
             Our comprehensive approach addresses every aspect of a child's language journey.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7">
           {features.map((f) => (
             <div
               key={f.title}
-              className="bg-background border border-[#e5e5e5] rounded-[10px] p-[22px]"
+              className="bg-background border border-border/50 rounded-xl p-6"
             >
-              <f.icon className="w-9 h-9 text-primary mb-3 stroke-[1.5]" />
-              <h3 className="font-sans text-base font-semibold text-foreground mb-1.5">{f.title}</h3>
+              <f.icon className="w-8 h-8 text-primary mb-3 stroke-[1.5]" />
+              <h3 className="font-sans text-[15px] font-semibold text-foreground mb-1.5">{f.title}</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">{f.description}</p>
             </div>
           ))}
