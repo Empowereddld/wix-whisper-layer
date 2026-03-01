@@ -15,20 +15,20 @@ const HeroSection = () => {
       <div className="absolute inset-0 bg-gradient-to-b from-[hsl(270_55%_98%/0.78)] via-[hsl(264_48%_96%/0.72)] via-[60%] to-[hsl(258_42%_94%/0.66)]" />
 
       {/* Layer 3: Content */}
-        <div className="relative z-10 h-full min-h-[calc(100vh-70px)] md:min-h-[calc(100vh-90px)] flex items-center">
-        <div className="w-full grid grid-cols-[38%_62%] md:grid-cols-[44%_56%] items-center min-h-[calc(100vh-70px)] md:min-h-[calc(100vh-90px)]">
+        <div className="relative z-10 h-full min-h-[calc(100vh-70px)] md:min-h-[calc(100vh-90px)] flex items-start md:items-center pt-4 md:pt-0">
+        <div className="w-full grid grid-cols-[35%_65%] md:grid-cols-[44%_56%] items-end min-h-[calc(100vh-70px)] md:min-h-[calc(100vh-90px)]">
           {/* Girls image — LEFT side, bleeds to left edge */}
           <div className="order-1 flex items-end justify-start h-[calc(100vh-70px)] md:h-[calc(100vh-90px)] overflow-hidden">
             <img
               src={heroImage}
               alt="Two girls laughing together"
-              className="h-full w-auto max-w-none object-cover object-top scale-[0.58] md:scale-[0.68] lg:scale-[0.93] xl:scale-[1.08] origin-bottom-left -translate-x-[12%] lg:-translate-x-[4%] xl:translate-x-0"
+              className="h-[70%] md:h-full w-auto max-w-none object-cover object-top scale-[0.75] md:scale-[0.68] lg:scale-[0.93] xl:scale-[1.08] origin-bottom-left -translate-x-[8%] lg:-translate-x-[4%] xl:translate-x-0"
               loading="eager"
             />
           </div>
 
           {/* Text — RIGHT side, vertically centered */}
-          <div className="order-2 py-6 md:py-0 px-4 sm:px-7 md:px-10 lg:px-14 xl:px-20 text-left flex flex-col justify-center">
+          <div className="order-2 pt-10 pb-6 md:py-0 px-4 sm:px-7 md:px-10 lg:px-14 xl:px-20 text-left flex flex-col justify-start md:justify-center">
             <p className="text-[9px] sm:text-[11px] font-bold uppercase tracking-[0.18em] text-primary/85 mb-3 md:mb-5">
               SUPPORTING CHILDREN WITH DLD
             </p>
