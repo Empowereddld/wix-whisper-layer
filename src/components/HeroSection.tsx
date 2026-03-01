@@ -18,7 +18,7 @@ const HeroSection = () => {
         <div className="relative z-10 min-h-[calc(100vh-70px)] md:min-h-[calc(100vh-90px)]">
         <div className="relative w-full grid grid-cols-1 md:grid-cols-[44%_56%] items-center min-h-[calc(100vh-70px)] md:min-h-[calc(100vh-90px)]">
           {/* Girls image — absolute overlay on mobile, grid column on desktop */}
-          <div className="absolute bottom-0 left-0 w-[45%] md:relative md:w-auto z-0 flex items-end justify-start md:h-[calc(100vh-90px)] overflow-visible">
+          <div className="absolute bottom-[30%] md:bottom-0 left-0 w-[45%] md:relative md:w-auto z-0 flex items-end justify-start md:h-[calc(100vh-90px)] overflow-visible">
             <img
               src={heroImage}
               alt="Two girls laughing together"
