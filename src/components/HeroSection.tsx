@@ -28,7 +28,7 @@ const HeroSection = () => {
           </div>
 
           {/* Text — full width on mobile with left padding to clear image */}
-          <div className="z-10 pl-[30%] md:pl-0 py-6 md:py-0 px-4 sm:px-7 md:px-10 lg:px-14 xl:px-20 text-left flex flex-col justify-center min-h-[calc(100vh-70px)] md:min-h-0">
+          <div className="z-10 pl-[30%] md:pl-0 pt-16 pb-6 md:py-0 px-4 sm:px-7 md:px-10 lg:px-14 xl:px-20 text-left flex flex-col justify-start md:justify-center min-h-[calc(100vh-70px)] md:min-h-0">
             <p className="text-[9px] sm:text-[11px] font-bold uppercase tracking-[0.18em] text-primary/85 mb-3 md:mb-5">
               SUPPORTING CHILDREN WITH DLD
             </p>
