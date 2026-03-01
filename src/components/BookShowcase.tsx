@@ -36,7 +36,7 @@ const BookShowcase = () => {
               SHOP ALL
             </Button>
 
-            <div className="mt-8 rounded-2xl overflow-hidden flex-1 min-h-[200px] shadow-[0_2px_8px_hsl(258_50%_50%/0.06)]">
+            <div className="mt-8 rounded-2xl overflow-hidden flex-1 min-h-[200px] max-h-[300px] md:max-h-[280px] lg:max-h-none shadow-[0_2px_8px_hsl(258_50%_50%/0.06)]">
               <img
                 src={kidsReading}
                 alt="Children reading together"
