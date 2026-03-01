@@ -18,11 +18,11 @@ const HeroSection = () => {
         <div className="relative z-10 min-h-[calc(100vh-70px)] md:min-h-[calc(100vh-90px)]">
         <div className="relative w-full grid grid-cols-1 md:grid-cols-[44%_56%] items-center min-h-[calc(100vh-70px)] md:min-h-[calc(100vh-90px)]">
           {/* Girls image — absolute overlay on mobile, grid column on desktop */}
-          <div className="absolute bottom-0 left-0 w-[40%] h-full md:relative md:w-auto z-0 flex items-end justify-start md:h-[calc(100vh-90px)] overflow-hidden">
+          <div className="absolute bottom-0 left-0 w-[45%] md:relative md:w-auto z-0 flex items-end justify-start md:h-[calc(100vh-90px)] overflow-visible">
             <img
               src={heroImage}
               alt="Two girls laughing together"
-              className="h-[70%] md:h-full w-auto max-w-none object-cover object-top scale-[0.82] md:scale-[0.68] lg:scale-[0.93] xl:scale-[1.08] origin-bottom-left -translate-x-[8%] lg:-translate-x-[4%] xl:translate-x-0"
+              className="w-full h-auto md:h-full md:w-auto max-w-none object-contain md:object-cover object-bottom md:object-top md:scale-[0.68] lg:scale-[0.93] xl:scale-[1.08] origin-bottom-left md:-translate-x-[8%] lg:-translate-x-[4%] xl:translate-x-0"
               loading="eager"
             />
           </div>
