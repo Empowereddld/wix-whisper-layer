@@ -4,12 +4,12 @@ import { ChevronRight } from "lucide-react";
 const StatBand = () => {
   return (
     <section className="bg-foreground text-background">
-      <div className="container flex flex-col md:flex-row md:items-start md:justify-between gap-6 py-10 md:py-16 px-6 md:px-8">
-        <h2 className="text-[28px] md:text-[42px] font-bold leading-[1.15] max-w-[320px]">
+      <div className="container flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6 py-10 lg:py-16 px-6 lg:px-8">
+        <h2 className="text-[28px] lg:text-[42px] font-bold leading-[1.15] max-w-[320px]">
           What affects 1 in 14 people?
         </h2>
         <div className="max-w-md flex flex-col gap-6">
-          <p className="text-[15px] md:text-[16px] text-background/80 leading-[1.65]">
+          <p className="text-[15px] lg:text-[16px] text-background/80 leading-[1.65]">
             Developmental Language Disorder (DLD) affects 1 in 14 people. It's 7x more common than autism, yet most people have never heard of it.
           </p>
           <div>
