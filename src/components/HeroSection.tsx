@@ -16,19 +16,19 @@ const HeroSection = () => {
 
       {/* Layer 3: Content */}
         <div className="relative z-10 h-full min-h-[calc(100vh-70px)] md:min-h-[calc(100vh-90px)] flex items-center">
-        <div className="w-full grid grid-cols-1 md:grid-cols-[52%_48%] items-end md:items-center min-h-[calc(100vh-70px)] md:min-h-[calc(100vh-90px)]">
+        <div className="w-full grid grid-cols-1 md:grid-cols-[44%_56%] items-end md:items-center min-h-[calc(100vh-70px)] md:min-h-[calc(100vh-90px)]">
           {/* Girls image — LEFT side, bleeds to left edge */}
           <div className="order-1 flex items-end justify-center md:justify-start h-[42vh] md:h-[calc(100vh-90px)] overflow-hidden mt-3 md:mt-0 px-4 md:px-0">
             <img
               src={heroImage}
               alt="Two girls laughing together"
-              className="h-full w-auto max-w-none object-cover object-top scale-[1.08] md:scale-[0.68] lg:scale-[0.93] xl:scale-[1.08] origin-bottom md:origin-bottom-left md:-translate-x-[12%] lg:-translate-x-[4%] xl:translate-x-0"
+              className="h-full w-auto max-w-none object-cover object-top scale-[1.08] md:scale-[0.68] lg:scale-[0.93] xl:scale-[1.08] origin-bottom md:origin-bottom-left md:-translate-x-[12%] md:-translate-y-[5%] lg:-translate-x-[4%] lg:translate-y-0 xl:translate-x-0"
               loading="eager"
             />
           </div>
 
           {/* Text — RIGHT side, vertically centered */}
-          <div className="order-2 pt-8 pb-12 md:py-0 px-7 md:px-14 xl:px-20 text-left flex flex-col justify-center">
+          <div className="order-2 pt-8 pb-12 md:py-0 px-7 md:px-10 lg:px-14 xl:px-20 text-left flex flex-col justify-center">
             <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-primary/85 mb-4 md:mb-5">
               SUPPORTING CHILDREN WITH DLD
             </p>
