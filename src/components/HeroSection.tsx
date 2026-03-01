@@ -12,24 +12,24 @@ const HeroSection = () => {
       />
 
       {/* Layer 2: White-lavender overlay — slightly more transparent to show hallway */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[hsl(270_60%_98%/0.75)] via-[hsl(266_50%_96%/0.70)] to-[hsl(258_45%_95%/0.68)]" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[hsl(270_55%_98%/0.78)] via-[hsl(264_48%_96%/0.72)] via-[60%] to-[hsl(258_42%_94%/0.66)]" />
 
       {/* Layer 3: Content */}
         <div className="relative z-10 h-full min-h-[calc(100vh-70px)] md:min-h-[calc(100vh-90px)] flex items-center">
         <div className="w-full grid grid-cols-1 md:grid-cols-[52%_48%] items-end md:items-center min-h-[calc(100vh-70px)] md:min-h-[calc(100vh-90px)]">
           {/* Girls image — LEFT side, bleeds to left edge */}
-          <div className="order-1 flex items-end justify-start h-[40vh] md:h-[calc(100vh-90px)] overflow-hidden mt-4 md:mt-0">
+          <div className="order-1 flex items-end justify-center md:justify-start h-[42vh] md:h-[calc(100vh-90px)] overflow-hidden mt-3 md:mt-0 px-4 md:px-0">
             <img
               src={heroImage}
               alt="Two girls laughing together"
-              className="h-full w-auto max-w-none object-cover object-top scale-[1.15] origin-bottom-left"
+              className="h-full w-auto max-w-none object-cover object-top scale-[1.08] md:scale-[1.15] origin-bottom md:origin-bottom-left"
               loading="eager"
             />
           </div>
 
           {/* Text — RIGHT side, vertically centered */}
           <div className="order-2 pt-8 pb-12 md:py-0 px-7 md:px-14 xl:px-20 text-left flex flex-col justify-center">
-            <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-primary mb-4 md:mb-5">
+            <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-primary/85 mb-4 md:mb-5">
               SUPPORTING CHILDREN WITH DLD
             </p>
             <h1 className="text-[36px] sm:text-[44px] md:text-[52px] xl:text-[74px] leading-[1.02] sm:leading-[1.05] font-black text-foreground mb-5 md:mb-6 max-w-[500px] tracking-[-0.025em]">
@@ -41,7 +41,7 @@ const HeroSection = () => {
             <div>
               <Button
                 size="lg"
-                className="h-[48px] md:h-[54px] px-10 md:px-14 rounded-sm text-[12px] font-bold uppercase tracking-[0.14em] bg-deep-purple text-deep-purple-foreground hover:bg-deep-purple/90 shadow-[0_1px_4px_hsl(262_49%_30%/0.18)] hover:shadow-[0_2px_8px_hsl(262_49%_30%/0.22)] transition-all duration-300"
+                className="h-[48px] md:h-[54px] px-10 md:px-14 rounded-sm text-[12px] font-bold uppercase tracking-[0.14em] bg-deep-purple text-deep-purple-foreground hover:bg-deep-purple/90 shadow-[0_1px_3px_hsl(262_49%_30%/0.12)] hover:shadow-[0_2px_6px_hsl(262_49%_30%/0.16)] transition-all duration-300"
               >
                 CHOOSE YOUR PATH
               </Button>
