@@ -7,7 +7,25 @@ const TrustSection = () => {
   return (
     <section className="py-12 md:py-18" id="why">
       <div className="container px-6 md:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1fr_1fr] gap-8 lg:gap-8 items-stretch">
+        <div className="grid grid-cols-1 md:grid-cols-[auto_1fr] lg:grid-cols-[1fr_1fr_1fr] gap-8 lg:gap-8 items-stretch">
+          {/* Images column — visible on md only, stacked vertically */}
+          <div className="hidden md:flex lg:hidden flex-col items-center justify-center gap-6">
+            <img
+              src={foundersPhoto}
+              alt="Jinean and Camesha, founders of Empowered DLD"
+              className="w-[180px] h-auto"
+              loading="lazy"
+            />
+            <div className="rounded-2xl overflow-hidden bg-gradient-to-br from-lavender to-secondary shadow-[0_2px_8px_hsl(258_50%_50%/0.06)] w-[180px] h-[140px]">
+              <img
+                src={boyReading}
+                alt="Boy reading a book about DLD"
+                className="w-full h-full object-cover object-[center_45%]"
+                loading="lazy"
+              />
+            </div>
+          </div>
+
           {/* Column 1 – Text */}
           <div className="flex flex-col">
             <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-primary mb-3 opacity-80">
@@ -43,8 +61,8 @@ const TrustSection = () => {
             </Button>
           </div>
 
-          {/* Column 2 – Founders photo (circle) */}
-          <div className="flex items-center justify-center">
+          {/* Column 2 – Founders photo (circle) — mobile + desktop only */}
+          <div className="flex md:hidden lg:flex items-center justify-center">
             <img
               src={foundersPhoto}
               alt="Jinean and Camesha, founders of Empowered DLD"
@@ -53,8 +71,8 @@ const TrustSection = () => {
             />
           </div>
 
-          {/* Column 3 – Boy reading photo */}
-          <div className="rounded-2xl overflow-hidden bg-gradient-to-br from-lavender to-secondary shadow-[0_2px_8px_hsl(258_50%_50%/0.06)] h-[300px] lg:h-auto">
+          {/* Column 3 – Boy reading photo — mobile + desktop only */}
+          <div className="md:hidden lg:block rounded-2xl overflow-hidden bg-gradient-to-br from-lavender to-secondary shadow-[0_2px_8px_hsl(258_50%_50%/0.06)] h-[300px] lg:h-auto">
             <img
               src={boyReading}
               alt="Boy reading a book about DLD"
