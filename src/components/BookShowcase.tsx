@@ -40,7 +40,7 @@ const BookShowcase = () => {
               <img
                 src={kidsReading}
                 alt="Children reading together"
-                className="w-full h-full object-cover object-[center_30%]"
+                className="w-full h-full object-cover"
                 loading="lazy"
               />
             </div>
