@@ -13,7 +13,7 @@ const TrustSection = () => {
             <img
               src={foundersPhoto}
               alt="Jinean and Camesha, founders of Empowered DLD"
-              className="w-[180px] h-[180px] object-cover rounded-full"
+              className="w-[180px] h-[180px] object-cover rounded-2xl"
               loading="lazy"
             />
             <div className="rounded-2xl overflow-hidden w-[180px] h-[180px]">
