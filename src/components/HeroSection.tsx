@@ -49,7 +49,7 @@ const HeroSection = () => {
           </div>
 
           {/* Girls image — mobile only, below text */}
-          <div className="md:hidden flex justify-end -mr-4 -mt-6 -mb-1">
+          <div className="md:hidden flex justify-end -mr-4 -mt-14 -mb-1">
             <img
               src={heroImage}
               alt="Two girls laughing together"
