@@ -21,8 +21,8 @@ const InstagramFilled = ({ className }: { className?: string }) => (
 
 const Footer = () => {
   return (
-    <footer className="bg-deep-purple text-deep-purple-foreground pt-12 lg:pt-14 pb-10">
-      <div className="container px-6 lg:px-8">
+    <footer className="bg-deep-purple text-deep-purple-foreground pt-12 md:pt-14 pb-10">
+      <div className="container px-6 md:px-8">
         {/* Row 1 – 4-column grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr] gap-8 sm:gap-10 mb-8 items-start">
           {/* Brand */}

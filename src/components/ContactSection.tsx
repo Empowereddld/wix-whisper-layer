@@ -70,14 +70,14 @@ const ContactSection = () => {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 container py-12 lg:py-20 px-6 lg:px-8">
+      <div className="relative z-10 container py-12 md:py-20 px-6 md:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start">
           {/* Right text – shown first on mobile via order */}
           <div className="flex flex-col justify-center lg:pt-8 order-1 lg:order-2">
             <p className="text-[12px] font-bold uppercase tracking-[0.2em] text-background/60 mb-4">
               Partner With Us
             </p>
-            <h2 className="text-[28px] lg:text-[52px] font-bold text-background leading-[1.08] mb-5">
+            <h2 className="text-[28px] md:text-[36px] lg:text-[52px] font-bold text-background leading-[1.08] mb-5">
               Bring DLD Resources to Your Organization
             </h2>
             <p className="text-background/70 text-[15px] leading-[1.7] max-w-[480px]">
@@ -86,7 +86,7 @@ const ContactSection = () => {
           </div>
 
           {/* Left – white form card */}
-          <div className="bg-background rounded-none p-6 lg:p-12 order-2 lg:order-1">
+          <div className="bg-background rounded-none p-6 md:p-10 lg:p-12 order-2 lg:order-1">
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                 {/* First + Last name row */}

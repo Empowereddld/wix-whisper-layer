@@ -59,14 +59,14 @@ const features = [
 
 const SupportSection = () => {
   return (
-    <section className="py-12 lg:py-18 bg-lavender" id="about">
-      <div className="container px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-[40%_60%] gap-6 lg:gap-14 items-start mb-10 lg:mb-12">
+    <section className="py-12 md:py-18 bg-lavender" id="about">
+      <div className="container px-6 md:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-[40%_60%] gap-6 lg:gap-14 items-start mb-10 md:mb-12">
           <div>
             <p className="text-[14px] font-bold uppercase tracking-[0.18em] text-foreground mb-3">
               WHAT WE OFFER
             </p>
-            <h2 className="text-[30px] lg:text-[52px] font-black text-foreground leading-[1.1]">
+            <h2 className="text-[30px] md:text-[52px] font-black text-foreground leading-[1.1]">
               How we support children with DLD
             </h2>
           </div>

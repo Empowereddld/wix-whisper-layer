@@ -14,16 +14,16 @@ const books = [
 
 const BookShowcase = () => {
   return (
-    <section className="py-12 lg:py-18" id="books">
-      <div className="container px-6 lg:px-8">
+    <section className="py-12 md:py-18" id="books">
+      <div className="container px-6 md:px-8">
         <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-primary mb-2 opacity-80">
           Our Books
         </p>
 
-        <div className="grid grid-cols-1 lg:grid-cols-[44%_56%] gap-6 lg:gap-12 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-[44%_56%] gap-6 md:gap-8 lg:gap-12 items-stretch">
           {/* Text + large image */}
           <div className="flex flex-col">
-            <h2 className="text-[26px] lg:text-[30px] font-bold text-foreground mb-3.5 leading-[1.1]">
+            <h2 className="text-[26px] md:text-[30px] font-bold text-foreground mb-3.5 leading-[1.1]">
               Stories that celebrate brave kids with DLD
             </h2>
             <p className="text-muted-foreground text-[14px] mb-1 leading-[1.65] max-w-[380px]">
@@ -36,7 +36,7 @@ const BookShowcase = () => {
               SHOP ALL
             </Button>
 
-            <div className="mt-8 rounded-2xl overflow-hidden flex-1 min-h-[200px] max-h-[300px] lg:max-h-none shadow-[0_2px_8px_hsl(258_50%_50%/0.06)]">
+            <div className="mt-8 rounded-2xl overflow-hidden flex-1 min-h-[200px] max-h-[300px] md:max-h-[280px] lg:max-h-none shadow-[0_2px_8px_hsl(258_50%_50%/0.06)]">
               <img
                 src={kidsReading}
                 alt="Children reading together"
