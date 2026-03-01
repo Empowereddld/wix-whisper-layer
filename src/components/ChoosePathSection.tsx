@@ -33,13 +33,13 @@ const paths = [
 
 const ChoosePathSection = () => {
   return (
-    <section className="py-12 md:py-18" id="resources">
-      <div className="container px-6 md:px-8">
-        <div className="mb-8 md:mb-10">
+    <section className="py-12 lg:py-18" id="resources">
+      <div className="container px-6 lg:px-8">
+        <div className="mb-8 lg:mb-10">
           <p className="text-[14px] font-bold uppercase tracking-[0.18em] text-foreground mb-3">
             CHOOSE YOUR PATH
           </p>
-          <h2 className="text-[32px] md:text-[52px] font-black text-foreground mb-3 leading-[1.1]">Start Here</h2>
+          <h2 className="text-[32px] lg:text-[52px] font-black text-foreground mb-3 leading-[1.1]">Start Here</h2>
           <p className="text-muted-foreground text-[15px] leading-[1.65]">
             Each section has resources designed specifically for you.
           </p>
@@ -56,7 +56,7 @@ const ChoosePathSection = () => {
                 alt={path.title}
                 className="w-[108px] h-[108px] object-contain mb-5 -m-3"
               />
-              <h3 className="text-[18px] md:text-[20px] font-bold text-foreground mb-2 leading-[1.25]">{path.title}</h3>
+              <h3 className="text-[18px] lg:text-[20px] font-bold text-foreground mb-2 leading-[1.25]">{path.title}</h3>
               <p className="text-[13px] text-muted-foreground mb-6 flex-1 leading-[1.65]">{path.description}</p>
               <Button
                 size="sm"

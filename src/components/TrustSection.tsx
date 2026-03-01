@@ -5,33 +5,15 @@ import boyReading from "@/assets/boy-reading.png";
 
 const TrustSection = () => {
   return (
-    <section className="py-12 md:py-18" id="why">
-      <div className="container px-6 md:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-[auto_1fr] lg:grid-cols-[1fr_1fr_1fr] gap-8 lg:gap-8 items-stretch">
-          {/* Images column — visible on md only, stacked vertically */}
-          <div className="hidden md:flex lg:hidden flex-col items-center justify-center gap-6">
-            <img
-              src={foundersPhoto}
-              alt="Jinean and Camesha, founders of Empowered DLD"
-              className="w-[180px] h-[180px] object-cover rounded-2xl"
-              loading="lazy"
-            />
-            <div className="rounded-2xl overflow-hidden w-[180px] h-[180px]">
-              <img
-                src={boyReading}
-                alt="Boy reading a book about DLD"
-                className="w-full h-full object-cover object-[center_45%]"
-                loading="lazy"
-              />
-            </div>
-          </div>
-
+    <section className="py-12 lg:py-18" id="why">
+      <div className="container px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1fr_1fr] gap-8 items-stretch">
           {/* Column 1 – Text */}
           <div className="flex flex-col">
             <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-primary mb-3 opacity-80">
               Why Empowered DLD?
             </p>
-            <h2 className="text-[26px] md:text-[30px] font-bold text-foreground mb-3.5 leading-[1.08]">
+            <h2 className="text-[26px] lg:text-[30px] font-bold text-foreground mb-3.5 leading-[1.08]">
               Created by an SLP and teacher
             </h2>
             <p className="text-muted-foreground text-[14px] mb-3.5 leading-[1.65] max-w-[420px]">
@@ -61,18 +43,18 @@ const TrustSection = () => {
             </Button>
           </div>
 
-          {/* Column 2 – Founders photo (circle) — mobile + desktop only */}
-          <div className="flex md:hidden lg:flex items-center justify-center">
+          {/* Column 2 – Founders photo */}
+          <div className="flex items-center justify-center">
             <img
               src={foundersPhoto}
               alt="Jinean and Camesha, founders of Empowered DLD"
-              className="w-full max-w-[260px] md:max-w-[320px] lg:max-w-[380px] h-auto"
+              className="w-full max-w-[260px] lg:max-w-[380px] h-auto"
               loading="lazy"
             />
           </div>
 
-          {/* Column 3 – Boy reading photo — mobile + desktop only */}
-          <div className="md:hidden lg:block rounded-2xl overflow-hidden h-[300px] lg:h-auto">
+          {/* Column 3 – Boy reading photo */}
+          <div className="rounded-2xl overflow-hidden h-[300px] lg:h-auto">
             <img
               src={boyReading}
               alt="Boy reading a book about DLD"
