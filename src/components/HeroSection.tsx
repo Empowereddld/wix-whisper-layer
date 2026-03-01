@@ -15,7 +15,7 @@ const HeroSection = () => {
       <div className="absolute inset-0 bg-gradient-to-b from-[hsl(270_55%_98%/0.78)] via-[hsl(264_48%_96%/0.72)] via-[60%] to-[hsl(258_42%_94%/0.66)]" />
 
       {/* Layer 3: Content */}
-        <div className="relative z-10 h-full min-h-[calc(100vh-70px)] md:min-h-[calc(100vh-90px)] flex items-center">
+        <div className="relative z-10 min-h-[calc(100vh-70px)] md:min-h-[calc(100vh-90px)]">
         <div className="relative w-full grid grid-cols-1 md:grid-cols-[44%_56%] items-center min-h-[calc(100vh-70px)] md:min-h-[calc(100vh-90px)]">
           {/* Girls image — absolute overlay on mobile, grid column on desktop */}
           <div className="absolute bottom-0 left-0 w-[40%] h-full md:relative md:w-auto z-0 flex items-end justify-start md:h-[calc(100vh-90px)] overflow-hidden">
@@ -28,7 +28,7 @@ const HeroSection = () => {
           </div>
 
           {/* Text — full width on mobile with left padding to clear image */}
-          <div className="z-10 pl-[30%] md:pl-0 py-6 md:py-0 px-4 sm:px-7 md:px-10 lg:px-14 xl:px-20 text-left flex flex-col justify-center">
+          <div className="z-10 pl-[30%] md:pl-0 py-6 md:py-0 px-4 sm:px-7 md:px-10 lg:px-14 xl:px-20 text-left flex flex-col justify-center min-h-[calc(100vh-70px)] md:min-h-0">
             <p className="text-[9px] sm:text-[11px] font-bold uppercase tracking-[0.18em] text-primary/85 mb-3 md:mb-5">
               SUPPORTING CHILDREN WITH DLD
             </p>
