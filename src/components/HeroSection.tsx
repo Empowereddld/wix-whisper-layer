@@ -4,7 +4,7 @@ import hallwayBg from "@/assets/school-hallway-bg.webp";
 
 const HeroSection = () => {
   return (
-    <section className="relative overflow-hidden min-h-[calc(100vh-70px)] md:min-h-[calc(100vh-90px)]">
+    <section className="relative overflow-hidden lg:min-h-[calc(100vh-90px)]">
       {/* Layer 1: Blurred school hallway background */}
       <div
         className="absolute inset-0 bg-cover bg-center blur-[2px] scale-105"
@@ -15,8 +15,8 @@ const HeroSection = () => {
       <div className="absolute inset-0 bg-[hsl(270_60%_98%/0.72)]" />
 
       {/* Layer 3: Content */}
-        <div className="relative z-10 h-full min-h-[calc(100vh-70px)] md:min-h-[calc(100vh-90px)] flex items-center">
-        <div className="w-full grid grid-cols-1 md:grid-cols-[52%_48%] items-end md:items-center min-h-[calc(100vh-70px)] md:min-h-[calc(100vh-90px)]">
+        <div className="relative z-10 h-full lg:min-h-[calc(100vh-90px)] flex items-center">
+        <div className="w-full grid grid-cols-1 lg:grid-cols-[52%_48%] items-end lg:items-center lg:min-h-[calc(100vh-90px)]">
           {/* Girls image — LEFT side, bleeds to left edge */}
           <div className="hidden lg:flex order-1 items-end justify-start h-[calc(100vh-90px)] overflow-hidden">
             <img
