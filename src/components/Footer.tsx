@@ -21,10 +21,10 @@ const InstagramFilled = ({ className }: { className?: string }) => (
 
 const Footer = () => {
   return (
-    <footer className="bg-deep-purple text-deep-purple-foreground pt-14 pb-10">
-      <div className="container">
+    <footer className="bg-deep-purple text-deep-purple-foreground pt-12 md:pt-14 pb-10">
+      <div className="container px-6 md:px-8">
         {/* Row 1 – 4-column grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr] gap-10 mb-8 items-start">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr] gap-8 sm:gap-10 mb-8 items-start">
           {/* Brand */}
           <div>
             <div className="h-12 mb-5 overflow-y-hidden overflow-x-visible">
@@ -79,7 +79,7 @@ const Footer = () => {
         {/* Row 2 – Social icons (left) + Newsletter (right) */}
         <div className="flex flex-col lg:flex-row items-start lg:items-start justify-between gap-8">
           {/* Social icons */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center justify-center lg:justify-start gap-4">
             {[
               { Icon: FacebookFilled, label: "Facebook" },
               { Icon: YouTubeFilled, label: "YouTube" },

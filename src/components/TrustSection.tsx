@@ -5,9 +5,9 @@ import boyReading from "@/assets/boy-reading.png";
 
 const TrustSection = () => {
   return (
-    <section className="py-14 md:py-18" id="why">
-      <div className="container">
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1fr_1fr] gap-6 lg:gap-8 items-stretch">
+    <section className="py-12 md:py-18" id="why">
+      <div className="container px-6 md:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1fr_1fr] gap-8 lg:gap-8 items-stretch">
           {/* Column 1 – Text */}
           <div className="flex flex-col">
             <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-primary mb-3 opacity-80">
@@ -48,13 +48,13 @@ const TrustSection = () => {
             <img
               src={foundersPhoto}
               alt="Jinean and Camesha, founders of Empowered DLD"
-              className="w-full max-w-[380px] h-auto"
+              className="w-full max-w-[260px] md:max-w-[320px] lg:max-w-[380px] h-auto"
               loading="lazy"
             />
           </div>
 
           {/* Column 3 – Boy reading photo */}
-          <div className="rounded-2xl overflow-hidden bg-gradient-to-br from-lavender to-secondary shadow-[0_2px_8px_hsl(258_50%_50%/0.06)]">
+          <div className="rounded-2xl overflow-hidden bg-gradient-to-br from-lavender to-secondary shadow-[0_2px_8px_hsl(258_50%_50%/0.06)] h-[300px] lg:h-auto">
             <img
               src={boyReading}
               alt="Boy reading a book about DLD"

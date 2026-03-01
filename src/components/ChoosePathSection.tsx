@@ -33,19 +33,19 @@ const paths = [
 
 const ChoosePathSection = () => {
   return (
-    <section className="py-14 md:py-18" id="resources">
-      <div className="container">
-        <div className="mb-10">
+    <section className="py-12 md:py-18" id="resources">
+      <div className="container px-6 md:px-8">
+        <div className="mb-8 md:mb-10">
           <p className="text-[14px] font-bold uppercase tracking-[0.18em] text-foreground mb-3">
             CHOOSE YOUR PATH
           </p>
-          <h2 className="text-[40px] md:text-[52px] font-black text-foreground mb-3 leading-[1.1]">Start Here</h2>
+          <h2 className="text-[32px] md:text-[52px] font-black text-foreground mb-3 leading-[1.1]">Start Here</h2>
           <p className="text-muted-foreground text-[15px] leading-[1.65]">
             Each section has resources designed specifically for you.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
           {paths.map((path) => (
             <div
               key={path.title}
