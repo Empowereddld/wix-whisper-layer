@@ -29,13 +29,13 @@ const HeroSection = () => {
 
           {/* Text — RIGHT side, vertically centered */}
           <div className="order-2 py-10 md:py-0 px-6 md:px-14 xl:px-20 text-left flex flex-col justify-center">
-            <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-foreground/70 mb-4 md:mb-5">
+            <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-primary mb-4 md:mb-5">
               SUPPORTING CHILDREN WITH DLD
             </p>
             <h1 className="text-[34px] sm:text-[44px] md:text-[52px] xl:text-[74px] leading-[1.05] font-black text-foreground mb-5 md:mb-6 max-w-[500px] tracking-[-0.02em]">
               Every child with DLD deserves to feel seen.
             </h1>
-            <p className="text-[14px] md:text-[15px] leading-[1.7] text-foreground/55 mb-8 md:mb-9 max-w-[420px]">
+            <p className="text-[14px] md:text-[15px] leading-[1.7] text-foreground/70 mb-8 md:mb-9 max-w-[420px]">
               We partner with families, educators, clinicians, and organizations to bring clear, practical DLD resources into homes, schools, and communities.
             </p>
             <div>
@@ -48,7 +48,8 @@ const HeroSection = () => {
             </div>
 
             {/* Girls image — mobile/tablet only, below CTA */}
-            <div className="lg:hidden mt-10 -mx-6 md:-mx-14">
+            <div className="lg:hidden mt-7 -mx-6 md:-mx-14 relative">
+              <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-[hsl(270_60%_98%/0.72)] to-transparent z-10" />
               <img
                 src={heroImage}
                 alt="Two girls laughing together"
