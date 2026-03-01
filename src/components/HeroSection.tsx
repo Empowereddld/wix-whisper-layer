@@ -16,7 +16,7 @@ const HeroSection = () => {
 
       {/* Layer 3: Content */}
         <div className="relative z-10 h-full min-h-[calc(100vh-70px)] md:min-h-[calc(100vh-90px)] flex items-center">
-        <div className="w-full grid grid-cols-1 md:grid-cols-[40%_60%] items-end md:items-center min-h-[calc(100vh-70px)] md:min-h-[calc(100vh-90px)]">
+        <div className="w-full grid grid-cols-1 md:grid-cols-[52%_48%] items-end md:items-center min-h-[calc(100vh-70px)] md:min-h-[calc(100vh-90px)]">
           {/* Girls image — LEFT side, bleeds to left edge */}
           <div className="order-1 flex items-end justify-start h-[40vh] md:h-[calc(100vh-90px)] overflow-hidden">
             <img
