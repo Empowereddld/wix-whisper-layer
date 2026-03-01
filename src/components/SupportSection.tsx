@@ -59,14 +59,14 @@ const features = [
 
 const SupportSection = () => {
   return (
-    <section className="py-14 md:py-18 bg-lavender" id="about">
-      <div className="container">
-        <div className="grid grid-cols-1 lg:grid-cols-[40%_60%] gap-8 lg:gap-14 items-start mb-12">
+    <section className="py-12 md:py-18 bg-lavender" id="about">
+      <div className="container px-6 md:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-[40%_60%] gap-6 lg:gap-14 items-start mb-10 md:mb-12">
           <div>
             <p className="text-[14px] font-bold uppercase tracking-[0.18em] text-foreground mb-3">
               WHAT WE OFFER
             </p>
-            <h2 className="text-[40px] md:text-[52px] font-black text-foreground leading-[1.1]">
+            <h2 className="text-[30px] md:text-[52px] font-black text-foreground leading-[1.1]">
               How we support children with DLD
             </h2>
           </div>
@@ -75,7 +75,7 @@ const SupportSection = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
           {features.map((f) => (
             <div
               key={f.title}

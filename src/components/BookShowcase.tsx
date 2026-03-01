@@ -14,13 +14,13 @@ const books = [
 
 const BookShowcase = () => {
   return (
-    <section className="py-14 md:py-18" id="books">
-      <div className="container">
+    <section className="py-12 md:py-18" id="books">
+      <div className="container px-6 md:px-8">
         <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-primary mb-2 opacity-80">
           Our Books
         </p>
 
-        <div className="grid grid-cols-1 lg:grid-cols-[44%_56%] gap-8 lg:gap-12 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-[44%_56%] gap-6 md:gap-8 lg:gap-12 items-stretch">
           {/* Text + large image */}
           <div className="flex flex-col">
             <h2 className="text-[26px] md:text-[30px] font-bold text-foreground mb-3.5 leading-[1.1]">
@@ -53,7 +53,7 @@ const BookShowcase = () => {
                 key={book.title}
                 className="bg-background rounded-xl border border-primary/[0.04] overflow-hidden shadow-[0_1px_2px_hsl(258_50%_50%/0.04)] hover:shadow-[0_5px_18px_-4px_hsl(258_50%_50%/0.1)] hover:-translate-y-[1px] transition-all duration-300"
               >
-                <div className="h-44 lg:h-56 bg-secondary/30 flex items-center justify-center p-3">
+                <div className="h-36 sm:h-44 lg:h-56 bg-secondary/30 flex items-center justify-center p-3">
                   <img
                     src={book.image}
                     alt={`Cover of ${book.title}`}

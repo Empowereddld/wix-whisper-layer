@@ -70,14 +70,27 @@ const ContactSection = () => {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 container py-16 md:py-20">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
+      <div className="relative z-10 container py-12 md:py-20 px-6 md:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start">
+          {/* Right text – shown first on mobile via order */}
+          <div className="flex flex-col justify-center lg:pt-8 order-1 lg:order-2">
+            <p className="text-[12px] font-bold uppercase tracking-[0.2em] text-background/60 mb-4">
+              Partner With Us
+            </p>
+            <h2 className="text-[28px] md:text-[36px] lg:text-[52px] font-bold text-background leading-[1.08] mb-5">
+              Bring DLD Resources to Your Organization
+            </h2>
+            <p className="text-background/70 text-[15px] leading-[1.7] max-w-[480px]">
+              Ready to bring DLD support to your community? From one-time workshops to ongoing training, we'll help you find the right approach for your organization. Reach out to explore what's possible.
+            </p>
+          </div>
+
           {/* Left – white form card */}
-          <div className="bg-background rounded-none p-8 md:p-10 lg:p-12">
+          <div className="bg-background rounded-none p-6 md:p-10 lg:p-12 order-2 lg:order-1">
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                 {/* First + Last name row */}
-                <div className="grid grid-cols-2 gap-5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <FormField
                     control={form.control}
                     name="first_name"
@@ -122,7 +135,7 @@ const ContactSection = () => {
                 />
 
                 {/* Email + Position row */}
-                <div className="grid grid-cols-2 gap-5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <FormField
                     control={form.control}
                     name="email"
@@ -179,19 +192,6 @@ const ContactSection = () => {
                 </Button>
               </form>
             </Form>
-          </div>
-
-          {/* Right – text content */}
-          <div className="flex flex-col justify-center lg:pt-8">
-            <p className="text-[12px] font-bold uppercase tracking-[0.2em] text-background/60 mb-4">
-              Partner With Us
-            </p>
-            <h2 className="text-[36px] md:text-[46px] lg:text-[52px] font-bold text-background leading-[1.08] mb-5">
-              Bring DLD Resources to Your Organization
-            </h2>
-            <p className="text-background/70 text-[15px] leading-[1.7] max-w-[480px]">
-              Ready to bring DLD support to your community? From one-time workshops to ongoing training, we'll help you find the right approach for your organization. Reach out to explore what's possible.
-            </p>
           </div>
         </div>
       </div>

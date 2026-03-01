@@ -17,10 +17,10 @@ const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 h-[90px] bg-background backdrop-blur-md border-b border-border/20">
-      <div className="container h-full flex items-center justify-between gap-6">
-        <a href="/" className="flex-shrink-0 ml-4">
-          <img src={logoImage} alt="EmpoweredDLD" className="h-[183px] w-auto" />
+    <header className="sticky top-0 z-50 h-[70px] md:h-[90px] bg-background backdrop-blur-md border-b border-border/20">
+      <div className="container h-full flex items-center justify-between gap-4 md:gap-6">
+        <a href="/" className="flex-shrink-0 ml-2 md:ml-4">
+          <img src={logoImage} alt="EmpoweredDLD" className="h-[140px] md:h-[183px] w-auto" />
         </a>
 
         <nav className="hidden lg:flex items-center gap-6">
@@ -56,18 +56,26 @@ const Header = () => {
       </div>
 
       {mobileOpen && (
-        <nav className="lg:hidden bg-background border-b border-border/30 px-5 pb-5 pt-2 flex flex-col gap-3 max-h-[75vh] overflow-y-auto shadow-[var(--shadow-elevated)]">
+        <nav className="lg:hidden bg-background border-b border-border/30 px-6 pb-6 pt-4 flex flex-col gap-4 max-h-[75vh] overflow-y-auto shadow-[var(--shadow-elevated)]">
           {navLinks.map((link) => (
             <a
               key={link.label}
               href={link.href}
-              className="text-[13px] font-semibold text-foreground"
+              className="text-[14px] font-semibold text-foreground py-1"
               onClick={() => setMobileOpen(false)}
             >
               {link.label}
             </a>
           ))}
-          <Button className="w-full font-bold text-[12px] tracking-[0.1em]">LOGIN</Button>
+          <div className="flex items-center gap-4 pt-2 border-t border-border/20 mt-2">
+            <button className="relative text-primary" aria-label="Shopping cart">
+              <ShoppingBag className="w-[24px] h-[24px] stroke-[1.5]" fill="hsl(var(--primary))" color="hsl(var(--primary))" />
+              <span className="absolute top-[-2px] right-[-2px] text-[9px] text-primary-foreground bg-primary rounded-full w-[14px] h-[14px] flex items-center justify-center font-bold leading-none">
+                0
+              </span>
+            </button>
+            <Button className="flex-1 font-bold text-[12px] tracking-[0.1em]">LOGIN</Button>
+          </div>
         </nav>
       )}
     </header>
