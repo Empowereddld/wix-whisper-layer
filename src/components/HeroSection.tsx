@@ -46,6 +46,16 @@ const HeroSection = () => {
                 CHOOSE YOUR PATH
               </Button>
             </div>
+
+            {/* Girls image — mobile/tablet only, below CTA */}
+            <div className="lg:hidden mt-10 -mx-6 md:-mx-14">
+              <img
+                src={heroImage}
+                alt="Two girls laughing together"
+                className="w-full h-auto object-cover object-top"
+                loading="eager"
+              />
+            </div>
           </div>
         </div>
       </div>
