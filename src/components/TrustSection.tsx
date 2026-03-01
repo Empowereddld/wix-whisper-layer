@@ -16,7 +16,7 @@ const TrustSection = () => {
               className="w-[180px] h-auto"
               loading="lazy"
             />
-            <div className="rounded-2xl overflow-hidden bg-gradient-to-br from-lavender to-secondary shadow-[0_2px_8px_hsl(258_50%_50%/0.06)] w-[180px] h-[140px]">
+            <div className="rounded-2xl overflow-hidden w-[180px] h-[140px]">
               <img
                 src={boyReading}
                 alt="Boy reading a book about DLD"
@@ -72,7 +72,7 @@ const TrustSection = () => {
           </div>
 
           {/* Column 3 – Boy reading photo — mobile + desktop only */}
-          <div className="md:hidden lg:block rounded-2xl overflow-hidden bg-gradient-to-br from-lavender to-secondary shadow-[0_2px_8px_hsl(258_50%_50%/0.06)] h-[300px] lg:h-auto">
+          <div className="md:hidden lg:block rounded-2xl overflow-hidden h-[300px] lg:h-auto">
             <img
               src={boyReading}
               alt="Boy reading a book about DLD"
