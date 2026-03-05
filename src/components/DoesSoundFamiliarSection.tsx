@@ -2,9 +2,9 @@ const DoesSoundFamiliarSection = () => {
   return (
     <section className="py-16 md:py-[120px]">
       <div className="container px-6 md:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 items-stretch gap-8 md:gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 items-stretch gap-8 lg:gap-12">
           {/* Left — black card with heading at bottom */}
-          <div className="bg-black text-white flex items-end p-8 md:p-12 rounded-lg min-h-0">
+          <div className="bg-black text-white flex items-end p-8 lg:p-12 rounded-lg min-h-0">
             <h2 className="text-[26px] md:text-[36px] font-black leading-[1.15]">
               Does this sound familiar?
             </h2>
