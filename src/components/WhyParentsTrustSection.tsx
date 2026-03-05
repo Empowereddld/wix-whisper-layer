@@ -22,12 +22,12 @@ const trustPoints = [
 
 const WhyParentsTrustSection = () => {
   return (
-    <section className="py-14 md:py-20 bg-lavender">
+    <section className="py-16 md:py-[120px] bg-lavender">
       <div className="container px-6 md:px-8">
         <div className="grid grid-cols-1 md:grid-cols-[1fr_0.8fr] gap-10 md:gap-16 items-start">
           {/* Left — heading + checklist */}
           <div>
-            <h2 className="text-[28px] md:text-[42px] font-black text-foreground leading-[1.12] mb-10">
+            <h2 className="text-[28px] md:text-[46px] font-black text-foreground leading-[1.12] mb-10">
               Why Parents Trust Empowered DLD
             </h2>
 

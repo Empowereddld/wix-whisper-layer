@@ -2,11 +2,11 @@ import familyStudying from "@/assets/family-studying.png";
 
 const RightPlaceSection = () => {
   return (
-    <section className="py-14 md:py-20">
+    <section className="py-16 md:py-[120px]">
       <div className="container px-6 md:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-start">
-          {/* Left — image, no rounded corners to match Wix */}
-          <div className="overflow-hidden">
+          {/* Left — image */}
+          <div className="rounded-xl overflow-hidden">
             <img
               src={familyStudying}
               alt="Family studying together at a table"
@@ -15,8 +15,8 @@ const RightPlaceSection = () => {
           </div>
 
           {/* Right — text content */}
-          <div className="flex flex-col justify-start pt-2">
-            <h2 className="text-[32px] md:text-[42px] font-black leading-[1.12] mb-6">
+          <div className="flex flex-col justify-start pt-2 max-w-[650px]">
+            <h2 className="text-[32px] md:text-[46px] font-black leading-[1.12] mb-6">
               You're in the right<br />place if...
             </h2>
 
@@ -42,7 +42,7 @@ const RightPlaceSection = () => {
               href="https://www.facebook.com/groups/empowereddld"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block border border-foreground text-foreground px-8 py-3 text-[13px] font-bold tracking-wider uppercase hover:bg-foreground hover:text-background transition-colors w-fit"
+              className="inline-block border border-foreground text-foreground px-10 py-4 text-[13px] font-bold tracking-wider uppercase hover:bg-foreground hover:text-background transition-colors w-fit"
             >
               JOIN OUR FACEBOOK COMMUNITY
             </a>
