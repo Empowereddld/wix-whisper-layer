@@ -2,6 +2,8 @@ import Header from "@/components/Header";
 import WhoWeServeHero from "@/components/WhoWeServeHero";
 import ChoosePathSection from "@/components/ChoosePathSection";
 import RealityOfDLDSection from "@/components/RealityOfDLDSection";
+import EveryChildSection from "@/components/EveryChildSection";
+import ChoosePathCTA from "@/components/ChoosePathCTA";
 import Footer from "@/components/Footer";
 
 const WhoWeServe = () => {
@@ -12,6 +14,8 @@ const WhoWeServe = () => {
         <WhoWeServeHero />
         <ChoosePathSection />
         <RealityOfDLDSection />
+        <EveryChildSection />
+        <ChoosePathCTA />
       </main>
       <Footer />
     </div>
