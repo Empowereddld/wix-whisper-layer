@@ -7,7 +7,7 @@ const EveryChildSection = () => {
       <div className="container px-6 md:px-8">
         <div className="relative">
           {/* Gray card background */}
-          <div className="bg-muted/60 rounded-xl md:rounded-2xl md:w-[65%] py-14 md:py-20 px-8 md:px-16">
+          <div className="bg-muted rounded-xl md:rounded-2xl md:w-[65%] py-14 md:py-20 px-8 md:px-16">
             <h2 className="text-[28px] md:text-[42px] font-black text-foreground mb-5 leading-[1.12] max-w-[480px]">
               Every Child Deserves to Be Understood
             </h2>
