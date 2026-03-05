@@ -1,30 +1,30 @@
-import familyGroup from "@/assets/family-dinner-new.png";
+import familyStudying from "@/assets/family-studying.png";
 
 const RightPlaceSection = () => {
   return (
     <section className="py-14 md:py-20">
       <div className="container px-6 md:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
-          {/* Left — image */}
-          <div className="aspect-[4/5] md:aspect-auto md:h-full overflow-hidden rounded-lg">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-start">
+          {/* Left — image, no rounded corners to match Wix */}
+          <div className="overflow-hidden">
             <img
-              src={familyGroup}
-              alt="Family enjoying dinner together"
+              src={familyStudying}
+              alt="Family studying together at a table"
               className="w-full h-full object-cover"
             />
           </div>
 
           {/* Right — text content */}
-          <div className="flex flex-col justify-center">
-            <h2 className="text-[28px] md:text-[36px] font-black leading-[1.15] mb-6">
+          <div className="flex flex-col justify-start pt-2">
+            <h2 className="text-[32px] md:text-[42px] font-black leading-[1.12] mb-6">
               You're in the right<br />place if...
             </h2>
 
-            <p className="text-[14px] md:text-[15px] text-muted-foreground leading-[1.7] mb-4">
+            <p className="text-[14px] md:text-[15px] text-muted-foreground leading-[1.7] mb-6">
               you're a parent who:
             </p>
 
-            <ul className="list-disc pl-5 space-y-2 text-[14px] md:text-[15px] text-muted-foreground leading-[1.7] mb-6">
+            <ul className="list-disc pl-5 space-y-4 text-[14px] md:text-[15px] text-muted-foreground leading-[1.7] mb-8">
               <li>Just received a DLD diagnosis and doesn't know where to start</li>
               <li>Has been journeying with DLD for a while and wants to continue to grow and share</li>
               <li>Suspects your child has language struggles but hasn't gotten answers yet</li>
@@ -42,7 +42,7 @@ const RightPlaceSection = () => {
               href="https://www.facebook.com/groups/empowereddld"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block bg-foreground text-background px-8 py-3 text-[13px] font-bold tracking-wider uppercase rounded-lg hover:opacity-90 transition-opacity w-fit"
+              className="inline-block border border-foreground text-foreground px-8 py-3 text-[13px] font-bold tracking-wider uppercase hover:bg-foreground hover:text-background transition-colors w-fit"
             >
               JOIN OUR FACEBOOK COMMUNITY
             </a>
