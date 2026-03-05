@@ -1,17 +1,18 @@
 const DoesSoundFamiliarSection = () => {
   return (
     <section className="py-10 md:py-16 lg:py-[120px] bg-muted">
-      <div className="container px-6 md:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 items-stretch gap-6 md:gap-8 lg:gap-12">
-          {/* Left — black card with heading at bottom */}
-          <div className="bg-black text-white flex items-end p-5 lg:p-10 rounded-lg min-h-[100px] md:min-h-[110px] lg:min-h-0">
-            <h2 className="text-[20px] md:text-[26px] lg:text-[32px] font-black leading-[1.15]">
-              Does this sound familiar?
-            </h2>
-          </div>
+      {/* Full-bleed black bar */}
+      <div className="bg-black text-white px-6 md:px-8 py-5 lg:py-8 mb-6 md:mb-8 lg:mb-12">
+        <div className="container px-0">
+          <h2 className="text-[20px] md:text-[26px] lg:text-[32px] font-black leading-[1.15]">
+            Does this sound familiar?
+          </h2>
+        </div>
+      </div>
 
-          {/* Right — text content */}
-          <div className="flex flex-col justify-center py-0 lg:py-10 max-w-[650px]">
+      {/* Constrained text content */}
+      <div className="container px-6 md:px-8">
+        <div className="max-w-[650px]">
             <p className="text-[14px] md:text-[15px] text-muted-foreground leading-[1.7] mb-6">
               Your child struggles to follow directions, even simple ones. They can't seem to find the right words. They get frustrated easily and you don't know why.
             </p>
@@ -38,7 +39,6 @@ const DoesSoundFamiliarSection = () => {
             <p className="text-[14px] md:text-[15px] text-muted-foreground leading-[1.7]">
               Understanding DLD changes everything. You can finally get answers, find the right support, and help your child thrive.
             </p>
-          </div>
         </div>
       </div>
     </section>
