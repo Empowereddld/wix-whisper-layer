@@ -1,6 +1,6 @@
 const DoesSoundFamiliarSection = () => {
   return (
-    <section className="py-16 md:py-[120px]">
+    <section className="py-16 lg:py-[120px]">
       <div className="container px-6 md:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 items-stretch gap-8 lg:gap-12">
           {/* Left — black card with heading at bottom */}

@@ -2,7 +2,7 @@ import familyStudying from "@/assets/family-studying.png";
 
 const RightPlaceSection = () => {
   return (
-    <section className="py-16 md:py-[120px]">
+    <section className="py-16 lg:py-[120px]">
       <div className="container px-6 md:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
           {/* Left — image */}
@@ -10,7 +10,7 @@ const RightPlaceSection = () => {
             <img
               src={familyStudying}
               alt="Family studying together at a table"
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover max-h-[350px] lg:max-h-none"
             />
           </div>
 

@@ -22,7 +22,7 @@ const trustPoints = [
 
 const WhyParentsTrustSection = () => {
   return (
-    <section className="py-16 md:py-[120px] bg-lavender">
+    <section className="py-16 lg:py-[120px] bg-lavender">
       <div className="container px-6 md:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_0.8fr] gap-10 lg:gap-16 items-start">
           {/* Left — heading + checklist */}
@@ -53,7 +53,7 @@ const WhyParentsTrustSection = () => {
             <img
               src={familyDinner}
               alt="A family enjoying dinner together"
-              className="w-full h-auto object-cover aspect-[4/5]"
+              className="w-full h-auto object-cover aspect-[4/5] max-h-[400px] lg:max-h-none"
             />
           </div>
         </div>

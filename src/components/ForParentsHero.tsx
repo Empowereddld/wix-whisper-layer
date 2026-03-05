@@ -2,7 +2,7 @@ import motherDaughterReading from "@/assets/mother-daughter-reading.png";
 
 const ForParentsHero = () => {
   return (
-    <section className="py-16 md:py-[120px]">
+    <section className="py-16 lg:py-[120px]">
       <div className="container px-6 md:px-8">
         <div className="relative">
           {/* Gray card background */}
@@ -25,7 +25,7 @@ const ForParentsHero = () => {
           </div>
 
           {/* Image — overlaps the card on the right */}
-          <div className="mt-6 lg:mt-0 lg:absolute lg:right-0 lg:top-0 lg:bottom-0 lg:w-[48%] rounded-xl lg:rounded-l-xl lg:rounded-r-none overflow-hidden shadow-lg max-h-[400px] lg:max-h-none">
+          <div className="mt-6 lg:mt-0 lg:absolute lg:right-0 lg:top-0 lg:bottom-0 lg:w-[48%] rounded-xl lg:rounded-l-xl lg:rounded-r-none overflow-hidden shadow-lg max-h-[300px] lg:max-h-none">
             <img
               src={motherDaughterReading}
               alt="A mother and daughter reading together"
