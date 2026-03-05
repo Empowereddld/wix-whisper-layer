@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import WhoWeServeHero from "@/components/WhoWeServeHero";
 import ChoosePathSection from "@/components/ChoosePathSection";
+import RealityOfDLDSection from "@/components/RealityOfDLDSection";
 import Footer from "@/components/Footer";
 
 const WhoWeServe = () => {
@@ -10,6 +11,7 @@ const WhoWeServe = () => {
       <main>
         <WhoWeServeHero />
         <ChoosePathSection />
+        <RealityOfDLDSection />
       </main>
       <Footer />
     </div>
