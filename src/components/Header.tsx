@@ -47,12 +47,18 @@ const Header = () => {
         <nav className="hidden lg:flex items-center gap-6">
           {navLinks.map((link) =>
             link.children ? (
-              <div key={link.label} className="relative" ref={dropdownRef}>
-                <button
-                  className="flex items-center gap-1 text-[13px] font-medium tracking-[0.04em] text-foreground/80 hover:text-primary transition-colors duration-200"
-                  onClick={() => setDropdownOpen(!dropdownOpen)}
+              <div key={link.label} className="relative flex items-center" ref={dropdownRef}>
+                <Link
+                  to={link.href}
+                  className="text-[13px] font-medium tracking-[0.04em] text-foreground/80 hover:text-primary transition-colors duration-200"
                 >
                   {link.label}
+                </Link>
+                <button
+                  className="p-1 text-foreground/80 hover:text-primary transition-colors duration-200"
+                  onClick={() => setDropdownOpen(!dropdownOpen)}
+                  aria-label="Show submenu"
+                >
                   <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${dropdownOpen ? "rotate-180" : ""}`} />
                 </button>
                 {dropdownOpen && (
