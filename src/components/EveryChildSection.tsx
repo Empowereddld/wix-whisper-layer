@@ -23,7 +23,7 @@ const EveryChildSection = () => {
           </div>
 
           {/* Image — overlaps the card on the right */}
-          <div className="mt-6 md:mt-0 md:absolute md:right-4 md:top-1/2 md:-translate-y-1/2 md:w-[28%] rounded-xl overflow-hidden shadow-lg">
+          <div className="mt-6 md:mt-0 md:absolute md:right-0 md:top-1/2 md:-translate-y-1/2 md:w-[36%] rounded-xl overflow-hidden shadow-lg">
             <img
               src={boyThinking}
               alt="A thoughtful child resting their chin on their hand"
