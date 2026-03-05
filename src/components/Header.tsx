@@ -62,15 +62,7 @@ const Header = () => {
                   <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${dropdownOpen ? "rotate-180" : ""}`} />
                 </button>
                 {dropdownOpen && (
-                  <div className="absolute top-full left-0 mt-2 bg-background border border-border/30 rounded-lg shadow-lg py-2 min-w-[200px] z-50">
-                    <Link
-                      to={link.href}
-                      className="block px-4 py-2.5 text-[13px] font-semibold text-foreground/80 hover:bg-accent hover:text-primary transition-colors"
-                      onClick={() => setDropdownOpen(false)}
-                    >
-                      Overview
-                    </Link>
-                    <div className="border-t border-border/20 my-1" />
+                   <div className="absolute top-full left-0 mt-2 bg-background border border-border/30 rounded-lg shadow-lg py-2 min-w-[200px] z-50">
                     {link.children.map((child) => (
                       <Link
                         key={child.label}
@@ -130,13 +122,6 @@ const Header = () => {
                 </button>
                 {mobileSubOpen && (
                   <div className="pl-4 flex flex-col gap-2 mt-2">
-                    <Link
-                      to={link.href}
-                      className="text-[13px] font-semibold text-foreground/70 py-1"
-                      onClick={() => setMobileOpen(false)}
-                    >
-                      Overview
-                    </Link>
                     {link.children.map((child) => (
                       <Link
                         key={child.label}
