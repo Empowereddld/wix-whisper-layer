@@ -4,7 +4,7 @@ const DoesSoundFamiliarSection = () => {
       <div className="container px-6 md:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
           {/* Left — black card with heading centered */}
-          <div className="bg-black text-white flex items-center p-10 md:p-16 min-h-[260px] md:min-h-[400px] rounded-lg">
+          <div className="bg-black text-white flex items-center p-10 md:p-16 min-h-[220px] md:min-h-[320px] rounded-lg">
             <h2 className="text-[26px] md:text-[36px] font-black leading-[1.15]">
               Does this sound familiar?
             </h2>
