@@ -1,4 +1,4 @@
-import familyGroup from "@/assets/family-group.png";
+import familyGroup from "@/assets/family-dinner-new.png";
 
 const RightPlaceSection = () => {
   return (
