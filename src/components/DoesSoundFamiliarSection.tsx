@@ -4,8 +4,8 @@ const DoesSoundFamiliarSection = () => {
       <div className="container px-6 md:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 items-stretch gap-6 md:gap-8 lg:gap-12">
           {/* Left — black card with heading at bottom */}
-          <div className="bg-black text-white flex items-end p-6 lg:p-12 rounded-lg min-h-[120px] md:min-h-[140px] lg:min-h-0">
-            <h2 className="text-[22px] md:text-[30px] lg:text-[36px] font-black leading-[1.15]">
+          <div className="bg-black text-white flex items-end p-5 lg:p-10 rounded-lg min-h-[100px] md:min-h-[110px] lg:min-h-0">
+            <h2 className="text-[20px] md:text-[26px] lg:text-[32px] font-black leading-[1.15]">
               Does this sound familiar?
             </h2>
           </div>
