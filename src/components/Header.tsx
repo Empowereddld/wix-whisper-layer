@@ -1,11 +1,19 @@
 import { Button } from "@/components/ui/button";
-import { Menu, X, ShoppingBag } from "lucide-react";
-import { useState } from "react";
+import { Menu, X, ShoppingBag, ChevronDown } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
+import { Link } from "react-router-dom";
 import logoImage from "@/assets/empowered-logo.png";
+
+const whoWeServeLinks = [
+  { label: "For Parents", href: "/for-parents" },
+  { label: "For Educators", href: "/for-educators" },
+  { label: "For SLPs", href: "/for-slps" },
+  { label: "For Organizations", href: "/for-organizations" },
+];
 
 const navLinks = [
   { label: "HOME", href: "/" },
-  { label: "WHO WE SERVE", href: "/who-we-serve" },
+  { label: "WHO WE SERVE", href: "/who-we-serve", children: whoWeServeLinks },
   { label: "RESOURSES", href: "#resources" },
   { label: "SHOP", href: "#shop" },
   { label: "WORK WITH US", href: "#work-with-us" },
@@ -15,24 +23,71 @@ const navLinks = [
 
 const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [mobileSubOpen, setMobileSubOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
     <header className="sticky top-0 z-50 h-[70px] md:h-[90px] bg-background backdrop-blur-md border-b border-border/20">
       <div className="container h-full flex items-center justify-between gap-4 md:gap-6">
-        <a href="/" className="flex-shrink-0 ml-2 md:ml-4">
+        <Link to="/" className="flex-shrink-0 ml-2 md:ml-4">
           <img src={logoImage} alt="EmpoweredDLD" className="h-[140px] md:h-[183px] w-auto" />
-        </a>
+        </Link>
 
         <nav className="hidden lg:flex items-center gap-6">
-          {navLinks.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              className="text-[13px] font-medium tracking-[0.04em] text-foreground/80 hover:text-primary transition-colors duration-200"
-            >
-              {link.label}
-            </a>
-          ))}
+          {navLinks.map((link) =>
+            link.children ? (
+              <div key={link.label} className="relative" ref={dropdownRef}>
+                <button
+                  className="flex items-center gap-1 text-[13px] font-medium tracking-[0.04em] text-foreground/80 hover:text-primary transition-colors duration-200"
+                  onClick={() => setDropdownOpen(!dropdownOpen)}
+                >
+                  {link.label}
+                  <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${dropdownOpen ? "rotate-180" : ""}`} />
+                </button>
+                {dropdownOpen && (
+                  <div className="absolute top-full left-0 mt-2 bg-background border border-border/30 rounded-lg shadow-lg py-2 min-w-[200px] z-50">
+                    <Link
+                      to={link.href}
+                      className="block px-4 py-2.5 text-[13px] font-semibold text-foreground/80 hover:bg-accent hover:text-primary transition-colors"
+                      onClick={() => setDropdownOpen(false)}
+                    >
+                      Overview
+                    </Link>
+                    <div className="border-t border-border/20 my-1" />
+                    {link.children.map((child) => (
+                      <Link
+                        key={child.label}
+                        to={child.href}
+                        className="block px-4 py-2.5 text-[13px] font-medium text-foreground/70 hover:bg-accent hover:text-primary transition-colors"
+                        onClick={() => setDropdownOpen(false)}
+                      >
+                        {child.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ) : (
+              <Link
+                key={link.label}
+                to={link.href}
+                className="text-[13px] font-medium tracking-[0.04em] text-foreground/80 hover:text-primary transition-colors duration-200"
+              >
+                {link.label}
+              </Link>
+            )
+          )}
 
           <button className="relative text-primary hover:text-primary/80 transition-colors duration-200 ml-2" aria-label="Shopping cart">
             <ShoppingBag className="w-[26px] h-[26px] stroke-[1.5]" fill="hsl(var(--primary))" color="hsl(var(--primary))" />
@@ -57,16 +112,49 @@ const Header = () => {
 
       {mobileOpen && (
         <nav className="lg:hidden bg-background border-b border-border/30 px-6 pb-6 pt-4 flex flex-col gap-4 max-h-[75vh] overflow-y-auto shadow-[var(--shadow-elevated)]">
-          {navLinks.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              className="text-[14px] font-semibold text-foreground py-1"
-              onClick={() => setMobileOpen(false)}
-            >
-              {link.label}
-            </a>
-          ))}
+          {navLinks.map((link) =>
+            link.children ? (
+              <div key={link.label}>
+                <button
+                  className="flex items-center justify-between w-full text-[14px] font-semibold text-foreground py-1"
+                  onClick={() => setMobileSubOpen(!mobileSubOpen)}
+                >
+                  {link.label}
+                  <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${mobileSubOpen ? "rotate-180" : ""}`} />
+                </button>
+                {mobileSubOpen && (
+                  <div className="pl-4 flex flex-col gap-2 mt-2">
+                    <Link
+                      to={link.href}
+                      className="text-[13px] font-semibold text-foreground/70 py-1"
+                      onClick={() => setMobileOpen(false)}
+                    >
+                      Overview
+                    </Link>
+                    {link.children.map((child) => (
+                      <Link
+                        key={child.label}
+                        to={child.href}
+                        className="text-[13px] font-medium text-foreground/60 py-1"
+                        onClick={() => setMobileOpen(false)}
+                      >
+                        {child.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ) : (
+              <Link
+                key={link.label}
+                to={link.href}
+                className="text-[14px] font-semibold text-foreground py-1"
+                onClick={() => setMobileOpen(false)}
+              >
+                {link.label}
+              </Link>
+            )
+          )}
           <div className="flex items-center gap-4 pt-2 border-t border-border/20 mt-2">
             <button className="relative text-primary" aria-label="Shopping cart">
               <ShoppingBag className="w-[24px] h-[24px] stroke-[1.5]" fill="hsl(var(--primary))" color="hsl(var(--primary))" />
