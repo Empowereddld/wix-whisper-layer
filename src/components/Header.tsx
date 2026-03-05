@@ -5,7 +5,7 @@ import logoImage from "@/assets/empowered-logo.png";
 
 const navLinks = [
   { label: "HOME", href: "/" },
-  { label: "WHO WE SERVE", href: "#who-we-serve" },
+  { label: "WHO WE SERVE", href: "/who-we-serve" },
   { label: "RESOURSES", href: "#resources" },
   { label: "SHOP", href: "#shop" },
   { label: "WORK WITH US", href: "#work-with-us" },
