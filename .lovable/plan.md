@@ -1,26 +1,33 @@
 
 
-## iPad Fix — Image Sizing + Gap Removal
+## Make "Does this sound familiar?" black bar full-width
 
-Two issues visible in the screenshots:
+The user wants the black card to stretch edge-to-edge across the viewport, breaking out of the container constraint.
 
-1. **Hero image is too tall** — When stacked on iPad, the image has `aspect-[4/3]` at mobile but `md:aspect-auto` kicks in at 768px, making it expand to its natural (very tall) height. Need to keep a constrained aspect ratio on tablet.
+### Approach
 
-2. **Large gap between "Does this sound familiar?" sections** — The black card and text column are in a grid with `items-stretch`. When stacked on iPad (single column), the black card has no intrinsic height constraint, so it just shows the heading with minimal content. The `py-6 md:py-10` on the text column adds extra vertical padding. The `md:py-[120px]` section padding also contributes to the gap feeling.
+In `DoesSoundFamiliarSection.tsx`, restructure so the black bar sits outside the container (or uses negative margins/full-width utility) to span the full viewport width, while the text content below remains within the container.
 
-### Changes
+### Changes — `src/components/DoesSoundFamiliarSection.tsx`
 
-**1. `ForParentsHero.tsx`**
-- Change image aspect from `aspect-[4/3] md:aspect-auto` to `aspect-[4/3] lg:aspect-auto` so it stays constrained at 4:3 on iPad
-- Add `max-h-[400px] lg:max-h-none` to the image container to cap its height on tablet
+- Pull the black card out of the container grid and place it as a standalone full-width element before the container
+- Remove `rounded-lg` from the black card (full-bleed bars don't have rounded corners)
+- Keep the text content inside the container as-is
+- The section background (`bg-muted`) still wraps everything
 
-**2. `DoesSoundFamiliarSection.tsx`**
-- The black card on mobile/tablet (single column) needs a minimum height so it looks intentional: add `min-h-[200px]` (only matters when single-column)
-- Change text column padding from `py-6 md:py-10` to `py-2 lg:py-10` to reduce gap on tablet
-- The `md:py-[120px]` section spacing is fine — the gap is from the internal padding
+The structure becomes:
 
-| File | Change |
-|---|---|
-| `ForParentsHero.tsx` | Constrain image aspect ratio and max-height on tablet |
-| `DoesSoundFamiliarSection.tsx` | Reduce text column padding on tablet, add min-height to black card |
+```text
+<section bg-muted>
+  <div class="bg-black full-width px-container py-5">  ← edge to edge
+    <h2>Does this sound familiar?</h2>
+  </div>
+  <div class="container">                               ← constrained
+    <p>Your child struggles...</p>
+    ...
+  </div>
+</section>
+```
+
+This gives a bold editorial feel — the black band acts as a divider/banner spanning the full viewport while the body text stays within the readable container width.
 
