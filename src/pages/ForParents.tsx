@@ -3,6 +3,7 @@ import ForParentsHero from "@/components/ForParentsHero";
 import DoesSoundFamiliarSection from "@/components/DoesSoundFamiliarSection";
 import HowWeSupportParentsSection from "@/components/HowWeSupportParentsSection";
 import WhyParentsTrustSection from "@/components/WhyParentsTrustSection";
+import RightPlaceSection from "@/components/RightPlaceSection";
 import Footer from "@/components/Footer";
 
 const ForParents = () => {
@@ -14,6 +15,7 @@ const ForParents = () => {
         <DoesSoundFamiliarSection />
         <HowWeSupportParentsSection />
         <WhyParentsTrustSection />
+        <RightPlaceSection />
       </main>
       <Footer />
     </div>
