@@ -7,7 +7,7 @@ const ForParentsHero = () => {
         <div className="relative">
           {/* Gray card background */}
           <div className="bg-muted/60 rounded-xl md:rounded-2xl md:w-[58%] py-14 md:py-20 px-8 md:px-16">
-            <span className="inline-block bg-deep-purple text-deep-purple-foreground text-[12px] md:text-[13px] font-bold uppercase tracking-[0.14em] px-5 py-2 rounded-sm mb-6">
+            <span className="inline-block bg-deep-purple text-deep-purple-foreground text-[14px] md:text-[16px] font-bold uppercase tracking-[0.14em] px-8 py-2.5 rounded-sm mb-6">
               For Parents
             </span>
             <h1 className="text-[30px] md:text-[46px] font-black text-foreground leading-[1.12] mb-5 max-w-[480px]">
@@ -25,11 +25,11 @@ const ForParentsHero = () => {
           </div>
 
           {/* Image — overlaps the card on the right */}
-          <div className="mt-6 md:mt-0 md:absolute md:right-0 md:top-1/2 md:-translate-y-1/2 md:w-[48%] rounded-xl overflow-hidden shadow-lg">
+          <div className="mt-6 md:mt-0 md:absolute md:right-0 md:top-0 md:bottom-0 md:w-[48%] rounded-xl md:rounded-l-xl md:rounded-r-none overflow-hidden shadow-lg">
             <img
               src={motherDaughterReading}
               alt="A mother and daughter reading together"
-              className="w-full h-auto object-cover aspect-[4/3] md:aspect-[3/4]"
+              className="w-full h-full object-cover aspect-[4/3] md:aspect-auto"
             />
           </div>
         </div>
