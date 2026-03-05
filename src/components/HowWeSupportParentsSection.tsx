@@ -41,22 +41,22 @@ const cards = [
 
 const HowWeSupportParentsSection = () => {
   return (
-    <section className="py-16 lg:py-[120px]">
+    <section className="py-10 md:py-16 lg:py-[120px]">
       <div className="container px-6 md:px-8">
-        <div className="mb-10 md:mb-14">
-          <h2 className="text-[30px] md:text-[46px] font-black text-foreground leading-[1.1] mb-3">
+        <div className="mb-8 md:mb-10 lg:mb-14">
+          <h2 className="text-[24px] md:text-[34px] lg:text-[46px] font-black text-foreground leading-[1.1] mb-3">
             How We Support Parents
           </h2>
-          <p className="text-[14px] md:text-[16px] text-muted-foreground leading-[1.7] max-w-[650px]">
+          <p className="text-[13px] md:text-[14px] lg:text-[16px] text-muted-foreground leading-[1.7] max-w-[650px]">
             From workshops to books to community support, we're here to help you help your child.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6 lg:gap-8">
           {cards.map((card) => (
             <div
               key={card.title}
-              className="bg-lavender border border-border/30 rounded-lg p-10 flex flex-col justify-between min-h-[300px]"
+              className="bg-lavender border border-border/30 rounded-lg p-6 md:p-8 lg:p-10 flex flex-col justify-between min-h-[260px] md:min-h-[300px]"
             >
               <div>
                 <h3 className="text-[20px] md:text-[24px] font-black text-foreground mb-4 text-center">

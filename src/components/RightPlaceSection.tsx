@@ -2,29 +2,29 @@ import familyStudying from "@/assets/family-studying.png";
 
 const RightPlaceSection = () => {
   return (
-    <section className="py-16 lg:py-[120px]">
+    <section className="py-10 md:py-16 lg:py-[120px]">
       <div className="container px-6 md:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 lg:gap-12 items-start">
           {/* Left — image */}
           <div className="rounded-xl overflow-hidden">
             <img
               src={familyStudying}
               alt="Family studying together at a table"
-              className="w-full h-full object-cover max-h-[350px] lg:max-h-none"
+              className="w-full h-full object-cover max-h-[220px] md:max-h-[300px] lg:max-h-none aspect-[16/9] lg:aspect-auto"
             />
           </div>
 
           {/* Right — text content */}
-          <div className="flex flex-col justify-start pt-2 max-w-[650px]">
-            <h2 className="text-[32px] md:text-[46px] font-black leading-[1.12] mb-6">
-              You're in the right<br />place if...
+          <div className="flex flex-col justify-start pt-0 md:pt-2 max-w-[650px]">
+            <h2 className="text-[24px] md:text-[34px] lg:text-[46px] font-black leading-[1.12] mb-4 md:mb-6">
+              You're in the right<br className="hidden md:block" /> place if...
             </h2>
 
-            <p className="text-[14px] md:text-[15px] text-muted-foreground leading-[1.7] mb-6">
+            <p className="text-[13px] md:text-[14px] lg:text-[15px] text-muted-foreground leading-[1.7] mb-4 md:mb-6">
               you're a parent who:
             </p>
 
-            <ul className="list-disc pl-5 space-y-4 text-[14px] md:text-[15px] text-muted-foreground leading-[1.7] mb-8">
+            <ul className="list-disc pl-5 space-y-2 md:space-y-4 text-[13px] md:text-[14px] lg:text-[15px] text-muted-foreground leading-[1.7] mb-6 md:mb-8">
               <li>Just received a DLD diagnosis and doesn't know where to start</li>
               <li>Has been journeying with DLD for a while and wants to continue to grow and share</li>
               <li>Suspects your child has language struggles but hasn't gotten answers yet</li>
@@ -34,7 +34,7 @@ const RightPlaceSection = () => {
               <li>Speaks a language other than English and needs resources that work for your family</li>
             </ul>
 
-            <p className="text-[14px] md:text-[15px] text-muted-foreground leading-[1.7] mb-8">
+            <p className="text-[13px] md:text-[14px] lg:text-[15px] text-muted-foreground leading-[1.7] mb-6 md:mb-8">
               Whether you're just beginning to understand DLD or you've been navigating it for years, you'll find support here.
             </p>
 
@@ -42,7 +42,7 @@ const RightPlaceSection = () => {
               href="https://www.facebook.com/groups/empowereddld"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block border border-foreground text-foreground px-10 py-4 text-[13px] font-bold tracking-wider uppercase hover:bg-foreground hover:text-background transition-colors w-fit"
+              className="inline-block border border-foreground text-foreground px-8 md:px-10 py-3 md:py-4 text-[12px] md:text-[13px] font-bold tracking-wider uppercase hover:bg-foreground hover:text-background transition-colors w-fit"
             >
               JOIN OUR FACEBOOK COMMUNITY
             </a>
