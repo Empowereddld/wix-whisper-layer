@@ -41,7 +41,7 @@ const cards = [
 
 const HowWeSupportParentsSection = () => {
   return (
-    <section className="py-16 md:py-[120px]">
+    <section className="py-16 lg:py-[120px]">
       <div className="container px-6 md:px-8">
         <div className="mb-10 md:mb-14">
           <h2 className="text-[30px] md:text-[46px] font-black text-foreground leading-[1.1] mb-3">
