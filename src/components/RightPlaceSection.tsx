@@ -6,7 +6,7 @@ const RightPlaceSection = () => {
       <div className="container px-6 md:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 lg:gap-12 items-start">
           {/* Left — image */}
-          <div className="rounded-xl overflow-hidden">
+          <div className="rounded-xl overflow-hidden order-2 lg:order-1">
             <img
               src={familyStudying}
               alt="Family studying together at a table"
@@ -15,7 +15,7 @@ const RightPlaceSection = () => {
           </div>
 
           {/* Right — text content */}
-          <div className="flex flex-col justify-start pt-0 md:pt-2 max-w-[650px]">
+          <div className="flex flex-col justify-start pt-0 md:pt-2 max-w-[650px] order-1 lg:order-2">
             <h2 className="text-[24px] md:text-[34px] lg:text-[46px] font-black leading-[1.12] mb-4 md:mb-6">
               You're in the right<br className="hidden md:block" /> place if...
             </h2>
