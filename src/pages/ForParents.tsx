@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import ForParentsHero from "@/components/ForParentsHero";
+import DoesSoundFamiliarSection from "@/components/DoesSoundFamiliarSection";
 import Footer from "@/components/Footer";
 
 const ForParents = () => {
@@ -8,6 +9,7 @@ const ForParents = () => {
       <Header />
       <main>
         <ForParentsHero />
+        <DoesSoundFamiliarSection />
       </main>
       <Footer />
     </div>
