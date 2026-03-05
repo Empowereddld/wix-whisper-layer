@@ -38,14 +38,16 @@ const RightPlaceSection = () => {
               Whether you're just beginning to understand DLD or you've been navigating it for years, you'll find support here.
             </p>
 
-            <a
-              href="https://www.facebook.com/groups/empowereddld"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block border border-foreground text-foreground px-8 md:px-10 py-3 md:py-4 text-[12px] md:text-[13px] font-bold tracking-wider uppercase hover:bg-foreground hover:text-background transition-colors w-fit"
-            >
-              JOIN OUR FACEBOOK COMMUNITY
-            </a>
+            <div className="flex justify-center">
+              <a
+                href="https://www.facebook.com/groups/empowereddld"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block border border-foreground text-foreground px-8 md:px-10 py-3 md:py-4 text-[12px] md:text-[13px] font-bold tracking-wider uppercase hover:bg-foreground hover:text-background transition-colors"
+              >
+                JOIN OUR FACEBOOK COMMUNITY
+              </a>
+            </div>
           </div>
         </div>
       </div>
