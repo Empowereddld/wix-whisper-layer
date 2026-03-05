@@ -24,7 +24,7 @@ const WhyParentsTrustSection = () => {
   return (
     <section className="py-16 md:py-[120px] bg-lavender">
       <div className="container px-6 md:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_0.8fr] gap-10 md:gap-16 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_0.8fr] gap-10 lg:gap-16 items-start">
           {/* Left — heading + checklist */}
           <div>
             <h2 className="text-[28px] md:text-[46px] font-black text-foreground leading-[1.12] mb-10">

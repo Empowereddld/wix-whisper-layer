@@ -6,7 +6,7 @@ const ForParentsHero = () => {
       <div className="container px-6 md:px-8">
         <div className="relative">
           {/* Gray card background */}
-          <div className="bg-muted/60 rounded-xl md:rounded-2xl md:w-[58%] py-14 md:py-24 px-8 md:px-16">
+          <div className="bg-muted/60 rounded-xl lg:rounded-2xl lg:w-[58%] py-14 lg:py-24 px-8 lg:px-16">
             <span className="inline-block bg-deep-purple text-deep-purple-foreground text-[14px] md:text-[16px] font-bold uppercase tracking-[0.14em] px-8 py-2.5 rounded-sm mb-6">
               For Parents
             </span>
@@ -25,7 +25,7 @@ const ForParentsHero = () => {
           </div>
 
           {/* Image — overlaps the card on the right */}
-          <div className="mt-6 md:mt-0 md:absolute md:right-0 md:top-0 md:bottom-0 md:w-[48%] rounded-xl md:rounded-l-xl md:rounded-r-none overflow-hidden shadow-lg">
+          <div className="mt-6 lg:mt-0 lg:absolute lg:right-0 lg:top-0 lg:bottom-0 lg:w-[48%] rounded-xl lg:rounded-l-xl lg:rounded-r-none overflow-hidden shadow-lg">
             <img
               src={motherDaughterReading}
               alt="A mother and daughter reading together"
