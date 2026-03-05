@@ -22,7 +22,7 @@ const trustPoints = [
 
 const WhyParentsTrustSection = () => {
   return (
-    <section className="py-14 md:py-20 bg-muted/40">
+    <section className="py-14 md:py-20 bg-lavender">
       <div className="container px-6 md:px-8">
         <div className="grid grid-cols-1 md:grid-cols-[1fr_0.8fr] gap-10 md:gap-16 items-start">
           {/* Left — heading + checklist */}
