@@ -55,6 +55,14 @@
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Hub color palette */
+    --midnight: 252 38% 16%;
+    --midnight-foreground: 0 0% 100%;
+    --hub-lavender: 264 26% 59%;
+    --thistle: 270 30% 82%;
+    --mauve: 328 33% 60%;
+    --stone-ui: 213 19% 72%;
   }
 
   .dark {

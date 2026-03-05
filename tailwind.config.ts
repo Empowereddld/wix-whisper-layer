@@ -61,6 +61,14 @@ export default {
           foreground: "hsl(var(--deep-purple-foreground))",
         },
         lavender: "hsl(var(--lavender))",
+        midnight: {
+          DEFAULT: "hsl(var(--midnight))",
+          foreground: "hsl(var(--midnight-foreground))",
+        },
+        "hub-lavender": "hsl(var(--hub-lavender))",
+        thistle: "hsl(var(--thistle))",
+        mauve: "hsl(var(--mauve))",
+        "stone-ui": "hsl(var(--stone-ui))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
