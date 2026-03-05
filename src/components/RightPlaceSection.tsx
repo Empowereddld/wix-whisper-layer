@@ -4,7 +4,7 @@ const RightPlaceSection = () => {
   return (
     <section className="py-16 md:py-[120px]">
       <div className="container px-6 md:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
           {/* Left — image */}
           <div className="rounded-xl overflow-hidden">
             <img
