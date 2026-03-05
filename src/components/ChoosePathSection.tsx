@@ -13,7 +13,7 @@ const paths = [
   },
   {
     icon: iconSlps,
-    title: "For Therapists/Clinicians",
+    title: "For Therapists/ Clinicians",
     description: "Time saving, evidence-based resources you can use right away, plus family friendly materials to share with confidence.",
     cta: "LEARN MORE",
   },
