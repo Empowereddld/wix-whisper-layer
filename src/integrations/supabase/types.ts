@@ -47,6 +47,110 @@ export type Database = {
         }
         Relationships: []
       }
+      profiles: {
+        Row: {
+          age_range: Database["public"]["Enums"]["age_range"] | null
+          country: string | null
+          created_at: string
+          first_name: string
+          id: string
+          role: Database["public"]["Enums"]["user_role"]
+          updated_at: string
+        }
+        Insert: {
+          age_range?: Database["public"]["Enums"]["age_range"] | null
+          country?: string | null
+          created_at?: string
+          first_name: string
+          id: string
+          role?: Database["public"]["Enums"]["user_role"]
+          updated_at?: string
+        }
+        Update: {
+          age_range?: Database["public"]["Enums"]["age_range"] | null
+          country?: string | null
+          created_at?: string
+          first_name?: string
+          id?: string
+          role?: Database["public"]["Enums"]["user_role"]
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      resources: {
+        Row: {
+          age_ranges: string[] | null
+          created_at: string
+          description: string | null
+          download_count: number | null
+          file_url: string | null
+          id: string
+          languages: string[] | null
+          resource_type: Database["public"]["Enums"]["resource_type"]
+          roles: string[] | null
+          settings: string[] | null
+          thumbnail_url: string | null
+          title: string
+        }
+        Insert: {
+          age_ranges?: string[] | null
+          created_at?: string
+          description?: string | null
+          download_count?: number | null
+          file_url?: string | null
+          id?: string
+          languages?: string[] | null
+          resource_type: Database["public"]["Enums"]["resource_type"]
+          roles?: string[] | null
+          settings?: string[] | null
+          thumbnail_url?: string | null
+          title: string
+        }
+        Update: {
+          age_ranges?: string[] | null
+          created_at?: string
+          description?: string | null
+          download_count?: number | null
+          file_url?: string | null
+          id?: string
+          languages?: string[] | null
+          resource_type?: Database["public"]["Enums"]["resource_type"]
+          roles?: string[] | null
+          settings?: string[] | null
+          thumbnail_url?: string | null
+          title?: string
+        }
+        Relationships: []
+      }
+      user_downloads: {
+        Row: {
+          downloaded_at: string
+          id: string
+          resource_id: string
+          user_id: string
+        }
+        Insert: {
+          downloaded_at?: string
+          id?: string
+          resource_id: string
+          user_id: string
+        }
+        Update: {
+          downloaded_at?: string
+          id?: string
+          resource_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_downloads_resource_id_fkey"
+            columns: ["resource_id"]
+            isOneToOne: false
+            referencedRelation: "resources"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -55,7 +159,16 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      age_range: "0-4" | "5-7" | "8-10" | "11-13" | "14+" | "not_applicable"
+      resource_type:
+        | "poster"
+        | "guide"
+        | "checklist"
+        | "handout"
+        | "activity"
+        | "bundle"
+        | "infographic"
+      user_role: "parent" | "slp" | "educator" | "school_leader" | "other"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -182,6 +295,18 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      age_range: ["0-4", "5-7", "8-10", "11-13", "14+", "not_applicable"],
+      resource_type: [
+        "poster",
+        "guide",
+        "checklist",
+        "handout",
+        "activity",
+        "bundle",
+        "infographic",
+      ],
+      user_role: ["parent", "slp", "educator", "school_leader", "other"],
+    },
   },
 } as const
