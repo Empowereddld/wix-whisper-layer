@@ -1,6 +1,6 @@
 const DoesSoundFamiliarSection = () => {
   return (
-    <section className="py-14 md:py-20">
+    <section className="py-16 md:py-[120px]">
       <div className="container px-6 md:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 items-stretch gap-8 md:gap-12">
           {/* Left — black card with heading at bottom */}
@@ -11,7 +11,7 @@ const DoesSoundFamiliarSection = () => {
           </div>
 
           {/* Right — text content */}
-          <div className="flex flex-col justify-center py-6 md:py-10">
+          <div className="flex flex-col justify-center py-6 md:py-10 max-w-[650px]">
             <p className="text-[14px] md:text-[15px] text-muted-foreground leading-[1.7] mb-6">
               Your child struggles to follow directions, even simple ones. They can't seem to find the right words. They get frustrated easily and you don't know why.
             </p>
@@ -19,7 +19,7 @@ const DoesSoundFamiliarSection = () => {
             <p className="text-[14px] md:text-[15px] text-muted-foreground font-semibold mb-3">
               You're noticing:
             </p>
-            <ul className="list-disc pl-5 space-y-1 text-[14px] md:text-[15px] text-muted-foreground leading-[1.7] mb-6">
+            <ul className="list-disc pl-5 space-y-2 text-[14px] md:text-[15px] text-muted-foreground leading-[1.7] mb-6">
               <li>Trouble following multi-step instructions</li>
               <li>Difficulty retelling what happened at school</li>
               <li>They use simpler sentences than other kids their age</li>
