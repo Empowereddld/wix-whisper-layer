@@ -4,14 +4,14 @@ const DoesSoundFamiliarSection = () => {
       <div className="container px-6 md:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 items-stretch gap-8 lg:gap-12">
           {/* Left — black card with heading at bottom */}
-          <div className="bg-black text-white flex items-end p-8 lg:p-12 rounded-lg min-h-0">
+          <div className="bg-black text-white flex items-end p-8 lg:p-12 rounded-lg min-h-[200px] lg:min-h-0">
             <h2 className="text-[26px] md:text-[36px] font-black leading-[1.15]">
               Does this sound familiar?
             </h2>
           </div>
 
           {/* Right — text content */}
-          <div className="flex flex-col justify-center py-6 md:py-10 max-w-[650px]">
+          <div className="flex flex-col justify-center py-2 lg:py-10 max-w-[650px]">
             <p className="text-[14px] md:text-[15px] text-muted-foreground leading-[1.7] mb-6">
               Your child struggles to follow directions, even simple ones. They can't seem to find the right words. They get frustrated easily and you don't know why.
             </p>
