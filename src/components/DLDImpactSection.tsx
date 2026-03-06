@@ -83,14 +83,14 @@ const DLDImpactSection = () => {
         <div className="flex flex-col md:flex-row items-center gap-6 md:gap-10 lg:gap-16 max-w-[1100px] w-full mx-auto">
 
           {/* Left Column — Label + Title + subtitle */}
-          <div className="w-full md:w-[38%] flex flex-col justify-center text-center md:text-left">
-            <span className="text-[11px] md:text-[12px] font-semibold uppercase tracking-[0.2em] text-muted-foreground/60 mb-3 md:mb-5 block">
+          <div className="w-full md:w-[38%] flex flex-col justify-center text-center md:text-left py-6 md:py-0">
+            <span className="text-[11px] md:text-[12px] font-semibold uppercase tracking-[0.2em] text-muted-foreground/60 mb-4 md:mb-5 block">
               The Reality of DLD
             </span>
-            <h2 className="text-[24px] md:text-[40px] lg:text-[52px] font-black text-foreground leading-[1.05] mb-3 md:mb-6">
+            <h2 className="text-[28px] md:text-[40px] lg:text-[52px] font-black text-foreground leading-[1.1] mb-5 md:mb-6">
               DLD is Affecting the Communities You Serve
             </h2>
-            <p className="text-[12px] md:text-[14px] lg:text-[16px] text-muted-foreground leading-[1.7]">
+            <p className="text-[14px] md:text-[14px] lg:text-[16px] text-muted-foreground leading-[1.8] max-w-[440px] mx-auto md:mx-0">
               Developmental Language Disorder affects 1 in 14 children, yet most
               people have never heard of it. Your organization can change that.
             </p>
