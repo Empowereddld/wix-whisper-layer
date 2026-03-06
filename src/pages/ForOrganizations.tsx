@@ -24,7 +24,7 @@ const ForOrganizations = () => {
         <WhyOrganizationsChooseSection />
         <PartnershipPackagesSection />
         <IsThisRightForOrgSection />
-        <OrganizationsLeadFormSection />
+        
         <ResourceLibraryCTA />
       </main>
       <Footer />
