@@ -5,12 +5,12 @@ const OrganizationsAwarenessSection = () => {
   return (
     <section className="py-10 md:py-16 lg:py-[120px] bg-secondary">
       <div className="container px-6 md:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start">
-          {/* Left — layered image composition (desktop only) */}
-          <div className="relative hidden lg:block h-[520px]">
-            {/* Back card */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-16 items-start">
+          {/* Left — layered image composition (tablet/desktop) */}
+          <div className="relative hidden md:block md:h-[380px] lg:h-[520px]">
+            {/* Back card — desktop only */}
             <div
-              className="absolute top-0 left-0 w-[72%] z-10 animate-float-gentle"
+              className="hidden lg:block absolute top-0 left-0 w-[72%] z-10 animate-float-gentle"
               style={{ transform: "rotate(-2deg)" }}
             >
               <div className="rounded-2xl overflow-hidden shadow-lg">
@@ -22,12 +22,12 @@ const OrganizationsAwarenessSection = () => {
               </div>
             </div>
 
-            {/* Front card */}
+            {/* Front card — single image on tablet, layered on desktop */}
             <div
-              className="absolute bottom-0 right-0 w-[72%] z-20 animate-float-gentle-alt"
+              className="md:relative lg:absolute bottom-0 right-0 md:w-full lg:w-[72%] z-20 lg:animate-float-gentle-alt md:flex md:justify-center lg:block"
               style={{ transform: "rotate(1deg)" }}
             >
-              <div className="rounded-2xl overflow-hidden" style={{ boxShadow: "var(--shadow-elevated)" }}>
+              <div className="rounded-2xl overflow-hidden md:w-[80%] lg:w-full" style={{ boxShadow: "var(--shadow-elevated)" }}>
                 <img
                   src={orgKids}
                   alt="Children engaged in learning activities"
@@ -38,7 +38,7 @@ const OrganizationsAwarenessSection = () => {
           </div>
 
           {/* Right — text */}
-          <div className="flex flex-col justify-center items-center lg:items-start">
+          <div className="flex flex-col justify-center items-center md:items-start">
             <h2 className="text-[28px] md:text-[36px] lg:text-[46px] font-black text-foreground leading-[1.12] mb-4 md:mb-6">
               Let's spread DLD Awareness together!
             </h2>
@@ -69,8 +69,8 @@ const OrganizationsAwarenessSection = () => {
               </a>
             </div>
 
-            {/* Mobile/tablet image — below button */}
-            <div className="lg:hidden mt-8 w-[60%] md:w-[50%] mx-auto">
+            {/* Mobile image — below button */}
+            <div className="md:hidden mt-8 w-[60%] mx-auto">
               <div className="rounded-2xl overflow-hidden" style={{ boxShadow: "var(--shadow-elevated)" }}>
                 <img
                   src={orgKids}
