@@ -1,4 +1,4 @@
-import { ArrowRight } from "lucide-react";
+
 
 const DownloadablesHowItWorks = () => {
   return (
@@ -10,14 +10,9 @@ const DownloadablesHowItWorks = () => {
         <p className="text-[15px] md:text-[17px] font-semibold text-foreground mb-6">
           One email. Instant access. Forever.
         </p>
-        <div className="flex items-start gap-3 text-left max-w-[650px] mx-auto">
-          <div className="mt-0.5 w-8 h-8 rounded-full border border-foreground/30 flex items-center justify-center shrink-0">
-            <ArrowRight className="w-4 h-4 text-foreground/60" />
-          </div>
-          <p className="text-[14px] md:text-[15px] text-muted-foreground leading-[1.7]">
-            Enter your email once and get immediate access to our entire resource library. Download what you need, when you need it.
-          </p>
-        </div>
+        <p className="text-[14px] md:text-[15px] text-muted-foreground leading-[1.7] max-w-[650px] mx-auto">
+          Enter your email once and get immediate access to our entire resource library. Download what you need, when you need it.
+        </p>
       </div>
     </section>
   );
