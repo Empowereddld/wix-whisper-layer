@@ -12,7 +12,7 @@ const OrganizationsAwarenessSection = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-16 items-start">
           {/* Left — layered image composition (tablet/desktop) */}
-          <div className="relative hidden md:block md:h-[380px] lg:h-[520px]">
+          <div className="relative hidden md:block h-auto lg:h-[520px] items-start">
             {/* Back card — desktop only */}
             <div
               className="hidden lg:block absolute top-0 left-0 w-[72%] z-10 animate-float-gentle"
