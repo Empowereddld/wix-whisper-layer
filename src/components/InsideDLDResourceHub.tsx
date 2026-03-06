@@ -118,7 +118,7 @@ const AnimatedResources = ({
               >
                 <img
                   src={testimonial.src}
-                  alt={testimonial.name}
+                  alt={testimonial.title}
                   className="h-full w-full rounded-3xl object-cover object-center"
                   draggable={false}
                 />
@@ -136,14 +136,14 @@ const AnimatedResources = ({
             exit={{ y: -20, opacity: 0 }}
             transition={{ duration: 0.2, ease: "easeInOut" }}
           >
-            <h3 className="text-2xl font-bold text-foreground">
-              {items[active].name}
-            </h3>
-            <p className="text-sm text-muted-foreground">
-              {items[active].designation}
+            <p className="text-sm font-semibold text-primary uppercase tracking-wide">
+              {items[active].subheading}
             </p>
-            <motion.p className="text-lg text-muted-foreground mt-8 leading-relaxed">
-              {items[active].quote.split(" ").map((word, index) => (
+            <h3 className="text-2xl font-bold text-foreground mt-1">
+              {items[active].title}
+            </h3>
+            <motion.p className="text-lg text-muted-foreground mt-6 leading-relaxed">
+              {items[active].description.split(" ").map((word, index) => (
                 <motion.span
                   key={index}
                   initial={{ filter: "blur(10px)", opacity: 0, y: 5 }}
