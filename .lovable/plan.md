@@ -1,14 +1,18 @@
 
 
-## Shift Image Focus to Worker & Kids on Floor
+## Plan: Zoom out the image in "Is This Right" section
 
-The `orgKids` image currently uses `object-bottom` on tablet and `object-center` on desktop, which likely shows the background people rather than the worker and kids playing on the floor.
+The image currently uses `object-cover` which crops tightly into the center of the photo, cutting off the reading activity. To "zoom out" while keeping the same frame size, we can use CSS `object-fit: contain` instead — but that would leave empty space.
 
-### Change in `OrganizationsAwarenessSection.tsx`:
+A better approach: keep `object-cover` but use `object-position` to show more of the image, combined with scaling. Specifically:
 
-1. **Tablet image (line 42)**: Change `object-bottom` to `object-[center_70%]` (or similar) to shift the visible crop area toward the foreground subjects (worker + kids on the floor)
-2. **Desktop image (line 42)**: Change `lg:object-center` to `lg:object-[center_60%]` to similarly focus on the lower-center area where the activity is happening
-3. **Mobile image (line 83)**: Apply the same `object-[center_70%]` positioning so the focal point is consistent across all breakpoints
+### Change in `src/components/IsThisRightSection.tsx` (line 16)
 
-The exact percentage may need fine-tuning, but `object-position: center 65-70%` should shift the crop to emphasize the foreground group rather than the standing people in the background.
+On the `<img>` element, add a CSS `scale` transform to shrink the image within its container, effectively zooming out while the container stays the same size. We'll use Tailwind's `scale-[0.85]` (or similar) combined with `object-contain` to ensure the full image is visible:
+
+- Change `object-cover` → `object-contain` so the entire image is visible without cropping
+- Add `object-center` to keep it centered
+- The container with `rounded-xl overflow-hidden` maintains the same frame size and shape
+
+This shows the full scene (people reading) within the exact same container dimensions.
 

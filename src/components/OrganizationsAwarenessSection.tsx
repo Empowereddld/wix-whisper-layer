@@ -39,7 +39,7 @@ const OrganizationsAwarenessSection = () => {
                 <img
                   src={orgKids}
                   alt="Children engaged in learning activities"
-                  className="w-full h-full object-cover object-bottom lg:object-center lg:aspect-[4/5]"
+                  className="w-full h-full object-cover object-[center_70%] lg:object-[center_60%] lg:aspect-[4/5]"
                 />
               </div>
             </div>
@@ -80,7 +80,7 @@ const OrganizationsAwarenessSection = () => {
                 <img
                   src={orgKids}
                   alt="Children engaged in learning activities"
-                  className="w-full h-auto object-cover aspect-[4/5]"
+                  className="w-full h-auto object-cover object-[center_70%] aspect-[4/5]"
                 />
               </div>
             </div>
