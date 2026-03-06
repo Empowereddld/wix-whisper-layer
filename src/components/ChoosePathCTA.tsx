@@ -9,8 +9,8 @@ const paths = [
 
 const ChoosePathCTA = () => {
   return (
-    <section className="bg-black text-white py-16 md:py-24">
-      <div className="container px-6 md:px-8 flex flex-col gap-8">
+    <section className="bg-black text-white py-20 md:py-32">
+      <div className="container px-6 md:px-8 flex flex-col gap-6 items-center">
         <p className="text-[11px] md:text-[12px] font-bold uppercase tracking-[0.22em] text-white/60 text-center">
           CHOOSE YOUR PATH
         </p>
