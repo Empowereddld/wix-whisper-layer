@@ -9,6 +9,7 @@ import WhoWeServe from "./pages/WhoWeServe";
 import ForParents from "./pages/ForParents";
 import ForTherapists from "./pages/ForTherapists";
 import ForEducators from "./pages/ForEducators";
+import ForOrganizations from "./pages/ForOrganizations";
 import NotFound from "./pages/NotFound";
 import HubSignup from "./pages/hub/HubSignup";
 import HubLogin from "./pages/hub/HubLogin";
