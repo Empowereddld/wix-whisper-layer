@@ -14,25 +14,22 @@ const TherapistsFamiliarSection = () => {
       <div className="container px-6 md:px-8">
         <div className="max-w-[650px]">
           <p className="text-[14px] md:text-[15px] text-muted-foreground leading-[1.7] mb-6">
-            Your clients need materials that represent their experience — but most resources about language disorders weren't designed with DLD in mind. You're working with multilingual families, neurodiverse children, and kids who've never seen themselves in a book about communication.
+            Your clients with DLD need materials that represent their experiences, work for multilingual families, and help explain language challenges in ways kids and parents can understand. But most resources:
           </p>
 
-          <p className="text-[14px] md:text-[15px] text-muted-foreground font-semibold mb-3">
-            Sound familiar?
-          </p>
           <ul className="list-disc pl-5 space-y-2 text-[14px] md:text-[15px] text-muted-foreground leading-[1.7] mb-6">
-            <li>Existing materials are expensive and time-consuming to adapt</li>
-            <li>Resources don't reflect the diverse populations you serve</li>
-            <li>Available books are too clinical for therapy sessions with kids</li>
-            <li>Most materials are only available in English</li>
+            <li>Are expensive and time-consuming to create yourself</li>
+            <li>Don't reflect the diverse populations on your caseload</li>
+            <li>Use language too clinical for families to understand</li>
+            <li>Only exist in English</li>
           </ul>
 
           <p className="text-[14px] md:text-[15px] text-muted-foreground leading-[1.7] mb-6">
-            You've spent hours creating your own materials, searching for the right tools, and adapting resources that weren't built for your caseload.
+            You're spending hours creating materials that should already exist. Your multilingual families leave empty-handed because nothing works in their language. Parents don't understand the handouts you send home.
           </p>
 
           <p className="text-[14px] md:text-[15px] text-muted-foreground leading-[1.7]">
-            You need real tools — created by clinicians and educators who understand the daily challenges of working with children with DLD.
+            You need tools that work for the real families sitting in your therapy room.
           </p>
         </div>
       </div>

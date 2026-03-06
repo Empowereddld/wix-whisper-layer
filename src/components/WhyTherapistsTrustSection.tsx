@@ -4,23 +4,23 @@ import boyReadingBench from "@/assets/boy-reading-bench.png";
 const trustPoints = [
   {
     title: "Designed for real-world practice",
-    description: "Every resource is built for actual therapy sessions — not just theory. Use them directly with clients from day one.",
+    description: "Created by clinicians and educators who understand school and clinic workflows.",
   },
   {
     title: "Evidence-based approach",
-    description: "Created by a certified SLP and experienced educator, grounded in current research on DLD and language intervention.",
+    description: "Partnering with university researchers on DLD intervention programs, including pilot affinity group curriculum. Grounded in speech-language pathology research.",
   },
   {
     title: "Serves diverse populations",
-    description: "Books and materials featuring characters from different backgrounds, available in 7+ languages to match your caseload.",
+    description: "Resources in 8+ languages (Farsi, Arabic, Spanish, Chinese, French, Czech, Welsh, English) with representation that reflects your real caseload.",
   },
   {
     title: "Saves you prep time",
-    description: "Stop spending hours creating materials from scratch. Our ready-to-use resources let you focus on what matters — your clients.",
+    description: "Ready-to-use books, guides, and tools. Spend less time creating materials, more time with clients.",
   },
   {
-    title: "Families can use them too",
-    description: "Share books and guides with parents to reinforce therapy goals at home. Multilingual options ensure every family can participate.",
+    title: "Families can use them",
+    description: "Bridges the gap between clinic and home practice without requiring parent training.",
   },
 ];
 
