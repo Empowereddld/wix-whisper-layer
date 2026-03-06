@@ -24,7 +24,7 @@ const OrganizationsAwarenessSection = () => {
 
             {/* Front card */}
             <div
-              className="absolute bottom-0 right-0 w-[70%] md:w-[72%] z-20 animate-float-gentle-alt"
+              className="relative lg:absolute bottom-0 right-0 w-[85%] md:w-[70%] lg:w-[72%] z-20 lg:animate-float-gentle-alt"
               style={{ transform: "rotate(1deg)" }}
             >
               <div className="rounded-2xl overflow-hidden" style={{ boxShadow: "var(--shadow-elevated)" }}>
