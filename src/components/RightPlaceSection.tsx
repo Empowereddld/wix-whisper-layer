@@ -2,7 +2,7 @@ import familyStudying from "@/assets/family-studying.png";
 
 const RightPlaceSection = () => {
   return (
-    <section className="py-10 md:py-16 lg:py-[120px]">
+    <section className="pt-4 md:pt-6 lg:pt-10 pb-10 md:pb-16 lg:pb-[120px]">
       <div className="container px-6 md:px-8">
         {/* Full-width title */}
         <h2 className="text-[24px] md:text-[34px] lg:text-[46px] font-black leading-[1.12] mb-6 md:mb-8 lg:mb-10">
