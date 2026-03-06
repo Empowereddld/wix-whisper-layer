@@ -2,7 +2,7 @@ import orgKids from "@/assets/org-kids.png";
 
 const OrganizationsAwarenessSection = () => {
   return (
-    <section className="py-10 md:py-16 lg:py-[120px]">
+    <section className="py-10 md:py-16 lg:py-[120px] bg-secondary">
       <div className="container px-6 md:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start">
           {/* Left — image */}
