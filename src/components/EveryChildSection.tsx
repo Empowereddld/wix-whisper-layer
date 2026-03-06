@@ -7,7 +7,7 @@ const EveryChildSection = () => {
       <div className="container px-6 md:px-8">
         <div className="relative">
           {/* Gray card background */}
-          <div className="bg-muted rounded-xl md:rounded-2xl md:w-[65%] py-14 md:py-20 px-8 md:px-16">
+          <div className="bg-muted rounded-xl lg:rounded-2xl lg:w-[65%] py-14 lg:py-20 px-8 lg:px-16">
             <h2 className="text-[28px] md:text-[42px] font-black text-foreground mb-5 leading-[1.12] max-w-[480px]">
               Every Child Deserves to Be Understood
             </h2>
@@ -23,11 +23,11 @@ const EveryChildSection = () => {
           </div>
 
           {/* Image — overlaps the card on the right */}
-          <div className="mt-6 md:mt-0 md:absolute md:right-0 md:top-1/2 md:-translate-y-1/2 md:w-[36%] rounded-xl overflow-hidden shadow-lg">
+          <div className="mt-6 lg:mt-0 lg:absolute lg:right-0 lg:top-1/2 lg:-translate-y-1/2 lg:w-[36%] rounded-xl overflow-hidden shadow-lg max-h-[300px] lg:max-h-none">
             <img
               src={boyThinking}
               alt="A thoughtful child resting their chin on their hand"
-              className="w-full h-auto object-cover aspect-[4/3] md:aspect-[3/4]"
+              className="w-full h-auto object-cover aspect-[4/3] lg:aspect-[3/4]"
             />
           </div>
         </div>

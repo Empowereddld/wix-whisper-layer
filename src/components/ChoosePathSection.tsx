@@ -54,7 +54,7 @@ const ChoosePathSection = () => {
               <img
                 src={path.icon}
                 alt={path.title}
-                className="w-[108px] h-[108px] object-contain mb-5 -m-3"
+                className="w-[108px] h-[108px] object-contain mb-5"
               />
               <h3 className="text-[18px] md:text-[20px] font-bold text-foreground mb-2 leading-[1.25]">{path.title}</h3>
               <p className="text-[13px] text-muted-foreground mb-6 flex-1 leading-[1.65]">{path.description}</p>

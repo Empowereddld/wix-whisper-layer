@@ -11,7 +11,7 @@ const ChoosePathCTA = () => {
   return (
     <section className="bg-black text-white py-16 md:py-24">
       <div className="container px-6 md:px-8 flex flex-col gap-8">
-        <p className="text-[11px] md:text-[12px] font-bold uppercase tracking-[0.22em] text-white/60">
+        <p className="text-[11px] md:text-[12px] font-bold uppercase tracking-[0.22em] text-white/60 text-center">
           CHOOSE YOUR PATH
         </p>
         <h2 className="text-[28px] md:text-[46px] font-black leading-[1.15] max-w-[700px] mx-auto text-center">

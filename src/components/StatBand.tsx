@@ -5,7 +5,7 @@ const StatBand = () => {
   return (
     <section className="bg-foreground text-background">
       <div className="container flex flex-col md:flex-row md:items-start md:justify-between gap-6 py-10 md:py-16 px-6 md:px-8">
-        <h2 className="text-[18px] md:text-[42px] font-bold leading-[1.15] max-w-[320px]">
+        <h2 className="text-[18px] sm:text-[28px] md:text-[42px] font-bold leading-[1.15] max-w-[320px]">
           What affects 1 in 14 people?
         </h2>
         <div className="max-w-md flex flex-col gap-6">
