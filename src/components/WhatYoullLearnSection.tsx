@@ -26,7 +26,7 @@ const WhatYoullLearnSection = () => {
       <div className="container px-6 md:px-8">
         <div className="text-center mb-10 md:mb-14">
           <h2 className="text-[28px] md:text-[38px] lg:text-[46px] font-black text-foreground leading-[1.1] mb-3">
-            WHAT YOU'LL LEARN
+            What You'll Learn
           </h2>
           <p className="text-[14px] md:text-[15px] text-muted-foreground">
             Everything You Need to Support Communication With Confidence
