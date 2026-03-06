@@ -1,17 +1,24 @@
 import kidsPlayingSoccer from "@/assets/kids-playing-soccer.png";
+import { useScrollFadeIn } from "@/hooks/useScrollFadeIn";
 
 const TherapistsRightPlaceSection = () => {
+  const headingFade = useScrollFadeIn();
+  const imageFade = useScrollFadeIn({ delay: 100 });
+  const textFade = useScrollFadeIn({ delay: 150 });
+
   return (
     <section className="pt-4 md:pt-6 lg:pt-10 pb-4 md:pb-8 lg:pb-16">
       <div className="container px-6 md:px-8">
         {/* Full-width title */}
-        <h2 className="text-[20px] md:text-[28px] lg:text-[38px] font-black leading-[1.12] mb-6 md:mb-8 lg:mb-10">
-          You're in the right<br className="hidden md:block" /> place if...
-        </h2>
+        <div ref={headingFade.ref} className={headingFade.className}>
+          <h2 className="text-[20px] md:text-[28px] lg:text-[38px] font-black leading-[1.12] mb-6 md:mb-8 lg:mb-10">
+            You're in the right<br className="hidden md:block" /> place if...
+          </h2>
+        </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 lg:gap-12 items-stretch">
           {/* Left — image */}
-          <div className="rounded-xl overflow-hidden order-2 lg:order-1">
+          <div ref={imageFade.ref} className={`rounded-xl overflow-hidden order-2 lg:order-1 ${imageFade.className}`}>
             <img
               src={kidsPlayingSoccer}
               alt="Kids playing soccer together"
@@ -20,7 +27,7 @@ const TherapistsRightPlaceSection = () => {
           </div>
 
           {/* Right — text content */}
-          <div className="flex flex-col justify-start pt-0 md:pt-2 order-1 lg:order-2">
+          <div ref={textFade.ref} className={`flex flex-col justify-start pt-0 md:pt-2 order-1 lg:order-2 ${textFade.className}`}>
             <p className="text-[14px] md:text-[15px] lg:text-[16px] font-semibold text-foreground mb-3 md:mb-4">
               You're a parent who:
             </p>

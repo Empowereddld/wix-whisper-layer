@@ -1,4 +1,5 @@
 import { ChevronRight } from "lucide-react";
+import { useScrollFadeIn } from "@/hooks/useScrollFadeIn";
 
 const cards = [
   {
@@ -39,11 +40,39 @@ const cards = [
   },
 ];
 
+const CardItem = ({ card, index }: { card: typeof cards[0]; index: number }) => {
+  const cardFade = useScrollFadeIn({ delay: index * 80 });
+  return (
+    <div
+      ref={cardFade.ref}
+      className={`group bg-lavender border border-border/30 rounded-lg p-6 md:p-8 lg:p-10 flex flex-col min-h-[220px] md:min-h-[260px] transition-all duration-300 hover:shadow-lg hover:-translate-y-1 ${cardFade.className}`}
+    >
+      <div>
+        <h3 className="text-[20px] md:text-[24px] font-black text-foreground mb-4 text-center max-w-[180px] mx-auto min-h-[56px] md:min-h-[64px]">
+          {card.title}
+        </h3>
+        <p className="text-[13px] md:text-[14px] text-muted-foreground leading-[1.7]">
+          {card.description}
+        </p>
+      </div>
+      <a
+        href={card.href}
+        className="inline-flex items-center gap-1 text-[11px] md:text-[12px] font-bold uppercase tracking-[0.12em] text-foreground hover:text-primary transition-colors mt-6"
+      >
+        {card.link}
+        <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+      </a>
+    </div>
+  );
+};
+
 const HowWeSupportTherapistsSection = () => {
+  const headingFade = useScrollFadeIn();
+
   return (
     <section className="py-10 md:py-16 lg:py-[120px]">
       <div className="container px-6 md:px-8">
-        <div className="mb-8 md:mb-10 lg:mb-14">
+        <div ref={headingFade.ref} className={`mb-8 md:mb-10 lg:mb-14 ${headingFade.className}`}>
           <h2 className="text-[28px] md:text-[38px] lg:text-[46px] font-black text-foreground leading-[1.1] mb-3">
             How We Support Therapists
           </h2>
@@ -53,27 +82,8 @@ const HowWeSupportTherapistsSection = () => {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6 lg:gap-8">
-          {cards.map((card) => (
-            <div
-              key={card.title}
-              className="bg-lavender border border-border/30 rounded-lg p-6 md:p-8 lg:p-10 flex flex-col min-h-[220px] md:min-h-[260px]"
-            >
-              <div>
-                <h3 className="text-[20px] md:text-[24px] font-black text-foreground mb-4 text-center max-w-[180px] mx-auto min-h-[56px] md:min-h-[64px]">
-                  {card.title}
-                </h3>
-                <p className="text-[13px] md:text-[14px] text-muted-foreground leading-[1.7]">
-                  {card.description}
-                </p>
-              </div>
-              <a
-                href={card.href}
-                className="inline-flex items-center gap-1 text-[11px] md:text-[12px] font-bold uppercase tracking-[0.12em] text-foreground hover:text-primary transition-colors mt-6"
-              >
-                {card.link}
-                <ChevronRight className="w-4 h-4" />
-              </a>
-            </div>
+          {cards.map((card, i) => (
+            <CardItem key={card.title} card={card} index={i} />
           ))}
         </div>
       </div>
