@@ -2,7 +2,7 @@ import { ChevronRight } from "lucide-react";
 
 const PartnershipPackagesSection = () => {
   return (
-    <section className="py-10 md:py-16 lg:py-[80px]">
+    <section className="py-10 md:py-16 lg:py-[80px] bg-muted">
       <div className="container px-6 md:px-8">
         <div className="mb-8 md:mb-10 lg:mb-14 text-center">
           <h2 className="text-[28px] md:text-[38px] lg:text-[46px] font-black text-foreground leading-[1.1] mb-3">
