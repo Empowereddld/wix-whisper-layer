@@ -1,5 +1,6 @@
 import { Check } from "lucide-react";
 import boyReadingBench from "@/assets/boy-reading-bench.png";
+import { useScrollFadeIn } from "@/hooks/useScrollFadeIn";
 
 const trustPoints = [
   {
@@ -25,12 +26,15 @@ const trustPoints = [
 ];
 
 const WhyTherapistsTrustSection = () => {
+  const contentFade = useScrollFadeIn();
+  const imageFade = useScrollFadeIn({ delay: 200 });
+
   return (
     <section className="py-10 md:py-16 lg:py-[120px] bg-lavender">
       <div className="container px-6 md:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_0.8fr] gap-8 lg:gap-16 items-start">
           {/* Left — heading + checklist */}
-          <div>
+          <div ref={contentFade.ref} className={contentFade.className}>
             <h2 className="text-[24px] md:text-[34px] lg:text-[46px] font-black text-foreground leading-[1.12] mb-6 md:mb-10">
               Why Therapists Trust Empowered DLD
             </h2>
@@ -53,7 +57,7 @@ const WhyTherapistsTrustSection = () => {
           </div>
 
           {/* Right — image */}
-          <div className="rounded-xl overflow-hidden lg:sticky lg:top-8">
+          <div ref={imageFade.ref} className={`rounded-xl overflow-hidden lg:sticky lg:top-8 ${imageFade.className}`}>
             <img
               src={boyReadingBench}
               alt="A boy reading a book on a bench"

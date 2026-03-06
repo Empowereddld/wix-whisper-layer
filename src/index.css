@@ -144,4 +144,14 @@
     box-shadow: var(--shadow-card-hover);
     transform: translateY(-2px);
   }
+
+  .fade-in-section {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+  .fade-in-section.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
