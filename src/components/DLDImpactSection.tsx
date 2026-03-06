@@ -189,7 +189,7 @@ const DLDImpactSection = () => {
                 return (
                   <div
                     key={card.title}
-                    className="absolute inset-0 bg-lavender border border-border/30 rounded-xl p-8 md:p-10 shadow-[var(--shadow-elevated)] transition-all duration-500 ease-out"
+                    className="absolute inset-0 bg-lavender border border-border/30 rounded-xl p-8 md:p-10 shadow-[var(--shadow-elevated)] transition-all duration-100 ease-out"
                     style={{
                       transform,
                       opacity,
