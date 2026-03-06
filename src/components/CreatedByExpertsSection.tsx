@@ -22,7 +22,7 @@ const CreatedByExpertsSection = () => {
               Together, they bring real-world classroom experience and clinical expertise to help you support children with DLD in ways that actually work.
             </p>
             <a href="/who-we-serve">
-              <Button className="h-[50px] px-8 rounded-md text-[11px] font-bold uppercase tracking-[0.14em] shadow-[0_2px_8px_hsl(258_50%_50%/0.2)] hover:shadow-[0_4px_14px_hsl(258_50%_50%/0.25)] hover:brightness-[0.96] transition-all duration-300">
+              <Button className="h-[50px] px-8 rounded-md bg-deep-purple text-deep-purple-foreground hover:bg-deep-purple/90 text-[11px] font-bold uppercase tracking-[0.14em] shadow-[0_2px_8px_hsl(258_50%_50%/0.2)] hover:shadow-[0_4px_14px_hsl(258_50%_50%/0.25)] hover:brightness-[0.96] transition-all duration-300">
                 Find What Works For You
               </Button>
             </a>
