@@ -28,7 +28,7 @@ const WhySchoolsChooseSection = () => {
           Why Schools Choose Empowered DLD
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_0.8fr] gap-8 md:gap-16 items-stretch overflow-hidden">
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_0.8fr] gap-8 md:gap-16 items-start overflow-hidden">
           <div className="flex flex-col gap-4 md:gap-6">
               {trustPoints.map((point) => (
                 <div key={point.title} className="flex gap-3 items-start">
@@ -45,7 +45,7 @@ const WhySchoolsChooseSection = () => {
               ))}
           </div>
 
-          <div className="rounded-lg overflow-hidden min-w-0">
+          <div className="rounded-lg overflow-hidden min-w-0 max-w-sm mx-auto md:max-w-none max-h-[300px] md:max-h-[400px] lg:max-h-[500px]">
             <img
               src={educatorsTrust}
               alt="An educator working with a student"
