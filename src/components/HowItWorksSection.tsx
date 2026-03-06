@@ -55,6 +55,7 @@ const HowItWorksSection = () => {
                     src={step.image}
                     alt={step.alt}
                     className="w-full h-auto object-cover aspect-[16/9] md:aspect-[4/3] max-h-[250px] md:max-h-[320px] lg:max-h-none"
+                    loading="lazy"
                   />
                 </div>
                 <div className={isEven ? "lg:order-1" : ""}>

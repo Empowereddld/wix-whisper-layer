@@ -28,7 +28,7 @@ const Footer = () => {
           {/* Brand */}
           <div className="col-span-2 lg:col-span-1">
             <div className="h-12 mb-5 overflow-y-hidden overflow-x-visible">
-              <img src={logoWhite} alt="EmpoweredDLD logo" className="h-48 -mt-[4.35rem] ml-0" style={{ objectFit: 'contain', objectPosition: 'left' }} />
+              <img src={logoWhite} alt="EmpoweredDLD logo" className="h-48 -mt-[4.35rem] ml-0" style={{ objectFit: 'contain', objectPosition: 'left' }} loading="lazy" />
             </div>
             <p className="text-[13px] text-primary-foreground/50 leading-relaxed">
               Supporting 4,000+ families and professionals with evidence-based resources, multilingual materials, and community connection for children with Developmental Language Disorder.

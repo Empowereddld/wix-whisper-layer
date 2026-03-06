@@ -95,7 +95,8 @@ const Podcasts = () => {
                     <img
                       src={ep.image}
                       alt={ep.title}
-                      className="w-full h-full object-cover aspect-[16/9] lg:aspect-auto"
+                     className="w-full h-full object-cover aspect-[16/9] lg:aspect-auto"
+                     loading="lazy"
                     />
                   </div>
 

@@ -64,6 +64,7 @@ const RealityOfDLDSection = () => {
                 src={fact.icon}
                 alt=""
                 className="w-[100px] h-[100px] md:w-[120px] md:h-[120px] object-contain mb-5 rounded-full"
+                loading="lazy"
               />
               <h3 className="text-[16px] md:text-[18px] font-bold text-foreground mb-2 leading-[1.25]">
                 {fact.title}

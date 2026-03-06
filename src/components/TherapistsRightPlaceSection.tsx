@@ -22,7 +22,8 @@ const TherapistsRightPlaceSection = () => {
             <img
               src={kidsPlayingSoccer}
               alt="Kids playing soccer together"
-              className="w-full h-full object-cover max-h-[220px] md:max-h-[300px] lg:max-h-none lg:h-full aspect-[16/9] lg:aspect-auto"
+               className="w-full h-full object-cover max-h-[220px] md:max-h-[300px] lg:max-h-none lg:h-full aspect-[16/9] lg:aspect-auto"
+               loading="lazy"
             />
           </div>
 

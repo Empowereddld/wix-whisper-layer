@@ -15,6 +15,7 @@ const EducatorsDLDAwarenessCTA = () => {
             src={workshopBg}
             alt=""
             className="absolute inset-0 w-full h-full object-cover"
+            loading="lazy"
           />
           <div className="absolute inset-0 bg-black/70" />
           <div className="relative z-10 px-8 md:px-16 py-14 md:py-20 text-center">
