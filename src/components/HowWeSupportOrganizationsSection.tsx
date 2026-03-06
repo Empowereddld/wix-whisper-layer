@@ -40,7 +40,7 @@ const HowWeSupportOrganizationsSection = () => {
               key={card.title}
               className="bg-secondary border border-border/30 rounded-lg p-8 lg:p-10 flex flex-col h-full"
             >
-              <h3 className="text-[18px] md:text-[20px] font-black text-foreground mb-4 text-center">
+              <h3 className="text-[18px] md:text-[20px] font-black text-foreground mb-4 text-center lg:min-h-[56px] flex items-center justify-center">
                 {card.title}
               </h3>
               <p className="text-[13px] md:text-[14px] text-muted-foreground leading-[1.7] flex-1">
