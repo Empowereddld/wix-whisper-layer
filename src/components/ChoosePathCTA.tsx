@@ -15,9 +15,11 @@ const ChoosePathCTA = () => {
           CHOOSE YOUR PATH
         </p>
         <h2 className="text-[28px] md:text-[46px] font-black leading-[1.15] max-w-[700px] mx-auto text-center">
-          Ready to Get Started?<br />
-          Find resources made specifically for you.
+          Ready to Get Started?
         </h2>
+        <p className="text-[15px] md:text-[18px] text-white/70 text-center max-w-[500px] mx-auto -mt-2">
+          Find resources made specifically for you.
+        </p>
         <div className="flex flex-wrap justify-center gap-4 mt-2">
           {paths.map((p) => (
             <a
