@@ -36,10 +36,10 @@ const IsThisRightSection = () => {
 
             <div className="flex justify-center">
               <a
-                href="mailto:info@empowereddld.com"
+                href="#contact"
                 className="inline-block border border-foreground text-foreground px-8 md:px-10 py-3 md:py-4 text-[12px] md:text-[13px] font-bold tracking-wider uppercase hover:bg-foreground hover:text-background transition-colors"
               >
-                Book a Consultation
+                Book a Free Consultation
               </a>
             </div>
           </div>
