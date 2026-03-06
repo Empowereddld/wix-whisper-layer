@@ -5,7 +5,7 @@ const RightPlaceSection = () => {
     <section className="pt-4 md:pt-6 lg:pt-10 pb-10 md:pb-16 lg:pb-[120px]">
       <div className="container px-6 md:px-8">
         {/* Full-width title */}
-        <h2 className="text-[24px] md:text-[34px] lg:text-[46px] font-black leading-[1.12] mb-6 md:mb-8 lg:mb-10">
+        <h2 className="text-[20px] md:text-[28px] lg:text-[38px] font-black leading-[1.12] mb-6 md:mb-8 lg:mb-10">
           You're in the right<br className="hidden md:block" /> place if you're a parent who...
         </h2>
 
