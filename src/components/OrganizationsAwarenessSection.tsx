@@ -1,5 +1,5 @@
 import orgKids from "@/assets/org-kids.png";
-import orgCommunity from "@/assets/org-community.png";
+import orgWorkshopWood from "@/assets/org-workshop-wood.png";
 
 const OrganizationsAwarenessSection = () => {
   return (
@@ -15,7 +15,7 @@ const OrganizationsAwarenessSection = () => {
             >
               <div className="rounded-2xl overflow-hidden shadow-lg">
                 <img
-                  src={orgCommunity}
+                  src={orgWorkshopWood}
                   alt="Community members collaborating together"
                   className="w-full h-auto object-cover aspect-[4/5]"
                 />
