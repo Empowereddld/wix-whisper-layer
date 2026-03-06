@@ -121,12 +121,12 @@ const Header = () => {
               <div key={link.label}>
                 <button
                   className="flex items-center justify-between w-full text-[14px] font-semibold text-foreground py-1"
-                  onClick={() => setMobileSubOpen(!mobileSubOpen)}
+                  onClick={() => setMobileSubOpen(mobileSubOpen === link.label ? null : link.label)}
                 >
                   {link.label}
-                  <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${mobileSubOpen ? "rotate-180" : ""}`} />
+                  <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${mobileSubOpen === link.label ? "rotate-180" : ""}`} />
                 </button>
-                {mobileSubOpen && (
+                {mobileSubOpen === link.label && (
                   <div className="pl-4 flex flex-col gap-2 mt-2">
                     {link.children.map((child) => (
                       <Link
