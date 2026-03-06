@@ -1,18 +1,39 @@
 
 
-## Plan: Zoom out the image in "Is This Right" section
+## Redesign DLDImpactSection as Stacked Sticky Card Scroll
 
-The image currently uses `object-cover` which crops tightly into the center of the photo, cutting off the reading activity. To "zoom out" while keeping the same frame size, we can use CSS `object-fit: contain` instead — but that would leave empty space.
+### Concept
+Replace the current 3-column grid with a scroll-driven stacked card experience. On desktop, a sticky container holds 6 cards that peel away one by one as the user scrolls, revealing the next card underneath. Each card is a compact, centered rectangle with a circular icon, bold headline, and short text.
 
-A better approach: keep `object-cover` but use `object-position` to show more of the image, combined with scaling. Specifically:
+### Scroll Mechanics
+- The outer section gets a tall height (~300vh) to create scroll runway
+- A sticky inner container (`position: sticky; top: ~20vh`) centers in the viewport
+- Each card is absolutely positioned in the stack; as the user scrolls, a `useEffect` with `scroll` listener calculates which card is active
+- The active card stays put; cards above it translate upward (e.g., `translateY(-120%)`) with a slight rotation, revealing the next card
+- Cards below remain stacked with subtle offsets (2-4px vertical, 0.5-1deg rotation) to create the "deck" feel
 
-### Change in `src/components/IsThisRightSection.tsx` (line 16)
+### Card Styling (brand-consistent)
+- `bg-lavender` (existing token) background, `border border-border/30`, `rounded-xl`, soft `shadow-card` elevation
+- Circular icon container: `bg-primary/10` with `text-primary` icons (existing pattern)
+- Headlines: `text-foreground font-black` (midnight-dark)
+- Body text: `text-muted-foreground` (stone-like)
+- Subtle alternating rotation on stacked cards: `-0.5deg`, `0.3deg`, `-0.2deg` etc.
+- Card width: `max-w-[480px]` centered, compact height
 
-On the `<img>` element, add a CSS `scale` transform to shrink the image within its container, effectively zooming out while the container stays the same size. We'll use Tailwind's `scale-[0.85]` (or similar) combined with `object-contain` to ensure the full image is visible:
+### Content Update
+Replace the 6 cards with the user's provided content, using appropriate lucide icons:
+1. "1 in 14 People Have DLD" — BarChart3
+2. "6x Higher Mental Health Risk" — Heart
+3. "Systematically Overlooked" — Eye (or EyeOff)
+4. "Social Isolation" — Users
+5. "Increased School Dropout Risk" — GraduationCap
+6. "Lower Employment Outcomes" — Briefcase
 
-- Change `object-cover` → `object-contain` so the entire image is visible without cropping
-- Add `object-center` to keep it centered
-- The container with `rounded-xl overflow-hidden` maintains the same frame size and shape
+### Responsive Behavior
+- **Desktop (lg+)**: Full sticky stacked card scroll effect
+- **Tablet (md)**: Stacked vertical feel with reduced scroll runway (~200vh), same sticky behavior but tighter spacing
+- **Mobile**: Simple vertical card list, no sticky behavior, cards stack naturally with `space-y-5`
 
-This shows the full scene (people reading) within the exact same container dimensions.
+### Changes
+- **`src/components/DLDImpactSection.tsx`**: Complete rewrite with scroll-driven stacked card logic using `useState`, `useEffect`, and scroll position calculations. No external dependencies needed.
 
