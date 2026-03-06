@@ -2,7 +2,7 @@ import motherDaughterReading from "@/assets/mother-daughter-reading.png";
 
 const ForParentsHero = () => {
   return (
-    <section className="py-10 md:py-16 lg:py-[120px]">
+    <section className="pt-6 md:pt-10 lg:pt-16 pb-10 md:pb-16 lg:pb-[120px]">
       <div className="container px-6 md:px-8">
         <div className="relative">
           {/* Gray card background */}
