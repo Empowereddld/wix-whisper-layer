@@ -16,13 +16,13 @@ const GlobalCommunitySection = () => {
           Empowered DLD is growing every day. Here's where we are.
         </p>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-[900px] mx-auto">
+        <div className="grid grid-cols-2 gap-y-12 gap-x-8 max-w-[900px] mx-auto md:grid-cols-4 md:gap-8">
           {stats.map((stat) => (
             <div key={stat.label} className="flex flex-col items-center gap-2">
-              <span className="text-[36px] md:text-[48px] font-black text-foreground leading-none">
+              <span className="text-[40px] md:text-[48px] font-black text-foreground leading-none">
                 {stat.value}
               </span>
-              <p className="text-[13px] md:text-[14px] text-muted-foreground leading-[1.5]">
+              <p className="text-[13px] md:text-[14px] text-muted-foreground leading-[1.5] max-w-[180px]">
                 {stat.label}
               </p>
             </div>
