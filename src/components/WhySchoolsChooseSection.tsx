@@ -24,13 +24,12 @@ const WhySchoolsChooseSection = () => {
   return (
     <section className="py-10 md:py-16 lg:py-[120px] bg-lavender">
       <div className="container px-6 md:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_0.8fr] gap-8 md:gap-16 items-start">
-          <div>
-            <h2 className="text-[24px] md:text-[34px] lg:text-[46px] font-black text-foreground leading-[1.12] mb-6 md:mb-10">
-              Why Schools Choose Empowered DLD
-            </h2>
+        <h2 className="text-[24px] md:text-[34px] lg:text-[46px] font-black text-foreground leading-[1.12] mb-6 md:mb-10">
+          Why Schools Choose Empowered DLD
+        </h2>
 
-            <div className="flex flex-col gap-4 md:gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_0.8fr] gap-8 md:gap-16 items-start">
+          <div className="flex flex-col gap-4 md:gap-6">
               {trustPoints.map((point) => (
                 <div key={point.title} className="flex gap-3 items-start">
                   <Check className="w-5 h-5 text-primary mt-0.5 flex-shrink-0 stroke-[2.5]" />
@@ -44,7 +43,6 @@ const WhySchoolsChooseSection = () => {
                   </div>
                 </div>
               ))}
-            </div>
           </div>
 
           <div className="rounded-xl overflow-hidden bg-lavender">
