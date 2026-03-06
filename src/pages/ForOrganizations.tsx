@@ -2,6 +2,7 @@ import Header from "@/components/Header";
 import ForOrganizationsHero from "@/components/ForOrganizationsHero";
 import OrganizationsAwarenessSection from "@/components/OrganizationsAwarenessSection";
 import DLDImpactSection from "@/components/DLDImpactSection";
+import OrganizationsStrugglesCTA from "@/components/OrganizationsStrugglesCTA";
 import HowWeSupportOrganizationsSection from "@/components/HowWeSupportOrganizationsSection";
 import WhyOrganizationsChooseSection from "@/components/WhyOrganizationsChooseSection";
 import PartnershipPackagesSection from "@/components/PartnershipPackagesSection";
@@ -18,6 +19,7 @@ const ForOrganizations = () => {
         <ForOrganizationsHero />
         <OrganizationsAwarenessSection />
         <DLDImpactSection />
+        <OrganizationsStrugglesCTA />
         <HowWeSupportOrganizationsSection />
         <WhyOrganizationsChooseSection />
         <PartnershipPackagesSection />
