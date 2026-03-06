@@ -195,7 +195,7 @@ const InsideDLDResourceHub = () => {
           Everything is designed to be simple, clear, and ready to use right away.
         </p>
       </div>
-      <AnimatedTestimonials items={testimonials} autoplay />
+      <AnimatedResources items={resources} autoplay />
     </section>
   );
 };
