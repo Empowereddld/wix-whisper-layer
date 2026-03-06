@@ -38,19 +38,19 @@ const Header = () => {
   }, []);
 
   return (
-    <header className="sticky top-0 z-50 h-[70px] md:h-[90px] bg-background backdrop-blur-md border-b border-border/20">
-      <div className="container h-full flex items-center justify-between gap-4 md:gap-6">
-        <Link to="/" className="flex-shrink-0 ml-2 md:ml-4">
-          <img src={logoImage} alt="EmpoweredDLD" className="h-[140px] md:h-[183px] w-auto" />
+    <header className="sticky top-0 z-50 h-[70px] lg:h-[80px] bg-background backdrop-blur-md border-b border-border/20">
+      <div className="max-w-[1200px] mx-auto px-6 lg:px-10 h-full flex items-center justify-between gap-6">
+        <Link to="/" className="flex-shrink-0">
+          <img src={logoImage} alt="EmpoweredDLD" className="h-[120px] lg:h-[140px] w-auto" />
         </Link>
 
-        <nav className="hidden lg:flex items-center gap-6">
+        <nav className="hidden lg:flex items-center gap-8">
           {navLinks.map((link) =>
             link.children ? (
               <div key={link.label} className="relative flex items-center" ref={dropdownRef}>
                 <Link
                   to={link.href}
-                  className="text-[13px] font-medium tracking-[0.04em] text-foreground/80 hover:text-primary transition-colors duration-200"
+                  className="text-[13px] font-medium tracking-[0.06em] text-foreground/80 hover:text-primary transition-colors duration-200"
                 >
                   {link.label}
                 </Link>
