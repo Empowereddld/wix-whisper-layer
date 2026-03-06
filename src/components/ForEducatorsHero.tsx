@@ -4,8 +4,8 @@ const ForEducatorsHero = () => {
   return (
     <section className="pt-6 md:pt-10 lg:pt-16 pb-14 md:pb-16 lg:pb-16">
       <div className="container px-6 md:px-8">
-        <div className="relative">
-          <div className="bg-muted rounded-xl lg:rounded-2xl lg:w-[58%] py-10 md:py-14 lg:py-24 px-6 md:px-8 lg:px-16">
+        <div className="flex flex-col lg:flex-row lg:items-stretch lg:gap-6">
+          <div className="bg-muted rounded-xl lg:rounded-2xl lg:w-[58%] lg:flex-shrink-0 py-10 md:py-14 lg:py-24 px-6 md:px-8 lg:px-16">
             <span className="inline-block bg-deep-purple text-deep-purple-foreground text-[12px] md:text-[14px] lg:text-[16px] font-bold uppercase tracking-[0.14em] px-6 md:px-8 py-2 md:py-2.5 rounded-sm mb-4 md:mb-6">
               For Schools and Educators
             </span>
@@ -23,7 +23,7 @@ const ForEducatorsHero = () => {
             </a>
           </div>
 
-          <div className="mt-4 md:mt-6 lg:mt-0 lg:absolute lg:right-0 lg:top-0 lg:bottom-0 lg:w-[48%] rounded-xl lg:rounded-l-xl lg:rounded-r-none overflow-hidden shadow-lg max-h-[260px] md:max-h-[380px] lg:max-h-none">
+          <div className="mt-4 lg:mt-0 lg:flex-1 rounded-xl overflow-hidden shadow-lg max-h-[260px] md:max-h-[380px] lg:max-h-none">
             <img
               src={educatorsHero}
               alt="Children in a classroom learning together"
