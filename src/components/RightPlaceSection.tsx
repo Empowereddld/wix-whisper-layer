@@ -4,22 +4,23 @@ const RightPlaceSection = () => {
   return (
     <section className="py-10 md:py-16 lg:py-[120px]">
       <div className="container px-6 md:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 lg:gap-12 items-start">
+        {/* Full-width title */}
+        <h2 className="text-[24px] md:text-[34px] lg:text-[46px] font-black leading-[1.12] mb-6 md:mb-8 lg:mb-10">
+          You're in the right<br className="hidden md:block" /> place if...
+        </h2>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 lg:gap-12 items-stretch">
           {/* Left — image */}
           <div className="rounded-xl overflow-hidden order-2 lg:order-1">
             <img
               src={familyStudying}
               alt="Family studying together at a table"
-              className="w-full h-full object-cover max-h-[220px] md:max-h-[300px] lg:max-h-none aspect-[16/9] lg:aspect-auto"
+              className="w-full h-full object-cover max-h-[220px] md:max-h-[300px] lg:max-h-none lg:h-full aspect-[16/9] lg:aspect-auto"
             />
           </div>
 
           {/* Right — text content */}
-          <div className="flex flex-col justify-start pt-0 md:pt-2 max-w-[650px] order-1 lg:order-2">
-            <h2 className="text-[24px] md:text-[34px] lg:text-[46px] font-black leading-[1.12] mb-4 md:mb-6">
-              You're in the right<br className="hidden md:block" /> place if...
-            </h2>
-
+          <div className="flex flex-col justify-start pt-0 md:pt-2 order-1 lg:order-2">
             <p className="text-[13px] md:text-[14px] lg:text-[15px] text-muted-foreground leading-[1.7] mb-4 md:mb-6 underline underline-offset-4">
               you're a parent who:
             </p>
