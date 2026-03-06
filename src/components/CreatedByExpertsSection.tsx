@@ -29,10 +29,10 @@ const CreatedByExpertsSection = () => {
           </div>
 
           {/* Right – Founders photo + discover card */}
-          <div className="flex flex-col gap-6 items-center lg:items-end">
-            <div className="flex gap-4 items-start">
+          <div className="flex items-start justify-center lg:justify-end">
+            <div className="relative mr-0 lg:mr-4">
               {/* Course discover card */}
-              <div className="rounded-xl overflow-hidden shadow-lg max-w-[320px]">
+              <div className="rounded-xl overflow-hidden shadow-lg w-[260px] md:w-[300px]">
                 <img
                   src={courseDiscover}
                   alt="Inside Communicate with Confidence — course highlights"
@@ -40,8 +40,8 @@ const CreatedByExpertsSection = () => {
                   loading="lazy"
                 />
               </div>
-              {/* Founders photo */}
-              <div className="hidden md:block rounded-xl overflow-hidden w-[180px] h-[220px] shrink-0">
+              {/* Founders photo – overlapping top-right */}
+              <div className="hidden md:block absolute -top-4 left-[calc(100%-20px)] rounded-xl overflow-hidden w-[140px] h-[170px] shadow-lg">
                 <img
                   src={foundersPhoto}
                   alt="Jinean and Camesha, founders of Empowered DLD"
