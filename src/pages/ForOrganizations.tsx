@@ -7,7 +7,7 @@ import HowWeSupportOrganizationsSection from "@/components/HowWeSupportOrganizat
 import WhyOrganizationsChooseSection from "@/components/WhyOrganizationsChooseSection";
 import PartnershipPackagesSection from "@/components/PartnershipPackagesSection";
 import IsThisRightForOrgSection from "@/components/IsThisRightForOrgSection";
-import OrganizationsLeadFormSection from "@/components/OrganizationsLeadFormSection";
+
 import ResourceLibraryCTA from "@/components/ResourceLibraryCTA";
 import Footer from "@/components/Footer";
 
