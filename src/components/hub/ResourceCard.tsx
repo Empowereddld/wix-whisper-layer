@@ -1,5 +1,6 @@
 import { Download, Eye, FileText, Image, CheckSquare, BookOpen, Package, BarChart3 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 import type { Resource } from "@/hooks/useResources";
 
 const typeIcons: Record<string, React.ElementType> = {
@@ -43,6 +44,7 @@ const isNew = (createdAt: string) => {
 
 const ResourceCard = ({ resource, onView, onDownload, viewMode = "grid" }: ResourceCardProps) => {
   const Icon = typeIcons[resource.resource_type] || FileText;
+  const navigate = useNavigate();
 
   if (viewMode === "list") {
     return (
@@ -60,7 +62,7 @@ const ResourceCard = ({ resource, onView, onDownload, viewMode = "grid" }: Resou
           <p className="text-sm text-stone-ui line-clamp-1">{resource.description}</p>
         </div>
         <div className="flex gap-2 flex-shrink-0">
-          <Button size="sm" variant="outline" onClick={() => onView(resource)} className="border-thistle hover:bg-thistle/30">
+          <Button size="sm" variant="outline" onClick={() => navigate(`/hub/resource/${resource.id}`)} className="border-thistle hover:bg-thistle/30">
             <Eye className="h-4 w-4 mr-1" /> View
           </Button>
           <Button size="sm" onClick={() => onDownload(resource)} className="bg-midnight text-midnight-foreground hover:bg-midnight/90">
@@ -109,7 +111,7 @@ const ResourceCard = ({ resource, onView, onDownload, viewMode = "grid" }: Resou
             variant="outline"
             size="sm"
             className="flex-1 border-thistle hover:bg-thistle/30 hover:border-hub-lavender transition-all"
-            onClick={() => onView(resource)}
+            onClick={() => navigate(`/hub/resource/${resource.id}`)}
           >
             <Eye className="h-4 w-4 mr-1.5" /> View
           </Button>
