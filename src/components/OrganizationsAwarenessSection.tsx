@@ -35,7 +35,7 @@ const OrganizationsAwarenessSection = () => {
                 <img
                   src={orgKids}
                   alt="Children engaged in learning activities"
-                  className="w-full md:h-full lg:h-auto object-cover lg:aspect-[4/5]"
+                  className="w-full md:h-full lg:h-auto object-cover md:object-bottom lg:object-center lg:aspect-[4/5]"
                 />
               </div>
             </div>
