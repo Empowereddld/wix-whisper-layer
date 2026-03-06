@@ -1,16 +1,19 @@
 
 
-## Fix: Reduce gap between header and hero section on For Parents page
+## Update CTA labels in "How We Support Parents" cards
 
-The hero section has `lg:py-[120px]` top padding, which creates a large gap below the header. The fix is to reduce the **top** padding while keeping the bottom padding intact.
+The user wants to standardize the card link labels for consistency and polish. This is a single change in `src/components/HowWeSupportParentsSection.tsx` — updating the `link` values in the `cards` array.
 
-### Change in `src/components/ForParentsHero.tsx` (line 5):
+### Changes (lines 5-36 of `HowWeSupportParentsSection.tsx`):
 
-Replace the symmetric padding `py-10 md:py-16 lg:py-[120px]` with asymmetric padding that reduces the top:
+| Card | Current | New |
+|------|---------|-----|
+| Parent Workshops | Join Waiting List | Join Workshop Waitlist |
+| Books and Resources | Buy Now | Explore the Books |
+| Free Community | Join Here | Join the Community |
+| Free Resources | Learn More | Browse Resources |
+| Animated Podcast | YouTube | Watch the Podcast |
+| Educational App | Join Waiting List | Join the App Waitlist |
 
-```
-pt-6 md:pt-10 lg:pt-16 pb-10 md:pb-16 lg:pb-[120px]
-```
-
-This cuts the top spacing roughly in half while preserving the bottom spacing that separates this section from the next.
+Single file, six string changes. No layout or styling modifications needed.
 
