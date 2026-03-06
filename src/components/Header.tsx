@@ -29,8 +29,8 @@ const navLinks = [
 
 const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [mobileSubOpen, setMobileSubOpen] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [mobileSubOpen, setMobileSubOpen] = useState<string | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
