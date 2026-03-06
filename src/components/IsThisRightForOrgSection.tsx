@@ -2,7 +2,7 @@ import orgCommunity from "@/assets/org-community.png";
 
 const IsThisRightForOrgSection = () => {
   return (
-    <section className="pt-4 md:pt-6 lg:pt-10 pb-4 md:pb-8 lg:pb-16">
+    <section className="pt-4 md:pt-6 lg:pt-8 pb-4 md:pb-6 lg:pb-12">
       <div className="container px-6 md:px-8">
         {/* Full-width title */}
         <h2 className="text-[20px] md:text-[28px] lg:text-[38px] font-black leading-[1.12] mb-6 md:mb-8 lg:mb-10">

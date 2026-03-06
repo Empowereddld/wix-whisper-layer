@@ -2,7 +2,7 @@ import orgKids from "@/assets/org-kids.png";
 
 const OrganizationsAwarenessSection = () => {
   return (
-    <section className="py-10 md:py-16 lg:py-[120px] bg-secondary">
+    <section className="py-10 md:py-16 lg:py-[80px] bg-secondary">
       <div className="container px-6 md:px-8">
         {/* Mobile-only title */}
         <h2 className="md:hidden text-[28px] font-black text-foreground leading-[1.12] mb-8">
