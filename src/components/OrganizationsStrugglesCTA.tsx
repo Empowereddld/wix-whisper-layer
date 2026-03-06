@@ -4,7 +4,7 @@ const OrganizationsStrugglesCTA = () => {
       <div className="container px-6 md:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 lg:gap-12 items-stretch">
           {/* Left — Black card */}
-          <div className="bg-foreground rounded-xl lg:rounded-2xl flex flex-col justify-center items-center text-center px-10 py-16 lg:py-20 lg:px-14">
+          <div className="bg-deep-purple rounded-xl lg:rounded-2xl flex flex-col justify-center items-center text-center px-10 py-16 lg:py-20 lg:px-14">
             <h2 className="text-[28px] md:text-[34px] lg:text-[40px] font-black text-background leading-[1.15] mb-6">
               You're Seeing the Struggles.
             </h2>
