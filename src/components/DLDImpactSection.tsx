@@ -49,8 +49,10 @@ const cards = [
 
 const DLDImpactSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [scrollProgress, setScrollProgress] = useState(0);
   const isMobile = useIsMobile();
+
+  const activeIndex = Math.round(scrollProgress);
 
   useEffect(() => {
     if (isMobile) return;
@@ -63,20 +65,16 @@ const DLDImpactSection = () => {
       const scrollableRange = sectionHeight - window.innerHeight;
 
       if (scrolled < 0) {
-        setActiveIndex(0);
+        setScrollProgress(0);
         return;
       }
       if (scrolled > scrollableRange) {
-        setActiveIndex(cards.length - 1);
+        setScrollProgress(cards.length - 1);
         return;
       }
 
       const progress = scrolled / scrollableRange;
-      const index = Math.min(
-        cards.length - 1,
-        Math.floor(progress * cards.length)
-      );
-      setActiveIndex(index);
+      setScrollProgress(Math.min(cards.length - 1, progress * (cards.length - 1)));
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
