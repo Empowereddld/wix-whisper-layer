@@ -12,6 +12,7 @@ import ForEducators from "./pages/ForEducators";
 import ForOrganizations from "./pages/ForOrganizations";
 import Resources from "./pages/Resources";
 import Podcasts from "./pages/Podcasts";
+import FreeCourse from "./pages/FreeCourse";
 import NotFound from "./pages/NotFound";
 import HubSignup from "./pages/hub/HubSignup";
 import HubLogin from "./pages/hub/HubLogin";
