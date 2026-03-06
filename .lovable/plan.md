@@ -1,38 +1,11 @@
 
 
-## Replace ResourceLibraryCTA with Clean Card-Style CTA
+## Polish Resource Library CTA
 
-Replace the current masonry-image CTA with a minimal, high-end card CTA matching the reference screenshot, adapted to the Empowered DLD brand.
+Single file change: `src/components/ResourceLibraryCTA.tsx`
 
-### Design
-
-```text
-┌─────────────────────────────────────────────────────────┐
-│  bg-muted section (light gray page background)          │
-│                                                         │
-│  ┌───────────────────────────────────────────────────┐  │
-│  │  bg-black rounded-2xl card                        │  │
-│  │                                                   │  │
-│  │  RESOURCE LIBRARY          (small uppercase label) │  │
-│  │                                                   │  │
-│  │  Access the Empowered DLD    [Get Free Access]    │  │
-│  │  Resource Library             (purple filled btn) │  │
-│  │                                                   │  │
-│  │  Guides, posters, and tools...                    │  │
-│  │  All free. All in one place.                      │  │
-│  │                                                   │  │
-│  └───────────────────────────────────────────────────┘  │
-│                                                         │
-└─────────────────────────────────────────────────────────┘
-```
-
-### Changes — single file: `src/components/ResourceLibraryCTA.tsx`
-
-- Remove all image imports and masonry grid
-- Render a `bg-muted` section with a centered `bg-black rounded-2xl` card inside the container
-- Left side: uppercase label, heading (DM Sans font-black, matching site style), description, sub-line
-- Right side or inline: purple "Get Free Access" button (primary color, rounded-full)
-- Layout: flex-row on desktop (text left, button right-center), stacked on mobile
-- Keep the existing copy and link to `/hub/preview`
-- Use the same font styles as the rest of the page (DM Sans, font-black headings, text sizes consistent with other sections)
+1. **Tighten spacing above** — reduce section top padding from `py-16 md:py-20 lg:py-[120px]` to `py-10 md:py-14 lg:py-20`
+2. **Vertically center button** — change `items-start lg:items-center` to just `items-center`
+3. **Increase description opacity** — bump `text-white/60` → `text-white/70` and `text-white/40` → `text-white/50`
+4. **More internal card padding** — increase from `px-8 md:px-16 py-14 md:py-16` to `px-10 md:px-20 py-16 md:py-20`
 
