@@ -9,18 +9,20 @@ import img6 from "@/assets/resource-preview-6.png";
 import img7 from "@/assets/resource-preview-7.png";
 
 const columns = [
-  [img1, img2],
-  [img3, img4, img5],
+  [img1, img2, img3],
+  [img4, img5],
   [img6, img7],
 ];
+
+const columnOffsets = ["pt-0", "pt-16", "pt-8"];
 
 const ResourceLibraryCTA = () => {
   return (
     <section className="relative bg-black text-white overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 md:px-10 lg:px-16 py-16 md:py-20 lg:py-28">
-        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
+      <div className="max-w-7xl mx-auto px-6 md:px-10 lg:px-16 py-16 md:py-20 lg:py-0 lg:min-h-[700px] flex items-center">
+        <div className="flex flex-col lg:flex-row items-center w-full gap-12 lg:gap-16">
           {/* Left — Copy */}
-          <div className="lg:w-[40%] text-center lg:text-left shrink-0">
+          <div className="lg:w-[38%] text-center lg:text-left shrink-0 py-10 lg:py-20">
             <h2 className="font-serif text-3xl md:text-4xl lg:text-[44px] leading-tight mb-6">
               Access the Empowered DLD
               <br />
@@ -42,16 +44,19 @@ const ResourceLibraryCTA = () => {
           </div>
 
           {/* Right — Masonry grid */}
-          <div className="lg:w-[60%] relative">
-            {/* Top/bottom gradient fades */}
-            <div className="pointer-events-none absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-black to-transparent z-10" />
-            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black to-transparent z-10" />
+          <div className="lg:w-[62%] relative lg:py-10">
+            {/* Gradient fades */}
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-32 lg:h-40 bg-gradient-to-b from-black via-black/70 to-transparent z-10" />
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 lg:h-40 bg-gradient-to-t from-black via-black/70 to-transparent z-10" />
 
-            <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
               {columns.map((col, colIdx) => (
-                <div key={colIdx} className={`flex flex-col gap-3 md:gap-4 ${colIdx === 2 ? "hidden lg:flex" : ""} ${colIdx === 1 ? "mt-6" : ""}`}>
+                <div
+                  key={colIdx}
+                  className={`flex flex-col gap-4 ${colIdx === 2 ? "hidden lg:flex" : ""} ${columnOffsets[colIdx]}`}
+                >
                   {col.map((src, imgIdx) => (
-                    <div key={imgIdx} className="rounded-xl overflow-hidden">
+                    <div key={imgIdx} className="rounded-2xl overflow-hidden">
                       <img
                         src={src}
                         alt="Resource preview"
