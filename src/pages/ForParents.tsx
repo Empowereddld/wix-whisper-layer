@@ -1,6 +1,6 @@
 import Header from "@/components/Header";
 import ForParentsHero from "@/components/ForParentsHero";
-import SplitScreenScroll from "@/components/SplitScreenScroll";
+import DoesSoundFamiliarSection from "@/components/DoesSoundFamiliarSection";
 import HowWeSupportParentsSection from "@/components/HowWeSupportParentsSection";
 import WhyParentsTrustSection from "@/components/WhyParentsTrustSection";
 import RightPlaceSection from "@/components/RightPlaceSection";
@@ -13,7 +13,7 @@ const ForParents = () => {
       <Header />
       <main>
         <ForParentsHero />
-        <SplitScreenScroll />
+        <DoesSoundFamiliarSection />
         <HowWeSupportParentsSection />
         <WhyParentsTrustSection />
         <RightPlaceSection />
