@@ -6,8 +6,8 @@ import logoImage from "@/assets/empowered-logo.png";
 
 const whoWeServeLinks = [
   { label: "For Parents", href: "/for-parents" },
-  { label: "For Educators", href: "/for-educators" },
   { label: "For Therapists", href: "/for-therapists" },
+  { label: "For Educators", href: "/for-educators" },
   { label: "For Organizations", href: "/for-organizations" },
 ];
 
