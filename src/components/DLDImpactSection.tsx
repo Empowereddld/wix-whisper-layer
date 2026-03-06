@@ -245,8 +245,8 @@ const DLDImpactSection = () => {
                 key={i}
                 className={`rounded-full transition-all duration-500 ${
                   i === activeIndex
-                    ? "bg-primary w-2 h-6"
-                    : "bg-border w-2 h-2"
+                    ? "bg-foreground w-2 h-6"
+                    : "bg-foreground/20 w-2 h-2"
                 }`}
               />
             ))}
