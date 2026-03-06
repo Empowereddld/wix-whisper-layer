@@ -29,7 +29,7 @@ const ForTherapistsHero = () => {
             <img
               src={therapistWithKids}
               alt="A therapist working with children"
-              className="w-full h-full object-cover object-center md:object-[center_35%] lg:object-[center_30%] aspect-[16/9] md:aspect-[16/10] lg:aspect-auto"
+              className="w-full h-full object-cover object-center md:object-[center_45%] lg:object-[center_30%] aspect-[16/9] md:aspect-[16/10] lg:aspect-auto"
             />
           </div>
         </div>

@@ -57,7 +57,7 @@ const WhyTherapistsTrustSection = () => {
             <img
               src={boyReadingBench}
               alt="A boy reading a book on a bench"
-              className="w-full h-auto object-cover object-bottom aspect-[4/3] md:aspect-[4/3] lg:aspect-[3/4] max-h-none"
+              className="w-full h-auto object-cover object-[center_70%] md:object-[center_35%] aspect-[4/3] md:aspect-[4/3] lg:aspect-[3/4] max-h-none"
             />
           </div>
         </div>
