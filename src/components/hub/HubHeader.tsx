@@ -35,7 +35,10 @@ const HubHeader = () => {
                 type="text"
                 placeholder="Search by topic, age, setting, or resource type"
                 className="w-full h-10 pl-10 pr-4 rounded-lg bg-white/10 border border-white/20 text-sm placeholder:text-stone-ui focus:outline-none focus:ring-2 focus:ring-hub-lavender text-white"
-                disabled
+                onChange={(e) => {
+                  // Dispatch a custom event so the dashboard can pick it up
+                  window.dispatchEvent(new CustomEvent("hub-search", { detail: e.target.value }));
+                }}
               />
             </div>
           </div>
