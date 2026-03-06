@@ -6,11 +6,11 @@ const OrganizationsAwarenessSection = () => {
     <section className="py-10 md:py-16 lg:py-[120px] bg-secondary">
       <div className="container px-6 md:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start">
-          {/* Left — layered image composition */}
-          <div className="relative h-auto lg:h-[520px] flex justify-center lg:block">
-            {/* Back card — hidden on mobile/tablet */}
+          {/* Left — layered image composition (desktop only) */}
+          <div className="relative hidden lg:block h-[520px]">
+            {/* Back card */}
             <div
-              className="hidden lg:block absolute top-0 left-0 w-[72%] z-10 animate-float-gentle"
+              className="absolute top-0 left-0 w-[72%] z-10 animate-float-gentle"
               style={{ transform: "rotate(-2deg)" }}
             >
               <div className="rounded-2xl overflow-hidden shadow-lg">
@@ -24,7 +24,7 @@ const OrganizationsAwarenessSection = () => {
 
             {/* Front card */}
             <div
-              className="relative lg:absolute bottom-0 right-0 w-[85%] md:w-[70%] lg:w-[72%] z-20 lg:animate-float-gentle-alt"
+              className="absolute bottom-0 right-0 w-[72%] z-20 animate-float-gentle-alt"
               style={{ transform: "rotate(1deg)" }}
             >
               <div className="rounded-2xl overflow-hidden" style={{ boxShadow: "var(--shadow-elevated)" }}>
@@ -38,14 +38,14 @@ const OrganizationsAwarenessSection = () => {
           </div>
 
           {/* Right — text */}
-          <div className="flex flex-col justify-center">
+          <div className="flex flex-col justify-center items-center lg:items-start">
             <h2 className="text-[28px] md:text-[36px] lg:text-[46px] font-black text-foreground leading-[1.12] mb-4 md:mb-6">
               Let's spread DLD Awareness together!
             </h2>
             <p className="text-[13px] md:text-[14px] lg:text-[15px] text-muted-foreground leading-[1.7] mb-4 md:mb-5">
               We partner with organizations committed to supporting underserved families, including:
             </p>
-            <ul className="list-disc pl-5 space-y-2 text-[13px] md:text-[14px] lg:text-[15px] text-muted-foreground leading-[1.7] mb-6 md:mb-8">
+            <ul className="list-disc pl-5 space-y-2 text-[13px] md:text-[14px] lg:text-[15px] text-muted-foreground leading-[1.7] mb-6 md:mb-8 self-start">
               <li>Family service agencies serving diverse communities</li>
               <li>Newcomer and settlement organizations</li>
               <li>EarlyON centers and family resource programs</li>
@@ -53,20 +53,31 @@ const OrganizationsAwarenessSection = () => {
               <li>Community health centers</li>
             </ul>
 
-            <p className="text-[14px] md:text-[15px] lg:text-[16px] font-bold text-foreground text-center mb-3">
+            <p className="text-[14px] md:text-[15px] lg:text-[16px] font-bold text-foreground text-center mb-3 w-full">
               Let's Talk About What's Possible
             </p>
             <p className="text-[13px] md:text-[14px] lg:text-[15px] text-muted-foreground leading-[1.7] mb-6 md:mb-8">
               Book a free 30-minute consultation to discuss your organization's needs and how we can bring DLD support to your community.
             </p>
 
-            <div className="text-center">
+            <div className="text-center w-full">
               <a
                 href="#contact"
                 className="inline-flex items-center justify-center h-12 md:h-14 px-8 md:px-10 border border-foreground text-foreground text-[11px] md:text-[12px] lg:text-[13px] font-bold tracking-[0.08em] rounded-sm hover:bg-foreground hover:text-background transition-colors duration-200"
               >
                 Book a Consultation
               </a>
+            </div>
+
+            {/* Mobile/tablet image — below button */}
+            <div className="lg:hidden mt-8 w-[60%] md:w-[50%] mx-auto">
+              <div className="rounded-2xl overflow-hidden" style={{ boxShadow: "var(--shadow-elevated)" }}>
+                <img
+                  src={orgKids}
+                  alt="Children engaged in learning activities"
+                  className="w-full h-auto object-cover aspect-[4/5]"
+                />
+              </div>
             </div>
           </div>
         </div>
