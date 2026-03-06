@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { useIsMobile } from "@/hooks/use-mobile";
 
 const cards = [
   {
@@ -43,13 +42,10 @@ const cards = [
 const DLDImpactSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
-  const isMobile = useIsMobile();
 
   const activeIndex = Math.round(scrollProgress);
 
   useEffect(() => {
-    if (isMobile) return;
-
     const handleScroll = () => {
       if (!sectionRef.current) return;
       const rect = sectionRef.current.getBoundingClientRect();
@@ -73,81 +69,36 @@ const DLDImpactSection = () => {
     window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [isMobile]);
+  }, []);
 
-  // Mobile: simple vertical list
-  if (isMobile) {
-    return (
-      <section className="py-10 relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-lavender/40 via-background to-background pointer-events-none" />
-        <div className="container px-6 relative">
-          <div className="mb-10">
-            <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted-foreground/70 mb-3 block">
-              The Reality of DLD
-            </span>
-            <h2 className="text-[28px] font-black text-foreground leading-[1.1] mb-3">
-              DLD is Affecting the Communities You Serve
-            </h2>
-            <p className="text-[13px] text-muted-foreground leading-[1.7] max-w-[500px]">
-              Developmental Language Disorder affects 1 in 14 children, yet most
-              people have never heard of it. Your organization can change that.
-            </p>
-          </div>
-          <div className="grid grid-cols-2 gap-3">
-            {cards.map((card, i) => (
-              <div
-                key={card.title}
-                className="rounded-xl p-5 shadow-[var(--shadow-card)]"
-                style={{
-                  background: "linear-gradient(145deg, #111111 0%, #000000 100%)",
-                }}
-              >
-                <span className="text-[10px] font-medium tracking-widest select-none block mb-2" style={{ color: "hsl(0, 0%, 55%)" }}>
-                  {String(i + 1).padStart(2, "0")} / {String(cards.length).padStart(2, "0")}
-                </span>
-                <h3 className="text-[14px] font-black mb-1.5" style={{ color: "hsl(0, 0%, 100%)" }}>
-                  {card.title}
-                </h3>
-                <p className="text-[11px] leading-[1.6]" style={{ color: "hsl(0, 0%, 78%)" }}>
-                  {card.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  // Desktop / Tablet: two-column sticky stacked card scroll
   return (
     <section
       ref={sectionRef}
-      className="relative md:h-[450vh]"
+      className="relative h-[300vh] md:h-[450vh]"
     >
       {/* Subtle background gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-lavender/30 via-background to-background pointer-events-none" />
 
       <div className="sticky top-0 h-screen flex items-center justify-center px-6 md:px-8 relative">
-        <div className="flex items-center gap-10 lg:gap-16 max-w-[1100px] w-full mx-auto">
+        <div className="flex flex-col md:flex-row items-center gap-6 md:gap-10 lg:gap-16 max-w-[1100px] w-full mx-auto">
 
           {/* Left Column — Label + Title + subtitle */}
-          <div className="w-[38%] flex flex-col justify-center">
-            <span className="text-[12px] font-semibold uppercase tracking-[0.2em] text-muted-foreground/60 mb-5 block">
+          <div className="w-full md:w-[38%] flex flex-col justify-center text-center md:text-left">
+            <span className="text-[11px] md:text-[12px] font-semibold uppercase tracking-[0.2em] text-muted-foreground/60 mb-3 md:mb-5 block">
               The Reality of DLD
             </span>
-            <h2 className="text-[40px] lg:text-[52px] font-black text-foreground leading-[1.05] mb-6">
+            <h2 className="text-[24px] md:text-[40px] lg:text-[52px] font-black text-foreground leading-[1.05] mb-3 md:mb-6">
               DLD is Affecting the Communities You Serve
             </h2>
-            <p className="text-[14px] lg:text-[16px] text-muted-foreground leading-[1.7]">
+            <p className="text-[12px] md:text-[14px] lg:text-[16px] text-muted-foreground leading-[1.7]">
               Developmental Language Disorder affects 1 in 14 children, yet most
               people have never heard of it. Your organization can change that.
             </p>
           </div>
 
-          {/* Center — Card Stack (10-15% wider) */}
-          <div className="w-[52%] flex items-center justify-center">
-            <div className="relative w-full max-w-[540px] h-[310px] md:h-[300px]">
+          {/* Center — Card Stack */}
+          <div className="w-full md:w-[52%] flex items-center justify-center">
+            <div className="relative w-full max-w-[540px] h-[220px] md:h-[300px]">
               {cards.map((card, i) => {
                 const offset = scrollProgress - i;
                 const isActive = Math.abs(offset) < 0.5;
@@ -195,7 +146,7 @@ const DLDImpactSection = () => {
                 return (
                   <div
                     key={card.title}
-                    className="absolute inset-0 rounded-xl transition-all duration-100 ease-out"
+                    className="absolute inset-0 rounded-xl transition-all duration-100 ease-out p-6 md:p-10 flex flex-col items-center justify-center text-center"
                     style={{
                       transform,
                       opacity,
@@ -203,29 +154,23 @@ const DLDImpactSection = () => {
                       background: cardBg,
                       boxShadow: shadowBase,
                       border: "1px solid rgba(255,255,255,0.06)",
-                      padding: "40px 44px",
-                      display: "flex",
-                      flexDirection: "column" as const,
-                      alignItems: "center",
-                      justifyContent: "center",
-                      textAlign: "center" as const,
                     }}
                   >
                     <span
-                      className="absolute top-5 right-6 text-[11px] font-medium tracking-widest select-none"
+                      className="absolute top-4 right-4 md:top-5 md:right-6 text-[10px] md:text-[11px] font-medium tracking-widest select-none"
                       style={{ color: "hsl(0, 0%, 55%)" }}
                     >
                       {String(i + 1).padStart(2, "0")} / {String(cards.length).padStart(2, "0")}
                     </span>
 
                     <h3
-                      className="text-[21px] lg:text-[24px] font-black mb-3"
+                      className="text-[17px] md:text-[21px] lg:text-[24px] font-black mb-2 md:mb-3"
                       style={{ color: "hsl(0, 0%, 100%)" }}
                     >
                       {card.title}
                     </h3>
                     <p
-                      className="text-[14px] lg:text-[15px] leading-[1.75] max-w-[380px]"
+                      className="text-[12px] md:text-[14px] lg:text-[15px] leading-[1.7] md:leading-[1.75] max-w-[380px]"
                       style={{ color: "hsl(0, 0%, 78%)" }}
                     >
                       {card.description}
@@ -236,8 +181,8 @@ const DLDImpactSection = () => {
             </div>
           </div>
 
-          {/* Right — Vertical progress dots */}
-          <div className="w-[10%] flex flex-col items-center justify-center gap-2">
+          {/* Right — Vertical progress dots (hidden on mobile) */}
+          <div className="hidden md:flex w-[10%] flex-col items-center justify-center gap-2">
             {cards.map((_, i) => (
               <div
                 key={i}
