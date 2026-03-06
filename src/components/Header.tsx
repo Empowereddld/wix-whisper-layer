@@ -62,19 +62,19 @@ const Header = () => {
                 </Link>
                 <button
                   className="p-1 text-foreground/80 hover:text-primary transition-colors duration-200"
-                  onClick={() => setDropdownOpen(!dropdownOpen)}
+                  onClick={() => setOpenDropdown(openDropdown === link.label ? null : link.label)}
                   aria-label="Show submenu"
                 >
-                  <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${dropdownOpen ? "rotate-180" : ""}`} />
+                  <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${openDropdown === link.label ? "rotate-180" : ""}`} />
                 </button>
-                {dropdownOpen && (
+                {openDropdown === link.label && (
                    <div className="absolute top-full left-0 mt-2 bg-background border border-border/30 rounded-lg shadow-lg py-2 min-w-[200px] z-50">
                     {link.children.map((child) => (
                       <Link
                         key={child.label}
                         to={child.href}
                         className="block px-4 py-2.5 text-[13px] font-medium text-foreground/70 hover:bg-accent hover:text-primary transition-colors"
-                        onClick={() => setDropdownOpen(false)}
+                        onClick={() => setOpenDropdown(null)}
                       >
                         {child.label}
                       </Link>
