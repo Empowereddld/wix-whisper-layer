@@ -4,37 +4,37 @@ const cards = [
   {
     title: "Parent Workshops",
     description: "Get the knowledge and tools you need to confidently support your child with DLD. Connect with experts and other parents who understand.",
-    link: "Join Waiting List",
+    link: "Join Workshop Waitlist",
     href: "#",
   },
   {
     title: "Books and Resources",
     description: "Stories featuring diverse characters with DLD your child can relate to. Available in 7+ languages with discussion guides and parent guidebook.",
-    link: "Buy Now",
+    link: "Explore the Books",
     href: "#",
   },
   {
     title: "Free Community",
     description: "Connect with 4000+ parents and professionals to ask questions, share strategies, and find support in our private Facebook community.",
-    link: "Join Here",
+    link: "Join the Community",
     href: "#",
   },
   {
     title: "Free Resources",
     description: "Free downloadable guides, checklists, and practical tools to help you advocate for your child, communicate with teachers, and support language development at home.",
-    link: "Learn More",
+    link: "Browse Resources",
     href: "#",
   },
   {
     title: "Animated Podcast",
     description: "Watch Dan and Daria share real conversations about living with DLD. These short episodes help you understand your child's experience and start important conversations with them.",
-    link: "YouTube",
+    link: "Watch the Podcast",
     href: "#",
   },
   {
     title: "Educational App",
     description: "Help your child build language skills through interactive storytelling. Designed by a team of experts specifically for children with DLD. Coming soon!",
-    link: "Join Waiting List",
+    link: "Join the App Waitlist",
     href: "#",
   },
 ];
