@@ -25,7 +25,7 @@ const ForParentsHero = () => {
           </div>
 
           {/* Image — overlaps the card on the right */}
-          <div className="mt-4 md:mt-6 lg:mt-0 lg:absolute lg:right-0 lg:top-0 lg:bottom-0 lg:w-[48%] rounded-xl lg:rounded-l-xl lg:rounded-r-none overflow-hidden shadow-lg max-h-[260px] md:max-h-[280px] lg:max-h-none">
+          <div className="mt-4 md:mt-6 lg:mt-0 lg:absolute lg:right-0 lg:top-0 lg:bottom-0 lg:w-[48%] rounded-xl lg:rounded-l-xl lg:rounded-r-none overflow-hidden shadow-lg max-h-[260px] md:max-h-[380px] lg:max-h-none">
             <img
               src={motherDaughterReading}
               alt="A mother and daughter reading together"
