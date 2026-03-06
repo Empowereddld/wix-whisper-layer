@@ -45,11 +45,11 @@ const WhySchoolsChooseSection = () => {
               ))}
           </div>
 
-          <div className="rounded-lg overflow-hidden min-w-0 w-full max-w-[280px] sm:max-w-sm md:max-w-[360px] lg:max-w-[420px] mx-auto md:mx-0 md:justify-self-end h-[260px] md:h-[340px] lg:h-[420px] bg-background/40">
+          <div className="rounded-lg overflow-hidden min-w-0 w-full max-w-[280px] sm:max-w-sm md:max-w-[360px] lg:max-w-[420px] mx-auto md:mx-0 md:justify-self-end h-[260px] md:h-[340px] lg:h-[420px]">
             <img
               src={educatorsTrust}
               alt="An educator working with a student"
-              className="w-full h-full object-contain object-center"
+              className="w-full h-full object-cover"
             />
           </div>
         </div>
