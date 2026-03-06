@@ -32,9 +32,6 @@ const RightPlaceSection = () => {
               <li>Speaks a language other than English and needs resources that work for your family</li>
             </ul>
 
-            <p className="text-[13px] md:text-[14px] lg:text-[15px] text-muted-foreground leading-[1.7] mb-6 md:mb-8">
-              Whether you're just beginning to understand DLD or you've been navigating it for years, you'll find support here.
-            </p>
 
             <div className="flex justify-center">
               <a
