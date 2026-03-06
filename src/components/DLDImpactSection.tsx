@@ -153,28 +153,32 @@ const DLDImpactSection = () => {
               {cards.map((card, i) => {
                 const Icon = card.icon;
                 const offset = scrollProgress - i;
-                // Gradient from light lavender to deep purple across cards
-                const t = i / (cards.length - 1);
-                const bgColor = `hsl(${262 - t * 10}, ${60 + t * 20}%, ${92 - t * 45}%)`;
-                const textColor = t > 0.6 ? 'hsl(0, 0%, 100%)' : undefined;
-                const mutedTextColor = t > 0.6 ? 'hsl(0, 0%, 85%)' : undefined;
-                const iconBg = t > 0.6 ? 'rgba(255,255,255,0.15)' : undefined;
-                const iconColor = t > 0.6 ? 'hsl(0, 0%, 100%)' : undefined;
-                const counterColor = t > 0.6 ? 'rgba(255,255,255,0.2)' : undefined;
+                // User-provided palette from lightest to darkest
+                const palette = ['#EBE8FC', '#DDD5F3', '#CEC2EB', '#C0AFE2', '#B19CD7', '#A58FCF'];
+                const bgColor = palette[i];
+                const isDark = i >= 4;
+                const textColor = isDark ? 'hsl(0, 0%, 100%)' : undefined;
+                const mutedTextColor = isDark ? 'hsl(0, 0%, 88%)' : undefined;
+                const iconBg = isDark ? 'rgba(255,255,255,0.15)' : undefined;
+                const iconColor = isDark ? 'hsl(0, 0%, 100%)' : undefined;
+                const counterColor = isDark ? 'rgba(255,255,255,0.25)' : undefined;
 
                 let transform = "";
                 let opacity = 1;
                 let zIndex = cards.length - i;
 
                 if (offset >= 1) {
-                  transform = `translateY(-120%) rotate(${card.rotation * 2}deg)`;
+                  // Fully gone — flared to the upper right
+                  transform = `translate(40%, -120%) rotate(8deg)`;
                   opacity = 0;
                   zIndex = i;
                 } else if (offset > 0) {
+                  // Actively leaving — flare to the right as it goes up
                   const yOff = -offset * 120;
-                  const rot = offset * card.rotation * 2;
+                  const xOff = offset * 40;
+                  const rot = offset * 8;
                   opacity = 1;
-                  transform = `translateY(${yOff}%) rotate(${rot}deg)`;
+                  transform = `translate(${xOff}%, ${yOff}%) rotate(${rot}deg)`;
                   zIndex = cards.length + 1;
                 } else if (offset === 0 || (offset > -0.01 && offset < 0.01)) {
                   transform = `translateY(0) rotate(0deg)`;
