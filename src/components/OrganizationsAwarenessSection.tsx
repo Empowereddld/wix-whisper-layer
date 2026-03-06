@@ -15,7 +15,7 @@ const OrganizationsAwarenessSection = () => {
             >
               <div className="rounded-2xl overflow-hidden shadow-lg">
                 <img
-                  src={orgWorkshopWood}
+                  src={orgStreetSunset}
                   alt="Community members collaborating together"
                   className="w-full h-auto object-cover aspect-[4/5]"
                 />
