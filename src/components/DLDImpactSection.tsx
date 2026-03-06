@@ -201,16 +201,16 @@ const DLDImpactSection = () => {
                       backgroundColor: bgColor,
                     }}
                   >
-                    <span className="absolute top-4 right-5 text-[11px] text-muted-foreground/30 font-medium tracking-widest select-none">
+                    <span className="absolute top-4 right-5 text-[11px] font-medium tracking-widest select-none" style={{ color: counterColor || 'hsl(var(--muted-foreground) / 0.3)' }}>
                       {String(i + 1).padStart(2, "0")} / {String(cards.length).padStart(2, "0")}
                     </span>
-                    <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mb-5">
-                      <Icon className="w-[18px] h-[18px] text-primary" strokeWidth={1.4} />
+                    <div className="w-14 h-14 rounded-full flex items-center justify-center mb-5" style={{ backgroundColor: iconBg || 'hsl(var(--primary) / 0.1)' }}>
+                      <Icon className="w-[18px] h-[18px]" strokeWidth={1.4} style={{ color: iconColor || 'hsl(var(--primary))' }} />
                     </div>
-                    <h3 className="text-[20px] lg:text-[22px] font-black text-foreground mb-3">
+                    <h3 className="text-[20px] lg:text-[22px] font-black mb-3" style={{ color: textColor || 'hsl(var(--foreground))' }}>
                       {card.title}
                     </h3>
-                    <p className="text-[14px] text-muted-foreground leading-[1.7] max-w-[400px]">
+                    <p className="text-[14px] leading-[1.7] max-w-[400px]" style={{ color: mutedTextColor || 'hsl(var(--muted-foreground))' }}>
                       {card.description}
                     </p>
                   </div>
