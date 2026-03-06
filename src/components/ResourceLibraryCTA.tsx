@@ -1,13 +1,15 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { DotBackground } from "@/components/ui/dot-background";
 
 const ResourceLibraryCTA = () => {
   return (
     <section className="bg-muted py-10 md:py-14 lg:py-20">
       <div className="container">
-        <div className="bg-black text-white rounded-2xl px-10 md:px-20 py-16 md:py-20 flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12">
+        <div className="relative overflow-hidden bg-black text-white rounded-2xl px-10 md:px-20 py-16 md:py-20 flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12">
+          <DotBackground />
           {/* Text */}
-          <div className="flex-1 max-w-xl">
+          <div className="relative z-10 flex-1 max-w-xl">
             <p className="text-xs font-semibold tracking-[0.2em] uppercase text-white/50 mb-4">
               Resource Library
             </p>
@@ -23,7 +25,7 @@ const ResourceLibraryCTA = () => {
           </div>
 
           {/* Button */}
-          <div className="shrink-0">
+          <div className="relative z-10 shrink-0">
             <Button
               asChild
               size="lg"
