@@ -135,13 +135,13 @@ const DLDImpactSection = () => {
 
           {/* Left Column — Label + Title + subtitle */}
           <div className="w-[38%] flex flex-col justify-center">
-            <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted-foreground/60 mb-4 block">
+            <span className="text-[12px] font-semibold uppercase tracking-[0.2em] text-muted-foreground/60 mb-5 block">
               The Reality of DLD
             </span>
-            <h2 className="text-[32px] lg:text-[42px] font-black text-foreground leading-[1.1] mb-5">
+            <h2 className="text-[40px] lg:text-[52px] font-black text-foreground leading-[1.05] mb-6">
               DLD is Affecting the Communities You Serve
             </h2>
-            <p className="text-[13px] lg:text-[15px] text-muted-foreground leading-[1.7]">
+            <p className="text-[14px] lg:text-[16px] text-muted-foreground leading-[1.7]">
               Developmental Language Disorder affects 1 in 14 children, yet most
               people have never heard of it. Your organization can change that.
             </p>
