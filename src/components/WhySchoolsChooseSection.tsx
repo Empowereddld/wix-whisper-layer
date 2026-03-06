@@ -3,20 +3,20 @@ import educatorsTrust from "@/assets/educators-trust.png";
 
 const trustPoints = [
   {
-    title: "Supports early identification",
-    description: "Our screening tools and teacher training help identify students with DLD earlier, so they can get support before they fall further behind.",
+    title: "Supports early identification and intervention",
+    description: "Evidence-based training helps your staff recognize DLD before students fall years behind. Early intervention = better long-term outcomes and reduced need for intensive support.",
   },
   {
-    title: "Saves staff time",
-    description: "Ready-to-use materials, goal banks, and implementation guides mean your team spends less time creating resources and more time supporting students.",
+    title: "Saves staff time and resources",
+    description: "Ready-to-implement materials eliminate hours of prep work. Learning plan goal bank, lesson plans, and plug and play resources your team can use immediately.",
   },
   {
     title: "Demonstrates commitment to educational equity",
-    description: "Multilingual, culturally responsive resources show families and communities that your school is serious about serving every learner.",
+    description: "Multilingual resources and culturally responsive materials show your school's dedication to serving ALL students, particularly those from underrepresented communities.",
   },
   {
-    title: "Inclusive practices that benefit all students",
-    description: "The strategies and accommodations that support students with DLD — like visual supports, simplified language, and structured routines — benefit every learner in the classroom.",
+    title: "Inclusive practices",
+    description: "Teaching strategies for DLD improve outcomes for all learners. Clear language instruction, visual supports, and structured activities strengthen communication skills across your entire student population.",
   },
 ];
 
