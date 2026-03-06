@@ -10,12 +10,16 @@ const OrganizationsAwarenessSection = () => {
           Let's spread DLD Awareness together!
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-16 md:items-stretch lg:items-start">
-          {/* Left — layered image composition (tablet/desktop) */}
-          <div className="relative hidden md:flex lg:block h-auto lg:h-[520px]">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-16 lg:items-start">
+          {/* Left — title + image (tablet/desktop) */}
+          <div className="hidden md:block relative lg:h-[520px]">
+            <h2 className="text-[36px] lg:text-[46px] font-black text-foreground leading-[1.12] mb-6 md:mb-8">
+              Let's spread DLD Awareness together!
+            </h2>
+
             {/* Back card — desktop only */}
             <div
-              className="hidden lg:block absolute top-0 left-0 w-[72%] z-10 animate-float-gentle"
+              className="hidden lg:block absolute top-[80px] left-0 w-[72%] z-10 animate-float-gentle"
               style={{ transform: "rotate(-2deg)" }}
             >
               <div className="rounded-2xl overflow-hidden shadow-lg">
@@ -29,13 +33,13 @@ const OrganizationsAwarenessSection = () => {
 
             {/* Front card — single image on tablet, layered on desktop */}
             <div
-              className="md:w-full md:h-full lg:absolute bottom-0 right-0 lg:w-[72%] lg:h-auto z-20 lg:animate-float-gentle-alt md:flex md:justify-center lg:block lg:rotate-[1deg]"
+              className="lg:absolute bottom-0 right-0 lg:w-[72%] lg:h-auto z-20 lg:animate-float-gentle-alt lg:rotate-[1deg]"
             >
-              <div className="rounded-2xl overflow-hidden md:w-[85%] md:h-full lg:w-full lg:h-auto" style={{ boxShadow: "var(--shadow-elevated)" }}>
+              <div className="rounded-2xl overflow-hidden md:max-h-[400px] lg:max-h-none lg:w-full" style={{ boxShadow: "var(--shadow-elevated)" }}>
                 <img
                   src={orgKids}
                   alt="Children engaged in learning activities"
-                  className="w-full md:h-full lg:h-auto object-cover md:object-bottom lg:object-center lg:aspect-[4/5]"
+                  className="w-full h-full object-cover object-bottom lg:object-center lg:aspect-[4/5]"
                 />
               </div>
             </div>
@@ -43,9 +47,6 @@ const OrganizationsAwarenessSection = () => {
 
           {/* Right — text */}
           <div className="flex flex-col justify-center items-center md:items-start">
-            <h2 className="hidden md:block text-[36px] lg:text-[46px] font-black text-foreground leading-[1.12] mb-8 md:mb-10">
-              Let's spread DLD Awareness together!
-            </h2>
             <p className="text-[13px] md:text-[14px] lg:text-[15px] text-muted-foreground leading-[1.7] mb-5 md:mb-6">
               We partner with organizations committed to supporting underserved families, including:
             </p>
