@@ -28,8 +28,6 @@ const WhatYoullLearnSection = () => {
           <h2 className="text-[28px] md:text-[38px] lg:text-[46px] font-black text-foreground leading-[1.1] mb-3">
             What You'll Learn
           </h2>
-            WHAT YOU'LL LEARN
-          </h2>
           <p className="text-[14px] md:text-[15px] text-muted-foreground">
             Everything You Need to Support Communication With Confidence
           </p>
