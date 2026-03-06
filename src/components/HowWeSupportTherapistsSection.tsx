@@ -3,37 +3,37 @@ import { ChevronRight } from "lucide-react";
 const cards = [
   {
     title: "Books & Therapy Guides",
-    description: "Engaging storybooks featuring characters with DLD, paired with therapy guides designed for use in sessions. Available in 7+ languages.",
+    description: "Children's books featuring diverse characters with DLD, with ready-made therapy guides. Use in sessions or recommend to families. Available in 7+ languages.",
     link: "Buy Now",
     href: "#",
   },
   {
     title: "Parent Resources",
-    description: "Handouts and guides you can share with families to reinforce therapy goals at home. Clear, jargon-free, and available in multiple languages.",
+    description: "Give families practical home strategies that bridge clinic and home practice. Includes activities, conversation starters, and confidence-building tools families can use independently.",
     link: "Buy Now",
     href: "#",
   },
   {
     title: "Workshops & Training",
-    description: "Professional development workshops on DLD identification, intervention strategies, and working with multilingual families.",
+    description: "Evidence-based DLD training for your team. Topics include recognizing DLD in underserved populations and multilingual considerations. Perfect for in-service training.",
     link: "Learn More",
     href: "#",
   },
   {
     title: "Animated Podcast",
-    description: "Short animated episodes featuring Dan and Daria discussing life with DLD. Use them in sessions to spark conversation and build awareness.",
+    description: "Short animated episodes showing what it's like to live with DLD. Use the clips in therapy sessions to facilitate discussion and recommend to families for home viewing.",
     link: "YouTube",
     href: "#",
   },
   {
     title: "Educational App",
-    description: "An interactive storytelling app designed specifically for children with DLD. Built by a team of SLPs, educators, and developers. Coming soon!",
+    description: "Evidence-based language app for therapy and home practice. Interactive storytelling specifically designed for children with DLD. Assign it between sessions. Coming soon!",
     link: "Join Waiting List",
     href: "#",
   },
   {
     title: "Stock Your Therapy Room",
-    description: "Get a complete set of Empowered DLD books and materials for your therapy room. Give your clients access to stories they can finally relate to.",
+    description: "Resource bundles for schools and clinics. Get multiple copies of books, guides, and tools at discounted rates to serve your entire caseload with diverse, multilingual materials.",
     link: "Buy Now",
     href: "#",
   },
