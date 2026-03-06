@@ -1,73 +1,36 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import img1 from "@/assets/resource-preview-1.png";
-import img2 from "@/assets/resource-preview-2.png";
-import img3 from "@/assets/resource-preview-3.png";
-import img4 from "@/assets/resource-preview-4.png";
-import img5 from "@/assets/resource-preview-5.png";
-import img6 from "@/assets/resource-preview-6.png";
-import img7 from "@/assets/resource-preview-7.png";
-
-const columns = [
-  [img1, img2, img3],
-  [img4, img5],
-  [img6, img7],
-];
-
-const columnOffsets = ["pt-0", "pt-16", "pt-8"];
 
 const ResourceLibraryCTA = () => {
   return (
-    <section className="relative bg-black text-white overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 md:px-10 lg:px-16 py-16 md:py-20 lg:py-0 lg:min-h-[700px] flex items-center">
-        <div className="flex flex-col lg:flex-row items-center w-full gap-12 lg:gap-16">
-          {/* Left — Copy */}
-          <div className="lg:w-[38%] text-center lg:text-left shrink-0 py-10 lg:py-20">
-            <h2 className="font-serif text-3xl md:text-4xl lg:text-[44px] leading-tight mb-6">
+    <section className="bg-muted py-16 md:py-20 lg:py-[120px]">
+      <div className="container">
+        <div className="bg-black text-white rounded-2xl px-8 md:px-16 py-14 md:py-16 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8 lg:gap-12">
+          {/* Text */}
+          <div className="flex-1 max-w-xl">
+            <p className="text-xs font-semibold tracking-[0.2em] uppercase text-white/50 mb-4">
+              Resource Library
+            </p>
+            <h2 className="text-3xl md:text-4xl lg:text-[42px] font-black leading-[1.1] tracking-[-0.02em] mb-4">
               Access the Empowered DLD
               <br />
               Resource Library
             </h2>
-            <p className="text-white/70 text-base md:text-lg leading-relaxed mb-4 max-w-md mx-auto lg:mx-0">
+            <p className="text-white/60 text-[15px] leading-relaxed max-w-md">
               Guides, posters, and tools to support children with DLD at home, in therapy, and in the classroom.
+              <span className="block mt-1 text-white/40 text-sm">All free. All in one place.</span>
             </p>
-            <p className="text-white/50 text-sm mb-8">
-              All free. All in one place.
-            </p>
+          </div>
+
+          {/* Button */}
+          <div className="shrink-0">
             <Button
               asChild
               size="lg"
-              className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full px-8 py-3 text-base font-semibold"
+              className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full h-14 px-10 text-base font-semibold"
             >
               <Link to="/hub/preview">Get Free Access</Link>
             </Button>
-          </div>
-
-          {/* Right — Masonry grid */}
-          <div className="lg:w-[62%] relative lg:py-10">
-            {/* Gradient fades */}
-            <div className="pointer-events-none absolute inset-x-0 top-0 h-32 lg:h-40 bg-gradient-to-b from-black via-black/70 to-transparent z-10" />
-            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 lg:h-40 bg-gradient-to-t from-black via-black/70 to-transparent z-10" />
-
-            <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
-              {columns.map((col, colIdx) => (
-                <div
-                  key={colIdx}
-                  className={`flex flex-col gap-4 ${colIdx === 2 ? "hidden lg:flex" : ""} ${columnOffsets[colIdx]}`}
-                >
-                  {col.map((src, imgIdx) => (
-                    <div key={imgIdx} className="rounded-2xl overflow-hidden">
-                      <img
-                        src={src}
-                        alt="Resource preview"
-                        className="w-full h-auto object-cover"
-                        loading="lazy"
-                      />
-                    </div>
-                  ))}
-                </div>
-              ))}
-            </div>
           </div>
         </div>
       </div>
