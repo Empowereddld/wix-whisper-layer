@@ -5,6 +5,11 @@ const OrganizationsAwarenessSection = () => {
   return (
     <section className="py-10 md:py-16 lg:py-[120px] bg-secondary">
       <div className="container px-6 md:px-8">
+        {/* Title spanning full width */}
+        <h2 className="text-[28px] md:text-[36px] lg:text-[46px] font-black text-foreground leading-[1.12] mb-8 md:mb-12">
+          Let's spread DLD Awareness together!
+        </h2>
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-16 items-start">
           {/* Left — layered image composition (tablet/desktop) */}
           <div className="relative hidden md:block md:h-[380px] lg:h-[520px]">
@@ -39,9 +44,6 @@ const OrganizationsAwarenessSection = () => {
 
           {/* Right — text */}
           <div className="flex flex-col justify-center items-center md:items-start">
-            <h2 className="text-[28px] md:text-[36px] lg:text-[46px] font-black text-foreground leading-[1.12] mb-4 md:mb-6">
-              Let's spread DLD Awareness together!
-            </h2>
             <p className="text-[13px] md:text-[14px] lg:text-[15px] text-muted-foreground leading-[1.7] mb-4 md:mb-5">
               We partner with organizations committed to supporting underserved families, including:
             </p>
