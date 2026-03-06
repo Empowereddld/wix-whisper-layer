@@ -1,4 +1,4 @@
-import { ArrowRight } from "lucide-react";
+
 
 const DownloadablesHowItWorks = () => {
   return (
