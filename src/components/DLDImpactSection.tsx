@@ -204,6 +204,9 @@ const DLDImpactSection = () => {
                       zIndex,
                     }}
                   >
+                    <span className="absolute top-4 right-5 text-[11px] text-muted-foreground/30 font-medium tracking-widest select-none">
+                      {String(i + 1).padStart(2, "0")} / {String(cards.length).padStart(2, "0")}
+                    </span>
                     <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mb-5">
                       <Icon className="w-[18px] h-[18px] text-primary" strokeWidth={1.4} />
                     </div>
