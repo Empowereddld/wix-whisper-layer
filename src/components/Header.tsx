@@ -44,13 +44,13 @@ const Header = () => {
           <img src={logoImage} alt="EmpoweredDLD" className="h-[120px] lg:h-[140px] w-auto" />
         </Link>
 
-        <nav className="hidden lg:flex items-center gap-8">
+        <nav className="hidden lg:flex items-center gap-6 xl:gap-8">
           {navLinks.map((link) =>
             link.children ? (
               <div key={link.label} className="relative flex items-center" ref={dropdownRef}>
                 <Link
                   to={link.href}
-                  className="text-[13px] font-medium tracking-[0.06em] text-foreground/80 hover:text-primary transition-colors duration-200"
+                  className="text-[13px] font-medium tracking-[0.06em] text-foreground/80 hover:text-primary transition-colors duration-200 whitespace-nowrap"
                 >
                   {link.label}
                 </Link>
@@ -80,7 +80,7 @@ const Header = () => {
               <Link
                 key={link.label}
                 to={link.href}
-                className="text-[13px] font-medium tracking-[0.04em] text-foreground/80 hover:text-primary transition-colors duration-200"
+                className="text-[13px] font-medium tracking-[0.04em] text-foreground/80 hover:text-primary transition-colors duration-200 whitespace-nowrap"
               >
                 {link.label}
               </Link>
