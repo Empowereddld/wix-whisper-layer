@@ -1,18 +1,18 @@
 
 
-## Reduce Section Padding on For Organizations Page
+## Plan: Zoom out the image in "Is This Right" section
 
-**Problem**: Most sections use `lg:py-[120px]` (240px total between sections), creating too much whitespace between content blocks.
+The image currently uses `object-cover` which crops tightly into the center of the photo, cutting off the reading activity. To "zoom out" while keeping the same frame size, we can use CSS `object-fit: contain` instead — but that would leave empty space.
 
-**Approach**: Reduce the desktop padding from `120px` to `80px` across all For Organizations-specific sections. This keeps the page feeling spacious without the excessive gaps. The two sections already at `80px` (StrugglesCTA and HowWeSupport) stay as-is.
+A better approach: keep `object-cover` but use `object-position` to show more of the image, combined with scaling. Specifically:
 
-**Sections to update** (all `lg:py-[120px]` → `lg:py-[80px]`):
-1. `OrganizationsAwarenessSection.tsx` 
-2. `WhyOrganizationsChooseSection.tsx`
-3. `PartnershipPackagesSection.tsx`
-4. `OrganizationsLeadFormSection.tsx`
+### Change in `src/components/IsThisRightSection.tsx` (line 16)
 
-**Also reduce** the `IsThisRightForOrgSection.tsx` which uses smaller custom values — tighten proportionally.
+On the `<img>` element, add a CSS `scale` transform to shrink the image within its container, effectively zooming out while the container stays the same size. We'll use Tailwind's `scale-[0.85]` (or similar) combined with `object-contain` to ensure the full image is visible:
 
-No changes to shared components (DLDImpactSection, ResourceLibraryCTA, Footer) to avoid affecting other pages.
+- Change `object-cover` → `object-contain` so the entire image is visible without cropping
+- Add `object-center` to keep it centered
+- The container with `rounded-xl overflow-hidden` maintains the same frame size and shape
+
+This shows the full scene (people reading) within the exact same container dimensions.
 

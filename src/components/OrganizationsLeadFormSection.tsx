@@ -23,7 +23,7 @@ const OrganizationsLeadFormSection = () => {
   };
 
   return (
-    <section className="py-10 md:py-16 lg:py-[120px] bg-muted">
+    <section className="py-10 md:py-16 lg:py-[80px] bg-muted">
       <div className="container px-6 md:px-8">
         <div className="max-w-[600px] mx-auto">
           <div className="text-center mb-8 md:mb-10">
