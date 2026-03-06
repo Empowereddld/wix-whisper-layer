@@ -11,10 +11,16 @@ const whoWeServeLinks = [
   { label: "For Organizations", href: "/for-organizations" },
 ];
 
+const resourcesLinks = [
+  { label: "Podcasts", href: "/resources/podcasts" },
+  { label: "Free Course", href: "/resources/free-course" },
+  { label: "Downloadables", href: "/resources/downloadables" },
+];
+
 const navLinks = [
   { label: "HOME", href: "/" },
   { label: "WHO WE SERVE", href: "/who-we-serve", children: whoWeServeLinks },
-  { label: "RESOURCES", href: "#resources" },
+  { label: "RESOURCES", href: "/resources", children: resourcesLinks },
   { label: "SHOP", href: "#shop" },
   { label: "WORK WITH US", href: "#work-with-us" },
   { label: "ABOUT DLD", href: "#about" },
@@ -23,14 +29,14 @@ const navLinks = [
 
 const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [mobileSubOpen, setMobileSubOpen] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [mobileSubOpen, setMobileSubOpen] = useState<string | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
-        setDropdownOpen(false);
+        setOpenDropdown(null);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
@@ -56,19 +62,19 @@ const Header = () => {
                 </Link>
                 <button
                   className="p-1 text-foreground/80 hover:text-primary transition-colors duration-200"
-                  onClick={() => setDropdownOpen(!dropdownOpen)}
+                  onClick={() => setOpenDropdown(openDropdown === link.label ? null : link.label)}
                   aria-label="Show submenu"
                 >
-                  <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${dropdownOpen ? "rotate-180" : ""}`} />
+                  <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${openDropdown === link.label ? "rotate-180" : ""}`} />
                 </button>
-                {dropdownOpen && (
+                {openDropdown === link.label && (
                    <div className="absolute top-full left-0 mt-2 bg-background border border-border/30 rounded-lg shadow-lg py-2 min-w-[200px] z-50">
                     {link.children.map((child) => (
                       <Link
                         key={child.label}
                         to={child.href}
                         className="block px-4 py-2.5 text-[13px] font-medium text-foreground/70 hover:bg-accent hover:text-primary transition-colors"
-                        onClick={() => setDropdownOpen(false)}
+                        onClick={() => setOpenDropdown(null)}
                       >
                         {child.label}
                       </Link>
@@ -115,12 +121,12 @@ const Header = () => {
               <div key={link.label}>
                 <button
                   className="flex items-center justify-between w-full text-[14px] font-semibold text-foreground py-1"
-                  onClick={() => setMobileSubOpen(!mobileSubOpen)}
+                  onClick={() => setMobileSubOpen(mobileSubOpen === link.label ? null : link.label)}
                 >
                   {link.label}
-                  <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${mobileSubOpen ? "rotate-180" : ""}`} />
+                  <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${mobileSubOpen === link.label ? "rotate-180" : ""}`} />
                 </button>
-                {mobileSubOpen && (
+                {mobileSubOpen === link.label && (
                   <div className="pl-4 flex flex-col gap-2 mt-2">
                     {link.children.map((child) => (
                       <Link
