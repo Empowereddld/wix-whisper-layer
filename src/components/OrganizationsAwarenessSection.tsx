@@ -1,5 +1,4 @@
 import orgKids from "@/assets/org-kids.png";
-import orgStreetSunset from "@/assets/org-street-sunset.png";
 
 const OrganizationsAwarenessSection = () => {
   return (
