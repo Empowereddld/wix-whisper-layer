@@ -2,7 +2,7 @@ import motherDaughterReading from "@/assets/mother-daughter-reading.png";
 
 const ForParentsHero = () => {
   return (
-    <section className="pt-6 md:pt-10 lg:pt-16 pb-10 md:pb-16 lg:pb-[120px]">
+    <section className="pt-6 md:pt-10 lg:pt-16 pb-14 md:pb-16 lg:pb-16">
       <div className="container px-6 md:px-8">
         <div className="relative">
           {/* Gray card background */}
@@ -10,7 +10,7 @@ const ForParentsHero = () => {
             <span className="inline-block bg-deep-purple text-deep-purple-foreground text-[12px] md:text-[14px] lg:text-[16px] font-bold uppercase tracking-[0.14em] px-6 md:px-8 py-2 md:py-2.5 rounded-sm mb-4 md:mb-6">
               For Parents
             </span>
-            <h1 className="text-[26px] md:text-[36px] lg:text-[48px] font-black text-foreground leading-[1.12] mb-4 md:mb-5 max-w-[500px]">
+            <h1 className="text-[30px] md:text-[36px] lg:text-[48px] font-black text-foreground leading-[1.12] mb-4 md:mb-5 max-w-[500px]">
               Does Your Child Struggle to Express Themself?
             </h1>
             <p className="text-[13px] md:text-[14px] lg:text-[15px] text-muted-foreground leading-[1.7] mb-6 md:mb-8 max-w-[500px]">
@@ -25,7 +25,7 @@ const ForParentsHero = () => {
           </div>
 
           {/* Image — overlaps the card on the right */}
-          <div className="mt-4 md:mt-6 lg:mt-0 lg:absolute lg:right-0 lg:top-0 lg:bottom-0 lg:w-[48%] rounded-xl lg:rounded-l-xl lg:rounded-r-none overflow-hidden shadow-lg max-h-[220px] md:max-h-[280px] lg:max-h-none">
+          <div className="mt-4 md:mt-6 lg:mt-0 lg:absolute lg:right-0 lg:top-0 lg:bottom-0 lg:w-[48%] rounded-xl lg:rounded-l-xl lg:rounded-r-none overflow-hidden shadow-lg max-h-[260px] md:max-h-[280px] lg:max-h-none">
             <img
               src={motherDaughterReading}
               alt="A mother and daughter reading together"
