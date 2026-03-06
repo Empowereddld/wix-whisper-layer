@@ -208,6 +208,20 @@ const DLDImpactSection = () => {
             </div>
           </div>
 
+          {/* Right — Vertical progress dots */}
+          <div className="w-[10%] flex flex-col items-center justify-center gap-2">
+            {cards.map((_, i) => (
+              <div
+                key={i}
+                className={`rounded-full transition-all duration-500 ${
+                  i === activeIndex
+                    ? "bg-primary w-2 h-6"
+                    : "bg-border w-2 h-2"
+                }`}
+              />
+            ))}
+          </div>
+
         </div>
       </div>
     </section>
