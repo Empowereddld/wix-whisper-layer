@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import DownloadablesHero from "@/components/DownloadablesHero";
+import DownloadablesHowItWorks from "@/components/DownloadablesHowItWorks";
 import Footer from "@/components/Footer";
 
 const Downloadables = () => {
@@ -8,6 +9,7 @@ const Downloadables = () => {
       <Header />
       <main>
         <DownloadablesHero />
+        <DownloadablesHowItWorks />
       </main>
       <Footer />
     </div>
