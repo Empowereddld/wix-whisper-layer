@@ -1,8 +1,9 @@
 
 
-## Plan: Force specific card titles to two lines
+## Plan: Widen card title max-width to prevent three-line wrapping
 
-Add `max-w-[200px] mx-auto` to the `h3` title elements in `HowWeSupportTherapistsSection.tsx` (line 62). This constrains the title width so "Parent Resources", "Animated Podcast", and "Educational App" wrap to two lines, matching "Workshops & Training" and "Stock Your Therapy Room". Also add `min-h-[56px] md:min-h-[64px]` for consistent vertical spacing across all cards.
+The current `max-w-[160px]` is too narrow for "Books & Therapy Guides", causing it to wrap to three lines. Increase to `max-w-[180px]` so it fits on two lines while still forcing shorter titles like "Educational App" to wrap to two lines.
 
-Single line change in one file.
+**File**: `src/components/HowWeSupportTherapistsSection.tsx` (line 62)  
+Change `max-w-[160px]` → `max-w-[180px]`
 
