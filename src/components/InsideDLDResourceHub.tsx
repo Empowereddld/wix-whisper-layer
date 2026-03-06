@@ -53,11 +53,11 @@ const resources: ResourceItem[] = [
   },
 ];
 
-const AnimatedTestimonials = ({
+const AnimatedResources = ({
   items,
   autoplay = true,
 }: {
-  items: Testimonial[];
+  items: ResourceItem[];
   autoplay?: boolean;
 }) => {
   const [active, setActive] = useState(0);
