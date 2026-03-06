@@ -10,9 +10,9 @@ const OrganizationsAwarenessSection = () => {
           Let's spread DLD Awareness together!
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-16 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-16 md:items-stretch lg:items-start">
           {/* Left — layered image composition (tablet/desktop) */}
-          <div className="relative hidden md:block h-auto lg:h-[520px] items-start">
+          <div className="relative hidden md:flex lg:block h-auto lg:h-[520px]">
             {/* Back card — desktop only */}
             <div
               className="hidden lg:block absolute top-0 left-0 w-[72%] z-10 animate-float-gentle"
@@ -29,13 +29,13 @@ const OrganizationsAwarenessSection = () => {
 
             {/* Front card — single image on tablet, layered on desktop */}
             <div
-              className="md:relative lg:absolute bottom-0 right-0 md:w-full lg:w-[72%] z-20 lg:animate-float-gentle-alt md:flex md:justify-center lg:block lg:rotate-[1deg]"
+              className="md:w-full md:h-full lg:absolute bottom-0 right-0 lg:w-[72%] lg:h-auto z-20 lg:animate-float-gentle-alt md:flex md:justify-center lg:block lg:rotate-[1deg]"
             >
-              <div className="rounded-2xl overflow-hidden md:w-[85%] lg:w-full" style={{ boxShadow: "var(--shadow-elevated)" }}>
+              <div className="rounded-2xl overflow-hidden md:w-[85%] md:h-full lg:w-full lg:h-auto" style={{ boxShadow: "var(--shadow-elevated)" }}>
                 <img
                   src={orgKids}
                   alt="Children engaged in learning activities"
-                  className="w-full h-auto object-cover aspect-[4/5]"
+                  className="w-full md:h-full lg:h-auto object-cover lg:aspect-[4/5]"
                 />
               </div>
             </div>
