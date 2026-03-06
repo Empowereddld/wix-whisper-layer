@@ -135,13 +135,13 @@ const DLDImpactSection = () => {
 
           {/* Left Column — Label + Title + subtitle */}
           <div className="w-[38%] flex flex-col justify-center">
-            <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted-foreground/60 mb-4 block">
+            <span className="text-[12px] font-semibold uppercase tracking-[0.2em] text-muted-foreground/60 mb-5 block">
               The Reality of DLD
             </span>
-            <h2 className="text-[32px] lg:text-[42px] font-black text-foreground leading-[1.1] mb-5">
+            <h2 className="text-[40px] lg:text-[52px] font-black text-foreground leading-[1.05] mb-6">
               DLD is Affecting the Communities You Serve
             </h2>
-            <p className="text-[13px] lg:text-[15px] text-muted-foreground leading-[1.7]">
+            <p className="text-[14px] lg:text-[16px] text-muted-foreground leading-[1.7]">
               Developmental Language Disorder affects 1 in 14 children, yet most
               people have never heard of it. Your organization can change that.
             </p>
@@ -206,6 +206,11 @@ const DLDImpactSection = () => {
                       boxShadow: shadowBase,
                       border: "1px solid rgba(255,255,255,0.06)",
                       padding: "40px 44px",
+                      display: "flex",
+                      flexDirection: "column" as const,
+                      alignItems: "center",
+                      justifyContent: "center",
+                      textAlign: "center" as const,
                     }}
                   >
                     <span
@@ -214,14 +219,15 @@ const DLDImpactSection = () => {
                     >
                       {String(i + 1).padStart(2, "0")} / {String(cards.length).padStart(2, "0")}
                     </span>
+
                     <h3
-                      className="text-[21px] lg:text-[24px] font-black mb-3 mt-4"
+                      className="text-[21px] lg:text-[24px] font-black mb-3"
                       style={{ color: "hsl(0, 0%, 100%)" }}
                     >
                       {card.title}
                     </h3>
                     <p
-                      className="text-[14px] lg:text-[15px] leading-[1.75] max-w-[420px]"
+                      className="text-[14px] lg:text-[15px] leading-[1.75] max-w-[380px]"
                       style={{ color: "hsl(0, 0%, 78%)" }}
                     >
                       {card.description}
@@ -239,8 +245,8 @@ const DLDImpactSection = () => {
                 key={i}
                 className={`rounded-full transition-all duration-500 ${
                   i === activeIndex
-                    ? "bg-primary w-2 h-6"
-                    : "bg-border w-2 h-2"
+                    ? "bg-foreground w-2 h-6"
+                    : "bg-foreground/20 w-2 h-2"
                 }`}
               />
             ))}
