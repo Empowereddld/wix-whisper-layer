@@ -1,9 +1,21 @@
 
 
-## Plan: Widen card title max-width to prevent three-line wrapping
+## Plan: Fix mobile image cropping on For Therapists page
 
-The current `max-w-[160px]` is too narrow for "Books & Therapy Guides", causing it to wrap to three lines. Increase to `max-w-[180px]` so it fits on two lines while still forcing shorter titles like "Educational App" to wrap to two lines.
+Two images on the /for-therapists page are being excessively cropped on mobile due to restrictive `max-h` and `object-position` values.
 
-**File**: `src/components/HowWeSupportTherapistsSection.tsx` (line 62)  
-Change `max-w-[160px]` → `max-w-[180px]`
+### Changes
+
+**1. `src/components/ForTherapistsHero.tsx` (line 28)**
+- The hero image has `max-h-[300px]` on mobile with `object-[center_40%]`, which crops subjects out of frame
+- Remove the aggressive `max-h` constraint and adjust `object-position` to keep subjects centered
+- Change: `max-h-[300px] md:max-h-[400px]` → remove max-h on mobile, use aspect ratio instead
+- Update to: `aspect-[16/9] md:aspect-[16/10] lg:aspect-auto` with `object-center` for mobile
+
+**2. `src/components/WhyTherapistsTrustSection.tsx` (line 60)**
+- The boy-reading-bench image has `max-h-[250px]` on mobile with `object-[center_20%]`, heavily cropping the subject
+- Increase mobile max-height and center the object position
+- Change: `max-h-[250px]` → `max-h-[300px]` and `object-[center_20%]` → `object-center`
+
+Both fixes widen the visible area of each image on mobile so the subjects are not cut off.
 
