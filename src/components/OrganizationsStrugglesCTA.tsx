@@ -1,6 +1,6 @@
 const OrganizationsStrugglesCTA = () => {
   return (
-    <section className="py-10 md:py-16 lg:py-[120px]">
+    <section className="py-10 md:py-16 lg:py-[80px]">
       <div className="container px-6 md:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 lg:gap-12 items-stretch">
           {/* Left — Black card */}
