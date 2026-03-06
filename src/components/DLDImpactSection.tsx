@@ -221,13 +221,13 @@ const DLDImpactSection = () => {
                     </span>
 
                     <h3
-                      className="text-[21px] lg:text-[24px] font-black mb-3 mt-4"
+                      className="text-[21px] lg:text-[24px] font-black mb-3"
                       style={{ color: "hsl(0, 0%, 100%)" }}
                     >
                       {card.title}
                     </h3>
                     <p
-                      className="text-[14px] lg:text-[15px] leading-[1.75] max-w-[420px]"
+                      className="text-[14px] lg:text-[15px] leading-[1.75] max-w-[380px]"
                       style={{ color: "hsl(0, 0%, 78%)" }}
                     >
                       {card.description}
