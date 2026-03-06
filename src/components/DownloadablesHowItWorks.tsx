@@ -1,5 +1,3 @@
-
-
 const DownloadablesHowItWorks = () => {
   return (
     <section className="py-16 md:py-20 lg:py-24">
