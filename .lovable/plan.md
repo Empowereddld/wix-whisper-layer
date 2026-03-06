@@ -1,18 +1,32 @@
 
 
-## Plan: Zoom out the image in "Is This Right" section
+## Plan: Premium Layered Image Composition for Awareness Section
 
-The image currently uses `object-cover` which crops tightly into the center of the photo, cutting off the reading activity. To "zoom out" while keeping the same frame size, we can use CSS `object-fit: contain` instead — but that would leave empty space.
+Replace the single flat image in `OrganizationsAwarenessSection` with a layered, floating dual-image composition inspired by the Salient reference screenshot.
 
-A better approach: keep `object-cover` but use `object-position` to show more of the image, combined with scaling. Specifically:
+### Changes
 
-### Change in `src/components/IsThisRightSection.tsx` (line 16)
+**1. Add floating animation keyframes** (`tailwind.config.ts`)
+- Add two keyframes: `float-gentle` and `float-gentle-alt` with very slow, minimal vertical drift (3-4px over 6-8s)
+- Slightly different durations so cards move out of sync
+- Register corresponding animation utilities
 
-On the `<img>` element, add a CSS `scale` transform to shrink the image within its container, effectively zooming out while the container stays the same size. We'll use Tailwind's `scale-[0.85]` (or similar) combined with `object-contain` to ensure the full image is visible:
+**2. Rewrite the image area** (`OrganizationsAwarenessSection.tsx`)
+- Replace the single `<img>` with a relative container holding two image cards:
+  - **Back card**: Slightly larger, offset top-left, subtle rotation (~-2deg), `z-10`, soft shadow, slower float animation
+  - **Front card**: Positioned overlapping in front, offset bottom-right, slight rotation (~1deg), `z-20`, stronger shadow, alternate float animation
+- Both cards get `rounded-2xl`, `overflow-hidden`, and `shadow-lg`/`shadow-xl`
+- Use the same `org-kids.png` for the front card; import `org-community.png` (already exists in assets) for the back card
+- Desktop: full layered composition with offsets via absolute positioning inside a relative wrapper
+- Mobile: stack simplified — show both images side-by-side or as a single prominent image with the second peeking behind, scaled down
 
-- Change `object-cover` → `object-contain` so the entire image is visible without cropping
-- Add `object-center` to keep it centered
-- The container with `rounded-xl overflow-hidden` maintains the same frame size and shape
+**3. Responsive behavior**
+- On `lg+`: relative container ~450px tall, both cards absolutely positioned with offsets
+- On mobile/tablet: reduce container height, tighten offsets so images don't overflow, keep the layered feel but more compact
 
-This shows the full scene (people reading) within the exact same container dimensions.
+### Visual Details
+- Back image: `top-0 left-0`, ~75% width, slight negative rotation
+- Front image: `bottom-0 right-0`, ~75% width, slight positive rotation
+- Shadows use the existing `--shadow-elevated` token for consistency
+- Float animation: pure translateY, 6s and 7s durations, ease-in-out, infinite
 
