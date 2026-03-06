@@ -1,15 +1,26 @@
 
 
-## Plan: Constrain image size across breakpoints
+## Plan: Replace How It Works images + Fix Why Schools Choose image styling
 
-The issue: with `items-stretch` and `h-full object-cover`, the image grows unconstrained — too tall on desktop (laptop) and too large on mobile where it stacks.
+Two changes needed:
 
-### Changes in `src/components/WhySchoolsChooseSection.tsx`
+### 1. Replace How It Works step images
 
-1. **Grid**: Change `items-stretch` to `items-start` so the image doesn't stretch to fill the full bullet-list height
-2. **Image wrapper**: Add `max-h-[300px] md:max-h-[400px] lg:max-h-[500px]` to cap image height at each breakpoint
-3. **Mobile**: On mobile (stacked), limit the image width with `max-w-sm mx-auto` so it doesn't fill the full screen width
-4. **Keep** `rounded-lg overflow-hidden min-w-0` and `object-cover` for proper cropping and rounded corners
+Copy the 4 uploaded images into `src/assets/` and update imports in `HowItWorksSection.tsx`:
 
-This gives a well-proportioned image at every screen size: compact on mobile, medium on tablet, reasonably sized on desktop.
+- `user-uploads://image-gen_3-2.png` → `src/assets/educators-step-1.png` (Step 01 - Book a Free Consultation)
+- `user-uploads://step_2.png` → `src/assets/educators-step-2.png` (Step 02 - Choose Your Implementation Package)
+- `user-uploads://step_3.png` → `src/assets/educators-step-3.png` (Step 03 - Schedule Training & Delivery)
+- `user-uploads://step_4.png` → `src/assets/educators-step-4.png` (Step 04 - Implement with Ongoing Support)
+
+These overwrite the existing step images, so no import changes needed.
+
+### 2. Fix Why Schools Choose image
+
+The image container has `bg-background/40` which adds a visible non-transparent background behind the image. The `rounded-lg` is on the wrapper div but since `object-contain` leaves empty space around the image, the rounded corners aren't visually apparent on the photo itself.
+
+Fix in `WhySchoolsChooseSection.tsx`:
+- Remove `bg-background/40` from the container to eliminate the visible background
+- Switch from `object-contain` back to `object-cover` so the image fills its container and the `rounded-lg overflow-hidden` on the wrapper actually clips the image corners visibly
+- Keep the existing responsive size constraints (`max-w-[280px]`/`h-[260px]` etc.) to prevent oversizing
 
