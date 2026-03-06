@@ -13,7 +13,7 @@ const ForParents = () => {
       <Header />
       <main>
         <ForParentsHero />
-        <DoesSoundFamiliarSection />
+        <SplitScreenScroll />
         <HowWeSupportParentsSection />
         <WhyParentsTrustSection />
         <RightPlaceSection />
