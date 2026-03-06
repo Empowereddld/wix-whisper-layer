@@ -7,7 +7,7 @@ const OrganizationsAwarenessSection = () => {
       <div className="container px-6 md:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start">
           {/* Left — layered image composition */}
-          <div className="relative h-[280px] md:h-[380px] lg:h-[450px]">
+          <div className="relative h-[320px] md:h-[420px] lg:h-[520px]">
             {/* Back card */}
             <div
               className="absolute top-0 left-0 w-[70%] md:w-[72%] z-10 animate-float-gentle"
@@ -17,7 +17,7 @@ const OrganizationsAwarenessSection = () => {
                 <img
                   src={orgCommunity}
                   alt="Community members collaborating together"
-                  className="w-full h-auto object-cover aspect-[4/3]"
+                  className="w-full h-auto object-cover aspect-[4/5]"
                 />
               </div>
             </div>
@@ -31,7 +31,7 @@ const OrganizationsAwarenessSection = () => {
                 <img
                   src={orgKids}
                   alt="Children engaged in learning activities"
-                  className="w-full h-auto object-cover aspect-[4/3]"
+                  className="w-full h-auto object-cover aspect-[4/5]"
                 />
               </div>
             </div>
