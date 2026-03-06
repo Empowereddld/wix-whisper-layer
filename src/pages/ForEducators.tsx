@@ -2,7 +2,7 @@ import Header from "@/components/Header";
 import ForEducatorsHero from "@/components/ForEducatorsHero";
 import EducatorsFamiliarSection from "@/components/EducatorsFamiliarSection";
 import HowWeSupportSchoolsSection from "@/components/HowWeSupportSchoolsSection";
-import EducatorsDLDAwarenessCTA from "@/components/EducatorsDLDAwarenessCTA";
+
 import WhySchoolsChooseSection from "@/components/WhySchoolsChooseSection";
 import ImplementationPackagesSection from "@/components/ImplementationPackagesSection";
 import HowItWorksSection from "@/components/HowItWorksSection";
@@ -18,7 +18,7 @@ const ForEducators = () => {
         <ForEducatorsHero />
         <EducatorsFamiliarSection />
         <HowWeSupportSchoolsSection />
-        <EducatorsDLDAwarenessCTA />
+        
         <WhySchoolsChooseSection />
         <ImplementationPackagesSection />
         <HowItWorksSection />
