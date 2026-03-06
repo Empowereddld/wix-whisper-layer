@@ -1,5 +1,4 @@
 import orgKids from "@/assets/org-kids.png";
-import orgStreetSunset from "@/assets/org-street-sunset.png";
 
 const OrganizationsAwarenessSection = () => {
   return (
@@ -12,36 +11,17 @@ const OrganizationsAwarenessSection = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-16 lg:items-start">
           {/* Left — title + image (tablet/desktop) */}
-          <div className="hidden md:block relative lg:h-[520px]">
-            <h2 className="text-[36px] lg:text-[46px] font-black text-foreground leading-[1.12] mb-6 md:mb-8">
+          <div className="hidden md:flex flex-col">
+            <h2 className="text-[36px] lg:text-[46px] font-black text-foreground leading-[1.12] mb-8">
               Let's spread DLD Awareness together!
             </h2>
 
-            {/* Back card — desktop only */}
-            <div
-              className="hidden lg:block absolute top-[80px] left-0 w-[72%] z-10 animate-float-gentle"
-              style={{ transform: "rotate(-2deg)" }}
-            >
-              <div className="rounded-2xl overflow-hidden shadow-lg">
-                <img
-                  src={orgStreetSunset}
-                  alt="Community members collaborating together"
-                  className="w-full h-auto object-cover aspect-[4/5]"
-                />
-              </div>
-            </div>
-
-            {/* Front card — single image on tablet, layered on desktop */}
-            <div
-              className="lg:absolute bottom-0 right-0 lg:w-[72%] lg:h-auto z-20 lg:animate-float-gentle-alt lg:rotate-[1deg]"
-            >
-              <div className="rounded-2xl overflow-hidden md:max-h-[400px] lg:max-h-none lg:w-full" style={{ boxShadow: "var(--shadow-elevated)" }}>
-                <img
-                  src={orgKids}
-                  alt="Children engaged in learning activities"
-                  className="w-full h-full object-cover object-[center_70%] lg:object-[center_60%] lg:aspect-[4/5]"
-                />
-              </div>
+            <div className="rounded-2xl overflow-hidden" style={{ boxShadow: "var(--shadow-elevated)" }}>
+              <img
+                src={orgKids}
+                alt="Children engaged in learning activities"
+                className="w-full h-auto object-cover object-[center_70%] lg:object-[center_60%] aspect-[4/5] max-h-[480px]"
+              />
             </div>
           </div>
 
