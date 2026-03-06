@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import WhoWeServe from "./pages/WhoWeServe";
 import ForParents from "./pages/ForParents";
 import ForTherapists from "./pages/ForTherapists";
+import ForEducators from "./pages/ForEducators";
 import NotFound from "./pages/NotFound";
 import HubSignup from "./pages/hub/HubSignup";
 import HubLogin from "./pages/hub/HubLogin";
@@ -33,6 +34,7 @@ const App = () => (
             <Route path="/who-we-serve" element={<WhoWeServe />} />
             <Route path="/for-parents" element={<ForParents />} />
             <Route path="/for-therapists" element={<ForTherapists />} />
+            <Route path="/for-educators" element={<ForEducators />} />
             <Route path="/hub/signup" element={<HubSignup />} />
             <Route path="/hub/login" element={<HubLogin />} />
             <Route path="/hub/verify-email" element={<VerifyEmail />} />
