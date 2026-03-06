@@ -25,11 +25,11 @@ const ForTherapistsHero = () => {
           </div>
 
           {/* Image — overlaps the card on the right */}
-          <div className="mt-4 md:mt-6 lg:mt-0 lg:absolute lg:right-0 lg:top-0 lg:bottom-0 lg:w-[48%] rounded-xl lg:rounded-l-xl lg:rounded-r-none overflow-hidden shadow-lg max-h-[260px] md:max-h-[380px] lg:max-h-none">
+          <div className="mt-4 md:mt-6 lg:mt-0 lg:absolute lg:right-0 lg:top-0 lg:bottom-0 lg:w-[48%] rounded-xl lg:rounded-l-xl lg:rounded-r-none overflow-hidden shadow-lg max-h-[300px] md:max-h-[400px] lg:max-h-none">
             <img
               src={therapistWithKids}
               alt="A therapist working with children"
-              className="w-full h-full object-cover object-[center_30%] aspect-[16/9] lg:aspect-auto"
+              className="w-full h-full object-cover object-[center_40%] md:object-[center_35%] lg:object-[center_30%] aspect-[4/3] md:aspect-[16/10] lg:aspect-auto"
             />
           </div>
         </div>
