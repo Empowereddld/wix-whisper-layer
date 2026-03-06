@@ -125,7 +125,7 @@ const DLDImpactSection = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative md:h-[300vh] lg:h-[450vh]"
+      className="relative md:h-[450vh]"
     >
       {/* Subtle background gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-lavender/30 via-background to-background pointer-events-none" />
