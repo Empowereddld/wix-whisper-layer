@@ -154,7 +154,7 @@ const DLDImpactSection = () => {
                 const Icon = card.icon;
                 const offset = scrollProgress - i;
                 // User-provided palette from lightest to darkest
-                const bgColor = '#1F1A3A';
+                const bgColor = '#000000';
                 const textColor = 'hsl(0, 0%, 100%)';
                 const mutedTextColor = 'hsl(0, 0%, 78%)';
                 const iconBg = 'rgba(255,255,255,0.1)';
