@@ -206,6 +206,11 @@ const DLDImpactSection = () => {
                       boxShadow: shadowBase,
                       border: "1px solid rgba(255,255,255,0.06)",
                       padding: "40px 44px",
+                      display: "flex",
+                      flexDirection: "column" as const,
+                      alignItems: "center",
+                      justifyContent: "center",
+                      textAlign: "center" as const,
                     }}
                   >
                     <span
