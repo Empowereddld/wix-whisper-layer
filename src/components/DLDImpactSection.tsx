@@ -148,16 +148,6 @@ const DLDImpactSection = () => {
               people have never heard of it. Your organization can change that.
             </p>
 
-            {/* Card counter */}
-            <div className="mb-6">
-              <span className="text-[32px] lg:text-[40px] font-black text-foreground leading-none">
-                {String(activeIndex + 1).padStart(2, "0")}
-              </span>
-              <span className="text-[14px] text-muted-foreground/50 font-medium tracking-widest ml-2">
-                / {String(cards.length).padStart(2, "0")}
-              </span>
-            </div>
-
             {/* Vertical progress dots */}
             <div className="flex flex-col gap-2">
               {cards.map((_, i) => (
@@ -214,6 +204,9 @@ const DLDImpactSection = () => {
                       zIndex,
                     }}
                   >
+                    <span className="absolute top-4 right-5 text-[11px] text-muted-foreground/30 font-medium tracking-widest select-none">
+                      {String(i + 1).padStart(2, "0")} / {String(cards.length).padStart(2, "0")}
+                    </span>
                     <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mb-5">
                       <Icon className="w-[18px] h-[18px] text-primary" strokeWidth={1.4} />
                     </div>
