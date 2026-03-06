@@ -43,6 +43,9 @@ const OrganizationsAwarenessSection = () => {
 
           {/* Right — text */}
           <div className="flex flex-col justify-center items-center md:items-start">
+            <h2 className="hidden md:block text-[36px] lg:text-[46px] font-black text-foreground leading-[1.12] mb-8 md:mb-10">
+              Let's spread DLD Awareness together!
+            </h2>
             <p className="text-[13px] md:text-[14px] lg:text-[15px] text-muted-foreground leading-[1.7] mb-5 md:mb-6">
               We partner with organizations committed to supporting underserved families, including:
             </p>
