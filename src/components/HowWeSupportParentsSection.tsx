@@ -59,7 +59,7 @@ const HowWeSupportParentsSection = () => {
               className="bg-lavender border border-border/30 rounded-lg p-6 md:p-8 lg:p-10 flex flex-col min-h-[220px] md:min-h-[260px]"
             >
               <div>
-                <h3 className="text-[20px] md:text-[24px] font-black text-foreground mb-4 text-center">
+                <h3 className="text-[20px] md:text-[24px] font-black text-foreground mb-4 text-center min-h-[60px] md:min-h-[72px] flex items-center justify-center">
                   {card.title}
                 </h3>
                 <p className="text-[13px] md:text-[14px] text-muted-foreground leading-[1.7]">
@@ -68,7 +68,7 @@ const HowWeSupportParentsSection = () => {
               </div>
               <a
                 href={card.href}
-                className="inline-flex items-center gap-1 text-[11px] md:text-[12px] font-bold uppercase tracking-[0.12em] text-foreground hover:text-primary transition-colors mt-6"
+                className="inline-flex items-center gap-1 text-[11px] md:text-[12px] font-bold uppercase tracking-[0.12em] text-foreground hover:text-primary transition-colors mt-auto"
               >
                 {card.link}
                 <ChevronRight className="w-4 h-4" />
