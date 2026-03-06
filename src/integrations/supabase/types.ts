@@ -156,7 +156,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      increment_download_count: {
+        Args: { resource_id: string }
+        Returns: undefined
+      }
     }
     Enums: {
       age_range: "0-4" | "5-7" | "8-10" | "11-13" | "14+" | "not_applicable"
