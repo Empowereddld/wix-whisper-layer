@@ -49,7 +49,8 @@ const WhySchoolsChooseSection = () => {
             <img
               src={educatorsTrust}
               alt="An educator working with a student"
-              className="w-full h-full object-cover"
+               className="w-full h-full object-cover"
+               loading="lazy"
             />
           </div>
         </div>

@@ -53,8 +53,9 @@ const WhyParentsTrustSection = () => {
             <img
               src={familyDinner}
               alt="A family enjoying dinner together"
-              className="w-full h-auto object-cover aspect-[16/9] md:aspect-[4/3] lg:aspect-[4/5] max-h-[250px] md:max-h-[350px] lg:max-h-none"
-            />
+               className="w-full h-auto object-cover aspect-[16/9] md:aspect-[4/3] lg:aspect-[4/5] max-h-[250px] md:max-h-[350px] lg:max-h-none"
+               loading="lazy"
+             />
           </div>
         </div>
       </div>
