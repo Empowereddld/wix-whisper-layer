@@ -93,24 +93,22 @@ const DLDImpactSection = () => {
               people have never heard of it. Your organization can change that.
             </p>
           </div>
-          <div className="space-y-5">
+          <div className="grid grid-cols-2 gap-3">
             {cards.map((card, i) => (
               <div
                 key={card.title}
-                className="rounded-xl p-7 shadow-[var(--shadow-card)]"
+                className="rounded-xl p-5 shadow-[var(--shadow-card)]"
                 style={{
                   background: "linear-gradient(145deg, #111111 0%, #000000 100%)",
                 }}
               >
-                <div className="flex items-center justify-between mb-4">
-                  <span className="text-[12px] font-medium tracking-widest select-none" style={{ color: "hsl(0, 0%, 55%)" }}>
-                    {String(i + 1).padStart(2, "0")} / {String(cards.length).padStart(2, "0")}
-                  </span>
-                </div>
-                <h3 className="text-[18px] font-black mb-2" style={{ color: "hsl(0, 0%, 100%)" }}>
+                <span className="text-[10px] font-medium tracking-widest select-none block mb-2" style={{ color: "hsl(0, 0%, 55%)" }}>
+                  {String(i + 1).padStart(2, "0")} / {String(cards.length).padStart(2, "0")}
+                </span>
+                <h3 className="text-[14px] font-black mb-1.5" style={{ color: "hsl(0, 0%, 100%)" }}>
                   {card.title}
                 </h3>
-                <p className="text-[13px] leading-[1.7]" style={{ color: "hsl(0, 0%, 78%)" }}>
+                <p className="text-[11px] leading-[1.6]" style={{ color: "hsl(0, 0%, 78%)" }}>
                   {card.description}
                 </p>
               </div>
