@@ -1,13 +1,16 @@
 
 
-## Fix: Make "How We Support Parents" cards uniform height
+## Fix: Reduce gap between header and hero section on For Parents page
 
-The issue is that "Books and Resources" has a longer description, causing its card to be taller than the others. The cards already use `flex flex-col` and `min-h`, but the titles wrap to two lines for "Books and Resources" while others fit on one line.
+The hero section has `lg:py-[120px]` top padding, which creates a large gap below the header. The fix is to reduce the **top** padding while keeping the bottom padding intact.
 
-### Changes to `src/components/HowWeSupportParentsSection.tsx`:
+### Change in `src/components/ForParentsHero.tsx` (line 5):
 
-1. **Set a fixed minimum height on the title area** — Add `min-h-[60px] md:min-h-[72px]` to the `<h3>` element so all titles occupy the same vertical space regardless of wrapping
-2. **Ensure the link is pushed to the bottom** — Add `mt-auto` to the link element so CTAs align at the bottom of each card, and remove the fixed `mt-6`
+Replace the symmetric padding `py-10 md:py-16 lg:py-[120px]` with asymmetric padding that reduces the top:
 
-This keeps all cards visually aligned: titles at the same height, descriptions flowing naturally, and CTAs pinned to the bottom.
+```
+pt-6 md:pt-10 lg:pt-16 pb-10 md:pb-16 lg:pb-[120px]
+```
+
+This cuts the top spacing roughly in half while preserving the bottom spacing that separates this section from the next.
 
