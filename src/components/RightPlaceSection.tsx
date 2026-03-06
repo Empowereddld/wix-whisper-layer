@@ -20,7 +20,7 @@ const RightPlaceSection = () => {
               You're in the right<br className="hidden md:block" /> place if...
             </h2>
 
-            <p className="text-[13px] md:text-[14px] lg:text-[15px] text-muted-foreground leading-[1.7] mb-4 md:mb-6">
+            <p className="text-[13px] md:text-[14px] lg:text-[15px] text-muted-foreground leading-[1.7] mb-4 md:mb-6 underline underline-offset-4">
               you're a parent who:
             </p>
 
