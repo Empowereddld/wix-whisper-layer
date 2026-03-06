@@ -42,13 +42,10 @@ const cards = [
 const DLDImpactSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
-  const isMobile = useIsMobile();
 
   const activeIndex = Math.round(scrollProgress);
 
   useEffect(() => {
-    if (isMobile) return;
-
     const handleScroll = () => {
       if (!sectionRef.current) return;
       const rect = sectionRef.current.getBoundingClientRect();
@@ -72,57 +69,12 @@ const DLDImpactSection = () => {
     window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [isMobile]);
+  }, []);
 
-  // Mobile: simple vertical list
-  if (isMobile) {
-    return (
-      <section className="py-10 relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-lavender/40 via-background to-background pointer-events-none" />
-        <div className="container px-6 relative">
-          <div className="mb-10">
-            <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted-foreground/70 mb-3 block">
-              The Reality of DLD
-            </span>
-            <h2 className="text-[28px] font-black text-foreground leading-[1.1] mb-3">
-              DLD is Affecting the Communities You Serve
-            </h2>
-            <p className="text-[13px] text-muted-foreground leading-[1.7] max-w-[500px]">
-              Developmental Language Disorder affects 1 in 14 children, yet most
-              people have never heard of it. Your organization can change that.
-            </p>
-          </div>
-          <div className="grid grid-cols-2 gap-3">
-            {cards.map((card, i) => (
-              <div
-                key={card.title}
-                className="rounded-xl p-5 shadow-[var(--shadow-card)]"
-                style={{
-                  background: "linear-gradient(145deg, #111111 0%, #000000 100%)",
-                }}
-              >
-                <span className="text-[10px] font-medium tracking-widest select-none block mb-2" style={{ color: "hsl(0, 0%, 55%)" }}>
-                  {String(i + 1).padStart(2, "0")} / {String(cards.length).padStart(2, "0")}
-                </span>
-                <h3 className="text-[14px] font-black mb-1.5" style={{ color: "hsl(0, 0%, 100%)" }}>
-                  {card.title}
-                </h3>
-                <p className="text-[11px] leading-[1.6]" style={{ color: "hsl(0, 0%, 78%)" }}>
-                  {card.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  // Desktop / Tablet: two-column sticky stacked card scroll
   return (
     <section
       ref={sectionRef}
-      className="relative md:h-[450vh]"
+      className="relative h-[300vh] md:h-[450vh]"
     >
       {/* Subtle background gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-lavender/30 via-background to-background pointer-events-none" />
