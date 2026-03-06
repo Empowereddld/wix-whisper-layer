@@ -1,12 +1,18 @@
 
-## Move Title Above Image in Left Column & Shorten Image
 
-### Changes to `src/components/OrganizationsAwarenessSection.tsx`:
+## Plan: Zoom out the image in "Is This Right" section
 
-1. **Move the `h2` title from the right column into the left column**, placed above the image (visible on tablet/desktop). The left column becomes: title → image.
+The image currently uses `object-cover` which crops tightly into the center of the photo, cutting off the reading activity. To "zoom out" while keeping the same frame size, we can use CSS `object-fit: contain` instead — but that would leave empty space.
 
-2. **Shorten the image on tablet** — remove `md:items-stretch` / `md:h-full` so the image no longer stretches to match the full text column height. Instead, give it a constrained height (e.g., `md:max-h-[400px]`) with `object-cover` and `object-bottom` to show the bottom portion cropped naturally.
+A better approach: keep `object-cover` but use `object-position` to show more of the image, combined with scaling. Specifically:
 
-3. **Left column structure on tablet**: Switch from `md:flex` to a simple block layout — title on top, image below, both left-aligned. The image container gets a fixed max-height so it's visibly shorter than the text column.
+### Change in `src/components/IsThisRightSection.tsx` (line 16)
 
-4. **Desktop (lg)**: Title stays above the layered image composition. The layered cards remain unchanged.
+On the `<img>` element, add a CSS `scale` transform to shrink the image within its container, effectively zooming out while the container stays the same size. We'll use Tailwind's `scale-[0.85]` (or similar) combined with `object-contain` to ensure the full image is visible:
+
+- Change `object-cover` → `object-contain` so the entire image is visible without cropping
+- Add `object-center` to keep it centered
+- The container with `rounded-xl overflow-hidden` maintains the same frame size and shape
+
+This shows the full scene (people reading) within the exact same container dimensions.
+
