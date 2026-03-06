@@ -12,7 +12,7 @@ const episodes = [
     number: "Episode 12",
     title: "What is DLD Anyways??",
     description:
-      "Dan and Daria explain DLD in their own words. Perfect for anyone who wants to understand what it's like.",
+      "Dan and Daria explain DLD in their own words. Perfect for anyone who wants to understand what it's really like.",
     image: ep12Img,
     link: "#",
   },
