@@ -159,7 +159,7 @@ const DLDImpactSection = () => {
                 const mutedTextColor = 'hsl(0, 0%, 78%)';
                 const iconBg = 'rgba(255,255,255,0.1)';
                 const iconColor = 'hsl(0, 0%, 100%)';
-                const counterColor = 'rgba(255,255,255,0.2)';
+                const counterColor = 'hsl(0, 0%, 78%)';
 
                 let transform = "";
                 let opacity = 1;
