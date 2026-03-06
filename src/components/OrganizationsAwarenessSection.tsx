@@ -29,8 +29,8 @@ const OrganizationsAwarenessSection = () => {
 
             {/* Front card — single image on tablet, layered on desktop */}
             <div
-              className="md:relative lg:absolute bottom-0 right-0 md:w-full lg:w-[72%] z-20 lg:animate-float-gentle-alt md:flex md:justify-center lg:block"
-              style={{ transform: window.innerWidth >= 1024 ? "rotate(1deg)" : "none" }}
+              className="md:relative lg:absolute bottom-0 right-0 md:w-full lg:w-[72%] z-20 lg:animate-float-gentle-alt md:flex md:justify-center lg:block lg:rotate-[1deg]"
+            >
             >
               <div className="rounded-2xl overflow-hidden md:w-[85%] lg:w-full" style={{ boxShadow: "var(--shadow-elevated)" }}>
                 <img
