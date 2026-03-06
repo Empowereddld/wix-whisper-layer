@@ -39,7 +39,7 @@ const TestimonialBand = () => {
 
   return (
     <section className="bg-deep-purple text-deep-purple-foreground py-14 md:py-28">
-      <div className="container max-w-[900px] text-center relative px-6 md:px-8">
+      <div className="container max-w-[900px] text-center relative px-10 md:px-8">
         <Quote className="w-10 h-10 md:w-16 md:h-16 text-primary-foreground/12 mx-auto mb-4 md:mb-6 rotate-180 stroke-[1]" />
 
         <div className="overflow-hidden" ref={emblaRef}>

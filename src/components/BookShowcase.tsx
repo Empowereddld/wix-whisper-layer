@@ -62,8 +62,8 @@ const BookShowcase = () => {
                   />
                 </div>
                 <div className="p-3">
-                  <h3 className="font-semibold text-[12px] text-foreground leading-snug">{book.title}</h3>
-                  <p className="text-[11px] text-muted-foreground mt-0.5">{book.subtitle}</p>
+                  <h3 className="font-semibold text-[11px] sm:text-[12px] text-foreground leading-snug">{book.title}</h3>
+                  <p className="text-[10px] sm:text-[11px] text-muted-foreground mt-0.5">{book.subtitle}</p>
                 </div>
               </div>
             ))}

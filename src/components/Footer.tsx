@@ -102,7 +102,7 @@ const Footer = () => {
             <input
               type="email"
               placeholder="Email"
-              className="h-10 w-full lg:w-[420px] bg-transparent border border-primary-foreground/30 rounded-sm px-3 text-[13px] text-primary-foreground placeholder:text-primary-foreground/30 focus:outline-none focus:border-primary-foreground/60 transition-colors"
+              className="h-10 w-full lg:w-[420px] xl:w-[500px] bg-transparent border border-primary-foreground/30 rounded-sm px-3 text-[13px] text-primary-foreground placeholder:text-primary-foreground/30 focus:outline-none focus:border-primary-foreground/60 transition-colors"
             />
             <div className="flex gap-3">
               <input

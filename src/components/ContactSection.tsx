@@ -86,7 +86,7 @@ const ContactSection = () => {
           </div>
 
           {/* Left – white form card */}
-          <div className="bg-background rounded-none p-6 md:p-10 lg:p-12 order-2 lg:order-1">
+          <div className="bg-background rounded-none p-6 md:p-10 lg:p-12 order-2 lg:order-1 max-w-[640px]">
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                 {/* First + Last name row */}
