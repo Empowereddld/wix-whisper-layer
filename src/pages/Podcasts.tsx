@@ -46,40 +46,34 @@ const Podcasts = () => {
       <Header />
       <main>
         {/* Hero Section */}
-        <section>
-          {/* Purple banner */}
-          <div className="bg-deep-purple py-8 md:py-10">
-            <div className="max-w-[1100px] mx-auto px-6 md:px-10">
-              <h1 className="text-[28px] md:text-[40px] font-black text-white tracking-wide">
-                PODCAST
-              </h1>
-            </div>
-          </div>
-
-          {/* Hero content */}
-          <div className="bg-muted">
-            <div className="max-w-[1100px] mx-auto px-6 md:px-10 py-16 md:py-20 flex flex-col lg:flex-row gap-10 lg:gap-16 items-center">
-              {/* Left text */}
-              <div className="flex-1 flex flex-col gap-6">
-                <h2 className="text-[30px] md:text-[42px] font-black text-foreground leading-[1.12]">
+        <section className="pt-6 md:pt-10 lg:pt-16 pb-14 md:pb-16 lg:pb-16">
+          <div className="container px-6 md:px-8">
+            <div className="flex flex-col lg:flex-row lg:items-stretch lg:gap-6">
+              {/* Gray card background */}
+              <div className="bg-muted rounded-xl lg:rounded-2xl lg:w-[58%] lg:flex-shrink-0 py-10 md:py-14 lg:py-24 px-6 md:px-8 lg:px-16">
+                <span className="inline-block bg-deep-purple text-deep-purple-foreground text-[12px] md:text-[14px] lg:text-[16px] font-bold uppercase tracking-[0.14em] px-6 md:px-8 py-2 md:py-2.5 rounded-sm mb-4 md:mb-6">
+                  PODCAST
+                </span>
+                <h1 className="text-[30px] md:text-[36px] lg:text-[48px] font-black text-foreground leading-[1.12] mb-4 md:mb-5 max-w-[500px]">
                   Life with DLD: The Dan and Daria Podcast
-                </h2>
-                <p className="text-[15px] md:text-[16px] text-muted-foreground leading-[1.75] max-w-[500px]">
+                </h1>
+                <p className="text-[13px] md:text-[14px] lg:text-[15px] text-muted-foreground leading-[1.7] mb-6 md:mb-8 max-w-[500px]">
                   Dan and Daria share real, honest conversations about living with DLD. Watch our short episodes that help children feel understood and give every adult in their corner a window into their world.
                 </p>
-                <div>
-                  <Button className="h-12 px-8 rounded-sm text-[14px] font-semibold bg-deep-purple text-deep-purple-foreground hover:bg-deep-purple/90">
-                    Explore the Series
-                  </Button>
-                </div>
+                <a
+                  href="#episodes"
+                  className="inline-flex items-center justify-center h-12 md:h-14 px-8 md:px-10 bg-black text-white text-[11px] md:text-[12px] lg:text-[13px] font-bold uppercase tracking-[0.12em] rounded-sm hover:bg-black/85 transition-colors duration-200"
+                >
+                  Explore the Series
+                </a>
               </div>
 
-              {/* Right image */}
-              <div className="flex-1 max-w-[520px]">
+              {/* Image */}
+              <div className="mt-4 lg:mt-0 lg:flex-1 rounded-xl overflow-hidden shadow-lg max-h-[260px] md:max-h-[380px] lg:max-h-none">
                 <img
                   src={podcastHeroImg}
-                  alt="Life with DLD Podcast"
-                  className="w-full h-auto rounded-lg object-cover"
+                  alt="Life with DLD - The Dan and Daria Podcast"
+                  className="w-full h-full object-cover object-center aspect-[16/9] lg:aspect-auto"
                 />
               </div>
             </div>
