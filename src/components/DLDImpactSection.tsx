@@ -219,6 +219,7 @@ const DLDImpactSection = () => {
                     >
                       {String(i + 1).padStart(2, "0")} / {String(cards.length).padStart(2, "0")}
                     </span>
+
                     <h3
                       className="text-[21px] lg:text-[24px] font-black mb-3 mt-4"
                       style={{ color: "hsl(0, 0%, 100%)" }}
