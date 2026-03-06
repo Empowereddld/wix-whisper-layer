@@ -1,36 +1,43 @@
 
 
-## Fix: ForParents Hero spacing issues
+## New CTA Section: Masonry Images + Text (Aceternity-inspired)
 
-Two problems identified from the screenshots:
+This will be a new component added to the ForParents page, placed before the Footer. The layout replicates the Aceternity "cta-with-masonry-images" pattern: left side has text + CTA button, right side has a masonry grid of portrait resource images.
 
-### 1. Desktop/Laptop: Large white gap below the hero
+### Layout
 
-The hero has `lg:pb-[120px]` bottom padding, creating excessive whitespace before the "Does this sound familiar?" section (which also has `lg:py-[120px]` top padding). Combined, that's 240px of white space.
-
-**Fix**: Reduce the hero bottom padding on desktop from 120px to something more proportional:
-
+```text
+┌──────────────────────────────────────────────────┐
+│  bg-black, full-width                            │
+│                                                  │
+│  ┌─────────────────┐  ┌──────────────────────┐   │
+│  │ Access the       │  │  col1    col2   col3 │   │
+│  │ Empowered DLD    │  │  ┌──┐   ┌──┐   ┌──┐ │   │
+│  │ Resource Library  │  │  │24│   │26│   │28│ │   │
+│  │                  │  │  └──┘   └──┘   └──┘ │   │
+│  │ body text...     │  │  ┌──┐   ┌──┐        │   │
+│  │                  │  │  │25│   │27│        │   │
+│  │ [Get Free Access]│  │  └──┘   └──┘        │   │
+│  └─────────────────┘  └──────────────────────┘   │
+└──────────────────────────────────────────────────┘
 ```
-pt-6 md:pt-10 lg:pt-16 pb-10 md:pb-16 lg:pb-16
-```
 
-This brings the gap down to ~16px + 120px (from next section) = a comfortable ~136px total.
+### New Component: `src/components/ResourceLibraryCTA.tsx`
 
-### 2. Mobile: Hero feels small/cramped
+- **Background**: `bg-black text-white` full-bleed section
+- **Left column (~40%)**: Heading, description, sub-line, and purple CTA button linking to `/hub/preview`
+- **Right column (~60%)**: 3-column masonry grid with the 7 uploaded portrait images, rounded corners, varying heights for visual interest, with a subtle top/bottom gradient fade like Aceternity
+- **Mobile**: Stacks vertically — text first, then a 2-column masonry grid
+- **Copy**: Exact text the user provided
 
-The mobile text is quite small (26px heading, 13px body) and the image is squeezed to max-h-[220px]. A few tweaks:
+### Images
+Copy all 7 uploaded images (24.png through 30.png) to `src/assets/` as resource preview thumbnails. Import them as ES6 modules.
 
-- Bump the mobile heading from `text-[26px]` to `text-[30px]`
-- Increase the mobile image max-height from `max-h-[220px]` to `max-h-[260px]`
-- Increase mobile section bottom padding from `pb-10` to `pb-14` for more breathing room
+### Page Integration
+Add the new `ResourceLibraryCTA` component to `ForParents.tsx` between `RightPlaceSection` and `Footer`.
 
-### Summary of changes in `ForParentsHero.tsx`:
-
-| Element | Current | New |
-|---------|---------|-----|
-| Section padding | `pb-10 md:pb-16 lg:pb-[120px]` | `pb-14 md:pb-16 lg:pb-16` |
-| Heading size | `text-[26px]` | `text-[30px]` |
-| Image container | `max-h-[220px]` | `max-h-[260px]` |
-
-Single file change, three class adjustments.
+### Files to create/modify:
+1. **Create** `src/components/ResourceLibraryCTA.tsx` — new CTA component
+2. **Modify** `src/pages/ForParents.tsx` — import and add the component
+3. **Copy** 7 images to `src/assets/`
 
