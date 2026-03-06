@@ -12,7 +12,7 @@ const episodes = [
     number: "Episode 12",
     title: "What is DLD Anyways??",
     description:
-      "Dan and Daria explain DLD in their own words. Perfect for anyone who wants to understand what it's like.",
+      "Dan and Daria explain DLD in their own words. Perfect for anyone who wants to understand what it's really like.",
     image: ep12Img,
     link: "#",
   },
@@ -81,40 +81,43 @@ const Podcasts = () => {
         </section>
 
         {/* Episodes Section */}
-        <section className="py-16 md:py-24">
-          <div className="max-w-[1100px] mx-auto px-6 md:px-10 flex flex-col gap-20 md:gap-28">
+        <section id="episodes" className="py-16 md:py-[120px]">
+          <div className="flex flex-col gap-20 md:gap-28">
             {episodes.map((ep, i) => {
               const imageFirst = i % 2 === 0;
               return (
                 <div
                   key={ep.number}
-                  className={`flex flex-col ${imageFirst ? "lg:flex-row" : "lg:flex-row-reverse"} gap-10 lg:gap-16 items-center`}
+                  className={`flex flex-col ${imageFirst ? "lg:flex-row" : "lg:flex-row-reverse"} items-stretch`}
                 >
                   {/* Image */}
-                  <div className="flex-1 w-full">
+                  <div className="lg:w-[58%] flex-shrink-0">
                     <img
                       src={ep.image}
                       alt={ep.title}
-                      className="w-full h-auto rounded-lg object-cover"
+                      className="w-full h-full object-cover aspect-[16/9] lg:aspect-auto"
                     />
                   </div>
 
                   {/* Text */}
-                  <div className="flex-1 flex flex-col gap-4">
-                    <p className="text-[13px] font-semibold text-foreground tracking-wide">
+                  <div className="flex-1 flex flex-col justify-center px-6 md:px-10 lg:px-16 py-10 lg:py-16">
+                    <p className="text-[13px] font-semibold text-foreground tracking-wide mb-3">
                       {ep.number}
                     </p>
-                    <h3 className="text-[26px] md:text-[32px] font-black text-foreground leading-[1.15]">
+                    <h3 className="text-[26px] md:text-[32px] font-black text-foreground leading-[1.15] mb-4">
                       {ep.title}
                     </h3>
-                    <div className="w-12 h-[3px] bg-foreground/20 my-1" />
-                    <p className="text-[14px] md:text-[15px] text-muted-foreground leading-[1.75] max-w-[450px]">
+                    <div className="w-12 h-[3px] bg-foreground/20 mb-5" />
+                    <p className="text-[14px] md:text-[15px] text-muted-foreground leading-[1.75] max-w-[400px] mb-6">
                       {ep.description}
                     </p>
-                    <div className="mt-2">
-                      <Button className="h-12 px-8 rounded-sm text-[14px] font-semibold bg-deep-purple text-deep-purple-foreground hover:bg-deep-purple/90">
+                    <div>
+                      <a
+                        href={ep.link}
+                        className="inline-flex items-center justify-center h-12 px-8 bg-deep-purple text-deep-purple-foreground text-[13px] font-semibold rounded-sm hover:bg-deep-purple/90 transition-colors duration-200"
+                      >
                         Watch Episode
-                      </Button>
+                      </a>
                     </div>
                   </div>
                 </div>
