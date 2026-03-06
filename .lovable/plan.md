@@ -1,26 +1,18 @@
 
 
-## Plan: Replace How It Works images + Fix Why Schools Choose image styling
+## Plan: Zoom out the image in "Is This Right" section
 
-Two changes needed:
+The image currently uses `object-cover` which crops tightly into the center of the photo, cutting off the reading activity. To "zoom out" while keeping the same frame size, we can use CSS `object-fit: contain` instead — but that would leave empty space.
 
-### 1. Replace How It Works step images
+A better approach: keep `object-cover` but use `object-position` to show more of the image, combined with scaling. Specifically:
 
-Copy the 4 uploaded images into `src/assets/` and update imports in `HowItWorksSection.tsx`:
+### Change in `src/components/IsThisRightSection.tsx` (line 16)
 
-- `user-uploads://image-gen_3-2.png` → `src/assets/educators-step-1.png` (Step 01 - Book a Free Consultation)
-- `user-uploads://step_2.png` → `src/assets/educators-step-2.png` (Step 02 - Choose Your Implementation Package)
-- `user-uploads://step_3.png` → `src/assets/educators-step-3.png` (Step 03 - Schedule Training & Delivery)
-- `user-uploads://step_4.png` → `src/assets/educators-step-4.png` (Step 04 - Implement with Ongoing Support)
+On the `<img>` element, add a CSS `scale` transform to shrink the image within its container, effectively zooming out while the container stays the same size. We'll use Tailwind's `scale-[0.85]` (or similar) combined with `object-contain` to ensure the full image is visible:
 
-These overwrite the existing step images, so no import changes needed.
+- Change `object-cover` → `object-contain` so the entire image is visible without cropping
+- Add `object-center` to keep it centered
+- The container with `rounded-xl overflow-hidden` maintains the same frame size and shape
 
-### 2. Fix Why Schools Choose image
-
-The image container has `bg-background/40` which adds a visible non-transparent background behind the image. The `rounded-lg` is on the wrapper div but since `object-contain` leaves empty space around the image, the rounded corners aren't visually apparent on the photo itself.
-
-Fix in `WhySchoolsChooseSection.tsx`:
-- Remove `bg-background/40` from the container to eliminate the visible background
-- Switch from `object-contain` back to `object-cover` so the image fills its container and the `rounded-lg overflow-hidden` on the wrapper actually clips the image corners visibly
-- Keep the existing responsive size constraints (`max-w-[280px]`/`h-[260px]` etc.) to prevent oversizing
+This shows the full scene (people reading) within the exact same container dimensions.
 
