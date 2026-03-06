@@ -1,18 +1,34 @@
 
 
-## Plan: Zoom out the image in "Is This Right" section
+## Redesign DLDImpactSection: Two-Column Layout + Slower Scroll + Card Numbering
 
-The image currently uses `object-cover` which crops tightly into the center of the photo, cutting off the reading activity. To "zoom out" while keeping the same frame size, we can use CSS `object-fit: contain` instead — but that would leave empty space.
+### Layout Change (Desktop)
+Switch from a single centered column to a **two-column sticky layout**:
+- **Left column** (sticky): Title, subtitle, and progress indicator (card counter `1/6`, `2/6`, etc.) — all left-aligned, pinned in place while scrolling
+- **Right column** (sticky): The stacked card deck, anchored while cards animate through
 
-A better approach: keep `object-cover` but use `object-position` to show more of the image, combined with scaling. Specifically:
+Both columns sit inside the sticky container. The outer section provides scroll runway.
 
-### Change in `src/components/IsThisRightSection.tsx` (line 16)
+### Scroll Speed Fix
+The current `300vh` height cycles through 6 cards too fast. Increase to **~450vh** (`lg:h-[450vh]`, `md:h-[300vh]`) so each card gets significantly more scroll runway — roughly 1 viewport height per card transition.
 
-On the `<img>` element, add a CSS `scale` transform to shrink the image within its container, effectively zooming out while the container stays the same size. We'll use Tailwind's `scale-[0.85]` (or similar) combined with `object-contain` to ensure the full image is visible:
+### Card Numbering
+Add a subtle `1 / 6` counter to each card or to the left column. Place it in the **left column** near the bottom as a muted label (e.g., `text-muted-foreground text-[13px] font-medium tracking-wider`) that updates with `activeIndex`. Format: `1 / 6`.
 
-- Change `object-cover` → `object-contain` so the entire image is visible without cropping
-- Add `object-center` to keep it centered
-- The container with `rounded-xl overflow-hidden` maintains the same frame size and shape
+### Specific Changes to `DLDImpactSection.tsx`:
 
-This shows the full scene (people reading) within the exact same container dimensions.
+1. **Outer section height**: Change `lg:h-[300vh]` → `lg:h-[450vh]`, `md:h-[200vh]` → `md:h-[300vh]`
+
+2. **Sticky container**: Change from `flex-col items-center justify-center` to a two-column flex layout:
+   - `flex items-center justify-center gap-16 max-w-[1100px] mx-auto`
+   - Left div (~40% width): title `text-left`, subtitle, progress dots (vertical or horizontal), and card counter `{activeIndex + 1} / {cards.length}`
+   - Right div (~60% width): the existing card stack (keep `max-w-[480px]`)
+
+3. **Card counter**: In the left column, add a subtle `<span>` showing `01 / 06` style numbering, using `text-muted-foreground text-[13px] tracking-widest`
+
+4. **Progress dots**: Move from below cards to the left column, displayed vertically for a more editorial feel
+
+5. **Mobile**: Keep the existing simple vertical list, unchanged. Add `{i + 1} / {cards.length}` as a small label on each mobile card.
+
+6. **Tablet (md)**: Use the two-column layout but with tighter gap (`gap-10`) and slightly smaller text sizes
 
