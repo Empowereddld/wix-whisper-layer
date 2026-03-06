@@ -35,9 +35,6 @@ const WhyOrganizationsChooseSection = () => {
               Why Organizations Choose Empowered DLD
             </h2>
 
-            <p className="text-[13px] md:text-[14px] lg:text-[15px] text-muted-foreground leading-[1.7] mb-6 md:mb-8">
-              We bring both lived experience and professional expertise to every partnership.
-            </p>
 
             <div className="flex flex-col gap-4 md:gap-6">
               {trustPoints.map((point) => (
