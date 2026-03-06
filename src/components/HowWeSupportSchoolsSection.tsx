@@ -59,7 +59,7 @@ const HowWeSupportSchoolsSection = () => {
               className="bg-lavender border border-border/30 rounded-lg p-6 md:p-8 lg:p-10 flex flex-col min-h-[220px] md:min-h-[260px]"
             >
               <div>
-                <h3 className="text-[20px] md:text-[24px] font-black text-foreground mb-4 text-center whitespace-nowrap">
+                <h3 className="text-[20px] md:text-[24px] font-black text-foreground mb-4">
                   {card.title}
                 </h3>
                 <p className="text-[13px] md:text-[14px] text-muted-foreground leading-[1.7]">
@@ -68,7 +68,7 @@ const HowWeSupportSchoolsSection = () => {
               </div>
               <a
                 href={card.href}
-                className="inline-flex items-center gap-1 text-[11px] md:text-[12px] font-bold uppercase tracking-[0.12em] text-foreground hover:text-primary transition-colors mt-6"
+                className="inline-flex items-center gap-1 text-[11px] md:text-[12px] font-bold uppercase tracking-[0.12em] text-foreground hover:text-primary transition-colors mt-auto pt-6"
               >
                 {card.link}
                 <ChevronRight className="w-4 h-4" />
