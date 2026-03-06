@@ -7,10 +7,10 @@ const OrganizationsAwarenessSection = () => {
       <div className="container px-6 md:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start">
           {/* Left — layered image composition */}
-          <div className="relative h-[320px] md:h-[420px] lg:h-[520px]">
-            {/* Back card */}
+          <div className="relative h-auto lg:h-[520px] flex justify-center lg:block">
+            {/* Back card — hidden on mobile/tablet */}
             <div
-              className="absolute top-0 left-0 w-[70%] md:w-[72%] z-10 animate-float-gentle"
+              className="hidden lg:block absolute top-0 left-0 w-[72%] z-10 animate-float-gentle"
               style={{ transform: "rotate(-2deg)" }}
             >
               <div className="rounded-2xl overflow-hidden shadow-lg">
@@ -24,7 +24,7 @@ const OrganizationsAwarenessSection = () => {
 
             {/* Front card */}
             <div
-              className="absolute bottom-0 right-0 w-[70%] md:w-[72%] z-20 animate-float-gentle-alt"
+              className="relative lg:absolute bottom-0 right-0 w-[85%] md:w-[70%] lg:w-[72%] z-20 lg:animate-float-gentle-alt"
               style={{ transform: "rotate(1deg)" }}
             >
               <div className="rounded-2xl overflow-hidden" style={{ boxShadow: "var(--shadow-elevated)" }}>
