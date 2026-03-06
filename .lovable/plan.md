@@ -1,23 +1,18 @@
 
 
-## Problem
+## Plan: Zoom out the image in "Is This Right" section
 
-The WHO WE SERVE dropdown opens but instantly closes because a single `dropdownRef` is shared across both dropdown nav items. In React's `.map()`, the ref gets reassigned on each iteration, so it only ever points to the **last** dropdown (RESOURCES). When you open WHO WE SERVE, the click-outside handler checks if the click is inside the RESOURCES container — it isn't — so it immediately closes the dropdown.
+The image currently uses `object-cover` which crops tightly into the center of the photo, cutting off the reading activity. To "zoom out" while keeping the same frame size, we can use CSS `object-fit: contain` instead — but that would leave empty space.
 
-## Fix
+A better approach: keep `object-cover` but use `object-position` to show more of the image, combined with scaling. Specifically:
 
-Replace the single `ref` approach with a proper click-outside pattern that accounts for multiple dropdowns:
+### Change in `src/components/IsThisRightSection.tsx` (line 16)
 
-1. **Remove the single `dropdownRef`** and its `useEffect` click-outside handler.
-2. **Use a wrapper ref** on the entire `<nav>` element (or use a callback ref pattern) so the click-outside handler checks if the click is inside *any* dropdown parent.
-3. Alternatively, the simplest fix: use a single ref that wraps the entire nav bar, so any click inside the nav (including either dropdown) is considered "inside."
+On the `<img>` element, add a CSS `scale` transform to shrink the image within its container, effectively zooming out while the container stays the same size. We'll use Tailwind's `scale-[0.85]` (or similar) combined with `object-contain` to ensure the full image is visible:
 
-### Implementation (simplest approach)
+- Change `object-cover` → `object-contain` so the entire image is visible without cropping
+- Add `object-center` to keep it centered
+- The container with `rounded-xl overflow-hidden` maintains the same frame size and shape
 
-In `src/components/Header.tsx`:
-- Move `ref={dropdownRef}` from the individual dropdown `<div>` elements to the parent `<nav>` element.
-- Remove `ref={dropdownRef}` from each `<div key={link.label} ...>` inside the map.
-- This way, clicking either dropdown's chevron or submenu is inside the ref, and only clicks truly outside the nav will close the dropdown.
-
-This is a ~3-line change in a single file.
+This shows the full scene (people reading) within the exact same container dimensions.
 
