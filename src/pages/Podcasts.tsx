@@ -88,7 +88,7 @@ const Podcasts = () => {
               return (
                 <div
                   key={ep.number}
-                  className={`flex flex-col ${imageFirst ? "lg:flex-row" : "lg:flex-row-reverse"} items-stretch`}
+                  className={`flex flex-col ${imageFirst ? "lg:flex-row" : "lg:flex-row-reverse"} items-stretch ${!imageFirst ? "bg-muted" : ""}`}
                 >
                   {/* Image */}
                   <div className="lg:w-[58%] flex-shrink-0">
