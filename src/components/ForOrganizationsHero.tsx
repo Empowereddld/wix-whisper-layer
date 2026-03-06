@@ -14,7 +14,7 @@ const ForOrganizationsHero = () => {
               DLD Support for Your Organization
             </h1>
             <p className="text-[13px] md:text-[14px] lg:text-[15px] text-muted-foreground leading-[1.7] mb-6 md:mb-8 max-w-[500px]">
-              We partner with schools, districts, clinics, and community organizations to bring DLD awareness, training, and resources where they're needed most.
+              We train your staff and educate the families you serve about Developmental Language Disorder. From one-time workshops to comprehensive partnerships.
             </p>
             <a
               href="#contact"
