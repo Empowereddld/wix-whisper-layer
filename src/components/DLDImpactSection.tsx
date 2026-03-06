@@ -138,33 +138,19 @@ const DLDImpactSection = () => {
       <div className="sticky top-0 h-screen flex items-center justify-center px-6 md:px-8">
         <div className="flex items-center gap-10 lg:gap-16 max-w-[1100px] w-full mx-auto">
 
-          {/* Left Column — Title, subtitle, counter, dots */}
-          <div className="w-[40%] flex flex-col justify-center">
+          {/* Left Column — Title + subtitle */}
+          <div className="w-[38%] flex flex-col justify-center">
             <h2 className="text-[32px] lg:text-[42px] font-black text-foreground leading-[1.1] mb-4">
               DLD is Affecting the Communities You Serve
             </h2>
-            <p className="text-[13px] lg:text-[15px] text-muted-foreground leading-[1.7] mb-10">
+            <p className="text-[13px] lg:text-[15px] text-muted-foreground leading-[1.7]">
               Developmental Language Disorder affects 1 in 14 children, yet most
               people have never heard of it. Your organization can change that.
             </p>
-
-            {/* Vertical progress dots */}
-            <div className="flex flex-col gap-2">
-              {cards.map((_, i) => (
-                <div
-                  key={i}
-                  className={`rounded-full transition-all duration-500 ${
-                    i === activeIndex
-                      ? "bg-primary w-2 h-6"
-                      : "bg-border w-2 h-2"
-                  }`}
-                />
-              ))}
-            </div>
           </div>
 
-          {/* Right Column — Card Stack */}
-          <div className="w-[60%] flex items-center justify-center">
+          {/* Center — Card Stack */}
+          <div className="w-[52%] flex items-center justify-center">
             <div className="relative w-full max-w-[480px] h-[280px] md:h-[260px]">
               {cards.map((card, i) => {
                 const Icon = card.icon;
