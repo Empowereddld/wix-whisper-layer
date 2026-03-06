@@ -59,7 +59,7 @@ const HowWeSupportTherapistsSection = () => {
               className="bg-lavender border border-border/30 rounded-lg p-6 md:p-8 lg:p-10 flex flex-col min-h-[220px] md:min-h-[260px]"
             >
               <div>
-                <h3 className="text-[20px] md:text-[24px] font-black text-foreground mb-4 text-center max-w-[160px] mx-auto min-h-[56px] md:min-h-[64px]">
+                <h3 className="text-[20px] md:text-[24px] font-black text-foreground mb-4 text-center max-w-[180px] mx-auto min-h-[56px] md:min-h-[64px]">
                   {card.title}
                 </h3>
                 <p className="text-[13px] md:text-[14px] text-muted-foreground leading-[1.7]">
