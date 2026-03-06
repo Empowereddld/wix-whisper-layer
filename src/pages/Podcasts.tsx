@@ -127,7 +127,7 @@ const Podcasts = () => {
         </section>
 
         {/* Why Watch Section */}
-        <section className="py-16 md:py-24 border-t border-border/30">
+        <section className="py-16 md:py-[120px] bg-deep-purple/10">
           <div className="max-w-[1100px] mx-auto px-6 md:px-10">
             <h2 className="text-[28px] md:text-[40px] font-black text-foreground leading-[1.15] mb-3">
               WHY WATCH?
