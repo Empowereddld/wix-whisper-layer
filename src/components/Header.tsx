@@ -36,7 +36,7 @@ const Header = () => {
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
-        setDropdownOpen(false);
+        setOpenDropdown(null);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
