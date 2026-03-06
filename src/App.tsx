@@ -42,6 +42,7 @@ const App = () => (
             <Route path="/for-organizations" element={<ForOrganizations />} />
             <Route path="/resources" element={<Resources />} />
             <Route path="/resources/podcasts" element={<Podcasts />} />
+            <Route path="/resources/free-course" element={<FreeCourse />} />
             <Route path="/hub/signup" element={<HubSignup />} />
             <Route path="/hub/login" element={<HubLogin />} />
             <Route path="/hub/verify-email" element={<VerifyEmail />} />
