@@ -1,49 +1,42 @@
 import { useEffect, useRef, useState } from "react";
-import { BarChart3, Heart, EyeOff, Users, GraduationCap, Briefcase } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 const cards = [
   {
-    icon: BarChart3,
     title: "1 in 14 People Have DLD",
     description:
       "You're already serving families affected by DLD. They just haven't been identified yet. In a community of 1,000 people, 75 have DLD.",
-    rotation: -0.6,
+    rotation: -1.5,
   },
   {
-    icon: Heart,
     title: "6x Higher Mental Health Risk",
     description:
       "Unidentified language disorders contribute to anxiety, depression, and social isolation throughout childhood and adulthood.",
-    rotation: 0.4,
+    rotation: 1.2,
   },
   {
-    icon: EyeOff,
     title: "Systematically Overlooked",
     description:
       "Girls, multilingual learners, and racialized individuals are least likely to receive DLD identification and support.",
-    rotation: -0.3,
+    rotation: -1,
   },
   {
-    icon: Users,
     title: "Social Isolation",
     description:
       "Children with DLD have fewer friendships and struggle with peer relationships, leading to loneliness and withdrawal.",
-    rotation: 0.5,
+    rotation: 1.5,
   },
   {
-    icon: GraduationCap,
     title: "Increased School Dropout Risk",
     description:
       "Students with unsupported DLD are more likely to disengage from education and leave school without completing their programs.",
-    rotation: -0.4,
+    rotation: -1.2,
   },
   {
-    icon: Briefcase,
     title: "Lower Employment Outcomes",
     description:
       "Adults with unidentified DLD face barriers to education and career advancement, limiting their economic opportunities.",
-    rotation: 0.3,
+    rotation: 1,
   },
 ];
 
@@ -85,9 +78,13 @@ const DLDImpactSection = () => {
   // Mobile: simple vertical list
   if (isMobile) {
     return (
-      <section className="py-10">
-        <div className="container px-6">
-          <div className="mb-8">
+      <section className="py-10 relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-lavender/40 via-background to-background pointer-events-none" />
+        <div className="container px-6 relative">
+          <div className="mb-10">
+            <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted-foreground/70 mb-3 block">
+              The Reality of DLD
+            </span>
             <h2 className="text-[28px] font-black text-foreground leading-[1.1] mb-3">
               DLD is Affecting the Communities You Serve
             </h2>
@@ -97,30 +94,27 @@ const DLDImpactSection = () => {
             </p>
           </div>
           <div className="space-y-5">
-            {cards.map((card, i) => {
-              const Icon = card.icon;
-              return (
-                <div
-                  key={card.title}
-                  className="bg-lavender border border-border/30 rounded-xl p-6 shadow-[var(--shadow-card)]"
-                >
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                      <Icon className="w-[18px] h-[18px] text-primary" strokeWidth={1.4} />
-                    </div>
-                    <span className="text-[12px] text-muted-foreground/60 font-medium tracking-widest">
-                      {String(i + 1).padStart(2, "0")} / {String(cards.length).padStart(2, "0")}
-                    </span>
-                  </div>
-                  <h3 className="text-[18px] font-black text-foreground mb-2">
-                    {card.title}
-                  </h3>
-                  <p className="text-[13px] text-muted-foreground leading-[1.7]">
-                    {card.description}
-                  </p>
+            {cards.map((card, i) => (
+              <div
+                key={card.title}
+                className="rounded-xl p-7 shadow-[var(--shadow-card)]"
+                style={{
+                  background: "linear-gradient(145deg, #111111 0%, #000000 100%)",
+                }}
+              >
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-[12px] font-medium tracking-widest select-none" style={{ color: "hsl(0, 0%, 55%)" }}>
+                    {String(i + 1).padStart(2, "0")} / {String(cards.length).padStart(2, "0")}
+                  </span>
                 </div>
-              );
-            })}
+                <h3 className="text-[18px] font-black mb-2" style={{ color: "hsl(0, 0%, 100%)" }}>
+                  {card.title}
+                </h3>
+                <p className="text-[13px] leading-[1.7]" style={{ color: "hsl(0, 0%, 78%)" }}>
+                  {card.description}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -133,12 +127,18 @@ const DLDImpactSection = () => {
       ref={sectionRef}
       className="relative md:h-[300vh] lg:h-[450vh]"
     >
-      <div className="sticky top-0 h-screen flex items-center justify-center px-6 md:px-8">
+      {/* Subtle background gradient */}
+      <div className="absolute inset-0 bg-gradient-to-b from-lavender/30 via-background to-background pointer-events-none" />
+
+      <div className="sticky top-0 h-screen flex items-center justify-center px-6 md:px-8 relative">
         <div className="flex items-center gap-10 lg:gap-16 max-w-[1100px] w-full mx-auto">
 
-          {/* Left Column — Title + subtitle */}
+          {/* Left Column — Label + Title + subtitle */}
           <div className="w-[38%] flex flex-col justify-center">
-            <h2 className="text-[32px] lg:text-[42px] font-black text-foreground leading-[1.1] mb-4">
+            <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted-foreground/60 mb-4 block">
+              The Reality of DLD
+            </span>
+            <h2 className="text-[32px] lg:text-[42px] font-black text-foreground leading-[1.1] mb-5">
               DLD is Affecting the Communities You Serve
             </h2>
             <p className="text-[13px] lg:text-[15px] text-muted-foreground leading-[1.7]">
@@ -147,45 +147,47 @@ const DLDImpactSection = () => {
             </p>
           </div>
 
-          {/* Center — Card Stack */}
+          {/* Center — Card Stack (10-15% wider) */}
           <div className="w-[52%] flex items-center justify-center">
-            <div className="relative w-full max-w-[480px] h-[280px] md:h-[260px]">
+            <div className="relative w-full max-w-[540px] h-[310px] md:h-[300px]">
               {cards.map((card, i) => {
-                const Icon = card.icon;
                 const offset = scrollProgress - i;
-                // User-provided palette from lightest to darkest
-                const bgColor = '#000000';
-                const textColor = 'hsl(0, 0%, 100%)';
-                const mutedTextColor = 'hsl(0, 0%, 78%)';
-                const iconBg = 'rgba(255,255,255,0.1)';
-                const iconColor = 'hsl(0, 0%, 100%)';
-                const counterColor = 'hsl(0, 0%, 78%)';
+                const isActive = Math.abs(offset) < 0.5;
+
+                // Layered shadows: deeper for lower cards
+                const depthIndex = Math.max(0, Math.min(cards.length - 1, Math.round(Math.abs(offset))));
+                const shadowBase = isActive
+                  ? "0 8px 24px -4px rgba(0,0,0,0.25), 0 2px 8px -2px rgba(0,0,0,0.15)"
+                  : `0 ${12 + depthIndex * 4}px ${32 + depthIndex * 8}px -${4 + depthIndex * 2}px rgba(0,0,0,${0.3 + depthIndex * 0.05}), 0 4px 12px -4px rgba(0,0,0,0.2)`;
+
+                // Subtle gradient on black cards
+                const cardBg = isActive
+                  ? "linear-gradient(145deg, #151515 0%, #050505 50%, #000000 100%)"
+                  : "linear-gradient(145deg, #111111 0%, #000000 100%)";
 
                 let transform = "";
                 let opacity = 1;
                 let zIndex = cards.length - i;
 
                 if (offset >= 1) {
-                  // Fully gone — flared to the upper right
-                  transform = `translate(40%, -120%) rotate(8deg)`;
+                  transform = `translate(40%, -120%) rotate(4deg)`;
                   opacity = 0;
                   zIndex = i;
                 } else if (offset > 0) {
-                  // Actively leaving — flare to the right as it goes up
                   const yOff = -offset * 120;
                   const xOff = offset * 40;
-                  const rot = offset * 8;
+                  const rot = offset * 4;
                   opacity = 1;
                   transform = `translate(${xOff}%, ${yOff}%) rotate(${rot}deg)`;
                   zIndex = cards.length + 1;
                 } else if (offset === 0 || (offset > -0.01 && offset < 0.01)) {
-                  transform = `translateY(0) rotate(0deg)`;
+                  transform = `translateY(0) rotate(0deg) scale(1.01)`;
                   opacity = 1;
                   zIndex = cards.length + 1;
                 } else {
                   const belowOffset = -offset;
                   const yOff = belowOffset * 8;
-                  const rot = card.rotation * 0.5;
+                  const rot = card.rotation;
                   const scale = 1 - Math.min(belowOffset, 3) * 0.02;
                   transform = `translateY(${yOff}px) rotate(${rot}deg) scale(${scale})`;
                   opacity = belowOffset <= 2 ? 1 - belowOffset * 0.15 : 0;
@@ -195,24 +197,33 @@ const DLDImpactSection = () => {
                 return (
                   <div
                     key={card.title}
-                    className="absolute inset-0 border border-border/30 rounded-xl p-8 md:p-10 shadow-[var(--shadow-elevated)] transition-all duration-100 ease-out"
+                    className="absolute inset-0 rounded-xl transition-all duration-100 ease-out"
                     style={{
                       transform,
                       opacity,
                       zIndex,
-                      backgroundColor: bgColor,
+                      background: cardBg,
+                      boxShadow: shadowBase,
+                      border: "1px solid rgba(255,255,255,0.06)",
+                      padding: "40px 44px",
                     }}
                   >
-                    <span className="absolute top-4 right-5 text-[11px] font-medium tracking-widest select-none" style={{ color: counterColor || 'hsl(var(--muted-foreground) / 0.3)' }}>
+                    <span
+                      className="absolute top-5 right-6 text-[11px] font-medium tracking-widest select-none"
+                      style={{ color: "hsl(0, 0%, 55%)" }}
+                    >
                       {String(i + 1).padStart(2, "0")} / {String(cards.length).padStart(2, "0")}
                     </span>
-                    <div className="w-14 h-14 rounded-full flex items-center justify-center mb-5" style={{ backgroundColor: iconBg || 'hsl(var(--primary) / 0.1)' }}>
-                      <Icon className="w-[18px] h-[18px]" strokeWidth={1.4} style={{ color: iconColor || 'hsl(var(--primary))' }} />
-                    </div>
-                    <h3 className="text-[20px] lg:text-[22px] font-black mb-3" style={{ color: textColor || 'hsl(var(--foreground))' }}>
+                    <h3
+                      className="text-[21px] lg:text-[24px] font-black mb-3 mt-4"
+                      style={{ color: "hsl(0, 0%, 100%)" }}
+                    >
                       {card.title}
                     </h3>
-                    <p className="text-[14px] leading-[1.7] max-w-[400px]" style={{ color: mutedTextColor || 'hsl(var(--muted-foreground))' }}>
+                    <p
+                      className="text-[14px] lg:text-[15px] leading-[1.75] max-w-[420px]"
+                      style={{ color: "hsl(0, 0%, 78%)" }}
+                    >
                       {card.description}
                     </p>
                   </div>
