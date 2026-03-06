@@ -49,8 +49,10 @@ const cards = [
 
 const DLDImpactSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [scrollProgress, setScrollProgress] = useState(0);
   const isMobile = useIsMobile();
+
+  const activeIndex = Math.round(scrollProgress);
 
   useEffect(() => {
     if (isMobile) return;
@@ -63,20 +65,16 @@ const DLDImpactSection = () => {
       const scrollableRange = sectionHeight - window.innerHeight;
 
       if (scrolled < 0) {
-        setActiveIndex(0);
+        setScrollProgress(0);
         return;
       }
       if (scrolled > scrollableRange) {
-        setActiveIndex(cards.length - 1);
+        setScrollProgress(cards.length - 1);
         return;
       }
 
       const progress = scrolled / scrollableRange;
-      const index = Math.min(
-        cards.length - 1,
-        Math.floor(progress * cards.length)
-      );
-      setActiveIndex(index);
+      setScrollProgress(Math.min(cards.length - 1, progress * (cards.length - 1)));
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -154,36 +152,44 @@ const DLDImpactSection = () => {
             <div className="relative w-full max-w-[480px] h-[280px] md:h-[260px]">
               {cards.map((card, i) => {
                 const Icon = card.icon;
-                const isAbove = i < activeIndex;
-                const isActive = i === activeIndex;
-                const isBelow = i > activeIndex;
-                const belowOffset = isBelow ? (i - activeIndex) : 0;
+                const offset = scrollProgress - i;
 
                 let transform = "";
                 let opacity = 1;
                 let zIndex = cards.length - i;
 
-                if (isAbove) {
+                if (offset >= 1) {
+                  // Fully gone above
                   transform = `translateY(-120%) rotate(${card.rotation * 2}deg)`;
                   opacity = 0;
                   zIndex = i;
-                } else if (isActive) {
+                } else if (offset > 0) {
+                  // Actively leaving — continuous scroll-linked
+                  const yOff = -offset * 120;
+                  const rot = offset * card.rotation * 2;
+                  opacity = 1 - offset * 0.8;
+                  transform = `translateY(${yOff}%) rotate(${rot}deg)`;
+                  zIndex = cards.length + 1;
+                } else if (offset === 0 || (offset > -0.01 && offset < 0.01)) {
+                  // Fully active
                   transform = `translateY(0) rotate(0deg)`;
                   opacity = 1;
                   zIndex = cards.length + 1;
-                } else if (isBelow) {
+                } else {
+                  // Waiting below
+                  const belowOffset = -offset;
                   const yOff = belowOffset * 8;
                   const rot = card.rotation * 0.5;
-                  const scale = 1 - belowOffset * 0.02;
+                  const scale = 1 - Math.min(belowOffset, 3) * 0.02;
                   transform = `translateY(${yOff}px) rotate(${rot}deg) scale(${scale})`;
                   opacity = belowOffset <= 2 ? 1 - belowOffset * 0.15 : 0;
-                  zIndex = cards.length - belowOffset;
+                  zIndex = cards.length - Math.round(belowOffset);
                 }
 
                 return (
                   <div
                     key={card.title}
-                    className="absolute inset-0 bg-lavender border border-border/30 rounded-xl p-8 md:p-10 shadow-[var(--shadow-elevated)] transition-all duration-500 ease-out"
+                    className="absolute inset-0 bg-lavender border border-border/30 rounded-xl p-8 md:p-10 shadow-[var(--shadow-elevated)] transition-all duration-100 ease-out"
                     style={{
                       transform,
                       opacity,
