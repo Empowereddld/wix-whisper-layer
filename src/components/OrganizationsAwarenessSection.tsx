@@ -84,7 +84,6 @@ const OrganizationsAwarenessSection = () => {
           </div>
         </div>
       </div>
-      </div>
     </section>
   );
 };
