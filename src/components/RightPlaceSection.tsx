@@ -21,8 +21,8 @@ const RightPlaceSection = () => {
 
           {/* Right — text content */}
           <div className="flex flex-col justify-start pt-0 md:pt-2 order-1 lg:order-2">
-            <p className="text-[13px] md:text-[14px] lg:text-[15px] text-muted-foreground leading-[1.7] mb-4 md:mb-6 underline underline-offset-4">
-              you're a parent who:
+            <p className="text-[15px] md:text-[17px] lg:text-[19px] text-muted-foreground leading-[1.7] mb-4 md:mb-6 underline underline-offset-4">
+              you're a parent who
             </p>
 
             <ul className="list-disc pl-5 space-y-2 md:space-y-4 text-[13px] md:text-[14px] lg:text-[15px] text-muted-foreground leading-[1.7] mb-6 md:mb-8">
