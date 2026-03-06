@@ -154,14 +154,12 @@ const DLDImpactSection = () => {
                 const Icon = card.icon;
                 const offset = scrollProgress - i;
                 // User-provided palette from lightest to darkest
-                const palette = ['#EBE8FC', '#DDD5F3', '#CEC2EB', '#C0AFE2', '#B19CD7', '#A58FCF'];
-                const bgColor = palette[i];
-                const isDark = i >= 4;
-                const textColor = isDark ? 'hsl(0, 0%, 100%)' : undefined;
-                const mutedTextColor = isDark ? 'hsl(0, 0%, 88%)' : undefined;
-                const iconBg = isDark ? 'rgba(255,255,255,0.15)' : undefined;
-                const iconColor = isDark ? 'hsl(0, 0%, 100%)' : undefined;
-                const counterColor = isDark ? 'rgba(255,255,255,0.25)' : undefined;
+                const bgColor = '#1F1A3A';
+                const textColor = 'hsl(0, 0%, 100%)';
+                const mutedTextColor = 'hsl(0, 0%, 78%)';
+                const iconBg = 'rgba(255,255,255,0.1)';
+                const iconColor = 'hsl(0, 0%, 100%)';
+                const counterColor = 'rgba(255,255,255,0.2)';
 
                 let transform = "";
                 let opacity = 1;
