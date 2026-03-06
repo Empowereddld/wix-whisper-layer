@@ -8,9 +8,9 @@ const OrganizationsAwarenessSection = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start">
           {/* Left — layered image composition */}
           <div className="relative h-[320px] md:h-[420px] lg:h-[520px]">
-            {/* Back card */}
+            {/* Back card — hidden on mobile/tablet */}
             <div
-              className="absolute top-0 left-0 w-[70%] md:w-[72%] z-10 animate-float-gentle"
+              className="hidden lg:block absolute top-0 left-0 w-[72%] z-10 animate-float-gentle"
               style={{ transform: "rotate(-2deg)" }}
             >
               <div className="rounded-2xl overflow-hidden shadow-lg">
