@@ -8,6 +8,7 @@ import TrustSection from "@/components/TrustSection";
 import TestimonialBand from "@/components/TestimonialBand";
 import NotAloneSection from "@/components/NotAloneSection";
 import ContactSection from "@/components/ContactSection";
+import ResourceLibraryCTA from "@/components/ResourceLibraryCTA";
 import Footer from "@/components/Footer";
 
 const Index = () => {
@@ -24,6 +25,7 @@ const Index = () => {
         <TestimonialBand />
         <NotAloneSection />
         <ContactSection />
+        <ResourceLibraryCTA />
       </main>
       <Footer />
     </div>
