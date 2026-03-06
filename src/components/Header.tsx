@@ -11,10 +11,16 @@ const whoWeServeLinks = [
   { label: "For Organizations", href: "/for-organizations" },
 ];
 
+const resourcesLinks = [
+  { label: "Podcasts", href: "/resources/podcasts" },
+  { label: "Free Course", href: "/resources/free-course" },
+  { label: "Downloadables", href: "/resources/downloadables" },
+];
+
 const navLinks = [
   { label: "HOME", href: "/" },
   { label: "WHO WE SERVE", href: "/who-we-serve", children: whoWeServeLinks },
-  { label: "RESOURCES", href: "#resources" },
+  { label: "RESOURCES", href: "/resources", children: resourcesLinks },
   { label: "SHOP", href: "#shop" },
   { label: "WORK WITH US", href: "#work-with-us" },
   { label: "ABOUT DLD", href: "#about" },
