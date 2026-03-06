@@ -2,38 +2,54 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
-import testimonialSarah from "@/assets/testimonial-sarah.png";
-import testimonialEmily from "@/assets/testimonial-emily.png";
-import testimonialTiffany from "@/assets/testimonial-tiffany.png";
+import resourcePreview1 from "@/assets/resource-preview-1.png";
+import resourcePreview2 from "@/assets/resource-preview-2.png";
+import resourcePreview3 from "@/assets/resource-preview-3.png";
+import resourcePreview4 from "@/assets/resource-preview-4.png";
+import resourcePreview5 from "@/assets/resource-preview-5.png";
 
-type Testimonial = {
-  quote: string;
-  name: string;
-  designation: string;
+type ResourceItem = {
+  title: string;
+  subheading: string;
+  description: string;
   src: string;
 };
 
-const testimonials: Testimonial[] = [
+const resources: ResourceItem[] = [
   {
-    quote:
-      "These resources have been a game-changer for our family. Everything is clear, practical, and easy to use right away.",
-    name: "Sarah",
-    designation: "Parent",
-    src: testimonialSarah,
+    title: "DLD Starter Pack",
+    subheading: "Start Here",
+    description:
+      "A clear introduction to DLD with practical next steps so families can start supporting their child right away.",
+    src: resourcePreview1,
   },
   {
-    quote:
-      "I recommend Empowered DLD resources to every family I work with. They're evidence-based and beautifully designed.",
-    name: "Emily",
-    designation: "Speech Language Pathologist",
-    src: testimonialEmily,
+    title: "Helping Kids Join Conversations",
+    subheading: "Everyday Communication",
+    description:
+      "Understand why conversations are hard and learn simple strategies that help children participate more confidently with friends and family.",
+    src: resourcePreview2,
   },
   {
-    quote:
-      "Finally, resources that actually make sense for the classroom. My students benefit every single day.",
-    name: "Tiffany",
-    designation: "Educator",
-    src: testimonialTiffany,
+    title: "Tips for Little Talkers",
+    subheading: "For Younger Children",
+    description:
+      "Practical strategies parents can use during everyday routines to help younger children with DLD build communication skills naturally.",
+    src: resourcePreview3,
+  },
+  {
+    title: "Language Impact Checklist",
+    subheading: "For SLPs",
+    description:
+      "Look beyond test scores and identify how language challenges affect real participation at home, school, and in social situations.",
+    src: resourcePreview4,
+  },
+  {
+    title: "Teacher Strategy Cheat Sheet",
+    subheading: "Classroom Support",
+    description:
+      "Simple classroom strategies teachers can use immediately to support understanding, participation, and language development for students with DLD.",
+    src: resourcePreview5,
   },
 ];
 
