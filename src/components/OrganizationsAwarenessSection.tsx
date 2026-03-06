@@ -31,7 +31,6 @@ const OrganizationsAwarenessSection = () => {
             <div
               className="md:relative lg:absolute bottom-0 right-0 md:w-full lg:w-[72%] z-20 lg:animate-float-gentle-alt md:flex md:justify-center lg:block lg:rotate-[1deg]"
             >
-            >
               <div className="rounded-2xl overflow-hidden md:w-[85%] lg:w-full" style={{ boxShadow: "var(--shadow-elevated)" }}>
                 <img
                   src={orgKids}
