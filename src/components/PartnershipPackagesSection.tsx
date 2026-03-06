@@ -60,7 +60,7 @@ const PartnershipPackagesSection = () => {
           {/* Package 2 */}
           <div className="border border-border rounded-lg overflow-hidden flex flex-col">
             <div className="bg-deep-purple text-deep-purple-foreground px-6 py-5 text-center">
-              <h3 className="text-[18px] md:text-[20px] font-black">Staff + Family Training</h3>
+              <h3 className="text-[18px] md:text-[20px] font-black">Staff + Family<br className="md:inline lg:hidden" /> Training</h3>
             </div>
             <div className="p-6 md:p-8 flex flex-col flex-1">
               <p className="text-[13px] md:text-[14px] text-muted-foreground leading-[1.7] mb-5 text-center">
