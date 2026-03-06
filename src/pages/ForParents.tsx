@@ -4,6 +4,7 @@ import DoesSoundFamiliarSection from "@/components/DoesSoundFamiliarSection";
 import HowWeSupportParentsSection from "@/components/HowWeSupportParentsSection";
 import WhyParentsTrustSection from "@/components/WhyParentsTrustSection";
 import RightPlaceSection from "@/components/RightPlaceSection";
+import ResourceLibraryCTA from "@/components/ResourceLibraryCTA";
 import Footer from "@/components/Footer";
 
 const ForParents = () => {
@@ -16,6 +17,7 @@ const ForParents = () => {
         <HowWeSupportParentsSection />
         <WhyParentsTrustSection />
         <RightPlaceSection />
+        <ResourceLibraryCTA />
       </main>
       <Footer />
     </div>
