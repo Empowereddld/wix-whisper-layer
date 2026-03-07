@@ -7,8 +7,8 @@ const BulkOrdersHero = () => {
         <div className="flex flex-col lg:flex-row lg:items-stretch lg:gap-6">
           {/* Gray card background */}
           <div className="bg-muted rounded-xl lg:rounded-2xl lg:w-[58%] lg:flex-shrink-0 pt-0 pb-10 md:pb-14 lg:pb-24 px-6 md:px-8 lg:px-16">
-            <div className="bg-deep-purple rounded-t-xl lg:rounded-t-2xl -mx-6 md:-mx-8 lg:-mx-16 px-6 md:px-8 lg:px-16 py-3 md:py-4 mb-6 md:mb-8">
-              <span className="text-white text-[13px] md:text-[15px] lg:text-[17px] font-bold uppercase tracking-[0.16em]">
+            <div className="bg-deep-purple rounded-t-xl lg:rounded-t-2xl -mx-6 md:-mx-8 lg:-mx-16 px-6 md:px-8 lg:px-16 py-4 md:py-5 lg:py-[20px] mb-10 md:mb-12 lg:mb-[48px] border-b-2 border-white/10">
+              <span className="text-white text-[15px] md:text-[17px] lg:text-[18px] font-semibold uppercase tracking-[0.14em]">
                 Bulk Orders
               </span>
             </div>
