@@ -186,7 +186,7 @@ const InsideDLDResourceHub = () => {
     <section className="pt-4 md:pt-6 lg:pt-8 pb-16 md:pb-20 lg:pb-24">
       <div className="container px-6 md:px-8 max-w-7xl mx-auto">
         <div className="bg-muted rounded-2xl py-8 md:py-10 lg:py-12 border border-border/50 shadow-sm">
-          <div className="max-w-[900px] mx-auto text-center mb-4 px-6">
+          <div className="max-w-[900px] mx-auto text-center mb-0 px-6">
             <p className="text-xs font-semibold tracking-[0.2em] uppercase text-muted-foreground mb-3">
               Featured Resources
             </p>
