@@ -183,7 +183,7 @@ const AnimatedResources = ({
 
 const InsideDLDResourceHub = () => {
   return (
-    <section className="py-16 md:py-20 lg:py-24">
+    <section className="pt-4 md:pt-6 lg:pt-8 pb-16 md:pb-20 lg:pb-24">
       <div className="container px-6 md:px-8 max-w-7xl mx-auto">
         <div className="bg-muted rounded-2xl py-10 md:py-12 lg:py-16 border border-border/50 shadow-sm">
           <div className="max-w-[900px] mx-auto text-center mb-8 px-6">
