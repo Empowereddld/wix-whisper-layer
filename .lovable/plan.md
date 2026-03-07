@@ -1,18 +1,15 @@
 
 
-## Plan: Zoom out the image in "Is This Right" section
+## Plan: Replace portrait image with landscape GIF in Library Intro section
 
-The image currently uses `object-cover` which crops tightly into the center of the photo, cutting off the reading activity. To "zoom out" while keeping the same frame size, we can use CSS `object-fit: contain` instead — but that would leave empty space.
+### Changes to `src/components/DownloadablesLibraryIntro.tsx`
 
-A better approach: keep `object-cover` but use `object-position` to show more of the image, combined with scaling. Specifically:
+1. **Copy the GIF** to `src/assets/resource-library-preview.gif` and import it instead of `family-reading.png`
+2. **Widen the container** from `max-w-6xl` (1152px) to `max-w-7xl` (1280px) to give the section more breathing room
+3. **Switch from portrait to landscape aspect ratio** on the image: change `aspect-[4/5]` to `aspect-[4/3]` since the GIF is landscape-oriented
+4. **Rebalance the grid** from 2/5 + 3/5 to an even 1/2 + 1/2 split (`md:grid-cols-2`) so the wider landscape image gets proper space
 
-### Change in `src/components/IsThisRightSection.tsx` (line 16)
-
-On the `<img>` element, add a CSS `scale` transform to shrink the image within its container, effectively zooming out while the container stays the same size. We'll use Tailwind's `scale-[0.85]` (or similar) combined with `object-contain` to ensure the full image is visible:
-
-- Change `object-cover` → `object-contain` so the entire image is visible without cropping
-- Add `object-center` to keep it centered
-- The container with `rounded-xl overflow-hidden` maintains the same frame size and shape
-
-This shows the full scene (people reading) within the exact same container dimensions.
+### Files
+- **Copy** `user-uploads://Beige_and_Brown_Minimal_Elegant_Business_Ebook.gif` → `src/assets/resource-library-preview.gif`
+- **Edit** `src/components/DownloadablesLibraryIntro.tsx` — update import, container width, grid split, and aspect ratio
 
