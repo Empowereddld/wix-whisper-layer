@@ -2,6 +2,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import BulkOrdersHero from "@/components/BulkOrdersHero";
 import BulkOrdersWhoSection from "@/components/BulkOrdersWhoSection";
+import WhyBulkOrderSection from "@/components/WhyBulkOrderSection";
 
 const BulkOrders = () => {
   return (
@@ -10,6 +11,7 @@ const BulkOrders = () => {
       <main className="flex-1">
         <BulkOrdersHero />
         <BulkOrdersWhoSection />
+        <WhyBulkOrderSection />
       </main>
       <Footer />
     </div>
