@@ -5,13 +5,14 @@ const BookDanSection = () => {
     <section className="py-10 md:py-[72px]">
       <div className="max-w-[1100px] mx-auto px-6 md:px-10">
         <div className="flex flex-col lg:flex-row items-start gap-8 lg:gap-12">
-        <div className="lg:w-[34%] flex-shrink-0 bg-muted overflow-hidden rounded-xl">
-          <img
-            src={bookDan}
-            alt="Dan and the Paper Airplane book cover"
-            className="w-full h-full object-cover aspect-[4/3] lg:aspect-auto"
-          />
-        </div>
+          {/* Image */}
+          <div className="lg:w-[38%] flex-shrink-0">
+            <img
+              src={bookDan}
+              alt="Dan and the Paper Airplane book cover"
+              className="w-full h-auto object-contain rounded-xl"
+            />
+          </div>
 
         {/* Text */}
         <div className="flex-1 flex flex-col justify-center px-5 md:px-8 lg:px-12 py-7 lg:py-10">
