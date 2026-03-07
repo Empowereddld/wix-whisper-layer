@@ -11,6 +11,7 @@ const Downloadables = () => {
       <Header />
       <main>
         <DownloadablesHero />
+        <StatBand />
         <DownloadablesHowItWorks />
         <InsideDLDResourceHub />
       </main>
