@@ -14,7 +14,7 @@ const DownloadablesLibraryIntro = () => {
       >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
           {/* Left – image (50%) */}
-          <div className="rounded-2xl overflow-hidden">
+          <div className="rounded-2xl overflow-hidden shadow-[var(--shadow-elevated)]">
             <img
               src={resourceGif}
               alt="Preview of DLD resource library materials"
