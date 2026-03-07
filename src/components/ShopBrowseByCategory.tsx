@@ -37,7 +37,7 @@ const categories = [
 const ShopBrowseByCategory = () => {
   return (
     <section className="py-16 md:py-24 lg:py-28">
-      <div className="max-w-[1100px] mx-auto px-6 md:px-8">
+      <div className="max-w-[1300px] mx-auto px-6 md:px-8">
         {/* Header */}
         <div className="mb-10 md:mb-14">
           <p className="text-[11px] md:text-[12px] font-bold uppercase tracking-[0.2em] text-muted-foreground mb-3">
@@ -54,9 +54,9 @@ const ShopBrowseByCategory = () => {
         {/* Cards grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {categories.map((cat) => (
-            <div key={cat.label} className="flex flex-col">
+            <div key={cat.label} className="flex flex-col bg-muted rounded-xl border border-border/40 overflow-hidden pb-8">
               {/* Image */}
-              <div className="relative rounded-xl overflow-hidden aspect-[4/3] mb-5">
+              <div className="relative aspect-[4/3]">
                 <img
                   src={cat.image}
                   alt={cat.title}
@@ -70,23 +70,25 @@ const ShopBrowseByCategory = () => {
               </div>
 
               {/* Text */}
-              <p className="text-[11px] font-bold uppercase tracking-[0.15em] text-muted-foreground mb-2">
-                {cat.label}
-              </p>
-              <h3 className="text-[20px] md:text-[22px] font-bold text-foreground leading-tight mb-2">
-                {cat.title}
-              </h3>
-              <p className="text-[14px] md:text-[15px] text-muted-foreground leading-relaxed mb-6 flex-1">
-                {cat.description}
-              </p>
+              <div className="px-6 pt-5 flex flex-col flex-1">
+                <p className="text-[11px] font-bold uppercase tracking-[0.15em] text-muted-foreground mb-2">
+                  {cat.label}
+                </p>
+                <h3 className="text-[20px] md:text-[22px] font-bold text-foreground leading-tight mb-2">
+                  {cat.title}
+                </h3>
+                <p className="text-[14px] md:text-[15px] text-muted-foreground leading-relaxed mb-6 flex-1">
+                  {cat.description}
+                </p>
 
-              {/* CTA */}
-              <Link
-                to={cat.href}
-                className="inline-flex items-center justify-center h-11 px-7 bg-foreground text-background text-[13px] font-semibold tracking-[0.04em] rounded-md hover:opacity-90 transition-opacity duration-200 w-fit"
-              >
-                {cat.cta}
-              </Link>
+                {/* CTA */}
+                <Link
+                  to={cat.href}
+                  className="inline-flex items-center justify-center h-11 px-7 bg-foreground text-background text-[13px] font-semibold tracking-[0.04em] rounded-md hover:opacity-90 transition-opacity duration-200 w-fit"
+                >
+                  {cat.cta}
+                </Link>
+              </div>
             </div>
           ))}
         </div>
