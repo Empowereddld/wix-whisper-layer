@@ -1,18 +1,16 @@
 
 
-## Plan: Zoom out the image in "Is This Right" section
+## Problem
 
-The image currently uses `object-cover` which crops tightly into the center of the photo, cutting off the reading activity. To "zoom out" while keeping the same frame size, we can use CSS `object-fit: contain` instead — but that would leave empty space.
+The carousel images are portrait-oriented resource previews (tall PDFs/posters), but the image container is set to `h-80` (320px) with `object-cover`, which crops them badly. The layout also creates excessive empty space below the text content because `justify-between` spreads the short text and arrows across the full column height.
 
-A better approach: keep `object-cover` but use `object-position` to show more of the image, combined with scaling. Specifically:
+## Fix in `src/components/InsideDLDResourceHub.tsx`
 
-### Change in `src/components/IsThisRightSection.tsx` (line 16)
+1. **Increase image container height** from `h-80` to `h-[28rem]` (448px) to better fit portrait resource images
+2. **Change `object-cover` to `object-contain`** on the `<img>` so images display fully without cropping
+3. **Change text column** from `justify-between` to `justify-center gap-6` so the text and arrows cluster together instead of spreading apart
+4. **Reduce bottom padding** on the outer wrapper from `py-12 md:py-16 lg:py-20` to `py-10 md:py-12 lg:py-16`
 
-On the `<img>` element, add a CSS `scale` transform to shrink the image within its container, effectively zooming out while the container stays the same size. We'll use Tailwind's `scale-[0.85]` (or similar) combined with `object-contain` to ensure the full image is visible:
-
-- Change `object-cover` → `object-contain` so the entire image is visible without cropping
-- Add `object-center` to keep it centered
-- The container with `rounded-xl overflow-hidden` maintains the same frame size and shape
-
-This shows the full scene (people reading) within the exact same container dimensions.
+### Files
+- **Edit** `src/components/InsideDLDResourceHub.tsx`
 
