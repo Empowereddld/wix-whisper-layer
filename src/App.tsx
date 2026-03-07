@@ -48,7 +48,7 @@ const App = () => (
             <Route path="/resources/free-course" element={<FreeCourse />} />
             <Route path="/resources/downloadables" element={<Downloadables />} />
             <Route path="/shop" element={<Shop />} />
-            <Route path="/books" element={<Books />} />
+            <Route path="/shop/books" element={<Books />} />
             <Route path="/hub/signup" element={<HubSignup />} />
             <Route path="/hub/login" element={<HubLogin />} />
             <Route path="/hub/verify-email" element={<VerifyEmail />} />
