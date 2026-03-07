@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import WorkWithUsHero from "@/components/WorkWithUsHero";
+import WorkWithUsBrowseSection from "@/components/WorkWithUsBrowseSection";
 import ContactSection from "@/components/ContactSection";
 
 const WorkWithUs = () => {
@@ -8,6 +9,7 @@ const WorkWithUs = () => {
     <div className="min-h-screen bg-background">
       <Header />
       <WorkWithUsHero />
+      <WorkWithUsBrowseSection />
       <ContactSection />
       <Footer />
     </div>
