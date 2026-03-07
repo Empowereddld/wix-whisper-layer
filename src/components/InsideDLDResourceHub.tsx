@@ -82,60 +82,66 @@ const AnimatedResources = ({
   return (
     <div className="max-w-sm md:max-w-4xl mx-auto px-4 md:px-8 lg:px-12 py-0">
       <div className="relative isolate grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-10">
-        {/* Image */}
-        <div className="relative h-72 md:h-[24rem] w-full overflow-hidden isolate">
-          <AnimatePresence mode="wait" initial={false}>
+        {/* Stacked image carousel */}
+        <div className="relative h-72 md:h-[24rem] w-full overflow-hidden isolate rounded-3xl">
+          {items.map((item, index) => (
             <motion.div
-              key={activeItem.src}
-              initial={{ opacity: 0, scale: 0.96 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.96 }}
-              transition={{ duration: 0.35, ease: "easeInOut" }}
-              className="absolute inset-0 pointer-events-auto"
+              key={item.src}
+              animate={{
+                scale: index === active ? 1 : 0.95,
+                y: index === active ? 0 : 8,
+                opacity: index === active ? 1 : 0.5,
+                zIndex: index === active ? 2 : 1,
+              }}
+              transition={{ duration: 0.4, ease: "easeInOut" }}
+              className="absolute inset-0"
+              style={{ pointerEvents: index === active ? "auto" : "none" }}
             >
               <img
-                src={activeItem.src}
-                alt={activeItem.title}
+                src={item.src}
+                alt={item.title}
                 className="h-full w-full rounded-3xl object-contain object-center"
                 draggable={false}
               />
             </motion.div>
-          </AnimatePresence>
+          ))}
         </div>
 
         {/* Text content */}
         <div className="flex flex-col justify-center gap-4 py-4">
-          <motion.div
-            key={active}
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: -20, opacity: 0 }}
-            transition={{ duration: 0.2, ease: "easeInOut" }}
-          >
-            <p className="text-sm font-semibold text-primary uppercase tracking-wide">
-              {activeItem.subheading}
-            </p>
-            <h3 className="text-2xl font-bold text-foreground mt-1">
-              {activeItem.title}
-            </h3>
-            <motion.p className="text-lg text-muted-foreground mt-3 leading-relaxed">
-              {activeItem.description.split(" ").map((word, index) => (
-                <motion.span
-                  key={index}
-                  initial={{ filter: "blur(10px)", opacity: 0, y: 5 }}
-                  animate={{ filter: "blur(0px)", opacity: 1, y: 0 }}
-                  transition={{
-                    duration: 0.2,
-                    ease: "easeInOut",
-                    delay: 0.02 * index,
-                  }}
-                  className="inline-block"
-                >
-                  {word}&nbsp;
-                </motion.span>
-              ))}
-            </motion.p>
-          </motion.div>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={active}
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: -20, opacity: 0 }}
+              transition={{ duration: 0.2, ease: "easeInOut" }}
+            >
+              <p className="text-sm font-semibold text-primary uppercase tracking-wide">
+                {activeItem.subheading}
+              </p>
+              <h3 className="text-2xl font-bold text-foreground mt-1">
+                {activeItem.title}
+              </h3>
+              <motion.p className="text-lg text-muted-foreground mt-3 leading-relaxed">
+                {activeItem.description.split(" ").map((word, index) => (
+                  <motion.span
+                    key={index}
+                    initial={{ filter: "blur(10px)", opacity: 0, y: 5 }}
+                    animate={{ filter: "blur(0px)", opacity: 1, y: 0 }}
+                    transition={{
+                      duration: 0.2,
+                      ease: "easeInOut",
+                      delay: 0.02 * index,
+                    }}
+                    className="inline-block"
+                  >
+                    {word}&nbsp;
+                  </motion.span>
+                ))}
+              </motion.p>
+            </motion.div>
+          </AnimatePresence>
 
           <div className="flex gap-4 pt-8 md:pt-0">
             <button

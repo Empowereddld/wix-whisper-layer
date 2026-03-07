@@ -1,37 +1,18 @@
 
 
-## Restore stacked multi-slide carousel with proper containment
+## Plan: Zoom out the image in "Is This Right" section
 
-You're right -- the stacked look communicates "there are many resources" much better than a single-slide fade. The original glitch was caused by high z-index values (`z-[999]`) and 3D transforms (`translateZ`) escaping the card boundaries. We can bring back the stack while keeping it fully contained.
+The image currently uses `object-cover` which crops tightly into the center of the photo, cutting off the reading activity. To "zoom out" while keeping the same frame size, we can use CSS `object-fit: contain` instead — but that would leave empty space.
 
-### Approach
+A better approach: keep `object-cover` but use `object-position` to show more of the image, combined with scaling. Specifically:
 
-**File:** `src/components/InsideDLDResourceHub.tsx`
+### Change in `src/components/IsThisRightSection.tsx` (line 16)
 
-1. **Render all slides simultaneously** -- go back to `items.map()` so all images are in the DOM, stacked on top of each other with `absolute` positioning.
+On the `<img>` element, add a CSS `scale` transform to shrink the image within its container, effectively zooming out while the container stays the same size. We'll use Tailwind's `scale-[0.85]` (or similar) combined with `object-contain` to ensure the full image is visible:
 
-2. **Active slide on top, others behind** -- use low, local z-index values only (`z-[2]` for active, `z-[1]` for others). No `z-[999]`.
+- Change `object-cover` → `object-contain` so the entire image is visible without cropping
+- Add `object-center` to keep it centered
+- The container with `rounded-xl overflow-hidden` maintains the same frame size and shape
 
-3. **Inactive slides: slightly scaled down + offset** -- animate inactive slides to `scale: 0.95, opacity: 0.5` with a small `y` offset (e.g. `8px`) to create the visual "stack" depth effect without any 3D transforms or `translateZ`.
-
-4. **Containment on the image wrapper** -- keep `overflow-hidden isolate` on the image container div so nothing escapes the card boundary. The `isolate` creates a local stacking context; `overflow-hidden` clips any visual leak.
-
-5. **Containment on the card wrapper** -- keep `relative isolate` on the outer grid div to double-ensure the entire carousel stays below the sticky header (`z-50`).
-
-6. **No `randomRotateY`** -- skip the random rotation that caused jitter. The depth effect comes purely from scale + y-offset + opacity.
-
-### Visual result
-
-```text
-┌─────────────────────────────┐
-│  ┌───────────────────────┐  │  ← inactive (scale 0.95, y+8, opacity 0.5)
-│  │ ┌─────────────────┐   │  │  ← inactive (scale 0.95, y+4, opacity 0.5)
-│  │ │  ACTIVE SLIDE    │   │  │  ← active (scale 1, opacity 1, z-[2])
-│  │ └─────────────────┘   │  │
-│  └───────────────────────┘  │
-│  overflow-hidden isolate    │
-└─────────────────────────────┘
-```
-
-All animation values stay small and 2D-only, and the `overflow-hidden` clips everything to the container.
+This shows the full scene (people reading) within the exact same container dimensions.
 
