@@ -14,6 +14,7 @@ import Resources from "./pages/Resources";
 import Podcasts from "./pages/Podcasts";
 import FreeCourse from "./pages/FreeCourse";
 import Downloadables from "./pages/Downloadables";
+import Shop from "./pages/Shop";
 import NotFound from "./pages/NotFound";
 import HubSignup from "./pages/hub/HubSignup";
 import HubLogin from "./pages/hub/HubLogin";
@@ -45,6 +46,7 @@ const App = () => (
             <Route path="/resources/podcasts" element={<Podcasts />} />
             <Route path="/resources/free-course" element={<FreeCourse />} />
             <Route path="/resources/downloadables" element={<Downloadables />} />
+            <Route path="/shop" element={<Shop />} />
             <Route path="/hub/signup" element={<HubSignup />} />
             <Route path="/hub/login" element={<HubLogin />} />
             <Route path="/hub/verify-email" element={<VerifyEmail />} />
