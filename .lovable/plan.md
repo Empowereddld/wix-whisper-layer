@@ -1,18 +1,27 @@
 
 
-## Plan: Zoom out the image in "Is This Right" section
+## Plan: Interactive Stats Cards with Hover Effects
 
-The image currently uses `object-cover` which crops tightly into the center of the photo, cutting off the reading activity. To "zoom out" while keeping the same frame size, we can use CSS `object-fit: contain` instead — but that would leave empty space.
+### What Changes
 
-A better approach: keep `object-cover` but use `object-position` to show more of the image, combined with scaling. Specifically:
+Update `src/components/ShopGlobalCommunity.tsx` to replace the current plain stat layout with individual white cards that have a premium hover effect — background shifts to light lavender, border highlights, card lifts, and stat numbers change color.
 
-### Change in `src/components/IsThisRightSection.tsx` (line 16)
+### Implementation Details
 
-On the `<img>` element, add a CSS `scale` transform to shrink the image within its container, effectively zooming out while the container stays the same size. We'll use Tailwind's `scale-[0.85]` (or similar) combined with `object-contain` to ensure the full image is visible:
+**Single file edit: `src/components/ShopGlobalCommunity.tsx`**
 
-- Change `object-cover` → `object-contain` so the entire image is visible without cropping
-- Add `object-center` to keep it centered
-- The container with `rounded-xl overflow-hidden` maintains the same frame size and shape
+- Wrap each stat in a white card with `rounded-2xl`, `border border-[#D7CCE5]`, `bg-white`, subtle shadow, and `p-10`
+- Add hover transitions via Tailwind: `hover:bg-[#EFE9F5] hover:border-[#8F79B5] hover:border-2 hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(143,121,181,0.15)]`
+- Number color transitions on hover using `group` / `group-hover:text-[#8F79B5]` (default: `text-[#1F1A3A]`)
+- Labels use `text-[#A7B4C4]` (Stone)
+- Section heading uses Midnight (`text-[#1F1A3A]`), subheadline uses Stone
+- Add `focus-within` states matching hover for keyboard accessibility
+- Grid: `grid-cols-1 md:grid-cols-2 lg:grid-cols-4` with `gap-6`
+- Responsive number sizing: 56px mobile → 64px tablet → 72px desktop
+- All transitions: `transition-all duration-300 ease-in-out`
+- No external libraries needed — pure Tailwind + group hover
 
-This shows the full scene (people reading) within the exact same container dimensions.
+### No other files change
+
+The component is already imported on Shop and Resources pages.
 
