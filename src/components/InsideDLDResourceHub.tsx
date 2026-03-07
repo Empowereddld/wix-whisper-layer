@@ -119,7 +119,7 @@ const AnimatedResources = ({
                 <img
                   src={testimonial.src}
                   alt={testimonial.title}
-                  className="h-full w-full rounded-3xl object-cover object-center"
+                  className="h-full w-full rounded-3xl object-contain object-center"
                   draggable={false}
                 />
               </motion.div>
