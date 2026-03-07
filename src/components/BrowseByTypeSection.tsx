@@ -52,11 +52,11 @@ const BrowseByTypeSection = () => {
           {types.map((item) => (
             <div key={item.tag} className="flex flex-col bg-muted rounded-xl border border-border/40 overflow-hidden pb-8">
               {/* Image */}
-              <div className="relative aspect-[4/3]">
+              <div className="relative aspect-[16/10] bg-white flex items-center justify-center p-6">
                 <img
                   src={item.image}
                   alt={item.title}
-                  className="w-full h-full object-cover"
+                  className="max-w-full max-h-full object-contain"
                   loading="lazy"
                 />
               </div>
