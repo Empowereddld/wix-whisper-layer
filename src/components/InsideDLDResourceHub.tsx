@@ -128,7 +128,7 @@ const AnimatedResources = ({
         </div>
 
         {/* Text content */}
-        <div className="flex flex-col justify-center gap-6 py-4">
+        <div className="flex flex-col justify-center gap-4 py-4">
           <motion.div
             key={active}
             initial={{ y: 20, opacity: 0 }}
