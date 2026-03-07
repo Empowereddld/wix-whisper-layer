@@ -83,7 +83,7 @@ const AnimatedResources = ({
 
   return (
     <div className="max-w-sm md:max-w-4xl mx-auto px-4 md:px-8 lg:px-12 py-0">
-      <div className="relative grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-14">
+      <div className="relative grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-10">
         {/* Image stack */}
         <div className="relative h-[28rem] w-full">
           <AnimatePresence>
