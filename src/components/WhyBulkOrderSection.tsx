@@ -18,7 +18,7 @@ const WhyBulkOrderSection = () => {
     <section className="bg-lavender py-14 md:py-20">
       <div className="max-w-[800px] mx-auto px-6 md:px-10">
         <h2 className="text-[26px] md:text-[32px] lg:text-[38px] font-black text-foreground leading-[1.1] mb-3">
-
+          Why Bulk Order
         </h2>
         <p className="text-[14px] md:text-[15px] text-foreground font-medium mb-8">
           More Books. More Impact. Less Cost.
