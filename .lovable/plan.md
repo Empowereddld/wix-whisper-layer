@@ -1,18 +1,22 @@
 
 
-## Plan: Zoom out the image in "Is This Right" section
+## Issues and Fix Plan
 
-The image currently uses `object-cover` which crops tightly into the center of the photo, cutting off the reading activity. To "zoom out" while keeping the same frame size, we can use CSS `object-fit: contain` instead — but that would leave empty space.
+### Core Problem
+The three resource images (`resource-podcast.png`, `resource-course.jpg`, `resource-downloadables.png`) were not designed for edge-to-edge card layouts. They have transparent backgrounds, inconsistent compositions, and baked-in text overlays -- unlike the Shop page images which are clean product shots.
 
-A better approach: keep `object-cover` but use `object-position` to show more of the image, combined with scaling. Specifically:
+### Issues Identified
+1. **Podcast image** floats in whitespace -- transparent/white background doesn't blend with the grey card
+2. **Downloadables image** has redundant text baked into it ("DOWNLOADABLE RESOURCES" header appears both in the image and in the card text)
+3. **Inconsistent image compositions** across the three cards
+4. **White gaps** visible where images don't fill the container
 
-### Change in `src/components/IsThisRightSection.tsx` (line 16)
+### Proposed Fix
+Since we can't change the source images, we can improve the card layout to work better with imperfect images:
 
-On the `<img>` element, add a CSS `scale` transform to shrink the image within its container, effectively zooming out while the container stays the same size. We'll use Tailwind's `scale-[0.85]` (or similar) combined with `object-contain` to ensure the full image is visible:
+1. **Add a background color to the image container** -- Use `bg-white` or `bg-muted` on the `aspect-[4/3]` wrapper so transparent image areas have a clean backdrop instead of showing through to the card
+2. **Add subtle inner padding to the image area** -- Give images like the podcast screenshot some breathing room with `p-4` so they look intentionally framed rather than awkwardly floating
+3. **Optionally adjust aspect ratio** -- Use `aspect-[16/10]` or similar to crop the images tighter and reduce empty space
 
-- Change `object-cover` → `object-contain` so the entire image is visible without cropping
-- Add `object-center` to keep it centered
-- The container with `rounded-xl overflow-hidden` maintains the same frame size and shape
-
-This shows the full scene (people reading) within the exact same container dimensions.
+Changes would be in `src/components/BrowseByTypeSection.tsx` only -- updating the image container div styling.
 
