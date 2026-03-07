@@ -5,6 +5,7 @@ import BulkOrdersWhoSection from "@/components/BulkOrdersWhoSection";
 import WhyBulkOrderSection from "@/components/WhyBulkOrderSection";
 import BulkOrdersHowItWorksSection from "@/components/BulkOrdersHowItWorksSection";
 import BulkOrdersCTASection from "@/components/BulkOrdersCTASection";
+import ChoosePathCTA from "@/components/ChoosePathCTA";
 
 const BulkOrders = () => {
   return (
@@ -16,6 +17,7 @@ const BulkOrders = () => {
         <WhyBulkOrderSection />
         <BulkOrdersHowItWorksSection />
         <BulkOrdersCTASection />
+        <ChoosePathCTA />
       </main>
       <Footer />
     </div>
