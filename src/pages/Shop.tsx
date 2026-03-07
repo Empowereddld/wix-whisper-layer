@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ShopHero from "@/components/ShopHero";
+import ShopBrowseByCategory from "@/components/ShopBrowseByCategory";
 
 const Shop = () => {
   return (
@@ -8,6 +9,7 @@ const Shop = () => {
       <Header />
       <main className="flex-1">
         <ShopHero />
+        <ShopBrowseByCategory />
       </main>
       <Footer />
     </div>
