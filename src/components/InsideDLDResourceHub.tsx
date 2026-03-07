@@ -83,26 +83,25 @@ const AnimatedResources = ({
     <div className="max-w-sm md:max-w-4xl mx-auto px-4 md:px-8 lg:px-12 py-0">
       <div className="relative isolate grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-10">
         {/* Stacked image carousel */}
-        <div className="relative h-72 md:h-[24rem] w-full overflow-hidden isolate rounded-3xl">
+        <div className="relative h-72 md:h-[24rem] w-full overflow-visible isolate rounded-3xl">
           {items.map((item, index) => {
             const isActive = index === active;
-            // Calculate offset from active to fan out behind
             const offset = (index - active + items.length) % items.length;
-            const cappedOffset = Math.min(offset, 3); // show max 3 layers
+            const cappedOffset = Math.min(offset, 3);
 
             return (
               <motion.div
                 key={item.src}
                 animate={{
-                  scale: isActive ? 1 : 1 - cappedOffset * 0.05,
-                  y: isActive ? 0 : cappedOffset * 14,
-                  x: isActive ? 0 : cappedOffset * 6,
-                  rotate: isActive ? 0 : cappedOffset * 2.5,
-                  opacity: isActive ? 1 : Math.max(0.15, 0.7 - cappedOffset * 0.2),
+                  scale: isActive ? 1 : 1 - cappedOffset * 0.04,
+                  x: isActive ? 0 : cappedOffset * 18,
+                  y: isActive ? 0 : cappedOffset * 4,
+                  rotate: isActive ? 0 : cappedOffset * 3,
+                  opacity: isActive ? 1 : Math.max(0.15, 0.65 - cappedOffset * 0.2),
                   zIndex: isActive ? 10 : 3 - cappedOffset,
                 }}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
-                className="absolute inset-0 origin-bottom-left"
+                className="absolute inset-0 origin-center"
                 style={{ pointerEvents: isActive ? "auto" : "none" }}
               >
                 <img
