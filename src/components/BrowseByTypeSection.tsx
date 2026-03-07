@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import podcastImg from "@/assets/resource-podcast.png";
 import courseImg from "@/assets/resource-course.jpg";
 import downloadImg from "@/assets/resource-downloadables.png";
@@ -11,6 +12,7 @@ const types = [
     cta: "Listen Now",
     href: "/resources/podcasts",
     image: podcastImg,
+    imageClass: "scale-[1.15] object-center",
   },
   {
     tag: "FREE COURSE",
@@ -20,6 +22,7 @@ const types = [
     cta: "Start Learning",
     href: "/resources/free-course",
     image: courseImg,
+    imageClass: "",
   },
   {
     tag: "DOWNLOADABLE",
@@ -29,6 +32,7 @@ const types = [
     cta: "Browse Downloads",
     href: "/resources/downloadables",
     image: downloadImg,
+    imageClass: "",
   },
 ];
 
@@ -36,6 +40,7 @@ const BrowseByTypeSection = () => {
   return (
     <section className="py-16 md:py-24 lg:py-28">
       <div className="max-w-[1300px] mx-auto px-6 md:px-8">
+        {/* Header */}
         <div className="mb-10 md:mb-14">
           <p className="text-[11px] md:text-[12px] font-bold uppercase tracking-[0.2em] text-muted-foreground mb-3">
             BROWSE BY TYPE
@@ -48,15 +53,16 @@ const BrowseByTypeSection = () => {
           </p>
         </div>
 
+        {/* Cards grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {types.map((item) => (
             <div key={item.tag} className="flex flex-col bg-muted rounded-xl border border-border/40 overflow-hidden pb-8">
               {/* Image */}
-              <div className="relative aspect-[4/3]">
+              <div className="relative aspect-[4/3] overflow-hidden">
                 <img
                   src={item.image}
                   alt={item.title}
-                  className="w-full h-full object-cover object-top"
+                  className={`w-full h-full object-cover ${item.imageClass}`}
                   loading="lazy"
                 />
               </div>
@@ -73,12 +79,13 @@ const BrowseByTypeSection = () => {
                   {item.description}
                 </p>
 
-                <a
-                  href={item.href}
+                {/* CTA */}
+                <Link
+                  to={item.href}
                   className="inline-flex items-center justify-center h-11 px-7 bg-foreground text-background text-[13px] font-semibold tracking-[0.04em] rounded-md hover:opacity-90 transition-opacity duration-200 w-fit mt-auto"
                 >
                   {item.cta}
-                </a>
+                </Link>
               </div>
             </div>
           ))}
