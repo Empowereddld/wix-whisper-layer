@@ -4,6 +4,7 @@ import BooksHero from "@/components/BooksHero";
 import MoreThanAStorySection from "@/components/MoreThanAStorySection";
 import BookDanSection from "@/components/BookDanSection";
 import BookGuidebookSection from "@/components/BookGuidebookSection";
+import BookMakeFriendsSection from "@/components/BookMakeFriendsSection";
 
 const Books = () => {
   return (
@@ -14,6 +15,7 @@ const Books = () => {
         <MoreThanAStorySection />
         <BookDanSection />
         <BookGuidebookSection />
+        <BookMakeFriendsSection />
       </main>
       <Footer />
     </div>
