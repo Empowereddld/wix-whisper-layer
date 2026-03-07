@@ -82,8 +82,8 @@ const AnimatedResources = ({
   };
 
   return (
-    <div className="max-w-sm md:max-w-4xl mx-auto px-4 md:px-8 lg:px-12 py-10">
-      <div className="relative grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-20">
+    <div className="max-w-sm md:max-w-4xl mx-auto px-4 md:px-8 lg:px-12 py-4">
+      <div className="relative grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-14">
         {/* Image stack */}
         <div className="relative h-[28rem] w-full">
           <AnimatePresence>
@@ -185,8 +185,8 @@ const InsideDLDResourceHub = () => {
   return (
     <section className="pt-4 md:pt-6 lg:pt-8 pb-16 md:pb-20 lg:pb-24">
       <div className="container px-6 md:px-8 max-w-7xl mx-auto">
-        <div className="bg-muted rounded-2xl py-10 md:py-12 lg:py-16 border border-border/50 shadow-sm">
-          <div className="max-w-[900px] mx-auto text-center mb-8 px-6">
+        <div className="bg-muted rounded-2xl py-8 md:py-10 lg:py-12 border border-border/50 shadow-sm">
+          <div className="max-w-[900px] mx-auto text-center mb-4 px-6">
             <p className="text-xs font-semibold tracking-[0.2em] uppercase text-muted-foreground mb-3">
               Featured Resources
             </p>
