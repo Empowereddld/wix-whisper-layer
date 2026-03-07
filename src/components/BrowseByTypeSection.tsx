@@ -37,14 +37,16 @@ const BrowseByTypeSection = () => {
     <section className="py-16 md:py-24 lg:py-28">
       <div className="max-w-[1300px] mx-auto px-6 md:px-8">
         <div className="mb-10 md:mb-14">
-          BROWSE BY TYPE
-        </p>
-        <h2 className="text-[28px] md:text-[42px] font-black text-foreground leading-[1.12] mb-2">
-          Find What You Need
-        </h2>
-        <p className="text-[14px] md:text-[15px] text-muted-foreground leading-[1.7] mb-10">
-          Each resource is free and designed specifically for you.
-        </p>
+          <p className="text-[11px] md:text-[12px] font-bold uppercase tracking-[0.2em] text-muted-foreground mb-3">
+            BROWSE BY TYPE
+          </p>
+          <h2 className="text-[28px] md:text-[36px] lg:text-[42px] font-black text-foreground leading-[1.1] mb-3">
+            Find What You Need
+          </h2>
+          <p className="text-[15px] md:text-[16px] text-muted-foreground leading-relaxed max-w-[500px]">
+            Each resource is free and designed specifically for you.
+          </p>
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {types.map((item) => (
