@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import podcastImg from "@/assets/resource-podcast.png";
 import courseImg from "@/assets/resource-course.jpg";
 import downloadImg from "@/assets/resource-downloadables.png";
