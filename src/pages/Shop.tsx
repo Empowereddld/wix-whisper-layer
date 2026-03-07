@@ -2,6 +2,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ShopHero from "@/components/ShopHero";
 import ShopBrowseByCategory from "@/components/ShopBrowseByCategory";
+import ShopGlobalCommunity from "@/components/ShopGlobalCommunity";
 
 const Shop = () => {
   return (
@@ -10,6 +11,7 @@ const Shop = () => {
       <main className="flex-1">
         <ShopHero />
         <ShopBrowseByCategory />
+        <ShopGlobalCommunity />
       </main>
       <Footer />
     </div>
