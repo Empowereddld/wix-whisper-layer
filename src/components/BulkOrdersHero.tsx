@@ -8,7 +8,7 @@ const BulkOrdersHero = () => {
           {/* Gray card background */}
           <div className="bg-muted rounded-xl lg:rounded-2xl lg:w-[58%] lg:flex-shrink-0 pt-0 pb-10 md:pb-14 lg:pb-24 px-6 md:px-8 lg:px-16">
             <div className="bg-[hsl(270,60%,22%)] rounded-t-xl lg:rounded-t-2xl -mx-6 md:-mx-8 lg:-mx-16 px-8 md:px-10 lg:px-16 py-5 md:py-6 lg:py-7 mb-10 md:mb-12 lg:mb-[48px] border-b-[3px] border-white/10">
-              <span className="text-white text-[18px] md:text-[20px] lg:text-[22px] font-bold uppercase tracking-[0.18em]">
+              <span className="text-white text-[20px] md:text-[22px] lg:text-[24px] font-bold uppercase tracking-[0.18em]">
                 Bulk Orders
               </span>
             </div>
