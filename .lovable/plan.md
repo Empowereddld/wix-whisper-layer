@@ -1,22 +1,18 @@
 
 
-## Plan: Unify Global Community and Every Child Sections Across All Pages
+## Plan: Zoom out the image in "Is This Right" section
 
-### Problem
-There are two versions of the "Join a Global Community" section: `ShopGlobalCommunity` (newer, better styled with suffix separation and larger numbers) and `GlobalCommunitySection` (older, smaller numbers, narrower container). The user wants them all to match the Shop versions shown in the screenshots.
+The image currently uses `object-cover` which crops tightly into the center of the photo, cutting off the reading activity. To "zoom out" while keeping the same frame size, we can use CSS `object-fit: contain` instead — but that would leave empty space.
 
-### Changes
+A better approach: keep `object-cover` but use `object-position` to show more of the image, combined with scaling. Specifically:
 
-**1. Replace `GlobalCommunitySection` with `ShopGlobalCommunity` on the Resources page**
-- Update `src/pages/Resources.tsx` to import and use `ShopGlobalCommunity` instead of `GlobalCommunitySection`
-- The `ShopGlobalCommunity` component already matches the reference screenshot (larger numbers with superscript suffixes, wider container, bolder labels)
+### Change in `src/components/IsThisRightSection.tsx` (line 16)
 
-**2. Delete the old `GlobalCommunitySection` component**
-- Remove `src/components/GlobalCommunitySection.tsx` since it will no longer be used anywhere
+On the `<img>` element, add a CSS `scale` transform to shrink the image within its container, effectively zooming out while the container stays the same size. We'll use Tailwind's `scale-[0.85]` (or similar) combined with `object-contain` to ensure the full image is visible:
 
-**3. `EveryChildSection` — already shared**
-- The `EveryChildSection` component is already the same component used on Shop, Resources, and WhoWeServe pages, so no changes needed there. It already matches the reference screenshot with the gray card, overlapping image, and deep-purple CTA button.
+- Change `object-cover` → `object-contain` so the entire image is visible without cropping
+- Add `object-center` to keep it centered
+- The container with `rounded-xl overflow-hidden` maintains the same frame size and shape
 
-### Summary
-One file edit (Resources.tsx import swap) and one file deletion. No visual changes needed to EveryChildSection since it's already consistent.
+This shows the full scene (people reading) within the exact same container dimensions.
 
