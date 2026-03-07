@@ -1,19 +1,18 @@
 
 
-## Tighten the "What's Inside" Featured Resources section
+## Plan: Zoom out the image in "Is This Right" section
 
-**File:** `src/components/InsideDLDResourceHub.tsx`
+The image currently uses `object-cover` which crops tightly into the center of the photo, cutting off the reading activity. To "zoom out" while keeping the same frame size, we can use CSS `object-fit: contain` instead — but that would leave empty space.
 
-### Changes
+A better approach: keep `object-cover` but use `object-position` to show more of the image, combined with scaling. Specifically:
 
-1. **Reduce image container height** -- from `h-[28rem]` (448px) to `h-72` (288px) on mobile, keeping taller on desktop via `md:h-[24rem]`
-2. **Reduce inner card padding** -- from `py-8 md:py-10 lg:py-12` to `py-6 md:py-8`
-3. **Remove carousel wrapper vertical padding** -- from `py-4` to `py-0`
-4. **Reduce grid gap** -- from `gap-8 md:gap-14` to `gap-4 md:gap-10`
-5. **Reduce heading bottom margin label spacing** -- from `mb-3` to `mb-2` on the "FEATURED RESOURCES" label
-6. **Reduce text content gap** -- from `gap-6` to `gap-4` in the text column
-7. **Reduce description top margin** -- from `mt-6` to `mt-3`
-8. **Reduce section bottom padding** -- from `pb-16 md:pb-20 lg:pb-24` to `pb-10 md:pb-14 lg:pb-16`
+### Change in `src/components/IsThisRightSection.tsx` (line 16)
 
-These changes collectively cut ~100-150px of vertical space across both mobile and desktop views.
+On the `<img>` element, add a CSS `scale` transform to shrink the image within its container, effectively zooming out while the container stays the same size. We'll use Tailwind's `scale-[0.85]` (or similar) combined with `object-contain` to ensure the full image is visible:
+
+- Change `object-cover` → `object-contain` so the entire image is visible without cropping
+- Add `object-center` to keep it centered
+- The container with `rounded-xl overflow-hidden` maintains the same frame size and shape
+
+This shows the full scene (people reading) within the exact same container dimensions.
 

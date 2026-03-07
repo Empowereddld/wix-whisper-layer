@@ -82,10 +82,10 @@ const AnimatedResources = ({
   };
 
   return (
-    <div className="max-w-sm md:max-w-4xl mx-auto px-4 md:px-8 lg:px-12 py-4">
-      <div className="relative grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-14">
+    <div className="max-w-sm md:max-w-4xl mx-auto px-4 md:px-8 lg:px-12 py-0">
+      <div className="relative grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-10">
         {/* Image stack */}
-        <div className="relative h-[28rem] w-full">
+        <div className="relative h-72 md:h-[24rem] w-full">
           <AnimatePresence>
             {items.map((testimonial, index) => (
               <motion.div
@@ -128,7 +128,7 @@ const AnimatedResources = ({
         </div>
 
         {/* Text content */}
-        <div className="flex flex-col justify-center gap-6 py-4">
+        <div className="flex flex-col justify-center gap-4 py-4">
           <motion.div
             key={active}
             initial={{ y: 20, opacity: 0 }}
@@ -142,7 +142,7 @@ const AnimatedResources = ({
             <h3 className="text-2xl font-bold text-foreground mt-1">
               {items[active].title}
             </h3>
-            <motion.p className="text-lg text-muted-foreground mt-6 leading-relaxed">
+            <motion.p className="text-lg text-muted-foreground mt-3 leading-relaxed">
               {items[active].description.split(" ").map((word, index) => (
                 <motion.span
                   key={index}
@@ -183,11 +183,11 @@ const AnimatedResources = ({
 
 const InsideDLDResourceHub = () => {
   return (
-    <section className="pt-4 md:pt-6 lg:pt-8 pb-16 md:pb-20 lg:pb-24">
+    <section className="pt-4 md:pt-6 lg:pt-8 pb-10 md:pb-14 lg:pb-16">
       <div className="container px-6 md:px-8 max-w-7xl mx-auto">
-        <div className="bg-muted rounded-2xl py-8 md:py-10 lg:py-12 border border-border/50 shadow-sm">
+        <div className="bg-muted rounded-2xl py-6 md:py-8 border border-border/50 shadow-sm">
           <div className="max-w-[900px] mx-auto text-center mb-0 px-6">
-            <p className="text-xs font-semibold tracking-[0.2em] uppercase text-muted-foreground mb-3">
+            <p className="text-xs font-semibold tracking-[0.2em] uppercase text-muted-foreground mb-2">
               Featured Resources
             </p>
             <h2 className="text-[28px] md:text-[36px] lg:text-[42px] font-black text-foreground leading-[1.1]">
