@@ -17,10 +17,10 @@ type ResourceItem = {
 
 const resources: ResourceItem[] = [
   {
-    title: "DLD Starter Pack",
-    subheading: "Start Here",
+    title: "Dan and Daria's Tips for Little Talkers",
+    subheading: "For Parents",
     description:
-      "A clear introduction to DLD with practical next steps so families can start supporting their child right away.",
+      "Everyday strategies to help younger children with DLD build communication skills during routines at home.",
     src: resourcePreview1,
   },
   {
