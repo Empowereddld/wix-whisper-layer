@@ -97,7 +97,7 @@ const AnimatedResources = ({
                   rotate: randomRotateY(),
                 }}
                 animate={{
-                  opacity: index === active ? 1 : 0.7,
+                  opacity: index === active ? 1 : 0,
                   scale: index === active ? 1 : 0.95,
                   z: index === active ? 0 : -100,
                   rotate: index === active ? 0 : randomRotateY(),
