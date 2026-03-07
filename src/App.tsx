@@ -16,6 +16,7 @@ import FreeCourse from "./pages/FreeCourse";
 import Downloadables from "./pages/Downloadables";
 import Shop from "./pages/Shop";
 import Books from "./pages/Books";
+import BulkOrders from "./pages/BulkOrders";
 import NotFound from "./pages/NotFound";
 import HubSignup from "./pages/hub/HubSignup";
 import HubLogin from "./pages/hub/HubLogin";
