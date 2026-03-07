@@ -1,18 +1,19 @@
 
 
-## Plan: Zoom out the image in "Is This Right" section
+## Plan: Restyle BooksHero + Fix Route
 
-The image currently uses `object-cover` which crops tightly into the center of the photo, cutting off the reading activity. To "zoom out" while keeping the same frame size, we can use CSS `object-fit: contain` instead — but that would leave empty space.
+### 1. Fix route path
+Change `/books` to `/shop/books` in `App.tsx` so the Header dropdown link works.
 
-A better approach: keep `object-cover` but use `object-position` to show more of the image, combined with scaling. Specifically:
+### 2. Restyle BooksHero to match sub-page hero pattern
+Rewrite `src/components/BooksHero.tsx` to use the same layout as `DownloadablesHero`, `FreeCourseHero`, etc.:
 
-### Change in `src/components/IsThisRightSection.tsx` (line 16)
-
-On the `<img>` element, add a CSS `scale` transform to shrink the image within its container, effectively zooming out while the container stays the same size. We'll use Tailwind's `scale-[0.85]` (or similar) combined with `object-contain` to ensure the full image is visible:
-
-- Change `object-cover` → `object-contain` so the entire image is visible without cropping
-- Add `object-center` to keep it centered
-- The container with `rounded-xl overflow-hidden` maintains the same frame size and shape
-
-This shows the full scene (people reading) within the exact same container dimensions.
+- **Outer section**: `pt-6 md:pt-10 lg:pt-16 pb-14 md:pb-16 lg:pb-16`
+- **Two-column flex layout** with `lg:flex-row lg:items-stretch lg:gap-6`
+- **Left column**: `bg-muted rounded-xl lg:rounded-2xl lg:w-[58%]` card with:
+  - Purple "BOOKS" badge (`bg-deep-purple` with uppercase text)
+  - Headline: `text-[30px] md:text-[36px] lg:text-[48px] font-black`
+  - Description paragraph in `text-muted-foreground`
+  - Black CTA button: "Explore the Series"
+- **Right column**: Character image in a flex container with `items-center justify-center p-4 lg:p-8` (similar to FreeCourseHero since the characters image is an illustration, not a photo)
 
