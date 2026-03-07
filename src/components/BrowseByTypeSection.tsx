@@ -47,43 +47,37 @@ const BrowseByTypeSection = () => {
           Each resource is free and designed specifically for you.
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {types.map((item) => (
-            <div key={item.tag} className="flex flex-col">
+            <div key={item.tag} className="flex flex-col bg-muted rounded-xl border border-border/40 overflow-hidden pb-8">
               {/* Image */}
-              <div className="rounded-lg overflow-hidden mb-5 aspect-[4/3]">
+              <div className="relative aspect-[4/3]">
                 <img
                   src={item.image}
                   alt={item.title}
-                   className="w-full h-full object-cover"
-                   loading="lazy"
-                 />
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
               </div>
 
-              {/* Tag */}
-              <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-foreground/50 mb-2">
-                {item.tag}
-              </p>
-
-              {/* Title */}
-              <h3 className="text-[20px] md:text-[22px] font-bold text-foreground leading-[1.2] mb-3">
-                {item.title}
-              </h3>
-
-              {/* Description */}
-              <p className="text-[14px] text-muted-foreground leading-[1.7] mb-6 flex-1">
-                {item.description}
-              </p>
-
-              {/* CTA */}
-              <a href={item.href}>
-                <Button
-                  size="sm"
-                  className="h-11 px-7 rounded-md text-[13px] font-semibold bg-deep-purple text-deep-purple-foreground hover:bg-deep-purple/90 transition-all duration-200"
+              {/* Text */}
+              <div className="px-6 pt-5 flex flex-col flex-1">
+                <p className="text-[11px] font-bold uppercase tracking-[0.15em] text-muted-foreground mb-2">
+                  {item.tag}
+                </p>
+                <h3 className="text-[20px] md:text-[22px] font-bold text-foreground leading-tight mb-2">
+                  {item.title}
+                </h3>
+                <p className="text-[14px] md:text-[15px] text-muted-foreground leading-relaxed mb-6 flex-1">
+                  {item.description}
+                </p>
+                <a
+                  href={item.href}
+                  className="inline-flex items-center justify-center h-11 px-7 bg-foreground text-background text-[13px] font-semibold tracking-[0.04em] rounded-md hover:opacity-90 transition-opacity duration-200 w-fit"
                 >
                   {item.cta}
-                </Button>
-              </a>
+                </a>
+              </div>
             </div>
           ))}
         </div>
