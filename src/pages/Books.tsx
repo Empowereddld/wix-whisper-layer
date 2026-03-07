@@ -7,6 +7,7 @@ import BookGuidebookSection from "@/components/BookGuidebookSection";
 import BookMakeFriendsSection from "@/components/BookMakeFriendsSection";
 import BookBirthdayPartySection from "@/components/BookBirthdayPartySection";
 import BookTheatreExchangeSection from "@/components/BookTheatreExchangeSection";
+import WhoAreTheseBooksForSection from "@/components/WhoAreTheseBooksForSection";
 
 const Books = () => {
   return (
@@ -20,6 +21,7 @@ const Books = () => {
         <BookMakeFriendsSection />
         <BookBirthdayPartySection />
         <BookTheatreExchangeSection />
+        <WhoAreTheseBooksForSection />
       </main>
       <Footer />
     </div>
