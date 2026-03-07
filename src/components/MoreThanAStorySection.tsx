@@ -2,7 +2,7 @@ const MoreThanAStorySection = () => {
   return (
     <section className="bg-muted py-16 md:py-20 lg:py-24">
       <div className="max-w-[1100px] mx-auto px-6 md:px-10">
-        <h2 className="text-[32px] md:text-[40px] lg:text-[48px] font-black text-foreground leading-[1.12] mb-6 md:mb-8">
+        <h2 className="text-[28px] md:text-[36px] lg:text-[40px] font-black text-foreground leading-[1.15] mb-6 md:mb-8">
           More than just a story
         </h2>
         <div className="flex flex-col gap-6 max-w-[800px]">
