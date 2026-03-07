@@ -13,6 +13,7 @@ const Books = () => {
         <BooksHero />
         <MoreThanAStorySection />
         <BookDanSection />
+        <BookGuidebookSection />
       </main>
       <Footer />
     </div>
