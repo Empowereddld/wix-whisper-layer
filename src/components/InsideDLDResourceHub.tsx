@@ -185,15 +185,12 @@ const InsideDLDResourceHub = () => {
   return (
     <section className="py-16 md:py-20 lg:py-24">
       <div className="container px-6 md:px-8 max-w-[900px] mx-auto text-center mb-8">
-        <h2 className="text-[28px] md:text-[36px] lg:text-[42px] font-black text-foreground leading-[1.1] mb-4">
-          Inside the DLD Resource Hub
-        </h2>
-        <p className="text-[14px] md:text-[15px] text-muted-foreground leading-[1.7] max-w-[700px] mx-auto">
-          A growing library of practical tools designed to support children with
-          Developmental Language Disorder at home, in therapy, and in the classroom.
-          <br /><br />
-          Everything is designed to be simple, clear, and ready to use right away.
+        <p className="text-xs font-semibold tracking-[0.2em] uppercase text-muted-foreground mb-3">
+          Featured Resources
         </p>
+        <h2 className="text-[28px] md:text-[36px] lg:text-[42px] font-black text-foreground leading-[1.1]">
+          What's Inside
+        </h2>
       </div>
       <AnimatedResources items={resources} autoplay />
     </section>
