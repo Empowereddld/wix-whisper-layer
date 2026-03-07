@@ -1,21 +1,18 @@
 
 
-## Plan: Refine Global Community Stats Section
+## Plan: Zoom out the image in "Is This Right" section
 
-### Changes — single file: `src/components/ShopGlobalCommunity.tsx`
+The image currently uses `object-cover` which crops tightly into the center of the photo, cutting off the reading activity. To "zoom out" while keeping the same frame size, we can use CSS `object-fit: contain` instead — but that would leave empty space.
 
-**Content updates:**
-- Headline → "A Growing Global Community"
-- Subtext → "Empowered DLD is connecting families, educators, and SLPs around the world."
-- Updated labels: "Community members worldwide", "Countries using our resources", "Languages available", "Children affected by DLD"
+A better approach: keep `object-cover` but use `object-position` to show more of the image, combined with scaling. Specifically:
 
-**Visual fixes:**
-1. **Add subtle shadow** to default cards: `shadow-[0_2px_12px_rgba(0,0,0,0.06)]` for more depth
-2. **Reduce vertical padding**: `py-10` → `py-8` (32px) so cards aren't stretched
-3. **Fix label color**: Ensure `text-stone-ui` resolves correctly; add fallback `text-[#A7B4C4]` if needed
-4. **Ensure border visibility**: Already has `border border-thistle` — verify it renders; may need explicit `border-[#D7CCE5]`
-5. **Fix "1 in 14" line break**: Add `whitespace-nowrap` to the number text, and slightly reduce font size for that card or use a consistent `whitespace-nowrap` on all numbers
-6. **Increase card gap** slightly: `gap-4 md:gap-6` → `gap-5 md:gap-6`
+### Change in `src/components/IsThisRightSection.tsx` (line 16)
 
-No other files affected — component is already shared across Shop and Resources pages.
+On the `<img>` element, add a CSS `scale` transform to shrink the image within its container, effectively zooming out while the container stays the same size. We'll use Tailwind's `scale-[0.85]` (or similar) combined with `object-contain` to ensure the full image is visible:
+
+- Change `object-cover` → `object-contain` so the entire image is visible without cropping
+- Add `object-center` to keep it centered
+- The container with `rounded-xl overflow-hidden` maintains the same frame size and shape
+
+This shows the full scene (people reading) within the exact same container dimensions.
 
