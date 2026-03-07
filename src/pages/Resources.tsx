@@ -13,7 +13,7 @@ const Resources = () => {
       <main>
         <ResourcesHero />
         <BrowseByTypeSection />
-        <GlobalCommunitySection />
+        <ShopGlobalCommunity />
         <EveryChildSection />
         <ChoosePathCTA />
       </main>
