@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import BooksHero from "@/components/BooksHero";
 import MoreThanAStorySection from "@/components/MoreThanAStorySection";
 import BookDanSection from "@/components/BookDanSection";
+import BookGuidebookSection from "@/components/BookGuidebookSection";
 
 const Books = () => {
   return (
