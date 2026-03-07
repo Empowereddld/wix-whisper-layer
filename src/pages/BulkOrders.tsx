@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import BulkOrdersHero from "@/components/BulkOrdersHero";
 import BulkOrdersWhoSection from "@/components/BulkOrdersWhoSection";
 import WhyBulkOrderSection from "@/components/WhyBulkOrderSection";
+import BulkOrdersHowItWorksSection from "@/components/BulkOrdersHowItWorksSection";
 
 const BulkOrders = () => {
   return (
@@ -12,6 +13,7 @@ const BulkOrders = () => {
         <BulkOrdersHero />
         <BulkOrdersWhoSection />
         <WhyBulkOrderSection />
+        <BulkOrdersHowItWorksSection />
       </main>
       <Footer />
     </div>
