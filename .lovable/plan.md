@@ -1,18 +1,20 @@
 
 
-## Plan: Zoom out the image in "Is This Right" section
+## Plan: Add Social Proof Section to Work With Us Page
 
-The image currently uses `object-cover` which crops tightly into the center of the photo, cutting off the reading activity. To "zoom out" while keeping the same frame size, we can use CSS `object-fit: contain` instead — but that would leave empty space.
+### What
+Create a new `WorkWithUsSocialProof` component — a clean, centered section with white background, a headline, a row of muted/grayscale icon logos, and a rating pill. Place it between `WorkWithUsBrowseSection` and `ContactSection`.
 
-A better approach: keep `object-cover` but use `object-position` to show more of the image, combined with scaling. Specifically:
+### Component: `src/components/WorkWithUsSocialProof.tsx`
+- White background, generous vertical padding (`py-28`), centered text
+- Headline: "Trusted by families, educators, and therapists worldwide"
+- Logo row using existing assets (`icon-parents.png`, `icon-educators.png`, `icon-slps.png`, `icon-organizations.png`) plus the community/Facebook group concept — all rendered with `grayscale opacity-70` filter, spaced with `gap-12`
+- Rating pill: inline-flex rounded-full border pill with "4.9/5 ★★★★★ From thousands of parents and professionals"
 
-### Change in `src/components/IsThisRightSection.tsx` (line 16)
+### Page Update: `src/pages/WorkWithUs.tsx`
+- Import and add `<WorkWithUsSocialProof />` after `<WorkWithUsBrowseSection />`
 
-On the `<img>` element, add a CSS `scale` transform to shrink the image within its container, effectively zooming out while the container stays the same size. We'll use Tailwind's `scale-[0.85]` (or similar) combined with `object-contain` to ensure the full image is visible:
-
-- Change `object-cover` → `object-contain` so the entire image is visible without cropping
-- Add `object-center` to keep it centered
-- The container with `rounded-xl overflow-hidden` maintains the same frame size and shape
-
-This shows the full scene (people reading) within the exact same container dimensions.
+### Notes
+- Will reuse the 4 existing icon assets from `src/assets/` rather than referencing nonexistent SVGs
+- Minimal styling, lots of whitespace, no stat cards or borders (just the pill border)
 
