@@ -85,7 +85,7 @@ const AnimatedResources = ({
     <div className="max-w-sm md:max-w-4xl mx-auto px-4 md:px-8 lg:px-12 py-10">
       <div className="relative grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-20">
         {/* Image stack */}
-        <div className="relative h-80 w-full">
+        <div className="relative h-[28rem] w-full">
           <AnimatePresence>
             {items.map((testimonial, index) => (
               <motion.div
@@ -119,7 +119,7 @@ const AnimatedResources = ({
                 <img
                   src={testimonial.src}
                   alt={testimonial.title}
-                  className="h-full w-full rounded-3xl object-cover object-center"
+                  className="h-full w-full rounded-3xl object-contain object-center"
                   draggable={false}
                 />
               </motion.div>
@@ -128,7 +128,7 @@ const AnimatedResources = ({
         </div>
 
         {/* Text content */}
-        <div className="flex flex-col justify-between py-4">
+        <div className="flex flex-col justify-center gap-6 py-4">
           <motion.div
             key={active}
             initial={{ y: 20, opacity: 0 }}
@@ -185,7 +185,7 @@ const InsideDLDResourceHub = () => {
   return (
     <section className="py-16 md:py-20 lg:py-24">
       <div className="container px-6 md:px-8 max-w-7xl mx-auto">
-        <div className="bg-muted rounded-2xl py-12 md:py-16 lg:py-20 border border-border/50 shadow-sm">
+        <div className="bg-muted rounded-2xl py-10 md:py-12 lg:py-16 border border-border/50 shadow-sm">
           <div className="max-w-[900px] mx-auto text-center mb-8 px-6">
             <p className="text-xs font-semibold tracking-[0.2em] uppercase text-muted-foreground mb-3">
               Featured Resources
