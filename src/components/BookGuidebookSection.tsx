@@ -2,7 +2,7 @@ import bookGuidebook from "@/assets/book-parent-guidebook.png";
 
 const BookGuidebookSection = () => {
   return (
-    <section className="py-10 md:py-[72px]">
+    <section className="py-6 md:py-10">
       <div className="max-w-[1100px] mx-auto px-6 md:px-10">
         <div className="flex flex-col lg:flex-row items-start gap-8 lg:gap-12">
           {/* Text */}
