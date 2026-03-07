@@ -84,27 +84,36 @@ const AnimatedResources = ({
       <div className="relative isolate grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-10">
         {/* Stacked image carousel */}
         <div className="relative h-72 md:h-[24rem] w-full overflow-hidden isolate rounded-3xl">
-          {items.map((item, index) => (
-            <motion.div
-              key={item.src}
-              animate={{
-                scale: index === active ? 1 : 0.95,
-                y: index === active ? 0 : 8,
-                opacity: index === active ? 1 : 0.5,
-                zIndex: index === active ? 2 : 1,
-              }}
-              transition={{ duration: 0.4, ease: "easeInOut" }}
-              className="absolute inset-0"
-              style={{ pointerEvents: index === active ? "auto" : "none" }}
-            >
-              <img
-                src={item.src}
-                alt={item.title}
-                className="h-full w-full rounded-3xl object-contain object-center"
-                draggable={false}
-              />
-            </motion.div>
-          ))}
+          {items.map((item, index) => {
+            const isActive = index === active;
+            // Calculate offset from active to fan out behind
+            const offset = (index - active + items.length) % items.length;
+            const cappedOffset = Math.min(offset, 3); // show max 3 layers
+
+            return (
+              <motion.div
+                key={item.src}
+                animate={{
+                  scale: isActive ? 1 : 1 - cappedOffset * 0.05,
+                  y: isActive ? 0 : cappedOffset * 14,
+                  x: isActive ? 0 : cappedOffset * 6,
+                  rotate: isActive ? 0 : cappedOffset * 2.5,
+                  opacity: isActive ? 1 : Math.max(0.15, 0.7 - cappedOffset * 0.2),
+                  zIndex: isActive ? 10 : 3 - cappedOffset,
+                }}
+                transition={{ duration: 0.5, ease: "easeInOut" }}
+                className="absolute inset-0 origin-bottom-left"
+                style={{ pointerEvents: isActive ? "auto" : "none" }}
+              >
+                <img
+                  src={item.src}
+                  alt={item.title}
+                  className="h-full w-full rounded-3xl object-contain object-center"
+                  draggable={false}
+                />
+              </motion.div>
+            );
+          })}
         </div>
 
         {/* Text content */}
