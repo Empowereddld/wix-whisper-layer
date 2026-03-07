@@ -12,7 +12,7 @@ const types = [
     cta: "Listen Now",
     href: "/resources/podcasts",
     image: podcastImg,
-    imageClass: "scale-[1.15] object-center",
+    imageClass: "scale-[1.15] object-[70%_center]",
   },
   {
     tag: "FREE COURSE",
