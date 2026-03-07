@@ -5,7 +5,7 @@ const BookTheatreExchangeSection = () => {
     <section className="py-10 md:py-[72px]">
       <div className="flex flex-col lg:flex-row items-stretch">
         {/* Image */}
-        <div className="lg:w-[34%] flex-shrink-0 bg-muted">
+        <div className="lg:w-[34%] flex-shrink-0 bg-muted overflow-hidden rounded-xl">
           <img
             src={bookTheatreExchange}
             alt="Dan & Daria and The Theatre Exchange book cover"
