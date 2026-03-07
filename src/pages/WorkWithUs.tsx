@@ -2,6 +2,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import WorkWithUsHero from "@/components/WorkWithUsHero";
 import WorkWithUsBrowseSection from "@/components/WorkWithUsBrowseSection";
+import WorkWithUsSocialProof from "@/components/WorkWithUsSocialProof";
 import ContactSection from "@/components/ContactSection";
 
 const WorkWithUs = () => {
@@ -10,6 +11,7 @@ const WorkWithUs = () => {
       <Header />
       <WorkWithUsHero />
       <WorkWithUsBrowseSection />
+      <WorkWithUsSocialProof />
       <ContactSection />
       <Footer />
     </div>
