@@ -1,22 +1,18 @@
 
 
-## Plan: Three adjustments to the Downloadables page
+## Plan: Zoom out the image in "Is This Right" section
 
-### 1. Slow down the carousel in `InsideDLDResourceHub.tsx`
-- Change the autoplay interval from `5000ms` to `8000ms` (line 76) to give readers more time.
+The image currently uses `object-cover` which crops tightly into the center of the photo, cutting off the reading activity. To "zoom out" while keeping the same frame size, we can use CSS `object-fit: contain` instead — but that would leave empty space.
 
-### 2. Reduce padding around the Library Intro section in `DownloadablesLibraryIntro.tsx`
-- Reduce the section's vertical padding from `py-16 md:py-20 lg:py-24` to `py-10 md:py-14 lg:py-16`.
+A better approach: keep `object-cover` but use `object-position` to show more of the image, combined with scaling. Specifically:
 
-### 3. Restyle "Ready to Access Everything?" to match the black Resource Library CTA
-In `DownloadablesSignupCTA.tsx`, replace the current plain `bg-muted` layout with the same black rounded card style used in `ResourceLibraryCTA.tsx`:
-- Wrap content in a `bg-black text-white rounded-2xl` card with `DotBackground`
-- Use the same horizontal flex layout (text left, button right on desktop)
-- Keep the "Ready to Access Everything?" heading and description, styled in white
-- Add the same padding, gap, and button styling as the Resource Library CTA
+### Change in `src/components/IsThisRightSection.tsx` (line 16)
 
-### Files
-- **Edit** `src/components/InsideDLDResourceHub.tsx` -- change `5000` to `8000`
-- **Edit** `src/components/DownloadablesLibraryIntro.tsx` -- reduce section padding
-- **Edit** `src/components/DownloadablesSignupCTA.tsx` -- rewrite to match `ResourceLibraryCTA` black card style with DotBackground
+On the `<img>` element, add a CSS `scale` transform to shrink the image within its container, effectively zooming out while the container stays the same size. We'll use Tailwind's `scale-[0.85]` (or similar) combined with `object-contain` to ensure the full image is visible:
+
+- Change `object-cover` → `object-contain` so the entire image is visible without cropping
+- Add `object-center` to keep it centered
+- The container with `rounded-xl overflow-hidden` maintains the same frame size and shape
+
+This shows the full scene (people reading) within the exact same container dimensions.
 
