@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import BulkOrdersHero from "@/components/BulkOrdersHero";
+import BulkOrdersWhoSection from "@/components/BulkOrdersWhoSection";
 
 const BulkOrders = () => {
   return (
@@ -8,6 +9,7 @@ const BulkOrders = () => {
       <Header />
       <main className="flex-1">
         <BulkOrdersHero />
+        <BulkOrdersWhoSection />
       </main>
       <Footer />
     </div>
