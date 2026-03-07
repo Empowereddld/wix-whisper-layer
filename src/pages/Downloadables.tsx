@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import DownloadablesHero from "@/components/DownloadablesHero";
+import StatBand from "@/components/StatBand";
 import DownloadablesHowItWorks from "@/components/DownloadablesHowItWorks";
 import InsideDLDResourceHub from "@/components/InsideDLDResourceHub";
 import Footer from "@/components/Footer";
