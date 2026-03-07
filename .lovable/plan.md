@@ -1,41 +1,18 @@
 
 
-## Make Page Labels More Prominent Across Hero Sections
+## Plan: Zoom out the image in "Is This Right" section
 
-The current page identifier (e.g., "BULK ORDERS", "For Parents") is a small inline badge that's easy to miss. We'll replace it with a full-width accent bar that spans the entire top of the gray content card, making the page identity unmissable.
+The image currently uses `object-cover` which crops tightly into the center of the photo, cutting off the reading activity. To "zoom out" while keeping the same frame size, we can use CSS `object-fit: contain` instead — but that would leave empty space.
 
-### Design
+A better approach: keep `object-cover` but use `object-position` to show more of the image, combined with scaling. Specifically:
 
-Replace the small `inline-block` badge with a full-width bar that stretches across the top of the card. The bar will:
-- Use `bg-deep-purple` background, spanning the full card width (negative margins to counteract card padding, or placed outside the padding container)
-- Display the page name in white, bold uppercase text at a larger size (~14-18px)
-- Sit flush at the top of the gray card with rounded top corners matching the card
+### Change in `src/components/IsThisRightSection.tsx` (line 16)
 
-### Files to Update
+On the `<img>` element, add a CSS `scale` transform to shrink the image within its container, effectively zooming out while the container stays the same size. We'll use Tailwind's `scale-[0.85]` (or similar) combined with `object-contain` to ensure the full image is visible:
 
-All 5 hero components that share this pattern:
+- Change `object-cover` → `object-contain` so the entire image is visible without cropping
+- Add `object-center` to keep it centered
+- The container with `rounded-xl overflow-hidden` maintains the same frame size and shape
 
-1. **`src/components/BulkOrdersHero.tsx`** -- "BULK ORDERS"
-2. **`src/components/ForParentsHero.tsx`** -- "FOR PARENTS"
-3. **`src/components/ForTherapistsHero.tsx`** -- "FOR THERAPISTS"
-4. **`src/components/ForEducatorsHero.tsx`** -- "FOR SCHOOLS AND EDUCATORS"
-5. **`src/components/ForOrganizationsHero.tsx`** -- "FOR ORGANIZATIONS"
-
-### Implementation
-
-For each hero, restructure the gray card `div` so the purple bar sits at the very top edge:
-
-- Remove `py-10`/`py-14`/`py-24` from the outer card div; instead use `pt-0 pb-10 md:pb-14 lg:pb-24`
-- Replace the small `<span>` badge with a full-width div:
-  ```tsx
-  <div className="bg-deep-purple rounded-t-xl lg:rounded-t-2xl -mx-6 md:-mx-8 lg:-mx-16 -mt-0 px-6 md:px-8 lg:px-16 py-3 md:py-4 mb-6 md:mb-8">
-    <span className="text-white text-[13px] md:text-[15px] lg:text-[17px] font-bold uppercase tracking-[0.16em]">
-      Bulk Orders
-    </span>
-  </div>
-  ```
-- The negative horizontal margins (`-mx-6`/`-mx-8`/`-mx-16`) make it span the full card width while the card keeps its internal padding for the rest of the content
-- `rounded-t-xl lg:rounded-t-2xl` keeps the top corners rounded to match the card shape
-
-This is a purely visual/CSS change -- no logic, routing, or backend changes needed.
+This shows the full scene (people reading) within the exact same container dimensions.
 
