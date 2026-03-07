@@ -3,8 +3,8 @@ import bookDan from "@/assets/book-dan-paper-airplane.png";
 const BookDanSection = () => {
   return (
     <section className="py-10 md:py-[72px]">
-      <div className="flex flex-col lg:flex-row items-stretch">
-        {/* Image */}
+      <div className="max-w-[1100px] mx-auto px-6 md:px-10">
+        <div className="flex flex-col lg:flex-row items-start gap-8 lg:gap-12">
         <div className="lg:w-[34%] flex-shrink-0 bg-muted overflow-hidden rounded-xl">
           <img
             src={bookDan}
