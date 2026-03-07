@@ -14,6 +14,7 @@ const WhoWeServe = () => {
       <main>
         <WhoWeServeHero />
         <ChoosePathSection />
+        <ShopGlobalCommunity />
         <RealityOfDLDSection />
         <EveryChildSection />
         <ChoosePathCTA />
