@@ -142,7 +142,7 @@ const AnimatedResources = ({
             <h3 className="text-2xl font-bold text-foreground mt-1">
               {items[active].title}
             </h3>
-            <motion.p className="text-lg text-muted-foreground mt-6 leading-relaxed">
+            <motion.p className="text-lg text-muted-foreground mt-3 leading-relaxed">
               {items[active].description.split(" ").map((word, index) => (
                 <motion.span
                   key={index}
