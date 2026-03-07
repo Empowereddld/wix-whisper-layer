@@ -27,7 +27,7 @@ const navLinks = [
   { label: "WHO WE SERVE", href: "/who-we-serve", children: whoWeServeLinks },
   { label: "RESOURCES", href: "/resources", children: resourcesLinks },
   { label: "SHOP", href: "/shop", children: shopLinks },
-  { label: "WORK WITH US", href: "#work-with-us" },
+  { label: "WORK WITH US", href: "/work-with-us" },
   { label: "ABOUT DLD", href: "#about" },
   { label: "BLOGS", href: "#blogs" },
 ];
