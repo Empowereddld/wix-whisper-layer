@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import ShopHero from "@/components/ShopHero";
 import ShopBrowseByCategory from "@/components/ShopBrowseByCategory";
 import ShopGlobalCommunity from "@/components/ShopGlobalCommunity";
+import EveryChildSection from "@/components/EveryChildSection";
 
 const Shop = () => {
   return (
@@ -12,6 +13,7 @@ const Shop = () => {
         <ShopHero />
         <ShopBrowseByCategory />
         <ShopGlobalCommunity />
+        <EveryChildSection />
       </main>
       <Footer />
     </div>
