@@ -16,6 +16,7 @@ import FreeCourse from "./pages/FreeCourse";
 import Downloadables from "./pages/Downloadables";
 import Shop from "./pages/Shop";
 import Books from "./pages/Books";
+import BulkOrders from "./pages/BulkOrders";
 import NotFound from "./pages/NotFound";
 import HubSignup from "./pages/hub/HubSignup";
 import HubLogin from "./pages/hub/HubLogin";
@@ -49,6 +50,7 @@ const App = () => (
             <Route path="/resources/downloadables" element={<Downloadables />} />
             <Route path="/shop" element={<Shop />} />
             <Route path="/shop/books" element={<Books />} />
+            <Route path="/shop/bulk-orders" element={<BulkOrders />} />
             <Route path="/hub/signup" element={<HubSignup />} />
             <Route path="/hub/login" element={<HubLogin />} />
             <Route path="/hub/verify-email" element={<VerifyEmail />} />
