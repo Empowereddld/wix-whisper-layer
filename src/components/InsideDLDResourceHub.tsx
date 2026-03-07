@@ -77,53 +77,29 @@ const AnimatedResources = ({
     }
   }, [autoplay]);
 
-  const randomRotateY = () => {
-    return Math.floor(Math.random() * 21) - 10;
-  };
+  const activeItem = items[active];
 
   return (
     <div className="max-w-sm md:max-w-4xl mx-auto px-4 md:px-8 lg:px-12 py-0">
-      <div className="relative grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-10">
-        {/* Image stack */}
-        <div className="relative h-72 md:h-[24rem] w-full">
-          <AnimatePresence>
-            {items.map((testimonial, index) => (
-              <motion.div
-                key={testimonial.src}
-                initial={{
-                  opacity: 0,
-                  scale: 0.9,
-                  z: -100,
-                  rotate: randomRotateY(),
-                }}
-                animate={{
-                  opacity: index === active ? 1 : 0,
-                  scale: index === active ? 1 : 0.95,
-                  z: index === active ? 0 : -100,
-                  rotate: index === active ? 0 : randomRotateY(),
-                  zIndex:
-                    index === active ? 999 : items.length - Math.abs(index - active),
-                }}
-                exit={{
-                  opacity: 0,
-                  scale: 0.9,
-                  z: 100,
-                  rotate: randomRotateY(),
-                }}
-                transition={{
-                  duration: 0.4,
-                  ease: "easeInOut",
-                }}
-                className="absolute inset-0 origin-bottom"
-              >
-                <img
-                  src={testimonial.src}
-                  alt={testimonial.title}
-                  className="h-full w-full rounded-3xl object-contain object-center"
-                  draggable={false}
-                />
-              </motion.div>
-            ))}
+      <div className="relative isolate grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-10">
+        {/* Image */}
+        <div className="relative h-72 md:h-[24rem] w-full overflow-hidden isolate">
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.div
+              key={activeItem.src}
+              initial={{ opacity: 0, scale: 0.96 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.96 }}
+              transition={{ duration: 0.35, ease: "easeInOut" }}
+              className="absolute inset-0 pointer-events-auto"
+            >
+              <img
+                src={activeItem.src}
+                alt={activeItem.title}
+                className="h-full w-full rounded-3xl object-contain object-center"
+                draggable={false}
+              />
+            </motion.div>
           </AnimatePresence>
         </div>
 
@@ -137,13 +113,13 @@ const AnimatedResources = ({
             transition={{ duration: 0.2, ease: "easeInOut" }}
           >
             <p className="text-sm font-semibold text-primary uppercase tracking-wide">
-              {items[active].subheading}
+              {activeItem.subheading}
             </p>
             <h3 className="text-2xl font-bold text-foreground mt-1">
-              {items[active].title}
+              {activeItem.title}
             </h3>
             <motion.p className="text-lg text-muted-foreground mt-3 leading-relaxed">
-              {items[active].description.split(" ").map((word, index) => (
+              {activeItem.description.split(" ").map((word, index) => (
                 <motion.span
                   key={index}
                   initial={{ filter: "blur(10px)", opacity: 0, y: 5 }}
