@@ -7,7 +7,7 @@ const DownloadablesLibraryIntro = () => {
   const fade = useScrollFadeIn();
 
   return (
-    <section className="py-10 md:py-14 lg:py-16 pb-4 md:pb-6 lg:pb-8">
+    <section className="py-10 md:py-14 lg:py-16">
       <div
         ref={fade.ref}
         className={`container px-6 md:px-8 max-w-7xl mx-auto ${fade.className}`}
