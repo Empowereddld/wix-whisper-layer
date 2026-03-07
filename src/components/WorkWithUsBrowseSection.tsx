@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import speakingImg from "@/assets/work-speaking.jpg";
-import workshopsImg from "@/assets/work-workshops.png";
-import consultationImg from "@/assets/work-consultation.png";
+import workshopsImg from "@/assets/work-workshops.jpg";
+import consultationImg from "@/assets/work-consultation.jpg";
 
 const categories = [
   {
