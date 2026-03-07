@@ -24,7 +24,7 @@ const DownloadablesLibraryIntro = () => {
           </div>
 
           {/* Right – copy (60%) */}
-          <div className="md:col-span-3 flex flex-col gap-6">
+          <div className="flex flex-col gap-6">
             <h2 className="text-[28px] md:text-[36px] lg:text-[42px] font-black text-foreground leading-[1.1]">
               Your Complete DLD
               <br />
