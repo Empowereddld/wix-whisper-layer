@@ -7,7 +7,7 @@ const DownloadablesSignupCTA = () => {
   const fade = useScrollFadeIn();
 
   return (
-    <section className="bg-muted py-10 md:py-14 lg:py-20">
+    <section className="py-10 md:py-14 lg:py-20">
       <div className="container">
         <div
           ref={fade.ref}
