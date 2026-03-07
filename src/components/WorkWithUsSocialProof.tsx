@@ -18,16 +18,17 @@ const WorkWithUsSocialProof = () => {
           Trusted by families, educators, and therapists worldwide
         </h2>
 
-        <div className="flex flex-wrap justify-center items-center gap-12 mb-12">
-          {logos.map((logo) => (
-            <img
-              key={logo.alt}
-              src={logo.src}
-              className="h-8 grayscale opacity-70"
-              alt={logo.alt}
-              loading="lazy"
-            />
-          ))}
+        <div className="relative overflow-hidden mb-12">
+          <div className="flex w-max animate-[marquee_20s_linear_infinite] gap-12 items-center">
+            {[...logos, ...logos, ...logos].map((logo, i) => (
+              <img
+                key={`${logo.alt}-${i}`}
+                src={logo.src}
+                className="h-8 grayscale opacity-70 flex-shrink-0"
+                alt={logo.alt}
+              />
+            ))}
+          </div>
         </div>
 
         <div className="inline-flex items-center gap-3 border border-border rounded-full px-6 py-3 text-sm text-muted-foreground">
