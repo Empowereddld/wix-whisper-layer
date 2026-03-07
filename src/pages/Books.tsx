@@ -8,6 +8,7 @@ import BookMakeFriendsSection from "@/components/BookMakeFriendsSection";
 import BookBirthdayPartySection from "@/components/BookBirthdayPartySection";
 import BookTheatreExchangeSection from "@/components/BookTheatreExchangeSection";
 import WhoAreTheseBooksForSection from "@/components/WhoAreTheseBooksForSection";
+import ChoosePathCTA from "@/components/ChoosePathCTA";
 
 const Books = () => {
   return (
@@ -22,6 +23,7 @@ const Books = () => {
         <BookBirthdayPartySection />
         <BookTheatreExchangeSection />
         <WhoAreTheseBooksForSection />
+        <ChoosePathCTA />
       </main>
       <Footer />
     </div>
