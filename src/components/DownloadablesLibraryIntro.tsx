@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { useScrollFadeIn } from "@/hooks/useScrollFadeIn";
-import familyReading from "@/assets/family-reading.png";
+import resourceGif from "@/assets/resource-library-preview.gif";
 
 const DownloadablesLibraryIntro = () => {
   const fade = useScrollFadeIn();
@@ -10,15 +10,15 @@ const DownloadablesLibraryIntro = () => {
     <section className="py-16 md:py-20 lg:py-24">
       <div
         ref={fade.ref}
-        className={`container px-6 md:px-8 max-w-6xl mx-auto ${fade.className}`}
+        className={`container px-6 md:px-8 max-w-7xl mx-auto ${fade.className}`}
       >
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-10 md:gap-16 items-center">
-          {/* Left – image (40%) */}
-          <div className="md:col-span-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
+          {/* Left – image (50%) */}
+          <div>
             <img
-              src={familyReading}
-              alt="Family reading DLD resources together"
-              className="w-full rounded-2xl object-cover aspect-[4/5]"
+              src={resourceGif}
+              alt="Preview of DLD resource library materials"
+              className="w-full rounded-2xl object-cover aspect-[4/3]"
               loading="lazy"
             />
           </div>
