@@ -5,6 +5,7 @@ import MoreThanAStorySection from "@/components/MoreThanAStorySection";
 import BookDanSection from "@/components/BookDanSection";
 import BookGuidebookSection from "@/components/BookGuidebookSection";
 import BookMakeFriendsSection from "@/components/BookMakeFriendsSection";
+import BookBirthdayPartySection from "@/components/BookBirthdayPartySection";
 
 const Books = () => {
   return (
@@ -16,6 +17,7 @@ const Books = () => {
         <BookDanSection />
         <BookGuidebookSection />
         <BookMakeFriendsSection />
+        <BookBirthdayPartySection />
       </main>
       <Footer />
     </div>
