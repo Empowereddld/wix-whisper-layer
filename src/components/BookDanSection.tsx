@@ -15,7 +15,7 @@ const BookDanSection = () => {
           </div>
 
         {/* Text */}
-        <div className="flex-1 flex flex-col justify-center px-5 md:px-8 lg:px-12 py-7 lg:py-10">
+        <div className="flex-1 flex flex-col justify-center py-4 lg:py-8">
           <p className="text-[11px] md:text-[12px] font-semibold text-foreground tracking-wide mb-2">
             <span className="font-bold">Book 1:</span> Living Life with Developmental Language Disorder Series
           </p>
