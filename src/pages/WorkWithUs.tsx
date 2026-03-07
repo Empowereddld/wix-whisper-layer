@@ -11,6 +11,7 @@ const WorkWithUs = () => {
       <Header />
       <WorkWithUsHero />
       <WorkWithUsBrowseSection />
+      <WorkWithUsSocialProof />
       <ContactSection />
       <Footer />
     </div>
