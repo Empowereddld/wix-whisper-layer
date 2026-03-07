@@ -40,13 +40,13 @@ const WorkWithUsBrowseSection = () => {
         {/* Header */}
         <div className="mb-10 md:mb-14">
           <p className="text-[11px] md:text-[12px] font-bold uppercase tracking-[0.2em] text-muted-foreground mb-3">
-            BROWSE BY CATEGORY
+            OUR SERVICES
           </p>
           <h2 className="text-[28px] md:text-[36px] lg:text-[42px] font-black text-foreground leading-[1.1] mb-3">
-            Find What You're Looking For
+            Three Ways to Bring DLD Expertise to Your Team
           </h2>
-          <p className="text-[15px] md:text-[16px] text-muted-foreground leading-relaxed max-w-[500px]">
-            Each section has resources designed specifically for you.
+          <p className="text-[15px] md:text-[16px] text-muted-foreground leading-relaxed max-w-[600px]">
+            Whether you need a keynote speaker, staff training, or ongoing consultation, we're here to support your team.
           </p>
         </div>
 
