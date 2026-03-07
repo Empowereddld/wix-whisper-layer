@@ -34,9 +34,9 @@ const types = [
 
 const BrowseByTypeSection = () => {
   return (
-    <section className="py-16 md:py-24">
-      <div className="max-w-[1400px] mx-auto px-6 md:px-10">
-        <p className="text-[11px] md:text-[12px] font-bold uppercase tracking-[0.22em] text-foreground/50 mb-3">
+    <section className="py-16 md:py-24 lg:py-28">
+      <div className="max-w-[1300px] mx-auto px-6 md:px-8">
+        <div className="mb-10 md:mb-14">
           BROWSE BY TYPE
         </p>
         <h2 className="text-[28px] md:text-[42px] font-black text-foreground leading-[1.12] mb-2">
