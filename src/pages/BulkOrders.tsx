@@ -17,7 +17,11 @@ const BulkOrders = () => {
         <WhyBulkOrderSection />
         <BulkOrdersHowItWorksSection />
         <BulkOrdersCTASection />
-        <ChoosePathCTA />
+        <ChoosePathCTA
+          label="EXPLORE BY ROLE"
+          heading="Find What's Right for You"
+          subheading="Resources and support tailored to your role."
+        />
       </main>
       <Footer />
     </div>
