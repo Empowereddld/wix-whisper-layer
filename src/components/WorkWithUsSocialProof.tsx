@@ -18,7 +18,12 @@ const WorkWithUsSocialProof = () => {
           Trusted by families, educators, and therapists worldwide
         </h2>
 
-        <div className="relative overflow-hidden mb-12">
+        <div className="relative overflow-hidden mb-12"
+          style={{
+            maskImage: "linear-gradient(to right, transparent, black 15%, black 85%, transparent)",
+            WebkitMaskImage: "linear-gradient(to right, transparent, black 15%, black 85%, transparent)",
+          }}
+        >
           <div className="flex w-max animate-[marquee_20s_linear_infinite] gap-12 items-center">
             {[...logos, ...logos, ...logos].map((logo, i) => (
               <img
