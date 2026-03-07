@@ -72,9 +72,10 @@ const BrowseByTypeSection = () => {
                 <p className="text-[14px] md:text-[15px] text-muted-foreground leading-relaxed mb-6 flex-1">
                   {item.description}
                 </p>
+
                 <a
                   href={item.href}
-                  className="inline-flex items-center justify-center h-11 px-7 bg-foreground text-background text-[13px] font-semibold tracking-[0.04em] rounded-md hover:opacity-90 transition-opacity duration-200 w-fit"
+                  className="inline-flex items-center justify-center h-11 px-7 bg-foreground text-background text-[13px] font-semibold tracking-[0.04em] rounded-md hover:opacity-90 transition-opacity duration-200 w-fit mt-auto"
                 >
                   {item.cta}
                 </a>
