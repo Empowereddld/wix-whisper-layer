@@ -2,6 +2,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import BooksHero from "@/components/BooksHero";
 import MoreThanAStorySection from "@/components/MoreThanAStorySection";
+import BookDanSection from "@/components/BookDanSection";
 
 const Books = () => {
   return (
@@ -10,6 +11,7 @@ const Books = () => {
       <main className="flex-1">
         <BooksHero />
         <MoreThanAStorySection />
+        <BookDanSection />
       </main>
       <Footer />
     </div>
