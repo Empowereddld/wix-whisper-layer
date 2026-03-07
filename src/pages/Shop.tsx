@@ -15,6 +15,7 @@ const Shop = () => {
         <ShopBrowseByCategory />
         <ShopGlobalCommunity />
         <EveryChildSection />
+        <ChoosePathCTA />
       </main>
       <Footer />
     </div>
