@@ -25,11 +25,11 @@ const BooksHero = () => {
           </div>
 
           {/* Image */}
-          <div className="mt-4 lg:mt-0 lg:flex-1 flex items-center justify-center p-4 lg:p-8">
+          <div className="mt-4 lg:mt-0 lg:flex-1 flex items-end justify-center overflow-hidden">
             <img
               src={bookCharacters}
               alt="Dan, Daria, Ming, and Millen - Living Life with DLD book characters"
-              className="w-full max-w-[520px] h-auto object-contain"
+              className="w-full max-w-[600px] h-auto object-contain scale-125 translate-y-8"
             />
           </div>
         </div>
