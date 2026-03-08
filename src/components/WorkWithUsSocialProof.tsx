@@ -6,7 +6,7 @@ import logoWestern from "@/assets/logo-western.jpg";
 const logos = [
   { src: logoAsha, alt: "ASHA – American Speech-Language-Hearing Association", className: "h-10 md:h-12" },
   { src: logoRadld, alt: "RADLD – Raising Awareness of DLD", className: "h-10 md:h-12" },
-  { src: logoDldSummit, alt: "DLD Global Summit", className: "h-20 md:h-24" },
+  { src: logoDldSummit, alt: "DLD Global Summit", className: "h-28 md:h-32" },
   { src: logoWestern, alt: "Western University", className: "h-10 md:h-12" },
 ];
 
