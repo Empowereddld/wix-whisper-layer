@@ -25,7 +25,7 @@ const ForEducators = () => {
         <HowItWorksSection />
         <IsThisRightSection />
         <EducatorsContactCTA />
-        <ResourceLibraryCTA />
+        
       </main>
       <Footer />
     </div>
