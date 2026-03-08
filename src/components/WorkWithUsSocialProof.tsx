@@ -1,39 +1,32 @@
-import iconParents from "@/assets/icon-parents.png";
-import iconEducators from "@/assets/icon-educators.png";
-import iconSlps from "@/assets/icon-slps.png";
-import iconOrganizations from "@/assets/icon-organizations.png";
+import logoAsha from "@/assets/logo-asha.png";
+import logoRadld from "@/assets/logo-radld.png";
+import logoDldSummit from "@/assets/logo-dld-summit.png";
+import logoWestern from "@/assets/logo-western.jpg";
 
 const logos = [
-  { src: iconParents, alt: "Parents" },
-  { src: iconEducators, alt: "Educators" },
-  { src: iconSlps, alt: "SLPs" },
-  { src: iconOrganizations, alt: "Organizations" },
+  { src: logoAsha, alt: "ASHA – American Speech-Language-Hearing Association" },
+  { src: logoRadld, alt: "RADLD – Raising Awareness of DLD" },
+  { src: logoDldSummit, alt: "DLD Global Summit" },
+  { src: logoWestern, alt: "Western University" },
 ];
 
 const WorkWithUsSocialProof = () => {
   return (
-    <section className="py-28 bg-background text-center">
-      <div className="max-w-6xl mx-auto px-6">
-        <h2 className="text-3xl md:text-4xl font-medium text-foreground mb-12">
-          Trusted by families, educators, and therapists worldwide
-        </h2>
+    <section className="py-24 bg-background text-center">
+      <div className="max-w-4xl mx-auto px-6">
+        <p className="text-sm uppercase tracking-widest text-muted-foreground mb-10">
+          Trusted by leading organizations
+        </p>
 
-        <div className="relative overflow-hidden mb-12"
-          style={{
-            maskImage: "linear-gradient(to right, transparent, black 15%, black 85%, transparent)",
-            WebkitMaskImage: "linear-gradient(to right, transparent, black 15%, black 85%, transparent)",
-          }}
-        >
-          <div className="flex w-max animate-[marquee_20s_linear_infinite] gap-12 items-center">
-            {[...logos, ...logos, ...logos].map((logo, i) => (
-              <img
-                key={`${logo.alt}-${i}`}
-                src={logo.src}
-                className="h-8 grayscale opacity-70 flex-shrink-0"
-                alt={logo.alt}
-              />
-            ))}
-          </div>
+        <div className="flex flex-wrap items-center justify-center gap-10 md:gap-16 mb-14">
+          {logos.map((logo) => (
+            <img
+              key={logo.alt}
+              src={logo.src}
+              alt={logo.alt}
+              className="h-10 md:h-12 w-auto object-contain grayscale opacity-60"
+            />
+          ))}
         </div>
 
         <div className="inline-flex items-center gap-3 border border-border rounded-full px-6 py-3 text-sm text-muted-foreground">
