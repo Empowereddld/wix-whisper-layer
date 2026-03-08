@@ -28,12 +28,6 @@ const WorkWithUsSocialProof = () => {
             />
           ))}
         </div>
-
-        <div className="inline-flex items-center gap-3 border border-border rounded-full px-6 py-3 text-sm text-muted-foreground">
-          <span className="font-medium text-foreground">4.9/5</span>
-          <span className="text-amber-500">★★★★★</span>
-          <span>From thousands of parents and professionals</span>
-        </div>
       </div>
     </section>
   );
