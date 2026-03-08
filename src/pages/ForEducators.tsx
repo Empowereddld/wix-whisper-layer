@@ -8,7 +8,7 @@ import ImplementationPackagesSection from "@/components/ImplementationPackagesSe
 import HowItWorksSection from "@/components/HowItWorksSection";
 import IsThisRightSection from "@/components/IsThisRightSection";
 import EducatorsContactCTA from "@/components/EducatorsContactCTA";
-import ResourceLibraryCTA from "@/components/ResourceLibraryCTA";
+
 import Footer from "@/components/Footer";
 
 const ForEducators = () => {
