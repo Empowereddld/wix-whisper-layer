@@ -24,7 +24,7 @@ const WorkWithUsSocialProof = () => {
               key={logo.alt}
               src={logo.src}
               alt={logo.alt}
-              className="h-10 md:h-12 w-auto object-contain grayscale opacity-60"
+              className={`${logo.className} w-auto object-contain grayscale opacity-60`}
             />
           ))}
         </div>
