@@ -12,9 +12,9 @@ const logos = [
 
 const WorkWithUsSocialProof = () => {
   return (
-    <section className="py-24 bg-background text-center">
+    <section className="py-12 bg-background text-center">
       <div className="max-w-4xl mx-auto px-6">
-        <p className="text-sm uppercase tracking-widest text-muted-foreground mb-10">
+        <p className="text-sm uppercase tracking-widest text-muted-foreground mb-6">
           Trusted by leading organizations
         </p>
 
