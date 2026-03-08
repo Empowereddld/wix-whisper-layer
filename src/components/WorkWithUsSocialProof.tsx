@@ -4,10 +4,10 @@ import logoDldSummit from "@/assets/logo-dld-summit.png";
 import logoWestern from "@/assets/logo-western.jpg";
 
 const logos = [
-  { src: logoAsha, alt: "ASHA – American Speech-Language-Hearing Association" },
-  { src: logoRadld, alt: "RADLD – Raising Awareness of DLD" },
-  { src: logoDldSummit, alt: "DLD Global Summit" },
-  { src: logoWestern, alt: "Western University" },
+  { src: logoAsha, alt: "ASHA – American Speech-Language-Hearing Association", className: "h-10 md:h-12" },
+  { src: logoRadld, alt: "RADLD – Raising Awareness of DLD", className: "h-10 md:h-12" },
+  { src: logoDldSummit, alt: "DLD Global Summit", className: "h-14 md:h-18" },
+  { src: logoWestern, alt: "Western University", className: "h-10 md:h-12" },
 ];
 
 const WorkWithUsSocialProof = () => {
@@ -24,7 +24,7 @@ const WorkWithUsSocialProof = () => {
               key={logo.alt}
               src={logo.src}
               alt={logo.alt}
-              className="h-10 md:h-12 w-auto object-contain grayscale opacity-60"
+              className={`${logo.className} w-auto object-contain grayscale opacity-60`}
             />
           ))}
         </div>
