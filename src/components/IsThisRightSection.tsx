@@ -13,7 +13,7 @@ const IsThisRightSection = () => {
             <img
               src={educatorsRightFit}
               alt="Teacher working with students in classroom"
-               className="w-full h-full object-cover object-bottom max-h-[220px] md:max-h-[300px] lg:max-h-[500px] aspect-[16/9] lg:aspect-auto"
+               className="w-full h-full object-cover object-[center_80%] max-h-[220px] md:max-h-[300px] lg:max-h-[500px] aspect-[16/9] lg:aspect-auto"
                loading="lazy"
             />
           </div>
