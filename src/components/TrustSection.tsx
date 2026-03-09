@@ -56,9 +56,11 @@ const TrustSection = () => {
               ))}
             </ul>
 
-            <Button className="w-fit h-[46px] px-7 rounded-lg text-[11px] font-bold uppercase tracking-[0.14em] shadow-[0_2px_8px_hsl(258_50%_50%/0.2)] hover:shadow-[0_4px_14px_hsl(258_50%_50%/0.25)] hover:brightness-[0.96] transition-all duration-300">
-              FIND WHAT WORKS FOR YOU
-            </Button>
+            <a href="/who-we-serve">
+              <Button className="w-fit h-[46px] px-7 rounded-lg text-[11px] font-bold uppercase tracking-[0.14em] shadow-[0_2px_8px_hsl(258_50%_50%/0.2)] hover:shadow-[0_4px_14px_hsl(258_50%_50%/0.25)] hover:brightness-[0.96] transition-all duration-300">
+                FIND WHAT WORKS FOR YOU
+              </Button>
+            </a>
           </div>
 
           {/* Column 2 – Founders photo (circle) — mobile + desktop only */}
