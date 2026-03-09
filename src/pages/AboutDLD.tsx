@@ -2,6 +2,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AboutDLDHero from "@/components/AboutDLDHero";
 import WhatIsDLDSection from "@/components/WhatIsDLDSection";
+import HowCommonSection from "@/components/HowCommonSection";
 
 const AboutDLD = () => {
   return (
@@ -17,6 +18,7 @@ const AboutDLD = () => {
           </div>
         </div>
         <WhatIsDLDSection />
+        <HowCommonSection />
       </main>
       <Footer />
     </div>);
