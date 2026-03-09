@@ -2,6 +2,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import WorkWithUsHero from "@/components/WorkWithUsHero";
 import WorkWithUsBrowseSection from "@/components/WorkWithUsBrowseSection";
+import DoesSoundFamiliarSection from "@/components/DoesSoundFamiliarSection";
 import WorkWithUsSocialProof from "@/components/WorkWithUsSocialProof";
 import ContactSection from "@/components/ContactSection";
 
