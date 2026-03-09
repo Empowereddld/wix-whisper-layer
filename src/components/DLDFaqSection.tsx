@@ -39,33 +39,14 @@ const DLDFaqSection = () => {
   return (
     <section className="py-16 md:py-[120px] bg-background">
       <div className="container px-6 md:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-20 items-start">
-          {/* Left — dot grid */}
-          <div className="flex flex-col items-center justify-center lg:sticky lg:top-24 pt-4 md:pt-8">
-            <div className="grid grid-cols-7 gap-4 md:gap-5">
-              {circles.map((i) => (
-                <div
-                  key={i}
-                  className={`w-8 h-8 md:w-10 md:h-10 rounded-full ${
-                    i === 6 ? "bg-primary" : "bg-muted"
-                  }`}
-                />
-              ))}
-            </div>
-            <p className="text-muted-foreground text-[13px] md:text-[14px] mt-6 tracking-wide">
-              1 in 14 children have DLD
-            </p>
-          </div>
-
-          {/* Right — FAQ accordion */}
-          <div>
-            <h2 className="font-serif text-[28px] md:text-[38px] lg:text-[42px] leading-[1.15] text-foreground mb-3">
-              Understanding Developmental Language Disorder
-            </h2>
-            <p className="text-muted-foreground text-[14px] md:text-[15px] leading-[1.7] mb-8 md:mb-10 max-w-[520px]">
-              Common questions about Developmental Language Disorder and why
-              awareness matters.
-            </p>
+        <div className="max-w-[720px] mx-auto">
+          <h2 className="font-serif text-[28px] md:text-[38px] lg:text-[42px] leading-[1.15] text-foreground mb-3">
+            Understanding Developmental Language Disorder
+          </h2>
+          <p className="text-muted-foreground text-[14px] md:text-[15px] leading-[1.7] mb-8 md:mb-10 max-w-[520px]">
+            Common questions about Developmental Language Disorder and why
+            awareness matters.
+          </p>
 
             <Accordion type="single" collapsible className="w-full">
               {faqs.map((faq, index) => (
