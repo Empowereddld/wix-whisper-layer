@@ -81,6 +81,15 @@ const HubHeader = ({ activeAudience = "", onAudienceChange }: HubHeaderProps) =>
               <ChevronDown className="h-4 w-4" />
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-48">
+              {isAdmin && (
+                <DropdownMenuItem
+                  onClick={() => navigate("/admin")}
+                  className="cursor-pointer"
+                >
+                  <Shield className="h-4 w-4 mr-2" />
+                  Admin Dashboard
+                </DropdownMenuItem>
+              )}
               <DropdownMenuItem
                 onClick={() => navigate("/hub/settings")}
                 className="cursor-pointer"
