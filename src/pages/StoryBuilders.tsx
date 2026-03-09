@@ -128,7 +128,8 @@ const StoryBuilders = () => {
       <div className="w-16 h-px bg-border mx-auto" />
 
       {/* ─── WHY STORYTELLING ─── */}
-      <section className="max-w-2xl mx-auto px-6 py-24 sm:py-32 text-center">
+      <section className="bg-muted py-24 sm:py-32">
+        <div className="max-w-2xl mx-auto px-6 text-center">
         <motion.h2
           variants={fadeUp}
           initial="hidden"
