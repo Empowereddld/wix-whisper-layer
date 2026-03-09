@@ -18,6 +18,7 @@ const AboutDLD = () => {
           </div>
         </div>
         <WhatIsDLDSection />
+        <HowCommonSection />
       </main>
       <Footer />
     </div>);
