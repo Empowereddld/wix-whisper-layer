@@ -1,6 +1,7 @@
 import { useAuth } from "@/contexts/AuthContext";
+import { useAdminCheck } from "@/hooks/useAdminCheck";
 import { useNavigate } from "react-router-dom";
-import { LogOut, Settings, ChevronDown } from "lucide-react";
+import { LogOut, Settings, ChevronDown, Shield } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -22,7 +23,8 @@ interface HubHeaderProps {
 }
 
 const HubHeader = ({ activeAudience = "", onAudienceChange }: HubHeaderProps) => {
-  const { profile, signOut } = useAuth();
+  const { user, profile, signOut } = useAuth();
+  const { isAdmin } = useAdminCheck(user?.id);
   const navigate = useNavigate();
 
   const handleSignOut = async () => {
@@ -79,6 +81,15 @@ const HubHeader = ({ activeAudience = "", onAudienceChange }: HubHeaderProps) =>
               <ChevronDown className="h-4 w-4" />
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-48">
+              {isAdmin && (
+                <DropdownMenuItem
+                  onClick={() => navigate("/admin")}
+                  className="cursor-pointer"
+                >
+                  <Shield className="h-4 w-4 mr-2" />
+                  Admin Dashboard
+                </DropdownMenuItem>
+              )}
               <DropdownMenuItem
                 onClick={() => navigate("/hub/settings")}
                 className="cursor-pointer"
