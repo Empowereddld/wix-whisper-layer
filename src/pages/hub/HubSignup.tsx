@@ -77,6 +77,7 @@ const HubSignup = () => {
           role: form.role,
           country: form.country || null,
           age_range: form.age_range || "not_applicable",
+          ...(refCode ? { referred_by: refCode } : {}),
         },
         emailRedirectTo: window.location.origin + "/hub",
       },
