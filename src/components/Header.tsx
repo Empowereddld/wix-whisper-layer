@@ -30,7 +30,7 @@ const navLinks = [
   { label: "SHOP", href: "/shop", children: shopLinks },
   { label: "WORK WITH US", href: "/work-with-us" },
   { label: "ABOUT DLD", href: "/about-dld" },
-  { label: "BLOGS", href: "#blogs" },
+  { label: "CONTACT", href: "/contact" },
 ];
 
 const Header = () => {
