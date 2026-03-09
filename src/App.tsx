@@ -47,6 +47,7 @@ import AdminProducts from "./pages/admin/AdminProducts";
 import AdminWaitlist from "./pages/admin/AdminWaitlist";
 import AdminResourceRequests from "./pages/admin/AdminResourceRequests";
 import AdminReferrals from "./pages/admin/AdminReferrals";
+import StoryBuilders from "./pages/StoryBuilders";
 
 const queryClient = new QueryClient();
 
@@ -74,6 +75,7 @@ const App = () => (
             <Route path="/work-with-us" element={<WorkWithUs />} />
             <Route path="/about-dld" element={<AboutDLD />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/storybuilders" element={<StoryBuilders />} />
             <Route path="/signup/role" element={<SignupRole />} />
             <Route path="/login" element={<Login />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
