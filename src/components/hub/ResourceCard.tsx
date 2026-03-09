@@ -1,4 +1,4 @@
-import { Download, Eye, FileText, Image, CheckSquare, BookOpen, Package, BarChart3 } from "lucide-react";
+import { Download, Eye, FileText, Image, CheckSquare, BookOpen, Package, BarChart3, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import type { Resource } from "@/hooks/useResources";
@@ -34,7 +34,11 @@ interface ResourceCardProps {
   resource: Resource;
   onView: (resource: Resource) => void;
   onDownload: (resource: Resource) => void;
+  onUnlock?: (resource: Resource) => void;
   viewMode?: "grid" | "list";
+  price?: number | null;
+  currency?: string;
+  isPurchased?: boolean;
 }
 
 const isNew = (createdAt: string) => {
@@ -42,19 +46,47 @@ const isNew = (createdAt: string) => {
   return diff < 30 * 24 * 60 * 60 * 1000;
 };
 
-const ResourceCard = ({ resource, onView, onDownload, viewMode = "grid" }: ResourceCardProps) => {
+const formatPrice = (cents: number, currency: string = "CAD") => {
+  const amount = (cents / 100).toFixed(2);
+  const sym = currency === "CAD" ? "CA$" : "$";
+  return `${sym}${amount}`;
+};
+
+const ResourceCard = ({
+  resource,
+  onView,
+  onDownload,
+  onUnlock,
+  viewMode = "grid",
+  price,
+  currency = "CAD",
+  isPurchased = false,
+}: ResourceCardProps) => {
   const Icon = typeIcons[resource.resource_type] || FileText;
   const navigate = useNavigate();
+  const isPaid = price != null && price > 0;
+  const isUnlocked = !isPaid || isPurchased;
 
   if (viewMode === "list") {
     return (
       <div className="bg-card rounded-xl border border-thistle/60 p-4 premium-card flex items-center gap-4">
-        <div className="h-16 w-16 rounded-lg bg-thistle/40 flex items-center justify-center flex-shrink-0">
+        <div className="h-16 w-16 rounded-lg bg-thistle/40 flex items-center justify-center flex-shrink-0 relative">
           <Icon className="h-7 w-7 text-hub-lavender" />
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1">
             <h3 className="font-semibold text-midnight truncate">{resource.title}</h3>
+            {!isPaid && (
+              <span className="text-xs px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 font-medium flex-shrink-0">Free</span>
+            )}
+            {isPaid && !isPurchased && (
+              <span className="text-xs px-2 py-0.5 rounded-full bg-mauve/15 text-mauve font-semibold flex-shrink-0">
+                {formatPrice(price, currency)}
+              </span>
+            )}
+            {isPaid && isPurchased && (
+              <span className="text-xs px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 font-medium flex-shrink-0">Purchased</span>
+            )}
             {isNew(resource.created_at) && (
               <span className="text-xs px-2 py-0.5 rounded-full bg-mauve text-white font-medium flex-shrink-0">New</span>
             )}
@@ -65,9 +97,15 @@ const ResourceCard = ({ resource, onView, onDownload, viewMode = "grid" }: Resou
           <Button size="sm" variant="outline" onClick={() => navigate(`/hub/resource/${resource.id}`)} className="border-thistle hover:bg-thistle/30">
             <Eye className="h-4 w-4 mr-1" /> View
           </Button>
-          <Button size="sm" onClick={() => onDownload(resource)} className="bg-midnight text-midnight-foreground hover:bg-midnight/90">
-            <Download className="h-4 w-4 mr-1" /> Download
-          </Button>
+          {isUnlocked ? (
+            <Button size="sm" onClick={() => onDownload(resource)} className="bg-midnight text-midnight-foreground hover:bg-midnight/90">
+              <Download className="h-4 w-4 mr-1" /> Download
+            </Button>
+          ) : (
+            <Button size="sm" onClick={() => onUnlock?.(resource)} className="bg-mauve text-white hover:bg-mauve/90">
+              <Lock className="h-4 w-4 mr-1" /> Unlock
+            </Button>
+          )}
         </div>
       </div>
     );
@@ -75,11 +113,25 @@ const ResourceCard = ({ resource, onView, onDownload, viewMode = "grid" }: Resou
 
   return (
     <div className="bg-card rounded-xl border border-thistle/60 premium-card flex flex-col h-full">
-      {/* Thumbnail placeholder */}
+      {/* Thumbnail */}
       <div className="h-40 rounded-t-xl bg-thistle/30 flex items-center justify-center relative">
         <Icon className="h-12 w-12 text-hub-lavender/60" />
+        {/* Price / Free badge */}
+        {isPaid && !isPurchased ? (
+          <span className="absolute top-3 right-3 text-xs px-2.5 py-1 rounded-full bg-mauve text-white font-semibold shadow-sm">
+            {formatPrice(price, currency)}
+          </span>
+        ) : isPaid && isPurchased ? (
+          <span className="absolute top-3 right-3 text-xs px-2.5 py-1 rounded-full bg-emerald-500 text-white font-medium">
+            Purchased
+          </span>
+        ) : (
+          <span className="absolute top-3 right-3 text-xs px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-700 font-medium">
+            Free
+          </span>
+        )}
         {isNew(resource.created_at) && (
-          <span className="absolute top-3 right-3 text-xs px-2.5 py-1 rounded-full bg-mauve text-white font-medium">New</span>
+          <span className="absolute top-3 left-3 text-xs px-2.5 py-1 rounded-full bg-mauve text-white font-medium">New</span>
         )}
       </div>
 
@@ -115,13 +167,23 @@ const ResourceCard = ({ resource, onView, onDownload, viewMode = "grid" }: Resou
           >
             <Eye className="h-4 w-4 mr-1.5" /> View
           </Button>
-          <Button
-            size="sm"
-            className="flex-1 bg-midnight text-midnight-foreground hover:bg-midnight/90"
-            onClick={() => onDownload(resource)}
-          >
-            <Download className="h-4 w-4 mr-1.5" /> Download
-          </Button>
+          {isUnlocked ? (
+            <Button
+              size="sm"
+              className="flex-1 bg-midnight text-midnight-foreground hover:bg-midnight/90"
+              onClick={() => onDownload(resource)}
+            >
+              <Download className="h-4 w-4 mr-1.5" /> Download
+            </Button>
+          ) : (
+            <Button
+              size="sm"
+              className="flex-1 bg-mauve text-white hover:bg-mauve/90"
+              onClick={() => onUnlock?.(resource)}
+            >
+              <Lock className="h-4 w-4 mr-1.5" /> Unlock
+            </Button>
+          )}
         </div>
       </div>
     </div>
