@@ -1,6 +1,6 @@
 const WhatIsDLDSection = () => {
   return (
-    <section className="py-16 md:py-[120px] bg-background">
+    <section className="py-10 md:py-[80px] bg-background">
       <div className="container px-6 md:px-8">
         <h2 className="font-serif text-[32px] md:text-[44px] lg:text-[48px] leading-[1.15] text-primary max-w-[700px] mb-12 md:mb-16">
           "DLD affects how the brain processes language — not intelligence, not effort, not potential."
