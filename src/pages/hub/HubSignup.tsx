@@ -31,6 +31,8 @@ const ageRanges = [
 const HubSignup = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const [searchParams] = useSearchParams();
+  const refCode = searchParams.get("ref");
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
     first_name: "",
