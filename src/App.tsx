@@ -47,6 +47,7 @@ import AdminProducts from "./pages/admin/AdminProducts";
 import AdminWaitlist from "./pages/admin/AdminWaitlist";
 import AdminResourceRequests from "./pages/admin/AdminResourceRequests";
 import AdminReferrals from "./pages/admin/AdminReferrals";
+import StoryBuilders from "./pages/StoryBuilders";
 
 const queryClient = new QueryClient();
 
