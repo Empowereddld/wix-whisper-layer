@@ -17,9 +17,6 @@ const AboutDLDHero = () => {
             Yet most people have never heard of it.
           </p>
         </div>
-        <p className="text-[13px] md:text-[14px] text-white/50 mt-4">
-          Trusted by families and professionals
-        </p>
       </div>
     </section>
   );
