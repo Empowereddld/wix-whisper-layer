@@ -28,7 +28,7 @@ const navLinks = [
   { label: "RESOURCES", href: "/resources", children: resourcesLinks },
   { label: "SHOP", href: "/shop", children: shopLinks },
   { label: "WORK WITH US", href: "/work-with-us" },
-  { label: "ABOUT DLD", href: "#about" },
+  { label: "ABOUT DLD", href: "/about-dld" },
   { label: "BLOGS", href: "#blogs" },
 ];
 
