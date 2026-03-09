@@ -1,29 +1,18 @@
 
 
-## Plan: Rebuild Resource Hub Preview/Landing Page
+## Plan: Zoom out the image in "Is This Right" section
 
-The existing `HubPreview.tsx` at `/hub/preview` is close but needs updates to match the detailed spec. The page already has the right structure (navbar, hero, preview grid, CTA, footer) but needs these changes:
+The image currently uses `object-cover` which crops tightly into the center of the photo, cutting off the reading activity. To "zoom out" while keeping the same frame size, we can use CSS `object-fit: contain` instead — but that would leave empty space.
 
-### Changes to `src/pages/hub/HubPreview.tsx`
+A better approach: keep `object-cover` but use `object-position` to show more of the image, combined with scaling. Specifically:
 
-1. **Hero updates**
-   - Change subheadline from "One Place. Always Free." to "Free to Access. Always Growing."
-   - Update body text to say "Parents, Therapists, and Educators" (not SLPs/school leaders)
-   - Replace Shield/Users/Sparkles icons with sparkle character "✦" for trust line
+### Change in `src/components/IsThisRightSection.tsx` (line 16)
 
-2. **Add audience filter tabs** between hero and preview grid
-   - Three tabs: Parents | Therapists | Educators + an "All" default
-   - State: `activeFilter` controls which cards display
-   - Filter based on matching audience tag
+On the `<img>` element, add a CSS `scale` transform to shrink the image within its container, effectively zooming out while the container stays the same size. We'll use Tailwind's `scale-[0.85]` (or similar) combined with `object-contain` to ensure the full image is visible:
 
-3. **Replace dynamic DB fetch with 6 hardcoded placeholder resources**
-   - Remove `supabase` import and `useEffect` fetch
-   - Use static array with the 6 specified resources, each with title, description, type, and audience
-   - Each card shows: icon thumbnail, title, description, audience pill tag, type pill tag, hover lock overlay
+- Change `object-cover` → `object-contain` so the entire image is visible without cropping
+- Add `object-center` to keep it centered
+- The container with `rounded-xl overflow-hidden` maintains the same frame size and shape
 
-4. **Bottom CTA and footer** — already match spec, minor copy tweaks only
-
-5. **Link routes** — Sign Up links to `/hub/signup`, Log In to `/hub/login` (already correct)
-
-No database changes, no new files needed. Single file edit to `HubPreview.tsx`.
+This shows the full scene (people reading) within the exact same container dimensions.
 
