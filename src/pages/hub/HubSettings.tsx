@@ -47,6 +47,8 @@ const HubSettings = () => {
     role: "",
     country: "",
     age_range: "",
+    job_title: "",
+    organization_name: "",
   });
   const [passwords, setPasswords] = useState({
     current: "",
