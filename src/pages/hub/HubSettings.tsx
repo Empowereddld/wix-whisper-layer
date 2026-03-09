@@ -63,6 +63,8 @@ const HubSettings = () => {
         role: profile.role,
         country: profile.country || "",
         age_range: profile.age_range || "not_applicable",
+        job_title: profile.job_title || "",
+        organization_name: profile.organization_name || "",
       });
     }
   }, [profile]);
