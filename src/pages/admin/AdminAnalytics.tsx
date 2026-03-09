@@ -6,11 +6,13 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import {
   LineChart, Line, BarChart, Bar, PieChart, Pie, Cell,
-  XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend,
+  XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
 } from "recharts";
-import { format, subDays, startOfDay } from "date-fns";
+import { format, subDays } from "date-fns";
+import StatsCard from "@/components/admin/StatsCard";
+import { DollarSign, TrendingUp, Users as UsersIcon, Download } from "lucide-react";
 
-const COLORS = ["hsl(258,50%,50%)", "hsl(4,77%,67%)", "hsl(270,30%,82%)", "hsl(328,33%,60%)"];
+const COLORS = ["hsl(258,50%,50%)", "hsl(4,77%,67%)", "hsl(270,30%,82%)", "hsl(328,33%,60%)", "hsl(213,19%,72%)"];
 const RANGE_OPTIONS = [
   { label: "30 days", value: 30 },
   { label: "60 days", value: 60 },
@@ -25,10 +27,11 @@ const AdminAnalytics = () => {
     queryFn: async () => {
       const since = subDays(new Date(), range).toISOString();
 
-      const [usersRes, resourcesRes, profilesRes] = await Promise.all([
+      const [usersRes, resourcesRes, profilesRes, purchasesRes] = await Promise.all([
         supabase.from("profiles").select("id, created_at").gte("created_at", since),
         supabase.from("resources").select("id, title, download_count, roles"),
         supabase.from("profiles").select("role"),
+        supabase.from("purchases").select("*"),
       ]);
 
       // Signups over time
@@ -59,9 +62,41 @@ const AdminAnalytics = () => {
       });
       const roleChart = Object.entries(roleCounts).map(([name, value]) => ({ name, value }));
 
-      return { signupsChart, downloadsChart, roleChart };
+      // Revenue data
+      const allPurchases = purchasesRes.data || [];
+      const completedPurchases = allPurchases.filter((p) => p.status === "completed");
+      const totalRevenue = completedPurchases.reduce((s, p) => s + (p.amount_paid || 0), 0);
+
+      const now = new Date();
+      const thisMonthPurchases = completedPurchases.filter((p) => {
+        const d = new Date(p.purchased_at);
+        return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+      });
+      const monthRevenue = thisMonthPurchases.reduce((s, p) => s + (p.amount_paid || 0), 0);
+
+      // Revenue by product
+      const { data: products } = await supabase.from("products").select("id, resource_id");
+      const { data: allResources } = await supabase.from("resources").select("id, title");
+      const resMap = Object.fromEntries((allResources || []).map((r) => [r.id, r.title]));
+
+      const revenueByProduct: Record<string, number> = {};
+      completedPurchases.forEach((p) => {
+        const title = resMap[p.resource_id] || "Unknown";
+        revenueByProduct[title] = (revenueByProduct[title] || 0) + (p.amount_paid || 0);
+      });
+      const revenueChart = Object.entries(revenueByProduct)
+        .sort(([, a], [, b]) => b - a)
+        .slice(0, 10)
+        .map(([name, value]) => ({ name: name.slice(0, 25), revenue: value / 100 }));
+
+      const refundCount = allPurchases.filter((p) => p.status === "refunded").length;
+      const refundRate = allPurchases.length > 0 ? ((refundCount / allPurchases.length) * 100).toFixed(1) : "0";
+
+      return { signupsChart, downloadsChart, roleChart, totalRevenue, monthRevenue, revenueChart, refundRate, totalOrders: allPurchases.length };
     },
   });
+
+  const fmtPrice = (cents: number) => `CA$${(cents / 100).toFixed(2)}`;
 
   return (
     <AdminLayout>
@@ -69,16 +104,19 @@ const AdminAnalytics = () => {
         <h1 className="text-2xl font-bold">Analytics</h1>
         <div className="flex gap-1">
           {RANGE_OPTIONS.map((opt) => (
-            <Button
-              key={opt.value}
-              variant={range === opt.value ? "default" : "outline"}
-              size="sm"
-              onClick={() => setRange(opt.value)}
-            >
+            <Button key={opt.value} variant={range === opt.value ? "default" : "outline"} size="sm" onClick={() => setRange(opt.value)}>
               {opt.label}
             </Button>
           ))}
         </div>
+      </div>
+
+      {/* Revenue Stats */}
+      <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 mb-6">
+        <StatsCard title="Total Revenue" value={data ? fmtPrice(data.totalRevenue) : "—"} icon={DollarSign} />
+        <StatsCard title="This Month" value={data ? fmtPrice(data.monthRevenue) : "—"} icon={TrendingUp} />
+        <StatsCard title="Total Orders" value={data?.totalOrders?.toString() ?? "—"} icon={UsersIcon} />
+        <StatsCard title="Refund Rate" value={data ? `${data.refundRate}%` : "—"} icon={Download} />
       </div>
 
       {isLoading ? (
@@ -99,6 +137,24 @@ const AdminAnalytics = () => {
                 <Line type="monotone" dataKey="count" stroke="hsl(258,50%,50%)" strokeWidth={2} dot={false} />
               </LineChart>
             </ResponsiveContainer>
+          </div>
+
+          {/* Revenue by product */}
+          <div className="bg-card rounded-lg border border-border p-5">
+            <h2 className="font-semibold mb-4">Revenue by Product</h2>
+            {data?.revenueChart?.length ? (
+              <ResponsiveContainer width="100%" height={250}>
+                <BarChart data={data.revenueChart} layout="vertical">
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis type="number" tickFormatter={(v) => `$${v}`} />
+                  <YAxis dataKey="name" type="category" width={120} tick={{ fontSize: 11 }} />
+                  <Tooltip formatter={(v: number) => [`$${v.toFixed(2)}`, "Revenue"]} />
+                  <Bar dataKey="revenue" fill="hsl(328,33%,60%)" radius={[0, 4, 4, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            ) : (
+              <div className="h-[250px] flex items-center justify-center text-muted-foreground text-sm">No revenue data yet</div>
+            )}
           </div>
 
           {/* Downloads per resource */}

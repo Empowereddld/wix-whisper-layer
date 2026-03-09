@@ -2,53 +2,34 @@ import { useEffect, useState, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import HubLayout from "@/components/hub/HubLayout";
+import PurchaseModal from "@/components/hub/PurchaseModal";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
-  Download,
-  ArrowLeft,
-  FileText,
-  Image,
-  CheckSquare,
-  BookOpen,
-  Package,
-  BarChart3,
-  Calendar,
-  Globe,
-  Users,
-  MapPin,
-  Layers,
+  Download, ArrowLeft, FileText, Image, CheckSquare, BookOpen, Package, BarChart3,
+  Calendar, Globe, Users, MapPin, Layers, Lock,
 } from "lucide-react";
 import { format } from "date-fns";
 import { toast } from "sonner";
 import type { Resource } from "@/hooks/useResources";
+import { useProducts, usePurchases } from "@/hooks/usePurchases";
 
 const typeIcons: Record<string, React.ElementType> = {
-  poster: Image,
-  guide: BookOpen,
-  checklist: CheckSquare,
-  handout: FileText,
-  activity: FileText,
-  bundle: Package,
-  infographic: BarChart3,
+  poster: Image, guide: BookOpen, checklist: CheckSquare, handout: FileText,
+  activity: FileText, bundle: Package, infographic: BarChart3,
 };
-
 const typeLabels: Record<string, string> = {
-  poster: "Poster",
-  guide: "Guide",
-  checklist: "Checklist",
-  handout: "Handout",
-  activity: "Activity",
-  bundle: "Bundle",
-  infographic: "Infographic",
+  poster: "Poster", guide: "Guide", checklist: "Checklist", handout: "Handout",
+  activity: "Activity", bundle: "Bundle", infographic: "Infographic",
+};
+const roleLabels: Record<string, string> = {
+  parent: "Parents", slp: "SLPs & Therapists", educator: "Educators", school_leader: "School Leaders",
 };
 
-const roleLabels: Record<string, string> = {
-  parent: "Parents",
-  slp: "SLPs & Therapists",
-  educator: "Educators",
-  school_leader: "School Leaders",
+const formatPrice = (cents: number, currency: string = "CAD") => {
+  const sym = currency === "CAD" ? "CA$" : "$";
+  return `${sym}${(cents / 100).toFixed(2)}`;
 };
 
 const ResourceDetail = () => {
@@ -57,29 +38,29 @@ const ResourceDetail = () => {
   const navigate = useNavigate();
   const [resource, setResource] = useState<Resource | null>(null);
   const [loading, setLoading] = useState(true);
+  const [showPurchase, setShowPurchase] = useState(false);
+
+  const { priceMap } = useProducts();
+  const { purchasedResourceIds, refetch: refetchPurchases } = usePurchases(user?.id);
 
   useEffect(() => {
     if (!id) return;
     const fetch = async () => {
-      const { data } = await supabase
-        .from("resources")
-        .select("*")
-        .eq("id", id)
-        .single();
+      const { data } = await supabase.from("resources").select("*").eq("id", id).single();
       if (data) setResource(data);
       setLoading(false);
     };
     fetch();
   }, [id]);
 
+  const product = resource ? priceMap[resource.id] : undefined;
+  const isPaid = product && product.price > 0;
+  const isUnlocked = !isPaid || purchasedResourceIds.has(resource?.id || "");
+
   const handleDownload = useCallback(async () => {
     if (!user || !resource) return;
-    await supabase.from("user_downloads").insert({
-      user_id: user.id,
-      resource_id: resource.id,
-    });
+    await supabase.from("user_downloads").insert({ user_id: user.id, resource_id: resource.id });
     await supabase.rpc("increment_download_count", { resource_id: resource.id });
-
     if (resource.file_url) {
       window.open(resource.file_url, "_blank");
     } else {
@@ -91,10 +72,8 @@ const ResourceDetail = () => {
     return (
       <HubLayout>
         <div className="max-w-4xl mx-auto px-4 py-12">
-          <Skeleton className="h-8 w-48 mb-6" />
-          <Skeleton className="h-64 rounded-xl mb-6" />
-          <Skeleton className="h-6 w-full mb-2" />
-          <Skeleton className="h-6 w-3/4" />
+          <Skeleton className="h-8 w-48 mb-6" /><Skeleton className="h-64 rounded-xl mb-6" />
+          <Skeleton className="h-6 w-full mb-2" /><Skeleton className="h-6 w-3/4" />
         </div>
       </HubLayout>
     );
@@ -119,51 +98,59 @@ const ResourceDetail = () => {
   return (
     <HubLayout>
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Back */}
-        <button
-          onClick={() => navigate("/hub")}
-          className="flex items-center gap-2 text-stone-ui hover:text-midnight transition-colors mb-6 text-sm font-medium"
-        >
+        <button onClick={() => navigate("/hub")} className="flex items-center gap-2 text-stone-ui hover:text-midnight transition-colors mb-6 text-sm font-medium">
           <ArrowLeft className="h-4 w-4" /> Back to Resources
         </button>
 
-        {/* Hero preview */}
-        <div className="h-64 md:h-80 rounded-2xl bg-thistle/30 flex items-center justify-center mb-8">
+        <div className="h-64 md:h-80 rounded-2xl bg-thistle/30 flex items-center justify-center mb-8 relative">
           <Icon className="h-20 w-20 text-hub-lavender/50" />
+          {isPaid && !isUnlocked && (
+            <span className="absolute top-4 right-4 text-sm px-3 py-1.5 rounded-full bg-mauve text-white font-semibold shadow">
+              {formatPrice(product!.price, product!.currency)}
+            </span>
+          )}
+          {isPaid && isUnlocked && (
+            <span className="absolute top-4 right-4 text-sm px-3 py-1.5 rounded-full bg-emerald-500 text-white font-medium">
+              Purchased
+            </span>
+          )}
+          {!isPaid && (
+            <span className="absolute top-4 right-4 text-sm px-3 py-1.5 rounded-full bg-emerald-100 text-emerald-700 font-medium">
+              Free
+            </span>
+          )}
         </div>
 
-        {/* Title + download */}
         <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-6">
           <div className="flex-1">
-            <h1 className="text-3xl font-bold text-midnight leading-snug mb-2">
-              {resource.title}
-            </h1>
+            <h1 className="text-3xl font-bold text-midnight leading-snug mb-2">{resource.title}</h1>
             <div className="flex flex-wrap gap-2">
               {resource.roles?.map((role) => (
-                <span key={role} className="text-xs px-2.5 py-1 rounded-full bg-mauve/15 text-mauve font-medium">
-                  {roleLabels[role] || role}
-                </span>
+                <span key={role} className="text-xs px-2.5 py-1 rounded-full bg-mauve/15 text-mauve font-medium">{roleLabels[role] || role}</span>
               ))}
-              <span className="text-xs px-2.5 py-1 rounded-full bg-hub-lavender/15 text-hub-lavender font-medium">
-                {typeLabels[resource.resource_type]}
-              </span>
+              <span className="text-xs px-2.5 py-1 rounded-full bg-hub-lavender/15 text-hub-lavender font-medium">{typeLabels[resource.resource_type]}</span>
             </div>
           </div>
-          <Button
-            size="lg"
-            className="bg-midnight text-midnight-foreground hover:bg-midnight/90 h-12 px-8"
-            onClick={handleDownload}
-          >
-            <Download className="h-5 w-5 mr-2" /> Download
-          </Button>
+          {isUnlocked ? (
+            <Button size="lg" className="bg-midnight text-midnight-foreground hover:bg-midnight/90 h-12 px-8" onClick={handleDownload}>
+              <Download className="h-5 w-5 mr-2" /> Download
+            </Button>
+          ) : (
+            <Button size="lg" className="bg-mauve text-white hover:bg-mauve/90 h-12 px-8" onClick={() => setShowPurchase(true)}>
+              <Lock className="h-5 w-5 mr-2" /> Unlock for {formatPrice(product!.price, product!.currency)}
+            </Button>
+          )}
         </div>
 
-        {/* Description */}
-        <p className="text-foreground/80 leading-relaxed text-lg mb-8">
-          {resource.description}
-        </p>
+        {!isUnlocked && (
+          <div className="flex items-center gap-2 text-xs text-stone-ui mb-6">
+            <Lock className="h-3.5 w-3.5" />
+            <span>Secure checkout · Instant access · Empowered DLD</span>
+          </div>
+        )}
 
-        {/* Metadata grid */}
+        <p className="text-foreground/80 leading-relaxed text-lg mb-8">{resource.description}</p>
+
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
           <MetaItem icon={Users} label="Audience" value={resource.roles?.map((r) => roleLabels[r] || r).join(", ") || "—"} />
           <MetaItem icon={MapPin} label="Setting" value={resource.settings?.join(", ") || "—"} />
@@ -173,6 +160,15 @@ const ResourceDetail = () => {
           <MetaItem icon={Calendar} label="Added" value={format(new Date(resource.created_at), "MMM d, yyyy")} />
         </div>
       </div>
+
+      <PurchaseModal
+        resource={resource}
+        product={product ?? null}
+        open={showPurchase}
+        onClose={() => setShowPurchase(false)}
+        onPurchased={refetchPurchases}
+        userId={user?.id}
+      />
     </HubLayout>
   );
 };
