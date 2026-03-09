@@ -29,6 +29,10 @@ import ResetPassword from "./pages/hub/ResetPassword";
 import HubPreview from "./pages/hub/HubPreview";
 import ResourceDetail from "./pages/hub/ResourceDetail";
 import ProtectedRoute from "@/components/hub/ProtectedRoute";
+import Signup from "./pages/auth/Signup";
+import SignupRole from "./pages/auth/SignupRole";
+import Login from "./pages/auth/Login";
+import ForgotPassword from "./pages/auth/ForgotPassword";
 
 const queryClient = new QueryClient();
 
