@@ -18,7 +18,7 @@ const DownloadablesHero = () => {
               Printable guides, checklists, posters, and activity sheets ready to use today. No catch. Just tools that work.
             </p>
             <Link
-              to="/hub/preview"
+              to="/hub/coming-soon"
               className="inline-flex items-center justify-center h-12 md:h-14 px-8 md:px-10 bg-black text-white text-[11px] md:text-[12px] lg:text-[13px] font-bold uppercase tracking-[0.12em] rounded-sm hover:bg-black/85 transition-colors duration-200"
             >
               Download Now
