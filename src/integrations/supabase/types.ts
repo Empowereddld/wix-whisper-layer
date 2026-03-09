@@ -66,6 +66,7 @@ export type Database = {
           last_name: string | null
           role: Database["public"]["Enums"]["user_role"]
           updated_at: string
+          welcome_dismissed: boolean
         }
         Insert: {
           age_range?: Database["public"]["Enums"]["age_range"] | null
@@ -76,6 +77,7 @@ export type Database = {
           last_name?: string | null
           role?: Database["public"]["Enums"]["user_role"]
           updated_at?: string
+          welcome_dismissed?: boolean
         }
         Update: {
           age_range?: Database["public"]["Enums"]["age_range"] | null
@@ -86,6 +88,7 @@ export type Database = {
           last_name?: string | null
           role?: Database["public"]["Enums"]["user_role"]
           updated_at?: string
+          welcome_dismissed?: boolean
         }
         Relationships: []
       }
@@ -97,6 +100,7 @@ export type Database = {
           download_count: number | null
           file_url: string | null
           id: string
+          is_published: boolean
           languages: string[] | null
           resource_type: Database["public"]["Enums"]["resource_type"]
           roles: string[] | null
@@ -111,6 +115,7 @@ export type Database = {
           download_count?: number | null
           file_url?: string | null
           id?: string
+          is_published?: boolean
           languages?: string[] | null
           resource_type: Database["public"]["Enums"]["resource_type"]
           roles?: string[] | null
@@ -125,6 +130,7 @@ export type Database = {
           download_count?: number | null
           file_url?: string | null
           id?: string
+          is_published?: boolean
           languages?: string[] | null
           resource_type?: Database["public"]["Enums"]["resource_type"]
           roles?: string[] | null
