@@ -10,24 +10,28 @@ const paths = [
     title: "For Parents and Caregivers",
     description: "Help your child understand DLD, build confidence, and feel supported at home and school using stories and strategies, that strengthen communication.",
     cta: "LEARN MORE",
+    href: "/for-parents",
   },
   {
     icon: iconSlps,
     title: "For Therapists/ Clinicians",
     description: "Time saving, evidence-based resources you can use right away, plus family friendly materials to share with confidence.",
     cta: "LEARN MORE",
+    href: "/for-therapists",
   },
   {
     icon: iconEducators,
     title: "For Teachers and Support Staff",
     description: "Classroom-ready tools that support language, learning, and inclusion. Make DLD visible in your classroom and school community.",
     cta: "LEARN MORE",
+    href: "/for-educators",
   },
   {
     icon: iconOrganizations,
     title: "For Schools, Clinics, and Organizations",
     description: "Bulk orders, implementation support, and professional development to equip your team with evidence-based DLD resources.",
     cta: "LEARN MORE",
+    href: "/for-organizations",
   },
 ];
 

@@ -1,10 +1,10 @@
 import { Button } from "@/components/ui/button";
 
 const paths = [
-  { label: "For Parents", href: "#" },
-  { label: "For Therapists", href: "#" },
-  { label: "For Schools", href: "#" },
-  { label: "For Organizations", href: "#" },
+  { label: "For Parents", href: "/for-parents" },
+  { label: "For Therapists", href: "/for-therapists" },
+  { label: "For Schools", href: "/for-educators" },
+  { label: "For Organizations", href: "/for-organizations" },
 ];
 
 interface ChoosePathCTAProps {

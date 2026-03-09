@@ -39,12 +39,14 @@ const HeroSection = () => {
               We partner with families, educators, clinicians, and organizations to bring clear, practical DLD resources into homes, schools, and communities.
             </p>
             <div>
-              <Button
-                size="lg"
-                className="h-[40px] sm:h-[48px] md:h-[54px] px-6 sm:px-10 md:px-14 rounded-sm text-[10px] sm:text-[12px] font-bold uppercase tracking-[0.14em] bg-deep-purple text-deep-purple-foreground hover:bg-deep-purple/90 shadow-[0_1px_3px_hsl(262_49%_30%/0.12)] hover:shadow-[0_2px_6px_hsl(262_49%_30%/0.16)] transition-all duration-300"
-              >
-                CHOOSE YOUR PATH
-              </Button>
+              <a href="/who-we-serve">
+                <Button
+                  size="lg"
+                  className="h-[40px] sm:h-[48px] md:h-[54px] px-6 sm:px-10 md:px-14 rounded-sm text-[10px] sm:text-[12px] font-bold uppercase tracking-[0.14em] bg-deep-purple text-deep-purple-foreground hover:bg-deep-purple/90 shadow-[0_1px_3px_hsl(262_49%_30%/0.12)] hover:shadow-[0_2px_6px_hsl(262_49%_30%/0.16)] transition-all duration-300"
+                >
+                  CHOOSE YOUR PATH
+                </Button>
+              </a>
             </div>
           </div>
 
