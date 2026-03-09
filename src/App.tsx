@@ -18,6 +18,7 @@ import Shop from "./pages/Shop";
 import Books from "./pages/Books";
 import BulkOrders from "./pages/BulkOrders";
 import WorkWithUs from "./pages/WorkWithUs";
+import AboutDLD from "./pages/AboutDLD";
 import NotFound from "./pages/NotFound";
 import HubSignup from "./pages/hub/HubSignup";
 import HubLogin from "./pages/hub/HubLogin";
@@ -53,6 +54,7 @@ const App = () => (
             <Route path="/shop/books" element={<Books />} />
             <Route path="/shop/bulk-orders" element={<BulkOrders />} />
             <Route path="/work-with-us" element={<WorkWithUs />} />
+            <Route path="/about-dld" element={<AboutDLD />} />
             <Route path="/hub/signup" element={<HubSignup />} />
             <Route path="/hub/login" element={<HubLogin />} />
             <Route path="/hub/verify-email" element={<VerifyEmail />} />
