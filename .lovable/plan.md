@@ -1,18 +1,26 @@
 
 
-## Plan: Zoom out the image in "Is This Right" section
+## Plan: Wire up "What We Offer" Support Section CTAs
 
-The image currently uses `object-cover` which crops tightly into the center of the photo, cutting off the reading activity. To "zoom out" while keeping the same frame size, we can use CSS `object-fit: contain` instead — but that would leave empty space.
+**What**: Update the 9 card CTAs in `SupportSection.tsx` to link to the correct pages instead of `#`.
 
-A better approach: keep `object-cover` but use `object-position` to show more of the image, combined with scaling. Specifically:
+**Changes** — single file: `src/components/SupportSection.tsx`
 
-### Change in `src/components/IsThisRightSection.tsx` (line 16)
+Add an `href` field to each item in the `features` array:
 
-On the `<img>` element, add a CSS `scale` transform to shrink the image within its container, effectively zooming out while the container stays the same size. We'll use Tailwind's `scale-[0.85]` (or similar) combined with `object-contain` to ensure the full image is visible:
+| Card | Route |
+|---|---|
+| Dan & Daria Book Series | `/books` |
+| Free Downloadable Resources | `/downloadables` |
+| Implementation Kits | `/for-educators` |
+| Life with DLD Podcast | `/podcasts` |
+| Join Our Community | `https://www.facebook.com/groups/empowereddld` (external, opens new tab) |
+| Educational app | `#` (no page yet) |
+| Professional Development | `/work-with-us` |
+| Free YouTube Course | `/free-course` |
+| DLD Awareness Merch | `/shop` |
 
-- Change `object-cover` → `object-contain` so the entire image is visible without cropping
-- Add `object-center` to keep it centered
-- The container with `rounded-xl overflow-hidden` maintains the same frame size and shape
+For internal links, use React Router's `<Link>` component. For the Facebook group, use a regular `<a>` with `target="_blank"`.
 
-This shows the full scene (people reading) within the exact same container dimensions.
+**Scope**: ~15 lines changed in one file.
 
