@@ -49,7 +49,7 @@ const WhatMakesUsDifferentSection = () => {
             <img
               src={foundersPhoto}
               alt="Empowered DLD founders"
-              className="w-full h-auto object-cover aspect-[16/9] md:aspect-[4/3] lg:aspect-[4/5] max-h-[250px] md:max-h-[350px] lg:max-h-none"
+              className="w-full h-auto object-cover object-[center_20%] aspect-[16/9] md:aspect-[4/3] lg:aspect-[5/4] max-h-[250px] md:max-h-[350px] lg:max-h-none"
               loading="lazy"
             />
           </div>
