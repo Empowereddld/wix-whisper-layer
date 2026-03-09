@@ -94,6 +94,9 @@ const App = () => (
             <Route path="/admin/orders" element={<AdminProtectedRoute><AdminOrders /></AdminProtectedRoute>} />
             <Route path="/admin/discounts" element={<AdminProtectedRoute><AdminDiscounts /></AdminProtectedRoute>} />
             <Route path="/admin/products" element={<AdminProtectedRoute><AdminProducts /></AdminProtectedRoute>} />
+            <Route path="/admin/waitlist" element={<AdminProtectedRoute><AdminWaitlist /></AdminProtectedRoute>} />
+            <Route path="/admin/resource-requests" element={<AdminProtectedRoute><AdminResourceRequests /></AdminProtectedRoute>} />
+            <Route path="/admin/referrals" element={<AdminProtectedRoute><AdminReferrals /></AdminProtectedRoute>} />
             <Route path="/admin/emails" element={<AdminProtectedRoute><AdminEmails /></AdminProtectedRoute>} />
             <Route path="/admin/audit" element={<AdminProtectedRoute><AdminAuditLog /></AdminProtectedRoute>} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
