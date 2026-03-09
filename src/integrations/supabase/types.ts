@@ -21,9 +21,12 @@ export type Database = {
           email: string
           first_name: string
           id: string
+          interested_in: string[] | null
           last_name: string | null
           position: string | null
+          preferred_timeline: string | null
           questions: string
+          role: string | null
         }
         Insert: {
           company_name: string
@@ -31,9 +34,12 @@ export type Database = {
           email: string
           first_name: string
           id?: string
+          interested_in?: string[] | null
           last_name?: string | null
           position?: string | null
+          preferred_timeline?: string | null
           questions: string
+          role?: string | null
         }
         Update: {
           company_name?: string
@@ -41,9 +47,12 @@ export type Database = {
           email?: string
           first_name?: string
           id?: string
+          interested_in?: string[] | null
           last_name?: string | null
           position?: string | null
+          preferred_timeline?: string | null
           questions?: string
+          role?: string | null
         }
         Relationships: []
       }
