@@ -115,33 +115,59 @@ export type Database = {
       }
       discount_codes: {
         Row: {
+          applies_to: string
           code: string
           created_at: string
+          discount_type: string
+          discount_value: number
           expiry_date: string | null
           id: string
           is_active: boolean
+          max_uses: number | null
           percent_off: number
+          product_id: string | null
+          uses_count: number
           uses_remaining: number | null
         }
         Insert: {
+          applies_to?: string
           code: string
           created_at?: string
+          discount_type?: string
+          discount_value?: number
           expiry_date?: string | null
           id?: string
           is_active?: boolean
+          max_uses?: number | null
           percent_off?: number
+          product_id?: string | null
+          uses_count?: number
           uses_remaining?: number | null
         }
         Update: {
+          applies_to?: string
           code?: string
           created_at?: string
+          discount_type?: string
+          discount_value?: number
           expiry_date?: string | null
           id?: string
           is_active?: boolean
+          max_uses?: number | null
           percent_off?: number
+          product_id?: string | null
+          uses_count?: number
           uses_remaining?: number | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "discount_codes_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       email_campaigns: {
         Row: {
@@ -203,6 +229,47 @@ export type Database = {
         }
         Relationships: []
       }
+      products: {
+        Row: {
+          created_at: string
+          currency: string
+          id: string
+          is_active: boolean
+          price: number
+          resource_id: string
+          stripe_price_id: string | null
+          tax_rate: number | null
+        }
+        Insert: {
+          created_at?: string
+          currency?: string
+          id?: string
+          is_active?: boolean
+          price?: number
+          resource_id: string
+          stripe_price_id?: string | null
+          tax_rate?: number | null
+        }
+        Update: {
+          created_at?: string
+          currency?: string
+          id?: string
+          is_active?: boolean
+          price?: number
+          resource_id?: string
+          stripe_price_id?: string | null
+          tax_rate?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "products_resource_id_fkey"
+            columns: ["resource_id"]
+            isOneToOne: true
+            referencedRelation: "resources"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           age_range: Database["public"]["Enums"]["age_range"] | null
@@ -238,6 +305,57 @@ export type Database = {
           welcome_dismissed?: boolean
         }
         Relationships: []
+      }
+      purchases: {
+        Row: {
+          amount_paid: number
+          currency: string
+          id: string
+          product_id: string
+          purchased_at: string
+          resource_id: string
+          status: string
+          stripe_payment_intent_id: string | null
+          user_id: string
+        }
+        Insert: {
+          amount_paid?: number
+          currency?: string
+          id?: string
+          product_id: string
+          purchased_at?: string
+          resource_id: string
+          status?: string
+          stripe_payment_intent_id?: string | null
+          user_id: string
+        }
+        Update: {
+          amount_paid?: number
+          currency?: string
+          id?: string
+          product_id?: string
+          purchased_at?: string
+          resource_id?: string
+          status?: string
+          stripe_payment_intent_id?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "purchases_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "purchases_resource_id_fkey"
+            columns: ["resource_id"]
+            isOneToOne: false
+            referencedRelation: "resources"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       resources: {
         Row: {
@@ -366,6 +484,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      get_resource_price: { Args: { p_resource_id: string }; Returns: number }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
