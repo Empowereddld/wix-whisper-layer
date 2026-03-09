@@ -29,6 +29,10 @@ import ResetPassword from "./pages/hub/ResetPassword";
 import HubPreview from "./pages/hub/HubPreview";
 import ResourceDetail from "./pages/hub/ResourceDetail";
 import ProtectedRoute from "@/components/hub/ProtectedRoute";
+import Signup from "./pages/auth/Signup";
+import SignupRole from "./pages/auth/SignupRole";
+import Login from "./pages/auth/Login";
+import ForgotPassword from "./pages/auth/ForgotPassword";
 
 const queryClient = new QueryClient();
 
@@ -55,6 +59,10 @@ const App = () => (
             <Route path="/shop/bulk-orders" element={<BulkOrders />} />
             <Route path="/work-with-us" element={<WorkWithUs />} />
             <Route path="/about-dld" element={<AboutDLD />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/signup/role" element={<SignupRole />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/hub/signup" element={<HubSignup />} />
             <Route path="/hub/login" element={<HubLogin />} />
             <Route path="/hub/verify-email" element={<VerifyEmail />} />
