@@ -9,6 +9,7 @@ interface Profile {
   role: string;
   country: string | null;
   age_range: string | null;
+  welcome_dismissed: boolean | null;
 }
 
 interface AuthContextType {
