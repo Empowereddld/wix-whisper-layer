@@ -19,6 +19,7 @@ import Books from "./pages/Books";
 import BulkOrders from "./pages/BulkOrders";
 import WorkWithUs from "./pages/WorkWithUs";
 import AboutDLD from "./pages/AboutDLD";
+import ContactUs from "./pages/ContactUs";
 import NotFound from "./pages/NotFound";
 import HubSignup from "./pages/hub/HubSignup";
 import HubLogin from "./pages/hub/HubLogin";
@@ -75,6 +76,7 @@ const App = () => (
             <Route path="/shop/bulk-orders" element={<BulkOrders />} />
             <Route path="/work-with-us" element={<WorkWithUs />} />
             <Route path="/about-dld" element={<AboutDLD />} />
+            <Route path="/contact" element={<ContactUs />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/storybuilders" element={<StoryBuilders />} />
             <Route path="/signup/role" element={<SignupRole />} />
