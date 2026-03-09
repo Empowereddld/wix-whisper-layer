@@ -1,18 +1,22 @@
 
 
-## Plan: Zoom out the image in "Is This Right" section
+## About DLD — "What is DLD?" Section
 
-The image currently uses `object-cover` which crops tightly into the center of the photo, cutting off the reading activity. To "zoom out" while keeping the same frame size, we can use CSS `object-fit: contain` instead — but that would leave empty space.
+**Layout** (inspired by the reference screenshot):
+- Large, bold italic headline in a warm coral/orange color, left-aligned, spanning roughly 60% width
+- Below: two-column body text layout (stacking on mobile)
+- White background, generous vertical padding
 
-A better approach: keep `object-cover` but use `object-position` to show more of the image, combined with scaling. Specifically:
+**Content mapping:**
+- **Headline (italic, coral):** A pull-quote style statement like *"DLD affects how the brain processes language — not intelligence, not effort, not potential."*
+- **Left column:** First paragraph about what DLD is and what children experience
+- **Right column:** The two shorter paragraphs about what DLD is NOT caused by, and that it continues into adulthood
 
-### Change in `src/components/IsThisRightSection.tsx` (line 16)
+**Styling:**
+- Headline: `font-serif italic` in a coral/warm-red color (~`text-[#E8573A]` or similar), large sizing (`text-[36px] md:text-[48px]`)
+- Body: standard `text-[14px] md:text-[15px]` in muted foreground, two-column grid `lg:grid-cols-2`
+- Section padding: `py-16 md:py-[120px]` per spacing rhythm
+- Container: standard 1100px max-width
 
-On the `<img>` element, add a CSS `scale` transform to shrink the image within its container, effectively zooming out while the container stays the same size. We'll use Tailwind's `scale-[0.85]` (or similar) combined with `object-contain` to ensure the full image is visible:
-
-- Change `object-cover` → `object-contain` so the entire image is visible without cropping
-- Add `object-center` to keep it centered
-- The container with `rounded-xl overflow-hidden` maintains the same frame size and shape
-
-This shows the full scene (people reading) within the exact same container dimensions.
+**File:** New component `src/components/WhatIsDLDSection.tsx`, added to `src/pages/AboutDLD.tsx`
 
