@@ -13,7 +13,7 @@ const AboutDLDHero = () => {
             Developmental Language Disorder affects how people understand and use language.
             It is common, lifelong, and widely misunderstood.
           </p>
-          <p className="text-[14px] md:text-[16px] text-white/80 leading-[1.7]">
+          <p className="text-[12px] md:text-[14px] text-white/80 leading-[1.7]">
             Yet most people have never heard of it.
           </p>
         </div>
