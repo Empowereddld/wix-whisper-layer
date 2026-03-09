@@ -11,7 +11,7 @@ const AboutDLD = () => {
         <AboutDLDHero />
         <div className="bg-foreground py-5 md:py-6 lg:py-7">
           <div className="container px-6 md:px-8">
-            <span className="text-background text-[20px] md:text-[22px] lg:text-[24px] font-bold uppercase tracking-[0.18em]">WHAT IS DEVELOPMENTAL LANGUAGE DISORDER?
+            <span className="text-background text-[20px] md:text-[22px] lg:text-[24px] font-bold tracking-[0.18em]">What is Developmental Language Disorder?
 
             </span>
           </div>
