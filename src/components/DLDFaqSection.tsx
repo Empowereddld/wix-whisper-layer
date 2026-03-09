@@ -40,7 +40,7 @@ const DLDFaqSection = () => {
     <section className="py-16 md:py-[120px] bg-background">
       <div className="container px-6 md:px-8">
         <div className="max-w-[720px] mx-auto border border-foreground/15 rounded-2xl p-8 md:p-12">
-          <h2 className="font-serif text-[28px] md:text-[38px] lg:text-[42px] leading-[1.15] text-foreground mb-3">
+          <h2 className="font-sans font-bold text-[28px] md:text-[38px] lg:text-[42px] leading-[1.1] tracking-tight text-foreground mb-3">
             Understanding Developmental Language Disorder
           </h2>
           <p className="text-muted-foreground text-[14px] md:text-[15px] leading-[1.7] mb-8 md:mb-10 max-w-[520px]">
@@ -55,7 +55,7 @@ const DLDFaqSection = () => {
                   value={`item-${index}`}
                   className="border-border"
                 >
-                  <AccordionTrigger className="text-[15px] md:text-[17px] font-semibold text-foreground text-left py-5 hover:no-underline">
+                  <AccordionTrigger className="font-sans text-[15px] md:text-[16px] font-bold text-foreground text-left py-5 hover:no-underline tracking-tight">
                     {faq.question}
                   </AccordionTrigger>
                   <AccordionContent className="text-[13px] md:text-[14px] text-muted-foreground leading-[1.8] pb-5">

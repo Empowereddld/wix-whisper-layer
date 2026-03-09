@@ -7,7 +7,7 @@ const HowCommonSection = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-20 items-center">
           {/* Left — dot grid */}
           <div className="flex flex-col items-center lg:items-start">
-            <h2 className="font-serif text-[28px] md:text-[38px] lg:text-[42px] leading-[1.15] text-foreground mb-8 md:mb-10">
+            <h2 className="font-sans font-bold text-[28px] md:text-[38px] lg:text-[42px] leading-[1.1] tracking-tight text-foreground mb-8 md:mb-10">
               How common is DLD?
             </h2>
             <div className="grid grid-cols-7 gap-4 md:gap-5">
