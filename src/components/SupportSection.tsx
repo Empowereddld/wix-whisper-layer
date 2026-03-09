@@ -66,7 +66,7 @@ const SupportSection = () => {
             <p className="text-[14px] font-bold uppercase tracking-[0.18em] text-foreground mb-3">
               WHAT WE OFFER
             </p>
-            <h2 className="text-[30px] md:text-[52px] font-black text-foreground leading-[1.1]">
+            <h2 className="text-[26px] md:text-[42px] lg:text-[46px] font-black text-foreground leading-[1.1]">
               How we support children with DLD
             </h2>
           </div>
