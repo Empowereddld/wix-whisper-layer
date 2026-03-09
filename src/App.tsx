@@ -90,6 +90,7 @@ const App = () => (
             <Route path="/admin/blog" element={<AdminProtectedRoute><AdminBlog /></AdminProtectedRoute>} />
             <Route path="/admin/orders" element={<AdminProtectedRoute><AdminOrders /></AdminProtectedRoute>} />
             <Route path="/admin/discounts" element={<AdminProtectedRoute><AdminDiscounts /></AdminProtectedRoute>} />
+            <Route path="/admin/products" element={<AdminProtectedRoute><AdminProducts /></AdminProtectedRoute>} />
             <Route path="/admin/emails" element={<AdminProtectedRoute><AdminEmails /></AdminProtectedRoute>} />
             <Route path="/admin/audit" element={<AdminProtectedRoute><AdminAuditLog /></AdminProtectedRoute>} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
