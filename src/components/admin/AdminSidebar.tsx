@@ -9,6 +9,7 @@ import {
   Tag,
   Mail,
   Shield,
+  Package,
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import {
@@ -26,6 +27,7 @@ import {
 const navItems = [
   { title: "Dashboard", url: "/admin", icon: LayoutDashboard },
   { title: "Resources", url: "/admin/resources", icon: FileText },
+  { title: "Products", url: "/admin/products", icon: Package },
   { title: "Users", url: "/admin/users", icon: Users },
   { title: "Analytics", url: "/admin/analytics", icon: BarChart3 },
   { title: "Blog", url: "/admin/blog", icon: BookOpen },

@@ -43,6 +43,7 @@ import AdminOrders from "./pages/admin/AdminOrders";
 import AdminDiscounts from "./pages/admin/AdminDiscounts";
 import AdminEmails from "./pages/admin/AdminEmails";
 import AdminAuditLog from "./pages/admin/AdminAuditLog";
+import AdminProducts from "./pages/admin/AdminProducts";
 
 const queryClient = new QueryClient();
 
