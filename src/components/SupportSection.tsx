@@ -1,4 +1,5 @@
 import { ChevronRight, BookOpen, Download, Package, Mic, Users, Monitor, Briefcase, Play, ShoppingCart } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const features = [
   {
@@ -6,54 +7,64 @@ const features = [
     title: "Dan & Daria Book Series",
     description: "Relatable stories showing DLD impacting kids in everyday life and kids overcoming their challenges.",
     cta: "LEARN MORE",
+    href: "/shop/books",
   },
   {
     icon: Download,
     title: "Free Downloadable Resources",
     description: "Printable guides, posters, discussion prompts, and parent resources to use immediately.",
     cta: "DOWNLOAD NOW",
+    href: "/resources/downloadables",
   },
   {
     icon: Package,
     title: "Implementation Kits",
     description: "Tiered packages with books, lesson plans, activities, and implementation support for schools.",
     cta: "LEARN MORE",
+    href: "/for-educators",
   },
   {
     icon: Mic,
     title: "Life with DLD Podcast",
     description: "Animated, candid talk with Dan and Daria about how it feels to experience life with DLD and what helps.",
     cta: "LISTEN NOW",
+    href: "/resources/podcasts",
   },
   {
     icon: Users,
     title: "Join Our Community",
     description: "Connect with 4,000+ families, educators, and SLPs in our supportive Facebook group.",
     cta: "JOIN TODAY",
+    href: "https://www.facebook.com/groups/empowereddld",
+    external: true,
   },
   {
     icon: Monitor,
     title: "Educational app",
     description: "Interactive stories building vocabulary, grammar, and narrative skills. Join the waitlist for beta access.",
     cta: "JOIN WAITLIST",
+    href: "#",
   },
   {
     icon: Briefcase,
     title: "Professional Development",
     description: "Workshops and speaking engagements for educators and SLPs on supporting DLD.",
     cta: "LEARN MORE",
+    href: "/work-with-us",
   },
   {
     icon: Play,
     title: "Free YouTube Course",
     description: "Video lessons teaching families and educators how to support children with DLD.",
     cta: "WATCH NOW",
+    href: "/resources/free-course",
   },
   {
     icon: ShoppingCart,
     title: "DLD Awareness Merch",
     description: "Stuffies, bracelets, action figures, and t-shirts celebrating kids with DLD.",
     cta: "SHOP MERCH",
+    href: "/shop",
   },
 ];
 
@@ -84,13 +95,25 @@ const SupportSection = () => {
               <f.icon className="w-12 h-12 text-foreground stroke-[1.2] mb-5" />
               <h3 className="text-[18px] font-bold text-foreground mb-2">{f.title}</h3>
               <p className="text-[14px] text-muted-foreground leading-[1.65] mb-5 flex-1">{f.description}</p>
-              <a
-                href="#"
-                className="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-[0.14em] text-foreground hover:text-primary transition-colors"
-              >
-                {f.cta}
-                <ChevronRight className="!w-4 !h-4" />
-              </a>
+              {"external" in f && f.external ? (
+                <a
+                  href={f.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-[0.14em] text-foreground hover:text-primary transition-colors"
+                >
+                  {f.cta}
+                  <ChevronRight className="!w-4 !h-4" />
+                </a>
+              ) : (
+                <Link
+                  to={f.href}
+                  className="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-[0.14em] text-foreground hover:text-primary transition-colors"
+                >
+                  {f.cta}
+                  <ChevronRight className="!w-4 !h-4" />
+                </Link>
+              )}
             </div>
           ))}
         </div>
