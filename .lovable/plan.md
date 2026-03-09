@@ -1,18 +1,23 @@
 
 
-## Plan: Zoom out the image in "Is This Right" section
+## Plan: Simplify Homepage Contact Form to Match Wix Reference
 
-The image currently uses `object-cover` which crops tightly into the center of the photo, cutting off the reading activity. To "zoom out" while keeping the same frame size, we can use CSS `object-fit: contain` instead — but that would leave empty space.
+The Wix reference shows a simpler, more general contact form with: First Name, Last Name, Company Name, Email, Position, Questions, and a "Send Message" button. The current homepage form is identical to the Work With Us form (role dropdown, interest checkboxes, timeline). We'll simplify the homepage version while keeping the Work With Us form unchanged.
 
-A better approach: keep `object-cover` but use `object-position` to show more of the image, combined with scaling. Specifically:
+The database already has `last_name` and `position` columns on `contact_submissions`, so no migration needed.
 
-### Change in `src/components/IsThisRightSection.tsx` (line 16)
+### Changes (single file: `src/components/ContactSection.tsx`)
 
-On the `<img>` element, add a CSS `scale` transform to shrink the image within its container, effectively zooming out while the container stays the same size. We'll use Tailwind's `scale-[0.85]` (or similar) combined with `object-contain` to ensure the full image is visible:
+**New form fields** (matching Wix reference):
+1. **First Name** + **Last Name** (side-by-side row)
+2. **Company Name** (full width)
+3. **Email** + **Position** (side-by-side row)
+4. **Questions** (textarea)
+5. **Send Message** button
 
-- Change `object-cover` → `object-contain` so the entire image is visible without cropping
-- Add `object-center` to keep it centered
-- The container with `rounded-xl overflow-hidden` maintains the same frame size and shape
+**Schema update**: Simplify the Zod schema to validate only these 6 fields. `lastName`, `position` are optional (matching the Wix reference where only First Name, Company, Email, and Questions are required).
 
-This shows the full scene (people reading) within the exact same container dimensions.
+**Database insert**: Map to existing `contact_submissions` columns — `first_name`, `last_name`, `company_name`, `email`, `position`, `questions`. Remove `role`, `interested_in`, `preferred_timeline` from the insert (they're all nullable).
+
+**Remove**: Role dropdown, Interest checkboxes, Timeline input, and their associated imports (`Checkbox`, `Select` components) and constants (`ROLE_OPTIONS`, `INTEREST_OPTIONS`).
 
