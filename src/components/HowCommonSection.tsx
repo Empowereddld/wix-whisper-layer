@@ -11,12 +11,15 @@ const HowCommonSection = () => {
               {circles.map((i) => (
                 <div
                   key={i}
-                  className={`w-8 h-8 md:w-10 md:h-10 rounded-full ${
+                  className={`w-8 h-8 md:w-10 md:h-10 rounded-full shadow-md ${
                     i === 6 ? "bg-primary" : "bg-muted"
                   }`}
                 />
               ))}
             </div>
+            <h2 className="font-serif text-[28px] md:text-[38px] lg:text-[42px] leading-[1.15] text-primary mt-8 md:mt-10 text-center lg:text-left">
+              How common is DLD?
+            </h2>
           </div>
 
           {/* Right — text */}
