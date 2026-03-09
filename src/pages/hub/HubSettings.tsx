@@ -145,6 +145,14 @@ const HubSettings = () => {
               </Select>
             </div>
             <div>
+              <Label className="text-midnight font-medium">Job Title / Position</Label>
+              <Input value={form.job_title} onChange={(e) => setForm({ ...form, job_title: e.target.value })} className="h-12 mt-1" placeholder="e.g. Speech-Language Pathologist" maxLength={100} />
+            </div>
+            <div>
+              <Label className="text-midnight font-medium">Organization / School</Label>
+              <Input value={form.organization_name} onChange={(e) => setForm({ ...form, organization_name: e.target.value })} className="h-12 mt-1" placeholder="e.g. Sunshine Elementary" maxLength={150} />
+            </div>
+            <div>
               <Label className="text-midnight font-medium">Country</Label>
               <Select value={form.country} onValueChange={(v) => setForm({ ...form, country: v })}>
                 <SelectTrigger className="h-12 mt-1"><SelectValue placeholder="Select country" /></SelectTrigger>
