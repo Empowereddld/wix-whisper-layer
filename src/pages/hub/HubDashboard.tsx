@@ -5,10 +5,13 @@ import HubLayout from "@/components/hub/HubLayout";
 import ResourceCard from "@/components/hub/ResourceCard";
 import ResourceDetailModal from "@/components/hub/ResourceDetailModal";
 import PurchaseModal from "@/components/hub/PurchaseModal";
+import ResourceRequestModal from "@/components/hub/ResourceRequestModal";
+import ProgressTracker from "@/components/hub/ProgressTracker";
 import { useResources, type SortOption, type Resource } from "@/hooks/useResources";
 import { useProducts, usePurchases } from "@/hooks/usePurchases";
+import { useSavedResources } from "@/hooks/useSavedResources";
 import { supabase } from "@/integrations/supabase/client";
-import { X, Search, SlidersHorizontal, LayoutGrid, List } from "lucide-react";
+import { X, Search, SlidersHorizontal, LayoutGrid, List, Plus, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
@@ -49,6 +52,7 @@ const HubDashboard = () => {
 
   const {
     resources: filtered,
+    allResources,
     recommended,
     loading,
     filters,
@@ -63,6 +67,7 @@ const HubDashboard = () => {
 
   const { priceMap } = useProducts();
   const { purchasedResourceIds, refetch: refetchPurchases } = usePurchases(user?.id);
+  const { savedIds, toggle: toggleSave } = useSavedResources(user?.id);
 
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
@@ -71,6 +76,8 @@ const HubDashboard = () => {
   const [showBanner, setShowBanner] = useState(false);
   const [activeType, setActiveType] = useState("");
   const [priceFilter, setPriceFilter] = useState("");
+  const [showSaved, setShowSaved] = useState(false);
+  const [requestModalOpen, setRequestModalOpen] = useState(false);
 
   // Handle purchase success URL param
   useEffect(() => {
@@ -118,8 +125,13 @@ const HubDashboard = () => {
     setPurchaseResource(resource);
   }, []);
 
-  // Apply price filter on top of existing filtered resources
+  const handleToggleSave = useCallback((resource: Resource) => {
+    toggleSave(resource.id);
+  }, [toggleSave]);
+
+  // Apply price + saved filter on top of existing filtered resources
   const displayResources = filtered.filter((r) => {
+    if (showSaved && !savedIds.has(r.id)) return false;
     const product = priceMap[r.id];
     const isPaid = product && product.price > 0;
     if (priceFilter === "purchased") return isPaid && purchasedResourceIds.has(r.id);
@@ -152,6 +164,13 @@ const HubDashboard = () => {
       </AnimatePresence>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Progress Tracker */}
+        <ProgressTracker
+          userId={user?.id}
+          totalResources={allResources.length}
+          onDiscoverMore={() => { clearFilters(); setActiveType(""); setPriceFilter(""); setShowSaved(false); }}
+        />
+
         {/* Search + Filter Bar */}
         <div className="mb-8 space-y-4">
           <div className="relative max-w-2xl">
@@ -163,15 +182,15 @@ const HubDashboard = () => {
             />
           </div>
 
-          {/* Price filter pills */}
+          {/* Price filter pills + My Saved + New This Month */}
           <div className="flex flex-wrap gap-2 items-center">
             <span className="text-xs font-semibold text-stone-ui uppercase tracking-wide mr-1">Show:</span>
             {PURCHASE_FILTER_PILLS.map((pill) => (
               <button
                 key={pill.value}
-                onClick={() => setPriceFilter(pill.value)}
+                onClick={() => { setPriceFilter(pill.value); setShowSaved(false); }}
                 className={`px-3 py-1 rounded-full text-sm font-medium border transition-all ${
-                  priceFilter === pill.value
+                  priceFilter === pill.value && !showSaved
                     ? "bg-midnight text-white border-midnight"
                     : "bg-card text-midnight border-thistle hover:border-hub-lavender hover:text-hub-lavender"
                 }`}
@@ -179,6 +198,16 @@ const HubDashboard = () => {
                 {pill.label}
               </button>
             ))}
+            <button
+              onClick={() => { setShowSaved(!showSaved); if (!showSaved) setPriceFilter(""); }}
+              className={`px-3 py-1 rounded-full text-sm font-medium border transition-all flex items-center gap-1.5 ${
+                showSaved
+                  ? "bg-mauve text-white border-mauve"
+                  : "bg-card text-midnight border-thistle hover:border-mauve hover:text-mauve"
+              }`}
+            >
+              <Heart className={`h-3.5 w-3.5 ${showSaved ? "fill-white" : ""}`} /> My Saved
+            </button>
           </div>
 
           {/* Type pills */}
@@ -201,18 +230,19 @@ const HubDashboard = () => {
         </div>
 
         {/* Recommended */}
-        {recommended.length > 0 && !hasActiveFilters && !filters.search && !filters.audienceTab && !priceFilter && (
+        {recommended.length > 0 && !hasActiveFilters && !filters.search && !filters.audienceTab && !priceFilter && !showSaved && (
           <div className="mb-10">
             <h2 className="text-xl font-bold text-midnight mb-4">
               Recommended for <span className="text-hub-lavender">{roleLabel[profile?.role || "other"]}</span>
             </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <div className="flex gap-5 overflow-x-auto pb-2 scrollbar-thin">
               {recommended.map((r, i) => (
-                <motion.div key={r.id} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.07, duration: 0.4 }}>
+                <motion.div key={r.id} className="min-w-[260px] max-w-[280px] flex-shrink-0" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.07, duration: 0.4 }}>
                   <ResourceCard
                     resource={r} onView={setSelectedResource} onDownload={handleDownload} onUnlock={handleUnlock}
                     price={priceMap[r.id]?.price} currency={priceMap[r.id]?.currency}
                     isPurchased={purchasedResourceIds.has(r.id)}
+                    isSaved={savedIds.has(r.id)} onToggleSave={handleToggleSave} userId={user?.id}
                   />
                 </motion.div>
               ))}
@@ -223,7 +253,7 @@ const HubDashboard = () => {
         {/* Toolbar */}
         <div className="flex items-center justify-between mb-5 gap-3 flex-wrap">
           <h2 className="text-xl font-bold text-midnight">
-            {priceFilter === "purchased" ? "My Purchases" : filters.audienceTab ? `${roleLabel[filters.audienceTab] ?? "All"} Resources` : "All Resources"}
+            {showSaved ? "My Saved Resources" : priceFilter === "purchased" ? "My Purchases" : filters.audienceTab ? `${roleLabel[filters.audienceTab] ?? "All"} Resources` : "All Resources"}
             <span className="text-sm font-normal text-stone-ui ml-2">({displayResources.length})</span>
           </h2>
           <div className="flex items-center gap-3">
@@ -279,14 +309,14 @@ const HubDashboard = () => {
         {/* Empty */}
         {!loading && displayResources.length === 0 && (
           <div className="text-center py-20">
-            <p className="text-4xl mb-4">{priceFilter === "purchased" ? "🛍️" : "🔍"}</p>
+            <p className="text-4xl mb-4">{showSaved ? "💜" : priceFilter === "purchased" ? "🛍️" : "🔍"}</p>
             <p className="text-midnight font-semibold text-lg mb-1">
-              {priceFilter === "purchased" ? "No purchases yet" : "No resources found"}
+              {showSaved ? "You haven't saved anything yet" : priceFilter === "purchased" ? "No purchases yet" : "No resources found"}
             </p>
             <p className="text-stone-ui mb-6">
-              {priceFilter === "purchased" ? "Unlock a premium resource to see it here." : "Try a different combination of filters."}
+              {showSaved ? "Heart a resource to find it here later." : priceFilter === "purchased" ? "Unlock a premium resource to see it here." : "Try a different combination of filters."}
             </p>
-            <Button variant="outline" onClick={() => { clearFilters(); setActiveType(""); setPriceFilter(""); }} className="border-thistle">Clear Filters</Button>
+            <Button variant="outline" onClick={() => { clearFilters(); setActiveType(""); setPriceFilter(""); setShowSaved(false); }} className="border-thistle">Clear Filters</Button>
           </div>
         )}
 
@@ -300,6 +330,7 @@ const HubDashboard = () => {
                   viewMode={viewMode}
                   price={priceMap[r.id]?.price} currency={priceMap[r.id]?.currency}
                   isPurchased={purchasedResourceIds.has(r.id)}
+                  isSaved={savedIds.has(r.id)} onToggleSave={handleToggleSave} userId={user?.id}
                 />
               </motion.div>
             ))}
@@ -346,6 +377,18 @@ const HubDashboard = () => {
         onPurchased={refetchPurchases}
         userId={user?.id}
       />
+
+      {/* Resource Request Modal */}
+      <ResourceRequestModal open={requestModalOpen} onClose={() => setRequestModalOpen(false)} userId={user?.id} />
+
+      {/* Floating Request Button */}
+      <button
+        onClick={() => setRequestModalOpen(true)}
+        className="fixed bottom-6 right-6 z-40 bg-mauve text-white rounded-full p-4 shadow-lg hover:bg-mauve/90 transition-all hover:scale-105"
+        aria-label="Request a Resource"
+      >
+        <Plus className="h-5 w-5" />
+      </button>
     </HubLayout>
   );
 };
