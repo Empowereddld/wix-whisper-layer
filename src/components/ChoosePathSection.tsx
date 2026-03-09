@@ -10,24 +10,28 @@ const paths = [
     title: "For Parents and Caregivers",
     description: "Help your child understand DLD, build confidence, and feel supported at home and school using stories and strategies, that strengthen communication.",
     cta: "LEARN MORE",
+    href: "/for-parents",
   },
   {
     icon: iconSlps,
     title: "For Therapists/ Clinicians",
     description: "Time saving, evidence-based resources you can use right away, plus family friendly materials to share with confidence.",
     cta: "LEARN MORE",
+    href: "/for-therapists",
   },
   {
     icon: iconEducators,
     title: "For Teachers and Support Staff",
     description: "Classroom-ready tools that support language, learning, and inclusion. Make DLD visible in your classroom and school community.",
     cta: "LEARN MORE",
+    href: "/for-educators",
   },
   {
     icon: iconOrganizations,
     title: "For Schools, Clinics, and Organizations",
     description: "Bulk orders, implementation support, and professional development to equip your team with evidence-based DLD resources.",
     cta: "LEARN MORE",
+    href: "/for-organizations",
   },
 ];
 
@@ -59,12 +63,14 @@ const ChoosePathSection = () => {
               />
               <h3 className="text-[18px] md:text-[20px] font-bold text-foreground mb-2 leading-[1.25]">{path.title}</h3>
               <p className="text-[13px] text-muted-foreground mb-6 flex-1 leading-[1.65]">{path.description}</p>
-              <Button
-                size="sm"
-                className="h-10 px-6 rounded-lg text-[11px] font-bold uppercase tracking-[0.12em] bg-deep-purple text-deep-purple-foreground hover:bg-deep-purple/90 shadow-[0_1px_3px_hsl(262_49%_30%/0.2)] transition-all duration-300"
-              >
-                {path.cta}
-              </Button>
+              <a href={path.href}>
+                <Button
+                  size="sm"
+                  className="h-10 px-6 rounded-lg text-[11px] font-bold uppercase tracking-[0.12em] bg-deep-purple text-deep-purple-foreground hover:bg-deep-purple/90 shadow-[0_1px_3px_hsl(262_49%_30%/0.2)] transition-all duration-300"
+                >
+                  {path.cta}
+                </Button>
+              </a>
             </div>
           ))}
         </div>
