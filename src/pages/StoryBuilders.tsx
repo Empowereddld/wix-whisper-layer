@@ -128,38 +128,40 @@ const StoryBuilders = () => {
       <div className="w-16 h-px bg-border mx-auto" />
 
       {/* ─── WHY STORYTELLING ─── */}
-      <section className="max-w-2xl mx-auto px-6 py-24 sm:py-32 text-center">
-        <motion.h2
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-60px" }}
-          className="text-3xl sm:text-4xl font-bold tracking-tight"
-        >
-          Why storytelling matters
-        </motion.h2>
-        <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ delay: 0.15 }}
-          className="mt-8 space-y-6 text-base sm:text-lg text-muted-foreground leading-relaxed"
-        >
-          <p>
-            Narrative language is the foundation for reading, writing, and
-            communication.
-          </p>
-          <p>
-            When children learn how stories work, they begin to organize ideas,
-            explain events, and express themselves with greater clarity and
-            confidence.
-          </p>
-          <p>
-            StoryBuilders was created to help children practice these skills in a
-            way that feels engaging, structured, and supportive.
-          </p>
-        </motion.div>
+      <section className="bg-muted py-24 sm:py-32">
+        <div className="max-w-2xl mx-auto px-6 text-center">
+          <motion.h2
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-60px" }}
+            className="text-3xl sm:text-4xl font-bold tracking-tight"
+          >
+            Why storytelling matters
+          </motion.h2>
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ delay: 0.15 }}
+            className="mt-8 space-y-6 text-base sm:text-lg text-muted-foreground leading-relaxed"
+          >
+            <p>
+              Narrative language is the foundation for reading, writing, and
+              communication.
+            </p>
+            <p>
+              When children learn how stories work, they begin to organize ideas,
+              explain events, and express themselves with greater clarity and
+              confidence.
+            </p>
+            <p>
+              StoryBuilders was created to help children practice these skills in a
+              way that feels engaging, structured, and supportive.
+            </p>
+          </motion.div>
+        </div>
       </section>
 
       {/* ─── DIVIDER ─── */}
