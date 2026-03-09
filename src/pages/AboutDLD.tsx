@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import AboutDLDHero from "@/components/AboutDLDHero";
 import WhatIsDLDSection from "@/components/WhatIsDLDSection";
 import DLDFaqSection from "@/components/DLDFaqSection";
+import ResourceLibraryCTA from "@/components/ResourceLibraryCTA";
 
 const AboutDLD = () => {
   return (
@@ -18,6 +19,7 @@ const AboutDLD = () => {
         </div>
         <WhatIsDLDSection />
         <DLDFaqSection />
+        <ResourceLibraryCTA />
       </main>
       <Footer />
     </div>
