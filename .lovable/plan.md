@@ -1,36 +1,18 @@
 
 
-## Plan: Create a "Coming Soon" Page for the Resource Hub
+## Plan: Zoom out the image in "Is This Right" section
 
-### What we'll build
-A clean, branded "Coming Soon" page at `/hub/coming-soon` and redirect all public-facing hub/library links there. Internal hub routes (dashboard, settings, etc.) remain untouched for your admin/testing use.
+The image currently uses `object-cover` which crops tightly into the center of the photo, cutting off the reading activity. To "zoom out" while keeping the same frame size, we can use CSS `object-fit: contain` instead — but that would leave empty space.
 
-### New file
-**`src/pages/hub/HubComingSoon.tsx`** — A minimal, on-brand page with:
-- Empowered DLD logo (links back to home)
-- "Coming Soon" heading
-- Brief message: "The Empowered DLD Resource Library is launching soon. Free guides, posters, and tools for parents, therapists, and educators — all in one place."
-- A "Back to Home" button
-- Matches the site's existing visual style (gradient background, rounded card, midnight colors)
+A better approach: keep `object-cover` but use `object-position` to show more of the image, combined with scaling. Specifically:
 
-### Route change
-**`src/App.tsx`** — Add `/hub/coming-soon` route pointing to the new page.
+### Change in `src/components/IsThisRightSection.tsx` (line 16)
 
-### Links to redirect (6 files)
-All public-facing CTAs that currently point to `/hub/preview`, `/hub/signup`, or `/hub/login` will be changed to `/hub/coming-soon`:
+On the `<img>` element, add a CSS `scale` transform to shrink the image within its container, effectively zooming out while the container stays the same size. We'll use Tailwind's `scale-[0.85]` (or similar) combined with `object-contain` to ensure the full image is visible:
 
-| File | Current destination |
-|------|-------------------|
-| `ResourceLibraryCTA.tsx` | `/hub/preview` → `/hub/coming-soon` |
-| `DownloadablesSignupCTA.tsx` | `/hub/preview` → `/hub/coming-soon` |
-| `DownloadablesLibraryIntro.tsx` | `/hub/preview` → `/hub/coming-soon` |
-| `DownloadablesHero.tsx` | `/hub/preview` → `/hub/coming-soon` |
-| `ForTherapistsHero.tsx` | `/hub/preview` → `/hub/coming-soon` |
-| `Header.tsx` | Any "Get Free Access" or hub login links → `/hub/coming-soon` |
+- Change `object-cover` → `object-contain` so the entire image is visible without cropping
+- Add `object-center` to keep it centered
+- The container with `rounded-xl overflow-hidden` maintains the same frame size and shape
 
-### What stays unchanged
-- All `/hub/*` routes (dashboard, signup, login, settings, etc.) remain functional for your use
-- Admin routes unaffected
-- Auth system unaffected
-- When you're ready to launch, we just swap the links back
+This shows the full scene (people reading) within the exact same container dimensions.
 
