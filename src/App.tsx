@@ -18,6 +18,7 @@ import Shop from "./pages/Shop";
 import Books from "./pages/Books";
 import BulkOrders from "./pages/BulkOrders";
 import WorkWithUs from "./pages/WorkWithUs";
+import AboutDLD from "./pages/AboutDLD";
 import NotFound from "./pages/NotFound";
 import HubSignup from "./pages/hub/HubSignup";
 import HubLogin from "./pages/hub/HubLogin";
