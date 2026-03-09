@@ -15,7 +15,7 @@ const WorkWithUsSocialProof = () => {
     <section className="py-12 bg-background text-center">
       <div className="max-w-4xl mx-auto px-6">
         <p className="text-sm uppercase tracking-widest text-muted-foreground mb-6">
-          Trusted by leading organizations
+          Partnered with leading organizations
         </p>
 
         <div className="flex flex-wrap items-center justify-center gap-10 md:gap-16 mb-14">
