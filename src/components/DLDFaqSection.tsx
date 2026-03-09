@@ -64,7 +64,6 @@ const DLDFaqSection = () => {
                 </AccordionItem>
               ))}
             </Accordion>
-          </div>
         </div>
       </div>
     </section>
