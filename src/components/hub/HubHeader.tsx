@@ -23,7 +23,8 @@ interface HubHeaderProps {
 }
 
 const HubHeader = ({ activeAudience = "", onAudienceChange }: HubHeaderProps) => {
-  const { profile, signOut } = useAuth();
+  const { user, profile, signOut } = useAuth();
+  const { isAdmin } = useAdminCheck(user?.id);
   const navigate = useNavigate();
 
   const handleSignOut = async () => {
