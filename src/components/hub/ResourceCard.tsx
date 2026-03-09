@@ -1,6 +1,7 @@
-import { Download, Eye, FileText, Image, CheckSquare, BookOpen, Package, BarChart3, Lock } from "lucide-react";
+import { Download, Eye, FileText, Image, CheckSquare, BookOpen, Package, BarChart3, Lock, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import SharePopover from "./SharePopover";
 import type { Resource } from "@/hooks/useResources";
 
 const typeIcons: Record<string, React.ElementType> = {
@@ -39,6 +40,9 @@ interface ResourceCardProps {
   price?: number | null;
   currency?: string;
   isPurchased?: boolean;
+  isSaved?: boolean;
+  onToggleSave?: (resource: Resource) => void;
+  userId?: string;
 }
 
 const isNew = (createdAt: string) => {
@@ -61,6 +65,9 @@ const ResourceCard = ({
   price,
   currency = "CAD",
   isPurchased = false,
+  isSaved = false,
+  onToggleSave,
+  userId,
 }: ResourceCardProps) => {
   const Icon = typeIcons[resource.resource_type] || FileText;
   const navigate = useNavigate();
@@ -93,7 +100,13 @@ const ResourceCard = ({
           </div>
           <p className="text-sm text-stone-ui line-clamp-1">{resource.description}</p>
         </div>
-        <div className="flex gap-2 flex-shrink-0">
+        <div className="flex gap-2 flex-shrink-0 items-center">
+          {onToggleSave && (
+            <button onClick={() => onToggleSave(resource)} className="p-1.5 rounded-full hover:bg-thistle/40 transition-colors" aria-label="Save">
+              <Heart className={`h-4 w-4 ${isSaved ? "fill-mauve text-mauve" : "text-stone-ui"}`} />
+            </button>
+          )}
+          <SharePopover resourceId={resource.id} resourceTitle={resource.title} userId={userId} />
           <Button size="sm" variant="outline" onClick={() => navigate(`/hub/resource/${resource.id}`)} className="border-thistle hover:bg-thistle/30">
             <Eye className="h-4 w-4 mr-1" /> View
           </Button>
@@ -116,6 +129,20 @@ const ResourceCard = ({
       {/* Thumbnail */}
       <div className="h-40 rounded-t-xl bg-thistle/30 flex items-center justify-center relative">
         <Icon className="h-12 w-12 text-hub-lavender/60" />
+        {/* Save heart */}
+        {onToggleSave && (
+          <button
+            onClick={(e) => { e.stopPropagation(); onToggleSave(resource); }}
+            className="absolute top-3 left-3 p-1.5 rounded-full bg-white/80 hover:bg-white transition-all shadow-sm z-10"
+            aria-label={isSaved ? "Unsave" : "Save"}
+          >
+            <Heart className={`h-3.5 w-3.5 ${isSaved ? "fill-mauve text-mauve" : "text-midnight/40"}`} />
+          </button>
+        )}
+        {/* Share */}
+        <div className="absolute bottom-3 right-3 z-10">
+          <SharePopover resourceId={resource.id} resourceTitle={resource.title} userId={userId} />
+        </div>
         {/* Price / Free badge */}
         {isPaid && !isPurchased ? (
           <span className="absolute top-3 right-3 text-xs px-2.5 py-1 rounded-full bg-mauve text-white font-semibold shadow-sm">
@@ -131,7 +158,7 @@ const ResourceCard = ({
           </span>
         )}
         {isNew(resource.created_at) && (
-          <span className="absolute top-3 left-3 text-xs px-2.5 py-1 rounded-full bg-mauve text-white font-medium">New</span>
+          <span className="absolute top-10 left-3 text-xs px-2.5 py-1 rounded-full bg-mauve text-white font-medium">New</span>
         )}
       </div>
 

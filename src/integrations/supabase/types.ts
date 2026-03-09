@@ -360,6 +360,36 @@ export type Database = {
           },
         ]
       }
+      resource_requests: {
+        Row: {
+          audience: string
+          context: string | null
+          created_at: string
+          id: string
+          status: string
+          topic: string
+          user_id: string
+        }
+        Insert: {
+          audience: string
+          context?: string | null
+          created_at?: string
+          id?: string
+          status?: string
+          topic: string
+          user_id: string
+        }
+        Update: {
+          audience?: string
+          context?: string | null
+          created_at?: string
+          id?: string
+          status?: string
+          topic?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       resources: {
         Row: {
           age_ranges: string[] | null
@@ -407,6 +437,64 @@ export type Database = {
           title?: string
         }
         Relationships: []
+      }
+      saved_resources: {
+        Row: {
+          id: string
+          resource_id: string
+          saved_at: string
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          resource_id: string
+          saved_at?: string
+          user_id: string
+        }
+        Update: {
+          id?: string
+          resource_id?: string
+          saved_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "saved_resources_resource_id_fkey"
+            columns: ["resource_id"]
+            isOneToOne: false
+            referencedRelation: "resources"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      share_events: {
+        Row: {
+          id: string
+          resource_id: string
+          shared_at: string
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          resource_id: string
+          shared_at?: string
+          user_id: string
+        }
+        Update: {
+          id?: string
+          resource_id?: string
+          shared_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "share_events_resource_id_fkey"
+            columns: ["resource_id"]
+            isOneToOne: false
+            referencedRelation: "resources"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       user_downloads: {
         Row: {
