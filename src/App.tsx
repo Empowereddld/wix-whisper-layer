@@ -44,6 +44,9 @@ import AdminDiscounts from "./pages/admin/AdminDiscounts";
 import AdminEmails from "./pages/admin/AdminEmails";
 import AdminAuditLog from "./pages/admin/AdminAuditLog";
 import AdminProducts from "./pages/admin/AdminProducts";
+import AdminWaitlist from "./pages/admin/AdminWaitlist";
+import AdminResourceRequests from "./pages/admin/AdminResourceRequests";
+import AdminReferrals from "./pages/admin/AdminReferrals";
 
 const queryClient = new QueryClient();
 
