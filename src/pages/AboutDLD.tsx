@@ -2,6 +2,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AboutDLDHero from "@/components/AboutDLDHero";
 import WhatIsDLDSection from "@/components/WhatIsDLDSection";
+import DLDFaqSection from "@/components/DLDFaqSection";
 import HowCommonSection from "@/components/HowCommonSection";
 
 const AboutDLD = () => {
@@ -18,6 +19,7 @@ const AboutDLD = () => {
           </div>
         </div>
         <WhatIsDLDSection />
+        <DLDFaqSection />
         <HowCommonSection />
       </main>
       <Footer />
