@@ -11,16 +11,16 @@ const AboutDLD = () => {
         <AboutDLDHero />
         <div className="bg-foreground py-5 md:py-6 lg:py-7">
           <div className="container px-6 md:px-8">
-            <span className="text-background text-[20px] md:text-[22px] lg:text-[24px] font-bold uppercase tracking-[0.18em]">
-              Who We Work With
+            <span className="text-background text-[20px] md:text-[22px] lg:text-[24px] font-bold uppercase tracking-[0.18em]">WHAT IS DEVELOPMENTAL LANGUAGE DISORDER?
+
             </span>
           </div>
         </div>
         <WhatIsDLDSection />
       </main>
       <Footer />
-    </div>
-  );
+    </div>);
+
 };
 
 export default AboutDLD;
