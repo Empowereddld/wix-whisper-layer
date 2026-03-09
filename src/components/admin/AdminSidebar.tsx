@@ -10,6 +10,9 @@ import {
   Mail,
   Shield,
   Package,
+  ClipboardList,
+  MessageSquare,
+  UserPlus,
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import {
@@ -29,6 +32,9 @@ const navItems = [
   { title: "Resources", url: "/admin/resources", icon: FileText },
   { title: "Products", url: "/admin/products", icon: Package },
   { title: "Users", url: "/admin/users", icon: Users },
+  { title: "Waitlist", url: "/admin/waitlist", icon: ClipboardList },
+  { title: "Resource Requests", url: "/admin/resource-requests", icon: MessageSquare },
+  { title: "Referrals", url: "/admin/referrals", icon: UserPlus },
   { title: "Analytics", url: "/admin/analytics", icon: BarChart3 },
   { title: "Blog", url: "/admin/blog", icon: BookOpen },
   { title: "Orders", url: "/admin/orders", icon: ShoppingCart },
