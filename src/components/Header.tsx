@@ -164,7 +164,9 @@ const Header = () => {
                 0
               </span>
             </button>
-            <Button className="flex-1 font-bold text-[12px] tracking-[0.1em]">LOGIN</Button>
+            <Button asChild className="flex-1 font-bold text-[12px] tracking-[0.1em]">
+              <Link to="/hub/coming-soon" onClick={() => setMobileOpen(false)}>LOGIN</Link>
+            </Button>
           </div>
         </nav>
       )}
