@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import type { Tables } from "@/integrations/supabase/types";
 
-export type Resource = Tables<"resources">;
+export type Resource = Tables<"resources"> & { is_published?: boolean };
 
 export type SortOption = "most_downloaded" | "newest" | "a_z" | "recommended";
 
@@ -13,6 +13,7 @@ export interface Filters {
   ageRanges: string[];
   languages: string[];
   search: string;
+  audienceTab: string; // "" = all, "parent" | "slp" | "educator" | "school_leader"
 }
 
 const EMPTY_FILTERS: Filters = {
@@ -22,6 +23,7 @@ const EMPTY_FILTERS: Filters = {
   ageRanges: [],
   languages: [],
   search: "",
+  audienceTab: "",
 };
 
 export function useResources(userRole?: string) {
@@ -34,19 +36,23 @@ export function useResources(userRole?: string) {
     const fetchResources = async () => {
       const { data, error } = await supabase
         .from("resources")
-        .select("*");
+        .select("*")
+        .eq("is_published", true);
       if (!error && data) {
-        setResources(data);
+        setResources(data as Resource[]);
       }
       setLoading(false);
     };
     fetchResources();
   }, []);
 
-  const clearFilters = useCallback(() => setFilters(EMPTY_FILTERS), []);
+  const clearFilters = useCallback(
+    () => setFilters((prev) => ({ ...EMPTY_FILTERS, audienceTab: prev.audienceTab })),
+    []
+  );
 
   const toggleFilter = useCallback(
-    (category: keyof Omit<Filters, "search">, value: string) => {
+    (category: keyof Omit<Filters, "search" | "audienceTab">, value: string) => {
       setFilters((prev) => {
         const arr = prev[category] as string[];
         return {
@@ -65,6 +71,12 @@ export function useResources(userRole?: string) {
     []
   );
 
+  const setAudienceTab = useCallback(
+    (audienceTab: string) =>
+      setFilters((prev) => ({ ...prev, audienceTab, roles: [] })),
+    []
+  );
+
   const hasActiveFilters = useMemo(
     () =>
       filters.roles.length > 0 ||
@@ -78,20 +90,25 @@ export function useResources(userRole?: string) {
   const filtered = useMemo(() => {
     let result = [...resources];
 
+    // Audience tab filter (from navbar)
+    if (filters.audienceTab) {
+      result = result.filter((r) => r.roles?.includes(filters.audienceTab));
+    }
+
     // Search
     if (filters.search.trim()) {
       const q = filters.search.toLowerCase();
       result = result.filter(
         (r) =>
           r.title.toLowerCase().includes(q) ||
-          (r.description?.toLowerCase().includes(q)) ||
-          (r.roles?.some((role) => role.toLowerCase().includes(q))) ||
-          (r.settings?.some((s) => s.toLowerCase().includes(q))) ||
+          r.description?.toLowerCase().includes(q) ||
+          r.roles?.some((role) => role.toLowerCase().includes(q)) ||
+          r.settings?.some((s) => s.toLowerCase().includes(q)) ||
           r.resource_type.toLowerCase().includes(q)
       );
     }
 
-    // Role filter
+    // Role filter (sidebar/pills)
     if (filters.roles.length > 0) {
       result = result.filter((r) =>
         r.roles?.some((role) => filters.roles.includes(role))
@@ -141,7 +158,6 @@ export function useResources(userRole?: string) {
         result.sort((a, b) => a.title.localeCompare(b.title));
         break;
       case "recommended":
-        // Prioritize user's role
         if (userRole) {
           result.sort((a, b) => {
             const aMatch = a.roles?.includes(userRole) ? 1 : 0;
@@ -191,6 +207,7 @@ export function useResources(userRole?: string) {
     setSort,
     toggleFilter,
     setSearch,
+    setAudienceTab,
     clearFilters,
     hasActiveFilters,
     filterCounts,

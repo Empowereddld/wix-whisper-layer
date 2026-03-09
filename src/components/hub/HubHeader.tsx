@@ -1,6 +1,6 @@
 import { useAuth } from "@/contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { LogOut, Settings, ChevronDown, Search } from "lucide-react";
+import { LogOut, Settings, ChevronDown } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,7 +9,19 @@ import {
 } from "@/components/ui/dropdown-menu";
 import empoweredLogoWhite from "@/assets/empowered-logo-white.png";
 
-const HubHeader = () => {
+const AUDIENCE_TABS = [
+  { label: "All", value: "" },
+  { label: "Parents", value: "parent" },
+  { label: "Therapists", value: "slp" },
+  { label: "Educators", value: "educator" },
+] as const;
+
+interface HubHeaderProps {
+  activeAudience?: string;
+  onAudienceChange?: (value: string) => void;
+}
+
+const HubHeader = ({ activeAudience = "", onAudienceChange }: HubHeaderProps) => {
   const { profile, signOut } = useAuth();
   const navigate = useNavigate();
 
@@ -18,48 +30,93 @@ const HubHeader = () => {
     navigate("/hub/login");
   };
 
+  const initials = profile?.first_name
+    ? profile.first_name.charAt(0).toUpperCase()
+    : "?";
+
   return (
     <header className="bg-midnight text-midnight-foreground sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-16 gap-4">
           {/* Logo */}
-          <a href="https://empowereddld.com" className="flex-shrink-0" target="_blank" rel="noopener noreferrer">
+          <a
+            href="https://empowereddld.com"
+            className="flex-shrink-0"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <img src={empoweredLogoWhite} alt="Empowered DLD" className="h-8" />
           </a>
 
-          {/* Search - placeholder */}
-          <div className="hidden md:flex flex-1 max-w-lg mx-8">
-            <div className="relative w-full">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-stone-ui" />
-              <input
-                type="text"
-                placeholder="Search by topic, age, setting, or resource type"
-                className="w-full h-10 pl-10 pr-4 rounded-lg bg-white/10 border border-white/20 text-sm placeholder:text-stone-ui focus:outline-none focus:ring-2 focus:ring-hub-lavender text-white"
-                onChange={(e) => {
-                  // Dispatch a custom event so the dashboard can pick it up
-                  window.dispatchEvent(new CustomEvent("hub-search", { detail: e.target.value }));
-                }}
-              />
-            </div>
-          </div>
+          {/* Audience tabs — center */}
+          <nav className="hidden md:flex items-center gap-1 flex-1 justify-center">
+            {AUDIENCE_TABS.map((tab) => {
+              const isActive = activeAudience === tab.value;
+              return (
+                <button
+                  key={tab.value}
+                  onClick={() => onAudienceChange?.(tab.value)}
+                  className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
+                    isActive
+                      ? "bg-hub-lavender text-midnight"
+                      : "text-white/70 hover:text-white hover:bg-white/10"
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              );
+            })}
+          </nav>
 
           {/* User menu */}
           <DropdownMenu>
-            <DropdownMenuTrigger className="flex items-center gap-2 text-sm font-medium hover:text-hub-lavender transition-colors outline-none">
-              <span>{profile?.first_name || "Account"}</span>
+            <DropdownMenuTrigger className="flex items-center gap-2 text-sm font-medium hover:text-hub-lavender transition-colors outline-none flex-shrink-0">
+              {/* Avatar circle */}
+              <span className="h-8 w-8 rounded-full bg-hub-lavender text-midnight flex items-center justify-center font-bold text-sm">
+                {initials}
+              </span>
+              <span className="hidden sm:inline">{profile?.first_name || "Account"}</span>
               <ChevronDown className="h-4 w-4" />
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-48">
-              <DropdownMenuItem onClick={() => navigate("/hub/settings")} className="cursor-pointer">
+              <DropdownMenuItem
+                onClick={() => navigate("/hub/settings")}
+                className="cursor-pointer"
+              >
                 <Settings className="h-4 w-4 mr-2" />
                 Account Settings
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={handleSignOut} className="cursor-pointer text-destructive">
+              <DropdownMenuItem
+                onClick={handleSignOut}
+                className="cursor-pointer text-destructive"
+              >
                 <LogOut className="h-4 w-4 mr-2" />
                 Log Out
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
+        </div>
+      </div>
+
+      {/* Mobile audience tabs */}
+      <div className="md:hidden border-t border-white/10 px-4 py-2">
+        <div className="flex gap-1 overflow-x-auto no-scrollbar">
+          {AUDIENCE_TABS.map((tab) => {
+            const isActive = activeAudience === tab.value;
+            return (
+              <button
+                key={tab.value}
+                onClick={() => onAudienceChange?.(tab.value)}
+                className={`px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap transition-all flex-shrink-0 ${
+                  isActive
+                    ? "bg-hub-lavender text-midnight"
+                    : "text-white/70 hover:text-white hover:bg-white/10"
+                }`}
+              >
+                {tab.label}
+              </button>
+            );
+          })}
         </div>
       </div>
     </header>
