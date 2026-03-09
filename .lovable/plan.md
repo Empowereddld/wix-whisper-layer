@@ -1,13 +1,18 @@
 
 
-## Plan: Update Downloadables Hero Copy for Future Paid Content
+## Plan: Zoom out the image in "Is This Right" section
 
-### Changes (single file: `src/components/DownloadablesHero.tsx`)
+The image currently uses `object-cover` which crops tightly into the center of the photo, cutting off the reading activity. To "zoom out" while keeping the same frame size, we can use CSS `object-fit: contain` instead — but that would leave empty space.
 
-- **Badge**: "Free Downloadables" → "Downloadables"
-- **Headline**: "Everything You Need to Support a Child With DLD. All free!" → "Everything You Need to Support a Child With DLD"
-- **Subtext**: "Printable guides, checklists, posters, and activity sheets ready to use today. No catch. Just tools that work." → "Printable guides, checklists, posters, and activity sheets — ready to use today. Practical tools that work."
-- **CTA**: "Download Now" → "Browse Resources"
+A better approach: keep `object-cover` but use `object-position` to show more of the image, combined with scaling. Specifically:
 
-Removes all "free" language so it stays accurate when paid items are added, while keeping the same layout and styling.
+### Change in `src/components/IsThisRightSection.tsx` (line 16)
+
+On the `<img>` element, add a CSS `scale` transform to shrink the image within its container, effectively zooming out while the container stays the same size. We'll use Tailwind's `scale-[0.85]` (or similar) combined with `object-contain` to ensure the full image is visible:
+
+- Change `object-cover` → `object-contain` so the entire image is visible without cropping
+- Add `object-center` to keep it centered
+- The container with `rounded-xl overflow-hidden` maintains the same frame size and shape
+
+This shows the full scene (people reading) within the exact same container dimensions.
 
