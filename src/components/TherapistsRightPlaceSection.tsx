@@ -30,30 +30,28 @@ const TherapistsRightPlaceSection = () => {
           {/* Right — text content */}
           <div ref={textFade.ref} className={`flex flex-col justify-start pt-0 md:pt-2 order-1 lg:order-2 ${textFade.className}`}>
             <p className="text-[14px] md:text-[15px] lg:text-[16px] font-semibold text-foreground mb-3 md:mb-4">
-              You're a parent who:
+              You're a therapist who:
             </p>
 
             <ul className="list-disc pl-5 space-y-2 md:space-y-4 text-[13px] md:text-[14px] lg:text-[15px] text-muted-foreground leading-[1.7] mb-6 md:mb-8">
-              <li>Just received a DLD diagnosis and doesn't know where to start</li>
-              <li>Suspects your child has language struggles but hasn't gotten answers yet</li>
-              <li>Feels alone because no one else seems to understand what you're going through</li>
-              <li>Wants practical tools you can use at home, not just medical jargon</li>
-              <li>Is looking for a community of parents who truly get it</li>
-              <li>Speaks a language other than English and needs resources that work for your family</li>
+              <li>Works with children with DLD and struggles to find resources that represent the diverse families on your caseload</li>
+              <li>Spends hours creating materials from scratch that should already exist</li>
+              <li>Has multilingual clients and needs resources that work across languages</li>
+              <li>Wants practical tools to bridge therapy and home, not just clinical handouts parents don't understand</li>
+              <li>Is looking for evidence-based books and resources you can use directly in sessions or recommend with confidence</li>
+              <li>Wants to stay connected to a growing global community of DLD-informed professionals</li>
             </ul>
 
             <p className="text-[13px] md:text-[14px] lg:text-[15px] text-muted-foreground leading-[1.7] mb-6 md:mb-8">
-              Whether you're just beginning to understand DLD or you've been navigating it for years, you'll find support here.
+              Whether you're newly learning about DLD or have been supporting these children for years, you'll find tools here that make your work easier and your impact greater.
             </p>
 
             <div className="flex justify-center">
               <a
-                href="https://www.facebook.com/groups/empowereddld"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/hub/coming-soon"
                 className="inline-block border border-foreground text-foreground px-8 md:px-10 py-3 md:py-4 text-[12px] md:text-[13px] font-bold tracking-wider uppercase hover:bg-foreground hover:text-background transition-colors"
               >
-                JOIN OUR FACEBOOK COMMUNITY
+                Explore Therapist Resources
               </a>
             </div>
           </div>
