@@ -35,7 +35,7 @@ const features = [
     title: "Join Our Community",
     description: "Connect with 4,000+ families, educators, and SLPs in our supportive Facebook group.",
     cta: "JOIN TODAY",
-    href: "https://www.facebook.com/groups/empowereddld",
+    href: "https://www.facebook.com/groups/782657700446046",
     external: true,
   },
   {
