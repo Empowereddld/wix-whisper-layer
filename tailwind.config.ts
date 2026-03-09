@@ -66,6 +66,7 @@ export default {
           foreground: "hsl(var(--midnight-foreground))",
         },
         "hub-lavender": "hsl(var(--hub-lavender))",
+        "coral": "hsl(var(--coral))",
         thistle: "hsl(var(--thistle))",
         mauve: "hsl(var(--mauve))",
         "stone-ui": "hsl(var(--stone-ui))",
