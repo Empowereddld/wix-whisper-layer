@@ -76,7 +76,7 @@ const HubSignup = () => {
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <Link to="/">
-            <img src={empoweredLogo} alt="Empowered DLD" className="h-16 mx-auto" />
+            <img src={empoweredLogo} alt="Empowered DLD" className="h-24 mx-auto" />
           </Link>
           <h1 className="text-3xl font-bold text-midnight mb-2">Create Your Free Account</h1>
           <p className="text-stone-ui">Sign up once. Access everything.</p>
