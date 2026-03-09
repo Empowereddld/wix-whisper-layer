@@ -21,7 +21,7 @@ const ShopGlobalCommunity = () => {
             <div
               key={stat.label}
               tabIndex={0}
-              className="group flex flex-col items-center gap-2 bg-background border border-thistle rounded-2xl px-4 py-4 md:px-5 md:py-5 text-center shadow-[0_2px_12px_rgba(0,0,0,0.06)] transition-all duration-300 ease-in-out cursor-default hover:bg-lavender hover:border-hub-lavender hover:border-2 hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(143,121,181,0.15)] focus-visible:bg-lavender focus-visible:border-hub-lavender focus-visible:border-2 focus-visible:-translate-y-1 focus-visible:shadow-[0_8px_24px_rgba(143,121,181,0.15)] focus-visible:outline-none"
+              className="group flex flex-col items-center gap-2 bg-background border border-thistle rounded-2xl px-4 py-3 md:px-5 md:py-5 text-center max-w-[240px] md:max-w-none mx-auto w-full shadow-[0_2px_12px_rgba(0,0,0,0.06)] transition-all duration-300 ease-in-out cursor-default hover:bg-lavender hover:border-hub-lavender hover:border-2 hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(143,121,181,0.15)] focus-visible:bg-lavender focus-visible:border-hub-lavender focus-visible:border-2 focus-visible:-translate-y-1 focus-visible:shadow-[0_8px_24px_rgba(143,121,181,0.15)] focus-visible:outline-none"
             >
               <p className="text-[28px] md:text-[40px] lg:text-[44px] font-bold text-midnight leading-none whitespace-nowrap transition-colors duration-300 group-hover:text-hub-lavender group-focus-visible:text-hub-lavender">
                 {stat.value}
