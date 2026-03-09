@@ -80,6 +80,8 @@ const HubSettings = () => {
         role: form.role as any,
         country: form.country || null,
         age_range: (form.age_range || "not_applicable") as any,
+        job_title: form.job_title.trim() || null,
+        organization_name: form.organization_name.trim() || null,
         updated_at: new Date().toISOString(),
       })
       .eq("id", user!.id);
