@@ -4,8 +4,8 @@ const DoesSoundFamiliarSection = () => {
       {/* Full-bleed black bar */}
       <div className="bg-black text-white px-6 md:px-8 py-5 lg:py-8 mb-6 md:mb-8 lg:mb-12">
         <div className="container px-0">
-          <h2 className="text-[20px] md:text-[26px] lg:text-[32px] font-black leading-[1.15]">
-            Does this sound familiar?
+          <h2 className="text-[20px] md:text-[26px] lg:text-[32px] font-black leading-[1.15]">Who We Work With
+
           </h2>
         </div>
       </div>
@@ -41,8 +41,8 @@ const DoesSoundFamiliarSection = () => {
             </p>
         </div>
       </div>
-    </section>
-  );
+    </section>);
+
 };
 
 export default DoesSoundFamiliarSection;
