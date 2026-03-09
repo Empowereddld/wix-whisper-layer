@@ -47,6 +47,8 @@ const HubSettings = () => {
     role: "",
     country: "",
     age_range: "",
+    job_title: "",
+    organization_name: "",
   });
   const [passwords, setPasswords] = useState({
     current: "",
@@ -61,6 +63,8 @@ const HubSettings = () => {
         role: profile.role,
         country: profile.country || "",
         age_range: profile.age_range || "not_applicable",
+        job_title: profile.job_title || "",
+        organization_name: profile.organization_name || "",
       });
     }
   }, [profile]);
@@ -76,6 +80,8 @@ const HubSettings = () => {
         role: form.role as any,
         country: form.country || null,
         age_range: (form.age_range || "not_applicable") as any,
+        job_title: form.job_title.trim() || null,
+        organization_name: form.organization_name.trim() || null,
         updated_at: new Date().toISOString(),
       })
       .eq("id", user!.id);
@@ -137,6 +143,14 @@ const HubSettings = () => {
                   {roles.map((r) => <SelectItem key={r.value} value={r.value}>{r.label}</SelectItem>)}
                 </SelectContent>
               </Select>
+            </div>
+            <div>
+              <Label className="text-midnight font-medium">Job Title / Position</Label>
+              <Input value={form.job_title} onChange={(e) => setForm({ ...form, job_title: e.target.value })} className="h-12 mt-1" placeholder="e.g. Speech-Language Pathologist" maxLength={100} />
+            </div>
+            <div>
+              <Label className="text-midnight font-medium">Organization / School</Label>
+              <Input value={form.organization_name} onChange={(e) => setForm({ ...form, organization_name: e.target.value })} className="h-12 mt-1" placeholder="e.g. Sunshine Elementary" maxLength={150} />
             </div>
             <div>
               <Label className="text-midnight font-medium">Country</Label>

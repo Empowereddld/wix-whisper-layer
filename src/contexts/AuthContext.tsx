@@ -10,6 +10,8 @@ interface Profile {
   country: string | null;
   age_range: string | null;
   welcome_dismissed: boolean | null;
+  job_title: string | null;
+  organization_name: string | null;
 }
 
 interface AuthContextType {
