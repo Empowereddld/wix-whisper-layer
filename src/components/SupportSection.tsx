@@ -43,7 +43,7 @@ const features = [
     title: "Educational app",
     description: "Interactive stories building vocabulary, grammar, and narrative skills. Join the waitlist for beta access.",
     cta: "JOIN WAITLIST",
-    href: "#",
+    href: "/storybuilders",
   },
   {
     icon: Briefcase,
