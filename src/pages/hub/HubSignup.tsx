@@ -4,29 +4,10 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import SocialLoginButtons from "@/components/hub/SocialLoginButtons";
 import PasswordInput from "@/components/hub/PasswordInput";
-import { countries } from "@/lib/countries";
 import { useToast } from "@/hooks/use-toast";
 import empoweredLogo from "@/assets/empowered-logo.png";
-
-const roles = [
-  { value: "parent", label: "Parent" },
-  { value: "slp", label: "SLP or Therapist" },
-  { value: "educator", label: "Educator" },
-  { value: "school_leader", label: "School Leader or Organization" },
-  { value: "other", label: "Other" },
-];
-
-const ageRanges = [
-  { value: "0-4", label: "0–4 years" },
-  { value: "5-7", label: "5–7 years" },
-  { value: "8-10", label: "8–10 years" },
-  { value: "11-13", label: "11–13 years" },
-  { value: "14+", label: "14+ years" },
-  { value: "not_applicable", label: "Not applicable" },
-];
 
 const HubSignup = () => {
   const navigate = useNavigate();
@@ -39,10 +20,12 @@ const HubSignup = () => {
     email: "",
     password: "",
     confirm_password: "",
-    role: "",
-    country: "",
-    age_range: "",
   });
+
+  // Store ref code for the onboarding flow
+  if (refCode) {
+    localStorage.setItem("empowered_ref", refCode);
+  }
 
   const validatePassword = (pw: string) => {
     if (pw.length < 8) return "Password must be at least 8 characters";
@@ -53,7 +36,7 @@ const HubSignup = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.first_name.trim() || !form.email.trim() || !form.role) {
+    if (!form.first_name.trim() || !form.email.trim()) {
       toast({ title: "Please fill in all required fields", variant: "destructive" });
       return;
     }
@@ -74,12 +57,9 @@ const HubSignup = () => {
       options: {
         data: {
           first_name: form.first_name.trim(),
-          role: form.role,
-          country: form.country || null,
-          age_range: form.age_range || "not_applicable",
           ...(refCode ? { referred_by: refCode } : {}),
         },
-        emailRedirectTo: window.location.origin + "/hub",
+        emailRedirectTo: window.location.origin + "/signup/role",
       },
     });
     setLoading(false);
@@ -134,33 +114,6 @@ const HubSignup = () => {
               <div className="mt-1">
                 <PasswordInput value={form.confirm_password} onChange={(e) => setForm({ ...form, confirm_password: e.target.value })} placeholder="Confirm your password" id="confirm_password" />
               </div>
-            </div>
-            <div>
-              <Label className="text-midnight font-medium">I am a: *</Label>
-              <Select value={form.role} onValueChange={(v) => setForm({ ...form, role: v })}>
-                <SelectTrigger className="h-12 mt-1"><SelectValue placeholder="Select your role" /></SelectTrigger>
-                <SelectContent>
-                  {roles.map((r) => <SelectItem key={r.value} value={r.value}>{r.label}</SelectItem>)}
-                </SelectContent>
-              </Select>
-            </div>
-            <div>
-              <Label className="text-midnight font-medium">Country <span className="text-stone-ui font-normal">(optional)</span></Label>
-              <Select value={form.country} onValueChange={(v) => setForm({ ...form, country: v })}>
-                <SelectTrigger className="h-12 mt-1"><SelectValue placeholder="Select country" /></SelectTrigger>
-                <SelectContent>
-                  {countries.map((c) => <SelectItem key={c} value={c}>{c}</SelectItem>)}
-                </SelectContent>
-              </Select>
-            </div>
-            <div>
-              <Label className="text-midnight font-medium">Age range <span className="text-stone-ui font-normal">(optional)</span></Label>
-              <Select value={form.age_range} onValueChange={(v) => setForm({ ...form, age_range: v })}>
-                <SelectTrigger className="h-12 mt-1"><SelectValue placeholder="Select age range" /></SelectTrigger>
-                <SelectContent>
-                  {ageRanges.map((a) => <SelectItem key={a.value} value={a.value}>{a.label}</SelectItem>)}
-                </SelectContent>
-              </Select>
             </div>
             <Button type="submit" className="w-full h-12 bg-midnight hover:bg-midnight/90 text-midnight-foreground font-semibold text-base" disabled={loading}>
               {loading ? "Creating Account..." : "Create Account"}
