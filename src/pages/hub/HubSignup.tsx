@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useSearchParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -31,6 +31,8 @@ const ageRanges = [
 const HubSignup = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const [searchParams] = useSearchParams();
+  const refCode = searchParams.get("ref");
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
     first_name: "",
@@ -75,6 +77,7 @@ const HubSignup = () => {
           role: form.role,
           country: form.country || null,
           age_range: form.age_range || "not_applicable",
+          ...(refCode ? { referred_by: refCode } : {}),
         },
         emailRedirectTo: window.location.origin + "/hub",
       },

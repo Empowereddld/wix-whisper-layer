@@ -278,6 +278,7 @@ export type Database = {
           first_name: string
           id: string
           last_name: string | null
+          referred_by: string | null
           role: Database["public"]["Enums"]["user_role"]
           updated_at: string
           welcome_dismissed: boolean
@@ -289,6 +290,7 @@ export type Database = {
           first_name: string
           id: string
           last_name?: string | null
+          referred_by?: string | null
           role?: Database["public"]["Enums"]["user_role"]
           updated_at?: string
           welcome_dismissed?: boolean
@@ -300,6 +302,7 @@ export type Database = {
           first_name?: string
           id?: string
           last_name?: string | null
+          referred_by?: string | null
           role?: Database["public"]["Enums"]["user_role"]
           updated_at?: string
           welcome_dismissed?: boolean
