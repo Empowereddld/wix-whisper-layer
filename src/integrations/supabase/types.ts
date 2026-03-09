@@ -14,6 +14,63 @@ export type Database = {
   }
   public: {
     Tables: {
+      audit_logs: {
+        Row: {
+          action: string
+          admin_id: string | null
+          created_at: string
+          id: string
+        }
+        Insert: {
+          action: string
+          admin_id?: string | null
+          created_at?: string
+          id?: string
+        }
+        Update: {
+          action?: string
+          admin_id?: string | null
+          created_at?: string
+          id?: string
+        }
+        Relationships: []
+      }
+      blog_posts: {
+        Row: {
+          body: string | null
+          created_at: string
+          featured_image_url: string | null
+          id: string
+          published_at: string | null
+          slug: string
+          status: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          body?: string | null
+          created_at?: string
+          featured_image_url?: string | null
+          id?: string
+          published_at?: string | null
+          slug: string
+          status?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          body?: string | null
+          created_at?: string
+          featured_image_url?: string | null
+          id?: string
+          published_at?: string | null
+          slug?: string
+          status?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       contact_submissions: {
         Row: {
           company_name: string
@@ -53,6 +110,96 @@ export type Database = {
           preferred_timeline?: string | null
           questions?: string
           role?: string | null
+        }
+        Relationships: []
+      }
+      discount_codes: {
+        Row: {
+          code: string
+          created_at: string
+          expiry_date: string | null
+          id: string
+          is_active: boolean
+          percent_off: number
+          uses_remaining: number | null
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          expiry_date?: string | null
+          id?: string
+          is_active?: boolean
+          percent_off?: number
+          uses_remaining?: number | null
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          expiry_date?: string | null
+          id?: string
+          is_active?: boolean
+          percent_off?: number
+          uses_remaining?: number | null
+        }
+        Relationships: []
+      }
+      email_campaigns: {
+        Row: {
+          audience: string
+          body: string | null
+          created_at: string
+          id: string
+          recipient_count: number | null
+          sent_at: string | null
+          subject: string
+        }
+        Insert: {
+          audience?: string
+          body?: string | null
+          created_at?: string
+          id?: string
+          recipient_count?: number | null
+          sent_at?: string | null
+          subject: string
+        }
+        Update: {
+          audience?: string
+          body?: string | null
+          created_at?: string
+          id?: string
+          recipient_count?: number | null
+          sent_at?: string | null
+          subject?: string
+        }
+        Relationships: []
+      }
+      orders: {
+        Row: {
+          amount: number | null
+          created_at: string
+          customer_name: string | null
+          email: string | null
+          id: string
+          product: string | null
+          status: string
+        }
+        Insert: {
+          amount?: number | null
+          created_at?: string
+          customer_name?: string | null
+          email?: string | null
+          id?: string
+          product?: string | null
+          status?: string
+        }
+        Update: {
+          amount?: number | null
+          created_at?: string
+          customer_name?: string | null
+          email?: string | null
+          id?: string
+          product?: string | null
+          status?: string
         }
         Relationships: []
       }
@@ -169,11 +316,63 @@ export type Database = {
           },
         ]
       }
+      user_notes: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          id: string
+          note: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          note: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          note?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
       increment_download_count: {
         Args: { resource_id: string }
         Returns: undefined
@@ -181,6 +380,7 @@ export type Database = {
     }
     Enums: {
       age_range: "0-4" | "5-7" | "8-10" | "11-13" | "14+" | "not_applicable"
+      app_role: "admin" | "moderator" | "user"
       resource_type:
         | "poster"
         | "guide"
@@ -318,6 +518,7 @@ export const Constants = {
   public: {
     Enums: {
       age_range: ["0-4", "5-7", "8-10", "11-13", "14+", "not_applicable"],
+      app_role: ["admin", "moderator", "user"],
       resource_type: [
         "poster",
         "guide",
