@@ -1,0 +1,113 @@
+import { useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { ShieldCheck, Lock } from "lucide-react";
+import type { Resource } from "@/hooks/useResources";
+import type { Product } from "@/hooks/usePurchases";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
+
+interface PurchaseModalProps {
+  resource: Resource | null;
+  product: Product | null;
+  open: boolean;
+  onClose: () => void;
+  onPurchased: () => void;
+  userId?: string;
+}
+
+const formatPrice = (cents: number, currency: string) => {
+  const amount = (cents / 100).toFixed(2);
+  const sym = currency === "CAD" ? "CA$" : "$";
+  return `${sym}${amount}`;
+};
+
+const PurchaseModal = ({ resource, product, open, onClose, onPurchased, userId }: PurchaseModalProps) => {
+  const [purchasing, setPurchasing] = useState(false);
+
+  if (!resource || !product) return null;
+
+  const handlePurchase = async () => {
+    if (!userId) return;
+    setPurchasing(true);
+
+    // For now (no Stripe), simulate a successful purchase
+    const { error } = await supabase.from("purchases").insert({
+      user_id: userId,
+      resource_id: resource.id,
+      product_id: product.id,
+      amount_paid: product.price,
+      currency: product.currency,
+      status: "completed",
+    });
+
+    if (error) {
+      toast.error("Purchase failed. Please try again.");
+    } else {
+      toast.success("Purchase complete! Your resource is now unlocked.");
+      onPurchased();
+      onClose();
+    }
+    setPurchasing(false);
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={(o) => !o && onClose()}>
+      <DialogContent className="sm:max-w-md">
+        <DialogHeader>
+          <DialogTitle className="text-midnight text-xl">Unlock Resource</DialogTitle>
+          <DialogDescription className="text-stone-ui">
+            One-time purchase — permanent access
+          </DialogDescription>
+        </DialogHeader>
+
+        <div className="space-y-5 mt-2">
+          {/* Resource preview */}
+          <div className="flex items-start gap-4 p-4 rounded-xl bg-thistle/20">
+            <div className="h-14 w-14 rounded-lg bg-thistle/50 flex items-center justify-center flex-shrink-0">
+              <Lock className="h-6 w-6 text-hub-lavender" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <h3 className="font-semibold text-midnight text-sm leading-snug">{resource.title}</h3>
+              <p className="text-xs text-stone-ui line-clamp-2 mt-1">{resource.description}</p>
+            </div>
+          </div>
+
+          {/* Price */}
+          <div className="flex items-center justify-between p-4 rounded-xl bg-midnight/5">
+            <span className="text-sm font-medium text-midnight">Total</span>
+            <span className="text-2xl font-bold text-midnight">
+              {formatPrice(product.price, product.currency)}
+            </span>
+          </div>
+
+          {/* Actions */}
+          <Button
+            className="w-full h-12 bg-mauve text-white hover:bg-mauve/90 font-semibold text-base"
+            onClick={handlePurchase}
+            disabled={purchasing}
+          >
+            {purchasing ? "Processing…" : `Purchase for ${formatPrice(product.price, product.currency)} →`}
+          </Button>
+
+          <div className="flex items-center justify-center gap-2 text-xs text-stone-ui">
+            <ShieldCheck className="h-3.5 w-3.5" />
+            <span>Secure checkout · Instant access · Empowered DLD</span>
+          </div>
+
+          <button onClick={onClose} className="w-full text-center text-sm text-stone-ui hover:text-midnight transition-colors">
+            Cancel
+          </button>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+};
+
+export default PurchaseModal;
