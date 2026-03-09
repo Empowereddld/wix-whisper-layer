@@ -24,9 +24,6 @@ const HowCommonSection = () => {
 
           {/* Right — text */}
           <div className="space-y-6">
-            <h2 className="font-serif text-[28px] md:text-[38px] lg:text-[42px] leading-[1.15] text-primary">
-              How common is DLD?
-            </h2>
             <p className="text-[14px] md:text-[15px] text-muted-foreground leading-[1.8]">
               Developmental Language Disorder affects approximately 1 in 14 children, making it one of the most common neurodevelopmental conditions. DLD is more common than autism, yet awareness remains far lower.
             </p>
