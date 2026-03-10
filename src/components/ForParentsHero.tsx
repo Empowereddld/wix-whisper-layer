@@ -1,4 +1,4 @@
-import motherDaughterReading from "@/assets/mother-daughter-reading.png";
+import motherDaughterReading from "@/assets/mother-daughter-reading.webp";
 
 const ForParentsHero = () => {
   return (

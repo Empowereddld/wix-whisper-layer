@@ -1,9 +1,9 @@
-import blobPurple1 from "@/assets/blob-purple-1.png";
-import blobPink1 from "@/assets/blob-pink-1.png";
-import blobPurple2 from "@/assets/blob-purple-2.png";
-import blobCoral1 from "@/assets/blob-coral-1.png";
-import blobPink2 from "@/assets/blob-pink-2.png";
-import blobMagenta1 from "@/assets/blob-magenta-1.png";
+import blobPurple1 from "@/assets/blob-purple-1.webp";
+import blobPink1 from "@/assets/blob-pink-1.webp";
+import blobPurple2 from "@/assets/blob-purple-2.webp";
+import blobCoral1 from "@/assets/blob-coral-1.webp";
+import blobPink2 from "@/assets/blob-pink-2.webp";
+import blobMagenta1 from "@/assets/blob-magenta-1.webp";
 
 const facts = [
   {

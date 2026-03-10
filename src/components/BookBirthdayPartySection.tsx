@@ -1,4 +1,4 @@
-import bookBirthdayParty from "@/assets/book-birthday-party-cover.png";
+import bookBirthdayParty from "@/assets/book-birthday-party-cover.webp";
 
 const BookBirthdayPartySection = () => {
   return (
