@@ -1,35 +1,18 @@
 
 
-# Replace PNG Images with Uploaded WebP Versions
+## Plan: Zoom out the image in "Is This Right" section
 
-## Mapping of Uploaded Files to Existing Assets
+The image currently uses `object-cover` which crops tightly into the center of the photo, cutting off the reading activity. To "zoom out" while keeping the same frame size, we can use CSS `object-fit: contain` instead — but that would leave empty space.
 
-Here's what I've identified from your uploads and where each is used:
+A better approach: keep `object-cover` but use `object-position` to show more of the image, combined with scaling. Specifically:
 
-| Uploaded File | Replaces | Used In |
-|---|---|---|
-| `image-gen_84.webp` (boy in classroom) | `boy-thinking.png` | EveryChildSection |
-| `image-gen_97.webp` (cartoon characters) | `book-characters.png` | BooksHero |
-| `image-gen_98.webp` (Dan book cover) | `book-dan-paper-airplane.png` | BookDanSection |
-| `image-gen_100.webp` (Parent Guidebook cover) | `book-parent-guidebook.png` | BookGuidebookSection |
-| `image-gen.webp` (Ask Me About DLD shirt) | `shop-merch.png` | ShopBrowseByCategory |
-| `Podcast_Thumbnails_2.webp` (Ep.6) | `podcast-ep6.png` | Podcasts page |
-| `Podcast_Thumbnails_4.webp` (Ep.9) | `podcast-ep9.png` | Podcasts page |
-| `step_2.webp` (woman at desk) | `educators-step-2.png` | HowItWorksSection |
-| `step_3.webp` (man at desk) | `educators-step-3.png` | HowItWorksSection |
-| `step_4.webp` (teacher with kids) | `educators-step-4.png` | HowItWorksSection |
+### Change in `src/components/IsThisRightSection.tsx` (line 16)
 
-## Implementation Steps
+On the `<img>` element, add a CSS `scale` transform to shrink the image within its container, effectively zooming out while the container stays the same size. We'll use Tailwind's `scale-[0.85]` (or similar) combined with `object-contain` to ensure the full image is visible:
 
-1. **Copy all 10 WebP files** into `src/assets/` with new `.webp` filenames matching the originals
-2. **Update imports** in 7 component files to point to the new `.webp` versions
+- Change `object-cover` → `object-contain` so the entire image is visible without cropping
+- Add `object-center` to keep it centered
+- The container with `rounded-xl overflow-hidden` maintains the same frame size and shape
 
-## Still Missing (PNGs not yet converted)
-
-After this batch, you'll still have ~72 PNGs remaining, including high-impact ones like:
-- Hero images: `hero-girls.png`, `educators-hero.png`, `org-hero.png`, `podcast-hero.png`
-- Book covers: `book-paper-airplane.png`, `book-make-friends.png`, `book-birthday-party.png`, `book-theatre-exchange.png`, `book-birthday-party-cover.png`, `book-theatre-exchange-cover.png`
-- Family/lifestyle photos: `family-dinner-new.png`, `family-reading.png`, `founders-photo.png`
-- Blobs and icons: all `blob-*.png`, `icon-*.png`, `char-*.png`
-- Testimonials, logos, and more
+This shows the full scene (people reading) within the exact same container dimensions.
 

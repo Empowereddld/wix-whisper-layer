@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import shopBooksImg from "@/assets/shop-books.png";
 import shopBulkImg from "@/assets/shop-bulk-orders.png";
-import shopMerchImg from "@/assets/shop-merch.png";
+import shopMerchImg from "@/assets/shop-merch.webp";
 
 const categories = [
   {

@@ -4,8 +4,8 @@ import ChoosePathCTA from "@/components/ChoosePathCTA";
 import { Button } from "@/components/ui/button";
 import podcastHeroImg from "@/assets/podcast-hero.png";
 import ep12Img from "@/assets/podcast-ep12.png";
-import ep6Img from "@/assets/podcast-ep6.png";
-import ep9Img from "@/assets/podcast-ep9.png";
+import ep6Img from "@/assets/podcast-ep6.webp";
+import ep9Img from "@/assets/podcast-ep9.webp";
 
 const episodes = [
   {

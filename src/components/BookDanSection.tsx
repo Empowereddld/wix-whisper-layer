@@ -1,4 +1,4 @@
-import bookDan from "@/assets/book-dan-paper-airplane.png";
+import bookDan from "@/assets/book-dan-paper-airplane.webp";
 
 const BookDanSection = () => {
   return (
