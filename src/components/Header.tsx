@@ -53,7 +53,7 @@ const Header = () => {
     <header className="sticky top-0 z-50 h-[70px] lg:h-[80px] bg-background backdrop-blur-md border-b border-border/20">
       <div className="max-w-[1200px] mx-auto px-6 lg:px-10 h-full flex items-center justify-between gap-6">
         <Link to="/" className="flex-shrink-0">
-          <img src={logoImage} alt="EmpoweredDLD" className="h-[120px] lg:h-[140px] w-auto" />
+          <img src={logoImage} alt="EmpoweredDLD" className="h-[32px] lg:h-[38px] w-auto" />
         </Link>
 
         <nav className="hidden lg:flex items-center gap-6 xl:gap-8" ref={dropdownRef}>
