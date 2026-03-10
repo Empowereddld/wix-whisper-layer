@@ -1,5 +1,5 @@
 import { Check } from "lucide-react";
-import boyReadingBench from "@/assets/boy-reading-bench.png";
+import boyReadingBench from "@/assets/boy-reading-bench.webp";
 import { useScrollFadeIn } from "@/hooks/useScrollFadeIn";
 
 const trustPoints = [

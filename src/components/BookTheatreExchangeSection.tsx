@@ -1,4 +1,4 @@
-import bookTheatreExchange from "@/assets/book-theatre-exchange-cover.png";
+import bookTheatreExchange from "@/assets/book-theatre-exchange-cover.webp";
 
 const BookTheatreExchangeSection = () => {
   return (

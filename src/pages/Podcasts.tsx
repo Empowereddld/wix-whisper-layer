@@ -2,7 +2,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ChoosePathCTA from "@/components/ChoosePathCTA";
 import { Button } from "@/components/ui/button";
-import podcastHeroImg from "@/assets/podcast-hero.png";
+import podcastHeroImg from "@/assets/podcast-hero.webp";
 import ep12Img from "@/assets/podcast-ep12.png";
 import ep6Img from "@/assets/podcast-ep6.webp";
 import ep9Img from "@/assets/podcast-ep9.webp";
