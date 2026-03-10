@@ -1,5 +1,5 @@
 import { Check } from "lucide-react";
-import orgWorkshop from "@/assets/org-workshop.png";
+import orgWorkshop from "@/assets/org-workshop.webp";
 
 const trustPoints = [
   {

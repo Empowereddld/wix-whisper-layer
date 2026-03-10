@@ -1,4 +1,4 @@
-import kidsPlayingSoccer from "@/assets/kids-playing-soccer.png";
+import kidsPlayingSoccer from "@/assets/kids-playing-soccer.webp";
 import { useScrollFadeIn } from "@/hooks/useScrollFadeIn";
 
 const TherapistsRightPlaceSection = () => {

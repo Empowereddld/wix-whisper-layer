@@ -1,4 +1,4 @@
-import educatorsHero from "@/assets/educators-hero.png";
+import educatorsHero from "@/assets/educators-hero.webp";
 
 const ForEducatorsHero = () => {
   return (
