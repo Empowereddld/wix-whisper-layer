@@ -59,7 +59,7 @@ const ChoosePathSection = () => {
                 <img
                   src={path.icon}
                   alt={path.title}
-                  className={`w-full object-contain ${path.href === "/for-therapists" ? "h-[130px] object-top" : "h-full"}`}
+                  className={`w-full ${path.href === "/for-therapists" ? "h-[160px] object-cover object-top" : "h-full object-contain"}`}
                   loading="lazy"
                 />
               </div>
