@@ -1,34 +1,18 @@
 
 
-## WebP Asset Swap — Homepage Images
+## Plan: Zoom out the image in "Is This Right" section
 
-Replace 5 PNG assets with the uploaded WebP versions and update all component imports.
+The image currently uses `object-cover` which crops tightly into the center of the photo, cutting off the reading activity. To "zoom out" while keeping the same frame size, we can use CSS `object-fit: contain` instead — but that would leave empty space.
 
-### Asset Mapping
+A better approach: keep `object-cover` but use `object-position` to show more of the image, combined with scaling. Specifically:
 
-| Upload | Replaces | Used In |
-|--------|----------|---------|
-| `two_girls-_home_page.webp` | `hero-girls.png` | HeroSection |
-| `Parents_and_caregiver-_home_page.webp` | `icon-parents.png` | ChoosePathSection |
-| `For_Teachers_and_Support_Staff.webp` | `icon-educators.png` | ChoosePathSection |
-| `school_clinics_and_organization-_home_page.webp` | `icon-organizations.png` | ChoosePathSection |
-| `Empowered_Logo-_home_page.webp` | `empowered-logo.png` | Header, Footer (white version stays), AdminLayout, HubLogin, HubSignup, HubPreview, HubComingSoon, Signup, Login, ForgotPassword, ResetPassword, VerifyEmail, SignupRole |
+### Change in `src/components/IsThisRightSection.tsx` (line 16)
 
-### Steps
+On the `<img>` element, add a CSS `scale` transform to shrink the image within its container, effectively zooming out while the container stays the same size. We'll use Tailwind's `scale-[0.85]` (or similar) combined with `object-contain` to ensure the full image is visible:
 
-1. **Copy 5 files** to `src/assets/` as WebP replacements:
-   - `hero-girls.webp`
-   - `icon-parents.webp`
-   - `icon-educators.webp`
-   - `icon-organizations.webp`
-   - `empowered-logo.webp`
+- Change `object-cover` → `object-contain` so the entire image is visible without cropping
+- Add `object-center` to keep it centered
+- The container with `rounded-xl overflow-hidden` maintains the same frame size and shape
 
-2. **Update imports** in all components that reference these assets (swap `.png` → `.webp`):
-   - `HeroSection.tsx` — hero-girls
-   - `ChoosePathSection.tsx` — 3 icons (parents, educators, organizations)
-   - `Header.tsx`, `AdminLayout.tsx`, `HubLogin.tsx`, `HubSignup.tsx`, `HubPreview.tsx`, `HubComingSoon.tsx`, `Signup.tsx`, `Login.tsx`, `ForgotPassword.tsx`, `ResetPassword.tsx`, `VerifyEmail.tsx`, `SignupRole.tsx` — empowered-logo
-
-### Note
-- `icon-slps.png` (therapist/clinician icon) has no WebP replacement uploaded yet — it remains as PNG.
-- `empowered-logo-white.png` (used in Footer and HubHeader) also has no replacement — stays as PNG.
+This shows the full scene (people reading) within the exact same container dimensions.
 

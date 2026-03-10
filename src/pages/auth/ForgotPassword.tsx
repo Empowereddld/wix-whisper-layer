@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import empoweredLogo from "@/assets/empowered-logo.png";
+import empoweredLogo from "@/assets/empowered-logo.webp";
 import { ArrowLeft, Mail } from "lucide-react";
 
 const ForgotPassword = () => {

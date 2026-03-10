@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import PasswordInput from "@/components/hub/PasswordInput";
 import { useToast } from "@/hooks/use-toast";
-import empoweredLogo from "@/assets/empowered-logo.png";
+import empoweredLogo from "@/assets/empowered-logo.webp";
 
 const GoogleIcon = () => (
   <svg className="w-5 h-5 mr-3" viewBox="0 0 24 24">

@@ -9,7 +9,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import empoweredLogo from "@/assets/empowered-logo.png";
+import empoweredLogo from "@/assets/empowered-logo.webp";
 
 const typeIcons: Record<string, React.ElementType> = {
   poster: Image,

@@ -3,7 +3,7 @@ import AdminSidebar from "./AdminSidebar";
 import { useAuth } from "@/contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { LogOut } from "lucide-react";
-import empoweredLogo from "@/assets/empowered-logo.png";
+import empoweredLogo from "@/assets/empowered-logo.webp";
 
 interface AdminLayoutProps {
   children: React.ReactNode;

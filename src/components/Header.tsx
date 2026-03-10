@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Menu, X, ShoppingBag, ChevronDown } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
-import logoImage from "@/assets/empowered-logo.png";
+import logoImage from "@/assets/empowered-logo.webp";
 
 const whoWeServeLinks = [
   { label: "For Parents", href: "/for-parents" },
