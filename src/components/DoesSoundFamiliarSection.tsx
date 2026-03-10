@@ -1,6 +1,6 @@
 const DoesSoundFamiliarSection = () => {
   return (
-    <section className="py-10 md:py-16 lg:py-[120px] bg-muted">
+    <section className="pt-6 md:pt-10 lg:pt-16 pb-10 md:pb-16 lg:pb-[120px] bg-muted">
       {/* Full-bleed black bar */}
       <div className="bg-black text-white px-6 md:px-8 py-5 lg:py-8 mb-6 md:mb-8 lg:mb-12">
         <div className="container px-0">
