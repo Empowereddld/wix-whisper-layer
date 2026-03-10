@@ -1,9 +1,9 @@
 import { Button } from "@/components/ui/button";
-import bookPaperAirplane from "@/assets/book-paper-airplane.png";
+import bookPaperAirplane from "@/assets/book-paper-airplane.webp";
 import bookMakeFriends from "@/assets/book-make-friends.png";
 import bookBirthdayParty from "@/assets/book-birthday-party.png";
 import bookTheatreExchange from "@/assets/book-theatre-exchange.png";
-import kidsReading from "@/assets/kids-reading.png";
+import kidsReading from "@/assets/kids-reading.webp";
 
 const books = [
   { title: "Dan and the Paper Airplane", subtitle: "Dan discovers DLD is why he struggles and starts helpful speech therapy.", image: bookPaperAirplane },

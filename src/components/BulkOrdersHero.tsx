@@ -1,4 +1,4 @@
-import bulkOrdersHero from "@/assets/bulk-orders-hero.png";
+import bulkOrdersHero from "@/assets/bulk-orders-hero.webp";
 
 const BulkOrdersHero = () => {
   return (
