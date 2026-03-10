@@ -1,18 +1,23 @@
 
 
-## Plan: Zoom out the image in "Is This Right" section
+## Crop SLP Icon — Remove "For SLP's" Text
 
-The image currently uses `object-cover` which crops tightly into the center of the photo, cutting off the reading activity. To "zoom out" while keeping the same frame size, we can use CSS `object-fit: contain` instead — but that would leave empty space.
+The therapist/clinician icon (`icon-slps.png`) has "For SLP's" text baked into the image that the other three icons don't have. The fix is to crop it out and match the sizing of the other icons.
 
-A better approach: keep `object-cover` but use `object-position` to show more of the image, combined with scaling. Specifically:
+### Approach
 
-### Change in `src/components/IsThisRightSection.tsx` (line 16)
+1. **Use AI image editing** (Gemini flash image model) via a backend function to:
+   - Take the current `icon-slps.png` as input
+   - Remove/crop out the "For SLP's" text at the bottom
+   - Output a clean icon matching the style of the other three (just the illustration, no text)
+   - Save as `icon-slps.webp` in `src/assets/`
 
-On the `<img>` element, add a CSS `scale` transform to shrink the image within its container, effectively zooming out while the container stays the same size. We'll use Tailwind's `scale-[0.85]` (or similar) combined with `object-contain` to ensure the full image is visible:
+2. **Update import** in `ChoosePathSection.tsx`:
+   - Change `import iconSlps from "@/assets/icon-slps.png"` → `import iconSlps from "@/assets/icon-slps.webp"`
 
-- Change `object-cover` → `object-contain` so the entire image is visible without cropping
-- Add `object-center` to keep it centered
-- The container with `rounded-xl overflow-hidden` maintains the same frame size and shape
+### Alternative (simpler)
+Since the icon images are displayed at 108x108px with `object-contain`, we can crop the image using CSS by switching to `object-cover` with `object-top` positioning to cut off the bottom text. However, this is fragile — a proper image crop is cleaner.
 
-This shows the full scene (people reading) within the exact same container dimensions.
+### Recommendation
+Use the AI image model to regenerate a clean version of the SLP icon without the text, matching the purple line-art style of the other icons. This gives us a proper asset rather than a CSS hack.
 
