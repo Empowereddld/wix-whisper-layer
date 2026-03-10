@@ -1,7 +1,7 @@
 import step1Img from "@/assets/educators-step-1.png";
-import step2Img from "@/assets/educators-step-2.png";
-import step3Img from "@/assets/educators-step-3.png";
-import step4Img from "@/assets/educators-step-4.png";
+import step2Img from "@/assets/educators-step-2.webp";
+import step3Img from "@/assets/educators-step-3.webp";
+import step4Img from "@/assets/educators-step-4.webp";
 
 const steps = [
   {

@@ -1,4 +1,4 @@
-import bookCharacters from "@/assets/book-characters.png";
+import bookCharacters from "@/assets/book-characters.webp";
 
 const BooksHero = () => {
   return (

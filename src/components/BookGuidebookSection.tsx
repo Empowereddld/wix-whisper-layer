@@ -1,4 +1,4 @@
-import bookGuidebook from "@/assets/book-parent-guidebook.png";
+import bookGuidebook from "@/assets/book-parent-guidebook.webp";
 
 const BookGuidebookSection = () => {
   return (

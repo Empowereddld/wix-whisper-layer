@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import boyThinking from "@/assets/boy-thinking.png";
+import boyThinking from "@/assets/boy-thinking.webp";
 
 const EveryChildSection = () => {
   return (
