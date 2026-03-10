@@ -55,12 +55,14 @@ const ChoosePathSection = () => {
               key={path.title}
               className="bg-lavender border border-border rounded-md px-6 py-7 text-left flex flex-col items-start hover:shadow-[0_6px_20px_-4px_hsl(258_50%_50%/0.1)] hover:-translate-y-[2px] transition-all duration-300"
             >
-              <img
-                src={path.icon}
-                alt={path.title}
-                className="w-[108px] h-[108px] object-contain mb-5"
-                loading="lazy"
-              />
+              <div className="w-[108px] h-[108px] mb-5 overflow-hidden">
+                <img
+                  src={path.icon}
+                  alt={path.title}
+                  className={`w-full object-contain ${path.href === "/for-therapists" ? "h-[130px] object-top" : "h-full"}`}
+                  loading="lazy"
+                />
+              </div>
               <h3 className="text-[18px] md:text-[20px] font-bold text-foreground mb-2 leading-[1.25]">{path.title}</h3>
               <p className="text-[13px] text-muted-foreground mb-6 flex-1 leading-[1.65]">{path.description}</p>
               <a href={path.href}>
