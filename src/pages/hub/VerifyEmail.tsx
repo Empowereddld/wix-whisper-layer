@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Mail } from "lucide-react";
-import empoweredLogo from "@/assets/empowered-logo.png";
+import empoweredLogo from "@/assets/empowered-logo.webp";
 
 const VerifyEmail = () => {
   return (

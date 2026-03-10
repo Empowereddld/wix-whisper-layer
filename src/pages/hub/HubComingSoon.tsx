@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import logoImage from "@/assets/empowered-logo.png";
+import logoImage from "@/assets/empowered-logo.webp";
 
 const HubComingSoon = () => {
   return (

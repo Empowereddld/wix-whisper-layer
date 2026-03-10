@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import PasswordInput from "@/components/hub/PasswordInput";
 import { useToast } from "@/hooks/use-toast";
-import empoweredLogo from "@/assets/empowered-logo.png";
+import empoweredLogo from "@/assets/empowered-logo.webp";
 
 const ResetPassword = () => {
   const navigate = useNavigate();
