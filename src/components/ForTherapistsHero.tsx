@@ -1,4 +1,4 @@
-import therapistWithKids from "@/assets/therapist-with-kids.png";
+import therapistWithKids from "@/assets/therapist-with-kids.webp";
 import { useScrollFadeIn } from "@/hooks/useScrollFadeIn";
 
 const ForTherapistsHero = () => {

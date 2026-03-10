@@ -1,4 +1,4 @@
-import orgKids from "@/assets/org-kids.png";
+import orgKids from "@/assets/org-kids.webp";
 
 const OrganizationsAwarenessSection = () => {
   return (

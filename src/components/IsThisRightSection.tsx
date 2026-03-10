@@ -1,4 +1,4 @@
-import educatorsRightFit from "@/assets/educators-right-fit.png";
+import educatorsRightFit from "@/assets/educators-right-fit.webp";
 
 const IsThisRightSection = () => {
   return (

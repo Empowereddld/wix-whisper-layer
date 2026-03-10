@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import familyReading from "@/assets/family-reading.png";
+import familyReading from "@/assets/family-reading.webp";
 
 const NotAloneSection = () => {
   return (

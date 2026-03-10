@@ -1,4 +1,4 @@
-import kidsSoccer from "@/assets/kids-playing-soccer.png";
+import kidsSoccer from "@/assets/kids-playing-soccer.webp";
 
 const IsThisRightForOrgSection = () => {
   return (

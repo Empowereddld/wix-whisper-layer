@@ -1,4 +1,4 @@
-import familyStudying from "@/assets/family-studying.png";
+import familyStudying from "@/assets/family-studying.webp";
 
 const RightPlaceSection = () => {
   return (

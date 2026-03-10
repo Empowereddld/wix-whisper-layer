@@ -1,5 +1,5 @@
 import { Check } from "lucide-react";
-import educatorsTrust from "@/assets/educators-trust.png";
+import educatorsTrust from "@/assets/educators-trust.webp";
 
 const trustPoints = [
   {

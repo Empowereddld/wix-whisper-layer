@@ -1,5 +1,5 @@
 import { Check } from "lucide-react";
-import familyDinner from "@/assets/family-dinner-new.png";
+import familyDinner from "@/assets/family-dinner-new.webp";
 
 const trustPoints = [
   {
