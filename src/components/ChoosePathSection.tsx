@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import iconParents from "@/assets/icon-parents.webp";
 import iconEducators from "@/assets/icon-educators.webp";
-import iconSlps from "@/assets/icon-slps.png";
+import iconSlps from "@/assets/icon-slps.webp";
 import iconOrganizations from "@/assets/icon-organizations.webp";
 
 const paths = [

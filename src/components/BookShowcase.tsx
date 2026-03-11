@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
 import bookPaperAirplane from "@/assets/book-paper-airplane.webp";
-import bookMakeFriends from "@/assets/book-make-friends.png";
-import bookBirthdayParty from "@/assets/book-birthday-party.png";
-import bookTheatreExchange from "@/assets/book-theatre-exchange.png";
+import bookMakeFriends from "@/assets/book-make-friends.webp";
+import bookBirthdayParty from "@/assets/book-birthday-party.webp";
+import bookTheatreExchange from "@/assets/book-theatre-exchange.webp";
 import kidsReading from "@/assets/kids-reading.webp";
 
 const books = [

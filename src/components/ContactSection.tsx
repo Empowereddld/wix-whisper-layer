@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
-import workshopBg from "@/assets/workshop-bg.png";
+import workshopBg from "@/assets/workshop-bg.webp";
 
 const contactSchema = z.object({
   firstName: z.string().trim().min(1, "First name is required").max(100),
