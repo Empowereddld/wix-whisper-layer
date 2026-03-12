@@ -1,18 +1,18 @@
 
 
-## Plan: Zoom out the image in "Is This Right" section
+## Replace last 2 PNGs with uploaded WebP versions
 
-The image currently uses `object-cover` which crops tightly into the center of the photo, cutting off the reading activity. To "zoom out" while keeping the same frame size, we can use CSS `object-fit: contain` instead — but that would leave empty space.
+**Changes:**
 
-A better approach: keep `object-cover` but use `object-position` to show more of the image, combined with scaling. Specifically:
+1. **Save uploaded files:**
+   - `user-uploads://empowered-logo-white..webp` → `src/assets/empowered-logo-white.webp`
+   - `user-uploads://icon-slps..webp` → `src/assets/icon-slps.webp`
 
-### Change in `src/components/IsThisRightSection.tsx` (line 16)
+2. **Update `src/components/Footer.tsx`:**
+   - Change import from `empowered-logo-white.png` → `empowered-logo-white.webp`
 
-On the `<img>` element, add a CSS `scale` transform to shrink the image within its container, effectively zooming out while the container stays the same size. We'll use Tailwind's `scale-[0.85]` (or similar) combined with `object-contain` to ensure the full image is visible:
+3. **Update `src/components/ChoosePathSection.tsx`:**
+   - Change import from `icon-slps.png` → `icon-slps.webp`
 
-- Change `object-cover` → `object-contain` so the entire image is visible without cropping
-- Add `object-center` to keep it centered
-- The container with `rounded-xl overflow-hidden` maintains the same frame size and shape
-
-This shows the full scene (people reading) within the exact same container dimensions.
+This eliminates the last 2 PNGs on the Who We Serve page (and the Footer which appears site-wide).
 
