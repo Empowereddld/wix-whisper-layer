@@ -3,7 +3,7 @@ import bookPaperAirplane from "@/assets/book-paper-airplane.webp";
 import bookMakeFriends from "@/assets/book-make-friends.webp";
 import bookBirthdayParty from "@/assets/book-birthday-party.webp";
 import bookTheatreExchange from "@/assets/book-theatre-exchange.webp";
-import kidsReading from "@/assets/3-kids-reading.png";
+import kidsReading from "@/assets/3-kids-reading.webp";
 
 const books = [
   { title: "Dan and the Paper Airplane", subtitle: "Dan discovers DLD is why he struggles and starts helpful speech therapy.", image: bookPaperAirplane },

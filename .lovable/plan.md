@@ -1,12 +1,18 @@
 
 
-## Replace 3-kids-reading.png with WebP version
+## Plan: Zoom out the image in "Is This Right" section
 
-**What**: Save the uploaded `3_kids_reading.webp` as `src/assets/3-kids-reading.webp` and update the import in `BookShowcase.tsx` to use the WebP file instead of the PNG.
+The image currently uses `object-cover` which crops tightly into the center of the photo, cutting off the reading activity. To "zoom out" while keeping the same frame size, we can use CSS `object-fit: contain` instead — but that would leave empty space.
 
-**Changes**:
-1. Copy `user-uploads://3_kids_reading.webp` to `src/assets/3-kids-reading.webp`
-2. Update `src/components/BookShowcase.tsx` import from `3-kids-reading.png` to `3-kids-reading.webp`
+A better approach: keep `object-cover` but use `object-position` to show more of the image, combined with scaling. Specifically:
 
-This removes one of the two remaining convertible PNGs on the homepage.
+### Change in `src/components/IsThisRightSection.tsx` (line 16)
+
+On the `<img>` element, add a CSS `scale` transform to shrink the image within its container, effectively zooming out while the container stays the same size. We'll use Tailwind's `scale-[0.85]` (or similar) combined with `object-contain` to ensure the full image is visible:
+
+- Change `object-cover` → `object-contain` so the entire image is visible without cropping
+- Add `object-center` to keep it centered
+- The container with `rounded-xl overflow-hidden` maintains the same frame size and shape
+
+This shows the full scene (people reading) within the exact same container dimensions.
 
