@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
-import foundersPhoto from "@/assets/founders-circle.png";
-import courseDiscover from "@/assets/course-discover.png";
+import courseDiscover from "@/assets/course-discover.webp";
 
 const CreatedByExpertsSection = () => {
   return (
@@ -28,27 +27,15 @@ const CreatedByExpertsSection = () => {
             </a>
           </div>
 
-          {/* Right – Founders photo + discover card */}
-          <div className="flex items-start justify-center lg:justify-end">
-            <div className="relative mr-0 lg:mr-4">
-              {/* Course discover card */}
-              <div className="rounded-xl overflow-hidden shadow-lg w-[260px] md:w-[300px]">
-                <img
-                  src={courseDiscover}
-                  alt="Inside Communicate with Confidence — course highlights"
-                  className="w-full h-auto"
-                  loading="lazy"
-                />
-              </div>
-              {/* Founders photo – overlapping top-right */}
-              <div className="hidden md:block absolute -top-4 left-[calc(100%-20px)] rounded-xl overflow-hidden w-[140px] h-[170px] shadow-lg">
-                <img
-                  src={foundersPhoto}
-                  alt="Jinean and Camesha, founders of Empowered DLD"
-                  className="w-full h-full object-cover"
-                  loading="lazy"
-                />
-              </div>
+          {/* Right – Discover card */}
+          <div className="flex items-center justify-center lg:justify-end">
+            <div className="rounded-xl overflow-hidden shadow-lg w-[280px] md:w-[340px] lg:w-[380px]">
+              <img
+                src={courseDiscover}
+                alt="Inside Communicate with Confidence — course highlights"
+                className="w-full h-auto"
+                loading="lazy"
+              />
             </div>
           </div>
         </div>
