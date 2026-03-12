@@ -1,5 +1,5 @@
 import { Mail } from "lucide-react";
-import logoWhite from "@/assets/empowered-logo-white.png";
+import logoWhite from "@/assets/empowered-logo-white.webp";
 
 const FacebookFilled = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
