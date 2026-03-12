@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
 import ResourcesHero from "@/components/ResourcesHero";
 import BrowseByTypeSection from "@/components/BrowseByTypeSection";
@@ -9,14 +9,23 @@ import ChoosePathCTA from "@/components/ChoosePathCTA";
 import Footer from "@/components/Footer";
 
 const Resources = () => {
-  const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (location.hash === "#blogs" || location.hash === "#blog") {
-      navigate("/resources/blog", { replace: true });
-    }
-  }, [location.hash, navigate]);
+    const redirectLegacyBlogHash = () => {
+      const hash = window.location.hash?.toLowerCase();
+      if (hash === "#blogs" || hash === "#blog") {
+        navigate("/resources/blog", { replace: true });
+      }
+    };
+
+    redirectLegacyBlogHash();
+    window.addEventListener("hashchange", redirectLegacyBlogHash);
+
+    return () => {
+      window.removeEventListener("hashchange", redirectLegacyBlogHash);
+    };
+  }, [navigate]);
 
   return (
     <div className="min-h-screen bg-background">
