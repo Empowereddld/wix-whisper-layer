@@ -82,7 +82,7 @@ const BlogPost = () => {
               )}
 
               {/* Body */}
-              <div className="max-w-[700px] mx-auto prose prose-lg prose-gray dark:prose-invert prose-headings:font-display prose-a:text-primary">
+              <div className="max-w-[700px] mx-auto blog-content">
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>
                   {post.body || ""}
                 </ReactMarkdown>

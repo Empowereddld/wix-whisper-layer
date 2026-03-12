@@ -1,29 +1,18 @@
 
 
-# Fix Blog Post Typography to Match Site Style
+## Plan: Zoom out the image in "Is This Right" section
 
-## Problem
-The blog body uses Tailwind's `prose` classes from `@tailwindcss/typography` (which isn't even registered), resulting in unstyled, wall-of-text content with no paragraph spacing, heading hierarchy, or list formatting.
+The image currently uses `object-cover` which crops tightly into the center of the photo, cutting off the reading activity. To "zoom out" while keeping the same frame size, we can use CSS `object-fit: contain` instead — but that would leave empty space.
 
-## Solution
-Remove the `prose` dependency entirely and style the markdown output with custom CSS classes that match the site's existing typography system (DM Sans, consistent sizing/spacing, muted-foreground for body text).
+A better approach: keep `object-cover` but use `object-position` to show more of the image, combined with scaling. Specifically:
 
-### Changes
+### Change in `src/components/IsThisRightSection.tsx` (line 16)
 
-**1. `src/pages/BlogPost.tsx`** — Replace the `prose` container with a custom-styled wrapper class:
-```tsx
-<div className="max-w-[700px] mx-auto blog-content">
-```
+On the `<img>` element, add a CSS `scale` transform to shrink the image within its container, effectively zooming out while the container stays the same size. We'll use Tailwind's `scale-[0.85]` (or similar) combined with `object-contain` to ensure the full image is visible:
 
-**2. `src/index.css`** — Add a `blog-content` utility class that styles all markdown elements to match the site's DM Sans typography:
-- **Paragraphs**: `text-[15px] md:text-[16px]`, `leading-[1.7]`, `text-muted-foreground`, with `1.5rem` bottom margin
-- **Headings (h2)**: `text-[24px] md:text-[28px]`, `font-bold`, `text-foreground`, matching site `h2` style
-- **Headings (h3)**: `text-[20px] md:text-[22px]`, `font-semibold`
-- **Lists (ul/ol)**: Proper indentation, bullet/number styling, consistent spacing
-- **Blockquotes**: Left border with `border-primary`, italic, muted background
-- **Bold/italic**: Proper `text-foreground` weight
-- **Links**: `text-primary` with underline on hover
-- **Images**: Rounded corners, full width, margin spacing
+- Change `object-cover` → `object-contain` so the entire image is visible without cropping
+- Add `object-center` to keep it centered
+- The container with `rounded-xl overflow-hidden` maintains the same frame size and shape
 
-No new dependencies needed — just CSS that mirrors the existing site patterns.
+This shows the full scene (people reading) within the exact same container dimensions.
 
