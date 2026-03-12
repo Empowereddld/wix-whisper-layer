@@ -1,4 +1,4 @@
-import courseDevices from "@/assets/course-devices.png";
+import courseDevices from "@/assets/course-devices.webp";
 
 const FreeCourseHero = () => {
   return (
