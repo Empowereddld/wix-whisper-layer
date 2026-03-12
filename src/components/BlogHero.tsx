@@ -8,7 +8,7 @@ const BlogHero = () => {
         <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-4">
           Blog
         </h1>
-        <p className="text-muted-foreground text-lg md:text-xl max-w-[600px] mx-auto">
+        <p className="text-muted-foreground text-sm md:text-base max-w-[600px] mx-auto">
           Insights, tips, and stories to help you support children with Developmental Language Disorder.
         </p>
       </div>
