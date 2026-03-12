@@ -21,6 +21,8 @@ import WorkWithUs from "./pages/WorkWithUs";
 import AboutDLD from "./pages/AboutDLD";
 import ContactUs from "./pages/ContactUs";
 import NotFound from "./pages/NotFound";
+import Blog from "./pages/Blog";
+import BlogPost from "./pages/BlogPost";
 import HubSignup from "./pages/hub/HubSignup";
 import HubLogin from "./pages/hub/HubLogin";
 import VerifyEmail from "./pages/hub/VerifyEmail";
