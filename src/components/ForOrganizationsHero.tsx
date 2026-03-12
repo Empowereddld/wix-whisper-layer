@@ -1,4 +1,4 @@
-import orgHero from "@/assets/org-hero.png";
+import orgHero from "@/assets/org-hero.webp";
 
 const ForOrganizationsHero = () => {
   return (
