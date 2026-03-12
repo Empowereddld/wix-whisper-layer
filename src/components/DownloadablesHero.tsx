@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import downloadablesHero from "@/assets/downloadables-hero.png";
+import downloadablesHero from "@/assets/downloadables-hero.webp";
 
 const DownloadablesHero = () => {
   return (
