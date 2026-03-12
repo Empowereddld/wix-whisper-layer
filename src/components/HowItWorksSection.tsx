@@ -1,4 +1,4 @@
-import step1Img from "@/assets/educators-step-1.png";
+import step1Img from "@/assets/educators-step-1.webp";
 import step2Img from "@/assets/educators-step-2.webp";
 import step3Img from "@/assets/educators-step-3.webp";
 import step4Img from "@/assets/educators-step-4.webp";
