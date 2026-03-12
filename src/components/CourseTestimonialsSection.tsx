@@ -1,6 +1,6 @@
-import testimonialEmily from "@/assets/testimonial-emily.png";
-import testimonialSarah from "@/assets/testimonial-sarah.png";
-import testimonialTiffany from "@/assets/testimonial-tiffany.png";
+import testimonialEmily from "@/assets/testimonial-emily.webp";
+import testimonialSarah from "@/assets/testimonial-sarah.webp";
+import testimonialTiffany from "@/assets/testimonial-tiffany.webp";
 
 const testimonials = [
   { src: testimonialEmily, alt: "Testimonial from Emily M., Grateful Mom from a Facebook Group" },
