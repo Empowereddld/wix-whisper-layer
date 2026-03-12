@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
 import foundersPhoto from "@/assets/founders-circle.webp";
-import boyReading from "@/assets/boy-reading-bench.png";
+import boyReading from "@/assets/boy-reading-bench.webp";
 
 const TrustSection = () => {
   return (
