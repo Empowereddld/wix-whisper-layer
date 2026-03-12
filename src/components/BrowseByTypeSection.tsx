@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import podcastImg from "@/assets/resource-podcast.png";
-import courseImg from "@/assets/resource-course.jpg";
-import downloadImg from "@/assets/resource-downloadables.png";
+import podcastImg from "@/assets/resource-podcast.webp";
+import courseImg from "@/assets/resource-course.webp";
+import downloadImg from "@/assets/resource-downloadables.webp";
 
 const types = [
   {
