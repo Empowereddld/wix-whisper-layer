@@ -21,6 +21,8 @@ import WorkWithUs from "./pages/WorkWithUs";
 import AboutDLD from "./pages/AboutDLD";
 import ContactUs from "./pages/ContactUs";
 import NotFound from "./pages/NotFound";
+import Blog from "./pages/Blog";
+import BlogPost from "./pages/BlogPost";
 import HubSignup from "./pages/hub/HubSignup";
 import HubLogin from "./pages/hub/HubLogin";
 import VerifyEmail from "./pages/hub/VerifyEmail";
@@ -71,6 +73,8 @@ const App = () => (
             <Route path="/resources/podcasts" element={<Podcasts />} />
             <Route path="/resources/free-course" element={<FreeCourse />} />
             <Route path="/resources/downloadables" element={<Downloadables />} />
+            <Route path="/resources/blog" element={<Blog />} />
+            <Route path="/resources/blog/:slug" element={<BlogPost />} />
             <Route path="/shop" element={<Shop />} />
             <Route path="/shop/books" element={<Books />} />
             <Route path="/shop/bulk-orders" element={<BulkOrders />} />

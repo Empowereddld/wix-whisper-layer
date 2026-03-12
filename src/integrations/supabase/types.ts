@@ -38,7 +38,9 @@ export type Database = {
       blog_posts: {
         Row: {
           body: string | null
+          categories: string[] | null
           created_at: string
+          excerpt: string | null
           featured_image_url: string | null
           id: string
           published_at: string | null
@@ -49,7 +51,9 @@ export type Database = {
         }
         Insert: {
           body?: string | null
+          categories?: string[] | null
           created_at?: string
+          excerpt?: string | null
           featured_image_url?: string | null
           id?: string
           published_at?: string | null
@@ -60,7 +64,9 @@ export type Database = {
         }
         Update: {
           body?: string | null
+          categories?: string[] | null
           created_at?: string
+          excerpt?: string | null
           featured_image_url?: string | null
           id?: string
           published_at?: string | null
