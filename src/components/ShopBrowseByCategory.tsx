@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import shopBooksImg from "@/assets/shop-books.webp";
-import shopBulkImg from "@/assets/shop-bulk-orders.png";
+import shopBulkImg from "@/assets/shop-bulk-orders.webp";
 import shopMerchImg from "@/assets/shop-merch.webp";
 
 const categories = [
