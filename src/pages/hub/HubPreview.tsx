@@ -22,6 +22,7 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import TestimonialMasonry from "@/components/hub/TestimonialMasonry";
 
 /* ── Data ── */
 
