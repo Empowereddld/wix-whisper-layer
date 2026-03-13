@@ -287,4 +287,126 @@
   .blog-content > *:first-child {
     margin-top: 0;
   }
+
+  /* Drop cap on first paragraph */
+  .blog-content > p:first-of-type::first-letter {
+    float: left;
+    font-size: 3.2em;
+    line-height: 0.85;
+    font-weight: 700;
+    color: hsl(var(--primary));
+    margin-right: 0.08em;
+    margin-top: 0.05em;
+  }
+
+  /* Callout boxes — blockquotes starting with bold openers */
+  .blog-content blockquote:has(strong:first-child) {
+    font-style: normal;
+    background: hsl(var(--lavender));
+    border-left: 4px solid hsl(var(--primary));
+    border-radius: 0 0.75rem 0.75rem 0;
+    padding: 1.25rem 1.5rem;
+  }
+
+  .blog-content blockquote:has(strong:first-child) strong:first-child {
+    color: hsl(var(--primary));
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+
+  /* Pull quotes — blockquotes with only bold/italic content, centered */
+  .blog-content blockquote:has(> p > em:only-child) {
+    font-style: normal;
+    background: transparent;
+    border-left: none;
+    border-top: 3px solid hsl(var(--primary));
+    border-bottom: 3px solid hsl(var(--primary));
+    border-radius: 0;
+    text-align: center;
+    padding: 1.5rem 2rem;
+    margin: 2.5rem auto;
+    max-width: 85%;
+  }
+
+  .blog-content blockquote:has(> p > em:only-child) em {
+    font-size: 1.25rem;
+    line-height: 1.5;
+    font-weight: 600;
+    color: hsl(var(--foreground));
+    font-style: italic;
+  }
+
+  /* Tables */
+  .blog-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    font-size: 0.875rem;
+    border-radius: 0.5rem;
+    overflow: hidden;
+  }
+
+  .blog-content thead {
+    background: hsl(var(--deep-purple));
+    color: hsl(var(--deep-purple-foreground));
+  }
+
+  .blog-content th {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .blog-content td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid hsl(var(--border));
+  }
+
+  .blog-content tbody tr:nth-child(even) {
+    background: hsl(var(--secondary));
+  }
+
+  /* Numbered steps — enhanced ordered list */
+  .blog-content ol {
+    counter-reset: step-counter;
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .blog-content ol > li {
+    counter-increment: step-counter;
+    position: relative;
+    padding-left: 2.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .blog-content ol > li::before {
+    content: counter(step-counter);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 2rem;
+    height: 2rem;
+    background: hsl(var(--secondary));
+    color: hsl(var(--primary));
+    font-weight: 700;
+    font-size: 0.875rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Inline code */
+  .blog-content code {
+    background: hsl(var(--secondary));
+    color: hsl(var(--primary));
+    padding: 0.15em 0.4em;
+    border-radius: 0.25rem;
+    font-size: 0.875em;
+    font-family: 'DM Sans', sans-serif;
+  }
 }
