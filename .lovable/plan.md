@@ -1,18 +1,39 @@
 
 
-## Plan: Zoom out the image in "Is This Right" section
+# Update Blog Post Markdown to Use New Formatting
 
-The image currently uses `object-cover` which crops tightly into the center of the photo, cutting off the reading activity. To "zoom out" while keeping the same frame size, we can use CSS `object-fit: contain` instead — but that would leave empty space.
+## What
+Update the markdown body of existing blog posts (via database migration or direct update) to incorporate the callout box, pull quote, and table syntax that the CSS already supports.
 
-A better approach: keep `object-cover` but use `object-position` to show more of the image, combined with scaling. Specifically:
+## Posts to Update
 
-### Change in `src/components/IsThisRightSection.tsx` (line 16)
+### 1. Reflexive Questioning
+- Wrap the opening `**Did you know?**` paragraph in a blockquote: `> **Did you know?** Children who develop...`
+- Add a pull quote for the key insight about directive vs reflexive approach
 
-On the `<img>` element, add a CSS `scale` transform to shrink the image within its container, effectively zooming out while the container stays the same size. We'll use Tailwind's `scale-[0.85]` (or similar) combined with `object-contain` to ensure the full image is visible:
+### 2. Autism vs DLD
+- Convert the similarities/differences comparison into a **markdown table** with columns for Feature, ASD, DLD
+- Add a callout box: `> **Key takeaway:** ...`
 
-- Change `object-cover` → `object-contain` so the entire image is visible without cropping
-- Add `object-center` to keep it centered
-- The container with `rounded-xl overflow-hidden` maintains the same frame size and shape
+### 3. Addressing Inequities in DLD Therapy
+- The numbered list (Racial Inequity, Income, Being a Girl, etc.) already works with the step counter styling
+- Add a pull quote highlighting a key stat
 
-This shows the full scene (people reading) within the exact same container dimensions.
+### 4. Finding Peace as a Parent
+- Add a callout: `> **Remember:** You are not alone...`
+
+### 5. Understanding Your Child's Development Team
+- Could benefit from a table listing each team member and their role
+
+### 6. DLD as an Adult
+- Add a pull quote from Alex's story
+
+## How
+Use database updates to modify the `body` field of each published blog post, adding the correct markdown syntax:
+- **Callout**: `> **Did you know?** text...` (blockquote with bold opener)
+- **Pull quote**: `> *"Meaningful quote here"*` (blockquote with only italic)
+- **Table**: Standard markdown table with `| Header | Header |` syntax
+
+## Files Changed
+- No code files — only database `blog_posts.body` content updates via SQL
 
