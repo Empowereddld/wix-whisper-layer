@@ -108,6 +108,8 @@ const AnimatedCounter = ({ target, suffix }: { target: number; suffix: string })
 const HubPreview = () => {
   const [activeFilter, setActiveFilter] = useState<AudienceFilter>("All");
   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
+  const [selectedRole, setSelectedRole] = useState<string>("");
+  const [otherRole, setOtherRole] = useState("");
   const navigate = useNavigate();
 
   const filteredResources = placeholderResources.filter(
@@ -185,7 +187,7 @@ const HubPreview = () => {
               </div>
               <div>
                 <Label htmlFor="signup-role" className="text-foreground font-medium text-[13px]">Role</Label>
-                <Select>
+                <Select value={selectedRole} onValueChange={setSelectedRole}>
                   <SelectTrigger className="mt-1.5">
                     <SelectValue placeholder="Select your role" />
                   </SelectTrigger>
@@ -194,10 +196,17 @@ const HubPreview = () => {
                     <SelectItem value="therapist">Therapist</SelectItem>
                     <SelectItem value="educator">Educator</SelectItem>
                     <SelectItem value="school_leader">School Leader</SelectItem>
-                    <SelectItem value="student">Student</SelectItem>
                     <SelectItem value="other">Other</SelectItem>
                   </SelectContent>
                 </Select>
+                {selectedRole === "other" && (
+                  <Input
+                    placeholder="Please specify your role"
+                    value={otherRole}
+                    onChange={(e) => setOtherRole(e.target.value)}
+                    className="mt-2"
+                  />
+                )}
               </div>
               <div>
                 <Label className="text-foreground font-medium text-[13px] mb-3 block">
