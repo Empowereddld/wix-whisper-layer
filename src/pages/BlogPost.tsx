@@ -87,7 +87,9 @@ const BlogPost = () => {
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>
                   {post.body || ""}
                 </ReactMarkdown>
+              </div>
 
+              <div className="max-w-[700px] mx-auto">
                 <BlogPostCTA categories={post.categories} />
               </div>
             </article>
