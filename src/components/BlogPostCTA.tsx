@@ -76,7 +76,7 @@ const BlogPostCTA = ({ categories }: BlogPostCTAProps) => {
           href={PODCAST_CTA.href}
           target="_blank"
           rel="noopener noreferrer"
-          className="group block rounded-xl bg-deep-purple p-6 md:p-7 transition-all duration-300 hover:shadow-elevated"
+          className="group flex flex-col rounded-xl bg-deep-purple p-6 md:p-7 transition-all duration-300 hover:shadow-elevated"
         >
           <div className="flex items-start gap-3 mb-3">
             <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center shrink-0">
@@ -89,7 +89,7 @@ const BlogPostCTA = ({ categories }: BlogPostCTAProps) => {
           <p className="text-deep-purple-foreground/75 text-sm mb-5 leading-relaxed">
             {PODCAST_CTA.description}
           </p>
-          <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary-foreground bg-primary/30 px-4 py-2 rounded-full group-hover:bg-primary/50 transition-colors">
+          <span className="mt-auto inline-flex items-center gap-1.5 text-sm font-semibold text-primary-foreground bg-primary/30 px-4 py-2 rounded-full group-hover:bg-primary/50 transition-colors">
             {PODCAST_CTA.label} →
           </span>
         </a>
@@ -97,7 +97,7 @@ const BlogPostCTA = ({ categories }: BlogPostCTAProps) => {
         {/* Secondary CTA */}
         <Link
           to={secondary.href}
-          className="group block rounded-xl bg-secondary border border-border p-6 md:p-7 transition-all duration-300 hover:shadow-elevated"
+          className="group flex flex-col rounded-xl bg-secondary border border-border p-6 md:p-7 transition-all duration-300 hover:shadow-elevated"
         >
           <div className="flex items-start gap-3 mb-3">
             <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
@@ -110,7 +110,7 @@ const BlogPostCTA = ({ categories }: BlogPostCTAProps) => {
           <p className="text-muted-foreground text-sm mb-5 leading-relaxed">
             {secondary.description}
           </p>
-          <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary-foreground bg-primary px-4 py-2 rounded-full group-hover:bg-primary/90 transition-colors">
+          <span className="mt-auto inline-flex items-center gap-1.5 text-sm font-semibold text-primary-foreground bg-primary px-4 py-2 rounded-full group-hover:bg-primary/90 transition-colors">
             {secondary.label} →
           </span>
         </Link>
