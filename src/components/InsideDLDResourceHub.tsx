@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
-import resourcePreview1 from "@/assets/resource-preview-1.png";
-import resourcePreview2 from "@/assets/resource-preview-2.png";
-import resourcePreview3 from "@/assets/resource-preview-3.png";
-import resourcePreview4 from "@/assets/resource-preview-4.png";
-import resourcePreview5 from "@/assets/resource-preview-5.png";
+import resourcePreview1 from "@/assets/resource-preview-1.webp";
+import resourcePreview2 from "@/assets/resource-preview-2.webp";
+import resourcePreview3 from "@/assets/resource-preview-3.webp";
+import resourcePreview4 from "@/assets/resource-preview-4.webp";
+import resourcePreview5 from "@/assets/resource-preview-5.webp";
 
 type ResourceItem = {
   title: string;

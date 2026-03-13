@@ -1,5 +1,5 @@
 import { Check } from "lucide-react";
-import courseWatching from "@/assets/course-watching.jpg";
+import courseWatching from "@/assets/course-watching.webp";
 
 const learnings = [
   {
