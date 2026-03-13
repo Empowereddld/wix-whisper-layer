@@ -76,7 +76,7 @@ const BlogPostCTA = ({ categories }: BlogPostCTAProps) => {
           href={PODCAST_CTA.href}
           target="_blank"
           rel="noopener noreferrer"
-          className="group block rounded-xl bg-deep-purple p-6 md:p-7 transition-all duration-300 hover:shadow-elevated"
+          className="group flex flex-col rounded-xl bg-deep-purple p-6 md:p-7 transition-all duration-300 hover:shadow-elevated"
         >
           <div className="flex items-start gap-3 mb-3">
             <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center shrink-0">
