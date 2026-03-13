@@ -1,4 +1,4 @@
-import bookMakeFriends from "@/assets/book-dan-daria-make-friends.png";
+import bookMakeFriends from "@/assets/book-dan-daria-make-friends.webp";
 
 const BookMakeFriendsSection = () => {
   return (
