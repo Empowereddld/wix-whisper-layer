@@ -1,7 +1,9 @@
 import { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
-import { Lock, ArrowRight, FileText, Image, BookOpen, Package, BarChart3, Quote, ChevronDown } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { Lock, ArrowRight, FileText, Image, BookOpen, Package, BarChart3, Quote, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Accordion,
@@ -9,7 +11,18 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import empoweredLogo from "@/assets/empowered-logo.webp";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+
+/* ── Data ── */
 
 const typeIcons: Record<string, React.ElementType> = {
   poster: Image,
@@ -35,11 +48,20 @@ const testimonials = [
 ];
 
 const faqs = [
-  { q: "Is it really free?", a: "Yes, creating an account and accessing every resource is completely free. No credit card required, ever." },
-  { q: "Do I need to be a professional to sign up?", a: "Not at all. The hub is designed for parents, therapists, and educators alike." },
-  { q: "What kind of resources are included?", a: "Posters, checklists, activity guides, infographics, and bundles — all created specifically for children with Developmental Language Disorder." },
+  { q: "Is the Resource Hub free to join?", a: "Yes, creating an account is completely free. Some resources are free to download, and others may be available for purchase. No credit card is required to sign up." },
+  { q: "Do I need to be a professional to sign up?", a: "Not at all. The hub is designed for parents, therapists, and educators alike — anyone supporting a child with DLD." },
+  { q: "What kinds of resources are included?", a: "Posters, checklists, activity guides, infographics, and bundles — all created specifically for children with Developmental Language Disorder." },
   { q: "How often are new resources added?", a: "We add new resources regularly. Every time you log in, check the \"New This Month\" section for the latest additions." },
   { q: "Can I share resources with colleagues or other parents?", a: "Yes! Each resource has a share button so you can spread the word and help more families find support." },
+];
+
+const interestOptions = [
+  "DLD awareness materials",
+  "Classroom supports",
+  "Parent guides",
+  "Therapy tools",
+  "Social communication resources",
+  "General information about DLD",
 ];
 
 type AudienceFilter = "All" | "Parents" | "Therapists" | "Educators";
@@ -75,128 +97,201 @@ const AnimatedCounter = ({ target, suffix }: { target: number; suffix: string })
   }, [target]);
 
   return (
-    <span ref={ref} className="text-3xl md:text-4xl font-bold text-mauve tabular-nums">
+    <span ref={ref} className="tabular-nums">
       {count.toLocaleString()}{suffix}
     </span>
   );
 };
 
+/* ── Page ── */
 const HubPreview = () => {
   const [activeFilter, setActiveFilter] = useState<AudienceFilter>("All");
+  const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
+  const navigate = useNavigate();
 
   const filteredResources = placeholderResources.filter(
     (resource) => activeFilter === "All" || resource.audience === activeFilter
   );
 
+  const toggleInterest = (interest: string) => {
+    setSelectedInterests((prev) =>
+      prev.includes(interest) ? prev.filter((i) => i !== interest) : [...prev, interest]
+    );
+  };
+
+  const handleFormSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    navigate("/hub/signup");
+  };
+
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="bg-midnight text-midnight-foreground">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <a href="https://empowereddld.com" className="flex-shrink-0">
-              <img src={empoweredLogo} alt="Empowered DLD" className="h-8 brightness-0 invert" />
-            </a>
-            <div className="flex items-center gap-3">
-              <Link to="/hub/login">
-                <Button variant="ghost" size="sm" className="text-white/80 hover:text-white hover:bg-white/10">Log In</Button>
-              </Link>
-              <Link to="/hub/signup">
-                <Button size="sm" className="bg-mauve text-white hover:bg-mauve/90">Sign Up Free</Button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </header>
+      <Header />
 
-      {/* Hero */}
-      <section className="bg-gradient-to-b from-midnight to-midnight/90 text-midnight-foreground py-20 lg:py-28">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-            Free DLD Resources.
-            <br />
-            <span className="text-mauve">Free to Access. Always Growing.</span>
-          </h1>
-          <p className="text-lg md:text-xl text-white/70 max-w-2xl mx-auto mb-10 leading-relaxed">
-            Posters, guides, checklists, and activities — designed for Parents, Therapists, and Educators supporting children with Developmental Language Disorder.
+      {/* ── Section 1: Hero ── */}
+      <section className="bg-deep-purple py-20 md:py-28 lg:py-32">
+        <div className="container px-6 md:px-8 flex flex-col items-center text-center gap-6">
+          <p className="text-[11px] md:text-[12px] font-bold uppercase tracking-[0.22em] text-white/60">
+            DLD RESOURCE HUB
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/hub/signup">
-              <Button size="lg" className="bg-mauve text-white hover:bg-mauve/90 h-14 px-8 text-lg">
-                Create Free Account <ArrowRight className="ml-2 h-5 w-5" />
+          <h1 className="text-[32px] md:text-[48px] lg:text-[56px] font-black text-white leading-[1.1] max-w-[800px]">
+            DLD Resources for Families and Professionals
+          </h1>
+          <p className="text-[14px] md:text-[16px] text-white/80 leading-[1.7] max-w-[620px]">
+            Posters, guides, checklists, and learning tools supporting children with Developmental Language Disorder.
+          </p>
+          <p className="text-[13px] md:text-[14px] text-white/50">
+            Join 4,300+ parents, therapists, and educators in the Developmental Language Disorder community.
+          </p>
+          <Link to="/hub/signup">
+            <Button size="lg" className="bg-white text-deep-purple hover:bg-white/90 h-14 px-8 text-[15px] font-bold tracking-wide mt-2">
+              Get Instant Access <ArrowRight className="ml-2 h-5 w-5" />
+            </Button>
+          </Link>
+          <p className="text-[13px] text-white/40">
+            Create a free account to explore the Resource Hub.
+          </p>
+        </div>
+      </section>
+
+      {/* ── Section 2: Signup Form ── */}
+      <section className="bg-muted py-16 lg:py-20">
+        <div className="max-w-[540px] mx-auto px-4 sm:px-6">
+          <div className="bg-card rounded-xl border border-border shadow-[var(--shadow-elevated)] p-8 md:p-10">
+            <h2 className="text-[22px] md:text-[26px] font-black text-foreground leading-[1.2] mb-2 text-center">
+              Create your free account to explore the DLD Resource Hub
+            </h2>
+            <p className="text-[14px] text-muted-foreground leading-[1.7] mb-8 text-center">
+              Access practical resources designed to support children with Developmental Language Disorder at home, in therapy, and in the classroom.
+            </p>
+
+            <form onSubmit={handleFormSubmit} className="space-y-5">
+              <div>
+                <Label htmlFor="signup-name" className="text-foreground font-medium text-[13px]">Name</Label>
+                <Input id="signup-name" placeholder="Your full name" className="mt-1.5" />
+              </div>
+              <div>
+                <Label htmlFor="signup-email" className="text-foreground font-medium text-[13px]">Email</Label>
+                <Input id="signup-email" type="email" placeholder="you@example.com" className="mt-1.5" />
+              </div>
+              <div>
+                <Label htmlFor="signup-role" className="text-foreground font-medium text-[13px]">Role</Label>
+                <Select>
+                  <SelectTrigger className="mt-1.5">
+                    <SelectValue placeholder="Select your role" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="parent">Parent</SelectItem>
+                    <SelectItem value="therapist">Therapist</SelectItem>
+                    <SelectItem value="educator">Educator</SelectItem>
+                    <SelectItem value="school_leader">School Leader</SelectItem>
+                    <SelectItem value="student">Student</SelectItem>
+                    <SelectItem value="other">Other</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <Label className="text-foreground font-medium text-[13px] mb-3 block">
+                  What resources are you most interested in?
+                </Label>
+                <div className="space-y-2.5">
+                  {interestOptions.map((interest) => (
+                    <label key={interest} className="flex items-center gap-2.5 cursor-pointer group">
+                      <Checkbox
+                        checked={selectedInterests.includes(interest)}
+                        onCheckedChange={() => toggleInterest(interest)}
+                      />
+                      <span className="text-[13px] md:text-[14px] text-foreground/80 group-hover:text-foreground transition-colors">
+                        {interest}
+                      </span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+              <Button type="submit" className="w-full h-12 bg-deep-purple text-white hover:bg-deep-purple/90 font-bold text-[14px] tracking-wide">
+                Access the Resource Hub <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
-            </Link>
-          </div>
-          <div className="flex items-center justify-center gap-6 mt-8 text-sm text-white/50">
-            <span>✦ 100% Free</span>
-            <span>✦ No credit card</span>
-            <span>✦ Instant access</span>
+              <p className="text-[12px] text-muted-foreground text-center">
+                Free account. Instant access.
+              </p>
+            </form>
           </div>
         </div>
       </section>
 
-      {/* ── Social Proof Counter Bar ── */}
-      <section className="bg-midnight py-10 md:py-12">
-        <div className="max-w-4xl mx-auto px-4">
+      {/* ── Section 3: Community Stats ── */}
+      <section className="bg-deep-purple py-14 md:py-16">
+        <div className="max-w-[1000px] mx-auto px-5 md:px-10">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-0 text-center">
             <div className="flex flex-col items-center md:border-r md:border-white/15">
-              <AnimatedCounter target={2400} suffix="+" />
-              <span className="text-white/60 text-sm mt-1.5 font-medium">community members</span>
+              <span className="text-[28px] md:text-[40px] lg:text-[44px] font-bold text-white leading-none">
+                <AnimatedCounter target={4300} suffix="+" />
+              </span>
+              <span className="text-white/60 text-[13px] md:text-[14px] mt-1.5 font-medium">community members</span>
             </div>
             <div className="flex flex-col items-center md:border-r md:border-white/15">
-              <AnimatedCounter target={15} suffix="+" />
-              <span className="text-white/60 text-sm mt-1.5 font-medium">countries reached</span>
+              <span className="text-[28px] md:text-[40px] lg:text-[44px] font-bold text-white leading-none">
+                <AnimatedCounter target={15} suffix="+" />
+              </span>
+              <span className="text-white/60 text-[13px] md:text-[14px] mt-1.5 font-medium">countries reached</span>
             </div>
             <div className="flex flex-col items-center">
-              <AnimatedCounter target={3} suffix="" />
-              <span className="text-white/60 text-sm mt-1.5 font-medium">audiences served</span>
+              <span className="text-[28px] md:text-[40px] lg:text-[44px] font-bold text-white leading-none whitespace-nowrap">
+                3 audiences
+              </span>
+              <span className="text-white/60 text-[13px] md:text-[14px] mt-1.5 font-medium max-w-[220px]">
+                Supporting parents, therapists, and educators worldwide
+              </span>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Audience Filter Tabs */}
-      <section className="bg-thistle/30 py-6">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Tabs value={activeFilter} onValueChange={(value) => setActiveFilter(value as AudienceFilter)} className="w-full">
-            <TabsList className="bg-white/80 border border-thistle mx-auto flex w-fit">
-              <TabsTrigger value="All" className="px-6 data-[state=active]:bg-midnight data-[state=active]:text-white">All</TabsTrigger>
-              <TabsTrigger value="Parents" className="px-6 data-[state=active]:bg-midnight data-[state=active]:text-white">Parents</TabsTrigger>
-              <TabsTrigger value="Therapists" className="px-6 data-[state=active]:bg-midnight data-[state=active]:text-white">Therapists</TabsTrigger>
-              <TabsTrigger value="Educators" className="px-6 data-[state=active]:bg-midnight data-[state=active]:text-white">Educators</TabsTrigger>
-            </TabsList>
-          </Tabs>
-        </div>
-      </section>
-
-      {/* Resource Preview Grid */}
-      <section className="py-16 lg:py-20 bg-white">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-2xl md:text-3xl font-bold text-midnight mb-3">Preview What's Inside</h2>
-            <p className="text-stone-ui text-lg">Sign up once to unlock and download every resource — for free.</p>
+      {/* ── Section 4: Resource Preview ── */}
+      <section className="py-16 lg:py-20 bg-background">
+        <div className="max-w-[1100px] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10">
+            <h2 className="text-[28px] md:text-[36px] font-black text-foreground leading-[1.1] mb-3">
+              Explore the Resource Library
+            </h2>
+            <p className="text-[14px] md:text-[16px] text-muted-foreground leading-[1.7] max-w-[620px] mx-auto">
+              Browse posters, guides, checklists, and practical tools for supporting children with Developmental Language Disorder.
+            </p>
           </div>
+
+          {/* Audience Tabs */}
+          <div className="flex justify-center mb-10">
+            <Tabs value={activeFilter} onValueChange={(v) => setActiveFilter(v as AudienceFilter)}>
+              <TabsList className="bg-muted border border-border">
+                <TabsTrigger value="All" className="px-6 data-[state=active]:bg-deep-purple data-[state=active]:text-white">All</TabsTrigger>
+                <TabsTrigger value="Parents" className="px-6 data-[state=active]:bg-deep-purple data-[state=active]:text-white">Parents</TabsTrigger>
+                <TabsTrigger value="Therapists" className="px-6 data-[state=active]:bg-deep-purple data-[state=active]:text-white">Therapists</TabsTrigger>
+                <TabsTrigger value="Educators" className="px-6 data-[state=active]:bg-deep-purple data-[state=active]:text-white">Educators</TabsTrigger>
+              </TabsList>
+            </Tabs>
+          </div>
+
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredResources.map((resource) => {
               const Icon = typeIcons[resource.type] || FileText;
               return (
-                <div key={resource.id} className="relative bg-card rounded-xl border border-thistle/60 overflow-hidden group shadow-sm">
-                  <div className="h-40 bg-thistle/30 flex items-center justify-center">
-                    <Icon className="h-12 w-12 text-hub-lavender/60" />
+                <div key={resource.id} className="relative bg-card rounded-xl border border-border overflow-hidden group shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-card-hover)] transition-shadow">
+                  <div className="h-40 bg-muted flex items-center justify-center">
+                    <Icon className="h-12 w-12 text-muted-foreground/40" />
                   </div>
                   <div className="p-5">
-                    <h3 className="font-semibold text-midnight mb-1.5 line-clamp-2 leading-snug">{resource.title}</h3>
-                    <p className="text-sm text-stone-ui mb-3 line-clamp-2">{resource.description}</p>
+                    <h3 className="font-semibold text-foreground mb-1.5 line-clamp-2 leading-snug">{resource.title}</h3>
+                    <p className="text-sm text-muted-foreground mb-3 line-clamp-2">{resource.description}</p>
                     <div className="flex flex-wrap gap-1.5">
-                      <span className="text-xs px-2 py-0.5 rounded-full bg-mauve/15 text-mauve font-medium">{resource.audience}</span>
-                      <span className="text-xs px-2 py-0.5 rounded-full bg-hub-lavender/15 text-hub-lavender font-medium capitalize">{resource.type}</span>
+                      <span className="text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary font-medium">{resource.audience}</span>
+                      <span className="text-xs px-2 py-0.5 rounded-full bg-secondary text-secondary-foreground font-medium capitalize">{resource.type}</span>
                     </div>
                   </div>
-                  <div className="absolute inset-0 bg-midnight/60 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center gap-3">
+                  <div className="absolute inset-0 bg-deep-purple/70 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center gap-3">
                     <Lock className="h-8 w-8 text-white/80" />
-                    <p className="text-white font-medium text-sm">Sign Up to Download</p>
+                    <p className="text-white font-medium text-sm">Sign Up to Access</p>
                     <Link to="/hub/signup">
-                      <Button size="sm" className="bg-mauve text-white hover:bg-mauve/90">Create Free Account</Button>
+                      <Button size="sm" className="bg-white text-deep-purple hover:bg-white/90 font-bold">Create Free Account</Button>
                     </Link>
                   </div>
                 </div>
@@ -206,25 +301,25 @@ const HubPreview = () => {
         </div>
       </section>
 
-      {/* ── Testimonial Strip ── */}
+      {/* ── Section 5: Testimonials ── */}
       <section className="py-16 lg:py-20 bg-muted">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl md:text-3xl font-bold text-midnight text-center mb-12">
+        <div className="max-w-[1100px] mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-[28px] md:text-[36px] font-black text-foreground text-center mb-12 leading-[1.1]">
             What our community is saying
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {testimonials.map((t, i) => (
               <div
                 key={i}
-                className="bg-card rounded-xl p-6 shadow-sm border border-thistle/40 flex flex-col"
+                className="bg-card rounded-xl p-6 shadow-[var(--shadow-card)] border border-border flex flex-col"
               >
-                <Quote className="h-7 w-7 text-mauve/40 mb-4 flex-shrink-0" />
-                <p className="text-midnight/80 leading-relaxed flex-1 mb-5 italic">
+                <Quote className="h-7 w-7 text-primary/30 mb-4 flex-shrink-0" />
+                <p className="text-foreground/80 leading-relaxed flex-1 mb-5 italic">
                   "{t.quote}"
                 </p>
-                <div className="border-t border-thistle/40 pt-4">
-                  <p className="font-semibold text-midnight text-sm">{t.name}</p>
-                  <p className="text-xs text-stone-ui">{t.role}</p>
+                <div className="border-t border-border pt-4">
+                  <p className="font-semibold text-foreground text-sm">{t.name}</p>
+                  <p className="text-xs text-muted-foreground">{t.role}</p>
                 </div>
               </div>
             ))}
@@ -232,10 +327,10 @@ const HubPreview = () => {
         </div>
       </section>
 
-      {/* ── FAQ Section ── */}
-      <section className="py-16 lg:py-20 bg-white">
+      {/* ── Section 6: FAQ ── */}
+      <section className="py-16 lg:py-20 bg-background">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl md:text-3xl font-bold text-midnight text-center mb-10">
+          <h2 className="text-[28px] md:text-[36px] font-black text-foreground text-center mb-10 leading-[1.1]">
             Common Questions
           </h2>
           <Accordion type="single" collapsible className="w-full space-y-3">
@@ -243,12 +338,12 @@ const HubPreview = () => {
               <AccordionItem
                 key={i}
                 value={`faq-${i}`}
-                className="bg-card rounded-xl border border-thistle/40 px-6 shadow-sm data-[state=open]:shadow-md transition-shadow"
+                className="bg-card rounded-xl border border-border px-6 shadow-[var(--shadow-card)] data-[state=open]:shadow-[var(--shadow-card-hover)] transition-shadow"
               >
-                <AccordionTrigger className="text-left font-semibold text-midnight hover:no-underline py-5 text-base">
+                <AccordionTrigger className="text-left font-semibold text-foreground hover:no-underline py-5 text-base">
                   {faq.q}
                 </AccordionTrigger>
-                <AccordionContent className="text-stone-ui leading-relaxed pb-5 text-[15px]">
+                <AccordionContent className="text-muted-foreground leading-relaxed pb-5 text-[15px]">
                   {faq.a}
                 </AccordionContent>
               </AccordionItem>
@@ -257,25 +352,24 @@ const HubPreview = () => {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="bg-thistle/30 py-16">
+      {/* ── Section 7: Final CTA ── */}
+      <section className="bg-deep-purple py-20 md:py-24">
         <div className="max-w-3xl mx-auto px-4 text-center">
-          <h2 className="text-2xl md:text-3xl font-bold text-midnight mb-4">Ready to access every resource?</h2>
-          <p className="text-stone-ui text-lg mb-8">Create your free account in under a minute. No credit card. No strings attached.</p>
+          <h2 className="text-[28px] md:text-[36px] lg:text-[42px] font-black text-white leading-[1.1] mb-4">
+            Start exploring the DLD Resource Hub
+          </h2>
+          <p className="text-[14px] md:text-[16px] text-white/70 leading-[1.7] mb-8 max-w-[620px] mx-auto">
+            Create your free account and discover tools for supporting children with Developmental Language Disorder.
+          </p>
           <Link to="/hub/signup">
-            <Button size="lg" className="bg-midnight text-midnight-foreground hover:bg-midnight/90 h-14 px-8 text-lg">
-              Get Started <ArrowRight className="ml-2 h-5 w-5" />
+            <Button size="lg" className="bg-white text-deep-purple hover:bg-white/90 h-14 px-8 text-[15px] font-bold tracking-wide">
+              Get Instant Access <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           </Link>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-midnight text-white/50 py-8">
-        <div className="max-w-6xl mx-auto px-4 text-center text-sm">
-          <p>© {new Date().getFullYear()} Empowered DLD. All rights reserved.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };
