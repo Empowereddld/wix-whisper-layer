@@ -108,6 +108,8 @@ const AnimatedCounter = ({ target, suffix }: { target: number; suffix: string })
 const HubPreview = () => {
   const [activeFilter, setActiveFilter] = useState<AudienceFilter>("All");
   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
+  const [selectedRole, setSelectedRole] = useState<string>("");
+  const [otherRole, setOtherRole] = useState("");
   const navigate = useNavigate();
 
   const filteredResources = placeholderResources.filter(
