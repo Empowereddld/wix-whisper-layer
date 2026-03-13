@@ -89,7 +89,7 @@ const BlogPostCTA = ({ categories }: BlogPostCTAProps) => {
           <p className="text-deep-purple-foreground/75 text-sm mb-5 leading-relaxed">
             {PODCAST_CTA.description}
           </p>
-          <span className="mt-auto inline-flex items-center gap-1.5 text-sm font-semibold text-primary-foreground bg-primary/30 px-4 py-2 rounded-full group-hover:bg-primary/50 transition-colors">
+          <span className="mt-auto self-start inline-flex items-center gap-1.5 text-sm font-semibold text-primary-foreground bg-primary/30 px-4 py-2 rounded-full group-hover:bg-primary/50 transition-colors">
             {PODCAST_CTA.label} →
           </span>
         </a>
@@ -110,7 +110,7 @@ const BlogPostCTA = ({ categories }: BlogPostCTAProps) => {
           <p className="text-muted-foreground text-sm mb-5 leading-relaxed">
             {secondary.description}
           </p>
-          <span className="mt-auto inline-flex items-center gap-1.5 text-sm font-semibold text-primary-foreground bg-primary px-4 py-2 rounded-full group-hover:bg-primary/90 transition-colors">
+          <span className="mt-auto self-start inline-flex items-center gap-1.5 text-sm font-semibold text-primary-foreground bg-primary px-4 py-2 rounded-full group-hover:bg-primary/90 transition-colors">
             {secondary.label} →
           </span>
         </Link>
