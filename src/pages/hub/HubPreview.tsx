@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Lock, ArrowRight, FileText, Image, BookOpen, Package, BarChart3, Quote, Check } from "lucide-react";
+import hallwayBg from "@/assets/school-hallway-bg.webp";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -129,26 +130,34 @@ const HubPreview = () => {
       <Header />
 
       {/* ── Section 1: Hero ── */}
-      <section className="bg-deep-purple py-20 md:py-28 lg:py-32">
-        <div className="container px-6 md:px-8 flex flex-col items-center text-center gap-6">
-          <p className="text-[11px] md:text-[12px] font-bold uppercase tracking-[0.22em] text-white/60">
+      <section className="relative overflow-hidden py-20 md:py-28 lg:py-32">
+        {/* Layer 1: Blurred school hallway background */}
+        <div
+          className="absolute inset-0 bg-cover bg-center blur-[2px] scale-105"
+          style={{ backgroundImage: `url(${hallwayBg})` }}
+        />
+        {/* Layer 2: White-lavender overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[hsl(270_55%_98%/0.78)] via-[hsl(264_48%_96%/0.72)] via-[60%] to-[hsl(258_42%_94%/0.66)]" />
+        {/* Layer 3: Content */}
+        <div className="relative z-10 container px-6 md:px-8 flex flex-col items-center text-center gap-6">
+          <p className="text-[11px] md:text-[12px] font-bold uppercase tracking-[0.22em] text-primary/85">
             DLD RESOURCE HUB
           </p>
-          <h1 className="text-[32px] md:text-[48px] lg:text-[56px] font-black text-white leading-[1.1] max-w-[800px]">
+          <h1 className="text-[32px] md:text-[48px] lg:text-[56px] font-black text-foreground leading-[1.1] max-w-[800px]">
             DLD Resources for Families and Professionals
           </h1>
-          <p className="text-[14px] md:text-[16px] text-white/80 leading-[1.7] max-w-[620px]">
+          <p className="text-[14px] md:text-[16px] text-foreground/55 leading-[1.7] max-w-[620px]">
             Posters, guides, checklists, and learning tools supporting children with Developmental Language Disorder.
           </p>
-          <p className="text-[13px] md:text-[14px] text-white/50">
+          <p className="text-[13px] md:text-[14px] text-foreground/40">
             Join 4,300+ parents, therapists, and educators in the Developmental Language Disorder community.
           </p>
           <Link to="/hub/signup">
-            <Button size="lg" className="bg-white text-deep-purple hover:bg-white/90 h-14 px-8 text-[15px] font-bold tracking-wide mt-2">
+            <Button size="lg" className="bg-deep-purple text-deep-purple-foreground hover:bg-deep-purple/90 h-14 px-8 text-[15px] font-bold tracking-wide mt-2 shadow-[0_1px_3px_hsl(262_49%_30%/0.12)] hover:shadow-[0_2px_6px_hsl(262_49%_30%/0.16)] transition-all duration-300">
               Get Instant Access <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           </Link>
-          <p className="text-[13px] text-white/40">
+          <p className="text-[13px] text-foreground/35">
             Create a free account to explore the Resource Hub.
           </p>
         </div>
