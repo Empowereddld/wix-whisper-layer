@@ -282,30 +282,30 @@ const HubPreview = () => {
       </section>
 
       {/* ── Section 3: Community Stats ── */}
-      <section className="bg-deep-purple py-14 md:py-16">
-        <div className="max-w-[1000px] mx-auto px-5 md:px-10">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-0 text-center">
-            <div className="flex flex-col items-center md:border-r md:border-white/15">
-              <span className="text-[28px] md:text-[40px] lg:text-[44px] font-bold text-white leading-none">
+      <section className="bg-deep-purple py-16 md:py-20">
+        <div className="max-w-[1100px] mx-auto px-5 md:px-10 text-center">
+          <h2 className="text-[28px] md:text-[36px] lg:text-[42px] font-black text-white leading-[1.15] mb-12 max-w-[900px] mx-auto">
+            Empowering families and professionals around the world<br className="hidden md:block" /> to better understand Developmental Language Disorder.
+          </h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-0 max-w-[700px] mx-auto mb-10">
+            <div className="flex flex-col items-center md:border-r md:border-white/20">
+              <span className="text-[48px] md:text-[64px] lg:text-[72px] font-bold text-white leading-none">
                 <AnimatedCounter target={4300} suffix="+" />
               </span>
-              <span className="text-white/60 text-[13px] md:text-[14px] mt-1.5 font-medium">community members</span>
-            </div>
-            <div className="flex flex-col items-center md:border-r md:border-white/15">
-              <span className="text-[28px] md:text-[40px] lg:text-[44px] font-bold text-white leading-none">
-                <AnimatedCounter target={15} suffix="+" />
-              </span>
-              <span className="text-white/60 text-[13px] md:text-[14px] mt-1.5 font-medium">countries reached</span>
+              <span className="text-white/60 text-[15px] md:text-[16px] mt-2 font-medium">community members</span>
             </div>
             <div className="flex flex-col items-center">
-              <span className="text-[28px] md:text-[40px] lg:text-[44px] font-bold text-white leading-none whitespace-nowrap">
-                3 audiences
+              <span className="text-[48px] md:text-[64px] lg:text-[72px] font-bold text-white leading-none">
+                <AnimatedCounter target={15} suffix="+" />
               </span>
-              <span className="text-white/60 text-[13px] md:text-[14px] mt-1.5 font-medium max-w-[220px]">
-                Supporting parents, therapists, and educators worldwide
-              </span>
+              <span className="text-white/60 text-[15px] md:text-[16px] mt-2 font-medium">countries reached</span>
             </div>
           </div>
+          
+          <p className="text-[13px] md:text-[14px] text-white/50 uppercase tracking-[0.15em] font-medium">
+            Advancing DLD awareness &nbsp;•&nbsp; Supporting families and professionals worldwide
+          </p>
         </div>
       </section>
 
