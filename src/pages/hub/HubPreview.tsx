@@ -293,18 +293,18 @@ const HubPreview = () => {
               <span className="text-[48px] md:text-[64px] lg:text-[72px] font-bold text-white leading-none">
                 <AnimatedCounter target={4300} suffix="+" />
               </span>
-              <span className="text-white/60 text-[15px] md:text-[16px] mt-2 font-medium">community members</span>
+              <span className="text-white/60 text-[15px] md:text-[16px] mt-2 font-medium">Global community members</span>
             </div>
             <div className="flex flex-col items-center">
               <span className="text-[48px] md:text-[64px] lg:text-[72px] font-bold text-white leading-none">
                 <AnimatedCounter target={15} suffix="+" />
               </span>
-              <span className="text-white/60 text-[15px] md:text-[16px] mt-2 font-medium">countries reached</span>
+              <span className="text-white/60 text-[15px] md:text-[16px] mt-2 font-medium">Countries reached worldwide</span>
             </div>
           </div>
           
-          <p className="text-[13px] md:text-[14px] text-white/50 uppercase tracking-[0.15em] font-medium">
-            Advancing DLD awareness &nbsp;•&nbsp; Supporting families and professionals worldwide
+          <p className="text-[13px] md:text-[14px] text-white/50 font-normal">
+            Advancing DLD awareness while supporting families and professionals worldwide.
           </p>
         </div>
       </section>
