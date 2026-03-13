@@ -1,18 +1,31 @@
 
 
-## Plan: Zoom out the image in "Is This Right" section
+## Update Blog Post Content and Add SEO Improvements
 
-The image currently uses `object-cover` which crops tightly into the center of the photo, cutting off the reading activity. To "zoom out" while keeping the same frame size, we can use CSS `object-fit: contain` instead — but that would leave empty space.
+Since blog content lives in the database, this requires both a database update and code changes.
 
-A better approach: keep `object-cover` but use `object-position` to show more of the image, combined with scaling. Specifically:
+### 1. Add `meta_description` column to `blog_posts` table
+- New nullable text column for SEO meta descriptions
+- Update this post's meta_description to the provided text
 
-### Change in `src/components/IsThisRightSection.tsx` (line 16)
+### 2. Update the blog post content via SQL migration
+- Replace the body of the post with slug `life-with-dld-dan-daria-podcast` with the new markdown content provided
+- Include the internal link to `/books` using markdown: `[Living Life with DLD book series](/books)`
+- Update the excerpt to match
 
-On the `<img>` element, add a CSS `scale` transform to shrink the image within its container, effectively zooming out while the container stays the same size. We'll use Tailwind's `scale-[0.85]` (or similar) combined with `object-contain` to ensure the full image is visible:
+### 3. Update `BlogPost.tsx` for SEO
+- Add a `<Helmet>` (or manual `document.title` + meta tag) to set the meta description dynamically from the `meta_description` column
+- Update the image alt text to use a custom alt field or fallback to the SEO-friendly alt text
 
-- Change `object-cover` → `object-contain` so the entire image is visible without cropping
-- Add `object-center` to keep it centered
-- The container with `rounded-xl overflow-hidden` maintains the same frame size and shape
+### 4. Add `featured_image_alt` column to `blog_posts` table
+- New nullable text column for custom image alt text
+- Set this post's alt to: "Family listening to Life with DLD Dan and Daria Podcast about Developmental Language Disorder"
 
-This shows the full scene (people reading) within the exact same container dimensions.
+### 5. Update `BlogPost.tsx` to use custom alt text
+- Use `post.featured_image_alt || post.title` as the img alt attribute
+
+### Summary of changes:
+- **Migration**: Add `meta_description` and `featured_image_alt` columns, update this post's body, excerpt, meta_description, and featured_image_alt
+- **Code**: Install `react-helmet-async`, update `BlogPost.tsx` to render meta description and use custom alt text
+- **Content**: Full new article body with internal link to books page embedded as markdown
 
