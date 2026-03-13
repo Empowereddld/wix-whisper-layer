@@ -49,6 +49,12 @@ const BlogPost = () => {
             </div>
           ) : post ? (
             <article>
+              <Helmet>
+                <title>{post.title} | Empowered DLD</title>
+                {(post as any).meta_description && (
+                  <meta name="description" content={(post as any).meta_description} />
+                )}
+              </Helmet>
               {/* Categories */}
               {(post as any).categories && (post as any).categories.length > 0 && (
                 <div className="flex flex-wrap gap-1.5 mb-4">
