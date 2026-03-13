@@ -57,12 +57,13 @@ const faqs = [
 ];
 
 const interestOptions = [
-  "DLD awareness materials",
-  "Classroom supports",
-  "Parent guides",
-  "Therapy tools",
-  "Social communication resources",
-  "General information about DLD",
+  "Understanding DLD",
+  "Classroom strategies and accommodations",
+  "Activities to support language development",
+  "Therapy tools and intervention ideas",
+  "Resources to share with schools or professionals",
+  "Social communication and friendship support",
+  "I'm just exploring",
 ];
 
 type AudienceFilter = "All" | "Parents" | "Therapists" | "Educators";
@@ -110,6 +111,7 @@ const HubPreview = () => {
   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
   const [selectedRole, setSelectedRole] = useState<string>("");
   const [otherRole, setOtherRole] = useState("");
+  const [customInterest, setCustomInterest] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -245,6 +247,26 @@ const HubPreview = () => {
                       </span>
                     </label>
                   ))}
+                  <label className="flex items-start gap-2.5 cursor-pointer group">
+                    <Checkbox
+                      checked={selectedInterests.includes("custom")}
+                      onCheckedChange={() => toggleInterest("custom")}
+                      className="mt-0.5"
+                    />
+                    <div className="flex-1">
+                      <span className="text-[13px] md:text-[14px] text-foreground/80 group-hover:text-foreground transition-colors">
+                        I'm looking for...
+                      </span>
+                      {selectedInterests.includes("custom") && (
+                        <Input
+                          placeholder="Tell us what you're looking for"
+                          value={customInterest}
+                          onChange={(e) => setCustomInterest(e.target.value)}
+                          className="mt-1.5"
+                        />
+                      )}
+                    </div>
+                  </label>
                 </div>
                 {errors.interests && <p className="text-destructive text-[12px] mt-1">{errors.interests}</p>}
               </div>
