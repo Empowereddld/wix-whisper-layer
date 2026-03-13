@@ -1,6 +1,6 @@
-import charDan from "@/assets/char-dan-block-1.png";
-import charDaria from "@/assets/char-daria-block-2.png";
-import charEducator from "@/assets/char-educator-block-3.png";
+import charDan from "@/assets/char-dan-block-1.webp";
+import charDaria from "@/assets/char-daria-block-2.webp";
+import charEducator from "@/assets/char-educator-block-3.webp";
 
 const cards = [
   {
