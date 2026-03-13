@@ -1,6 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import { Helmet } from "react-helmet-async";
 import { ArrowLeft } from "lucide-react";
 import { format } from "date-fns";
 import ReactMarkdown from "react-markdown";
@@ -48,6 +49,12 @@ const BlogPost = () => {
             </div>
           ) : post ? (
             <article>
+              <Helmet>
+                <title>{post.title} | Empowered DLD</title>
+                {(post as any).meta_description && (
+                  <meta name="description" content={(post as any).meta_description} />
+                )}
+              </Helmet>
               {/* Categories */}
               {(post as any).categories && (post as any).categories.length > 0 && (
                 <div className="flex flex-wrap gap-1.5 mb-4">
@@ -76,7 +83,7 @@ const BlogPost = () => {
                 <div className="mt-8 mb-10 rounded-xl overflow-hidden md:max-w-[800px] md:mx-auto">
                   <img
                     src={post.featured_image_url}
-                    alt={post.title}
+                    alt={(post as any).featured_image_alt || post.title}
                     className="w-full h-auto object-cover max-h-[400px] md:max-h-[450px]"
                   />
                 </div>

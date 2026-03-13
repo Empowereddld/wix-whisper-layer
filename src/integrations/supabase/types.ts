@@ -41,8 +41,10 @@ export type Database = {
           categories: string[] | null
           created_at: string
           excerpt: string | null
+          featured_image_alt: string | null
           featured_image_url: string | null
           id: string
+          meta_description: string | null
           published_at: string | null
           slug: string
           status: string
@@ -54,8 +56,10 @@ export type Database = {
           categories?: string[] | null
           created_at?: string
           excerpt?: string | null
+          featured_image_alt?: string | null
           featured_image_url?: string | null
           id?: string
+          meta_description?: string | null
           published_at?: string | null
           slug: string
           status?: string
@@ -67,8 +71,10 @@ export type Database = {
           categories?: string[] | null
           created_at?: string
           excerpt?: string | null
+          featured_image_alt?: string | null
           featured_image_url?: string | null
           id?: string
+          meta_description?: string | null
           published_at?: string | null
           slug?: string
           status?: string
