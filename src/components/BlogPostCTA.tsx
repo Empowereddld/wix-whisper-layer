@@ -110,7 +110,7 @@ const BlogPostCTA = ({ categories }: BlogPostCTAProps) => {
           <p className="text-muted-foreground text-sm mb-5 leading-relaxed">
             {secondary.description}
           </p>
-          <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary-foreground bg-primary px-4 py-2 rounded-full group-hover:bg-primary/90 transition-colors">
+          <span className="mt-auto inline-flex items-center gap-1.5 text-sm font-semibold text-primary-foreground bg-primary px-4 py-2 rounded-full group-hover:bg-primary/90 transition-colors">
             {secondary.label} →
           </span>
         </Link>
