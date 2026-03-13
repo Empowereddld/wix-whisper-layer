@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Lock, ArrowRight, FileText, Image, BookOpen, Package, BarChart3, Quote, Check } from "lucide-react";
+import { Lock, ArrowRight, FileText, Image, BookOpen, Package, BarChart3, Check } from "lucide-react";
 import hallwayBg from "@/assets/school-hallway-bg.webp";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -22,6 +22,7 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import TestimonialMasonry from "@/components/hub/TestimonialMasonry";
 
 /* ── Data ── */
 
@@ -364,30 +365,7 @@ const HubPreview = () => {
       </section>
 
       {/* ── Section 5: Testimonials ── */}
-      <section className="py-16 lg:py-20 bg-muted">
-        <div className="max-w-[1100px] mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-[28px] md:text-[36px] font-black text-foreground text-center mb-12 leading-[1.1]">
-            What our community is saying
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {testimonials.map((t, i) => (
-              <div
-                key={i}
-                className="bg-card rounded-xl p-6 shadow-[var(--shadow-card)] border border-border flex flex-col"
-              >
-                <Quote className="h-7 w-7 text-primary/30 mb-4 flex-shrink-0" />
-                <p className="text-foreground/80 leading-relaxed flex-1 mb-5 italic">
-                  "{t.quote}"
-                </p>
-                <div className="border-t border-border pt-4">
-                  <p className="font-semibold text-foreground text-sm">{t.name}</p>
-                  <p className="text-xs text-muted-foreground">{t.role}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <TestimonialMasonry />
 
       {/* ── Section 6: FAQ ── */}
       <section className="py-16 lg:py-20 bg-background">
