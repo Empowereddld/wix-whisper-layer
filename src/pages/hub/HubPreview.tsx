@@ -111,6 +111,7 @@ const HubPreview = () => {
   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
   const [selectedRole, setSelectedRole] = useState<string>("");
   const [otherRole, setOtherRole] = useState("");
+  const [customInterest, setCustomInterest] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
