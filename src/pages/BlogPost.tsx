@@ -72,11 +72,11 @@ const BlogPost = () => {
               )}
 
               {post.featured_image_url && (
-                <div className="mt-8 mb-10 rounded-xl overflow-hidden">
+                <div className="mt-8 mb-10 rounded-xl overflow-hidden md:max-w-[800px] md:mx-auto">
                   <img
                     src={post.featured_image_url}
                     alt={post.title}
-                    className="w-full h-auto object-cover max-h-[500px]"
+                    className="w-full h-auto object-cover max-h-[400px] md:max-h-[450px]"
                   />
                 </div>
               )}
