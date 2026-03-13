@@ -193,15 +193,17 @@ const HubPreview = () => {
 
             <form onSubmit={handleFormSubmit} className="space-y-5">
               <div>
-                <Label htmlFor="signup-name" className="text-foreground font-medium text-[13px]">Name</Label>
-                <Input id="signup-name" placeholder="Your full name" className="mt-1.5" />
+                <Label htmlFor="signup-name" className="text-foreground font-medium text-[13px]">Name <span className="text-destructive">*</span></Label>
+                <Input id="signup-name" placeholder="Your full name" className="mt-1.5" value={name} onChange={(e) => setName(e.target.value)} />
+                {errors.name && <p className="text-destructive text-[12px] mt-1">{errors.name}</p>}
               </div>
               <div>
-                <Label htmlFor="signup-email" className="text-foreground font-medium text-[13px]">Email</Label>
-                <Input id="signup-email" type="email" placeholder="you@example.com" className="mt-1.5" />
+                <Label htmlFor="signup-email" className="text-foreground font-medium text-[13px]">Email <span className="text-destructive">*</span></Label>
+                <Input id="signup-email" type="email" placeholder="you@example.com" className="mt-1.5" value={email} onChange={(e) => setEmail(e.target.value)} />
+                {errors.email && <p className="text-destructive text-[12px] mt-1">{errors.email}</p>}
               </div>
               <div>
-                <Label htmlFor="signup-role" className="text-foreground font-medium text-[13px]">Role</Label>
+                <Label htmlFor="signup-role" className="text-foreground font-medium text-[13px]">Role <span className="text-destructive">*</span></Label>
                 <Select value={selectedRole} onValueChange={setSelectedRole}>
                   <SelectTrigger className="mt-1.5">
                     <SelectValue placeholder="Select your role" />
@@ -215,17 +217,21 @@ const HubPreview = () => {
                   </SelectContent>
                 </Select>
                 {selectedRole === "other" && (
-                  <Input
-                    placeholder="Please specify your role"
-                    value={otherRole}
-                    onChange={(e) => setOtherRole(e.target.value)}
-                    className="mt-2"
-                  />
+                  <>
+                    <Input
+                      placeholder="Please specify your role"
+                      value={otherRole}
+                      onChange={(e) => setOtherRole(e.target.value)}
+                      className="mt-2"
+                    />
+                    {errors.otherRole && <p className="text-destructive text-[12px] mt-1">{errors.otherRole}</p>}
+                  </>
                 )}
+                {errors.role && <p className="text-destructive text-[12px] mt-1">{errors.role}</p>}
               </div>
               <div>
                 <Label className="text-foreground font-medium text-[13px] mb-3 block">
-                  What resources are you most interested in?
+                  What resources are you most interested in? <span className="text-destructive">*</span>
                 </Label>
                 <div className="space-y-2.5">
                   {interestOptions.map((interest) => (
@@ -240,6 +246,7 @@ const HubPreview = () => {
                     </label>
                   ))}
                 </div>
+                {errors.interests && <p className="text-destructive text-[12px] mt-1">{errors.interests}</p>}
               </div>
               <Button type="submit" className="w-full h-12 bg-deep-purple text-white hover:bg-deep-purple/90 font-bold text-[14px] tracking-wide">
                 Access the Resource Hub <ArrowRight className="ml-2 h-4 w-4" />
