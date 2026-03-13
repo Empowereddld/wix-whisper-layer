@@ -1,18 +1,29 @@
 
 
-## Plan: Zoom out the image in "Is This Right" section
+## Change Hub Preview Hero to Match Homepage Style
 
-The image currently uses `object-cover` which crops tightly into the center of the photo, cutting off the reading activity. To "zoom out" while keeping the same frame size, we can use CSS `object-fit: contain` instead — but that would leave empty space.
+Replace the solid `bg-deep-purple` hero with the homepage's 3-layer approach: blurred school hallway background image + white-lavender gradient overlay + content on top.
 
-A better approach: keep `object-cover` but use `object-position` to show more of the image, combined with scaling. Specifically:
+### Changes to `src/pages/hub/HubPreview.tsx`
 
-### Change in `src/components/IsThisRightSection.tsx` (line 16)
+**1. Add hallway background import:**
+```typescript
+import hallwayBg from "@/assets/school-hallway-bg.webp";
+```
 
-On the `<img>` element, add a CSS `scale` transform to shrink the image within its container, effectively zooming out while the container stays the same size. We'll use Tailwind's `scale-[0.85]` (or similar) combined with `object-contain` to ensure the full image is visible:
+**2. Replace the hero section (lines 132-155)** with the homepage-style layered approach:
+- Layer 1: Blurred hallway background (`blur-[2px] scale-105`)
+- Layer 2: White-lavender gradient overlay (same `from-[hsl(270_55%_98%/0.78)] via-[hsl(264_48%_96%/0.72)] to-[hsl(258_42%_94%/0.66)]`)
+- Layer 3: Content centered (same text but with dark foreground colors instead of white, matching the homepage aesthetic)
 
-- Change `object-cover` → `object-contain` so the entire image is visible without cropping
-- Add `object-center` to keep it centered
-- The container with `rounded-xl overflow-hidden` maintains the same frame size and shape
+**3. Update text colors** for the light background:
+- Eyebrow: `text-primary/85` (purple tint)
+- Headline: `text-foreground` (dark)
+- Subheadline: `text-foreground/55`
+- Trust line: `text-foreground/40`
+- Button: `bg-deep-purple text-white` (inverted from current)
+- Small text: `text-foreground/35`
 
-This shows the full scene (people reading) within the exact same container dimensions.
+### File changed
+- `src/pages/hub/HubPreview.tsx`
 
