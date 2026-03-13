@@ -393,7 +393,7 @@ const HubPreview = () => {
       </section>
 
       {/* ── Section 7: Final CTA ── */}
-      <section className="bg-midnight py-20 md:py-24">
+      <section className="bg-black py-20 md:py-24">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <h2 className="text-[28px] md:text-[36px] lg:text-[42px] font-black text-white leading-[1.1] mb-4">
             Start exploring the DLD Resource Hub
