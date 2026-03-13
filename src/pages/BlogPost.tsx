@@ -7,6 +7,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import BlogPostCTA from "@/components/BlogPostCTA";
 
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
