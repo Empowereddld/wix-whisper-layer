@@ -283,19 +283,19 @@ const HubPreview = () => {
 
       {/* ── Section 3: Community Stats ── */}
       <section className="bg-deep-purple py-16 md:py-20">
-        <div className="max-w-[1100px] mx-auto px-5 md:px-10 text-center">
+        <div className="max-w-7xl mx-auto px-5 md:px-10 text-center">
           <h2 className="text-[18px] md:text-[20px] lg:text-[22px] font-semibold text-white leading-[1.4] mb-12 max-w-[900px] mx-auto">
             Empowering families and professionals around the world<br className="hidden md:block" /> to better understand Developmental Language Disorder.
           </h2>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-0 max-w-[700px] mx-auto mb-10">
-            <div className="flex flex-col items-center md:border-r md:border-white/20">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-0 max-w-[900px] mx-auto mb-10">
+            <div className="flex flex-col items-center md:border-r md:border-white/20 md:pr-12">
               <span className="text-[48px] md:text-[64px] lg:text-[72px] font-bold text-white leading-none">
                 <AnimatedCounter target={4300} suffix="+" />
               </span>
               <span className="text-white/60 text-[15px] md:text-[16px] mt-2 font-medium">Global community members</span>
             </div>
-            <div className="flex flex-col items-center">
+            <div className="flex flex-col items-center md:pl-12">
               <span className="text-[48px] md:text-[64px] lg:text-[72px] font-bold text-white leading-none">
                 <AnimatedCounter target={15} suffix="+" />
               </span>
