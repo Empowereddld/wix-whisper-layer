@@ -284,7 +284,7 @@ const HubPreview = () => {
       {/* ── Section 3: Community Stats ── */}
       <section className="bg-deep-purple py-16 md:py-20">
         <div className="max-w-[1100px] mx-auto px-5 md:px-10 text-center">
-          <h2 className="text-[28px] md:text-[36px] lg:text-[42px] font-black text-white leading-[1.15] mb-12 max-w-[900px] mx-auto">
+          <h2 className="text-[18px] md:text-[20px] lg:text-[22px] font-semibold text-white leading-[1.4] mb-12 max-w-[900px] mx-auto">
             Empowering families and professionals around the world<br className="hidden md:block" /> to better understand Developmental Language Disorder.
           </h2>
           
