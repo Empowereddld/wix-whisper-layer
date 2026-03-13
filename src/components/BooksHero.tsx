@@ -1,4 +1,4 @@
-import bookCharacters from "@/assets/book-characters.webp";
+import bookCharacters from "@/assets/book-characters-new.webp";
 
 const BooksHero = () => {
   return (
