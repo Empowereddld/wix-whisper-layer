@@ -8,7 +8,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import empoweredLogoWhite from "@/assets/empowered-logo-white.png";
+import empoweredLogoWhite from "@/assets/empowered-logo-white.webp";
 
 const AUDIENCE_TABS = [
   { label: "All", value: "" },

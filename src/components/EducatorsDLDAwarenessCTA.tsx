@@ -1,4 +1,4 @@
-import workshopBg from "@/assets/workshop-bg.png";
+import workshopBg from "@/assets/workshop-bg.webp";
 import { useScrollFadeIn } from "@/hooks/useScrollFadeIn";
 
 const EducatorsDLDAwarenessCTA = () => {
