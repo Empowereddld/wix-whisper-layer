@@ -57,12 +57,13 @@ const faqs = [
 ];
 
 const interestOptions = [
-  "DLD awareness materials",
-  "Classroom supports",
-  "Parent guides",
-  "Therapy tools",
-  "Social communication resources",
-  "General information about DLD",
+  "Understanding DLD",
+  "Classroom strategies and accommodations",
+  "Activities to support language development",
+  "Therapy tools and intervention ideas",
+  "Resources to share with schools or professionals",
+  "Social communication and friendship support",
+  "I'm just exploring",
 ];
 
 type AudienceFilter = "All" | "Parents" | "Therapists" | "Educators";
