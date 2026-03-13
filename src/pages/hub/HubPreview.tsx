@@ -247,6 +247,26 @@ const HubPreview = () => {
                       </span>
                     </label>
                   ))}
+                  <label className="flex items-start gap-2.5 cursor-pointer group">
+                    <Checkbox
+                      checked={selectedInterests.includes("custom")}
+                      onCheckedChange={() => toggleInterest("custom")}
+                      className="mt-0.5"
+                    />
+                    <div className="flex-1">
+                      <span className="text-[13px] md:text-[14px] text-foreground/80 group-hover:text-foreground transition-colors">
+                        I'm looking for...
+                      </span>
+                      {selectedInterests.includes("custom") && (
+                        <Input
+                          placeholder="Tell us what you're looking for"
+                          value={customInterest}
+                          onChange={(e) => setCustomInterest(e.target.value)}
+                          className="mt-1.5"
+                        />
+                      )}
+                    </div>
+                  </label>
                 </div>
                 {errors.interests && <p className="text-destructive text-[12px] mt-1">{errors.interests}</p>}
               </div>
