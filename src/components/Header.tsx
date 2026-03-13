@@ -15,7 +15,7 @@ const resourcesLinks = [
   { label: "Podcasts", href: "/resources/podcasts" },
   { label: "Free Course", href: "/resources/free-course" },
   { label: "Downloadables", href: "/resources/downloadables" },
-  { label: "Blog", href: "/resources/blog" },
+  { label: "Blogs", href: "/resources/blog" },
 ];
 
 const shopLinks = [
