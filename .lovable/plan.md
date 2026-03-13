@@ -1,18 +1,20 @@
 
 
-## Plan: Zoom out the image in "Is This Right" section
+## Convert Remaining PNG/JPG Images to WebP
 
-The image currently uses `object-cover` which crops tightly into the center of the photo, cutting off the reading activity. To "zoom out" while keeping the same frame size, we can use CSS `object-fit: contain` instead — but that would leave empty space.
+8 remaining non-WebP image imports to convert:
 
-A better approach: keep `object-cover` but use `object-position` to show more of the image, combined with scaling. Specifically:
+### Files to change:
 
-### Change in `src/components/IsThisRightSection.tsx` (line 16)
+1. **`src/components/InsideDLDResourceHub.tsx`** — 5 resource preview PNGs → WebP
+2. **`src/components/EducatorsDLDAwarenessCTA.tsx`** — `workshop-bg.png` → WebP
+3. **`src/components/WhatYoullLearnSection.tsx`** — `course-watching.jpg` → WebP
+4. **`src/components/hub/HubHeader.tsx`** — `empowered-logo-white.png` → WebP
 
-On the `<img>` element, add a CSS `scale` transform to shrink the image within its container, effectively zooming out while the container stays the same size. We'll use Tailwind's `scale-[0.85]` (or similar) combined with `object-contain` to ensure the full image is visible:
+### What stays as-is:
+- `resource-library-preview.gif` in DownloadablesLibraryIntro — GIF (animated), not convertible to static WebP
 
-- Change `object-cover` → `object-contain` so the entire image is visible without cropping
-- Add `object-center` to keep it centered
-- The container with `rounded-xl overflow-hidden` maintains the same frame size and shape
-
-This shows the full scene (people reading) within the exact same container dimensions.
+### For each asset:
+- Create the `.webp` version in `src/assets/`
+- Update the import in the component file
 
