@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import speakingImg from "@/assets/work-speaking.jpg";
+import speakingImg from "@/assets/work-speaking.webp";
 import workshopsImg from "@/assets/work-workshops.webp";
 import consultationImg from "@/assets/work-consultation.webp";
 

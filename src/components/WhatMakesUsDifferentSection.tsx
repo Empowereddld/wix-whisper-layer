@@ -1,5 +1,5 @@
 import { Check } from "lucide-react";
-import foundersPhoto from "@/assets/founders-photo.png";
+import foundersPhoto from "@/assets/founders-photo.webp";
 
 const points = [
   {

@@ -1,8 +1,8 @@
-import logoAsha from "@/assets/logo-asha.png";
-import logoRadld from "@/assets/logo-radld.png";
-import logoDldSummit from "@/assets/logo-dld-summit.png";
-import logoWestern from "@/assets/logo-western.jpg";
-import logoDldProject from "@/assets/logo-dld-project.png";
+import logoAsha from "@/assets/logo-asha.webp";
+import logoRadld from "@/assets/logo-radld.webp";
+import logoDldSummit from "@/assets/logo-dld-summit.webp";
+import logoWestern from "@/assets/logo-western.webp";
+import logoDldProject from "@/assets/logo-dld-project.webp";
 import logoDld from "@/assets/logo-dld.webp";
 
 const logos = [
