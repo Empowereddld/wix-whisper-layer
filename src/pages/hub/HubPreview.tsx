@@ -368,7 +368,7 @@ const HubPreview = () => {
       <TestimonialMasonry />
 
       {/* ── Section 6: FAQ ── */}
-      <section className="py-16 lg:py-20 bg-background">
+      <section className="py-16 lg:py-20 bg-muted">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-[28px] md:text-[36px] font-black text-foreground text-center mb-10 leading-[1.1]">
             Common Questions
