@@ -50,11 +50,12 @@ const testimonials = [
 ];
 
 const faqs = [
-  { q: "Is the Resource Hub free to join?", a: "Yes, creating an account is completely free. Some resources are free to download, and others may be available for purchase. No credit card is required to sign up." },
-  { q: "Do I need to be a professional to sign up?", a: "Not at all. The hub is designed for parents, therapists, and educators alike — anyone supporting a child with DLD." },
-  { q: "What kinds of resources are included?", a: "Posters, checklists, activity guides, infographics, and bundles — all created specifically for children with Developmental Language Disorder." },
-  { q: "How often are new resources added?", a: "We add new resources regularly. Every time you log in, check the \"New This Month\" section for the latest additions." },
-  { q: "Can I share resources with colleagues or other parents?", a: "Yes! Each resource has a share button so you can spread the word and help more families find support." },
+  { q: "Is the Resource Hub free to join?", a: "Yes, completely free. We created it so families, educators, and therapists can easily find practical tools for supporting children with Developmental Language Disorder (DLD)." },
+  { q: "Who is the Resource Hub designed for?", a: "Anyone supporting a child with DLD, including parents, educators, speech-language pathologists, and other professionals. If a child with DLD is in your life, this space is for you." },
+  { q: "What kinds of resources are included in the Resource Hub?", a: "Printable guides, checklists, activity ideas, and discussion tools, all designed to help children with DLD build communication skills, understand themselves, and feel more confident." },
+  { q: "How do I access resources after signing up?", a: "Create your free account and you'll have immediate access to the Resource Library. New materials are added regularly, so it's always worth coming back." },
+  { q: "Can I share resources with colleagues or other parents?", a: "Please do. Sharing helps more families and communities understand DLD, and that's exactly the point." },
+  { q: "What is Developmental Language Disorder (DLD)?", a: "Developmental Language Disorder is a difference in how the brain learns and uses language. Children with DLD may have difficulty understanding language, expressing their ideas, or learning new words and grammar. DLD is common, affecting about 1 in 14 children, yet many families and educators have never heard the term. With the right understanding and support, children with DLD can thrive." },
 ];
 
 const interestOptions = [
