@@ -66,7 +66,7 @@ const interestOptions = [
   "I'm just exploring",
 ];
 
-type AudienceFilter = "All" | "Parents" | "Therapists" | "Educators";
+
 
 /* ── Animated Counter ── */
 const AnimatedCounter = ({ target, suffix }: { target: number; suffix: string }) => {
