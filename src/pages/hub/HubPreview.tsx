@@ -38,9 +38,6 @@ const placeholderResources = [
   { id: "1", title: "Dan and Daria's Tips for Little Talkers", description: "A colorful poster with practical tips to support early language development at home.", type: "poster", audience: "Parents" },
   { id: "2", title: "DLD Awareness Infographic", description: "A visual guide explaining DLD signs, statistics, and intervention strategies.", type: "infographic", audience: "Therapists" },
   { id: "3", title: "Accommodations & Modifications for DLD", description: "A comprehensive checklist of classroom accommodations to support students with DLD.", type: "checklist", audience: "Educators" },
-  { id: "4", title: "Language Impact Checklist", description: "An assessment tool to identify how DLD affects communication across different settings.", type: "checklist", audience: "Therapists" },
-  { id: "5", title: "DLD Discussion & Activity Guide", description: "Engaging activities and discussion prompts for teaching students about DLD.", type: "guide", audience: "Educators" },
-  { id: "6", title: "DLD Starter Pack", description: "A curated bundle of essential resources for families new to the DLD journey.", type: "bundle", audience: "Parents" },
 ];
 
 const testimonials = [
