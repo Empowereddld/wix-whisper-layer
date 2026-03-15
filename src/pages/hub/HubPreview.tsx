@@ -35,9 +35,9 @@ const typeIcons: Record<string, React.ElementType> = {
 };
 
 const placeholderResources = [
-  { id: "1", title: "Dan and Daria's Tips for Little Talkers", description: "A colorful poster with practical tips to support early language development at home.", type: "poster", audience: "Parents" },
-  { id: "2", title: "DLD Awareness Infographic", description: "A visual guide explaining DLD signs, statistics, and intervention strategies.", type: "infographic", audience: "Therapists" },
-  { id: "3", title: "Accommodations & Modifications for DLD", description: "A comprehensive checklist of classroom accommodations to support students with DLD.", type: "checklist", audience: "Educators" },
+  { id: "1", title: "Language Impact Checklist", description: "A structured checklist to help educators and therapists identify how language difficulties are affecting a student's learning and participation at school.", type: "checklist", audiences: ["Educators", "Therapists"] },
+  { id: "2", title: "Dan and Daria's Graphic Organizers", description: "A practical toolkit to help children with DLD visualize their thinking and express ideas more clearly — covering 10 key academic language skills.", type: "activity", audiences: ["Parents", "Educators", "Therapists"] },
+  { id: "3", title: "Parent Email Templates", description: "Ready-to-use email templates to help parents start confident, supportive conversations with their child's teacher and school team.", type: "guide", audiences: ["Parents"] },
 ];
 
 const testimonials = [
