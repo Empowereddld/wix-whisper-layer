@@ -117,7 +117,7 @@ const HubPreview = () => {
   const navigate = useNavigate();
 
   const filteredResources = placeholderResources.filter(
-    (resource) => activeFilter === "All" || resource.audience === activeFilter
+    (resource) => activeFilter === "All" || resource.audiences.includes(activeFilter)
   );
 
   const toggleInterest = (interest: string) => {
