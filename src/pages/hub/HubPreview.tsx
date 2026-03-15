@@ -5,7 +5,7 @@ import hallwayBg from "@/assets/school-hallway-bg.webp";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
 import {
   Accordion,
   AccordionContent,
@@ -66,7 +66,7 @@ const interestOptions = [
   "I'm just exploring",
 ];
 
-type AudienceFilter = "All" | "Parents" | "Therapists" | "Educators";
+
 
 /* ── Animated Counter ── */
 const AnimatedCounter = ({ target, suffix }: { target: number; suffix: string }) => {
@@ -107,7 +107,6 @@ const AnimatedCounter = ({ target, suffix }: { target: number; suffix: string })
 
 /* ── Page ── */
 const HubPreview = () => {
-  const [activeFilter, setActiveFilter] = useState<AudienceFilter>("All");
   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
   const [selectedRole, setSelectedRole] = useState<string>("");
   const [otherRole, setOtherRole] = useState("");
@@ -116,10 +115,6 @@ const HubPreview = () => {
   const [email, setEmail] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const navigate = useNavigate();
-
-  const filteredResources = placeholderResources.filter(
-    (resource) => activeFilter === "All" || resource.audiences.includes(activeFilter)
-  );
 
   const toggleInterest = (interest: string) => {
     setSelectedInterests((prev) =>
@@ -321,20 +316,8 @@ const HubPreview = () => {
             </p>
           </div>
 
-          {/* Audience Tabs */}
-          <div className="flex justify-center mb-10">
-            <Tabs value={activeFilter} onValueChange={(v) => setActiveFilter(v as AudienceFilter)}>
-              <TabsList className="bg-muted border border-border">
-                <TabsTrigger value="All" className="px-6 data-[state=active]:bg-deep-purple data-[state=active]:text-white">All</TabsTrigger>
-                <TabsTrigger value="Parents" className="px-6 data-[state=active]:bg-deep-purple data-[state=active]:text-white">Parents</TabsTrigger>
-                <TabsTrigger value="Therapists" className="px-6 data-[state=active]:bg-deep-purple data-[state=active]:text-white">Therapists</TabsTrigger>
-                <TabsTrigger value="Educators" className="px-6 data-[state=active]:bg-deep-purple data-[state=active]:text-white">Educators</TabsTrigger>
-              </TabsList>
-            </Tabs>
-          </div>
-
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredResources.map((resource) => {
+            {placeholderResources.map((resource) => {
               const Icon = typeIcons[resource.type] || FileText;
               return (
                 <div key={resource.id} className="relative bg-card rounded-xl border border-border overflow-hidden group shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-card-hover)] transition-shadow">
