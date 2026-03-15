@@ -32,12 +32,13 @@ const typeIcons: Record<string, React.ElementType> = {
   checklist: FileText,
   bundle: Package,
   infographic: BarChart3,
+  activity: Check,
 };
 
 const placeholderResources = [
-  { id: "1", title: "Dan and Daria's Tips for Little Talkers", description: "A colorful poster with practical tips to support early language development at home.", type: "poster", audience: "Parents" },
-  { id: "2", title: "DLD Awareness Infographic", description: "A visual guide explaining DLD signs, statistics, and intervention strategies.", type: "infographic", audience: "Therapists" },
-  { id: "3", title: "Accommodations & Modifications for DLD", description: "A comprehensive checklist of classroom accommodations to support students with DLD.", type: "checklist", audience: "Educators" },
+  { id: "1", title: "Language Impact Checklist", description: "A structured checklist to help educators and therapists identify how language difficulties are affecting a student's learning and participation at school.", type: "checklist", audiences: ["Educators", "Therapists"] },
+  { id: "2", title: "Dan and Daria's Graphic Organizers", description: "A practical toolkit to help children with DLD visualize their thinking and express ideas more clearly — covering 10 key academic language skills.", type: "activity", audiences: ["Parents", "Educators", "Therapists"] },
+  { id: "3", title: "Parent Email Templates", description: "Ready-to-use email templates to help parents start confident, supportive conversations with their child's teacher and school team.", type: "guide", audiences: ["Parents"] },
 ];
 
 const testimonials = [
@@ -117,7 +118,7 @@ const HubPreview = () => {
   const navigate = useNavigate();
 
   const filteredResources = placeholderResources.filter(
-    (resource) => activeFilter === "All" || resource.audience === activeFilter
+    (resource) => activeFilter === "All" || resource.audiences.includes(activeFilter)
   );
 
   const toggleInterest = (interest: string) => {
@@ -344,8 +345,10 @@ const HubPreview = () => {
                     <h3 className="font-semibold text-foreground mb-1.5 line-clamp-2 leading-snug">{resource.title}</h3>
                     <p className="text-sm text-muted-foreground mb-3 line-clamp-2">{resource.description}</p>
                     <div className="flex flex-wrap gap-1.5">
-                      <span className="text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary font-medium">{resource.audience}</span>
-                      <span className="text-xs px-2 py-0.5 rounded-full bg-secondary text-secondary-foreground font-medium capitalize">{resource.type}</span>
+                      {resource.audiences.map((audience) => (
+                        <span key={audience} className="text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary font-medium">{audience}</span>
+                      ))}
+                      <span className="text-xs px-2 py-0.5 rounded-full bg-secondary text-secondary-foreground font-medium capitalize">{resource.type === "activity" ? "Activity Pack" : resource.type}</span>
                     </div>
                   </div>
                   <div className="absolute inset-0 bg-deep-purple/70 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center gap-3">
