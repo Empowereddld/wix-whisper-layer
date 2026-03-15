@@ -32,6 +32,7 @@ const typeIcons: Record<string, React.ElementType> = {
   checklist: FileText,
   bundle: Package,
   infographic: BarChart3,
+  activity: Check,
 };
 
 const placeholderResources = [
