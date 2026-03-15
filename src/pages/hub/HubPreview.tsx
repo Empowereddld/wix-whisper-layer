@@ -316,20 +316,8 @@ const HubPreview = () => {
             </p>
           </div>
 
-          {/* Audience Tabs */}
-          <div className="flex justify-center mb-10">
-            <Tabs value={activeFilter} onValueChange={(v) => setActiveFilter(v as AudienceFilter)}>
-              <TabsList className="bg-muted border border-border">
-                <TabsTrigger value="All" className="px-6 data-[state=active]:bg-deep-purple data-[state=active]:text-white">All</TabsTrigger>
-                <TabsTrigger value="Parents" className="px-6 data-[state=active]:bg-deep-purple data-[state=active]:text-white">Parents</TabsTrigger>
-                <TabsTrigger value="Therapists" className="px-6 data-[state=active]:bg-deep-purple data-[state=active]:text-white">Therapists</TabsTrigger>
-                <TabsTrigger value="Educators" className="px-6 data-[state=active]:bg-deep-purple data-[state=active]:text-white">Educators</TabsTrigger>
-              </TabsList>
-            </Tabs>
-          </div>
-
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredResources.map((resource) => {
+            {placeholderResources.map((resource) => {
               const Icon = typeIcons[resource.type] || FileText;
               return (
                 <div key={resource.id} className="relative bg-card rounded-xl border border-border overflow-hidden group shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-card-hover)] transition-shadow">
