@@ -107,7 +107,6 @@ const AnimatedCounter = ({ target, suffix }: { target: number; suffix: string })
 
 /* ── Page ── */
 const HubPreview = () => {
-  const [activeFilter, setActiveFilter] = useState<AudienceFilter>("All");
   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
   const [selectedRole, setSelectedRole] = useState<string>("");
   const [otherRole, setOtherRole] = useState("");
@@ -116,10 +115,6 @@ const HubPreview = () => {
   const [email, setEmail] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const navigate = useNavigate();
-
-  const filteredResources = placeholderResources.filter(
-    (resource) => activeFilter === "All" || resource.audiences.includes(activeFilter)
-  );
 
   const toggleInterest = (interest: string) => {
     setSelectedInterests((prev) =>
