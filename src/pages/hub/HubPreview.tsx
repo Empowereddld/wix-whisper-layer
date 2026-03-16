@@ -309,6 +309,9 @@ const HubPreview = () => {
       {/* ── Section 4: Resource Preview ── */}
       <section className="py-16 lg:py-20 bg-background">
         <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
+          <p className="text-[13px] md:text-[14px] text-muted-foreground/70 uppercase tracking-[0.18em] font-medium text-center mb-6">
+            Preview a few of the resources inside the hub
+          </p>
           <div className="text-center mb-10">
             <h2 className="text-[28px] md:text-[36px] font-black text-foreground leading-[1.1] mb-3">
               Explore the Resource Library
