@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Lock, ArrowRight, FileText, Image, BookOpen, Package, BarChart3, Check } from "lucide-react";
 import hallwayBg from "@/assets/school-hallway-bg.webp";
+import checklistPreview from "@/assets/resource-checklist-preview.png";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -36,7 +37,7 @@ const typeIcons: Record<string, React.ElementType> = {
 };
 
 const placeholderResources = [
-  { id: "1", title: "Language Impact Checklist", description: "A structured checklist to help educators and therapists identify how language difficulties are affecting a student's learning and participation at school.", type: "checklist", audiences: ["Educators", "Therapists"] },
+  { id: "1", title: "Language Impact Checklist", description: "A structured checklist to help educators and therapists identify how language difficulties are affecting a student's learning and participation at school.", type: "checklist", audiences: ["Educators", "Therapists"], image: checklistPreview },
   { id: "2", title: "Dan and Daria's Graphic Organizers", description: "A practical toolkit to help children with DLD visualize their thinking and express ideas more clearly — covering 10 key academic language skills.", type: "activity", audiences: ["Parents", "Educators", "Therapists"] },
   { id: "3", title: "Parent Email Templates", description: "Ready-to-use email templates to help parents start confident, supportive conversations with their child's teacher and school team.", type: "guide", audiences: ["Parents"] },
 ];
@@ -321,8 +322,12 @@ const HubPreview = () => {
               const Icon = typeIcons[resource.type] || FileText;
               return (
                 <div key={resource.id} className="relative bg-card rounded-xl border border-border overflow-hidden group shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-card-hover)] transition-shadow">
-                  <div className="h-40 bg-muted flex items-center justify-center">
-                    <Icon className="h-12 w-12 text-muted-foreground/40" />
+                  <div className="h-40 bg-muted flex items-center justify-center overflow-hidden">
+                    {resource.image ? (
+                      <img src={resource.image} alt={resource.title} className="w-full h-full object-cover" />
+                    ) : (
+                      <Icon className="h-12 w-12 text-muted-foreground/40" />
+                    )}
                   </div>
                   <div className="p-5">
                     <h3 className="font-semibold text-foreground mb-1.5 line-clamp-2 leading-snug">{resource.title}</h3>
