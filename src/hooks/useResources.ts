@@ -157,18 +157,6 @@ export function useResources(userRole?: string) {
       case "a_z":
         result.sort((a, b) => a.title.localeCompare(b.title));
         break;
-      case "recommended":
-        if (userRole) {
-          result.sort((a, b) => {
-            const aMatch = a.roles?.includes(userRole) ? 1 : 0;
-            const bMatch = b.roles?.includes(userRole) ? 1 : 0;
-            if (bMatch !== aMatch) return bMatch - aMatch;
-            return (b.download_count ?? 0) - (a.download_count ?? 0);
-          });
-        } else {
-          result.sort((a, b) => (b.download_count ?? 0) - (a.download_count ?? 0));
-        }
-        break;
     }
 
     return result;
