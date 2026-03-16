@@ -100,7 +100,7 @@ const ResourceCard = ({
             </button>
           )}
           <SharePopover resourceId={resource.id} resourceTitle={resource.title} userId={userId} />
-          <Button size="sm" variant="outline" onClick={() => navigate(`/hub/resource/${resource.id}`)} className="border-thistle hover:bg-thistle/30">
+          <Button size="sm" variant="outline" onClick={() => { onView(resource); navigate(`/hub/resource/${resource.id}`); }} className="border-thistle hover:bg-thistle/30">
             <Eye className="h-4 w-4 mr-1" /> Preview
           </Button>
           {isUnlocked ? (
