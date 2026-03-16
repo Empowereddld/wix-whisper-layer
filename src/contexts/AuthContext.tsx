@@ -12,6 +12,7 @@ interface Profile {
   welcome_dismissed: boolean | null;
   job_title: string | null;
   organization_name: string | null;
+  interests: string[] | null;
 }
 
 interface AuthContextType {

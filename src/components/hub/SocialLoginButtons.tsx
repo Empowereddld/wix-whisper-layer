@@ -8,7 +8,7 @@ const SocialLoginButtons = () => {
   const handleOAuth = async (provider: "google" | "apple") => {
     setLoading(provider);
     const { error } = await lovable.auth.signInWithOAuth(provider, {
-      redirect_uri: window.location.origin + "/hub",
+      redirect_uri: window.location.origin + "/signup/role",
     });
     if (error) {
       console.error("OAuth error:", error);
