@@ -49,9 +49,9 @@ const testimonials = [
 ];
 
 const variantClasses = {
-  white: "bg-card border-border",
-  lavender: "bg-[hsl(264_50%_97%)] border-[hsl(264_40%_92%)]",
-  neutral: "bg-[hsl(240_10%_97%)] border-[hsl(240_8%_92%)]",
+  white: "bg-card border-border shadow-[0_2px_12px_-4px_hsl(0_0%_0%/0.08)]",
+  lavender: "bg-[hsl(264_50%_96%)] border-[hsl(264_40%_90%)] shadow-[0_2px_12px_-4px_hsl(264_40%_40%/0.10)]",
+  neutral: "bg-[hsl(240_10%_96%)] border-[hsl(240_8%_90%)] shadow-[0_2px_12px_-4px_hsl(240_10%_20%/0.08)]",
 };
 
 /* Split testimonials into 3 columns for masonry effect */
