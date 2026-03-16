@@ -90,7 +90,7 @@ const App = () => (
             <Route path="/hub/login" element={<HubLogin />} />
             <Route path="/hub/verify-email" element={<VerifyEmail />} />
             <Route path="/hub/reset-password" element={<ResetPassword />} />
-            <Route path="/hub/coming-soon" element={<HubComingSoon />} />
+            
             <Route path="/hub/preview" element={<HubPreview />} />
             <Route path="/hub" element={<ProtectedRoute><HubDashboard /></ProtectedRoute>} />
             <Route path="/hub/resource/:id" element={<ProtectedRoute><ResourceDetail /></ProtectedRoute>} />

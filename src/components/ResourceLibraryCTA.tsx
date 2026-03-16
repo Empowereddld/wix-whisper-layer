@@ -37,7 +37,7 @@ const ResourceLibraryCTA = () => {
               size="lg"
               className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full h-14 px-10 text-base font-semibold"
             >
-              <Link to="/hub/coming-soon">Get Free Access</Link>
+              <Link to="/hub/preview">Get Free Access</Link>
             </Button>
           </div>
         </div>
