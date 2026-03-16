@@ -43,8 +43,8 @@ const SignupRole = () => {
     if (!authLoading && !user) {
       navigate("/hub/signup");
     }
-    // If user already completed onboarding, go to hub
-    if (!authLoading && profile && profile.role !== "parent") {
+    // If user already completed onboarding (has interests set), go to hub
+    if (!authLoading && profile && profile.interests !== null) {
       navigate("/hub");
     }
   }, [user, profile, authLoading, navigate]);

@@ -1,8 +1,9 @@
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-  const { session, loading } = useAuth();
+  const { session, profile, loading } = useAuth();
+  const location = useLocation();
 
   if (loading) {
     return (
@@ -14,6 +15,11 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
 
   if (!session) {
     return <Navigate to="/hub/login" replace />;
+  }
+
+  // Redirect new users who haven't completed onboarding
+  if (profile && profile.interests === null && location.pathname !== "/signup/role") {
+    return <Navigate to="/signup/role" replace />;
   }
 
   return <>{children}</>;
