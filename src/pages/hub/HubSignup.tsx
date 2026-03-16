@@ -68,7 +68,7 @@ const HubSignup = () => {
       toast({ title: "Something went wrong. Please try again.", variant: "destructive" });
       return;
     }
-    navigate("/hub/verify-email");
+    navigate("/signup/role");
   };
 
   return (
