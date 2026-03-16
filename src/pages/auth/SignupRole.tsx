@@ -85,7 +85,11 @@ const SignupRole = () => {
     navigate("/hub");
   };
 
-  const handleSkip = () => {
+  const handleSkip = async () => {
+    if (user) {
+      // Mark onboarding as complete with empty interests
+      await supabase.from("profiles").update({ interests: [] }).eq("id", user.id);
+    }
     navigate("/hub");
   };
 
