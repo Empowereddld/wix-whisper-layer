@@ -157,19 +157,17 @@ const ResourceCard = ({
 
       {/* Content */}
       <div className="p-5 flex flex-col flex-1">
-        <h3 className="font-semibold text-midnight mb-1.5 line-clamp-2 leading-snug">{resource.title}</h3>
-        <p className="text-sm text-stone-ui mb-3 line-clamp-3">{resource.description}</p>
+        <h3 className="font-semibold text-midnight mb-1.5 line-clamp-2 leading-snug min-h-[2.75rem]">{resource.title}</h3>
+        <p className="text-sm text-stone-ui mb-3 line-clamp-3 min-h-[3.75rem]">{resource.description}</p>
 
         {/* Audience Tags — max 2 */}
-        {audienceTags.length > 0 && (
-          <div className="flex flex-wrap gap-1.5 mb-4">
-            {audienceTags.map((tag) => (
-              <span key={tag} className="text-xs px-2 py-0.5 rounded-full bg-mauve/15 text-mauve font-medium">
-                {tag}
-              </span>
-            ))}
-          </div>
-        )}
+        <div className="flex flex-wrap gap-1.5 mb-4 mt-auto">
+          {audienceTags.map((tag) => (
+            <span key={tag} className="text-xs px-2 py-0.5 rounded-full bg-mauve/15 text-mauve font-medium">
+              {tag}
+            </span>
+          ))}
+        </div>
 
         {/* Actions */}
         <div className="flex gap-2">
