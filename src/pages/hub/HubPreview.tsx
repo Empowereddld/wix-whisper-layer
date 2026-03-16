@@ -1,13 +1,11 @@
 import { useState, useEffect, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Lock, ArrowRight, FileText, Image, BookOpen, Package, BarChart3, Check } from "lucide-react";
 import hallwayBg from "@/assets/school-hallway-bg.webp";
 import graphicOrganizersPreview from "@/assets/resource-graphic-organizers-preview.png";
 import checklistPreview from "@/assets/resource-checklist-preview.png";
 import emailTemplatesPreview from "@/assets/resource-email-templates-preview.png";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 
 import {
   Accordion,
@@ -93,25 +91,6 @@ const AnimatedCounter = ({ target, suffix }: { target: number; suffix: string })
 
 /* ── Page ── */
 const HubPreview = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [errors, setErrors] = useState<Record<string, string>>({});
-  const navigate = useNavigate();
-
-  const handleFormSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const newErrors: Record<string, string> = {};
-
-    if (!name.trim()) newErrors.name = "Name is required.";
-    if (!email.trim()) newErrors.email = "Email is required.";
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) newErrors.email = "Please enter a valid email.";
-
-    setErrors(newErrors);
-    if (Object.keys(newErrors).length > 0) return;
-
-    navigate("/hub/signup");
-  };
-
   return (
     <div className="min-h-screen bg-background">
       <Header />
@@ -150,38 +129,7 @@ const HubPreview = () => {
         </div>
       </section>
 
-      {/* ── Section 2: Signup Form ── */}
-      <section className="bg-muted py-16 lg:py-20">
-        <div className="max-w-[540px] mx-auto px-4 sm:px-6">
-          <div className="bg-card rounded-xl border border-border shadow-[var(--shadow-elevated)] p-8 md:p-10">
-            <h2 className="text-[22px] md:text-[26px] font-black text-foreground leading-[1.2] mb-2 text-center">
-              Create your free account
-            </h2>
-            <p className="text-[14px] text-muted-foreground leading-[1.7] mb-8 text-center">
-              Access practical resources designed to support children with Developmental Language Disorder.
-            </p>
 
-            <form onSubmit={handleFormSubmit} className="space-y-5">
-              <div>
-                <Label htmlFor="signup-name" className="text-foreground font-medium text-[13px]">Name <span className="text-destructive">*</span></Label>
-                <Input id="signup-name" placeholder="Your name" className="mt-1.5" value={name} onChange={(e) => setName(e.target.value)} />
-                {errors.name && <p className="text-destructive text-[12px] mt-1">{errors.name}</p>}
-              </div>
-              <div>
-                <Label htmlFor="signup-email" className="text-foreground font-medium text-[13px]">Email <span className="text-destructive">*</span></Label>
-                <Input id="signup-email" type="email" placeholder="you@example.com" className="mt-1.5" value={email} onChange={(e) => setEmail(e.target.value)} />
-                {errors.email && <p className="text-destructive text-[12px] mt-1">{errors.email}</p>}
-              </div>
-              <Button type="submit" className="w-full h-12 bg-deep-purple text-white hover:bg-deep-purple/90 font-bold text-[14px] tracking-wide">
-                Get Instant Access <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-              <p className="text-[12px] text-muted-foreground text-center">
-                Free account. Instant access.
-              </p>
-            </form>
-          </div>
-        </div>
-      </section>
 
       {/* ── Section 3: Community Stats ── */}
       <section className="bg-deep-purple py-16 md:py-20">
