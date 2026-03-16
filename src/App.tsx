@@ -30,7 +30,7 @@ import HubDashboard from "./pages/hub/HubDashboard";
 import HubSettings from "./pages/hub/HubSettings";
 import ResetPassword from "./pages/hub/ResetPassword";
 import HubPreview from "./pages/hub/HubPreview";
-import HubComingSoon from "./pages/hub/HubComingSoon";
+
 import ResourceDetail from "./pages/hub/ResourceDetail";
 import ProtectedRoute from "@/components/hub/ProtectedRoute";
 import Signup from "./pages/auth/Signup";
