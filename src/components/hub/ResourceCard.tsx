@@ -138,7 +138,7 @@ const ResourceCard = ({
         </div>
         {/* Price / Free badge */}
         {isPaid && !isPurchased ? (
-          <span className="absolute top-3 right-3 text-xs px-2.5 py-1 rounded-full bg-mauve text-white font-semibold shadow-sm">
+          <span className="absolute top-3 right-3 text-xs px-2.5 py-1 rounded-full bg-deep-purple text-white font-semibold shadow-sm">
             {formatPrice(price, currency)}
           </span>
         ) : isPaid && isPurchased ? (
