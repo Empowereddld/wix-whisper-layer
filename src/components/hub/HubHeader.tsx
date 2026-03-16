@@ -47,7 +47,7 @@ const HubHeader = ({ activeAudience = "", onAudienceChange }: HubHeaderProps) =>
             target="_blank"
             rel="noopener noreferrer"
           >
-            <img src={empoweredLogoWhite} alt="Empowered DLD" className="h-[120px]" />
+            <img src={empoweredLogoWhite} alt="Empowered DLD" className="h-20" />
           </a>
 
           {/* Spacer for centering */}
