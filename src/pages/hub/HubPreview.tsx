@@ -308,7 +308,7 @@ const HubPreview = () => {
 
       {/* ── Section 4: Resource Preview ── */}
       <section className="py-16 lg:py-20 bg-background">
-        <div className="max-w-[1100px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
             <h2 className="text-[28px] md:text-[36px] font-black text-foreground leading-[1.1] mb-3">
               Explore the Resource Library
