@@ -30,7 +30,7 @@ import HubDashboard from "./pages/hub/HubDashboard";
 import HubSettings from "./pages/hub/HubSettings";
 import ResetPassword from "./pages/hub/ResetPassword";
 import HubPreview from "./pages/hub/HubPreview";
-import HubComingSoon from "./pages/hub/HubComingSoon";
+
 import ResourceDetail from "./pages/hub/ResourceDetail";
 import ProtectedRoute from "@/components/hub/ProtectedRoute";
 import Signup from "./pages/auth/Signup";
@@ -90,7 +90,7 @@ const App = () => (
             <Route path="/hub/login" element={<HubLogin />} />
             <Route path="/hub/verify-email" element={<VerifyEmail />} />
             <Route path="/hub/reset-password" element={<ResetPassword />} />
-            <Route path="/hub/coming-soon" element={<HubComingSoon />} />
+            
             <Route path="/hub/preview" element={<HubPreview />} />
             <Route path="/hub" element={<ProtectedRoute><HubDashboard /></ProtectedRoute>} />
             <Route path="/hub/resource/:id" element={<ProtectedRoute><ResourceDetail /></ProtectedRoute>} />

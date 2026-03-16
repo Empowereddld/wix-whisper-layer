@@ -36,7 +36,7 @@ const DownloadablesLibraryIntro = () => {
             </p>
 
             <Link
-              to="/hub/coming-soon"
+              to="/hub/preview"
               className="inline-flex items-center gap-2 text-primary font-semibold text-[15px] hover:underline w-fit"
             >
               Sign Up for Free Access
