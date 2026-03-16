@@ -13,6 +13,7 @@ interface Profile {
   job_title: string | null;
   organization_name: string | null;
   interests: string[] | null;
+  created_at: string;
 }
 
 interface AuthContextType {
