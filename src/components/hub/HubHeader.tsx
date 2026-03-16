@@ -39,15 +39,15 @@ const HubHeader = ({ activeAudience = "", onAudienceChange }: HubHeaderProps) =>
   return (
     <header className="bg-midnight text-midnight-foreground sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between gap-4">
+        <div className="flex items-center justify-between h-14 gap-4">
           {/* Logo */}
           <a
             href="https://empowereddld.com"
-            className="flex-shrink-0"
+            className="flex-shrink-0 -my-4"
             target="_blank"
             rel="noopener noreferrer"
           >
-            <img src={empoweredLogoWhite} alt="Empowered DLD" className="h-20" />
+            <img src={empoweredLogoWhite} alt="Empowered DLD" className="h-24" />
           </a>
 
           {/* Spacer for centering */}
