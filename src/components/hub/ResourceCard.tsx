@@ -80,7 +80,7 @@ const ResourceCard = ({
               <span className="text-xs px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 font-medium flex-shrink-0">Free</span>
             )}
             {isPaid && !isPurchased && (
-              <span className="text-xs px-2 py-0.5 rounded-full bg-mauve/15 text-mauve font-semibold flex-shrink-0">
+              <span className="text-xs px-2 py-0.5 rounded-full bg-deep-purple/15 text-deep-purple font-semibold flex-shrink-0">
                 {formatPrice(price, currency)}
               </span>
             )}
