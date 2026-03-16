@@ -129,7 +129,7 @@ const ResourceCard = ({
             className="absolute top-3 left-3 p-1.5 rounded-full bg-white/80 hover:bg-white transition-all shadow-sm z-10"
             aria-label={isSaved ? "Unsave" : "Save"}
           >
-            <Heart className={`h-3.5 w-3.5 ${isSaved ? "fill-mauve text-mauve" : "text-midnight/40"}`} />
+            <Heart className={`h-3.5 w-3.5 ${isSaved ? "fill-coral text-coral" : "text-midnight/40"}`} />
           </button>
         )}
         {/* Share */}
