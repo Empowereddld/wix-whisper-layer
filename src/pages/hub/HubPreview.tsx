@@ -15,14 +15,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Checkbox } from "@/components/ui/checkbox";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import TestimonialMasonry from "@/components/hub/TestimonialMasonry";
@@ -59,15 +51,6 @@ const faqs = [
   { q: "What is Developmental Language Disorder (DLD)?", a: "Developmental Language Disorder is a difference in how the brain learns and uses language. Children with DLD may have difficulty understanding language, expressing their ideas, or learning new words and grammar. DLD is common, affecting about 1 in 14 children, yet many families and educators have never heard the term. With the right understanding and support, children with DLD can thrive." },
 ];
 
-const interestOptions = [
-  "Understanding DLD",
-  "Classroom strategies and accommodations",
-  "Activities to support language development",
-  "Therapy tools and intervention ideas",
-  "Resources to share with schools or professionals",
-  "Social communication and friendship support",
-  "I'm exploring and not sure where to start",
-];
 
 
 
@@ -110,20 +93,10 @@ const AnimatedCounter = ({ target, suffix }: { target: number; suffix: string })
 
 /* ── Page ── */
 const HubPreview = () => {
-  const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
-  const [selectedRole, setSelectedRole] = useState<string>("");
-  const [otherRole, setOtherRole] = useState("");
-  const [customInterest, setCustomInterest] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const navigate = useNavigate();
-
-  const toggleInterest = (interest: string) => {
-    setSelectedInterests((prev) =>
-      prev.includes(interest) ? prev.filter((i) => i !== interest) : [...prev, interest]
-    );
-  };
 
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -132,9 +105,6 @@ const HubPreview = () => {
     if (!name.trim()) newErrors.name = "Name is required.";
     if (!email.trim()) newErrors.email = "Email is required.";
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) newErrors.email = "Please enter a valid email.";
-    if (!selectedRole) newErrors.role = "Please select a role.";
-    if (selectedRole === "other" && !otherRole.trim()) newErrors.otherRole = "Please specify your role.";
-    if (selectedInterests.length === 0) newErrors.interests = "Please select at least one interest.";
 
     setErrors(newErrors);
     if (Object.keys(newErrors).length > 0) return;
@@ -185,10 +155,10 @@ const HubPreview = () => {
         <div className="max-w-[540px] mx-auto px-4 sm:px-6">
           <div className="bg-card rounded-xl border border-border shadow-[var(--shadow-elevated)] p-8 md:p-10">
             <h2 className="text-[22px] md:text-[26px] font-black text-foreground leading-[1.2] mb-2 text-center">
-              Create your free account to explore the DLD Resource Hub
+              Create your free account
             </h2>
             <p className="text-[14px] text-muted-foreground leading-[1.7] mb-8 text-center">
-              Access practical resources designed to support children with Developmental Language Disorder at home, in therapy, and in the classroom.
+              Access practical resources designed to support children with Developmental Language Disorder.
             </p>
 
             <form onSubmit={handleFormSubmit} className="space-y-5">
@@ -202,73 +172,8 @@ const HubPreview = () => {
                 <Input id="signup-email" type="email" placeholder="you@example.com" className="mt-1.5" value={email} onChange={(e) => setEmail(e.target.value)} />
                 {errors.email && <p className="text-destructive text-[12px] mt-1">{errors.email}</p>}
               </div>
-              <div>
-                <Label htmlFor="signup-role" className="text-foreground font-medium text-[13px]">Role <span className="text-destructive">*</span></Label>
-                <Select value={selectedRole} onValueChange={setSelectedRole}>
-                  <SelectTrigger className="mt-1.5">
-                    <SelectValue placeholder="Select your role" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="parent">Parent</SelectItem>
-                    <SelectItem value="therapist">Therapist</SelectItem>
-                    <SelectItem value="educator">Educator</SelectItem>
-                    <SelectItem value="school_leader">School Leader</SelectItem>
-                    <SelectItem value="other">Other</SelectItem>
-                  </SelectContent>
-                </Select>
-                {selectedRole === "other" && (
-                  <>
-                    <Input
-                      placeholder="Please specify your role"
-                      value={otherRole}
-                      onChange={(e) => setOtherRole(e.target.value)}
-                      className="mt-2"
-                    />
-                    {errors.otherRole && <p className="text-destructive text-[12px] mt-1">{errors.otherRole}</p>}
-                  </>
-                )}
-                {errors.role && <p className="text-destructive text-[12px] mt-1">{errors.role}</p>}
-              </div>
-              <div>
-                <Label className="text-foreground font-medium text-[13px] mb-3 block">
-                  What resources are you most interested in? <span className="text-destructive">*</span>
-                </Label>
-                <div className="space-y-2.5">
-                  {interestOptions.map((interest) => (
-                    <label key={interest} className="flex items-center gap-2.5 cursor-pointer group">
-                      <Checkbox
-                        checked={selectedInterests.includes(interest)}
-                        onCheckedChange={() => toggleInterest(interest)}
-                      />
-                      <span className="text-[13px] md:text-[14px] text-foreground/80 group-hover:text-foreground transition-colors">
-                        {interest}
-                      </span>
-                    </label>
-                  ))}
-                  <label className="flex items-start gap-2.5 cursor-pointer group">
-                    <Checkbox
-                      checked={selectedInterests.includes("custom")}
-                      onCheckedChange={() => toggleInterest("custom")}
-                      className="mt-0.5"
-                    />
-                    <div className="flex-1">
-                      <span className="text-[13px] md:text-[14px] text-foreground/80 group-hover:text-foreground transition-colors">
-                        I wish there was a resource for...
-                      </span>
-                      <textarea
-                        placeholder="Share anything — we actually read these!"
-                        value={customInterest}
-                        onChange={(e) => setCustomInterest(e.target.value)}
-                        className="w-full mt-1.5 px-3 py-2 rounded-lg border border-input bg-background text-sm focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 resize-none"
-                        rows={3}
-                      />
-                    </div>
-                  </label>
-                </div>
-                {errors.interests && <p className="text-destructive text-[12px] mt-1">{errors.interests}</p>}
-              </div>
               <Button type="submit" className="w-full h-12 bg-deep-purple text-white hover:bg-deep-purple/90 font-bold text-[14px] tracking-wide">
-                Access the Resource Hub <ArrowRight className="ml-2 h-4 w-4" />
+                Get Instant Access <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
               <p className="text-[12px] text-muted-foreground text-center">
                 Free account. Instant access.

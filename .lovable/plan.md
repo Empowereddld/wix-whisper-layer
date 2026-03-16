@@ -1,48 +1,18 @@
 
-## Plan: Simplify /hub/preview Embedded Signup Form
 
-### Current State
-The embedded signup form (Section 2) in `/hub/preview` currently collects:
-- Name
-- Email
-- Role dropdown (with "Other" option requiring text specification)
-- Interest checkboxes (7 predefined options + custom textarea)
+## Plan: Zoom out the image in "Is This Right" section
 
-The form validates all fields and redirects to `/hub/signup` on submission.
+The image currently uses `object-cover` which crops tightly into the center of the photo, cutting off the reading activity. To "zoom out" while keeping the same frame size, we can use CSS `object-fit: contain` instead — but that would leave empty space.
 
-### Changes Required
+A better approach: keep `object-cover` but use `object-position` to show more of the image, combined with scaling. Specifically:
 
-**File: `src/pages/hub/HubPreview.tsx`**
+### Change in `src/components/IsThisRightSection.tsx` (line 16)
 
-1. **Remove State Variables**
-   - Delete `selectedInterests`, `selectedRole`, `otherRole`, `customInterest` state
-   - Delete `toggleInterest` function
-   - Keep only `name`, `email`, and `errors` state
+On the `<img>` element, add a CSS `scale` transform to shrink the image within its container, effectively zooming out while the container stays the same size. We'll use Tailwind's `scale-[0.85]` (or similar) combined with `object-contain` to ensure the full image is visible:
 
-2. **Simplify Form Validation**
-   - Remove role and interests validation
-   - Keep only name and email validation in `handleFormSubmit`
-   - Update error handling to only check name/email fields
+- Change `object-cover` → `object-contain` so the entire image is visible without cropping
+- Add `object-center` to keep it centered
+- The container with `rounded-xl overflow-hidden` maintains the same frame size and shape
 
-3. **Update Form UI (lines 194-276)**
-   - Keep Name input field (lines 195-199)
-   - Keep Email input field (lines 200-204)
-   - **Remove** Role dropdown section entirely (lines 205-231)
-   - **Remove** Interests checkboxes section entirely (lines 232-269)
-   - Update button text from "Access the Resource Hub" to "Get Instant Access"
-   - Keep the "Free account. Instant access." subtext
+This shows the full scene (people reading) within the exact same container dimensions.
 
-4. **Update Heading/Subheading (optional refinement)**
-   - Current heading works but could be simplified to match the minimal approach
-   - Consider: "Create your free account" instead of "Create your free account to explore the DLD Resource Hub"
-
-### Result
-The embedded form becomes a lightweight lead capture that only asks for name and email, reducing friction. Users who click "Get Instant Access" are taken to `/hub/signup` where they complete account creation (password), then proceed to `/signup/role` for role and interests onboarding.
-
-### Flow
-```
-/hub/preview (name + email only) 
-  → /hub/signup (password creation) 
-  → /signup/role (role + interests)
-  → /hub (dashboard)
-```
