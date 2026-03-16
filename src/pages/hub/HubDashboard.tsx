@@ -204,8 +204,17 @@ const HubDashboard = () => {
           </div>
         )}
 
-        {/* Empty */}
-        {!loading && filtered.length === 0 && (
+        {/* Empty – Saved filter active but nothing saved */}
+        {!loading && showSavedOnly && filtered.filter((r) => savedIds.has(r.id)).length === 0 && (
+          <div className="text-center py-20">
+            <Heart className="h-10 w-10 mx-auto mb-4 text-stone-ui" />
+            <p className="text-midnight font-semibold text-lg mb-1">No saved resources yet</p>
+            <p className="text-stone-ui">Click the heart icon on any resource to save it here.</p>
+          </div>
+        )}
+
+        {/* Empty – regular filters */}
+        {!loading && !showSavedOnly && filtered.length === 0 && (
           <div className="text-center py-20">
             <p className="text-4xl mb-4">🔍</p>
             <p className="text-midnight font-semibold text-lg mb-1">No resources found</p>
@@ -215,21 +224,25 @@ const HubDashboard = () => {
         )}
 
         {/* Grid */}
-        {!loading && filtered.length > 0 && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {filtered.map((r, i) => (
-              <motion.div key={r.id} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: Math.min(i * 0.05, 0.4), duration: 0.4 }}>
-                <ResourceCard
-                  resource={r} onView={handleView} onDownload={handleDownload} onUnlock={handleUnlock}
-                  price={priceMap[r.id]?.price} currency={priceMap[r.id]?.currency}
-                  isPurchased={purchasedResourceIds.has(r.id)}
-                  isSaved={savedIds.has(r.id)} onToggleSave={handleToggleSave} userId={user?.id}
-                  isNew={isResourceNew(r)}
-                />
-              </motion.div>
-            ))}
-          </div>
-        )}
+        {!loading && (() => {
+          const displayResources = showSavedOnly ? filtered.filter((r) => savedIds.has(r.id)) : filtered;
+          if (displayResources.length === 0) return null;
+          return (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              {displayResources.map((r, i) => (
+                <motion.div key={r.id} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: Math.min(i * 0.05, 0.4), duration: 0.4 }}>
+                  <ResourceCard
+                    resource={r} onView={handleView} onDownload={handleDownload} onUnlock={handleUnlock}
+                    price={priceMap[r.id]?.price} currency={priceMap[r.id]?.currency}
+                    isPurchased={purchasedResourceIds.has(r.id)}
+                    isSaved={savedIds.has(r.id)} onToggleSave={handleToggleSave} userId={user?.id}
+                    isNew={isResourceNew(r)}
+                  />
+                </motion.div>
+              ))}
+            </div>
+          );
+        })()}
       </div>
 
       {/* Detail Modal */}
