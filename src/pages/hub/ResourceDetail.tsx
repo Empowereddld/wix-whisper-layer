@@ -1,16 +1,16 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import HubLayout from "@/components/hub/HubLayout";
 import PurchaseModal from "@/components/hub/PurchaseModal";
+import ResourceCard from "@/components/hub/ResourceCard";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   Download, ArrowLeft, FileText, Image, CheckSquare, BookOpen, Package, BarChart3,
-  Calendar, Globe, Users, MapPin, Layers, Lock,
+  Lock,
 } from "lucide-react";
-import { format } from "date-fns";
 import { toast } from "sonner";
 import type { Resource } from "@/hooks/useResources";
 import { useProducts, usePurchases } from "@/hooks/usePurchases";
@@ -19,12 +19,9 @@ const typeIcons: Record<string, React.ElementType> = {
   poster: Image, guide: BookOpen, checklist: CheckSquare, handout: FileText,
   activity: FileText, bundle: Package, infographic: BarChart3,
 };
-const typeLabels: Record<string, string> = {
-  poster: "Poster", guide: "Guide", checklist: "Checklist", handout: "Handout",
-  activity: "Activity", bundle: "Bundle", infographic: "Infographic",
-};
-const roleLabels: Record<string, string> = {
-  parent: "Parents", slp: "SLPs & Therapists", educator: "Educators", school_leader: "School Leaders",
+
+const audienceLabels: Record<string, string> = {
+  parent: "Parents", slp: "Therapists", educator: "Educators", school_leader: "School Leaders",
 };
 
 const formatPrice = (cents: number, currency: string = "CAD") => {
@@ -37,6 +34,7 @@ const ResourceDetail = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [resource, setResource] = useState<Resource | null>(null);
+  const [allResources, setAllResources] = useState<Resource[]>([]);
   const [loading, setLoading] = useState(true);
   const [showPurchase, setShowPurchase] = useState(false);
 
@@ -45,35 +43,74 @@ const ResourceDetail = () => {
 
   useEffect(() => {
     if (!id) return;
-    const fetch = async () => {
-      const { data } = await supabase.from("resources").select("*").eq("id", id).single();
-      if (data) setResource(data);
+    const fetchData = async () => {
+      setLoading(true);
+      const [{ data: res }, { data: all }] = await Promise.all([
+        supabase.from("resources").select("*").eq("id", id).single(),
+        supabase.from("resources").select("*").eq("is_published", true),
+      ]);
+      if (res) setResource(res);
+      if (all) setAllResources(all as Resource[]);
       setLoading(false);
     };
-    fetch();
+    fetchData();
   }, [id]);
 
   const product = resource ? priceMap[resource.id] : undefined;
   const isPaid = product && product.price > 0;
   const isUnlocked = !isPaid || purchasedResourceIds.has(resource?.id || "");
 
-  const handleDownload = useCallback(async () => {
-    if (!user || !resource) return;
-    await supabase.from("user_downloads").insert({ user_id: user.id, resource_id: resource.id });
-    await supabase.rpc("increment_download_count", { resource_id: resource.id });
-    if (resource.file_url) {
-      window.open(resource.file_url, "_blank");
+  const suggestedResources = useMemo(() => {
+    if (!resource) return [];
+    const currentRoles = resource.roles || [];
+    const others = allResources.filter((r) => r.id !== resource.id);
+
+    // Prefer same audience
+    const sameAudience = others.filter((r) =>
+      r.roles?.some((role) => currentRoles.includes(role))
+    );
+    const rest = others.filter(
+      (r) => !r.roles?.some((role) => currentRoles.includes(role))
+    );
+
+    return [...sameAudience, ...rest].slice(0, 3);
+  }, [resource, allResources]);
+
+  const handleDownload = useCallback(async (res?: Resource) => {
+    const target = res || resource;
+    if (!user || !target) return;
+    await supabase.from("user_downloads").insert({ user_id: user.id, resource_id: target.id });
+    await supabase.rpc("increment_download_count", { resource_id: target.id });
+    if (target.file_url) {
+      window.open(target.file_url, "_blank");
     } else {
       toast.info("This resource file will be available soon.");
     }
   }, [user, resource]);
 
+  const handleView = useCallback(async (res: Resource) => {
+    if (!user) return;
+    await supabase.from("user_resource_views").upsert(
+      { user_id: user.id, resource_id: res.id },
+      { onConflict: "user_id,resource_id" }
+    );
+  }, [user]);
+
   if (loading) {
     return (
       <HubLayout>
-        <div className="max-w-4xl mx-auto px-4 py-12">
-          <Skeleton className="h-8 w-48 mb-6" /><Skeleton className="h-64 rounded-xl mb-6" />
-          <Skeleton className="h-6 w-full mb-2" /><Skeleton className="h-6 w-3/4" />
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <Skeleton className="h-5 w-48 mb-8" />
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <Skeleton className="h-[400px] rounded-xl" />
+            <div className="space-y-4">
+              <Skeleton className="h-8 w-3/4" />
+              <Skeleton className="h-6 w-20" />
+              <Skeleton className="h-5 w-full" />
+              <Skeleton className="h-5 w-full" />
+              <Skeleton className="h-5 w-2/3" />
+            </div>
+          </div>
         </div>
       </HubLayout>
     );
@@ -82,11 +119,11 @@ const ResourceDetail = () => {
   if (!resource) {
     return (
       <HubLayout>
-        <div className="max-w-4xl mx-auto px-4 py-20 text-center">
+        <div className="max-w-6xl mx-auto px-4 py-20 text-center">
           <h1 className="text-2xl font-bold text-midnight mb-4">Resource Not Found</h1>
           <p className="text-stone-ui mb-6">The resource you're looking for doesn't exist or has been removed.</p>
           <Button onClick={() => navigate("/hub")} className="bg-midnight text-midnight-foreground hover:bg-midnight/90">
-            <ArrowLeft className="h-4 w-4 mr-2" /> Back to Dashboard
+            <ArrowLeft className="h-4 w-4 mr-2" /> Back to Resource Library
           </Button>
         </div>
       </HubLayout>
@@ -94,71 +131,135 @@ const ResourceDetail = () => {
   }
 
   const Icon = typeIcons[resource.resource_type] || FileText;
+  const audienceTags = (resource.roles ?? []).filter((r) => audienceLabels[r]).map((r) => audienceLabels[r]);
 
   return (
     <HubLayout>
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <button onClick={() => navigate("/hub")} className="flex items-center gap-2 text-stone-ui hover:text-midnight transition-colors mb-6 text-sm font-medium">
-          <ArrowLeft className="h-4 w-4" /> Back to Resources
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Back navigation */}
+        <button
+          onClick={() => navigate("/hub")}
+          className="flex items-center gap-2 text-stone-ui hover:text-midnight transition-colors mb-8 text-sm font-medium"
+        >
+          <ArrowLeft className="h-4 w-4" /> Back to Resource Library
         </button>
 
-        <div className="h-64 md:h-80 rounded-2xl bg-thistle/30 flex items-center justify-center mb-8 relative">
-          <Icon className="h-20 w-20 text-hub-lavender/50" />
-          {isPaid && !isUnlocked && (
-            <span className="absolute top-4 right-4 text-sm px-3 py-1.5 rounded-full bg-mauve text-white font-semibold shadow">
-              {formatPrice(product!.price, product!.currency)}
-            </span>
-          )}
-          {isPaid && isUnlocked && (
-            <span className="absolute top-4 right-4 text-sm px-3 py-1.5 rounded-full bg-emerald-500 text-white font-medium">
-              Purchased
-            </span>
-          )}
-          {!isPaid && (
-            <span className="absolute top-4 right-4 text-sm px-3 py-1.5 rounded-full bg-emerald-100 text-emerald-700 font-medium">
-              Free
-            </span>
-          )}
-        </div>
+        {/* Two-column layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+          {/* Left column — Cover image */}
+          <div className="w-full">
+            {resource.thumbnail_url ? (
+              <img
+                src={resource.thumbnail_url}
+                alt={resource.title}
+                className="w-full h-full min-h-[320px] max-h-[520px] object-cover rounded-xl border border-border"
+              />
+            ) : (
+              <div className="w-full h-full min-h-[320px] max-h-[520px] rounded-xl bg-muted border border-border flex items-center justify-center">
+                <Icon className="h-20 w-20 text-muted-foreground/40" />
+              </div>
+            )}
+          </div>
 
-        <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-6">
-          <div className="flex-1">
-            <h1 className="text-3xl font-bold text-midnight leading-snug mb-2">{resource.title}</h1>
-            <div className="flex flex-wrap gap-2">
-              {resource.roles?.map((role) => (
-                <span key={role} className="text-xs px-2.5 py-1 rounded-full bg-mauve/15 text-mauve font-medium">{roleLabels[role] || role}</span>
-              ))}
-              <span className="text-xs px-2.5 py-1 rounded-full bg-hub-lavender/15 text-hub-lavender font-medium">{typeLabels[resource.resource_type]}</span>
+          {/* Right column — Details */}
+          <div className="flex flex-col">
+            <h1 className="text-2xl sm:text-3xl font-bold text-midnight leading-snug mb-3">
+              {resource.title}
+            </h1>
+
+            {/* Price badge */}
+            <div className="mb-4">
+              {isPaid && !isUnlocked ? (
+                <span className="inline-block text-sm px-3 py-1 rounded-full bg-deep-purple text-white font-semibold">
+                  {formatPrice(product!.price, product!.currency)}
+                </span>
+              ) : isPaid && isUnlocked ? (
+                <span className="inline-block text-sm px-3 py-1 rounded-full bg-emerald-500 text-white font-medium">
+                  Purchased
+                </span>
+              ) : (
+                <span className="inline-block text-sm px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 font-medium">
+                  Free
+                </span>
+              )}
+            </div>
+
+            {/* Audience tags */}
+            {audienceTags.length > 0 && (
+              <div className="flex flex-wrap gap-2 mb-5">
+                {audienceTags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="text-xs px-2.5 py-1 rounded-full bg-pale-yellow text-deep-purple font-medium"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            )}
+
+            {/* Full description */}
+            <p className="text-foreground/80 leading-relaxed text-base mb-8">
+              {resource.description}
+            </p>
+
+            {/* Action button pushed to bottom */}
+            <div className="mt-auto">
+              {isUnlocked ? (
+                <Button
+                  size="lg"
+                  className="bg-midnight text-midnight-foreground hover:bg-midnight/90 h-12 px-10 w-full sm:w-auto"
+                  onClick={() => handleDownload()}
+                >
+                  <Download className="h-5 w-5 mr-2" /> Download
+                </Button>
+              ) : (
+                <Button
+                  size="lg"
+                  className="bg-deep-purple text-white hover:bg-deep-purple/90 h-12 px-10 w-full sm:w-auto"
+                  onClick={() => setShowPurchase(true)}
+                >
+                  <Lock className="h-5 w-5 mr-2" /> Unlock for {formatPrice(product!.price, product!.currency)}
+                </Button>
+              )}
             </div>
           </div>
-          {isUnlocked ? (
-            <Button size="lg" className="bg-midnight text-midnight-foreground hover:bg-midnight/90 h-12 px-8" onClick={handleDownload}>
-              <Download className="h-5 w-5 mr-2" /> Download
-            </Button>
-          ) : (
-            <Button size="lg" className="bg-mauve text-white hover:bg-mauve/90 h-12 px-8" onClick={() => setShowPurchase(true)}>
-              <Lock className="h-5 w-5 mr-2" /> Unlock for {formatPrice(product!.price, product!.currency)}
-            </Button>
-          )}
         </div>
 
-        {!isUnlocked && (
-          <div className="flex items-center gap-2 text-xs text-stone-ui mb-6">
-            <Lock className="h-3.5 w-3.5" />
-            <span>Secure checkout · Instant access · Empowered DLD</span>
+        {/* Divider */}
+        <hr className="border-border my-12" />
+
+        {/* You May Also Like */}
+        {suggestedResources.length > 0 && (
+          <div>
+            <h2 className="text-xl font-bold text-midnight mb-6">You May Also Like</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {suggestedResources.map((r) => {
+                const rProduct = priceMap[r.id];
+                const rPrice = rProduct?.price ?? null;
+                const rCurrency = rProduct?.currency ?? "CAD";
+                const rPurchased = purchasedResourceIds.has(r.id);
+
+                return (
+                  <ResourceCard
+                    key={r.id}
+                    resource={r}
+                    onView={handleView}
+                    onDownload={(res) => handleDownload(res)}
+                    onUnlock={(res) => {
+                      setResource(res);
+                      setShowPurchase(true);
+                    }}
+                    price={rPrice}
+                    currency={rCurrency}
+                    isPurchased={rPurchased}
+                    userId={user?.id}
+                  />
+                );
+              })}
+            </div>
           </div>
         )}
-
-        <p className="text-foreground/80 leading-relaxed text-lg mb-8">{resource.description}</p>
-
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-          <MetaItem icon={Users} label="Audience" value={resource.roles?.map((r) => roleLabels[r] || r).join(", ") || "—"} />
-          <MetaItem icon={MapPin} label="Setting" value={resource.settings?.join(", ") || "—"} />
-          <MetaItem icon={Layers} label="Age Range" value={resource.age_ranges?.join(", ") || "—"} />
-          <MetaItem icon={FileText} label="Type" value={typeLabels[resource.resource_type]} />
-          <MetaItem icon={Globe} label="Language" value={resource.languages?.join(", ") || "English"} />
-          <MetaItem icon={Calendar} label="Added" value={format(new Date(resource.created_at), "MMM d, yyyy")} />
-        </div>
       </div>
 
       <PurchaseModal
@@ -172,15 +273,5 @@ const ResourceDetail = () => {
     </HubLayout>
   );
 };
-
-const MetaItem = ({ icon: Icon, label, value }: { icon: React.ElementType; label: string; value: string }) => (
-  <div className="flex items-start gap-2.5 p-4 rounded-xl bg-thistle/20">
-    <Icon className="h-4 w-4 text-hub-lavender mt-0.5 flex-shrink-0" />
-    <div>
-      <p className="text-xs text-stone-ui font-medium">{label}</p>
-      <p className="text-sm text-midnight font-medium">{value}</p>
-    </div>
-  </div>
-);
 
 export default ResourceDetail;
