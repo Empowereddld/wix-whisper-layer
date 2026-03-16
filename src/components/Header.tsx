@@ -107,7 +107,7 @@ const Header = () => {
           </button>
 
           <Button asChild variant="outline" size="default" className="rounded-md h-10 px-7 text-[12px] font-semibold tracking-[0.08em] border-foreground/30 hover:bg-accent transition-all duration-300 ml-2">
-            <Link to="/hub/coming-soon">LOGIN</Link>
+            <Link to="/hub/preview">LOGIN</Link>
           </Button>
         </nav>
 
