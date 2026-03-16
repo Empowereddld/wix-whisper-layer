@@ -177,7 +177,7 @@ const ResourceCard = ({
             variant="outline"
             size="sm"
             className="flex-1 border-thistle hover:bg-thistle/30 hover:border-hub-lavender transition-all"
-            onClick={() => navigate(`/hub/resource/${resource.id}`)}
+            onClick={() => { onView(resource); navigate(`/hub/resource/${resource.id}`); }}
           >
             <Eye className="h-4 w-4 mr-1.5" /> Preview
           </Button>
