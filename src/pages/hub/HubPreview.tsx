@@ -309,15 +309,12 @@ const HubPreview = () => {
       {/* ── Section 4: Resource Preview ── */}
       <section className="py-16 lg:py-20 bg-background">
         <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-[13px] md:text-[14px] text-muted-foreground/70 uppercase tracking-[0.18em] font-medium text-center mb-6">
-            Preview a few of the resources inside the hub
-          </p>
           <div className="text-center mb-10">
             <h2 className="text-[28px] md:text-[36px] font-black text-foreground leading-[1.1] mb-3">
-              Explore the Resource Library
+              A Few of the Tools Inside the Resource Hub
             </h2>
             <p className="text-[14px] md:text-[16px] text-muted-foreground leading-[1.7] max-w-[620px] mx-auto">
-              Browse posters, guides, checklists, and practical tools for supporting children with Developmental Language Disorder.
+              Create your free account to access the full library of printable guides, checklists, and practical supports for children with Developmental Language Disorder.
             </p>
           </div>
 
