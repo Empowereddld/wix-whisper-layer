@@ -30,7 +30,7 @@ export function useResources(userRole?: string) {
   const [resources, setResources] = useState<Resource[]>([]);
   const [loading, setLoading] = useState(true);
   const [filters, setFilters] = useState<Filters>(EMPTY_FILTERS);
-  const [sort, setSort] = useState<SortOption>("recommended");
+  const [sort, setSort] = useState<SortOption>("newest");
 
   useEffect(() => {
     const fetchResources = async () => {
