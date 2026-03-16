@@ -70,6 +70,7 @@ export default {
         thistle: "hsl(var(--thistle))",
         mauve: "hsl(var(--mauve))",
         "stone-ui": "hsl(var(--stone-ui))",
+        "pale-yellow": "hsl(var(--pale-yellow))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
