@@ -151,7 +151,7 @@ const ResourceCard = ({
           </span>
         )}
         {isNew && (
-          <span className="absolute top-10 left-3 text-xs px-2.5 py-1 rounded-full bg-mauve text-white font-medium">New</span>
+          <span className="absolute top-10 left-3 text-xs px-2.5 py-1 rounded-full bg-deep-purple text-white font-medium">New</span>
         )}
       </div>
 
