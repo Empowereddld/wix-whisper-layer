@@ -39,7 +39,7 @@ const ResourceDetail = () => {
   const [allResources, setAllResources] = useState<Resource[]>([]);
   const [loading, setLoading] = useState(true);
   const [showPurchase, setShowPurchase] = useState(false);
-
+  const [activeTab, setActiveTab] = useState<DetailTab>("description");
   const { priceMap } = useProducts();
   const { purchasedResourceIds, refetch: refetchPurchases } = usePurchases(user?.id);
 
