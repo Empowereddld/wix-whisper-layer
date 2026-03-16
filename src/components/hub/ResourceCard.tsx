@@ -192,7 +192,7 @@ const ResourceCard = ({
           ) : (
             <Button
               size="sm"
-              className="flex-1 bg-mauve text-white hover:bg-mauve/90"
+              className="flex-1 bg-midnight text-midnight-foreground hover:bg-midnight/90"
               onClick={() => onUnlock?.(resource)}
             >
               <Lock className="h-4 w-4 mr-1.5" /> Unlock
