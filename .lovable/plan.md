@@ -1,54 +1,18 @@
 
 
-## Plan: Update All 16 Resource Descriptions
+## Plan: Zoom out the image in "Is This Right" section
 
-### What Changes
+The image currently uses `object-cover` which crops tightly into the center of the photo, cutting off the reading activity. To "zoom out" while keeping the same frame size, we can use CSS `object-fit: contain` instead — but that would leave empty space.
 
-1. **Database updates** — Update `description` (short card text) and `long_description` (preview page text) for all 16 resources
-2. **Detail page tweak** — Change the right-column description on `ResourceDetail.tsx` to display `long_description` when available, falling back to `description`
+A better approach: keep `object-cover` but use `object-position` to show more of the image, combined with scaling. Specifically:
 
-### Data Updates (via insert tool)
+### Change in `src/components/IsThisRightSection.tsx` (line 16)
 
-All 16 resources will be updated with two fields each:
-- `description` → the short "Card" text (shown on hub grid cards, truncated via line-clamp)
-- `long_description` → the longer "Preview" text (shown in the right column of the detail page)
+On the `<img>` element, add a CSS `scale` transform to shrink the image within its container, effectively zooming out while the container stays the same size. We'll use Tailwind's `scale-[0.85]` (or similar) combined with `object-contain` to ensure the full image is visible:
 
-Resource mapping by ID:
-| Resource | ID |
-|---|---|
-| Daria's Tips for Starting Conversations | a97360be |
-| Word Finding Strategies | c2234d34 |
-| Dan and Daria Self Advocacy | aa22b1a2 |
-| Emotion Word Poster and Guide | d4dc87d2 |
-| Describing and Connecting Words | f48cb30f |
-| Tips for Little Talkers | 1ec8b8da |
-| Graphic Organizers | 31f2e93e |
-| Accommodations and Modifications | ef7ab4af |
-| Language Impact Checklist | 84599638 |
-| Executive Function Skills | d9836a63 |
-| Parent Child Conversation Starters | 2630ce77 |
-| Classroom Discussion Questions | a91a8a2d |
-| Navigating DLD Together | b7e364af |
-| Why Representation Matters | 8088506a |
-| DLD Infographic | a3ff1443 |
-| Parent Email Templates (Advocacy Toolkit) | 8b4aeeb0 |
+- Change `object-cover` → `object-contain` so the entire image is visible without cropping
+- Add `object-center` to keep it centered
+- The container with `rounded-xl overflow-hidden` maintains the same frame size and shape
 
-### Code Change
-
-**File: `src/pages/hub/ResourceDetail.tsx`** (line 212)
-
-Change:
-```tsx
-{resource.description}
-```
-To:
-```tsx
-{resource.long_description || resource.description}
-```
-
-This ensures the preview page shows the longer description when available, while cards continue showing the short `description` via the existing `ResourceCard` component.
-
-### No Schema Changes
-
-Both `description` and `long_description` columns already exist on the `resources` table. Only data updates needed.
+This shows the full scene (people reading) within the exact same container dimensions.
 
