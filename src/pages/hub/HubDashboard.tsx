@@ -75,6 +75,7 @@ const HubDashboard = () => {
 
   const handleDownload = useCallback(async (resource: Resource) => {
     if (!user) return;
+    markViewed(resource.id);
     await supabase.from("user_downloads").insert({ user_id: user.id, resource_id: resource.id });
     await supabase.rpc("increment_download_count", { resource_id: resource.id });
     if (resource.file_url) {
@@ -82,7 +83,20 @@ const HubDashboard = () => {
     } else {
       toast.info("This resource file will be available soon.");
     }
-  }, [user]);
+  }, [user, markViewed]);
+
+  const handleView = useCallback((resource: Resource) => {
+    markViewed(resource.id);
+    setSelectedResource(resource);
+  }, [markViewed]);
+
+  const isResourceNew = useCallback((resource: Resource) => {
+    if (!profile) return false;
+    const resourceDate = new Date(resource.created_at).getTime();
+    const accountDate = new Date(profile.created_at).getTime();
+    if (resourceDate <= accountDate) return false;
+    return !viewedIds.has(resource.id);
+  }, [profile, viewedIds]);
 
   const handleUnlock = useCallback((resource: Resource) => {
     setPurchaseResource(resource);
