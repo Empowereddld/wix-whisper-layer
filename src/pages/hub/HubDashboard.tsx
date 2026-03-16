@@ -9,6 +9,7 @@ import ResourceRequestModal from "@/components/hub/ResourceRequestModal";
 import { useResources, type SortOption, type Resource } from "@/hooks/useResources";
 import { useProducts, usePurchases } from "@/hooks/usePurchases";
 import { useSavedResources } from "@/hooks/useSavedResources";
+import { useResourceViews } from "@/hooks/useResourceViews";
 import { supabase } from "@/integrations/supabase/client";
 import { Search, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
