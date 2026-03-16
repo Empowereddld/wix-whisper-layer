@@ -194,7 +194,7 @@ const HubPreview = () => {
             <form onSubmit={handleFormSubmit} className="space-y-5">
               <div>
                 <Label htmlFor="signup-name" className="text-foreground font-medium text-[13px]">Name <span className="text-destructive">*</span></Label>
-                <Input id="signup-name" placeholder="Your full name" className="mt-1.5" value={name} onChange={(e) => setName(e.target.value)} />
+                <Input id="signup-name" placeholder="Your name" className="mt-1.5" value={name} onChange={(e) => setName(e.target.value)} />
                 {errors.name && <p className="text-destructive text-[12px] mt-1">{errors.name}</p>}
               </div>
               <div>
