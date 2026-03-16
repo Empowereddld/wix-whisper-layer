@@ -14,21 +14,11 @@ const typeIcons: Record<string, React.ElementType> = {
   infographic: BarChart3,
 };
 
-const typeLabels: Record<string, string> = {
-  poster: "Poster",
-  guide: "Guide",
-  checklist: "Checklist",
-  handout: "Handout",
-  activity: "Activity",
-  bundle: "Bundle",
-  infographic: "Infographic",
-};
-
-const roleLabels: Record<string, string> = {
-  parent: "Parents",
-  slp: "SLPs",
-  educator: "Educators",
-  school_leader: "School Leaders",
+const audienceLabels: Record<string, string> = {
+  parent: "Parent Resource",
+  slp: "Therapist Resource",
+  educator: "Educator Resource",
+  school_leader: "School Leader Resource",
 };
 
 interface ResourceCardProps {
@@ -74,10 +64,16 @@ const ResourceCard = ({
   const isPaid = price != null && price > 0;
   const isUnlocked = !isPaid || isPurchased;
 
+  // Show max 2 audience tags
+  const audienceTags = (resource.roles ?? [])
+    .filter((r) => audienceLabels[r])
+    .slice(0, 2)
+    .map((r) => audienceLabels[r]);
+
   if (viewMode === "list") {
     return (
       <div className="bg-card rounded-xl border border-thistle/60 p-4 premium-card flex items-center gap-4">
-        <div className="h-16 w-16 rounded-lg bg-thistle/40 flex items-center justify-center flex-shrink-0 relative">
+        <div className="h-16 w-16 rounded-lg bg-thistle/40 flex items-center justify-center flex-shrink-0">
           <Icon className="h-7 w-7 text-hub-lavender" />
         </div>
         <div className="flex-1 min-w-0">
@@ -108,7 +104,7 @@ const ResourceCard = ({
           )}
           <SharePopover resourceId={resource.id} resourceTitle={resource.title} userId={userId} />
           <Button size="sm" variant="outline" onClick={() => navigate(`/hub/resource/${resource.id}`)} className="border-thistle hover:bg-thistle/30">
-            <Eye className="h-4 w-4 mr-1" /> View
+            <Eye className="h-4 w-4 mr-1" /> Preview
           </Button>
           {isUnlocked ? (
             <Button size="sm" onClick={() => onDownload(resource)} className="bg-midnight text-midnight-foreground hover:bg-midnight/90">
@@ -167,22 +163,16 @@ const ResourceCard = ({
         <h3 className="font-semibold text-midnight mb-1.5 line-clamp-2 leading-snug">{resource.title}</h3>
         <p className="text-sm text-stone-ui mb-3 line-clamp-2 flex-1">{resource.description}</p>
 
-        {/* Tags */}
-        <div className="flex flex-wrap gap-1.5 mb-4">
-          {resource.roles?.map((role) => (
-            <span key={role} className="text-xs px-2 py-0.5 rounded-full bg-mauve/15 text-mauve font-medium">
-              {roleLabels[role] || role}
-            </span>
-          ))}
-          <span className="text-xs px-2 py-0.5 rounded-full bg-hub-lavender/15 text-hub-lavender font-medium">
-            {typeLabels[resource.resource_type]}
-          </span>
-          {resource.settings?.slice(0, 1).map((s) => (
-            <span key={s} className="text-xs px-2 py-0.5 rounded-full bg-thistle/50 text-midnight/70 font-medium">
-              {s}
-            </span>
-          ))}
-        </div>
+        {/* Audience Tags — max 2 */}
+        {audienceTags.length > 0 && (
+          <div className="flex flex-wrap gap-1.5 mb-4">
+            {audienceTags.map((tag) => (
+              <span key={tag} className="text-xs px-2 py-0.5 rounded-full bg-mauve/15 text-mauve font-medium">
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
 
         {/* Actions */}
         <div className="flex gap-2">
@@ -192,7 +182,7 @@ const ResourceCard = ({
             className="flex-1 border-thistle hover:bg-thistle/30 hover:border-hub-lavender transition-all"
             onClick={() => navigate(`/hub/resource/${resource.id}`)}
           >
-            <Eye className="h-4 w-4 mr-1.5" /> View
+            <Eye className="h-4 w-4 mr-1.5" /> Preview
           </Button>
           {isUnlocked ? (
             <Button
