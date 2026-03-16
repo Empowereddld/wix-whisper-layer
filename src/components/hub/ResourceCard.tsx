@@ -54,6 +54,7 @@ const ResourceCard = ({
   isSaved = false,
   onToggleSave,
   userId,
+  isNew = false,
 }: ResourceCardProps) => {
   const Icon = typeIcons[resource.resource_type] || FileText;
   const navigate = useNavigate();
