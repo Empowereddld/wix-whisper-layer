@@ -138,7 +138,7 @@ const HubDashboard = () => {
         </div>
 
         {/* Audience Filter Pills */}
-        <div className="flex flex-wrap gap-2 mb-3">
+        <div className="flex flex-wrap gap-2 mb-5">
           {AUDIENCE_PILLS.map((pill) => (
             <button
               key={pill.value}
