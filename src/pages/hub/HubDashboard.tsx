@@ -122,7 +122,7 @@ const HubDashboard = () => {
         </div>
 
         {/* Audience Filter Pills */}
-        <div className="flex flex-wrap gap-2 mb-8">
+        <div className="flex flex-wrap gap-2 mb-3">
           {AUDIENCE_PILLS.map((pill) => (
             <button
               key={pill.value}
@@ -137,6 +137,11 @@ const HubDashboard = () => {
             </button>
           ))}
         </div>
+
+        {/* Subtext */}
+        <p className="text-center text-sm text-stone-ui mb-8">
+          Supporting a child with DLD is a team effort. Many of these resources are useful across all roles.
+        </p>
 
         {/* Toolbar */}
         <div className="flex items-center justify-between mb-5 gap-3 flex-wrap">
