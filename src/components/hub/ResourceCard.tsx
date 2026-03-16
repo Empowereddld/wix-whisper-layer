@@ -80,7 +80,7 @@ const ResourceCard = ({
               <span className="text-xs px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 font-medium flex-shrink-0">Free</span>
             )}
             {isPaid && !isPurchased && (
-              <span className="text-xs px-2 py-0.5 rounded-full bg-mauve/15 text-mauve font-semibold flex-shrink-0">
+              <span className="text-xs px-2 py-0.5 rounded-full bg-deep-purple/15 text-deep-purple font-semibold flex-shrink-0">
                 {formatPrice(price, currency)}
               </span>
             )}
@@ -88,7 +88,7 @@ const ResourceCard = ({
               <span className="text-xs px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 font-medium flex-shrink-0">Purchased</span>
             )}
             {isNew && (
-              <span className="text-xs px-2 py-0.5 rounded-full bg-mauve text-white font-medium flex-shrink-0">New</span>
+              <span className="text-xs px-2 py-0.5 rounded-full bg-deep-purple text-white font-medium flex-shrink-0">New</span>
             )}
           </div>
           <p className="text-sm text-stone-ui line-clamp-1">{resource.description}</p>
@@ -96,7 +96,7 @@ const ResourceCard = ({
         <div className="flex gap-2 flex-shrink-0 items-center">
           {onToggleSave && (
             <button onClick={() => onToggleSave(resource)} className="p-1.5 rounded-full hover:bg-thistle/40 transition-colors" aria-label="Save">
-              <Heart className={`h-4 w-4 ${isSaved ? "fill-mauve text-mauve" : "text-stone-ui"}`} />
+              <Heart className={`h-4 w-4 ${isSaved ? "fill-coral text-coral" : "text-stone-ui"}`} />
             </button>
           )}
           <SharePopover resourceId={resource.id} resourceTitle={resource.title} userId={userId} />
@@ -129,7 +129,7 @@ const ResourceCard = ({
             className="absolute top-3 left-3 p-1.5 rounded-full bg-white/80 hover:bg-white transition-all shadow-sm z-10"
             aria-label={isSaved ? "Unsave" : "Save"}
           >
-            <Heart className={`h-3.5 w-3.5 ${isSaved ? "fill-mauve text-mauve" : "text-midnight/40"}`} />
+            <Heart className={`h-3.5 w-3.5 ${isSaved ? "fill-coral text-coral" : "text-midnight/40"}`} />
           </button>
         )}
         {/* Share */}
@@ -138,7 +138,7 @@ const ResourceCard = ({
         </div>
         {/* Price / Free badge */}
         {isPaid && !isPurchased ? (
-          <span className="absolute top-3 right-3 text-xs px-2.5 py-1 rounded-full bg-mauve text-white font-semibold shadow-sm">
+          <span className="absolute top-3 right-3 text-xs px-2.5 py-1 rounded-full bg-deep-purple text-white font-semibold shadow-sm">
             {formatPrice(price, currency)}
           </span>
         ) : isPaid && isPurchased ? (
@@ -151,7 +151,7 @@ const ResourceCard = ({
           </span>
         )}
         {isNew && (
-          <span className="absolute top-10 left-3 text-xs px-2.5 py-1 rounded-full bg-mauve text-white font-medium">New</span>
+          <span className="absolute top-10 left-3 text-xs px-2.5 py-1 rounded-full bg-deep-purple text-white font-medium">New</span>
         )}
       </div>
 
@@ -163,7 +163,7 @@ const ResourceCard = ({
         {/* Audience Tags — max 2 */}
         <div className="flex flex-wrap gap-1.5 mb-4 mt-auto">
           {audienceTags.map((tag) => (
-            <span key={tag} className="text-xs px-2 py-0.5 rounded-full bg-mauve/15 text-mauve font-medium">
+            <span key={tag} className="text-xs px-2 py-0.5 rounded-full bg-pale-yellow text-deep-purple font-medium">
               {tag}
             </span>
           ))}
