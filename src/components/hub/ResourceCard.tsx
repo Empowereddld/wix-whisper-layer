@@ -33,12 +33,8 @@ interface ResourceCardProps {
   isSaved?: boolean;
   onToggleSave?: (resource: Resource) => void;
   userId?: string;
+  isNew?: boolean;
 }
-
-const isNew = (createdAt: string) => {
-  const diff = Date.now() - new Date(createdAt).getTime();
-  return diff < 30 * 24 * 60 * 60 * 1000;
-};
 
 const formatPrice = (cents: number, currency: string = "CAD") => {
   const amount = (cents / 100).toFixed(2);
