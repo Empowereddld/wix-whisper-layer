@@ -96,7 +96,7 @@ const ResourceCard = ({
         <div className="flex gap-2 flex-shrink-0 items-center">
           {onToggleSave && (
             <button onClick={() => onToggleSave(resource)} className="p-1.5 rounded-full hover:bg-thistle/40 transition-colors" aria-label="Save">
-              <Heart className={`h-4 w-4 ${isSaved ? "fill-mauve text-mauve" : "text-stone-ui"}`} />
+              <Heart className={`h-4 w-4 ${isSaved ? "fill-coral text-coral" : "text-stone-ui"}`} />
             </button>
           )}
           <SharePopover resourceId={resource.id} resourceTitle={resource.title} userId={userId} />
