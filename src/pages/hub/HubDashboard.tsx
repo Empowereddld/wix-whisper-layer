@@ -9,6 +9,7 @@ import ResourceRequestModal from "@/components/hub/ResourceRequestModal";
 import { useResources, type SortOption, type Resource } from "@/hooks/useResources";
 import { useProducts, usePurchases } from "@/hooks/usePurchases";
 import { useSavedResources } from "@/hooks/useSavedResources";
+import { useResourceViews } from "@/hooks/useResourceViews";
 import { supabase } from "@/integrations/supabase/client";
 import { Search, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -44,6 +45,7 @@ const HubDashboard = () => {
   const { priceMap } = useProducts();
   const { purchasedResourceIds, refetch: refetchPurchases } = usePurchases(user?.id);
   const { savedIds, toggle: toggleSave } = useSavedResources(user?.id);
+  const { viewedIds, markViewed } = useResourceViews(user?.id);
 
   const [selectedResource, setSelectedResource] = useState<Resource | null>(null);
   const [purchaseResource, setPurchaseResource] = useState<Resource | null>(null);
@@ -73,6 +75,7 @@ const HubDashboard = () => {
 
   const handleDownload = useCallback(async (resource: Resource) => {
     if (!user) return;
+    markViewed(resource.id);
     await supabase.from("user_downloads").insert({ user_id: user.id, resource_id: resource.id });
     await supabase.rpc("increment_download_count", { resource_id: resource.id });
     if (resource.file_url) {
@@ -80,7 +83,20 @@ const HubDashboard = () => {
     } else {
       toast.info("This resource file will be available soon.");
     }
-  }, [user]);
+  }, [user, markViewed]);
+
+  const handleView = useCallback((resource: Resource) => {
+    markViewed(resource.id);
+    setSelectedResource(resource);
+  }, [markViewed]);
+
+  const isResourceNew = useCallback((resource: Resource) => {
+    if (!profile) return false;
+    const resourceDate = new Date(resource.created_at).getTime();
+    const accountDate = new Date(profile.created_at).getTime();
+    if (resourceDate <= accountDate) return false;
+    return !viewedIds.has(resource.id);
+  }, [profile, viewedIds]);
 
   const handleUnlock = useCallback((resource: Resource) => {
     setPurchaseResource(resource);
@@ -182,10 +198,11 @@ const HubDashboard = () => {
             {filtered.map((r, i) => (
               <motion.div key={r.id} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: Math.min(i * 0.05, 0.4), duration: 0.4 }}>
                 <ResourceCard
-                  resource={r} onView={setSelectedResource} onDownload={handleDownload} onUnlock={handleUnlock}
+                  resource={r} onView={handleView} onDownload={handleDownload} onUnlock={handleUnlock}
                   price={priceMap[r.id]?.price} currency={priceMap[r.id]?.currency}
                   isPurchased={purchasedResourceIds.has(r.id)}
                   isSaved={savedIds.has(r.id)} onToggleSave={handleToggleSave} userId={user?.id}
+                  isNew={isResourceNew(r)}
                 />
               </motion.div>
             ))}
