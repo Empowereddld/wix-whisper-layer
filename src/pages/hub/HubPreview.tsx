@@ -186,12 +186,6 @@ const HubPreview = () => {
                   <div className="p-6">
                     <h3 className="font-semibold text-[15px] text-foreground mb-2 line-clamp-2 leading-snug">{resource.title}</h3>
                     <p className="text-sm text-muted-foreground mb-3 line-clamp-3">{resource.description}</p>
-                    <div className="flex flex-wrap gap-1.5">
-                      {resource.audiences.map((audience) => (
-                        <span key={audience} className="text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary font-medium">{audience}</span>
-                      ))}
-                      <span className="text-xs px-2 py-0.5 rounded-full bg-secondary text-secondary-foreground font-medium capitalize">{resource.type === "activity" ? "Activity Pack" : resource.type}</span>
-                    </div>
                   </div>
                   <div className="absolute inset-0 bg-deep-purple/70 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center gap-3">
                     <Lock className="h-8 w-8 text-white/80" />
