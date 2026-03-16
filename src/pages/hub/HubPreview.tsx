@@ -4,6 +4,7 @@ import { Lock, ArrowRight, FileText, Image, BookOpen, Package, BarChart3, Check 
 import hallwayBg from "@/assets/school-hallway-bg.webp";
 import graphicOrganizersPreview from "@/assets/resource-graphic-organizers-preview.png";
 import checklistPreview from "@/assets/resource-checklist-preview.png";
+import emailTemplatesPreview from "@/assets/resource-email-templates-preview.png";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -40,7 +41,7 @@ const typeIcons: Record<string, React.ElementType> = {
 const placeholderResources = [
   { id: "1", title: "Language Impact Checklist", description: "A structured checklist to help educators and therapists identify how language difficulties are affecting a student's learning and participation at school.", type: "checklist", audiences: ["Educators", "Therapists"], image: checklistPreview },
   { id: "2", title: "Dan and Daria's Graphic Organizers", description: "A practical toolkit to help children with DLD visualize their thinking and express ideas more clearly — covering 10 key academic language skills.", type: "activity", audiences: ["Parents", "Educators", "Therapists"], image: graphicOrganizersPreview },
-  { id: "3", title: "Parent Email Templates", description: "Ready-to-use email templates to help parents start confident, supportive conversations with their child's teacher and school team.", type: "guide", audiences: ["Parents"] },
+  { id: "3", title: "Parent Email Templates", description: "Ready-to-use email templates to help parents start confident, supportive conversations with their child's teacher and school team.", type: "guide", audiences: ["Parents"], image: emailTemplatesPreview },
 ];
 
 const testimonials = [
