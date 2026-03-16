@@ -139,13 +139,13 @@ const HubDashboard = () => {
         </div>
 
         {/* Audience Filter Pills */}
-        <div className="flex flex-wrap gap-2 mb-5">
+        <div className="flex flex-wrap items-center gap-2 mb-5">
           {AUDIENCE_PILLS.map((pill) => (
             <button
               key={pill.value}
-              onClick={() => setAudienceTab(pill.value)}
+              onClick={() => { setAudienceTab(pill.value); setShowSavedOnly(false); }}
               className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-all ${
-                filters.audienceTab === pill.value
+                !showSavedOnly && filters.audienceTab === pill.value
                   ? "bg-midnight text-white border-midnight"
                   : "bg-card text-midnight border-thistle hover:border-hub-lavender hover:text-hub-lavender"
               }`}
@@ -153,6 +153,27 @@ const HubDashboard = () => {
               {pill.label}
             </button>
           ))}
+
+          {/* Divider */}
+          <div className="w-px h-6 bg-thistle mx-1" />
+
+          {/* Saved pill */}
+          <button
+            onClick={() => setShowSavedOnly((prev) => !prev)}
+            className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-all inline-flex items-center gap-1.5 ${
+              showSavedOnly
+                ? "bg-midnight text-white border-midnight"
+                : "bg-card text-midnight border-thistle hover:border-hub-lavender hover:text-hub-lavender"
+            }`}
+          >
+            <Heart className={`h-3.5 w-3.5 ${showSavedOnly ? "fill-white" : ""}`} />
+            Saved
+            {savedIds.size > 0 && (
+              <span className={`text-xs ml-0.5 ${showSavedOnly ? "text-white/70" : "text-stone-ui"}`}>
+                ({savedIds.size})
+              </span>
+            )}
+          </button>
         </div>
 
         {/* Subtext */}
