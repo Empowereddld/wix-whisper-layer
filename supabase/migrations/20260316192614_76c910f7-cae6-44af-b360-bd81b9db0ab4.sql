@@ -1,0 +1,1 @@
+UPDATE resources SET thumbnail_url = 'https://haafpznzuazanylcelse.supabase.co/storage/v1/object/public/thumbnails/conversation-starters-thumbnail.png' WHERE id = '2630ce77-c3b2-49cd-bf73-da63799d0d0a';
