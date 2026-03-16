@@ -152,7 +152,6 @@ const HubDashboard = () => {
           <Select value={sort} onValueChange={(v) => setSort(v as SortOption)}>
             <SelectTrigger className="w-44 border-thistle"><SelectValue /></SelectTrigger>
             <SelectContent>
-              <SelectItem value="recommended">Recommended</SelectItem>
               <SelectItem value="most_downloaded">Most Downloaded</SelectItem>
               <SelectItem value="newest">Newest First</SelectItem>
               <SelectItem value="a_z">A–Z</SelectItem>
