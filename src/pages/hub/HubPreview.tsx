@@ -253,16 +253,15 @@ const HubPreview = () => {
                     />
                     <div className="flex-1">
                       <span className="text-[13px] md:text-[14px] text-foreground/80 group-hover:text-foreground transition-colors">
-                        I'm looking for...
+                        I wish there was a resource for...
                       </span>
-                      {selectedInterests.includes("custom") && (
-                        <Input
-                          placeholder="Tell us what you're looking for"
-                          value={customInterest}
-                          onChange={(e) => setCustomInterest(e.target.value)}
-                          className="mt-1.5"
-                        />
-                      )}
+                      <textarea
+                        placeholder="Share anything — we actually read these!"
+                        value={customInterest}
+                        onChange={(e) => setCustomInterest(e.target.value)}
+                        className="w-full mt-1.5 px-3 py-2 rounded-lg border border-input bg-background text-sm focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 resize-none"
+                        rows={3}
+                      />
                     </div>
                   </label>
                 </div>
