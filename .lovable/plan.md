@@ -1,53 +1,18 @@
 
 
-## Plan: Restructure Hub Signup into Two Distinct Steps
+## Plan: Zoom out the image in "Is This Right" section
 
-### Overview
-Split the current signup flow so Step 1 is pure account creation (at `/hub/signup`) and Step 2 is a lightweight onboarding screen (at a new route or reusing `/signup/role`) with role, interests, and a resource wish field.
+The image currently uses `object-cover` which crops tightly into the center of the photo, cutting off the reading activity. To "zoom out" while keeping the same frame size, we can use CSS `object-fit: contain` instead — but that would leave empty space.
 
-### Step 1: Update HubSignup.tsx (Account Creation)
-The page already has most of the right structure. Changes needed:
-- Keep the existing logo (h-48), heading "Create Your Free Account", subheading "Sign up once. Access everything."
-- Keep `SocialLoginButtons` (Google + Apple via Lovable Cloud OAuth)
-- Keep the "OR SIGN UP WITH EMAIL" divider
-- Keep first name, email, password, confirm password fields
-- Button text is already "Create Account" — no change needed
-- Keep "Already have an account? Log in" link
-- Keep dark purple button styling (`bg-midnight`)
-- After successful signup, redirect to the new onboarding step instead of `/hub/verify-email`
+A better approach: keep `object-cover` but use `object-position` to show more of the image, combined with scaling. Specifically:
 
-**Key decision**: Since email auto-confirm is enabled (per memory), after signup we navigate directly to the onboarding step. If email verification were required, the flow would go verify-email → onboarding.
+### Change in `src/components/IsThisRightSection.tsx` (line 16)
 
-### Step 2: Create New Onboarding Page (Post-Signup)
-Create or repurpose a page for the post-signup onboarding step:
-- **Route**: Reuse `/signup/role` path but replace `SignupRole.tsx` content entirely
-- **Header**: "One last thing..." with subheading "Help us personalize your experience."
-- **Fields**:
-  - Role dropdown (Parent, Therapist, Educator, School Leader, Other) — reuse from HubPreview's role select
-  - Interest checkboxes — reuse the `interestOptions` array from HubPreview
-  - Open text field: "I wish there was a resource for..." with placeholder "Your answer might inspire our next resource."
-- **Submit button**: "Take me to the Resource Hub" — saves role + interests to the profiles table, then navigates to `/hub`
-- **Skip link**: "Skip for now" in small text beneath the button — navigates directly to `/hub`
-- **Styling**: Same `bg-gradient-to-b from-thistle/30 to-background` background, same card styling as Step 1
+On the `<img>` element, add a CSS `scale` transform to shrink the image within its container, effectively zooming out while the container stays the same size. We'll use Tailwind's `scale-[0.85]` (or similar) combined with `object-contain` to ensure the full image is visible:
 
-### Database Considerations
-- The `profiles` table already has a `role` column — we'll update that
-- Interests and resource wish may need new columns. Will check the schema and add a migration if `interests` and `resource_wish` columns don't exist.
+- Change `object-cover` → `object-contain` so the entire image is visible without cropping
+- Add `object-center` to keep it centered
+- The container with `rounded-xl overflow-hidden` maintains the same frame size and shape
 
-### Changes to HubPreview.tsx
-- The inline signup form (Section 2) currently collects name, email, role, interests. Update it to simply link to `/hub/signup` (or keep as a lead-capture form). No structural changes needed since it already has a "Get Instant Access" button linking to `/hub/signup`.
-
-### Files to Modify
-1. **`src/pages/hub/HubSignup.tsx`** — Minor updates: ensure redirect goes to `/signup/role` after signup (already does via `emailRedirectTo`, but direct navigation should also go there)
-2. **`src/pages/auth/SignupRole.tsx`** — Replace with new onboarding UI (role dropdown, interests, resource wish field)
-3. **Database migration** — Add `interests` (text array) and `resource_wish` (text) columns to profiles table if missing
-
-### Flow Summary
-```text
-/hub/preview → "Get Instant Access" → /hub/signup (Step 1: Create Account)
-                                           ↓ success
-                                      /signup/role (Step 2: "One last thing...")
-                                           ↓ submit or skip
-                                        /hub (Dashboard)
-```
+This shows the full scene (people reading) within the exact same container dimensions.
 

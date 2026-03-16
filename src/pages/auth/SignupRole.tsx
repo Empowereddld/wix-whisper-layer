@@ -2,74 +2,69 @@ import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
-import { countries } from "@/lib/countries";
 import empoweredLogo from "@/assets/empowered-logo.webp";
-import { cn } from "@/lib/utils";
-import { ArrowLeft } from "lucide-react";
 
 type Role = "parent" | "slp" | "educator" | "school_leader" | "other";
 
-const roles = [
-  { id: "parent" as Role, icon: "👨‍👩‍👧", title: "Parent or Caregiver", description: "Supporting my child with DLD at home" },
-  { id: "slp" as Role, icon: "🩺", title: "Therapist / SLP", description: "Working with children with DLD professionally" },
-  { id: "educator" as Role, icon: "🏫", title: "Educator", description: "Supporting students with DLD in school" },
-  { id: "school_leader" as Role, icon: "🏢", title: "School Leader / Organization", description: "Leading DLD programs or initiatives" },
-  { id: "other" as Role, icon: "🌟", title: "Other", description: "Researcher, advocate, or other supporter" },
+const roleOptions: { value: Role; label: string }[] = [
+  { value: "parent", label: "Parent or Caregiver" },
+  { value: "slp", label: "Therapist / SLP" },
+  { value: "educator", label: "Educator" },
+  { value: "school_leader", label: "School Leader / Organization" },
+  { value: "other", label: "Other" },
 ];
 
-const ageRanges = [
-  { value: "0-4", label: "0–4 years" },
-  { value: "5-7", label: "5–7 years" },
-  { value: "8-10", label: "8–10 years" },
-  { value: "11-13", label: "11–13 years" },
-  { value: "14+", label: "14+ years" },
-  { value: "not_applicable", label: "Not applicable" },
+const interestOptions = [
+  "Understanding DLD",
+  "Classroom strategies and accommodations",
+  "Activities to support language development",
+  "Therapy tools and intervention ideas",
+  "Resources to share with schools or professionals",
+  "Social communication and friendship support",
+  "I'm exploring and not sure where to start",
 ];
 
 const SignupRole = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const { user, profile, loading: authLoading } = useAuth();
-  const [step, setStep] = useState(1);
-  const [selectedRole, setSelectedRole] = useState<Role | null>(null);
-  const [jobTitle, setJobTitle] = useState("");
-  const [organizationName, setOrganizationName] = useState("");
-  const [country, setCountry] = useState("");
-  const [ageRange, setAgeRange] = useState("not_applicable");
+  const [selectedRole, setSelectedRole] = useState<Role | undefined>(undefined);
+  const [interests, setInterests] = useState<string[]>([]);
+  const [resourceWish, setResourceWish] = useState("");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (!authLoading && !user) {
-      navigate("/signup");
+      navigate("/hub/signup");
     }
+    // If user already completed onboarding, go to hub
     if (!authLoading && profile && profile.role !== "parent") {
       navigate("/hub");
     }
   }, [user, profile, authLoading, navigate]);
 
-  const handleContinue = async () => {
-    if (!selectedRole || !user) return;
+  const toggleInterest = (interest: string) => {
+    setInterests((prev) =>
+      prev.includes(interest) ? prev.filter((i) => i !== interest) : [...prev, interest]
+    );
+  };
 
-    if (step === 1) {
-      setStep(2);
-      return;
-    }
-
+  const handleSubmit = async () => {
+    if (!user) return;
     setLoading(true);
 
     const storedRef = localStorage.getItem("empowered_ref");
     const updateData: Record<string, any> = {
-      role: selectedRole,
-      job_title: jobTitle.trim() || null,
-      organization_name: organizationName.trim() || null,
-      country: country || null,
-      age_range: ageRange || "not_applicable",
+      interests,
+      resource_wish: resourceWish.trim() || null,
     };
+    if (selectedRole) updateData.role = selectedRole;
     if (storedRef) {
       updateData.referred_by = storedRef;
       localStorage.removeItem("empowered_ref");
@@ -90,6 +85,10 @@ const SignupRole = () => {
     navigate("/hub");
   };
 
+  const handleSkip = () => {
+    navigate("/hub");
+  };
+
   if (authLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
@@ -100,151 +99,78 @@ const SignupRole = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-thistle/30 to-background flex items-center justify-center p-4">
-      <div className="w-full max-w-lg">
+      <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <Link to="/">
-            <img src={empoweredLogo} alt="Empowered DLD" className="h-10 mx-auto mb-6" />
+            <img src={empoweredLogo} alt="Empowered DLD" className="h-48 mx-auto" />
           </Link>
-          <h1 className="text-3xl font-bold text-midnight mb-2">
-            {step === 1 ? "Welcome! Tell us about yourself" : "A few more details"}
-          </h1>
-          <p className="text-stone-ui">
-            {step === 1
-              ? "This helps us show you the most relevant resources."
-              : "Optional — but it helps us personalize your experience."}
-          </p>
-          {/* Step indicator */}
-          <div className="flex items-center justify-center gap-2 mt-4">
-            <div className={cn("h-2 w-8 rounded-full transition-colors", step >= 1 ? "bg-coral" : "bg-thistle")} />
-            <div className={cn("h-2 w-8 rounded-full transition-colors", step >= 2 ? "bg-coral" : "bg-thistle")} />
-          </div>
+          <h1 className="text-3xl font-bold text-midnight mb-2">One last thing...</h1>
+          <p className="text-stone-ui">Help us personalize your experience.</p>
         </div>
 
         <div className="bg-white rounded-2xl shadow-lg p-8 space-y-6">
-          {step === 1 ? (
-            <>
-              <p className="text-center text-midnight font-medium text-lg">I am a...</p>
-              <div className="space-y-3">
-                {roles.map((role) => (
-                  <button
-                    key={role.id}
-                    onClick={() => setSelectedRole(role.id)}
-                    className={cn(
-                      "w-full p-4 rounded-xl border-2 text-left transition-all duration-200",
-                      "hover:border-coral hover:bg-coral/5",
-                      selectedRole === role.id ? "border-coral bg-coral/10" : "border-thistle bg-white"
-                    )}
-                  >
-                    <div className="flex items-center gap-4">
-                      <span className="text-3xl">{role.icon}</span>
-                      <div>
-                        <p className="font-semibold text-midnight">{role.title}</p>
-                        <p className="text-sm text-stone-ui">{role.description}</p>
-                      </div>
-                    </div>
-                  </button>
+          {/* Role Dropdown */}
+          <div>
+            <Label className="text-midnight font-medium">I am a...</Label>
+            <Select value={selectedRole} onValueChange={(v) => setSelectedRole(v as Role)}>
+              <SelectTrigger className="h-12 mt-1">
+                <SelectValue placeholder="Select your role" />
+              </SelectTrigger>
+              <SelectContent>
+                {roleOptions.map((r) => (
+                  <SelectItem key={r.value} value={r.value}>{r.label}</SelectItem>
                 ))}
-              </div>
-            </>
-          ) : (
-            <>
-              <button
-                onClick={() => setStep(1)}
-                className="flex items-center gap-1 text-sm text-stone-ui hover:text-midnight transition-colors"
-              >
-                <ArrowLeft className="h-4 w-4" />
-                Back
-              </button>
+              </SelectContent>
+            </Select>
+          </div>
 
-              <div className="space-y-4">
-                <div>
-                  <Label className="text-midnight font-medium">Job Title / Position</Label>
-                  <Input
-                    value={jobTitle}
-                    onChange={(e) => setJobTitle(e.target.value)}
-                    placeholder="e.g. Speech-Language Pathologist, Grade 3 Teacher"
-                    className="h-12 mt-1"
-                    maxLength={100}
+          {/* Interest Checkboxes */}
+          <div>
+            <Label className="text-midnight font-medium">I'm interested in...</Label>
+            <div className="space-y-2.5 mt-2">
+              {interestOptions.map((interest) => (
+                <label key={interest} className="flex items-center gap-2.5 cursor-pointer group">
+                  <Checkbox
+                    checked={interests.includes(interest)}
+                    onCheckedChange={() => toggleInterest(interest)}
+                    className="border-thistle data-[state=checked]:bg-midnight data-[state=checked]:border-midnight"
                   />
-                </div>
-
-                <div>
-                  <Label className="text-midnight font-medium">Organization / School Name</Label>
-                  <Input
-                    value={organizationName}
-                    onChange={(e) => setOrganizationName(e.target.value)}
-                    placeholder="e.g. Sunshine Elementary, Private Practice"
-                    className="h-12 mt-1"
-                    maxLength={150}
-                  />
-                </div>
-
-                <div>
-                  <Label className="text-midnight font-medium">Country</Label>
-                  <Select value={country} onValueChange={setCountry}>
-                    <SelectTrigger className="h-12 mt-1">
-                      <SelectValue placeholder="Select your country" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {countries.map((c) => (
-                        <SelectItem key={c} value={c}>{c}</SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                {selectedRole === "parent" && (
-                  <div>
-                    <Label className="text-midnight font-medium">Child's Age Range</Label>
-                    <Select value={ageRange} onValueChange={setAgeRange}>
-                      <SelectTrigger className="h-12 mt-1">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {ageRanges.map((a) => (
-                          <SelectItem key={a.value} value={a.value}>{a.label}</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                )}
-              </div>
-            </>
-          )}
-
-          {(step === 1 && selectedRole) && (
-            <Button
-              onClick={handleContinue}
-              className="w-full h-12 bg-coral hover:bg-coral/90 text-white font-semibold text-base animate-in fade-in slide-in-from-bottom-2 duration-300"
-            >
-              Continue →
-            </Button>
-          )}
-
-          {step === 2 && (
-            <div className="space-y-3">
-              <Button
-                onClick={handleContinue}
-                className="w-full h-12 bg-coral hover:bg-coral/90 text-white font-semibold text-base"
-                disabled={loading}
-              >
-                {loading ? "Saving..." : "Take Me to the Resources →"}
-              </Button>
-              <button
-                onClick={() => {
-                  // Allow skipping step 2
-                  setJobTitle("");
-                  setOrganizationName("");
-                  handleContinue();
-                }}
-                className="w-full text-sm text-stone-ui hover:text-midnight transition-colors"
-              >
-                Skip for now
-              </button>
+                  <span className="text-sm text-foreground group-hover:text-midnight transition-colors">
+                    {interest}
+                  </span>
+                </label>
+              ))}
             </div>
-          )}
+          </div>
 
-          <p className="text-center text-xs text-stone-ui">You can update this anytime in your settings</p>
+          {/* Resource Wish */}
+          <div>
+            <Label className="text-midnight font-medium">I wish there was a resource for...</Label>
+            <Textarea
+              value={resourceWish}
+              onChange={(e) => setResourceWish(e.target.value)}
+              placeholder="Your answer might inspire our next resource."
+              className="mt-1 min-h-[80px] resize-none"
+              maxLength={500}
+            />
+          </div>
+
+          {/* Submit */}
+          <div className="space-y-3">
+            <Button
+              onClick={handleSubmit}
+              className="w-full h-12 bg-midnight hover:bg-midnight/90 text-midnight-foreground font-semibold text-base"
+              disabled={loading}
+            >
+              {loading ? "Saving..." : "Take me to the Resource Hub"}
+            </Button>
+            <button
+              onClick={handleSkip}
+              className="w-full text-sm text-stone-ui hover:text-midnight transition-colors"
+            >
+              Skip for now
+            </button>
+          </div>
         </div>
       </div>
     </div>

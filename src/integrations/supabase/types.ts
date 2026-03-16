@@ -289,10 +289,12 @@ export type Database = {
           created_at: string
           first_name: string
           id: string
+          interests: string[] | null
           job_title: string | null
           last_name: string | null
           organization_name: string | null
           referred_by: string | null
+          resource_wish: string | null
           role: Database["public"]["Enums"]["user_role"]
           updated_at: string
           welcome_dismissed: boolean
@@ -303,10 +305,12 @@ export type Database = {
           created_at?: string
           first_name: string
           id: string
+          interests?: string[] | null
           job_title?: string | null
           last_name?: string | null
           organization_name?: string | null
           referred_by?: string | null
+          resource_wish?: string | null
           role?: Database["public"]["Enums"]["user_role"]
           updated_at?: string
           welcome_dismissed?: boolean
@@ -317,10 +321,12 @@ export type Database = {
           created_at?: string
           first_name?: string
           id?: string
+          interests?: string[] | null
           job_title?: string | null
           last_name?: string | null
           organization_name?: string | null
           referred_by?: string | null
+          resource_wish?: string | null
           role?: Database["public"]["Enums"]["user_role"]
           updated_at?: string
           welcome_dismissed?: boolean
