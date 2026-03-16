@@ -228,6 +228,60 @@ const ResourceDetail = () => {
           </div>
         </div>
 
+        {/* Description / Great For tabs */}
+        {(resource.long_description || resource.great_for) && (
+          <div className="mt-10">
+            <div className="flex gap-0 border-b border-border">
+              <button
+                onClick={() => setActiveTab("description")}
+                className={`px-5 py-3 text-sm font-semibold transition-colors relative ${
+                  activeTab === "description"
+                    ? "text-midnight"
+                    : "text-stone-ui hover:text-midnight"
+                }`}
+              >
+                Description
+                {activeTab === "description" && (
+                  <span className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-deep-purple rounded-t" />
+                )}
+              </button>
+              {resource.great_for && resource.great_for.length > 0 && (
+                <button
+                  onClick={() => setActiveTab("great_for")}
+                  className={`px-5 py-3 text-sm font-semibold transition-colors relative ${
+                    activeTab === "great_for"
+                      ? "text-midnight"
+                      : "text-stone-ui hover:text-midnight"
+                  }`}
+                >
+                  Great For
+                  {activeTab === "great_for" && (
+                    <span className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-deep-purple rounded-t" />
+                  )}
+                </button>
+              )}
+            </div>
+
+            <div className="py-6">
+              {activeTab === "description" && resource.long_description && (
+                <p className="text-foreground/80 leading-relaxed text-base whitespace-pre-line">
+                  {resource.long_description}
+                </p>
+              )}
+              {activeTab === "great_for" && resource.great_for && (
+                <ul className="space-y-3">
+                  {resource.great_for.map((item, i) => (
+                    <li key={i} className="flex items-start gap-3 text-foreground/80 text-base">
+                      <Check className="h-5 w-5 text-deep-purple flex-shrink-0 mt-0.5" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </div>
+        )}
+
         {/* Divider */}
         <hr className="border-border my-12" />
 
