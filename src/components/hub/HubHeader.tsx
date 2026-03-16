@@ -47,7 +47,7 @@ const HubHeader = ({ activeAudience = "", onAudienceChange }: HubHeaderProps) =>
             target="_blank"
             rel="noopener noreferrer"
           >
-            <img src={empoweredLogoWhite} alt="Empowered DLD" className="h-8" />
+            <img src={empoweredLogoWhite} alt="Empowered DLD" className="h-12" />
           </a>
 
           {/* Audience tabs — center */}
