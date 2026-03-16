@@ -15,10 +15,10 @@ const typeIcons: Record<string, React.ElementType> = {
 };
 
 const audienceLabels: Record<string, string> = {
-  parent: "Parent Resource",
-  slp: "Therapist Resource",
-  educator: "Educator Resource",
-  school_leader: "School Leader Resource",
+  parent: "Parents",
+  slp: "Therapists",
+  educator: "Educators",
+  school_leader: "School Leaders",
 };
 
 interface ResourceCardProps {
