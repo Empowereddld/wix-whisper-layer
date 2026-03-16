@@ -421,9 +421,11 @@ export type Database = {
           description: string | null
           download_count: number | null
           file_url: string | null
+          great_for: string[] | null
           id: string
           is_published: boolean
           languages: string[] | null
+          long_description: string | null
           resource_type: Database["public"]["Enums"]["resource_type"]
           roles: string[] | null
           settings: string[] | null
@@ -436,9 +438,11 @@ export type Database = {
           description?: string | null
           download_count?: number | null
           file_url?: string | null
+          great_for?: string[] | null
           id?: string
           is_published?: boolean
           languages?: string[] | null
+          long_description?: string | null
           resource_type: Database["public"]["Enums"]["resource_type"]
           roles?: string[] | null
           settings?: string[] | null
@@ -451,9 +455,11 @@ export type Database = {
           description?: string | null
           download_count?: number | null
           file_url?: string | null
+          great_for?: string[] | null
           id?: string
           is_published?: boolean
           languages?: string[] | null
+          long_description?: string | null
           resource_type?: Database["public"]["Enums"]["resource_type"]
           roles?: string[] | null
           settings?: string[] | null
