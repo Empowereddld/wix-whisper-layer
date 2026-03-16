@@ -161,7 +161,7 @@ const HubPreview = () => {
             DLD RESOURCE HUB
           </p>
           <h1 className="text-[32px] md:text-[48px] lg:text-[56px] font-black text-foreground leading-[1.1] max-w-[800px]">
-            DLD Resources for Families and Professionals
+            Everything You Need to Support a Child with DLD
           </h1>
           <p className="text-[14px] md:text-[16px] text-foreground/55 leading-[1.7] max-w-[620px]">
             Posters, guides, checklists, and learning tools supporting children with Developmental Language Disorder.
