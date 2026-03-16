@@ -1,50 +1,18 @@
 
 
-## Plan: Increase Resource Card Sizes in "Explore the Resource Library"
+## Plan: Zoom out the image in "Is This Right" section
 
-### Current State
-The resource preview section uses:
-- Container: `max-w-[1100px]` with standard padding
-- Grid: 3 columns on lg+ (`lg:grid-cols-3`), 2 on sm+ (`sm:grid-cols-2`), 1 on mobile
-- Card image height: `h-40` (160px)
-- Card padding: `p-5` (20px)
-- Gap between cards: `gap-6` (24px)
+The image currently uses `object-cover` which crops tightly into the center of the photo, cutting off the reading activity. To "zoom out" while keeping the same frame size, we can use CSS `object-fit: contain` instead — but that would leave empty space.
 
-### Proposed Changes
+A better approach: keep `object-cover` but use `object-position` to show more of the image, combined with scaling. Specifically:
 
-**1. Increase Container Width**
-- Change from `max-w-[1100px]` to `max-w-[1200px]` to give cards more breathing room
-- This provides ~100px more width, distributed across the 3 columns
+### Change in `src/components/IsThisRightSection.tsx` (line 16)
 
-**2. Increase Card Image Height**
-- Change from `h-40` (160px) to `h-52` (208px)
-- This makes preview images 30% taller and more prominent
-- Resource previews will be easier to scan and evaluate
+On the `<img>` element, add a CSS `scale` transform to shrink the image within its container, effectively zooming out while the container stays the same size. We'll use Tailwind's `scale-[0.85]` (or similar) combined with `object-contain` to ensure the full image is visible:
 
-**3. Increase Card Content Padding**
-- Change from `p-5` (20px) to `p-6` (24px)
-- Provides more space around title, description, and tags
-- Improves readability without feeling cramped
+- Change `object-cover` → `object-contain` so the entire image is visible without cropping
+- Add `object-center` to keep it centered
+- The container with `rounded-xl overflow-hidden` maintains the same frame size and shape
 
-**4. Increase Card Gap**
-- Change from `gap-6` (24px) to `gap-8` (32px)
-- Creates better visual separation between cards
-- Prevents cards from feeling crowded
-
-**5. Increase Typography**
-- Card title: Add `text-base` or `text-[15px]` to make titles more readable
-- Currently using default font size which feels small for larger cards
-
-### Responsive Behavior
-- Mobile (< 640px): Single column, cards stack vertically
-- Tablet (640px - 1023px): 2 columns with increased spacing
-- Desktop (1024px+): 3 columns with larger cards and more prominent previews
-
-### Visual Impact
-The changes will:
-- Make resource previews 30% larger and easier to evaluate
-- Improve title and description readability
-- Create better visual hierarchy and balance with other page sections
-- Maintain the clean, editorial design style
-- Keep the same responsive grid behavior
+This shows the full scene (people reading) within the exact same container dimensions.
 

@@ -308,7 +308,7 @@ const HubPreview = () => {
 
       {/* ── Section 4: Resource Preview ── */}
       <section className="py-16 lg:py-20 bg-background">
-        <div className="max-w-[1100px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
             <h2 className="text-[28px] md:text-[36px] font-black text-foreground leading-[1.1] mb-3">
               Explore the Resource Library
@@ -318,21 +318,21 @@ const HubPreview = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {placeholderResources.map((resource) => {
               const Icon = typeIcons[resource.type] || FileText;
               return (
                 <div key={resource.id} className="relative bg-card rounded-xl border border-border overflow-hidden group shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-card-hover)] transition-shadow">
-                  <div className="h-40 bg-muted flex items-center justify-center overflow-hidden">
+                  <div className="h-52 bg-muted flex items-center justify-center overflow-hidden">
                     {resource.image ? (
                       <img src={resource.image} alt={resource.title} className="w-full h-full object-cover" />
                     ) : (
                       <Icon className="h-12 w-12 text-muted-foreground/40" />
                     )}
                   </div>
-                  <div className="p-5">
-                    <h3 className="font-semibold text-foreground mb-1.5 line-clamp-2 leading-snug">{resource.title}</h3>
-                    <p className="text-sm text-muted-foreground mb-3 line-clamp-2">{resource.description}</p>
+                  <div className="p-6">
+                    <h3 className="font-semibold text-[15px] text-foreground mb-2 line-clamp-2 leading-snug">{resource.title}</h3>
+                    <p className="text-sm text-muted-foreground mb-3 line-clamp-3">{resource.description}</p>
                     <div className="flex flex-wrap gap-1.5">
                       {resource.audiences.map((audience) => (
                         <span key={audience} className="text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary font-medium">{audience}</span>
