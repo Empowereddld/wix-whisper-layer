@@ -78,7 +78,7 @@ const ResourceCard = ({
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1">
-            <h3 className="font-semibold text-midnight truncate">{resource.title}</h3>
+            <h3 className="font-semibold text-midnight truncate">{displayTitle}</h3>
             {!isPaid && (
               <span className="text-xs px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 font-medium flex-shrink-0">Free</span>
             )}
