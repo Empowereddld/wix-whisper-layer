@@ -15,7 +15,7 @@ import { toast } from "sonner";
 import type { Resource } from "@/hooks/useResources";
 import { useProducts, usePurchases } from "@/hooks/usePurchases";
 
-type DetailTab = "description" | "great_for";
+type DetailTab = "description" | "who_is_this_for";
 
 const typeIcons: Record<string, React.ElementType> = {
   poster: Image, guide: BookOpen, checklist: CheckSquare, handout: FileText,
