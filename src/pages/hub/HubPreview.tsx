@@ -66,7 +66,7 @@ const interestOptions = [
   "Therapy tools and intervention ideas",
   "Resources to share with schools or professionals",
   "Social communication and friendship support",
-  "I'm just exploring",
+  "I'm exploring and not sure where to start",
 ];
 
 
