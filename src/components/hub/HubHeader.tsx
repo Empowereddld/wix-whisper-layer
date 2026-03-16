@@ -92,27 +92,6 @@ const HubHeader = ({ activeAudience = "", onAudienceChange }: HubHeaderProps) =>
         </div>
       </div>
 
-      {/* Mobile audience tabs */}
-      <div className="md:hidden border-t border-white/10 px-4 py-2">
-        <div className="flex gap-1 overflow-x-auto no-scrollbar">
-          {AUDIENCE_TABS.map((tab) => {
-            const isActive = activeAudience === tab.value;
-            return (
-              <button
-                key={tab.value}
-                onClick={() => onAudienceChange?.(tab.value)}
-                className={`px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap transition-all flex-shrink-0 ${
-                  isActive
-                    ? "bg-hub-lavender text-midnight"
-                    : "text-white/70 hover:text-white hover:bg-white/10"
-                }`}
-              >
-                {tab.label}
-              </button>
-            );
-          })}
-        </div>
-      </div>
     </header>
   );
 };
