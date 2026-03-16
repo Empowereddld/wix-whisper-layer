@@ -330,9 +330,9 @@ const HubPreview = () => {
                       <Icon className="h-12 w-12 text-muted-foreground/40" />
                     )}
                   </div>
-                  <div className="p-5">
-                    <h3 className="font-semibold text-foreground mb-1.5 line-clamp-2 leading-snug">{resource.title}</h3>
-                    <p className="text-sm text-muted-foreground mb-3 line-clamp-2">{resource.description}</p>
+                  <div className="p-6">
+                    <h3 className="font-semibold text-[15px] text-foreground mb-2 line-clamp-2 leading-snug">{resource.title}</h3>
+                    <p className="text-sm text-muted-foreground mb-3 line-clamp-3">{resource.description}</p>
                     <div className="flex flex-wrap gap-1.5">
                       {resource.audiences.map((audience) => (
                         <span key={audience} className="text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary font-medium">{audience}</span>
