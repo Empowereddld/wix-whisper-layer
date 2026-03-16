@@ -9,9 +9,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import TestimonialMasonry from "@/components/hub/TestimonialMasonry";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import TestimonialMasonry from "@/components/hub/TestimonialMasonry";
