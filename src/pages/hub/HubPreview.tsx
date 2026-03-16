@@ -322,8 +322,12 @@ const HubPreview = () => {
               const Icon = typeIcons[resource.type] || FileText;
               return (
                 <div key={resource.id} className="relative bg-card rounded-xl border border-border overflow-hidden group shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-card-hover)] transition-shadow">
-                  <div className="h-40 bg-muted flex items-center justify-center">
-                    <Icon className="h-12 w-12 text-muted-foreground/40" />
+                  <div className="h-40 bg-muted flex items-center justify-center overflow-hidden">
+                    {resource.image ? (
+                      <img src={resource.image} alt={resource.title} className="w-full h-full object-cover" />
+                    ) : (
+                      <Icon className="h-12 w-12 text-muted-foreground/40" />
+                    )}
                   </div>
                   <div className="p-5">
                     <h3 className="font-semibold text-foreground mb-1.5 line-clamp-2 leading-snug">{resource.title}</h3>
