@@ -150,7 +150,7 @@ const ResourceCard = ({
             Free
           </span>
         )}
-        {isNew(resource.created_at) && (
+        {isNew && (
           <span className="absolute top-10 left-3 text-xs px-2.5 py-1 rounded-full bg-mauve text-white font-medium">New</span>
         )}
       </div>
