@@ -1,18 +1,33 @@
 
 
-## Plan: Zoom out the image in "Is This Right" section
+## Plan: Remove Embedded Signup Form from /hub/preview
 
-The image currently uses `object-cover` which crops tightly into the center of the photo, cutting off the reading activity. To "zoom out" while keeping the same frame size, we can use CSS `object-fit: contain` instead — but that would leave empty space.
+### Overview
+Remove Section 2 (the embedded signup form) entirely from the HubPreview landing page. All signup CTAs should link directly to `/hub/signup`.
 
-A better approach: keep `object-cover` but use `object-position` to show more of the image, combined with scaling. Specifically:
+### Changes Required
 
-### Change in `src/components/IsThisRightSection.tsx` (line 16)
+**File: `src/pages/hub/HubPreview.tsx`**
 
-On the `<img>` element, add a CSS `scale` transform to shrink the image within its container, effectively zooming out while the container stays the same size. We'll use Tailwind's `scale-[0.85]` (or similar) combined with `object-contain` to ensure the full image is visible:
+1. **Remove Form State & Logic (lines 96-113)**
+   - Delete `name`, `email`, `errors` state variables
+   - Delete `handleFormSubmit` function
+   - Remove `useNavigate` import (no longer needed)
 
-- Change `object-cover` → `object-contain` so the entire image is visible without cropping
-- Add `object-center` to keep it centered
-- The container with `rounded-xl overflow-hidden` maintains the same frame size and shape
+2. **Remove Unused Imports**
+   - Remove `Input` component import (line 9)
+   - Remove `Label` component import (line 10)
 
-This shows the full scene (people reading) within the exact same container dimensions.
+3. **Delete Section 2 Entirely (lines 153-184)**
+   - Remove the entire "Signup Form" section
+   - The page will flow directly from Hero → Community Stats
+
+### Result
+The page will have three "Get Instant Access" buttons linking to `/hub/signup`:
+1. Hero section (line 142-145) — already exists
+2. Resource cards hover overlay (line 252) — already exists
+3. Final CTA section (line 299-302) — already exists
+
+### Files Modified
+- `src/pages/hub/HubPreview.tsx`
 
