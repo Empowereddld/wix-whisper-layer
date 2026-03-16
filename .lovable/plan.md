@@ -1,18 +1,46 @@
 
 
-## Plan: Zoom out the image in "Is This Right" section
+## Plan: Simplify the Resource Hub
 
-The image currently uses `object-cover` which crops tightly into the center of the photo, cutting off the reading activity. To "zoom out" while keeping the same frame size, we can use CSS `object-fit: contain` instead — but that would leave empty space.
+### 1. `src/pages/hub/HubDashboard.tsx` — Major simplification
 
-A better approach: keep `object-cover` but use `object-position` to show more of the image, combined with scaling. Specifically:
+- **Remove** the `PURCHASE_FILTER_PILLS` and `TYPE_PILLS` constants and all their UI (the "Show:" row and "Type:" row)
+- **Remove** `showSaved`, `priceFilter`, `activeType` state and related logic
+- **Remove** the entire "Recommended for…" section (lines 226–245)
+- **Remove** the mobile filter drawer (lines 336–360) and the Filters button in the toolbar
+- **Remove** the view mode toggle (grid/list) — keep grid only
+- **Remove** active filter chips section
+- **Simplify `displayResources`** — no more price/saved filtering, just use `filtered` directly
+- **Update welcome banner**: 
+  - First visit: `"Welcome, {first_name}, to the DLD Resource Hub"`
+  - Return visit: `"Welcome back, {first_name}!"`
+  - Both followed by: `"Browse practical tools designed to support children with Developmental Language Disorder."`
+  - Remove the dismiss button — show as a static header, not a dismissable banner
+- **Update section title** from dynamic titles to static `"Resource Library"`
+- **Update empty state** text: replace "premium" → "paid"
+- **Keep**: search bar, sort dropdown, card grid (3-col), resource request FAB, modals
 
-### Change in `src/components/IsThisRightSection.tsx` (line 16)
+### 2. `src/components/hub/ResourceCard.tsx` — Simplify labels & rename buttons
 
-On the `<img>` element, add a CSS `scale` transform to shrink the image within its container, effectively zooming out while the container stays the same size. We'll use Tailwind's `scale-[0.85]` (or similar) combined with `object-contain` to ensure the full image is visible:
+- **Rename** "View" button → "Preview"
+- **Replace** "Premium" references → "Paid"  
+- **Simplify tags section**: Show max 1–2 audience tags using a primary label format:
+  - `parent` → "Parent Resource"
+  - `educator` → "Educator Resource"  
+  - `slp` → "Therapist Resource"
+  - `school_leader` → "School Leader Resource"
+  - Show up to 2 if the resource genuinely serves multiple audiences
+  - Remove the resource type tag and setting tags from the card face
 
-- Change `object-cover` → `object-contain` so the entire image is visible without cropping
-- Add `object-center` to keep it centered
-- The container with `rounded-xl overflow-hidden` maintains the same frame size and shape
+### 3. `src/components/hub/HubHeader.tsx` — Already correct
 
-This shows the full scene (people reading) within the exact same container dimensions.
+The header already has "Therapists" for the SLP tab. No changes needed.
+
+### 4. `src/hooks/useResources.ts` — Minor cleanup
+
+- The `toggleFilter` type already excludes `audienceTab`. No changes strictly required, but the unused filter categories will simply go unused.
+
+### Files changed
+- `src/pages/hub/HubDashboard.tsx` — major rewrite
+- `src/components/hub/ResourceCard.tsx` — label simplification + button rename
 
