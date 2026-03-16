@@ -87,7 +87,7 @@ const ResourceCard = ({
             {isPaid && isPurchased && (
               <span className="text-xs px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 font-medium flex-shrink-0">Purchased</span>
             )}
-            {isNew(resource.created_at) && (
+            {isNew && (
               <span className="text-xs px-2 py-0.5 rounded-full bg-mauve text-white font-medium flex-shrink-0">New</span>
             )}
           </div>
