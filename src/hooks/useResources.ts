@@ -4,7 +4,7 @@ import type { Tables } from "@/integrations/supabase/types";
 
 export type Resource = Tables<"resources"> & { is_published?: boolean };
 
-export type SortOption = "most_downloaded" | "newest" | "a_z" | "recommended";
+export type SortOption = "most_downloaded" | "newest" | "a_z";
 
 export interface Filters {
   roles: string[];
@@ -30,7 +30,7 @@ export function useResources(userRole?: string) {
   const [resources, setResources] = useState<Resource[]>([]);
   const [loading, setLoading] = useState(true);
   const [filters, setFilters] = useState<Filters>(EMPTY_FILTERS);
-  const [sort, setSort] = useState<SortOption>("recommended");
+  const [sort, setSort] = useState<SortOption>("newest");
 
   useEffect(() => {
     const fetchResources = async () => {
@@ -156,18 +156,6 @@ export function useResources(userRole?: string) {
         break;
       case "a_z":
         result.sort((a, b) => a.title.localeCompare(b.title));
-        break;
-      case "recommended":
-        if (userRole) {
-          result.sort((a, b) => {
-            const aMatch = a.roles?.includes(userRole) ? 1 : 0;
-            const bMatch = b.roles?.includes(userRole) ? 1 : 0;
-            if (bMatch !== aMatch) return bMatch - aMatch;
-            return (b.download_count ?? 0) - (a.download_count ?? 0);
-          });
-        } else {
-          result.sort((a, b) => (b.download_count ?? 0) - (a.download_count ?? 0));
-        }
         break;
     }
 

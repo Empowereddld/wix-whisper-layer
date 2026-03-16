@@ -139,7 +139,7 @@ const HubDashboard = () => {
         </div>
 
         {/* Subtext */}
-        <p className="text-right text-sm text-stone-ui mb-8">
+        <p className="text-center text-sm text-stone-ui mb-8">
           Supporting a child with DLD is a team effort. Many of these resources are useful across all roles.
         </p>
 
@@ -152,7 +152,6 @@ const HubDashboard = () => {
           <Select value={sort} onValueChange={(v) => setSort(v as SortOption)}>
             <SelectTrigger className="w-44 border-thistle"><SelectValue /></SelectTrigger>
             <SelectContent>
-              <SelectItem value="recommended">Recommended</SelectItem>
               <SelectItem value="most_downloaded">Most Downloaded</SelectItem>
               <SelectItem value="newest">Newest First</SelectItem>
               <SelectItem value="a_z">A–Z</SelectItem>
