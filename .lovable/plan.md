@@ -1,18 +1,25 @@
 
 
-## Plan: Zoom out the image in "Is This Right" section
+## Plan: Add "Saved" Filter Pill to Resource Hub Dashboard
 
-The image currently uses `object-cover` which crops tightly into the center of the photo, cutting off the reading activity. To "zoom out" while keeping the same frame size, we can use CSS `object-fit: contain` instead — but that would leave empty space.
+### Approach
+Add a "Saved" pill with a heart icon to the existing audience filter row on the dashboard. When active, it filters the grid to show only the user's saved/favourited resources. This is the simplest approach — no new page or route needed.
 
-A better approach: keep `object-cover` but use `object-position` to show more of the image, combined with scaling. Specifically:
+### Changes
 
-### Change in `src/components/IsThisRightSection.tsx` (line 16)
+**1. `src/pages/hub/HubDashboard.tsx`**
+- Add a "Saved" pill (with `Heart` icon) after the audience pills
+- Track a `showSavedOnly` boolean state
+- When active, filter the `filtered` array to only include resources whose ID is in `savedIds`
+- Clicking "Saved" deselects the audience filter and vice versa
+- Show the count of saved resources on the pill
 
-On the `<img>` element, add a CSS `scale` transform to shrink the image within its container, effectively zooming out while the container stays the same size. We'll use Tailwind's `scale-[0.85]` (or similar) combined with `object-contain` to ensure the full image is visible:
+**2. Behaviour details**
+- The "Saved" pill sits visually separated (with a divider or gap) from the audience pills to indicate it's a different type of filter
+- When "Saved" is active, search and sort still apply on top
+- If no saved resources exist, show an empty state: "You haven't saved any resources yet. Click the heart icon on any resource to save it here."
+- Clicking an audience pill while "Saved" is active deactivates the saved filter
 
-- Change `object-cover` → `object-contain` so the entire image is visible without cropping
-- Add `object-center` to keep it centered
-- The container with `rounded-xl overflow-hidden` maintains the same frame size and shape
-
-This shows the full scene (people reading) within the exact same container dimensions.
+### No database or backend changes required
+The `saved_resources` table and `useSavedResources` hook already provide everything needed.
 
