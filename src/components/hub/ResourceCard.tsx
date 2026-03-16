@@ -88,7 +88,7 @@ const ResourceCard = ({
               <span className="text-xs px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 font-medium flex-shrink-0">Purchased</span>
             )}
             {isNew && (
-              <span className="text-xs px-2 py-0.5 rounded-full bg-mauve text-white font-medium flex-shrink-0">New</span>
+              <span className="text-xs px-2 py-0.5 rounded-full bg-deep-purple text-white font-medium flex-shrink-0">New</span>
             )}
           </div>
           <p className="text-sm text-stone-ui line-clamp-1">{resource.description}</p>
