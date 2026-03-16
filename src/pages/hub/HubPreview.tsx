@@ -51,15 +51,6 @@ const faqs = [
   { q: "What is Developmental Language Disorder (DLD)?", a: "Developmental Language Disorder is a difference in how the brain learns and uses language. Children with DLD may have difficulty understanding language, expressing their ideas, or learning new words and grammar. DLD is common, affecting about 1 in 14 children, yet many families and educators have never heard the term. With the right understanding and support, children with DLD can thrive." },
 ];
 
-const interestOptions = [
-  "Understanding DLD",
-  "Classroom strategies and accommodations",
-  "Activities to support language development",
-  "Therapy tools and intervention ideas",
-  "Resources to share with schools or professionals",
-  "Social communication and friendship support",
-  "I'm exploring and not sure where to start",
-];
 
 
 
