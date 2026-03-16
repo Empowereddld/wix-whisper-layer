@@ -51,6 +51,7 @@ const HubDashboard = () => {
   const [purchaseResource, setPurchaseResource] = useState<Resource | null>(null);
   const [requestModalOpen, setRequestModalOpen] = useState(false);
   const [isReturning, setIsReturning] = useState(false);
+  const [showSavedOnly, setShowSavedOnly] = useState(false);
 
   // Handle purchase success URL param
   useEffect(() => {
