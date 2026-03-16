@@ -198,10 +198,11 @@ const HubDashboard = () => {
             {filtered.map((r, i) => (
               <motion.div key={r.id} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: Math.min(i * 0.05, 0.4), duration: 0.4 }}>
                 <ResourceCard
-                  resource={r} onView={setSelectedResource} onDownload={handleDownload} onUnlock={handleUnlock}
+                  resource={r} onView={handleView} onDownload={handleDownload} onUnlock={handleUnlock}
                   price={priceMap[r.id]?.price} currency={priceMap[r.id]?.currency}
                   isPurchased={purchasedResourceIds.has(r.id)}
                   isSaved={savedIds.has(r.id)} onToggleSave={handleToggleSave} userId={user?.id}
+                  isNew={isResourceNew(r)}
                 />
               </motion.div>
             ))}
