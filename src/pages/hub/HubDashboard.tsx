@@ -229,7 +229,7 @@ const HubDashboard = () => {
       {/* Floating Request Button */}
       <button
         onClick={() => setRequestModalOpen(true)}
-        className="fixed bottom-6 right-6 z-40 bg-mauve text-white rounded-full p-4 shadow-lg hover:bg-mauve/90 transition-all hover:scale-105"
+        className="fixed bottom-6 right-6 z-40 bg-deep-purple text-white rounded-full p-4 shadow-lg hover:bg-deep-purple/90 transition-all hover:scale-105"
         aria-label="Request a Resource"
       >
         <Plus className="h-5 w-5" />
