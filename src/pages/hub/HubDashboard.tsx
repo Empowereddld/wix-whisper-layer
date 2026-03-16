@@ -11,7 +11,7 @@ import { useProducts, usePurchases } from "@/hooks/usePurchases";
 import { useSavedResources } from "@/hooks/useSavedResources";
 import { useResourceViews } from "@/hooks/useResourceViews";
 import { supabase } from "@/integrations/supabase/client";
-import { Search, Plus } from "lucide-react";
+import { Search, Plus, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
@@ -51,6 +51,7 @@ const HubDashboard = () => {
   const [purchaseResource, setPurchaseResource] = useState<Resource | null>(null);
   const [requestModalOpen, setRequestModalOpen] = useState(false);
   const [isReturning, setIsReturning] = useState(false);
+  const [showSavedOnly, setShowSavedOnly] = useState(false);
 
   // Handle purchase success URL param
   useEffect(() => {
@@ -138,13 +139,13 @@ const HubDashboard = () => {
         </div>
 
         {/* Audience Filter Pills */}
-        <div className="flex flex-wrap gap-2 mb-5">
+        <div className="flex flex-wrap items-center gap-2 mb-5">
           {AUDIENCE_PILLS.map((pill) => (
             <button
               key={pill.value}
-              onClick={() => setAudienceTab(pill.value)}
+              onClick={() => { setAudienceTab(pill.value); setShowSavedOnly(false); }}
               className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-all ${
-                filters.audienceTab === pill.value
+                !showSavedOnly && filters.audienceTab === pill.value
                   ? "bg-midnight text-white border-midnight"
                   : "bg-card text-midnight border-thistle hover:border-hub-lavender hover:text-hub-lavender"
               }`}
@@ -152,6 +153,27 @@ const HubDashboard = () => {
               {pill.label}
             </button>
           ))}
+
+          {/* Divider */}
+          <div className="w-px h-6 bg-thistle mx-1" />
+
+          {/* Saved pill */}
+          <button
+            onClick={() => setShowSavedOnly((prev) => !prev)}
+            className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-all inline-flex items-center gap-1.5 ${
+              showSavedOnly
+                ? "bg-midnight text-white border-midnight"
+                : "bg-card text-midnight border-thistle hover:border-hub-lavender hover:text-hub-lavender"
+            }`}
+          >
+            <Heart className={`h-3.5 w-3.5 ${showSavedOnly ? "fill-white" : ""}`} />
+            Saved
+            {savedIds.size > 0 && (
+              <span className={`text-xs ml-0.5 ${showSavedOnly ? "text-white/70" : "text-stone-ui"}`}>
+                ({savedIds.size})
+              </span>
+            )}
+          </button>
         </div>
 
         {/* Subtext */}
@@ -182,8 +204,17 @@ const HubDashboard = () => {
           </div>
         )}
 
-        {/* Empty */}
-        {!loading && filtered.length === 0 && (
+        {/* Empty – Saved filter active but nothing saved */}
+        {!loading && showSavedOnly && filtered.filter((r) => savedIds.has(r.id)).length === 0 && (
+          <div className="text-center py-20">
+            <Heart className="h-10 w-10 mx-auto mb-4 text-stone-ui" />
+            <p className="text-midnight font-semibold text-lg mb-1">No saved resources yet</p>
+            <p className="text-stone-ui">Click the heart icon on any resource to save it here.</p>
+          </div>
+        )}
+
+        {/* Empty – regular filters */}
+        {!loading && !showSavedOnly && filtered.length === 0 && (
           <div className="text-center py-20">
             <p className="text-4xl mb-4">🔍</p>
             <p className="text-midnight font-semibold text-lg mb-1">No resources found</p>
@@ -193,21 +224,25 @@ const HubDashboard = () => {
         )}
 
         {/* Grid */}
-        {!loading && filtered.length > 0 && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {filtered.map((r, i) => (
-              <motion.div key={r.id} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: Math.min(i * 0.05, 0.4), duration: 0.4 }}>
-                <ResourceCard
-                  resource={r} onView={handleView} onDownload={handleDownload} onUnlock={handleUnlock}
-                  price={priceMap[r.id]?.price} currency={priceMap[r.id]?.currency}
-                  isPurchased={purchasedResourceIds.has(r.id)}
-                  isSaved={savedIds.has(r.id)} onToggleSave={handleToggleSave} userId={user?.id}
-                  isNew={isResourceNew(r)}
-                />
-              </motion.div>
-            ))}
-          </div>
-        )}
+        {!loading && (() => {
+          const displayResources = showSavedOnly ? filtered.filter((r) => savedIds.has(r.id)) : filtered;
+          if (displayResources.length === 0) return null;
+          return (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              {displayResources.map((r, i) => (
+                <motion.div key={r.id} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: Math.min(i * 0.05, 0.4), duration: 0.4 }}>
+                  <ResourceCard
+                    resource={r} onView={handleView} onDownload={handleDownload} onUnlock={handleUnlock}
+                    price={priceMap[r.id]?.price} currency={priceMap[r.id]?.currency}
+                    isPurchased={purchasedResourceIds.has(r.id)}
+                    isSaved={savedIds.has(r.id)} onToggleSave={handleToggleSave} userId={user?.id}
+                    isNew={isResourceNew(r)}
+                  />
+                </motion.div>
+              ))}
+            </div>
+          );
+        })()}
       </div>
 
       {/* Detail Modal */}
