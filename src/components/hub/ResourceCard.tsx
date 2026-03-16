@@ -60,6 +60,9 @@ const ResourceCard = ({
   const navigate = useNavigate();
   const isPaid = price != null && price > 0;
   const isUnlocked = !isPaid || isPurchased;
+  
+  // Shorten "Developmental Language Disorder" to "DLD" for display
+  const displayTitle = resource.title.replace(/Developmental Language Disorder/g, "DLD");
 
   // Show max 2 audience tags
   const audienceTags = (resource.roles ?? [])
@@ -75,7 +78,7 @@ const ResourceCard = ({
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1">
-            <h3 className="font-semibold text-midnight truncate">{resource.title}</h3>
+            <h3 className="font-semibold text-midnight truncate">{displayTitle}</h3>
             {!isPaid && (
               <span className="text-xs px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 font-medium flex-shrink-0">Free</span>
             )}
@@ -157,7 +160,7 @@ const ResourceCard = ({
 
       {/* Content */}
       <div className="p-5 flex flex-col flex-1">
-        <h3 className="font-semibold text-midnight mb-1.5 line-clamp-2 leading-snug min-h-[2.75rem]">{resource.title}</h3>
+        <h3 className="font-semibold text-midnight mb-1.5 line-clamp-2 leading-snug min-h-[2.75rem]">{displayTitle}</h3>
         <p className="text-sm text-stone-ui mb-3 line-clamp-3 min-h-[3.75rem]">{resource.description}</p>
 
         {/* Audience Tags — max 2 */}
