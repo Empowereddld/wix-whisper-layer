@@ -200,6 +200,13 @@ const ResourceDetail = () => {
               </div>
             )}
 
+            {/* Format info */}
+            {resource.page_count && (
+              <p className="text-muted-foreground text-sm mb-5">
+                PDF · {resource.page_count} pages · Printable
+              </p>
+            )}
+
             {/* Full description */}
             <p className="text-foreground/80 leading-relaxed text-base mb-8">
               {resource.description}

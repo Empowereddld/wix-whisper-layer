@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import type { Tables } from "@/integrations/supabase/types";
 
-export type Resource = Tables<"resources"> & { is_published?: boolean; long_description?: string | null; great_for?: string[] | null };
+export type Resource = Tables<"resources"> & { is_published?: boolean; long_description?: string | null; great_for?: string[] | null; page_count?: number | null };
 
 export type SortOption = "most_downloaded" | "newest" | "a_z";
 
