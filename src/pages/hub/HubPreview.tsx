@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Lock, ArrowRight, FileText, Image, BookOpen, Package, BarChart3, Check } from "lucide-react";
 import hallwayBg from "@/assets/school-hallway-bg.webp";
 import graphicOrganizersPreview from "@/assets/resource-graphic-organizers-preview.png";
