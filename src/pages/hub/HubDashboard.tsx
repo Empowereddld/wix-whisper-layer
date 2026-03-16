@@ -139,7 +139,7 @@ const HubDashboard = () => {
         </div>
 
         {/* Subtext */}
-        <p className="text-center text-sm text-stone-ui mb-8">
+        <p className="text-right text-sm text-stone-ui mb-8">
           Supporting a child with DLD is a team effort. Many of these resources are useful across all roles.
         </p>
 
