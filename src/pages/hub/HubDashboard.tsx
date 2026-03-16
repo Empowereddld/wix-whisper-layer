@@ -11,7 +11,7 @@ import { useProducts, usePurchases } from "@/hooks/usePurchases";
 import { useSavedResources } from "@/hooks/useSavedResources";
 import { useResourceViews } from "@/hooks/useResourceViews";
 import { supabase } from "@/integrations/supabase/client";
-import { Search, Plus } from "lucide-react";
+import { Search, Plus, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
