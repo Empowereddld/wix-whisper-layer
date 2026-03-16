@@ -1,0 +1,1 @@
+UPDATE resources SET thumbnail_url = 'https://haafpznzuazanylcelse.supabase.co/storage/v1/object/public/thumbnails/representation-matters-thumbnail.png' WHERE id = '8088506a-57ac-450a-ad6a-b96e7f4e4542';
