@@ -1,0 +1,1 @@
+UPDATE public.resources SET file_url = 'https://haafpznzuazanylcelse.supabase.co/storage/v1/object/public/resources/Parent_and_Child_Conversation_Cards.pdf' WHERE id = '2630ce77-c3b2-49cd-bf73-da63799d0d0a';
