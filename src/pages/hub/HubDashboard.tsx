@@ -164,12 +164,6 @@ const HubDashboard = () => {
       </AnimatePresence>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Progress Tracker */}
-        <ProgressTracker
-          userId={user?.id}
-          totalResources={allResources.length}
-          onDiscoverMore={() => { clearFilters(); setActiveType(""); setPriceFilter(""); setShowSaved(false); }}
-        />
 
         {/* Search + Filter Bar */}
         <div className="mb-8 space-y-4">
