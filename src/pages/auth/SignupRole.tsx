@@ -106,7 +106,7 @@ const SignupRole = () => {
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <Link to="/">
-            <img src={empoweredLogo} alt="Empowered DLD" className="h-48 mx-auto" />
+            <img src={empoweredLogo} alt="Empowered DLD" className="h-10 mx-auto mb-6" />
           </Link>
           <h1 className="text-3xl font-bold text-midnight mb-2">One last thing...</h1>
           <p className="text-stone-ui">Help us personalize your experience.</p>
