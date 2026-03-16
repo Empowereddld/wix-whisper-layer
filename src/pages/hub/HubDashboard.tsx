@@ -45,6 +45,7 @@ const HubDashboard = () => {
   const { priceMap } = useProducts();
   const { purchasedResourceIds, refetch: refetchPurchases } = usePurchases(user?.id);
   const { savedIds, toggle: toggleSave } = useSavedResources(user?.id);
+  const { viewedIds, markViewed } = useResourceViews(user?.id);
 
   const [selectedResource, setSelectedResource] = useState<Resource | null>(null);
   const [purchaseResource, setPurchaseResource] = useState<Resource | null>(null);
