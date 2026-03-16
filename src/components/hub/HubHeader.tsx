@@ -50,25 +50,8 @@ const HubHeader = ({ activeAudience = "", onAudienceChange }: HubHeaderProps) =>
             <img src={empoweredLogoWhite} alt="Empowered DLD" className="h-16" />
           </a>
 
-          {/* Audience tabs — center */}
-          <nav className="hidden md:flex items-center gap-1 flex-1 justify-center">
-            {AUDIENCE_TABS.map((tab) => {
-              const isActive = activeAudience === tab.value;
-              return (
-                <button
-                  key={tab.value}
-                  onClick={() => onAudienceChange?.(tab.value)}
-                  className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
-                    isActive
-                      ? "bg-hub-lavender text-midnight"
-                      : "text-white/70 hover:text-white hover:bg-white/10"
-                  }`}
-                >
-                  {tab.label}
-                </button>
-              );
-            })}
-          </nav>
+          {/* Spacer for centering */}
+          <div className="flex-1" />
 
           {/* User menu */}
           <DropdownMenu>
