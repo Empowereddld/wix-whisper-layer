@@ -110,20 +110,10 @@ const AnimatedCounter = ({ target, suffix }: { target: number; suffix: string })
 
 /* ── Page ── */
 const HubPreview = () => {
-  const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
-  const [selectedRole, setSelectedRole] = useState<string>("");
-  const [otherRole, setOtherRole] = useState("");
-  const [customInterest, setCustomInterest] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const navigate = useNavigate();
-
-  const toggleInterest = (interest: string) => {
-    setSelectedInterests((prev) =>
-      prev.includes(interest) ? prev.filter((i) => i !== interest) : [...prev, interest]
-    );
-  };
 
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -132,9 +122,6 @@ const HubPreview = () => {
     if (!name.trim()) newErrors.name = "Name is required.";
     if (!email.trim()) newErrors.email = "Email is required.";
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) newErrors.email = "Please enter a valid email.";
-    if (!selectedRole) newErrors.role = "Please select a role.";
-    if (selectedRole === "other" && !otherRole.trim()) newErrors.otherRole = "Please specify your role.";
-    if (selectedInterests.length === 0) newErrors.interests = "Please select at least one interest.";
 
     setErrors(newErrors);
     if (Object.keys(newErrors).length > 0) return;
