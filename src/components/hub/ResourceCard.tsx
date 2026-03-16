@@ -108,7 +108,7 @@ const ResourceCard = ({
               <Download className="h-4 w-4 mr-1" /> Download
             </Button>
           ) : (
-            <Button size="sm" onClick={() => onUnlock?.(resource)} className="bg-mauve text-white hover:bg-mauve/90">
+            <Button size="sm" onClick={() => onUnlock?.(resource)} className="bg-midnight text-midnight-foreground hover:bg-midnight/90">
               <Lock className="h-4 w-4 mr-1" /> Unlock
             </Button>
           )}
