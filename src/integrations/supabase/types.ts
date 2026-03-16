@@ -426,6 +426,7 @@ export type Database = {
           is_published: boolean
           languages: string[] | null
           long_description: string | null
+          page_count: number | null
           resource_type: Database["public"]["Enums"]["resource_type"]
           roles: string[] | null
           settings: string[] | null
@@ -443,6 +444,7 @@ export type Database = {
           is_published?: boolean
           languages?: string[] | null
           long_description?: string | null
+          page_count?: number | null
           resource_type: Database["public"]["Enums"]["resource_type"]
           roles?: string[] | null
           settings?: string[] | null
@@ -460,6 +462,7 @@ export type Database = {
           is_published?: boolean
           languages?: string[] | null
           long_description?: string | null
+          page_count?: number | null
           resource_type?: Database["public"]["Enums"]["resource_type"]
           roles?: string[] | null
           settings?: string[] | null
