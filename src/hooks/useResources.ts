@@ -4,7 +4,7 @@ import type { Tables } from "@/integrations/supabase/types";
 
 export type Resource = Tables<"resources"> & { is_published?: boolean };
 
-export type SortOption = "most_downloaded" | "newest" | "a_z" | "recommended";
+export type SortOption = "most_downloaded" | "newest" | "a_z";
 
 export interface Filters {
   roles: string[];
