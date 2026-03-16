@@ -150,7 +150,7 @@ const HubDashboard = () => {
             <span className="text-sm font-normal text-stone-ui ml-2">({filtered.length})</span>
           </h2>
           <Select value={sort} onValueChange={(v) => setSort(v as SortOption)}>
-            <SelectTrigger className="w-44 border-thistle"><SelectValue /></SelectTrigger>
+            <SelectTrigger className="w-44 border-thistle"><SelectValue placeholder="Sort by" /></SelectTrigger>
             <SelectContent>
               <SelectItem value="most_downloaded">Most Downloaded</SelectItem>
               <SelectItem value="newest">Newest First</SelectItem>
