@@ -123,8 +123,12 @@ const ResourceCard = ({
   return (
     <div className="bg-card rounded-xl border border-thistle/60 premium-card flex flex-col h-full">
       {/* Thumbnail */}
-      <div className="h-40 rounded-t-xl bg-thistle/30 flex items-center justify-center relative">
-        <Icon className="h-12 w-12 text-hub-lavender/60" />
+      <div className="h-40 rounded-t-xl bg-thistle/30 flex items-center justify-center relative overflow-hidden">
+        {resource.thumbnail_url ? (
+          <img src={resource.thumbnail_url} alt={resource.title} className="w-full h-full object-cover" loading="lazy" />
+        ) : (
+          <Icon className="h-12 w-12 text-hub-lavender/60" />
+        )}
         {/* Save heart */}
         {onToggleSave && (
           <button
