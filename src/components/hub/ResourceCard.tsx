@@ -60,6 +60,9 @@ const ResourceCard = ({
   const navigate = useNavigate();
   const isPaid = price != null && price > 0;
   const isUnlocked = !isPaid || isPurchased;
+  
+  // Shorten "Developmental Language Disorder" to "DLD" for display
+  const displayTitle = resource.title.replace(/Developmental Language Disorder/g, "DLD");
 
   // Show max 2 audience tags
   const audienceTags = (resource.roles ?? [])
