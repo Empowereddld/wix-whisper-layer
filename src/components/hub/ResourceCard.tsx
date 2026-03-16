@@ -160,7 +160,7 @@ const ResourceCard = ({
 
       {/* Content */}
       <div className="p-5 flex flex-col flex-1">
-        <h3 className="font-semibold text-midnight mb-1.5 line-clamp-2 leading-snug min-h-[2.75rem]">{resource.title}</h3>
+        <h3 className="font-semibold text-midnight mb-1.5 line-clamp-2 leading-snug min-h-[2.75rem]">{displayTitle}</h3>
         <p className="text-sm text-stone-ui mb-3 line-clamp-3 min-h-[3.75rem]">{resource.description}</p>
 
         {/* Audience Tags — max 2 */}
