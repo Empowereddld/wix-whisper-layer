@@ -108,7 +108,7 @@ const ResourceCard = ({
               <Download className="h-4 w-4 mr-1" /> Download
             </Button>
           ) : (
-            <Button size="sm" onClick={() => onUnlock?.(resource)} className="bg-mauve text-white hover:bg-mauve/90">
+            <Button size="sm" onClick={() => onUnlock?.(resource)} className="bg-midnight text-midnight-foreground hover:bg-midnight/90">
               <Lock className="h-4 w-4 mr-1" /> Unlock
             </Button>
           )}
@@ -158,7 +158,7 @@ const ResourceCard = ({
       {/* Content */}
       <div className="p-5 flex flex-col flex-1">
         <h3 className="font-semibold text-midnight mb-1.5 line-clamp-2 leading-snug">{resource.title}</h3>
-        <p className="text-sm text-stone-ui mb-3 line-clamp-2 flex-1">{resource.description}</p>
+        <p className="text-sm text-stone-ui mb-3 line-clamp-3">{resource.description}</p>
 
         {/* Audience Tags — max 2 */}
         {audienceTags.length > 0 && (
@@ -192,7 +192,7 @@ const ResourceCard = ({
           ) : (
             <Button
               size="sm"
-              className="flex-1 bg-mauve text-white hover:bg-mauve/90"
+              className="flex-1 bg-midnight text-midnight-foreground hover:bg-midnight/90"
               onClick={() => onUnlock?.(resource)}
             >
               <Lock className="h-4 w-4 mr-1.5" /> Unlock
