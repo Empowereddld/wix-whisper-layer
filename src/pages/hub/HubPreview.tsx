@@ -4,6 +4,7 @@ import { Lock, ArrowRight, FileText, Image, BookOpen, Package, BarChart3, Check 
 import hallwayBg from "@/assets/school-hallway-bg.webp";
 import graphicOrganizersPreview from "@/assets/resource-graphic-organizers-preview.png";
 import checklistPreview from "@/assets/resource-checklist-preview.png";
+import emailTemplatesPreview from "@/assets/resource-email-templates-preview.png";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
