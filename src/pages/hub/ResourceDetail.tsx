@@ -225,6 +225,9 @@ const ResourceDetail = () => {
                   <Lock className="h-5 w-5 mr-2" /> Unlock for {formatPrice(product!.price, product!.currency)}
                 </Button>
               )}
+
+              {/* Social share */}
+              <SocialShareButtons resourceId={resource.id} resourceTitle={resource.title} userId={user?.id} />
             </div>
           </div>
         </div>
