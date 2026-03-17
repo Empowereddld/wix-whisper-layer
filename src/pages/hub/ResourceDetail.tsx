@@ -226,8 +226,6 @@ const ResourceDetail = () => {
                 </Button>
               )}
 
-              {/* Social share */}
-              <SocialShareButtons resourceId={resource.id} resourceTitle={resource.title} userId={user?.id} />
             </div>
           </div>
         </div>
@@ -286,7 +284,8 @@ const ResourceDetail = () => {
           </div>
         </div>
 
-        {/* Divider */}
+        {/* Share + Divider */}
+        <SocialShareButtons resourceId={resource.id} resourceTitle={resource.title} userId={user?.id} />
         <hr className="border-border my-12" />
 
         {/* You May Also Like */}
