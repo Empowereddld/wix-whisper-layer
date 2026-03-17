@@ -11,6 +11,7 @@ import { useProducts, usePurchases } from "@/hooks/usePurchases";
 import { useSavedResources } from "@/hooks/useSavedResources";
 import { useResourceViews } from "@/hooks/useResourceViews";
 import { supabase } from "@/integrations/supabase/client";
+import { secureDownload } from "@/lib/secureDownload";
 import { Search, Plus, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -77,13 +78,11 @@ const HubDashboard = () => {
   const handleDownload = useCallback(async (resource: Resource) => {
     if (!user) return;
     markViewed(resource.id);
-    await supabase.from("user_downloads").insert({ user_id: user.id, resource_id: resource.id });
-    await supabase.rpc("increment_download_count", { resource_id: resource.id });
-    if (resource.file_url) {
-      window.open(resource.file_url, "_blank");
-    } else {
-      toast.info("This resource file will be available soon.");
-    }
+    // Fire-and-forget tracking
+    supabase.from("user_downloads").insert({ user_id: user.id, resource_id: resource.id }).then(() => {});
+    supabase.rpc("increment_download_count", { resource_id: resource.id }).then(() => {});
+    // Secure download (signed URL for paid, direct for free)
+    await secureDownload(resource.id, resource.file_url);
   }, [user, markViewed]);
 
   const handleView = useCallback((resource: Resource) => {
