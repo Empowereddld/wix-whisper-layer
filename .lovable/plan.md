@@ -1,18 +1,22 @@
 
 
-## Plan: Zoom out the image in "Is This Right" section
+## Add Sample Pages to Executive Function Skills Resource
 
-The image currently uses `object-cover` which crops tightly into the center of the photo, cutting off the reading activity. To "zoom out" while keeping the same frame size, we can use CSS `object-fit: contain` instead — but that would leave empty space.
+### What we're doing
+Upload 3 sample page images from the Executive Function Skills PDF and wire them up exactly like the Dan and Daria's Graphic Organizers detail page (thumbnail gallery + social share buttons). Also upload the actual PDF to the private bucket for paid downloads.
 
-A better approach: keep `object-cover` but use `object-position` to show more of the image, combined with scaling. Specifically:
+### Sample pages chosen
+- **Page 1** — Working Memory (title page, shows full table format)
+- **Page 4** — Organization + Response Inhibition (two skills, stop sign icon)
+- **Page 6** — Emotional Control (traffic light icon, relatable topic)
 
-### Change in `src/components/IsThisRightSection.tsx` (line 16)
+### Steps
 
-On the `<img>` element, add a CSS `scale` transform to shrink the image within its container, effectively zooming out while the container stays the same size. We'll use Tailwind's `scale-[0.85]` (or similar) combined with `object-contain` to ensure the full image is visible:
+1. **Upload the PDF** to the `resources-private` bucket and update `file_url` on the resource record (`d9836a63-003e-44bc-9da4-a27d6d478d1a`).
 
-- Change `object-cover` → `object-contain` so the entire image is visible without cropping
-- Add `object-center` to keep it centered
-- The container with `rounded-xl overflow-hidden` maintains the same frame size and shape
+2. **Upload 3 sample page screenshots** (page_1.jpg, page_4.jpg, page_6.jpg) to the public `resources` bucket under `samples/executive-function-skills-*.jpg`.
 
-This shows the full scene (people reading) within the exact same container dimensions.
+3. **Update the `sample_images` array** on the resource record with the 3 public URLs.
+
+No code changes needed — the SampleGallery, SocialShareButtons, and detail page layout are already in place from the Graphic Organizers work.
 
