@@ -6,10 +6,16 @@ import DoesSoundFamiliarSection from "@/components/DoesSoundFamiliarSection";
 import WhatMakesUsDifferentSection from "@/components/WhatMakesUsDifferentSection";
 import WorkWithUsSocialProof from "@/components/WorkWithUsSocialProof";
 import ContactSection from "@/components/ContactSection";
+import SEOHead from "@/components/SEOHead";
 
 const WorkWithUs = () => {
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title="Work With Us — DLD Workshops, Speaking & Consultation | Empowered DLD"
+        description="Book Empowered DLD for workshops, speaking engagements, and consultation on Developmental Language Disorder. Professional development for schools, clinics, and conferences."
+        path="/work-with-us"
+      />
       <Header />
       <WorkWithUsHero />
       <WorkWithUsBrowseSection />

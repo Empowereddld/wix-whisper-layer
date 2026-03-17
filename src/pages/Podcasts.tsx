@@ -2,6 +2,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ChoosePathCTA from "@/components/ChoosePathCTA";
 import { Button } from "@/components/ui/button";
+import SEOHead from "@/components/SEOHead";
 import podcastHeroImg from "@/assets/podcast-hero.webp";
 import ep12Img from "@/assets/podcast-ep12.webp";
 import ep6Img from "@/assets/podcast-ep6.webp";
@@ -43,13 +44,17 @@ const whyWatchPoints = [
 const Podcasts = () => {
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title="Life with DLD Podcast — Real Stories from Children | Empowered DLD"
+        description="Watch the Dan and Daria Podcast where children with Developmental Language Disorder share real, honest conversations about living with DLD. Short episodes for parents, SLPs, and educators."
+        path="/resources/podcasts"
+      />
       <Header />
       <main>
         {/* Hero Section */}
         <section className="pt-6 md:pt-10 lg:pt-16 pb-14 md:pb-16 lg:pb-16">
           <div className="container px-6 md:px-8">
             <div className="flex flex-col lg:flex-row lg:items-stretch lg:gap-6">
-              {/* Gray card background */}
               <div className="bg-muted rounded-xl lg:rounded-2xl lg:w-[58%] lg:flex-shrink-0 py-10 md:py-14 lg:py-24 px-6 md:px-8 lg:px-16">
                 <span className="inline-block bg-deep-purple text-deep-purple-foreground text-[12px] md:text-[14px] lg:text-[16px] font-bold uppercase tracking-[0.14em] px-6 md:px-8 py-2 md:py-2.5 rounded-sm mb-4 md:mb-6">
                   PODCAST
@@ -67,12 +72,10 @@ const Podcasts = () => {
                   Explore the Series
                 </a>
               </div>
-
-              {/* Image */}
               <div className="mt-4 lg:mt-0 lg:flex-1 rounded-xl overflow-hidden shadow-lg max-h-[260px] md:max-h-[380px] lg:max-h-none">
                 <img
                   src={podcastHeroImg}
-                  alt="Life with DLD - The Dan and Daria Podcast"
+                  alt="Children with DLD sharing their stories on the Dan and Daria Podcast"
                   className="w-full h-full object-cover object-center aspect-[16/9] lg:aspect-auto"
                 />
               </div>
@@ -90,17 +93,14 @@ const Podcasts = () => {
                   key={ep.number}
                   className={`flex flex-col ${imageFirst ? "lg:flex-row" : "lg:flex-row-reverse"} items-stretch ${!imageFirst ? "bg-muted" : ""}`}
                 >
-                  {/* Image */}
                   <div className="lg:w-[58%] flex-shrink-0">
                     <img
                       src={ep.image}
-                      alt={ep.title}
-                     className="w-full h-full object-cover aspect-[16/9] lg:aspect-auto"
-                     loading="lazy"
+                      alt={`DLD podcast episode: ${ep.title}`}
+                      className="w-full h-full object-cover aspect-[16/9] lg:aspect-auto"
+                      loading="lazy"
                     />
                   </div>
-
-                  {/* Text */}
                   <div className="flex-1 flex flex-col justify-center px-6 md:px-10 lg:px-16 py-10 lg:py-16">
                     <p className="text-[13px] font-semibold text-foreground tracking-wide mb-3">
                       {ep.number}

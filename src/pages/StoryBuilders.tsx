@@ -1,4 +1,5 @@
 import { useState } from "react";
+import SEOHead from "@/components/SEOHead";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -69,6 +70,11 @@ const WaitlistForm = () => {
 const StoryBuilders = () => {
   return (
     <div className="min-h-screen bg-background text-foreground font-sans antialiased">
+      <SEOHead
+        title="StoryBuilders — Helping Children Become Confident Storytellers | Empowered DLD"
+        description="StoryBuilders is an upcoming storytelling platform helping children with Developmental Language Disorder strengthen narrative language, vocabulary, and communication through guided stories."
+        path="/storybuilders"
+      />
       {/* ─── HERO ─── */}
       <section className="flex flex-col items-center justify-center text-center px-6 pt-32 pb-24 sm:pt-44 sm:pb-32">
         <motion.h1

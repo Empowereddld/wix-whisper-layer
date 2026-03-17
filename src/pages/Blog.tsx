@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import BlogHero from "@/components/BlogHero";
 import BlogPostCard from "@/components/BlogPostCard";
+import SEOHead from "@/components/SEOHead";
 
 const ALL_CATEGORIES = ["All", "Awareness", "DLD", "Parenting", "Academics", "Kids", "Skills"];
 
@@ -30,13 +31,17 @@ const Blog = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title="DLD Blog — Articles on Developmental Language Disorder | Empowered DLD"
+        description="Read articles about Developmental Language Disorder (DLD) covering awareness, parenting tips, academic strategies, and practical advice for supporting children with DLD."
+        path="/resources/blog"
+      />
       <Header />
       <main>
         <BlogHero />
 
         <section className="py-12 md:py-16">
           <div className="max-w-[1100px] mx-auto px-6">
-            {/* Category filters */}
             <div className="flex flex-wrap gap-2 mb-10">
               {ALL_CATEGORIES.map((cat) => (
                 <button
@@ -53,7 +58,6 @@ const Blog = () => {
               ))}
             </div>
 
-            {/* Grid */}
             {isLoading ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
                 {[1, 2, 3].map((i) => (

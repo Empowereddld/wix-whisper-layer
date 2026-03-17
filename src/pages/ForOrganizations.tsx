@@ -7,13 +7,18 @@ import HowWeSupportOrganizationsSection from "@/components/HowWeSupportOrganizat
 import WhyOrganizationsChooseSection from "@/components/WhyOrganizationsChooseSection";
 import PartnershipPackagesSection from "@/components/PartnershipPackagesSection";
 import IsThisRightForOrgSection from "@/components/IsThisRightForOrgSection";
-
 import ResourceLibraryCTA from "@/components/ResourceLibraryCTA";
 import Footer from "@/components/Footer";
+import SEOHead from "@/components/SEOHead";
 
 const ForOrganizations = () => {
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title="DLD Awareness & Training for Organizations | Empowered DLD"
+        description="Partner with Empowered DLD to bring Developmental Language Disorder awareness, training, and resources to your organization. Custom workshops, speaking, and consultation."
+        path="/for-organizations"
+      />
       <Header />
       <main>
         <ForOrganizationsHero />
@@ -24,7 +29,6 @@ const ForOrganizations = () => {
         <WhyOrganizationsChooseSection />
         <PartnershipPackagesSection />
         <IsThisRightForOrgSection />
-        
         <ResourceLibraryCTA />
       </main>
       <Footer />
