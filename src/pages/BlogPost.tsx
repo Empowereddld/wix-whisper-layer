@@ -9,6 +9,7 @@ import remarkGfm from "remark-gfm";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import BlogPostCTA from "@/components/BlogPostCTA";
+import { BASE_URL } from "@/components/SEOHead";
 
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -27,6 +28,27 @@ const BlogPost = () => {
     },
     enabled: !!slug,
   });
+
+  const articleJsonLd = post ? {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: post.title,
+    description: (post as any).meta_description || post.excerpt || "",
+    image: post.featured_image_url || "",
+    datePublished: post.published_at || post.created_at,
+    dateModified: post.updated_at,
+    author: {
+      "@type": "Organization",
+      name: "Empowered DLD",
+      url: BASE_URL,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "Empowered DLD",
+      logo: { "@type": "ImageObject", url: `${BASE_URL}/favicon.png` },
+    },
+    mainEntityOfPage: `${BASE_URL}/resources/blog/${slug}`,
+  } : null;
 
   return (
     <div className="min-h-screen bg-background">
@@ -53,6 +75,17 @@ const BlogPost = () => {
                 <title>{post.title} | Empowered DLD</title>
                 {(post as any).meta_description && (
                   <meta name="description" content={(post as any).meta_description} />
+                )}
+                <link rel="canonical" href={`${BASE_URL}/resources/blog/${slug}`} />
+                <meta property="og:title" content={`${post.title} | Empowered DLD`} />
+                <meta property="og:description" content={(post as any).meta_description || post.excerpt || ""} />
+                <meta property="og:type" content="article" />
+                <meta property="og:url" content={`${BASE_URL}/resources/blog/${slug}`} />
+                {post.featured_image_url && <meta property="og:image" content={post.featured_image_url} />}
+                {articleJsonLd && (
+                  <script type="application/ld+json">
+                    {JSON.stringify(articleJsonLd)}
+                  </script>
                 )}
               </Helmet>
               {/* Categories */}
