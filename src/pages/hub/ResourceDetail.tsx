@@ -81,14 +81,11 @@ const ResourceDetail = () => {
   const handleDownload = useCallback(async (res?: Resource) => {
     const target = res || resource;
     if (!user || !target) return;
-    if (target.file_url) {
-      window.open(target.file_url, "_blank");
-    } else {
-      toast.info("This resource file will be available soon.");
-    }
-    // Track after opening to avoid popup blocker
+    // Fire-and-forget tracking
     supabase.from("user_downloads").insert({ user_id: user.id, resource_id: target.id }).then(() => {});
     supabase.rpc("increment_download_count", { resource_id: target.id }).then(() => {});
+    // Secure download (signed URL for paid, direct for free)
+    await secureDownload(target.id, target.file_url);
   }, [user, resource]);
 
   const handleView = useCallback(async (res: Resource) => {
