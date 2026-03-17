@@ -11,6 +11,7 @@ import { useProducts, usePurchases } from "@/hooks/usePurchases";
 import { useSavedResources } from "@/hooks/useSavedResources";
 import { useResourceViews } from "@/hooks/useResourceViews";
 import { supabase } from "@/integrations/supabase/client";
+import { secureDownload } from "@/lib/secureDownload";
 import { Search, Plus, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {

@@ -12,6 +12,7 @@ import {
   Lock, Check,
 } from "lucide-react";
 import { toast } from "sonner";
+import { secureDownload } from "@/lib/secureDownload";
 import type { Resource } from "@/hooks/useResources";
 import { useProducts, usePurchases } from "@/hooks/usePurchases";
 
