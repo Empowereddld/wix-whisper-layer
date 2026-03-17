@@ -81,13 +81,14 @@ const ResourceDetail = () => {
   const handleDownload = useCallback(async (res?: Resource) => {
     const target = res || resource;
     if (!user || !target) return;
-    await supabase.from("user_downloads").insert({ user_id: user.id, resource_id: target.id });
-    await supabase.rpc("increment_download_count", { resource_id: target.id });
     if (target.file_url) {
       window.open(target.file_url, "_blank");
     } else {
       toast.info("This resource file will be available soon.");
     }
+    // Track after opening to avoid popup blocker
+    supabase.from("user_downloads").insert({ user_id: user.id, resource_id: target.id }).then(() => {});
+    supabase.rpc("increment_download_count", { resource_id: target.id }).then(() => {});
   }, [user, resource]);
 
   const handleView = useCallback(async (res: Resource) => {
