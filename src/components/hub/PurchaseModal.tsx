@@ -89,7 +89,7 @@ const PurchaseModal = ({ resource, product, open, onClose, onPurchased, userId }
 
           {/* Actions */}
           <Button
-            className="w-full h-12 bg-mauve text-white hover:bg-mauve/90 font-semibold text-base"
+            className="w-full h-12 bg-pale-yellow text-midnight hover:bg-pale-yellow/90 font-semibold text-base"
             onClick={handlePurchase}
             disabled={purchasing}
           >
