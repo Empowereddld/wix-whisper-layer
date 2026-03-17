@@ -1,1 +1,4 @@
 project_id = "haafpznzuazanylcelse"
+
+[functions.generate-download-url]
+verify_jwt = false
