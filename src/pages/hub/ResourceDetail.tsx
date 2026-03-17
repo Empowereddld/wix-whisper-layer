@@ -4,6 +4,8 @@ import { useAuth } from "@/contexts/AuthContext";
 import HubLayout from "@/components/hub/HubLayout";
 import PurchaseModal from "@/components/hub/PurchaseModal";
 import ResourceCard from "@/components/hub/ResourceCard";
+import SampleGallery from "@/components/hub/SampleGallery";
+import SocialShareButtons from "@/components/hub/SocialShareButtons";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
