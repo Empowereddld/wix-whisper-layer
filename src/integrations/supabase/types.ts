@@ -429,6 +429,7 @@ export type Database = {
           page_count: number | null
           resource_type: Database["public"]["Enums"]["resource_type"]
           roles: string[] | null
+          sample_images: string[] | null
           settings: string[] | null
           thumbnail_url: string | null
           title: string
@@ -447,6 +448,7 @@ export type Database = {
           page_count?: number | null
           resource_type: Database["public"]["Enums"]["resource_type"]
           roles?: string[] | null
+          sample_images?: string[] | null
           settings?: string[] | null
           thumbnail_url?: string | null
           title: string
@@ -465,6 +467,7 @@ export type Database = {
           page_count?: number | null
           resource_type?: Database["public"]["Enums"]["resource_type"]
           roles?: string[] | null
+          sample_images?: string[] | null
           settings?: string[] | null
           thumbnail_url?: string | null
           title?: string

@@ -1,0 +1,1 @@
+ALTER TABLE public.resources ADD COLUMN sample_images text[] DEFAULT '{}'::text[];
