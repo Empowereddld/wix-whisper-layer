@@ -211,6 +211,36 @@ export type Database = {
         }
         Relationships: []
       }
+      lead_captures: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          name: string
+          organization_name: string | null
+          role: string | null
+          source: string | null
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          name: string
+          organization_name?: string | null
+          role?: string | null
+          source?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          name?: string
+          organization_name?: string | null
+          role?: string | null
+          source?: string | null
+        }
+        Relationships: []
+      }
       orders: {
         Row: {
           amount: number | null
