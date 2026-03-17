@@ -7,6 +7,7 @@ import ShopGlobalCommunity from "@/components/ShopGlobalCommunity";
 import EveryChildSection from "@/components/EveryChildSection";
 import ChoosePathCTA from "@/components/ChoosePathCTA";
 import Footer from "@/components/Footer";
+import SEOHead from "@/components/SEOHead";
 
 const Resources = () => {
   const navigate = useNavigate();
@@ -29,6 +30,11 @@ const Resources = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title="DLD Resources — Books, Courses, Podcasts & Downloads | Empowered DLD"
+        description="Browse evidence-based Developmental Language Disorder resources including books, free courses, downloadable materials, podcasts, and a blog. Tools for parents, SLPs, and educators."
+        path="/resources"
+      />
       <Header />
       <main>
         <ResourcesHero />
@@ -43,4 +49,3 @@ const Resources = () => {
 };
 
 export default Resources;
-

@@ -4,10 +4,16 @@ import AboutDLDHero from "@/components/AboutDLDHero";
 import WhatIsDLDSection from "@/components/WhatIsDLDSection";
 import DLDFaqSection from "@/components/DLDFaqSection";
 import ResourceLibraryCTA from "@/components/ResourceLibraryCTA";
+import SEOHead from "@/components/SEOHead";
 
 const AboutDLD = () => {
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title="What is DLD? — Understanding Developmental Language Disorder | Empowered DLD"
+        description="Learn about Developmental Language Disorder (DLD), the most common childhood condition you've never heard of. Symptoms, diagnosis, FAQs, and how to support children with DLD."
+        path="/about-dld"
+      />
       <Header />
       <main>
         <AboutDLDHero />

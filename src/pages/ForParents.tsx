@@ -6,10 +6,16 @@ import WhyParentsTrustSection from "@/components/WhyParentsTrustSection";
 import RightPlaceSection from "@/components/RightPlaceSection";
 import ResourceLibraryCTA from "@/components/ResourceLibraryCTA";
 import Footer from "@/components/Footer";
+import SEOHead from "@/components/SEOHead";
 
 const ForParents = () => {
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title="DLD Resources for Parents | Empowered DLD"
+        description="Evidence-based resources and support for parents of children with Developmental Language Disorder (DLD). Books, downloadables, free courses, and a supportive community to help your child thrive."
+        path="/for-parents"
+      />
       <Header />
       <main>
         <ForParentsHero />
