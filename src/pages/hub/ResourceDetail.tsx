@@ -226,8 +226,6 @@ const ResourceDetail = () => {
                 </Button>
               )}
 
-              {/* Social share */}
-              <SocialShareButtons resourceId={resource.id} resourceTitle={resource.title} userId={user?.id} />
             </div>
           </div>
         </div>
