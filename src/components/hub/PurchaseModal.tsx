@@ -80,7 +80,7 @@ const PurchaseModal = ({ resource, product, open, onClose, onPurchased, userId }
           </div>
 
           {/* Price */}
-          <div className="flex items-center justify-between p-4 rounded-xl bg-midnight/5">
+          <div className="flex items-center justify-center gap-4 p-4 rounded-xl bg-midnight/5">
             <span className="text-sm font-medium text-midnight">Total</span>
             <span className="text-2xl font-bold text-midnight">
               {formatPrice(product.price, product.currency)}
