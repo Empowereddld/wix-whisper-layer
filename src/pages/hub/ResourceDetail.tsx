@@ -4,6 +4,8 @@ import { useAuth } from "@/contexts/AuthContext";
 import HubLayout from "@/components/hub/HubLayout";
 import PurchaseModal from "@/components/hub/PurchaseModal";
 import ResourceCard from "@/components/hub/ResourceCard";
+import SampleGallery from "@/components/hub/SampleGallery";
+import SocialShareButtons from "@/components/hub/SocialShareButtons";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -147,19 +149,14 @@ const ResourceDetail = () => {
 
         {/* Two-column layout */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
-          {/* Left column — Cover image */}
+          {/* Left column — Cover image + sample gallery */}
           <div className="w-full">
-            {resource.thumbnail_url ? (
-              <img
-                src={resource.thumbnail_url}
-                alt={resource.title}
-                className="w-full h-full min-h-[320px] max-h-[520px] object-cover rounded-xl border border-border"
-              />
-            ) : (
-              <div className="w-full h-full min-h-[320px] max-h-[520px] rounded-xl bg-muted border border-border flex items-center justify-center">
-                <Icon className="h-20 w-20 text-muted-foreground/40" />
-              </div>
-            )}
+            <SampleGallery
+              thumbnailUrl={resource.thumbnail_url}
+              sampleImages={(resource as any).sample_images || []}
+              title={resource.title}
+              fallbackIcon={Icon}
+            />
           </div>
 
           {/* Right column — Details */}
@@ -228,6 +225,9 @@ const ResourceDetail = () => {
                   <Lock className="h-5 w-5 mr-2" /> Unlock for {formatPrice(product!.price, product!.currency)}
                 </Button>
               )}
+
+              {/* Social share */}
+              <SocialShareButtons resourceId={resource.id} resourceTitle={resource.title} userId={user?.id} />
             </div>
           </div>
         </div>
