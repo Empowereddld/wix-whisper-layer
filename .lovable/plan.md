@@ -1,18 +1,43 @@
 
 
-## Plan: Zoom out the image in "Is This Right" section
+## Two Features: Sample Page Gallery + Social Sharing Buttons
 
-The image currently uses `object-cover` which crops tightly into the center of the photo, cutting off the reading activity. To "zoom out" while keeping the same frame size, we can use CSS `object-fit: contain` instead — but that would leave empty space.
+### Feature 1: Sample Pages Gallery
 
-A better approach: keep `object-cover` but use `object-position` to show more of the image, combined with scaling. Specifically:
+Like the Black Sheep Press reference screenshot, we'll add a thumbnail gallery below the main cover image on the resource detail page. This lets potential buyers preview sample pages before purchasing.
 
-### Change in `src/components/IsThisRightSection.tsx` (line 16)
+**Database change:** Add a `sample_images` column (text array) to the `resources` table to store URLs of sample page screenshots.
 
-On the `<img>` element, add a CSS `scale` transform to shrink the image within its container, effectively zooming out while the container stays the same size. We'll use Tailwind's `scale-[0.85]` (or similar) combined with `object-contain` to ensure the full image is visible:
+**Storage:** Upload the sample PDF page images (extracted from the parsed document) to the `resources` storage bucket as individual image files (e.g., `samples/dan-daria-graphic-organizers-1.jpg`, etc.).
 
-- Change `object-cover` → `object-contain` so the entire image is visible without cropping
-- Add `object-center` to keep it centered
-- The container with `rounded-xl overflow-hidden` maintains the same frame size and shape
+**UI change in ResourceDetail.tsx — Left column:**
+- Main cover image stays at top
+- Below it, add a row of clickable thumbnail images (grid of small squares, like the reference)
+- Clicking a thumbnail swaps it into the main image view
+- The cover image is always the first thumbnail
 
-This shows the full scene (people reading) within the exact same container dimensions.
+**Data for Dan & Daria's Graphic Organizers:** Upload 4-5 representative sample page images from the PDF and populate the `sample_images` array.
+
+### Feature 2: Social Sharing Buttons
+
+Upgrade the existing `SharePopover` component to include social platform sharing alongside the copy-link functionality.
+
+**Buttons to add:**
+- **Facebook** — uses `https://www.facebook.com/sharer/sharer.php?u={url}`
+- **X (Twitter)** — uses `https://twitter.com/intent/tweet?url={url}&text={title}`
+- **Copy link** — keep existing behavior
+
+**Note on Instagram:** Instagram does not support URL-based sharing (no share URL scheme for posts). We can't add a "share to Instagram" button — it's a platform limitation. We'll skip it.
+
+**UI approach:** Add circular social icon buttons (Facebook blue, X black) in the SharePopover below the copy-link row, similar to the reference screenshot's "Share this product" section with LinkedIn/Twitter/Facebook icons. We'll also add a "Share this resource" section on the ResourceDetail page itself (below the download button area) with the same social buttons for higher visibility.
+
+### Summary of Changes
+
+| Area | Change |
+|------|--------|
+| Database | Add `sample_images text[]` column to `resources` |
+| Storage | Upload sample page images for Graphic Organizers |
+| `ResourceDetail.tsx` | Add thumbnail gallery below cover image; add share section |
+| `SharePopover.tsx` | Add Facebook + X sharing buttons with icons |
+| Database data | Populate `sample_images` for the Graphic Organizers resource |
 
