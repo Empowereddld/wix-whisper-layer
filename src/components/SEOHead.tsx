@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet-async";
 
-const BASE_URL = "https://wix-whisper-layer.lovable.app";
+const BASE_URL = "https://www.empowereddld.com";
 
 interface SEOHeadProps {
   title: string;

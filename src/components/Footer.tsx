@@ -1,4 +1,8 @@
+import { useState } from "react";
 import { Mail } from "lucide-react";
+import { Link } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 import logoWhite from "@/assets/empowered-logo-white.webp";
 
 const FacebookFilled = ({ className }: { className?: string }) => (
@@ -19,7 +23,52 @@ const InstagramFilled = ({ className }: { className?: string }) => (
   </svg>
 );
 
+const quickLinks = [
+  { label: "Home", to: "/" },
+  { label: "About", to: "/about-dld" },
+  { label: "Resources", to: "/resources" },
+  { label: "Contact Us", to: "/contact" },
+];
+
+const usefulLinks = [
+  { label: "Privacy Policy", to: "/privacy-policy" },
+  { label: "Terms & Conditions", to: "/terms-and-conditions" },
+  { label: "Disclaimer", to: "/disclaimer" },
+  { label: "Support", to: "/contact" },
+];
+
+const socialLinks = [
+  { Icon: FacebookFilled, label: "Facebook", href: "https://www.facebook.com/share/g/17LHKuHtuC/" },
+  { Icon: YouTubeFilled, label: "YouTube", href: "https://www.youtube.com/@EmpoweredDLDParenting" },
+  { Icon: InstagramFilled, label: "Instagram", href: "https://www.instagram.com/empowered.dld.parenting" },
+];
+
 const Footer = () => {
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
+
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email.trim() || !name.trim()) return;
+
+    setIsSubmitting(true);
+    const { error } = await supabase
+      .from("waitlist")
+      .insert({ name: name.trim(), email: email.trim(), notes: "footer newsletter" });
+
+    setIsSubmitting(false);
+
+    if (error) {
+      toast({ title: "Something went wrong", description: "Please try again later.", variant: "destructive" });
+    } else {
+      toast({ title: "You're on the list!", description: "Thanks for subscribing." });
+      setEmail("");
+      setName("");
+    }
+  };
+
   return (
     <footer className="bg-deep-purple text-deep-purple-foreground pt-12 md:pt-14 pb-10">
       <div className="container px-6 md:px-8">
@@ -39,11 +88,11 @@ const Footer = () => {
           <div>
             <p className="font-bold text-base mb-4 text-primary-foreground">Quick Links</p>
             <ul className="space-y-2">
-              {["Home", "About", "Services", "Contact Us"].map((link) => (
-                <li key={link}>
-                  <a href="#" className="text-[13px] text-primary-foreground/50 hover:text-primary-foreground transition-colors duration-200">
-                    {link}
-                  </a>
+              {quickLinks.map((link) => (
+                <li key={link.label}>
+                  <Link to={link.to} className="text-[13px] text-primary-foreground/50 hover:text-primary-foreground transition-colors duration-200">
+                    {link.label}
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -53,11 +102,11 @@ const Footer = () => {
           <div>
             <p className="font-bold text-base mb-4 text-primary-foreground">Useful Links</p>
             <ul className="space-y-2">
-              {["Privacy Policy", "Terms & Conditions", "Disclaimer", "Support"].map((link) => (
-                <li key={link}>
-                  <a href="#" className="text-[13px] text-primary-foreground/50 hover:text-primary-foreground transition-colors duration-200">
-                    {link}
-                  </a>
+              {usefulLinks.map((link) => (
+                <li key={link.label}>
+                  <Link to={link.to} className="text-[13px] text-primary-foreground/50 hover:text-primary-foreground transition-colors duration-200">
+                    {link.label}
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -80,14 +129,12 @@ const Footer = () => {
         <div className="flex flex-col lg:flex-row items-start lg:items-start justify-between gap-8">
           {/* Social icons */}
           <div className="flex items-center justify-center lg:justify-start gap-4">
-            {[
-              { Icon: FacebookFilled, label: "Facebook" },
-              { Icon: YouTubeFilled, label: "YouTube" },
-              { Icon: InstagramFilled, label: "Instagram" },
-            ].map(({ Icon, label }) => (
+            {socialLinks.map(({ Icon, label, href }) => (
               <a
                 key={label}
-                href="#"
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-primary-foreground/80 hover:text-primary-foreground transition-colors duration-200"
                 aria-label={label}
               >
@@ -97,24 +144,34 @@ const Footer = () => {
           </div>
 
           {/* Newsletter */}
-          <div className="flex flex-col gap-4 w-full lg:w-auto">
+          <form onSubmit={handleNewsletterSubmit} className="flex flex-col gap-4 w-full lg:w-auto">
             <p className="font-serif italic text-lg text-primary-foreground/90">Subscribe to Our Newsletter</p>
             <input
               type="email"
+              required
               placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="h-10 w-full lg:w-[420px] xl:w-[500px] bg-transparent border border-primary-foreground/30 rounded-sm px-3 text-[13px] text-primary-foreground placeholder:text-primary-foreground/30 focus:outline-none focus:border-primary-foreground/60 transition-colors"
             />
             <div className="flex gap-3">
               <input
                 type="text"
+                required
                 placeholder="Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
                 className="h-10 flex-1 bg-transparent border border-primary-foreground/30 rounded-sm px-3 text-[13px] text-primary-foreground placeholder:text-primary-foreground/30 focus:outline-none focus:border-primary-foreground/60 transition-colors"
               />
-              <button className="h-10 px-6 border border-primary-foreground/50 bg-transparent text-primary-foreground text-[12px] font-bold uppercase tracking-[0.15em] rounded-sm hover:bg-primary-foreground/10 transition-colors duration-200 shrink-0">
-                Subscribe
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="h-10 px-6 border border-primary-foreground/50 bg-transparent text-primary-foreground text-[12px] font-bold uppercase tracking-[0.15em] rounded-sm hover:bg-primary-foreground/10 transition-colors duration-200 shrink-0 disabled:opacity-50"
+              >
+                {isSubmitting ? "..." : "Subscribe"}
               </button>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </footer>

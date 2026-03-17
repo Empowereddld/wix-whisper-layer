@@ -16,13 +16,13 @@ const organizationJsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
   name: "Empowered DLD",
-  url: "https://wix-whisper-layer.lovable.app",
-  logo: "https://wix-whisper-layer.lovable.app/favicon.png",
+  url: "https://www.empowereddld.com",
+  logo: "https://www.empowereddld.com/favicon.png",
   description: "Evidence-based resources, books, and community for families and professionals supporting children with Developmental Language Disorder (DLD).",
   sameAs: [
-    "https://www.facebook.com/empowereddld",
-    "https://www.instagram.com/empowereddld",
-    "https://www.youtube.com/@empowereddld"
+    "https://www.facebook.com/share/g/17LHKuHtuC/",
+    "https://www.instagram.com/empowered.dld.parenting",
+    "https://www.youtube.com/@EmpoweredDLDParenting"
   ]
 };
 

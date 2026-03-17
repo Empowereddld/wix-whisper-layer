@@ -9,17 +9,41 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 const OrganizationsLeadFormSection = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [orgName, setOrgName] = useState("");
   const [role, setRole] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Frontend-only for now
-    console.log({ name, email, orgName, role });
+    if (!name.trim() || !email.trim() || !orgName.trim() || !role) return;
+
+    setIsSubmitting(true);
+    const { error } = await supabase.from("lead_captures" as any).insert({
+      name: name.trim(),
+      email: email.trim(),
+      organization_name: orgName.trim(),
+      role,
+      source: "organizations_page",
+    } as any);
+
+    setIsSubmitting(false);
+
+    if (error) {
+      toast({ title: "Something went wrong", description: "Please try again later.", variant: "destructive" });
+    } else {
+      toast({ title: "Guide on its way!", description: "Check your inbox shortly." });
+      setName("");
+      setEmail("");
+      setOrgName("");
+      setRole("");
+    }
   };
 
   return (
@@ -40,40 +64,21 @@ const OrganizationsLeadFormSection = () => {
               <Label htmlFor="org-name-field" className="text-[13px] font-semibold text-foreground mb-1.5 block">
                 Name <span className="text-destructive">*</span>
               </Label>
-              <Input
-                id="org-name-field"
-                required
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="Your full name"
-              />
+              <Input id="org-name-field" required value={name} onChange={(e) => setName(e.target.value)} placeholder="Your full name" />
             </div>
 
             <div>
               <Label htmlFor="org-email-field" className="text-[13px] font-semibold text-foreground mb-1.5 block">
                 Email <span className="text-destructive">*</span>
               </Label>
-              <Input
-                id="org-email-field"
-                type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@organization.com"
-              />
+              <Input id="org-email-field" type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@organization.com" />
             </div>
 
             <div>
               <Label htmlFor="org-org-name-field" className="text-[13px] font-semibold text-foreground mb-1.5 block">
                 Organization Name <span className="text-destructive">*</span>
               </Label>
-              <Input
-                id="org-org-name-field"
-                required
-                value={orgName}
-                onChange={(e) => setOrgName(e.target.value)}
-                placeholder="Your organization"
-              />
+              <Input id="org-org-name-field" required value={orgName} onChange={(e) => setOrgName(e.target.value)} placeholder="Your organization" />
             </div>
 
             <div>
@@ -93,11 +98,8 @@ const OrganizationsLeadFormSection = () => {
               </Select>
             </div>
 
-            <Button
-              type="submit"
-              className="w-full h-12 text-[12px] font-bold uppercase tracking-[0.12em]"
-            >
-              Download Free Guide
+            <Button type="submit" disabled={isSubmitting} className="w-full h-12 text-[12px] font-bold uppercase tracking-[0.12em]">
+              {isSubmitting ? "Submitting..." : "Download Free Guide"}
             </Button>
 
             <p className="text-[11px] md:text-[12px] text-muted-foreground text-center leading-[1.6]">

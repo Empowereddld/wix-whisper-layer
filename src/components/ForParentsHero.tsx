@@ -19,7 +19,9 @@ const ForParentsHero = () => {
               Join 4,000+ parents learning about language challenges, gaining practical strategies, and discovering they're not alone.
             </p>
             <a
-              href="#"
+              href="https://www.facebook.com/share/g/17LHKuHtuC/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center justify-center h-12 md:h-14 px-8 md:px-10 bg-black text-white text-[11px] md:text-[12px] lg:text-[13px] font-bold uppercase tracking-[0.12em] rounded-sm hover:bg-black/85 transition-colors duration-200"
             >
               Join Our Community
