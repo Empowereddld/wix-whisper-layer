@@ -1,22 +1,18 @@
 
 
-## Fix: Align "Total" and price closer together
+## Plan: Zoom out the image in "Is This Right" section
 
-The "Total" label and price amount in the `PurchaseModal` are currently spaced apart using `justify-between` on the full width. The user wants them visually closer.
+The image currently uses `object-cover` which crops tightly into the center of the photo, cutting off the reading activity. To "zoom out" while keeping the same frame size, we can use CSS `object-fit: contain` instead — but that would leave empty space.
 
-### Change
-In `src/components/hub/PurchaseModal.tsx`, update the price row from `justify-between` (which pushes them to opposite edges) to `justify-end gap-3` so both "Total" and the price sit together on the right side — or alternatively use `justify-center gap-4` to center them together.
+A better approach: keep `object-cover` but use `object-position` to show more of the image, combined with scaling. Specifically:
 
-Best approach: keep `justify-between` but add padding to shrink the row, or switch to `flex items-center justify-center gap-4` so the label and price are adjacent and centered.
+### Change in `src/components/IsThisRightSection.tsx` (line 16)
 
-**File:** `src/components/hub/PurchaseModal.tsx` — change the price container div from:
-```
-<div className="flex items-center justify-between p-4 rounded-xl bg-midnight/5">
-```
-to:
-```
-<div className="flex items-center justify-center gap-4 p-4 rounded-xl bg-midnight/5">
-```
+On the `<img>` element, add a CSS `scale` transform to shrink the image within its container, effectively zooming out while the container stays the same size. We'll use Tailwind's `scale-[0.85]` (or similar) combined with `object-contain` to ensure the full image is visible:
 
-This centers "Total" and the price together instead of pushing them to opposite edges.
+- Change `object-cover` → `object-contain` so the entire image is visible without cropping
+- Add `object-center` to keep it centered
+- The container with `rounded-xl overflow-hidden` maintains the same frame size and shape
+
+This shows the full scene (people reading) within the exact same container dimensions.
 
