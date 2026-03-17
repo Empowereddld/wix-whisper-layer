@@ -207,7 +207,7 @@ const ResourceDetail = () => {
 
             {/* Full description */}
             <p className="text-foreground/80 leading-relaxed text-base mb-8">
-              {resource.long_description || resource.description}
+              {resource.description || resource.long_description}
             </p>
 
             {/* Action button pushed to bottom */}
