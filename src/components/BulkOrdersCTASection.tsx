@@ -23,7 +23,7 @@ const BulkOrdersCTASection = () => {
               Join schools and organizations in 15+ countries already using the Living Life with DLD series.
             </p>
             <a
-              href="#"
+              href="/contact"
               className="inline-flex items-center justify-center h-12 px-8 bg-deep-purple text-deep-purple-foreground text-[13px] font-semibold rounded-sm hover:bg-deep-purple/90 transition-colors duration-200"
             >
               Request a Bulk Order

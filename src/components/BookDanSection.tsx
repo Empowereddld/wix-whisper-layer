@@ -31,7 +31,9 @@ const BookDanSection = () => {
             </p>
             <div>
               <a
-                href="#"
+                href="https://mybook.to/nwINcA"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center justify-center h-10 px-6 bg-deep-purple text-deep-purple-foreground text-[12px] font-semibold rounded-sm hover:bg-deep-purple/90 transition-colors duration-200"
               >
                 Buy on Amazon
