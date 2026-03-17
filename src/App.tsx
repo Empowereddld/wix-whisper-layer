@@ -51,6 +51,9 @@ import AdminWaitlist from "./pages/admin/AdminWaitlist";
 import AdminResourceRequests from "./pages/admin/AdminResourceRequests";
 import AdminReferrals from "./pages/admin/AdminReferrals";
 import StoryBuilders from "./pages/StoryBuilders";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsAndConditions from "./pages/TermsAndConditions";
+import Disclaimer from "./pages/Disclaimer";
 
 const queryClient = new QueryClient();
 
