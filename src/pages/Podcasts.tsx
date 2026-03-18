@@ -15,7 +15,7 @@ const episodes = [
     description:
       "Dan and Daria explain DLD in their own words. Perfect for anyone who wants to understand what it's really like.",
     image: ep12Img,
-    link: "https://youtube.com/playlist?list=PLzfiOYFA1If6abH3LUNdxKPOAuOgkjZN5",
+    link: "https://youtu.be/Zf6PcH4f7rk?si=BP1rCxc0sp1uJEw6",
   },
   {
     number: "Episode 6",
