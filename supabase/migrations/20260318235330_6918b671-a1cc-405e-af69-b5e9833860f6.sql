@@ -1,0 +1,1 @@
+UPDATE public.resources SET file_url = 'resources-private/daria-tips-starting-conversations-poster.pdf' WHERE id = 'a97360be-fe8e-41f5-bbbb-167254772e7c';
