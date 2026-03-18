@@ -1,18 +1,14 @@
 
 
-## Plan: Zoom out the image in "Is This Right" section
+## Fix: Always scroll to top on page navigation
 
-The image currently uses `object-cover` which crops tightly into the center of the photo, cutting off the reading activity. To "zoom out" while keeping the same frame size, we can use CSS `object-fit: contain` instead — but that would leave empty space.
+**Problem:** When navigating between pages via the header nav or buttons, the browser keeps the previous scroll position instead of starting at the top.
 
-A better approach: keep `object-cover` but use `object-position` to show more of the image, combined with scaling. Specifically:
+**Solution:** Add a `ScrollToTop` component that listens for route changes and scrolls to the top on every navigation (except browser back/forward).
 
-### Change in `src/components/IsThisRightSection.tsx` (line 16)
+**Changes:**
 
-On the `<img>` element, add a CSS `scale` transform to shrink the image within its container, effectively zooming out while the container stays the same size. We'll use Tailwind's `scale-[0.85]` (or similar) combined with `object-contain` to ensure the full image is visible:
+1. **Create `src/components/ScrollToTop.tsx`** — a small component using `useLocation` and `useNavigationType` from React Router to call `window.scrollTo(0, 0)` on route changes.
 
-- Change `object-cover` → `object-contain` so the entire image is visible without cropping
-- Add `object-center` to keep it centered
-- The container with `rounded-xl overflow-hidden` maintains the same frame size and shape
-
-This shows the full scene (people reading) within the exact same container dimensions.
+2. **Edit `src/App.tsx`** — add `<ScrollToTop />` inside `<BrowserRouter>`, before `<Routes>`.
 
