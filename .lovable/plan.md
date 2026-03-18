@@ -1,21 +1,18 @@
 
 
-## Plan: Fix "Explore the Series" button + investigate universal link for paperback
+## Plan: Zoom out the image in "Is This Right" section
 
-### Changes
+The image currently uses `object-cover` which crops tightly into the center of the photo, cutting off the reading activity. To "zoom out" while keeping the same frame size, we can use CSS `object-fit: contain` instead — but that would leave empty space.
 
-1. **Fix "Explore the Series" button in `BooksHero.tsx`**
-   - The `#series` anchor has no matching `id="series"` element on the Books page — that's why it does nothing.
-   - Change the href from `#series` to `#book-dan` (a new id we'll add) so it scrolls down to the first book description section.
-   - Add `id="book-dan"` to the `<section>` in `BookDanSection.tsx` (the first book after the hero and "More Than A Story" sections).
+A better approach: keep `object-cover` but use `object-position` to show more of the image, combined with scaling. Specifically:
 
-2. **Universal Amazon link → paperback**
-   - The `mybook.to/nwINcA` link is a "Genius Link" that auto-redirects by country, but it defaults to the Kindle edition.
-   - Unfortunately, we cannot control where a mybook.to link lands (Kindle vs Paperback) from our code — that setting lives in the Genius Link / Books2Read dashboard where the link was created.
-   - **Recommendation:** Log into your [Books2Read / MyBook.to dashboard](https://books2read.com) and edit the link so the default landing is the Paperback edition instead of Kindle. This is a setting on their side, not something we can append a query parameter to.
-   - Alternatively, if you cannot change it there, we can replace `mybook.to/nwINcA` across all 6 files with a different universal link that defaults to paperback. You would need to either create a new Genius Link targeting paperback, or we can use the direct Amazon link (but that will only work for Canadian visitors).
+### Change in `src/components/IsThisRightSection.tsx` (line 16)
 
-### Files to edit
-- `src/components/BooksHero.tsx` — change `#series` → `#book-dan`
-- `src/components/BookDanSection.tsx` — add `id="book-dan"` to the section element
+On the `<img>` element, add a CSS `scale` transform to shrink the image within its container, effectively zooming out while the container stays the same size. We'll use Tailwind's `scale-[0.85]` (or similar) combined with `object-contain` to ensure the full image is visible:
+
+- Change `object-cover` → `object-contain` so the entire image is visible without cropping
+- Add `object-center` to keep it centered
+- The container with `rounded-xl overflow-hidden` maintains the same frame size and shape
+
+This shows the full scene (people reading) within the exact same container dimensions.
 
