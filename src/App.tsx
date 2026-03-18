@@ -1,9 +1,13 @@
+import { lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
+import ScrollToTop from "./components/ScrollToTop";
+
+// Eagerly loaded (main public pages)
 import Index from "./pages/Index";
 import WhoWeServe from "./pages/WhoWeServe";
 import ForParents from "./pages/ForParents";
@@ -11,9 +15,6 @@ import ForTherapists from "./pages/ForTherapists";
 import ForEducators from "./pages/ForEducators";
 import ForOrganizations from "./pages/ForOrganizations";
 import Resources from "./pages/Resources";
-import Podcasts from "./pages/Podcasts";
-import FreeCourse from "./pages/FreeCourse";
-import Downloadables from "./pages/Downloadables";
 import Shop from "./pages/Shop";
 import Books from "./pages/Books";
 import BulkOrders from "./pages/BulkOrders";
@@ -21,40 +22,56 @@ import WorkWithUs from "./pages/WorkWithUs";
 import AboutDLD from "./pages/AboutDLD";
 import ContactUs from "./pages/ContactUs";
 import NotFound from "./pages/NotFound";
-import Blog from "./pages/Blog";
-import BlogPost from "./pages/BlogPost";
-import HubSignup from "./pages/hub/HubSignup";
-import HubLogin from "./pages/hub/HubLogin";
-import VerifyEmail from "./pages/hub/VerifyEmail";
-import HubDashboard from "./pages/hub/HubDashboard";
-import HubSettings from "./pages/hub/HubSettings";
-import ResetPassword from "./pages/hub/ResetPassword";
-import HubPreview from "./pages/hub/HubPreview";
-import ResourceDetail from "./pages/hub/ResourceDetail";
-import ProtectedRoute from "@/components/hub/ProtectedRoute";
-import Signup from "./pages/auth/Signup";
-import SignupRole from "./pages/auth/SignupRole";
-import Login from "./pages/auth/Login";
-import ForgotPassword from "./pages/auth/ForgotPassword";
-import AdminProtectedRoute from "@/components/admin/AdminProtectedRoute";
-import AdminDashboard from "./pages/admin/AdminDashboard";
-import AdminResources from "./pages/admin/AdminResources";
-import AdminUsers from "./pages/admin/AdminUsers";
-import AdminAnalytics from "./pages/admin/AdminAnalytics";
-import AdminBlog from "./pages/admin/AdminBlog";
-import AdminOrders from "./pages/admin/AdminOrders";
-import AdminDiscounts from "./pages/admin/AdminDiscounts";
-import AdminEmails from "./pages/admin/AdminEmails";
-import AdminAuditLog from "./pages/admin/AdminAuditLog";
-import AdminProducts from "./pages/admin/AdminProducts";
-import AdminWaitlist from "./pages/admin/AdminWaitlist";
-import AdminResourceRequests from "./pages/admin/AdminResourceRequests";
-import AdminReferrals from "./pages/admin/AdminReferrals";
-import ScrollToTop from "./components/ScrollToTop";
-import StoryBuilders from "./pages/StoryBuilders";
-import PrivacyPolicy from "./pages/PrivacyPolicy";
-import TermsAndConditions from "./pages/TermsAndConditions";
-import Disclaimer from "./pages/Disclaimer";
+
+// Lazy-loaded: Blog
+const Blog = lazy(() => import("./pages/Blog"));
+const BlogPost = lazy(() => import("./pages/BlogPost"));
+
+// Lazy-loaded: Resources sub-pages
+const Podcasts = lazy(() => import("./pages/Podcasts"));
+const FreeCourse = lazy(() => import("./pages/FreeCourse"));
+const Downloadables = lazy(() => import("./pages/Downloadables"));
+
+// Lazy-loaded: Auth
+const Signup = lazy(() => import("./pages/auth/Signup"));
+const SignupRole = lazy(() => import("./pages/auth/SignupRole"));
+const Login = lazy(() => import("./pages/auth/Login"));
+const ForgotPassword = lazy(() => import("./pages/auth/ForgotPassword"));
+
+// Lazy-loaded: Hub
+const HubSignup = lazy(() => import("./pages/hub/HubSignup"));
+const HubLogin = lazy(() => import("./pages/hub/HubLogin"));
+const VerifyEmail = lazy(() => import("./pages/hub/VerifyEmail"));
+const HubDashboard = lazy(() => import("./pages/hub/HubDashboard"));
+const HubSettings = lazy(() => import("./pages/hub/HubSettings"));
+const ResetPassword = lazy(() => import("./pages/hub/ResetPassword"));
+const HubPreview = lazy(() => import("./pages/hub/HubPreview"));
+const ResourceDetail = lazy(() => import("./pages/hub/ResourceDetail"));
+
+// Lazy-loaded: Admin
+const AdminDashboard = lazy(() => import("./pages/admin/AdminDashboard"));
+const AdminResources = lazy(() => import("./pages/admin/AdminResources"));
+const AdminUsers = lazy(() => import("./pages/admin/AdminUsers"));
+const AdminAnalytics = lazy(() => import("./pages/admin/AdminAnalytics"));
+const AdminBlog = lazy(() => import("./pages/admin/AdminBlog"));
+const AdminOrders = lazy(() => import("./pages/admin/AdminOrders"));
+const AdminDiscounts = lazy(() => import("./pages/admin/AdminDiscounts"));
+const AdminEmails = lazy(() => import("./pages/admin/AdminEmails"));
+const AdminAuditLog = lazy(() => import("./pages/admin/AdminAuditLog"));
+const AdminProducts = lazy(() => import("./pages/admin/AdminProducts"));
+const AdminWaitlist = lazy(() => import("./pages/admin/AdminWaitlist"));
+const AdminResourceRequests = lazy(() => import("./pages/admin/AdminResourceRequests"));
+const AdminReferrals = lazy(() => import("./pages/admin/AdminReferrals"));
+
+// Lazy-loaded: Legal & misc
+const StoryBuilders = lazy(() => import("./pages/StoryBuilders"));
+const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
+const TermsAndConditions = lazy(() => import("./pages/TermsAndConditions"));
+const Disclaimer = lazy(() => import("./pages/Disclaimer"));
+
+// Lazy-loaded: Protected route wrappers
+const ProtectedRoute = lazy(() => import("@/components/hub/ProtectedRoute"));
+const AdminProtectedRoute = lazy(() => import("@/components/admin/AdminProtectedRoute"));
 
 const queryClient = new QueryClient();
 
@@ -66,59 +83,61 @@ const App = () => (
       <BrowserRouter>
         <AuthProvider>
           <ScrollToTop />
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/who-we-serve" element={<WhoWeServe />} />
-            <Route path="/for-parents" element={<ForParents />} />
-            <Route path="/for-therapists" element={<ForTherapists />} />
-            <Route path="/for-educators" element={<ForEducators />} />
-            <Route path="/for-organizations" element={<ForOrganizations />} />
-            <Route path="/resources" element={<Resources />} />
-            <Route path="/resources/podcasts" element={<Podcasts />} />
-            <Route path="/resources/free-course" element={<FreeCourse />} />
-            <Route path="/resources/downloadables" element={<Downloadables />} />
-            <Route path="/resources/blog" element={<Blog />} />
-            <Route path="/resources/blog/:slug" element={<BlogPost />} />
-            <Route path="/shop" element={<Shop />} />
-            <Route path="/shop/books" element={<Books />} />
-            <Route path="/shop/bulk-orders" element={<BulkOrders />} />
-            <Route path="/work-with-us" element={<WorkWithUs />} />
-            <Route path="/about-dld" element={<AboutDLD />} />
-            <Route path="/contact" element={<ContactUs />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/storybuilders" element={<StoryBuilders />} />
-            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-            <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
-            <Route path="/disclaimer" element={<Disclaimer />} />
-            <Route path="/signup/role" element={<SignupRole />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/forgot-password" element={<ForgotPassword />} />
-            <Route path="/hub/signup" element={<HubSignup />} />
-            <Route path="/hub/login" element={<HubLogin />} />
-            <Route path="/hub/verify-email" element={<VerifyEmail />} />
-            <Route path="/hub/reset-password" element={<ResetPassword />} />
-            
-            <Route path="/hub/preview" element={<HubPreview />} />
-            <Route path="/hub" element={<ProtectedRoute><HubDashboard /></ProtectedRoute>} />
-            <Route path="/hub/resource/:id" element={<ProtectedRoute><ResourceDetail /></ProtectedRoute>} />
-            <Route path="/hub/settings" element={<ProtectedRoute><HubSettings /></ProtectedRoute>} />
-            {/* Admin routes */}
-            <Route path="/admin" element={<AdminProtectedRoute><AdminDashboard /></AdminProtectedRoute>} />
-            <Route path="/admin/resources" element={<AdminProtectedRoute><AdminResources /></AdminProtectedRoute>} />
-            <Route path="/admin/users" element={<AdminProtectedRoute><AdminUsers /></AdminProtectedRoute>} />
-            <Route path="/admin/analytics" element={<AdminProtectedRoute><AdminAnalytics /></AdminProtectedRoute>} />
-            <Route path="/admin/blog" element={<AdminProtectedRoute><AdminBlog /></AdminProtectedRoute>} />
-            <Route path="/admin/orders" element={<AdminProtectedRoute><AdminOrders /></AdminProtectedRoute>} />
-            <Route path="/admin/discounts" element={<AdminProtectedRoute><AdminDiscounts /></AdminProtectedRoute>} />
-            <Route path="/admin/products" element={<AdminProtectedRoute><AdminProducts /></AdminProtectedRoute>} />
-            <Route path="/admin/waitlist" element={<AdminProtectedRoute><AdminWaitlist /></AdminProtectedRoute>} />
-            <Route path="/admin/resource-requests" element={<AdminProtectedRoute><AdminResourceRequests /></AdminProtectedRoute>} />
-            <Route path="/admin/referrals" element={<AdminProtectedRoute><AdminReferrals /></AdminProtectedRoute>} />
-            <Route path="/admin/emails" element={<AdminProtectedRoute><AdminEmails /></AdminProtectedRoute>} />
-            <Route path="/admin/audit" element={<AdminProtectedRoute><AdminAuditLog /></AdminProtectedRoute>} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <Suspense fallback={<div className="min-h-screen" />}>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/who-we-serve" element={<WhoWeServe />} />
+              <Route path="/for-parents" element={<ForParents />} />
+              <Route path="/for-therapists" element={<ForTherapists />} />
+              <Route path="/for-educators" element={<ForEducators />} />
+              <Route path="/for-organizations" element={<ForOrganizations />} />
+              <Route path="/resources" element={<Resources />} />
+              <Route path="/resources/podcasts" element={<Podcasts />} />
+              <Route path="/resources/free-course" element={<FreeCourse />} />
+              <Route path="/resources/downloadables" element={<Downloadables />} />
+              <Route path="/resources/blog" element={<Blog />} />
+              <Route path="/resources/blog/:slug" element={<BlogPost />} />
+              <Route path="/shop" element={<Shop />} />
+              <Route path="/shop/books" element={<Books />} />
+              <Route path="/shop/bulk-orders" element={<BulkOrders />} />
+              <Route path="/work-with-us" element={<WorkWithUs />} />
+              <Route path="/about-dld" element={<AboutDLD />} />
+              <Route path="/contact" element={<ContactUs />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/storybuilders" element={<StoryBuilders />} />
+              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+              <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+              <Route path="/disclaimer" element={<Disclaimer />} />
+              <Route path="/signup/role" element={<SignupRole />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route path="/hub/signup" element={<HubSignup />} />
+              <Route path="/hub/login" element={<HubLogin />} />
+              <Route path="/hub/verify-email" element={<VerifyEmail />} />
+              <Route path="/hub/reset-password" element={<ResetPassword />} />
+              
+              <Route path="/hub/preview" element={<HubPreview />} />
+              <Route path="/hub" element={<ProtectedRoute><HubDashboard /></ProtectedRoute>} />
+              <Route path="/hub/resource/:id" element={<ProtectedRoute><ResourceDetail /></ProtectedRoute>} />
+              <Route path="/hub/settings" element={<ProtectedRoute><HubSettings /></ProtectedRoute>} />
+              {/* Admin routes */}
+              <Route path="/admin" element={<AdminProtectedRoute><AdminDashboard /></AdminProtectedRoute>} />
+              <Route path="/admin/resources" element={<AdminProtectedRoute><AdminResources /></AdminProtectedRoute>} />
+              <Route path="/admin/users" element={<AdminProtectedRoute><AdminUsers /></AdminProtectedRoute>} />
+              <Route path="/admin/analytics" element={<AdminProtectedRoute><AdminAnalytics /></AdminProtectedRoute>} />
+              <Route path="/admin/blog" element={<AdminProtectedRoute><AdminBlog /></AdminProtectedRoute>} />
+              <Route path="/admin/orders" element={<AdminProtectedRoute><AdminOrders /></AdminProtectedRoute>} />
+              <Route path="/admin/discounts" element={<AdminProtectedRoute><AdminDiscounts /></AdminProtectedRoute>} />
+              <Route path="/admin/products" element={<AdminProtectedRoute><AdminProducts /></AdminProtectedRoute>} />
+              <Route path="/admin/waitlist" element={<AdminProtectedRoute><AdminWaitlist /></AdminProtectedRoute>} />
+              <Route path="/admin/resource-requests" element={<AdminProtectedRoute><AdminResourceRequests /></AdminProtectedRoute>} />
+              <Route path="/admin/referrals" element={<AdminProtectedRoute><AdminReferrals /></AdminProtectedRoute>} />
+              <Route path="/admin/emails" element={<AdminProtectedRoute><AdminEmails /></AdminProtectedRoute>} />
+              <Route path="/admin/audit" element={<AdminProtectedRoute><AdminAuditLog /></AdminProtectedRoute>} />
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Suspense>
         </AuthProvider>
       </BrowserRouter>
     </TooltipProvider>
