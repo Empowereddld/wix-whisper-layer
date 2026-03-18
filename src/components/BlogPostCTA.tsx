@@ -8,7 +8,7 @@ interface BlogPostCTAProps {
 const PODCAST_CTA = {
   title: "Watch the Dan & Daria Podcast",
   description: "See Dan and Daria share real stories about life with DLD",
-  href: "https://www.youtube.com/watch?v=FEA22DA7yn0&list=PLzfiOYFA1If6abH3LUNdxKPOAuOgkjZN5",
+  href: "https://youtube.com/playlist?list=PLzfiOYFA1If6abH3LUNdxKPOAuOgkjZN5&si=92E3bFbq89Y3B_F_",
   label: "Watch Now",
   icon: Play,
   external: true,
