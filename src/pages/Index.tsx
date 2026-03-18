@@ -20,7 +20,7 @@ const organizationJsonLd = {
   logo: "https://www.empowereddld.com/favicon.png",
   description: "Evidence-based resources, books, and community for families and professionals supporting children with Developmental Language Disorder (DLD).",
   sameAs: [
-    "https://www.facebook.com/share/g/17LHKuHtuC/",
+    "https://www.facebook.com/share/g/1GCdxhWtfB/",
     "https://www.instagram.com/empowered.dld.parenting",
     "https://www.youtube.com/@EmpoweredDLDParenting"
   ]
