@@ -31,7 +31,7 @@ const episodes = [
     description:
       "Dan, Daria, and Millen share what it feels like when the right words are just out of reach. Honest and eye-opening.",
     image: ep9Img,
-    link: "https://youtube.com/playlist?list=PLzfiOYFA1If6abH3LUNdxKPOAuOgkjZN5",
+    link: "https://youtu.be/tyaSSYIMGpg?si=IlhZ528ehYEzKnUI",
   },
 ];
 
