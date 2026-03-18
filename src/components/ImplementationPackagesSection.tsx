@@ -80,7 +80,7 @@ const ImplementationPackagesSection = () => {
                   ))}
                 </ul>
                 <a
-                  href="#contact"
+                  href="/contact"
                   className="inline-flex items-center justify-center h-12 px-8 border border-foreground text-foreground text-[11px] md:text-[12px] font-bold uppercase tracking-[0.12em] hover:bg-foreground hover:text-background transition-colors duration-200 w-full"
                 >
                   Contact Us

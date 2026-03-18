@@ -48,7 +48,7 @@ const PartnershipPackagesSection = () => {
               <div className="mt-auto text-center">
                 <p className="text-[28px] md:text-[32px] font-black text-foreground mb-4">$1500</p>
                 <a
-                  href="#contact"
+                  href="/contact"
                   className="inline-flex items-center justify-center gap-1 h-12 px-8 border border-foreground text-foreground text-[11px] md:text-[12px] font-bold uppercase tracking-[0.12em] hover:bg-foreground hover:text-background transition-colors duration-200"
                 >
                   CONTACT US <ChevronRight className="w-4 h-4" />
@@ -96,7 +96,7 @@ const PartnershipPackagesSection = () => {
               <div className="mt-auto text-center">
                 <p className="text-[28px] md:text-[32px] font-black text-foreground mb-4">$3000</p>
                 <a
-                  href="#contact"
+                  href="/contact"
                   className="inline-flex items-center justify-center gap-1 h-12 px-8 border border-foreground text-foreground text-[11px] md:text-[12px] font-bold uppercase tracking-[0.12em] hover:bg-foreground hover:text-background transition-colors duration-200"
                 >
                   CONTACT US <ChevronRight className="w-4 h-4" />

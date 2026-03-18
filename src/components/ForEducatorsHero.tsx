@@ -18,7 +18,7 @@ const ForEducatorsHero = () => {
               School-wide materials, staff training, and multilingual resources to support students with Developmental Language Disorder — designed by an SLP and educator team.
             </p>
             <a
-              href="#contact"
+              href="/contact"
               className="inline-flex items-center justify-center h-12 md:h-14 px-8 md:px-10 bg-black text-white text-[11px] md:text-[12px] lg:text-[13px] font-bold uppercase tracking-[0.12em] rounded-sm hover:bg-black/85 transition-colors duration-200"
             >
               Book a Consultation

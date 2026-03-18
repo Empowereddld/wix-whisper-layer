@@ -158,9 +158,14 @@ const Podcasts = () => {
             <p className="text-[15px] md:text-[16px] text-muted-foreground">
               All episodes are free on YouTube.
             </p>
-            <Button className="h-12 px-8 rounded-sm text-[14px] font-semibold bg-deep-purple text-deep-purple-foreground hover:bg-deep-purple/90 mt-2">
+            <a
+              href="https://youtube.com/playlist?list=PLzfiOYFA1If6abH3LUNdxKPOAuOgkjZN5"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center h-12 px-8 rounded-sm text-[14px] font-semibold bg-deep-purple text-deep-purple-foreground hover:bg-deep-purple/90 mt-2"
+            >
               Go to YouTube Channel
-            </Button>
+            </a>
           </div>
         </section>
 

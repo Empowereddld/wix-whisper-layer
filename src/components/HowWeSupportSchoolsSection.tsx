@@ -5,37 +5,37 @@ const cards = [
     title: "Diverse Children's Books",
     description: "Our DLD book series features characters from diverse backgrounds, available in 7+ languages. Each book comes with a discussion guide and parent letter to extend learning beyond the classroom.",
     link: "Explore the Books",
-    href: "#",
+    href: "/shop/books",
   },
   {
     title: "Professional Development",
     description: "Interactive training sessions for teachers, support staff, and administrators. Learn to recognize DLD, implement classroom accommodations, and support students across all subject areas.",
     link: "Learn About Training",
-    href: "#",
+    href: "/contact",
   },
   {
     title: "Implementation Toolkit",
     description: "Everything you need to launch a DLD-aware initiative in your school: screening guides, referral pathways, accommodation checklists, and progress monitoring tools.",
     link: "View the Toolkit",
-    href: "#",
+    href: "/contact",
   },
   {
     title: "Parent Partnership Resources",
     description: "Multilingual parent guides, workshop materials, and communication templates to help families understand DLD and participate in their child's support plan.",
     link: "See Parent Resources",
-    href: "#",
+    href: "/hub/preview",
   },
   {
     title: "Equity-Driven Resources",
     description: "Culturally responsive materials designed to address the disproportionate impact of DLD on multilingual learners and underserved communities.",
     link: "Explore Resources",
-    href: "#",
+    href: "/hub/preview",
   },
   {
     title: "Goal Bank & Digital Resources",
     description: "A comprehensive digital library of IEP goals, therapy activities, classroom strategies, and progress monitoring tools — all organized by age and skill area.",
     link: "Browse the Goal Bank",
-    href: "#",
+    href: "/hub/preview",
   },
 ];
 

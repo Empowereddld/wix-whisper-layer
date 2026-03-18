@@ -22,13 +22,13 @@ const EducatorsContactCTA = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
-                href="mailto:info@empowereddld.com"
+                href="/contact"
                 className="inline-flex items-center justify-center h-12 md:h-14 px-8 md:px-10 bg-primary text-primary-foreground text-[11px] md:text-[12px] lg:text-[13px] font-bold uppercase tracking-[0.12em] rounded-sm hover:bg-primary/90 transition-colors duration-200"
               >
                 Get the Info Packet
               </a>
               <a
-                href="mailto:info@empowereddld.com"
+                href="/contact"
                 className="inline-flex items-center justify-center h-12 md:h-14 px-8 md:px-10 border border-white text-white text-[11px] md:text-[12px] lg:text-[13px] font-bold uppercase tracking-[0.12em] rounded-sm hover:bg-white hover:text-black transition-colors duration-200"
               >
                 Book a Consultation
