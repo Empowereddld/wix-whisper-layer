@@ -21,7 +21,7 @@ const paths = [
   },
   {
     icon: iconEducators,
-    title: "For Teachers and Support Staff",
+    title: "For Schools and Educators",
     description: "Classroom-ready tools that support language, learning, and inclusion. Make DLD visible in your classroom and school community.",
     cta: "LEARN MORE",
     href: "/for-educators",
