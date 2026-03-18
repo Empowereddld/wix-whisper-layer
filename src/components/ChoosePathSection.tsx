@@ -28,7 +28,7 @@ const paths = [
   },
   {
     icon: iconOrganizations,
-    title: "For Schools, Clinics, and Organizations",
+    title: "For Organizations and Non For Profits",
     description: "Bulk orders, implementation support, and professional development to equip your team with evidence-based DLD resources.",
     cta: "LEARN MORE",
     href: "/for-organizations",
