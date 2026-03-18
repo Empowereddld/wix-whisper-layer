@@ -50,6 +50,7 @@ import AdminProducts from "./pages/admin/AdminProducts";
 import AdminWaitlist from "./pages/admin/AdminWaitlist";
 import AdminResourceRequests from "./pages/admin/AdminResourceRequests";
 import AdminReferrals from "./pages/admin/AdminReferrals";
+import ScrollToTop from "./components/ScrollToTop";
 import StoryBuilders from "./pages/StoryBuilders";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsAndConditions from "./pages/TermsAndConditions";
@@ -64,6 +65,7 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <AuthProvider>
+          <ScrollToTop />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/who-we-serve" element={<WhoWeServe />} />
