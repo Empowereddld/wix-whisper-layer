@@ -1,22 +1,18 @@
 
 
-## Problem
+## Plan: Zoom out the image in "Is This Right" section
 
-The left girl's arm is being clipped on the left side of the hero image, especially at larger viewports. This happens because:
-- The image uses `overflow-hidden` on its container
-- At xl (1920px), the image is scaled to 1.02x and shifted left by 8%, pushing the left edge outside the visible container
-- At lg (1366px), similar clipping occurs with 0.88x scale and 12% shift
+The image currently uses `object-cover` which crops tightly into the center of the photo, cutting off the reading activity. To "zoom out" while keeping the same frame size, we can use CSS `object-fit: contain` instead — but that would leave empty space.
 
-## Solution
+A better approach: keep `object-cover` but use `object-position` to show more of the image, combined with scaling. Specifically:
 
-Reduce the scale and negative translate values so the full image (both girls' arms included) stays within the container bounds:
+### Change in `src/components/IsThisRightSection.tsx` (line 16)
 
-**File: `src/components/HeroSection.tsx` (line 25)**
+On the `<img>` element, add a CSS `scale` transform to shrink the image within its container, effectively zooming out while the container stays the same size. We'll use Tailwind's `scale-[0.85]` (or similar) combined with `object-contain` to ensure the full image is visible:
 
-Adjust the image scaling and positioning:
-- **md**: Reduce scale from `0.64` to ~`0.60`, reduce translate from `16%` to ~`10%`
-- **lg**: Reduce scale from `0.88` to ~`0.82`, reduce translate from `12%` to ~`6%`
-- **xl**: Reduce scale from `1.02` to ~`0.94`, reduce translate from `8%` to ~`2%`
+- Change `object-cover` → `object-contain` so the entire image is visible without cropping
+- Add `object-center` to keep it centered
+- The container with `rounded-xl overflow-hidden` maintains the same frame size and shape
 
-This keeps the "zoomed out" framing that shows both girls fully — matching the Wix reference — while preventing the left arm from being clipped by the overflow boundary.
+This shows the full scene (people reading) within the exact same container dimensions.
 
