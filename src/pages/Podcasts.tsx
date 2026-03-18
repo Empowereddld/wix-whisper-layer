@@ -23,7 +23,7 @@ const episodes = [
     description:
       "Dan and Daria talk about the frustration of not knowing how to get started on tasks. Every teacher should watch this.",
     image: ep6Img,
-    link: "https://youtube.com/playlist?list=PLzfiOYFA1If6abH3LUNdxKPOAuOgkjZN5",
+    link: "https://youtu.be/gXuw2cCkoxI?si=bzNpKsEZGmBS9oSP",
   },
   {
     number: "Episode 9",
