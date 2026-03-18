@@ -22,7 +22,7 @@ const HeroSection = () => {
             <img
               src={heroImage}
               alt="Two girls laughing together"
-              className="h-full w-auto max-w-none object-cover object-top scale-[0.68] lg:scale-[0.93] xl:scale-[1.08] origin-bottom-left -translate-x-[14%] lg:-translate-x-[10%] xl:-translate-x-[6%]"
+              className="h-full w-auto max-w-none object-cover object-top scale-[0.64] lg:scale-[0.88] xl:scale-[1.02] origin-bottom-left -translate-x-[16%] lg:-translate-x-[12%] xl:-translate-x-[8%]"
               loading="eager"
             />
           </div>
