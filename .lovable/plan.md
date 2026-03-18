@@ -1,18 +1,17 @@
 
 
-## Plan: Zoom out the image in "Is This Right" section
+## Fix: Zoom out hero girls image on desktop
 
-The image currently uses `object-cover` which crops tightly into the center of the photo, cutting off the reading activity. To "zoom out" while keeping the same frame size, we can use CSS `object-fit: contain` instead — but that would leave empty space.
+The right girl's shoulder is getting cut off because the image scales large and shifts left, causing the right edge to crop.
 
-A better approach: keep `object-cover` but use `object-position` to show more of the image, combined with scaling. Specifically:
+### Change in `src/components/HeroSection.tsx` (line 25)
 
-### Change in `src/components/IsThisRightSection.tsx` (line 16)
+Reduce the scale values slightly and shift the image further left to reveal more of the right side:
 
-On the `<img>` element, add a CSS `scale` transform to shrink the image within its container, effectively zooming out while the container stays the same size. We'll use Tailwind's `scale-[0.85]` (or similar) combined with `object-contain` to ensure the full image is visible:
+- `scale-[0.68]` → `scale-[0.64]` (md)
+- `lg:scale-[0.93]` → `lg:scale-[0.88]` 
+- `xl:scale-[1.08]` → `xl:scale-[1.02]`
+- Adjust translate-x values to shift slightly more left: `-translate-x-[14%]` → `-translate-x-[16%]`, `lg:-translate-x-[12%]`, `xl:-translate-x-[8%]`
 
-- Change `object-cover` → `object-contain` so the entire image is visible without cropping
-- Add `object-center` to keep it centered
-- The container with `rounded-xl overflow-hidden` maintains the same frame size and shape
-
-This shows the full scene (people reading) within the exact same container dimensions.
+This zooms out ~5% at each breakpoint so both girls' shoulders are fully visible.
 
