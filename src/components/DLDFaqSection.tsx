@@ -9,22 +9,22 @@ const faqs = [
   {
     question: "What is Developmental Language Disorder?",
     answer:
-      "Developmental Language Disorder (DLD) affects how people understand and use language. Children with DLD may have difficulty learning new words, following instructions, or expressing ideas clearly. DLD is lifelong, but with the right understanding and support, children can develop strategies and strengths that help them thrive.",
+      "Developmental Language Disorder (DLD) affects how people understand and use language. Individuals with DLD may have difficulty learning new words, following instructions, or expressing ideas clearly. DLD is lifelong, but with the right understanding and support, people with DLD can develop strategies and strengths that help them thrive.",
   },
   {
     question: "How common is DLD?",
     answer:
-      "Developmental Language Disorder affects approximately 1 in 14 children, making it one of the most common neurodevelopmental conditions. DLD is more common than autism, yet awareness remains far lower. Because many educators, families, and even professionals have never heard the term, children with language difficulties are often misunderstood or do not receive the support they need.",
+      "Developmental Language Disorder affects approximately 1 in 14 people, making it one of the most common neurodevelopmental conditions. DLD is more common than autism, yet awareness remains far lower. Because many educators, families, and even professionals have never heard the term, individuals with language difficulties are often misunderstood or do not receive the support they need.",
   },
   {
     question: "What does DLD look like?",
     answer:
-      "Children with DLD may experience challenges with understanding complex instructions, learning new vocabulary, expressing ideas clearly, following conversations in busy environments, and organizing ideas when speaking or writing. These differences can affect learning, friendships, and confidence if the right supports are not in place.",
+      "People with DLD may experience challenges with understanding complex instructions, learning new vocabulary, expressing ideas clearly, following conversations in busy environments, and organizing ideas when speaking or writing. These differences can affect learning, friendships, and confidence if the right supports are not in place.",
   },
   {
     question: "Why does awareness matter?",
     answer:
-      "Language is the foundation for learning, relationships, and participation in everyday life. When Developmental Language Disorder is misunderstood, children may be labeled as inattentive or struggling academically when the underlying challenge is language. Increasing awareness helps children receive the right support earlier.",
+      "Language is the foundation for learning, relationships, and participation in everyday life. When Developmental Language Disorder is misunderstood, individuals may be labeled as inattentive or struggling academically when the underlying challenge is language. Increasing awareness helps people receive the right support earlier.",
   },
   {
     question: "How do we support DLD awareness?",

@@ -47,7 +47,7 @@ const OrganizationsAwarenessSection = () => {
 
             <div className="text-center w-full">
               <a
-                href="#contact"
+                href="/contact"
                 className="inline-flex items-center justify-center h-12 md:h-14 px-8 md:px-10 border border-foreground text-foreground text-[11px] md:text-[12px] lg:text-[13px] font-bold tracking-[0.08em] rounded-sm hover:bg-foreground hover:text-background transition-colors duration-200"
               >
                 Book a Consultation

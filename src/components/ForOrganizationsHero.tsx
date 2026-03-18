@@ -19,7 +19,7 @@ const ForOrganizationsHero = () => {
               We train your staff and educate the families you serve about Developmental Language Disorder. From one-time workshops to comprehensive partnerships.
             </p>
             <a
-              href="#contact"
+              href="/contact"
               className="inline-flex items-center justify-center h-12 md:h-14 px-8 md:px-10 bg-black text-white text-[11px] md:text-[12px] lg:text-[13px] font-bold uppercase tracking-[0.12em] rounded-sm hover:bg-black/85 transition-colors duration-200"
             >
               Book a Consultation

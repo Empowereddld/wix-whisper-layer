@@ -2,8 +2,19 @@ import { Link } from "react-router-dom";
 import podcastImg from "@/assets/resource-podcast.webp";
 import courseImg from "@/assets/resource-course.webp";
 import downloadImg from "@/assets/resource-downloadables.webp";
+import shopBooksImg from "@/assets/shop-books.webp";
 
 const types = [
+  {
+    tag: "BOOKS",
+    title: "Children's Book Series",
+    description:
+      "Stories featuring diverse characters with DLD, available in 7+ languages. Designed for families, therapists, and educators with discussion guides included.",
+    cta: "Explore the Books",
+    href: "/shop/books",
+    image: shopBooksImg,
+    imageClass: "",
+  },
   {
     tag: "PODCAST",
     title: "Life with DLD Podcast",
@@ -54,7 +65,7 @@ const BrowseByTypeSection = () => {
         </div>
 
         {/* Cards grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
           {types.map((item) => (
             <div key={item.tag} className="flex flex-col bg-muted rounded-xl border border-border/40 overflow-hidden pb-8">
               {/* Image */}

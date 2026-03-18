@@ -12,7 +12,7 @@ const WorkWithUsHero = () => {
           Speaking engagements, custom workshops, and consultation services designed by an SLP and an educator who understand what works in real-world settings.
         </p>
         <a
-          href="#contact"
+          href="/contact"
           className="inline-flex items-center justify-center h-12 md:h-14 px-8 md:px-10 bg-white text-deep-purple text-[11px] md:text-[12px] lg:text-[13px] font-bold uppercase tracking-[0.12em] rounded-sm hover:bg-white/90 transition-colors duration-200 mt-2"
         >
           Book a Consultation
