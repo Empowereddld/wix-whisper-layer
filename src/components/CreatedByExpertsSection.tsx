@@ -20,9 +20,9 @@ const CreatedByExpertsSection = () => {
             <p className="text-[14px] md:text-[15px] text-muted-foreground leading-[1.75] mb-8 max-w-[550px]">
               Together, they bring real-world classroom experience and clinical expertise to help you support children with DLD in ways that actually work.
             </p>
-            <a href="/who-we-serve">
+            <a href="https://youtube.com/playlist?list=PLzfiOYFA1If7CpwIvkvipjplTZawhjw97&si=oaF0Fjhgp-AAhny4" target="_blank" rel="noopener noreferrer">
               <Button className="h-[50px] px-8 rounded-md bg-deep-purple text-deep-purple-foreground hover:bg-deep-purple/90 text-[11px] font-bold uppercase tracking-[0.14em] shadow-[0_2px_8px_hsl(258_50%_50%/0.2)] hover:shadow-[0_4px_14px_hsl(258_50%_50%/0.25)] hover:brightness-[0.96] transition-all duration-300">
-                Find What Works For You
+                Watch Now
               </Button>
             </a>
           </div>
