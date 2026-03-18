@@ -13,9 +13,14 @@ const NotAloneSection = () => {
             <p className="text-muted-foreground text-[15px] md:text-[16px] mb-7 leading-[1.7] max-w-[460px]">
               Join thousands of families and professionals learning and supporting children with DLD together.
             </p>
-            <Button className="h-[46px] px-7 w-fit rounded-none text-[12px] font-bold uppercase tracking-[0.12em] bg-deep-purple text-deep-purple-foreground hover:bg-deep-purple/90 shadow-[var(--shadow-button)] hover:shadow-[0_4px_14px_hsl(258_50%_50%/0.25)] transition-all duration-300">
+            <a
+              href="https://www.facebook.com/share/g/1GCdxhWtfB/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center h-[46px] px-7 w-fit rounded-none text-[12px] font-bold uppercase tracking-[0.12em] bg-deep-purple text-deep-purple-foreground hover:bg-deep-purple/90 shadow-[var(--shadow-button)] hover:shadow-[0_4px_14px_hsl(258_50%_50%/0.25)] transition-all duration-300"
+            >
               Join The Community
-            </Button>
+            </a>
           </div>
 
           <div className="h-[280px] lg:h-full">

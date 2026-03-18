@@ -17,7 +17,7 @@ const cards = [
     title: "Free Community",
     description: "Connect with 4000+ parents and professionals to ask questions, share strategies, and find support in our private Facebook community.",
     link: "Join the Community",
-    href: "https://www.facebook.com/groups/empowereddld",
+    href: "https://www.facebook.com/share/g/1GCdxhWtfB/",
   },
   {
     title: "Free Resources",
