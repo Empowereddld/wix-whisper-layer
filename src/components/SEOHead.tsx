@@ -54,6 +54,12 @@ const SEOHead = ({ title, description, path, ogImage, type = "website", jsonLd, 
           {JSON.stringify(jsonLd)}
         </script>
       )}
+
+      {breadcrumbJsonLd && (
+        <script type="application/ld+json">
+          {JSON.stringify(breadcrumbJsonLd)}
+        </script>
+      )}
     </Helmet>
   );
 };
