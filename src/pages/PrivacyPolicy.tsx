@@ -62,7 +62,7 @@ const PrivacyPolicy = () => {
             <p>We may update this privacy policy from time to time. Changes will be posted on this page with an updated revision date.</p>
 
             <h2>9. Contact Us</h2>
-            <p>If you have questions about this privacy policy, please contact us at <a href="mailto:hello@empowereddldparenting.com" className="text-primary hover:underline">hello@empowereddldparenting.com</a>.</p>
+            <p>If you have questions about this privacy policy, please contact us at <a href="mailto:hello@empowereddld.com" className="text-primary hover:underline">hello@empowereddld.com</a>.</p>
           </div>
         </div>
       </main>

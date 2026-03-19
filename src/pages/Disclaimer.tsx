@@ -41,7 +41,7 @@ const Disclaimer = () => {
             <p>We strive to keep all information on this website current and accurate. However, the field of speech-language pathology and DLD research is continually evolving. Information may become outdated. We recommend verifying any critical information with current professional sources.</p>
 
             <h2>Contact</h2>
-            <p>If you have concerns about any content on this website, please contact us at <a href="mailto:hello@empowereddldparenting.com" className="text-primary hover:underline">hello@empowereddldparenting.com</a>.</p>
+            <p>If you have concerns about any content on this website, please contact us at <a href="mailto:hello@empowereddld.com" className="text-primary hover:underline">hello@empowereddld.com</a>.</p>
           </div>
         </div>
       </main>

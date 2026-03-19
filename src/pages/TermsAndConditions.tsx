@@ -57,7 +57,7 @@ const TermsAndConditions = () => {
             <p>We reserve the right to update these terms at any time. Continued use of the website after changes constitutes acceptance of the revised terms.</p>
 
             <h2>10. Contact</h2>
-            <p>For questions about these terms, contact us at <a href="mailto:hello@empowereddldparenting.com" className="text-primary hover:underline">hello@empowereddldparenting.com</a>.</p>
+            <p>For questions about these terms, contact us at <a href="mailto:hello@empowereddld.com" className="text-primary hover:underline">hello@empowereddld.com</a>.</p>
           </div>
         </div>
       </main>
