@@ -37,24 +37,30 @@ const PurchaseModal = ({ resource, product, open, onClose, onPurchased, userId }
     if (!userId) return;
     setPurchasing(true);
 
-    // For now (no Stripe), simulate a successful purchase
-    const { error } = await supabase.from("purchases").insert({
-      user_id: userId,
-      resource_id: resource.id,
-      product_id: product.id,
-      amount_paid: product.price,
-      currency: product.currency,
-      status: "completed",
-    });
+    try {
+      const { data, error } = await supabase.functions.invoke("create-checkout", {
+        body: { resource_id: resource.id },
+      });
 
-    if (error) {
-      toast.error("Purchase failed. Please try again.");
-    } else {
-      toast.success("Purchase complete! Your resource is now unlocked.");
-      onPurchased();
-      onClose();
+      if (error || !data?.url) {
+        const msg = data?.error || "Unable to start checkout. Please try again.";
+        if (msg === "Already purchased") {
+          toast.info("You already own this resource!");
+          onPurchased();
+          onClose();
+        } else {
+          toast.error(msg);
+        }
+        setPurchasing(false);
+        return;
+      }
+
+      // Redirect to Stripe Checkout
+      window.location.href = data.url;
+    } catch {
+      toast.error("Checkout failed. Please try again.");
+      setPurchasing(false);
     }
-    setPurchasing(false);
   };
 
   return (
@@ -93,12 +99,12 @@ const PurchaseModal = ({ resource, product, open, onClose, onPurchased, userId }
             onClick={handlePurchase}
             disabled={purchasing}
           >
-            {purchasing ? "Processing…" : `Purchase for ${formatPrice(product.price, product.currency)} →`}
+            {purchasing ? "Redirecting to checkout…" : `Purchase for ${formatPrice(product.price, product.currency)} →`}
           </Button>
 
           <div className="flex items-center justify-center gap-2 text-xs text-stone-ui">
             <ShieldCheck className="h-3.5 w-3.5" />
-            <span>Secure checkout · Instant access · Empowered DLD</span>
+            <span>Secure Stripe checkout · Instant access · Empowered DLD</span>
           </div>
 
           <button onClick={onClose} className="w-full text-center text-sm text-stone-ui hover:text-midnight transition-colors">

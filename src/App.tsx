@@ -47,6 +47,7 @@ const HubSettings = lazy(() => import("./pages/hub/HubSettings"));
 const ResetPassword = lazy(() => import("./pages/hub/ResetPassword"));
 const HubPreview = lazy(() => import("./pages/hub/HubPreview"));
 const ResourceDetail = lazy(() => import("./pages/hub/ResourceDetail"));
+const PaymentSuccess = lazy(() => import("./pages/hub/PaymentSuccess"));
 
 // Lazy-loaded: Admin
 const AdminDashboard = lazy(() => import("./pages/admin/AdminDashboard"));
@@ -117,6 +118,7 @@ const App = () => (
               <Route path="/hub/reset-password" element={<ResetPassword />} />
               
               <Route path="/hub/preview" element={<HubPreview />} />
+              <Route path="/hub/payment-success" element={<ProtectedRoute><PaymentSuccess /></ProtectedRoute>} />
               <Route path="/hub" element={<ProtectedRoute><HubDashboard /></ProtectedRoute>} />
               <Route path="/hub/resource/:id" element={<ProtectedRoute><ResourceDetail /></ProtectedRoute>} />
               <Route path="/hub/settings" element={<ProtectedRoute><HubSettings /></ProtectedRoute>} />
