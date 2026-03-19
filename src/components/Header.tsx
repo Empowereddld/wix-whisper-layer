@@ -36,7 +36,7 @@ const navLinks = [
 
 const Header = () => {
   const { session } = useAuth();
-  const loginTarget = session ? "/hub" : "/hub/login";
+  const loginTarget = session ? "/hub" : "/hub/preview";
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [mobileSubOpen, setMobileSubOpen] = useState<string | null>(null);
