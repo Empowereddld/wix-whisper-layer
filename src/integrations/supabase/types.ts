@@ -751,6 +751,10 @@ export type Database = {
         Args: { resource_id: string }
         Returns: undefined
       }
+      increment_waitlist_invites: {
+        Args: { p_code: string }
+        Returns: undefined
+      }
     }
     Enums: {
       age_range: "0-4" | "5-7" | "8-10" | "11-13" | "14+" | "not_applicable"
