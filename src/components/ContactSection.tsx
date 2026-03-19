@@ -54,7 +54,7 @@ const ContactSection = () => {
         questions: data.questions,
       });
       if (error) throw error;
-      toast({ title: "Message sent!", description: "We'll get back to you shortly." });
+      toast({ title: "Thank you for reaching out! 🙌", description: "We'll review your message and get back to you within 48 hours." });
       form.reset();
     } catch {
       toast({ title: "Something went wrong", description: "Please try again later.", variant: "destructive" });
