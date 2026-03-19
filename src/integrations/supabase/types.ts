@@ -562,6 +562,36 @@ export type Database = {
           },
         ]
       }
+      storybuilders_waitlist: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          invite_count: number
+          name: string
+          referral_code: string
+          referred_by_code: string | null
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          invite_count?: number
+          name: string
+          referral_code: string
+          referred_by_code?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          invite_count?: number
+          name?: string
+          referral_code?: string
+          referred_by_code?: string | null
+        }
+        Relationships: []
+      }
       user_downloads: {
         Row: {
           downloaded_at: string
@@ -698,6 +728,18 @@ export type Database = {
     }
     Functions: {
       get_resource_price: { Args: { p_resource_id: string }; Returns: number }
+      get_storybuilders_waitlist_count: { Args: never; Returns: number }
+      get_waitlist_by_referral: {
+        Args: { p_code: string }
+        Returns: {
+          created_at: string
+          email: string
+          id: string
+          invite_count: number
+          name: string
+          referral_code: string
+        }[]
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -707,6 +749,10 @@ export type Database = {
       }
       increment_download_count: {
         Args: { resource_id: string }
+        Returns: undefined
+      }
+      increment_waitlist_invites: {
+        Args: { p_code: string }
         Returns: undefined
       }
     }
