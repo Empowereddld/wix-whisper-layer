@@ -82,12 +82,14 @@ const ShopBrowseByCategory = () => {
                 </p>
 
                 {/* CTA */}
-                <Link
-                  to={cat.href}
-                  className="inline-flex items-center justify-center h-11 px-7 bg-foreground text-background text-[13px] font-semibold tracking-[0.04em] rounded-md hover:opacity-90 transition-opacity duration-200 w-fit"
-                >
-                  {cat.cta}
-                </Link>
+                {!cat.comingSoon && (
+                  <Link
+                    to={cat.href}
+                    className="inline-flex items-center justify-center h-11 px-7 bg-foreground text-background text-[13px] font-semibold tracking-[0.04em] rounded-md hover:opacity-90 transition-opacity duration-200 w-fit"
+                  >
+                    {cat.cta}
+                  </Link>
+                )}
               </div>
             </div>
           ))}
