@@ -107,12 +107,46 @@ const StoryBuilders = () => {
             children with Developmental Language Disorder through stories, connection,
             and confidence.
           </p>
-          <Button
-            onClick={scrollToForm}
-            className="h-12 md:h-14 px-8 md:px-10 bg-primary text-primary-foreground text-[11px] md:text-[12px] lg:text-[13px] font-bold uppercase tracking-[0.12em] rounded-md hover:bg-primary/90 transition-colors duration-200 shadow-[var(--shadow-button)]"
-          >
-            Join the Launch Team
-          </Button>
+          {!wl.joined ? (
+            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 w-full max-w-[560px] mt-2">
+              <Input
+                placeholder="Your name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+                className="h-12 bg-white/10 border-white/20 text-white placeholder:text-white/50 rounded-md focus-visible:ring-primary"
+              />
+              <Input
+                type="email"
+                placeholder="Your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className="h-12 bg-white/10 border-white/20 text-white placeholder:text-white/50 rounded-md focus-visible:ring-primary"
+              />
+              <Button
+                type="submit"
+                disabled={wl.loading}
+                className="h-12 px-8 bg-primary text-primary-foreground font-bold rounded-md hover:bg-primary/90 transition-colors shadow-[var(--shadow-button)] whitespace-nowrap"
+              >
+                {wl.loading ? "Joining…" : "Join Now"}
+              </Button>
+            </form>
+          ) : (
+            <div className="flex items-center gap-2 mt-2">
+              <code className="bg-white/10 border border-white/20 rounded-md px-4 py-2.5 text-white text-[13px] max-w-[320px] truncate">
+                {wl.referralLink}
+              </code>
+              <Button
+                onClick={() => handleCopy(wl.referralLink)}
+                variant="outline"
+                className="h-10 px-4 border-white/30 text-white bg-transparent hover:bg-white/10 rounded-md"
+              >
+                {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+              </Button>
+            </div>
+          )}
+          {wl.error && <p className="text-white/70 text-[13px]">{wl.error}</p>}
         </div>
       </section>
 
