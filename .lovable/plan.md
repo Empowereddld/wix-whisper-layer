@@ -1,27 +1,51 @@
 
 
-## Plan: Educational App Waitlist Page under Shop
+## Plan: Premium StoryBuilders Hero Section
 
-### What we're building
+### Overview
+Rebuild the `/storybuilders` page hero as a warm, premium two-column layout with the uploaded child+parent image on the right, and structured copy with CTA buttons on the left. Remove the existing inline waitlist form from the hero. Keep the "Why storytelling" and "Final CTA" sections below (they can be updated later).
 
-1. **New page at `/shop/educational-app`** — A waitlist landing page for the Educational App, nested under Shop like Books and Bulk Orders. It will use the same `Header`/`Footer` layout as other shop sub-pages, with:
-   - A hero section explaining the app (the "Coming soon!" messaging)
-   - A waitlist signup form (reusing the existing `waitlist` table — inserting with a `notes` tag like `"Educational App waitlist"`)
-   - A "Why storytelling matters" or feature preview section
-   - SEO metadata with breadcrumbs (Home > Shop > Educational App)
+### What changes
 
-2. **Add to Shop dropdown nav** — Add `{ label: "Educational App", href: "/shop/educational-app" }` to `shopLinks` in `Header.tsx`.
+**1. Copy the uploaded image into the project**
+- Copy `user-uploads://Gemini_Generated_Image_9nlto39nlto39nlt.png` → `src/assets/storybuilders-hero.png`
 
-3. **Update "Join the App Waitlist" links** — Change the `href` in `HowWeSupportParentsSection.tsx` (and any other pages with the same CTA) from `/contact` to `/shop/educational-app`.
+**2. Rewrite `src/pages/StoryBuilders.tsx` hero section**
 
-4. **Route registration** — Add the `/shop/educational-app` route in `App.tsx` (lazy-loaded).
+Replace the current centered single-column hero + WaitlistForm with:
 
-### Technical details
+- **Background**: Soft warm off-white (`bg-[#FFF9F5]` or similar warm neutral)
+- **Two-column layout** (stacks on mobile):
+  - **Left column** — text content with motion fade-in:
+    - Small label: `COMING SOON` in uppercase tracking
+    - **Headline**: "The storytelling app created to support children with DLD" (font-black, ~42-54px)
+    - **Subheadline**: "StoryBuilders helps children build language through interactive stories, structured support, and meaningful practice — that feels like a story, not a lesson."
+    - **Support text** (smaller, muted): "Built to support comprehension, vocabulary, sentence building, and retell in one calm, child-friendly experience."
+    - **CTA area** with space for future expansion:
+      - Primary button: "Join the Launch Team" — warm orange/coral bg, rounded-full, shadow
+      - Secondary button: "See How It Works" — outline/ghost style, rounded-full
+    - **Microcopy** below buttons: "Created with children with Developmental Language Disorder in mind."
+  - **Right column** — the uploaded parent+child image with `rounded-2xl` and subtle shadow, `object-cover`
 
-- **New file**: `src/pages/EducationalApp.tsx` — Standard layout page with Header, Footer, waitlist form inserting into the `waitlist` table with `notes: "Educational App waitlist"` and optional `role` field.
-- **Modified files**:
-  - `src/components/Header.tsx` — Add entry to `shopLinks` array (line 22-25)
-  - `src/components/HowWeSupportParentsSection.tsx` — Update Educational App card `href` from `/contact` to `/shop/educational-app` (line 38)
-  - `src/App.tsx` — Add lazy import and route for the new page
-- The existing `waitlist` table and admin panel (`/admin/waitlist`) already handle viewing/managing signups — no backend changes needed.
+- Remove the `WaitlistForm` component from the hero (keep it in the Final CTA section at the bottom for now, or remove entirely — will be replaced by the custom waitlist system later)
+
+**3. Keep existing sections below the hero**
+- "Why storytelling matters" section stays as-is
+- "Be the first to try StoryBuilders" section stays but swap the WaitlistForm for the same "Join the Launch Team" button (placeholder until custom waitlist is built)
+
+**4. Add Header/Footer**
+- Wrap the page with the site's shared `<Header />` and `<Footer />` for navigation consistency (currently missing)
+
+### Design details
+- Buttons: `rounded-full` with generous padding
+- Primary CTA color: warm orange/coral (`bg-[#E8734A]` or similar from the coral token `hsl(4, 77%, 67%)`)
+- Secondary CTA: outline style with foreground text
+- Image: `rounded-2xl shadow-elevated`, natural aspect ratio
+- Section padding: `py-20 md:py-32` with `max-w-[1100px]` container
+- Typography: DM Sans font-black for headline, regular weight for body
+- Animations: reuse existing `fadeUp` motion variants with staggered delays
+
+### Files modified
+- `src/assets/storybuilders-hero.png` (new — copied from upload)
+- `src/pages/StoryBuilders.tsx` (rewritten hero, add Header/Footer, update Final CTA)
 
