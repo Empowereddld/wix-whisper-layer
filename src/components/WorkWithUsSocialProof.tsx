@@ -9,7 +9,7 @@ const logos = [
   { src: logoAsha, alt: "ASHA – American Speech-Language-Hearing Association", className: "h-10 md:h-14" },
   { src: logoRadld, alt: "RADLD – Raising Awareness of DLD", className: "h-8 md:h-10" },
   { src: logoDldSummit, alt: "DLD Global Summit", className: "h-28 md:h-32" },
-  { src: logoWestern, alt: "Western University", className: "h-6 md:h-7" },
+  { src: logoWestern, alt: "Western University", className: "h-10 md:h-12" },
   { src: logoDldProject, alt: "The DLD Project", className: "h-10 md:h-12" },
   { src: logoDld, alt: "DLD and Me", className: "h-14 md:h-16" },
 ];
