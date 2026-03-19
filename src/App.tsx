@@ -118,6 +118,7 @@ const App = () => (
               <Route path="/hub/reset-password" element={<ResetPassword />} />
               
               <Route path="/hub/preview" element={<HubPreview />} />
+              <Route path="/hub/payment-success" element={<ProtectedRoute><PaymentSuccess /></ProtectedRoute>} />
               <Route path="/hub" element={<ProtectedRoute><HubDashboard /></ProtectedRoute>} />
               <Route path="/hub/resource/:id" element={<ProtectedRoute><ResourceDetail /></ProtectedRoute>} />
               <Route path="/hub/settings" element={<ProtectedRoute><HubSettings /></ProtectedRoute>} />
