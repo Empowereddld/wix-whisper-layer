@@ -2,6 +2,11 @@ import { Helmet } from "react-helmet-async";
 
 const BASE_URL = "https://www.empowereddld.com";
 
+interface BreadcrumbItem {
+  name: string;
+  path: string;
+}
+
 interface SEOHeadProps {
   title: string;
   description: string;
@@ -9,6 +14,7 @@ interface SEOHeadProps {
   ogImage?: string;
   type?: string;
   jsonLd?: Record<string, unknown>;
+  breadcrumbs?: BreadcrumbItem[];
 }
 
 const SEOHead = ({ title, description, path, ogImage, type = "website", jsonLd }: SEOHeadProps) => {
