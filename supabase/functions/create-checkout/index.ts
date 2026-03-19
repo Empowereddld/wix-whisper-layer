@@ -127,6 +127,9 @@ Deno.serve(async (req) => {
       customer_email: customerId ? undefined : user.email,
       line_items: [{ price: stripePriceId, quantity: 1 }],
       mode: "payment",
+      payment_intent_data: {
+        receipt_email: user.email,
+      },
       success_url: `${origin}/hub/payment-success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/hub/resource/${resource_id}`,
       metadata: {
