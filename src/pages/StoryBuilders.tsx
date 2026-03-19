@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import SEOHead from "@/components/SEOHead";
+import hallwayBg from "@/assets/school-hallway-bg.webp";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
