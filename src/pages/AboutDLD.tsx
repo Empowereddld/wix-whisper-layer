@@ -2,9 +2,22 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AboutDLDHero from "@/components/AboutDLDHero";
 import WhatIsDLDSection from "@/components/WhatIsDLDSection";
-import DLDFaqSection from "@/components/DLDFaqSection";
+import DLDFaqSection, { faqs } from "@/components/DLDFaqSection";
 import ResourceLibraryCTA from "@/components/ResourceLibraryCTA";
 import SEOHead from "@/components/SEOHead";
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((faq) => ({
+    "@type": "Question",
+    name: faq.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: faq.answer,
+    },
+  })),
+};
 
 const AboutDLD = () => {
   return (
@@ -17,6 +30,7 @@ const AboutDLD = () => {
           { name: "Home", path: "/" },
           { name: "About DLD", path: "/about-dld" },
         ]}
+        jsonLd={faqJsonLd}
       />
       <Header />
       <main>
