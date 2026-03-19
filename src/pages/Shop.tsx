@@ -14,6 +14,10 @@ const Shop = () => {
         title="Shop DLD Books & Resources | Empowered DLD"
         description="Shop evidence-based books, downloadable resources, and bulk orders for Developmental Language Disorder. The Living Life with DLD book series and more."
         path="/shop"
+        breadcrumbs={[
+          { name: "Home", path: "/" },
+          { name: "Shop", path: "/shop" },
+        ]}
       />
       <Header />
       <main className="flex-1">

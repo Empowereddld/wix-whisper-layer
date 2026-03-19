@@ -13,6 +13,10 @@ const AboutDLD = () => {
         title="What is DLD? — Understanding Developmental Language Disorder | Empowered DLD"
         description="Learn about Developmental Language Disorder (DLD), the most common childhood condition you've never heard of. Symptoms, diagnosis, FAQs, and how to support children with DLD."
         path="/about-dld"
+        breadcrumbs={[
+          { name: "Home", path: "/" },
+          { name: "About DLD", path: "/about-dld" },
+        ]}
       />
       <Header />
       <main>

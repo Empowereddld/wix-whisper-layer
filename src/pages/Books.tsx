@@ -18,6 +18,11 @@ const Books = () => {
         title="Living Life with DLD Book Series — Children's Books About Language Disorder | Empowered DLD"
         description="Explore the Living Life with DLD book series. Stories that help children with Developmental Language Disorder feel seen, understood, and empowered. For families, classrooms, and therapy."
         path="/shop/books"
+        breadcrumbs={[
+          { name: "Home", path: "/" },
+          { name: "Shop", path: "/shop" },
+          { name: "Books", path: "/shop/books" },
+        ]}
       />
       <Header />
       <main className="flex-1">

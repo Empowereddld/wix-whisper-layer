@@ -35,6 +35,11 @@ const Blog = () => {
         title="DLD Blog — Articles on Developmental Language Disorder | Empowered DLD"
         description="Read articles about Developmental Language Disorder (DLD) covering awareness, parenting tips, academic strategies, and practical advice for supporting children with DLD."
         path="/resources/blog"
+        breadcrumbs={[
+          { name: "Home", path: "/" },
+          { name: "Resources", path: "/resources" },
+          { name: "Blog", path: "/resources/blog" },
+        ]}
       />
       <Header />
       <main>

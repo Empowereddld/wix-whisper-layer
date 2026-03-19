@@ -87,6 +87,18 @@ const BlogPost = () => {
                     {JSON.stringify(articleJsonLd)}
                   </script>
                 )}
+                <script type="application/ld+json">
+                  {JSON.stringify({
+                    "@context": "https://schema.org",
+                    "@type": "BreadcrumbList",
+                    itemListElement: [
+                      { "@type": "ListItem", position: 1, name: "Home", item: BASE_URL },
+                      { "@type": "ListItem", position: 2, name: "Resources", item: `${BASE_URL}/resources` },
+                      { "@type": "ListItem", position: 3, name: "Blog", item: `${BASE_URL}/resources/blog` },
+                      { "@type": "ListItem", position: 4, name: post.title, item: `${BASE_URL}/resources/blog/${slug}` },
+                    ],
+                  })}
+                </script>
               </Helmet>
               {/* Categories */}
               {(post as any).categories && (post as any).categories.length > 0 && (

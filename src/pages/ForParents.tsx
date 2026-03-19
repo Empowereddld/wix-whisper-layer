@@ -15,6 +15,11 @@ const ForParents = () => {
         title="DLD Resources for Parents | Empowered DLD"
         description="Evidence-based resources and support for parents of children with Developmental Language Disorder (DLD). Books, downloadables, free courses, and a supportive community to help your child thrive."
         path="/for-parents"
+        breadcrumbs={[
+          { name: "Home", path: "/" },
+          { name: "Who We Serve", path: "/who-we-serve" },
+          { name: "For Parents", path: "/for-parents" },
+        ]}
       />
       <Header />
       <main>

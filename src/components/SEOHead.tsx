@@ -2,6 +2,11 @@ import { Helmet } from "react-helmet-async";
 
 const BASE_URL = "https://www.empowereddld.com";
 
+interface BreadcrumbItem {
+  name: string;
+  path: string;
+}
+
 interface SEOHeadProps {
   title: string;
   description: string;
@@ -9,11 +14,23 @@ interface SEOHeadProps {
   ogImage?: string;
   type?: string;
   jsonLd?: Record<string, unknown>;
+  breadcrumbs?: BreadcrumbItem[];
 }
 
-const SEOHead = ({ title, description, path, ogImage, type = "website", jsonLd }: SEOHeadProps) => {
+const SEOHead = ({ title, description, path, ogImage, type = "website", jsonLd, breadcrumbs }: SEOHeadProps) => {
   const canonicalUrl = `${BASE_URL}${path}`;
   const defaultOgImage = "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/786b7754-4032-4112-8b7e-ff71931a9602/id-preview-0f696399--51a660d5-acfd-48f5-86f4-38b3ac526ca2.lovable.app-1773034135768.png";
+
+  const breadcrumbJsonLd = breadcrumbs?.length ? {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: breadcrumbs.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      item: `${BASE_URL}${item.path}`,
+    })),
+  } : null;
 
   return (
     <Helmet>
@@ -35,6 +52,12 @@ const SEOHead = ({ title, description, path, ogImage, type = "website", jsonLd }
       {jsonLd && (
         <script type="application/ld+json">
           {JSON.stringify(jsonLd)}
+        </script>
+      )}
+
+      {breadcrumbJsonLd && (
+        <script type="application/ld+json">
+          {JSON.stringify(breadcrumbJsonLd)}
         </script>
       )}
     </Helmet>
