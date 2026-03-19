@@ -169,7 +169,7 @@ const Header = () => {
               </span>
             </button>
             <Button asChild className="flex-1 font-bold text-[12px] tracking-[0.1em]">
-              <Link to="/hub/preview" onClick={() => setMobileOpen(false)}>LOGIN</Link>
+              <Link to={loginTarget} onClick={() => setMobileOpen(false)}>{session ? "MY HUB" : "LOGIN"}</Link>
             </Button>
           </div>
         </nav>
