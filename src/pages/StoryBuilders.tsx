@@ -3,7 +3,6 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import heroImage from "@/assets/storybuilders-hero.png";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -21,68 +20,35 @@ const StoryBuilders = () => {
       <Header />
 
       {/* ─── HERO ─── */}
-      <section className="bg-[hsl(30_60%_98%)] py-20 md:py-32">
-        <div className="max-w-[1100px] mx-auto px-6 lg:px-10 grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16 items-center">
-          {/* Left — Copy */}
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            animate="visible"
-            className="flex flex-col gap-6"
-          >
-            <span className="text-xs font-semibold tracking-[0.18em] uppercase text-coral">
-              Coming Soon
-            </span>
-
-            <h1 className="text-4xl sm:text-5xl font-black tracking-tight leading-[1.1] text-foreground">
-              The storytelling app created to support children with DLD
-            </h1>
-
-            <p className="text-lg leading-relaxed text-muted-foreground max-w-[500px]">
-              StoryBuilders helps children build language through interactive
-              stories, structured support, and meaningful practice — that feels
-              like a story, not a lesson.
-            </p>
-
-            <p className="text-sm leading-relaxed text-muted-foreground/80 max-w-[480px]">
-              Built to support comprehension, vocabulary, sentence building, and
-              retell in one calm, child-friendly experience.
-            </p>
-
-            {/* CTA area */}
-            <div className="flex flex-wrap gap-3 mt-2">
-              <Button
-                className="rounded-full h-12 px-8 text-base font-semibold bg-coral text-white hover:bg-coral/90 shadow-[var(--shadow-button)]"
-              >
-                Join the Launch Team
-              </Button>
-              <Button
-                variant="outline"
-                className="rounded-full h-12 px-8 text-base font-semibold border-foreground/20 hover:bg-accent"
-              >
-                See How It Works
-              </Button>
-            </div>
-
-            <p className="text-xs text-muted-foreground/60 mt-1">
-              Created with children with Developmental Language Disorder in mind.
-            </p>
-          </motion.div>
-
-          {/* Right — Image */}
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            animate="visible"
-            transition={{ delay: 0.2 }}
-            className="flex justify-center md:justify-end"
-          >
-            <img
-              src={heroImage}
-              alt="A parent and child reading a story together"
-              className="w-full max-w-[520px] rounded-2xl shadow-[var(--shadow-elevated)] object-cover"
-            />
-          </motion.div>
+      <section className="bg-deep-purple py-20 md:py-28 lg:py-32">
+        <div className="container px-6 md:px-8 flex flex-col items-center text-center gap-6">
+          <p className="text-[11px] md:text-[12px] font-bold uppercase tracking-[0.22em] text-white/60">
+            COMING SOON
+          </p>
+          <h1 className="text-[32px] md:text-[48px] lg:text-[56px] font-black text-white leading-[1.1] max-w-[800px]">
+            The Storytelling App Created to Support Children With DLD
+          </h1>
+          <p className="text-[14px] md:text-[16px] text-white/80 leading-[1.7] max-w-[620px]">
+            StoryBuilders helps children build language through interactive
+            stories, structured support, and meaningful practice — that feels
+            like a story, not a lesson.
+          </p>
+          <div className="flex flex-wrap justify-center gap-3 mt-2">
+            <Button
+              className="h-12 md:h-14 px-8 md:px-10 bg-white text-deep-purple text-[11px] md:text-[12px] lg:text-[13px] font-bold uppercase tracking-[0.12em] rounded-sm hover:bg-white/90 transition-colors duration-200"
+            >
+              Join the Launch Team
+            </Button>
+            <Button
+              variant="outline"
+              className="h-12 md:h-14 px-8 md:px-10 border-white/30 text-white text-[11px] md:text-[12px] lg:text-[13px] font-bold uppercase tracking-[0.12em] rounded-sm hover:bg-white/10 bg-transparent transition-colors duration-200"
+            >
+              See How It Works
+            </Button>
+          </div>
+          <p className="text-[13px] md:text-[14px] text-white/50 mt-4">
+            Created with children with Developmental Language Disorder in mind
+          </p>
         </div>
       </section>
 
