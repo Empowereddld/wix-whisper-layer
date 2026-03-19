@@ -57,6 +57,7 @@ const CardItem = ({ card, index }: { card: typeof cards[0]; index: number }) => 
       </div>
       <a
         href={card.href}
+        {...(card.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
         className="inline-flex items-center gap-1 text-[11px] md:text-[12px] font-bold uppercase tracking-[0.12em] text-foreground hover:text-primary transition-colors mt-auto pt-6"
       >
         {card.link}
