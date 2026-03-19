@@ -110,10 +110,10 @@ const AdminPurchases = () => {
 
       {/* Summary cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        <StatsCard title="Today" value={data ? formatPrice(data.todayRevenue) : "—"} icon={DollarSign} description={data ? `${data.todayCount} purchase${data.todayCount !== 1 ? "s" : ""}` : undefined} />
-        <StatsCard title="This Week" value={data ? formatPrice(data.weekRevenue) : "—"} icon={TrendingUp} description={data ? `${data.weekCount} purchase${data.weekCount !== 1 ? "s" : ""}` : undefined} />
-        <StatsCard title="This Month" value={data ? formatPrice(data.monthRevenue) : "—"} icon={Calendar} description={data ? `${data.monthCount} purchase${data.monthCount !== 1 ? "s" : ""}` : undefined} />
-        <StatsCard title="All Time" value={data ? formatPrice(data.totalRevenue) : "—"} icon={DollarSign} description={data ? `${data.totalPurchases} total purchase${data.totalPurchases !== 1 ? "s" : ""}` : undefined} />
+        <StatsCard title="Today" value={data ? formatPrice(data.todayRevenue) : "—"} icon={DollarSign} subtitle={data ? `${data.todayCount} purchase${data.todayCount !== 1 ? "s" : ""}` : undefined} />
+        <StatsCard title="This Week" value={data ? formatPrice(data.weekRevenue) : "—"} icon={TrendingUp} subtitle={data ? `${data.weekCount} purchase${data.weekCount !== 1 ? "s" : ""}` : undefined} />
+        <StatsCard title="This Month" value={data ? formatPrice(data.monthRevenue) : "—"} icon={Calendar} subtitle={data ? `${data.monthCount} purchase${data.monthCount !== 1 ? "s" : ""}` : undefined} />
+        <StatsCard title="All Time" value={data ? formatPrice(data.totalRevenue) : "—"} icon={DollarSign} subtitle={data ? `${data.totalPurchases} total purchase${data.totalPurchases !== 1 ? "s" : ""}` : undefined} />
       </div>
 
       {/* 7-day mini chart */}
