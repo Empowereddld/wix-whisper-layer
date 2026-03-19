@@ -68,7 +68,7 @@ const HowWeSupportParentsSection = () => {
               </div>
               <a
                 href={card.href}
-                className="inline-flex items-center gap-1 text-[11px] md:text-[12px] font-bold uppercase tracking-[0.12em] text-foreground hover:text-primary transition-colors mt-6"
+                className="inline-flex items-center gap-1 text-[11px] md:text-[12px] font-bold uppercase tracking-[0.12em] text-foreground hover:text-primary transition-colors mt-auto pt-6"
               >
                 {card.link}
                 <ChevronRight className="w-4 h-4" />
