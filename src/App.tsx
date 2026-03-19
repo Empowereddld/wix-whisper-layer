@@ -31,6 +31,7 @@ const BlogPost = lazy(() => import("./pages/BlogPost"));
 const Podcasts = lazy(() => import("./pages/Podcasts"));
 const FreeCourse = lazy(() => import("./pages/FreeCourse"));
 const Downloadables = lazy(() => import("./pages/Downloadables"));
+const EducationalApp = lazy(() => import("./pages/EducationalApp"));
 
 // Lazy-loaded: Auth
 const Signup = lazy(() => import("./pages/auth/Signup"));
@@ -101,6 +102,7 @@ const App = () => (
               <Route path="/shop" element={<Shop />} />
               <Route path="/shop/books" element={<Books />} />
               <Route path="/shop/bulk-orders" element={<BulkOrders />} />
+              <Route path="/shop/educational-app" element={<EducationalApp />} />
               <Route path="/work-with-us" element={<WorkWithUs />} />
               <Route path="/about-dld" element={<AboutDLD />} />
               <Route path="/contact" element={<ContactUs />} />
