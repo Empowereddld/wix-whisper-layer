@@ -1,18 +1,26 @@
 
 
-## Plan: Zoom out the image in "Is This Right" section
+## Open External Links in New Tab
 
-The image currently uses `object-cover` which crops tightly into the center of the photo, cutting off the reading activity. To "zoom out" while keeping the same frame size, we can use CSS `object-fit: contain` instead — but that would leave empty space.
+The issue: Several card components use `<a href={card.href}>` for links that mix internal (`/contact`) and external (`https://...`) URLs, but don't add `target="_blank"` for external ones.
 
-A better approach: keep `object-cover` but use `object-position` to show more of the image, combined with scaling. Specifically:
+### Components that need fixing
 
-### Change in `src/components/IsThisRightSection.tsx` (line 16)
+These components render cards with a mix of internal/external hrefs but never set `target="_blank"`:
 
-On the `<img>` element, add a CSS `scale` transform to shrink the image within its container, effectively zooming out while the container stays the same size. We'll use Tailwind's `scale-[0.85]` (or similar) combined with `object-contain` to ensure the full image is visible:
+1. **`src/components/HowWeSupportParentsSection.tsx`** — "Free Community" and "Animated Podcast" cards link to Facebook and YouTube
+2. **`src/components/HowWeSupportTherapistsSection.tsx`** — "Animated Podcast" card links to YouTube
 
-- Change `object-cover` → `object-contain` so the entire image is visible without cropping
-- Add `object-center` to keep it centered
-- The container with `rounded-xl overflow-hidden` maintains the same frame size and shape
+### Components already correct
+- `SupportSection.tsx` — already checks `external` flag and adds `target="_blank"`
+- `Footer.tsx` — social links already have `target="_blank"`
+- `BlogPostCTA.tsx` — podcast CTA already has `target="_blank"`
+- All Book sections, `CreatedByExpertsSection`, `FreeCourseHero`, `ForParentsHero`, `NotAloneSection`, `RightPlaceSection`, `Podcasts.tsx` — already have `target="_blank"`
 
-This shows the full scene (people reading) within the exact same container dimensions.
+### Implementation
+
+For both `HowWeSupportParentsSection.tsx` and `HowWeSupportTherapistsSection.tsx`:
+- Check if `card.href` starts with `http` in the `<a>` tag
+- If external, add `target="_blank" rel="noopener noreferrer"`
+- This is a simple conditional attribute addition on the existing `<a>` elements
 
