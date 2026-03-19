@@ -17,6 +17,11 @@ const ForEducators = () => {
         title="DLD Resources for Educators & Schools | Empowered DLD"
         description="Classroom resources, implementation packages, and professional development for educators supporting students with Developmental Language Disorder (DLD) in schools."
         path="/for-educators"
+        breadcrumbs={[
+          { name: "Home", path: "/" },
+          { name: "Who We Serve", path: "/who-we-serve" },
+          { name: "For Educators", path: "/for-educators" },
+        ]}
       />
       <Header />
       <main>

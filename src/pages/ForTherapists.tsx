@@ -15,6 +15,11 @@ const ForTherapists = () => {
         title="DLD Resources for Speech-Language Pathologists (SLPs) | Empowered DLD"
         description="Clinical resources, downloadable therapy materials, and professional development for SLPs working with children who have Developmental Language Disorder (DLD)."
         path="/for-therapists"
+        breadcrumbs={[
+          { name: "Home", path: "/" },
+          { name: "Who We Serve", path: "/who-we-serve" },
+          { name: "For SLPs", path: "/for-therapists" },
+        ]}
       />
       <Header />
       <main>

@@ -14,6 +14,11 @@ const FreeCourse = () => {
         title="Free DLD Course — Learn About Developmental Language Disorder | Empowered DLD"
         description="Take our free, self-paced course on Developmental Language Disorder. Learn what DLD is, how to identify it, and practical strategies to support children at home and in the classroom."
         path="/resources/free-course"
+        breadcrumbs={[
+          { name: "Home", path: "/" },
+          { name: "Resources", path: "/resources" },
+          { name: "Free Course", path: "/resources/free-course" },
+        ]}
       />
       <Header />
       <main>
