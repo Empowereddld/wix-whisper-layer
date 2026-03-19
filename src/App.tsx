@@ -31,6 +31,7 @@ const BlogPost = lazy(() => import("./pages/BlogPost"));
 const Podcasts = lazy(() => import("./pages/Podcasts"));
 const FreeCourse = lazy(() => import("./pages/FreeCourse"));
 const Downloadables = lazy(() => import("./pages/Downloadables"));
+const EducationalApp = lazy(() => import("./pages/EducationalApp"));
 
 // Lazy-loaded: Auth
 const Signup = lazy(() => import("./pages/auth/Signup"));
