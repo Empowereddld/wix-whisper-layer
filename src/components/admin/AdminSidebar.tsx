@@ -37,7 +37,7 @@ const navItems = [
   { title: "Referrals", url: "/admin/referrals", icon: UserPlus },
   { title: "Analytics", url: "/admin/analytics", icon: BarChart3 },
   { title: "Blog", url: "/admin/blog", icon: BookOpen },
-  { title: "Orders", url: "/admin/orders", icon: ShoppingCart },
+  { title: "Purchases", url: "/admin/purchases", icon: ShoppingCart },
   { title: "Discounts", url: "/admin/discounts", icon: Tag },
   { title: "Emails", url: "/admin/emails", icon: Mail },
   { title: "Audit Log", url: "/admin/audit", icon: Shield },
