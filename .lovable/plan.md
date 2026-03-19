@@ -1,18 +1,27 @@
 
 
-## Plan: Zoom out the image in "Is This Right" section
+## Plan: Educational App Waitlist Page under Shop
 
-The image currently uses `object-cover` which crops tightly into the center of the photo, cutting off the reading activity. To "zoom out" while keeping the same frame size, we can use CSS `object-fit: contain` instead — but that would leave empty space.
+### What we're building
 
-A better approach: keep `object-cover` but use `object-position` to show more of the image, combined with scaling. Specifically:
+1. **New page at `/shop/educational-app`** — A waitlist landing page for the Educational App, nested under Shop like Books and Bulk Orders. It will use the same `Header`/`Footer` layout as other shop sub-pages, with:
+   - A hero section explaining the app (the "Coming soon!" messaging)
+   - A waitlist signup form (reusing the existing `waitlist` table — inserting with a `notes` tag like `"Educational App waitlist"`)
+   - A "Why storytelling matters" or feature preview section
+   - SEO metadata with breadcrumbs (Home > Shop > Educational App)
 
-### Change in `src/components/IsThisRightSection.tsx` (line 16)
+2. **Add to Shop dropdown nav** — Add `{ label: "Educational App", href: "/shop/educational-app" }` to `shopLinks` in `Header.tsx`.
 
-On the `<img>` element, add a CSS `scale` transform to shrink the image within its container, effectively zooming out while the container stays the same size. We'll use Tailwind's `scale-[0.85]` (or similar) combined with `object-contain` to ensure the full image is visible:
+3. **Update "Join the App Waitlist" links** — Change the `href` in `HowWeSupportParentsSection.tsx` (and any other pages with the same CTA) from `/contact` to `/shop/educational-app`.
 
-- Change `object-cover` → `object-contain` so the entire image is visible without cropping
-- Add `object-center` to keep it centered
-- The container with `rounded-xl overflow-hidden` maintains the same frame size and shape
+4. **Route registration** — Add the `/shop/educational-app` route in `App.tsx` (lazy-loaded).
 
-This shows the full scene (people reading) within the exact same container dimensions.
+### Technical details
+
+- **New file**: `src/pages/EducationalApp.tsx` — Standard layout page with Header, Footer, waitlist form inserting into the `waitlist` table with `notes: "Educational App waitlist"` and optional `role` field.
+- **Modified files**:
+  - `src/components/Header.tsx` — Add entry to `shopLinks` array (line 22-25)
+  - `src/components/HowWeSupportParentsSection.tsx` — Update Educational App card `href` from `/contact` to `/shop/educational-app` (line 38)
+  - `src/App.tsx` — Add lazy import and route for the new page
+- The existing `waitlist` table and admin panel (`/admin/waitlist`) already handle viewing/managing signups — no backend changes needed.
 
