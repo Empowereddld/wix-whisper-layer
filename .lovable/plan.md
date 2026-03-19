@@ -1,51 +1,26 @@
 
 
-## Plan: Premium StoryBuilders Hero Section
-
-### Overview
-Rebuild the `/storybuilders` page hero as a warm, premium two-column layout with the uploaded child+parent image on the right, and structured copy with CTA buttons on the left. Remove the existing inline waitlist form from the hero. Keep the "Why storytelling" and "Final CTA" sections below (they can be updated later).
+## Plan: Align StoryBuilders Hero with Standard Sub-page Pattern
 
 ### What changes
 
-**1. Copy the uploaded image into the project**
-- Copy `user-uploads://Gemini_Generated_Image_9nlto39nlto39nlt.png` → `src/assets/storybuilders-hero.png`
+Replace the current warm off-white two-column hero (lines 23-87) with the standard deep-purple centered hero pattern used across Shop, Resources, About DLD, etc.
 
-**2. Rewrite `src/pages/StoryBuilders.tsx` hero section**
+**New hero structure** (matching `ShopHero`, `ResourcesHero`, etc.):
+- `bg-deep-purple py-20 md:py-28 lg:py-32`
+- Centered layout with `container px-6 md:px-8 flex flex-col items-center text-center gap-6`
+- Small-caps label: `COMING SOON` in `text-white/60`, `tracking-[0.22em]`
+- Headline: "The Storytelling App Created to Support Children With DLD" — `font-black text-white max-w-[800px]`
+- Subheadline: the existing description — `text-white/80 max-w-[620px]`
+- Two CTA buttons centered: "Join the Launch Team" (white bg, deep-purple text) and "See How It Works" (outline white)
+- Microcopy: `text-white/50`
 
-Replace the current centered single-column hero + WaitlistForm with:
+### What stays the same
+- "Why storytelling matters" section — unchanged
+- "Be the first to try StoryBuilders" final CTA section — unchanged
+- Header, Footer, SEOHead — unchanged
+- The hero image import can be removed (no longer used in hero; could be reused in a later section)
 
-- **Background**: Soft warm off-white (`bg-[#FFF9F5]` or similar warm neutral)
-- **Two-column layout** (stacks on mobile):
-  - **Left column** — text content with motion fade-in:
-    - Small label: `COMING SOON` in uppercase tracking
-    - **Headline**: "The storytelling app created to support children with DLD" (font-black, ~42-54px)
-    - **Subheadline**: "StoryBuilders helps children build language through interactive stories, structured support, and meaningful practice — that feels like a story, not a lesson."
-    - **Support text** (smaller, muted): "Built to support comprehension, vocabulary, sentence building, and retell in one calm, child-friendly experience."
-    - **CTA area** with space for future expansion:
-      - Primary button: "Join the Launch Team" — warm orange/coral bg, rounded-full, shadow
-      - Secondary button: "See How It Works" — outline/ghost style, rounded-full
-    - **Microcopy** below buttons: "Created with children with Developmental Language Disorder in mind."
-  - **Right column** — the uploaded parent+child image with `rounded-2xl` and subtle shadow, `object-cover`
-
-- Remove the `WaitlistForm` component from the hero (keep it in the Final CTA section at the bottom for now, or remove entirely — will be replaced by the custom waitlist system later)
-
-**3. Keep existing sections below the hero**
-- "Why storytelling matters" section stays as-is
-- "Be the first to try StoryBuilders" section stays but swap the WaitlistForm for the same "Join the Launch Team" button (placeholder until custom waitlist is built)
-
-**4. Add Header/Footer**
-- Wrap the page with the site's shared `<Header />` and `<Footer />` for navigation consistency (currently missing)
-
-### Design details
-- Buttons: `rounded-full` with generous padding
-- Primary CTA color: warm orange/coral (`bg-[#E8734A]` or similar from the coral token `hsl(4, 77%, 67%)`)
-- Secondary CTA: outline style with foreground text
-- Image: `rounded-2xl shadow-elevated`, natural aspect ratio
-- Section padding: `py-20 md:py-32` with `max-w-[1100px]` container
-- Typography: DM Sans font-black for headline, regular weight for body
-- Animations: reuse existing `fadeUp` motion variants with staggered delays
-
-### Files modified
-- `src/assets/storybuilders-hero.png` (new — copied from upload)
-- `src/pages/StoryBuilders.tsx` (rewritten hero, add Header/Footer, update Final CTA)
+### File modified
+- `src/pages/StoryBuilders.tsx` — replace hero section only (lines 23-87)
 
