@@ -116,11 +116,11 @@ const Footer = () => {
           <div className="col-span-2 lg:col-span-1">
             <p className="font-bold text-base mb-4 text-primary-foreground">Contact</p>
             <a
-              href="mailto:hello@empowereddldparenting.com"
+              href="mailto:hello@empowereddld.com"
               className="inline-flex items-center gap-2 text-[13px] text-primary-foreground/50 hover:text-primary-foreground transition-colors duration-200"
             >
               <Mail className="w-4 h-4 shrink-0" />
-              hello@empowereddldparenting.com
+              hello@empowereddld.com
             </a>
           </div>
         </div>
