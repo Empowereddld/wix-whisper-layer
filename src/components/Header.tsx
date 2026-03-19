@@ -3,6 +3,7 @@ import { Menu, X, ShoppingBag, ChevronDown } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import logoImage from "@/assets/empowered-logo.webp";
+import { useAuth } from "@/contexts/AuthContext";
 
 const whoWeServeLinks = [
   { label: "For Parents", href: "/for-parents" },
@@ -34,6 +35,8 @@ const navLinks = [
 ];
 
 const Header = () => {
+  const { session } = useAuth();
+  const loginTarget = session ? "/hub" : "/hub/login";
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [mobileSubOpen, setMobileSubOpen] = useState<string | null>(null);
@@ -107,7 +110,7 @@ const Header = () => {
           </button>
 
           <Button asChild variant="outline" size="default" className="rounded-md h-10 px-7 text-[12px] font-semibold tracking-[0.08em] border-foreground/30 hover:bg-accent transition-all duration-300 ml-2">
-            <Link to="/hub/preview">LOGIN</Link>
+            <Link to={loginTarget}>{session ? "MY HUB" : "LOGIN"}</Link>
           </Button>
         </nav>
 
@@ -166,7 +169,7 @@ const Header = () => {
               </span>
             </button>
             <Button asChild className="flex-1 font-bold text-[12px] tracking-[0.1em]">
-              <Link to="/hub/preview" onClick={() => setMobileOpen(false)}>LOGIN</Link>
+              <Link to={loginTarget} onClick={() => setMobileOpen(false)}>{session ? "MY HUB" : "LOGIN"}</Link>
             </Button>
           </div>
         </nav>
