@@ -63,7 +63,7 @@ const Footer = () => {
     if (error) {
       toast({ title: "Something went wrong", description: "Please try again later.", variant: "destructive" });
     } else {
-      toast({ title: "You're on the list!", description: "Thanks for subscribing." });
+      toast({ title: "Welcome to the community! 🎉", description: "You'll be the first to hear about new resources, tips, and DLD updates." });
       setEmail("");
       setName("");
     }
