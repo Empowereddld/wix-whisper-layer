@@ -227,7 +227,7 @@ const StoryBuilders = () => {
       <div className="w-16 h-px bg-border mx-auto" />
 
       {/* ─── S5: HOW IT WORKS ─── */}
-      <section className="bg-muted py-16 md:py-[120px]">
+      <section id="how-it-works" className="bg-muted py-16 md:py-[120px]">
         <div className="container px-6 md:px-8">
           <FadeSection className="text-center mb-12 md:mb-16">
             <h2 className="text-[32px] md:text-[42px] lg:text-[46px] font-bold tracking-tight text-foreground">
