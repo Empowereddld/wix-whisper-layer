@@ -54,7 +54,7 @@ const AdminResources = lazy(() => import("./pages/admin/AdminResources"));
 const AdminUsers = lazy(() => import("./pages/admin/AdminUsers"));
 const AdminAnalytics = lazy(() => import("./pages/admin/AdminAnalytics"));
 const AdminBlog = lazy(() => import("./pages/admin/AdminBlog"));
-const AdminOrders = lazy(() => import("./pages/admin/AdminOrders"));
+const AdminPurchases = lazy(() => import("./pages/admin/AdminPurchases"));
 const AdminDiscounts = lazy(() => import("./pages/admin/AdminDiscounts"));
 const AdminEmails = lazy(() => import("./pages/admin/AdminEmails"));
 const AdminAuditLog = lazy(() => import("./pages/admin/AdminAuditLog"));
@@ -126,7 +126,7 @@ const App = () => (
               <Route path="/admin/users" element={<AdminProtectedRoute><AdminUsers /></AdminProtectedRoute>} />
               <Route path="/admin/analytics" element={<AdminProtectedRoute><AdminAnalytics /></AdminProtectedRoute>} />
               <Route path="/admin/blog" element={<AdminProtectedRoute><AdminBlog /></AdminProtectedRoute>} />
-              <Route path="/admin/orders" element={<AdminProtectedRoute><AdminOrders /></AdminProtectedRoute>} />
+              <Route path="/admin/purchases" element={<AdminProtectedRoute><AdminPurchases /></AdminProtectedRoute>} />
               <Route path="/admin/discounts" element={<AdminProtectedRoute><AdminDiscounts /></AdminProtectedRoute>} />
               <Route path="/admin/products" element={<AdminProtectedRoute><AdminProducts /></AdminProtectedRoute>} />
               <Route path="/admin/waitlist" element={<AdminProtectedRoute><AdminWaitlist /></AdminProtectedRoute>} />
