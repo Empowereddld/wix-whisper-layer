@@ -3,6 +3,7 @@ import { Menu, X, ShoppingBag, ChevronDown } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import logoImage from "@/assets/empowered-logo.webp";
+import { useAuth } from "@/contexts/AuthContext";
 
 const whoWeServeLinks = [
   { label: "For Parents", href: "/for-parents" },
