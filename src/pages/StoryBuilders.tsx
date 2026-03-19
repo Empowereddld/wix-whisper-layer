@@ -1,6 +1,5 @@
 import { useState, useRef } from "react";
 import SEOHead from "@/components/SEOHead";
-import hallwayBg from "@/assets/school-hallway-bg.webp";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -94,62 +93,75 @@ const StoryBuilders = () => {
       />
       <Header />
 
-      {/* ─── S1: HERO (editorial, matching homepage) ─── */}
-      <section className="relative overflow-hidden py-20 md:py-28 lg:py-32">
-        <div
-          className="absolute inset-0 bg-cover bg-center blur-[2px] scale-105"
-          style={{ backgroundImage: `url(${hallwayBg})` }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-[hsl(270_55%_98%/0.78)] via-[hsl(264_48%_96%/0.72)] via-[60%] to-[hsl(258_42%_94%/0.66)]" />
-
-        <div className="relative z-10 container px-6 sm:px-7 md:px-10 lg:px-14 xl:px-20">
-          <p className="text-[9px] sm:text-[11px] font-bold uppercase tracking-[0.18em] text-primary/85 mb-3 md:mb-5">
-            FOR CHILDREN WITH DLD
+      {/* ─── S1: HERO ─── */}
+      <section className="bg-deep-purple py-20 md:py-28 lg:py-32">
+        <div className="container px-6 md:px-8 flex flex-col items-center text-center gap-6">
+          <p className="text-[11px] md:text-[12px] font-bold uppercase tracking-[0.22em] text-white/60">
+            FOR FAMILIES, EDUCATORS &amp; PROFESSIONALS
           </p>
-          <h1 className="text-[42px] sm:text-[48px] md:text-[52px] xl:text-[74px] leading-[1.05] font-black text-foreground mb-4 md:mb-6 max-w-[500px] tracking-[-0.025em]">
-            Every child deserves to tell their story.
+          <h1 className="text-[32px] md:text-[48px] lg:text-[56px] font-black text-white leading-[1.1] max-w-[800px]">
+            Help Us Build Something That Could Change How Children Experience Storytelling
           </h1>
-          <p className="text-[12px] sm:text-[13px] md:text-[15px] leading-[1.6] text-foreground/55 mb-5 md:mb-9 max-w-[420px]">
-            StoryBuilders is an app being built to help children with Developmental
-            Language Disorder communicate with confidence. Join the Launch Team and
-            help us build it.
+          <p className="text-[14px] md:text-[16px] text-white/80 leading-[1.7] max-w-[620px]">
+            Join the StoryBuilders Launch Team and be part of a movement supporting
+            children with Developmental Language Disorder through stories, connection,
+            and confidence.
           </p>
-          <Button
-            size="lg"
-            onClick={scrollToForm}
-            className="h-[40px] sm:h-[48px] md:h-[54px] px-6 sm:px-10 md:px-14 rounded-sm text-[10px] sm:text-[12px] font-bold uppercase tracking-[0.14em] bg-deep-purple text-deep-purple-foreground hover:bg-deep-purple/90 shadow-[0_1px_3px_hsl(262_49%_30%/0.12)] hover:shadow-[0_2px_6px_hsl(262_49%_30%/0.16)] transition-all duration-300"
-          >
-            JOIN THE LAUNCH TEAM
-          </Button>
+          {!wl.joined ? (
+            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 w-full max-w-[560px] mt-2">
+              <Input
+                placeholder="Your name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+                className="h-12 bg-white/10 border-white/20 text-white placeholder:text-white/50 rounded-md focus-visible:ring-primary"
+              />
+              <Input
+                type="email"
+                placeholder="Your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className="h-12 bg-white/10 border-white/20 text-white placeholder:text-white/50 rounded-md focus-visible:ring-primary"
+              />
+              <Button
+                type="submit"
+                disabled={wl.loading}
+                className="h-12 px-8 bg-primary text-primary-foreground font-bold rounded-md hover:bg-primary/90 transition-colors shadow-[var(--shadow-button)] whitespace-nowrap"
+              >
+                {wl.loading ? "Joining…" : "Join Now"}
+              </Button>
+            </form>
+          ) : (
+            <div className="flex items-center gap-2 mt-2">
+              <code className="bg-white/10 border border-white/20 rounded-md px-4 py-2.5 text-white text-[13px] max-w-[320px] truncate">
+                {wl.referralLink}
+              </code>
+              <Button
+                onClick={() => handleCopy(wl.referralLink)}
+                variant="outline"
+                className="h-10 px-4 border-white/30 text-white bg-transparent hover:bg-white/10 rounded-md"
+              >
+                {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+              </Button>
+            </div>
+          )}
+          {wl.error && <p className="text-white/70 text-[13px]">{wl.error}</p>}
         </div>
       </section>
 
-      {/* ─── S1b: DARK MISSION BAND ─── */}
-      <section className="bg-foreground text-background">
-        <div className="container flex flex-col md:flex-row md:items-start md:justify-between gap-6 py-10 md:py-16 px-6 md:px-8">
-          <h2 className="text-[18px] sm:text-[28px] md:text-[42px] font-bold leading-[1.15] max-w-[320px]">
-            Why StoryBuilders?
-          </h2>
-          <div className="max-w-md flex flex-col gap-6">
-            <p className="text-[11px] md:text-[16px] text-background/80 leading-[1.65]">
-              Storytelling is one of the hardest skills for children with DLD — and
-              one of the most important. StoryBuilders is designed to change that,
-              one story at a time.
-            </p>
-            <div>
-              <a href="#how-it-works">
-                <Button
-                  variant="outline"
-                  className="border-background/60 text-background bg-transparent hover:bg-background/10 rounded-none uppercase text-[11px] tracking-[0.14em] font-bold px-6 h-[44px] gap-2"
-                >
-                  See How It Works
-                  <span className="text-[14px]">›</span>
-                </Button>
-              </a>
-            </div>
-          </div>
-        </div>
+      {/* ─── S2: EMOTIONAL HOOK ─── */}
+      <section className="py-16 md:py-[120px]">
+        <FadeSection className="max-w-[650px] mx-auto px-6 md:px-8 text-center">
+          <p className="text-[16px] text-foreground leading-[1.7]">
+            For so many children, telling a story about their day is not simple. Words
+            get stuck. Details get lost. And over time, confidence starts to fade.
+            StoryBuilders was created to change that.
+          </p>
+        </FadeSection>
       </section>
+
+      <div className="w-16 h-px bg-border mx-auto" />
 
       {/* ─── S3: WHAT IS STORYBUILDERS ─── */}
       <section className="bg-muted py-16 md:py-[120px]">
@@ -227,7 +239,7 @@ const StoryBuilders = () => {
       <div className="w-16 h-px bg-border mx-auto" />
 
       {/* ─── S5: HOW IT WORKS ─── */}
-      <section id="how-it-works" className="bg-muted py-16 md:py-[120px]">
+      <section className="bg-muted py-16 md:py-[120px]">
         <div className="container px-6 md:px-8">
           <FadeSection className="text-center mb-12 md:mb-16">
             <h2 className="text-[32px] md:text-[42px] lg:text-[46px] font-bold tracking-tight text-foreground">
