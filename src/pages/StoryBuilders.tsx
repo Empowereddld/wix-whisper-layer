@@ -1,70 +1,13 @@
-import { useState } from "react";
 import SEOHead from "@/components/SEOHead";
-import { supabase } from "@/integrations/supabase/client";
-import { toast } from "sonner";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { motion } from "framer-motion";
+import heroImage from "@/assets/storybuilders-hero.png";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" as const } },
-};
-
-const WaitlistForm = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!name.trim() || !email.trim()) return;
-    setLoading(true);
-    const { error } = await supabase.from("waitlist").insert({
-      name: name.trim(),
-      email: email.trim().toLowerCase(),
-      notes: "StoryBuilders waitlist",
-    });
-    setLoading(false);
-    if (error) {
-      toast.error(error.message.includes("duplicate") ? "You're already on the list!" : "Something went wrong. Please try again.");
-      return;
-    }
-    setSubmitted(true);
-    toast.success("You're on the list!");
-  };
-
-  if (submitted) {
-    return (
-      <p className="text-lg text-muted-foreground text-center">
-        Thank you, {name.split(" ")[0]}! We'll be in touch soon.
-      </p>
-    );
-  }
-
-  return (
-    <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 w-full max-w-lg mx-auto">
-      <Input
-        placeholder="Your name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        required
-        className="h-12 bg-white border-border/60 text-base"
-      />
-      <Input
-        placeholder="Email address"
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        required
-        className="h-12 bg-white border-border/60 text-base"
-      />
-      <Button type="submit" disabled={loading} className="h-12 px-8 text-base font-medium shrink-0">
-        {loading ? "Joining…" : "Join the Waitlist"}
-      </Button>
-    </form>
-  );
 };
 
 const StoryBuilders = () => {
@@ -72,62 +15,75 @@ const StoryBuilders = () => {
     <div className="min-h-screen bg-background text-foreground font-sans antialiased">
       <SEOHead
         title="StoryBuilders — Helping Children Become Confident Storytellers | Empowered DLD"
-        description="StoryBuilders is an upcoming storytelling platform helping children with Developmental Language Disorder strengthen narrative language, vocabulary, and communication through guided stories."
+        description="StoryBuilders is a storytelling and language development app designed to support children with Developmental Language Disorder through interactive stories, structured support, and meaningful practice."
         path="/storybuilders"
       />
+      <Header />
+
       {/* ─── HERO ─── */}
-      <section className="flex flex-col items-center justify-center text-center px-6 pt-32 pb-24 sm:pt-44 sm:pb-32">
-        <motion.h1
-          variants={fadeUp}
-          initial="hidden"
-          animate="visible"
-          className="text-5xl sm:text-7xl font-black tracking-tight leading-[1.08]"
-        >
-          StoryBuilders
-        </motion.h1>
-        <motion.p
-          variants={fadeUp}
-          initial="hidden"
-          animate="visible"
-          transition={{ delay: 0.15 }}
-          className="mt-4 text-xl sm:text-2xl text-muted-foreground max-w-md"
-        >
-          Helping children become confident storytellers.
-        </motion.p>
+      <section className="bg-[hsl(30_60%_98%)] py-20 md:py-32">
+        <div className="max-w-[1100px] mx-auto px-6 lg:px-10 grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16 items-center">
+          {/* Left — Copy */}
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            className="flex flex-col gap-6"
+          >
+            <span className="text-xs font-semibold tracking-[0.18em] uppercase text-coral">
+              Coming Soon
+            </span>
 
-        <motion.p
-          variants={fadeUp}
-          initial="hidden"
-          animate="visible"
-          transition={{ delay: 0.3 }}
-          className="mt-10 text-base sm:text-lg text-muted-foreground max-w-xl leading-relaxed"
-        >
-          StoryBuilders is an upcoming storytelling platform designed to help
-          children strengthen narrative language, vocabulary, and communication
-          through engaging stories and guided retell.
-        </motion.p>
-        <motion.p
-          variants={fadeUp}
-          initial="hidden"
-          animate="visible"
-          transition={{ delay: 0.4 }}
-          className="mt-4 text-base sm:text-lg text-muted-foreground max-w-xl"
-        >
-          Join the waitlist to be the first to hear when early access opens.
-        </motion.p>
+            <h1 className="text-4xl sm:text-5xl font-black tracking-tight leading-[1.1] text-foreground">
+              The storytelling app created to support children with DLD
+            </h1>
 
-        <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          animate="visible"
-          transition={{ delay: 0.55 }}
-          className="mt-10 w-full"
-        >
-          <WaitlistForm />
-          <p className="mt-4 text-sm text-muted-foreground/70">
-            Be the first to know when early access becomes available.
-          </p>
-        </motion.div>
+            <p className="text-lg leading-relaxed text-muted-foreground max-w-[500px]">
+              StoryBuilders helps children build language through interactive
+              stories, structured support, and meaningful practice — that feels
+              like a story, not a lesson.
+            </p>
+
+            <p className="text-sm leading-relaxed text-muted-foreground/80 max-w-[480px]">
+              Built to support comprehension, vocabulary, sentence building, and
+              retell in one calm, child-friendly experience.
+            </p>
+
+            {/* CTA area */}
+            <div className="flex flex-wrap gap-3 mt-2">
+              <Button
+                className="rounded-full h-12 px-8 text-base font-semibold bg-coral text-white hover:bg-coral/90 shadow-[var(--shadow-button)]"
+              >
+                Join the Launch Team
+              </Button>
+              <Button
+                variant="outline"
+                className="rounded-full h-12 px-8 text-base font-semibold border-foreground/20 hover:bg-accent"
+              >
+                See How It Works
+              </Button>
+            </div>
+
+            <p className="text-xs text-muted-foreground/60 mt-1">
+              Created with children with Developmental Language Disorder in mind.
+            </p>
+          </motion.div>
+
+          {/* Right — Image */}
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            transition={{ delay: 0.2 }}
+            className="flex justify-center md:justify-end"
+          >
+            <img
+              src={heroImage}
+              alt="A parent and child reading a story together"
+              className="w-full max-w-[520px] rounded-2xl shadow-[var(--shadow-elevated)] object-cover"
+            />
+          </motion.div>
+        </div>
       </section>
 
       {/* ─── DIVIDER ─── */}
@@ -163,8 +119,8 @@ const StoryBuilders = () => {
               confidence.
             </p>
             <p>
-              StoryBuilders was created to help children practice these skills in a
-              way that feels engaging, structured, and supportive.
+              StoryBuilders was created to help children practice these skills in
+              a way that feels engaging, structured, and supportive.
             </p>
           </motion.div>
         </div>
@@ -192,35 +148,26 @@ const StoryBuilders = () => {
           transition={{ delay: 0.12 }}
           className="mt-6 text-base sm:text-lg text-muted-foreground"
         >
-          Early access will open soon.
-        </motion.p>
-        <motion.p
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ delay: 0.2 }}
-          className="mt-2 text-base sm:text-lg text-muted-foreground"
-        >
-          Join the waitlist and we will let you know as soon as StoryBuilders
-          becomes available.
+          Early access will open soon. Join the Launch Team and we'll let you
+          know as soon as StoryBuilders becomes available.
         </motion.p>
         <motion.div
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-60px" }}
-          transition={{ delay: 0.35 }}
+          transition={{ delay: 0.3 }}
           className="mt-10"
         >
-          <WaitlistForm />
+          <Button
+            className="rounded-full h-12 px-10 text-base font-semibold bg-coral text-white hover:bg-coral/90 shadow-[var(--shadow-button)]"
+          >
+            Join the Launch Team
+          </Button>
         </motion.div>
       </section>
 
-      {/* ─── FOOTER ─── */}
-      <footer className="py-12 text-center text-sm text-muted-foreground/60">
-        © {new Date().getFullYear()} StoryBuilders
-      </footer>
+      <Footer />
     </div>
   );
 };
