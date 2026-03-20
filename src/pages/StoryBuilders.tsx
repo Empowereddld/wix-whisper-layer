@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import SEOHead from "@/components/SEOHead";
+import storybuildersHero from "@/assets/storybuilders-hero.png";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -94,8 +95,10 @@ const StoryBuilders = () => {
       <Header />
 
       {/* ─── S1: HERO ─── */}
-      <section className="bg-deep-purple py-20 md:py-28 lg:py-32">
-        <div className="container px-6 md:px-8 flex flex-col items-center text-center gap-6">
+      <section className="relative overflow-hidden py-20 md:py-28 lg:py-32">
+        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${storybuildersHero})` }} />
+        <div className="absolute inset-0 bg-deep-purple/85" />
+        <div className="relative z-10 container px-6 md:px-8 flex flex-col items-center text-center gap-6">
           <p className="text-[11px] md:text-[12px] font-bold uppercase tracking-[0.22em] text-white/60">
             FOR FAMILIES, EDUCATORS &amp; PROFESSIONALS
           </p>
