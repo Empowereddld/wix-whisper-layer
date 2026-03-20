@@ -98,7 +98,7 @@ const StoryBuilders = () => {
       <section className="relative overflow-hidden py-20 md:py-28 lg:py-32">
         <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${storybuildersHero})` }} />
         <div className="absolute inset-0 bg-deep-purple/85" />
-        <div className="container px-6 md:px-8 flex flex-col items-center text-center gap-6">
+        <div className="relative z-10 container px-6 md:px-8 flex flex-col items-center text-center gap-6">
           <p className="text-[11px] md:text-[12px] font-bold uppercase tracking-[0.22em] text-white/60">
             FOR FAMILIES, EDUCATORS &amp; PROFESSIONALS
           </p>
