@@ -95,61 +95,75 @@ const StoryBuilders = () => {
       <Header />
 
       {/* ─── S1: HERO ─── */}
-      <section className="relative overflow-hidden py-20 md:py-28 lg:py-32">
-        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${storybuildersHero})` }} />
-        <div className="absolute inset-0 bg-deep-purple/85" />
-        <div className="relative z-10 container px-6 md:px-8 flex flex-col items-center text-center gap-6">
-          <p className="text-[11px] md:text-[12px] font-bold uppercase tracking-[0.22em] text-white/60">
-            FOR FAMILIES, EDUCATORS &amp; PROFESSIONALS
-          </p>
-          <h1 className="text-[32px] md:text-[48px] lg:text-[56px] font-black text-white leading-[1.1] max-w-[800px]">
-            Help Us Build Something That Could Change How Children Experience Storytelling
-          </h1>
-          <p className="text-[14px] md:text-[16px] text-white/80 leading-[1.7] max-w-[620px]">
-            Join the StoryBuilders Launch Team and be part of a movement supporting
-            children with Developmental Language Disorder through stories, connection,
-            and confidence.
-          </p>
-          {!wl.joined ? (
-            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 w-full max-w-[560px] mt-2">
-              <Input
-                placeholder="Your name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-                className="h-12 bg-white/10 border-white/20 text-white placeholder:text-white/50 rounded-md focus-visible:ring-primary"
-              />
-              <Input
-                type="email"
-                placeholder="Your email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                className="h-12 bg-white/10 border-white/20 text-white placeholder:text-white/50 rounded-md focus-visible:ring-primary"
-              />
-              <Button
-                type="submit"
-                disabled={wl.loading}
-                className="h-12 px-8 bg-primary text-primary-foreground font-bold rounded-md hover:bg-primary/90 transition-colors shadow-[var(--shadow-button)] whitespace-nowrap"
-              >
-                {wl.loading ? "Joining…" : "Join Now"}
-              </Button>
-            </form>
-          ) : (
-            <div className="flex items-center gap-2 mt-2">
-              <code className="bg-white/10 border border-white/20 rounded-md px-4 py-2.5 text-white text-[13px] max-w-[320px] truncate">
-                {wl.referralLink}
-              </code>
-              <Button
-                onClick={() => handleCopy(wl.referralLink)}
-                variant="outline"
-                className="h-10 px-4 border-white/30 text-white bg-transparent hover:bg-white/10 rounded-md"
-              >
-                {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-              </Button>
+      <section className="relative overflow-hidden bg-deep-purple">
+        <div className="container px-6 md:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-8 lg:gap-12 py-16 md:py-24 lg:py-28">
+            {/* Text side */}
+            <div className="relative z-10 flex flex-col gap-5 text-center lg:text-left items-center lg:items-start">
+              <p className="text-[11px] md:text-[12px] font-bold uppercase tracking-[0.22em] text-white/60">
+                FOR FAMILIES, EDUCATORS &amp; PROFESSIONALS
+              </p>
+              <h1 className="text-[32px] md:text-[44px] lg:text-[50px] font-black text-white leading-[1.1] max-w-[540px]">
+                Help Us Build Something That Could Change How Children Experience Storytelling
+              </h1>
+              <p className="text-[14px] md:text-[16px] text-white/80 leading-[1.7] max-w-[480px]">
+                Join the StoryBuilders Launch Team and be part of a movement supporting
+                children with Developmental Language Disorder through stories, connection,
+                and confidence.
+              </p>
+              {!wl.joined ? (
+                <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row flex-wrap gap-3 w-full max-w-[480px] mt-1">
+                  <Input
+                    placeholder="Your name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    required
+                    className="h-12 bg-white/10 border-white/20 text-white placeholder:text-white/50 rounded-md focus-visible:ring-primary flex-1 min-w-[140px]"
+                  />
+                  <Input
+                    type="email"
+                    placeholder="Your email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    className="h-12 bg-white/10 border-white/20 text-white placeholder:text-white/50 rounded-md focus-visible:ring-primary flex-1 min-w-[140px]"
+                  />
+                  <Button
+                    type="submit"
+                    disabled={wl.loading}
+                    className="h-12 px-8 bg-primary text-primary-foreground font-bold rounded-md hover:bg-primary/90 transition-colors shadow-[var(--shadow-button)] whitespace-nowrap w-full sm:w-auto"
+                  >
+                    {wl.loading ? "Joining…" : "Join Now"}
+                  </Button>
+                </form>
+              ) : (
+                <div className="flex items-center gap-2 mt-1">
+                  <code className="bg-white/10 border border-white/20 rounded-md px-4 py-2.5 text-white text-[13px] max-w-[320px] truncate">
+                    {wl.referralLink}
+                  </code>
+                  <Button
+                    onClick={() => handleCopy(wl.referralLink)}
+                    variant="outline"
+                    className="h-10 px-4 border-white/30 text-white bg-transparent hover:bg-white/10 rounded-md"
+                  >
+                    {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+                  </Button>
+                </div>
+              )}
+              {wl.error && <p className="text-white/70 text-[13px]">{wl.error}</p>}
             </div>
-          )}
-          {wl.error && <p className="text-white/70 text-[13px]">{wl.error}</p>}
+
+            {/* Image side */}
+            <div className="relative rounded-xl overflow-hidden h-[300px] md:h-[400px] lg:h-[480px]">
+              <img
+                src={storybuildersHero}
+                alt="Mother and son laughing together while using a tablet"
+                className="w-full h-full object-cover object-center"
+                loading="eager"
+              />
+              <div className="absolute inset-0 bg-deep-purple/20" />
+            </div>
+          </div>
         </div>
       </section>
 
