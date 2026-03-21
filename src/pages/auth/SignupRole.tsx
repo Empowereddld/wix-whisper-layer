@@ -168,12 +168,6 @@ const SignupRole = () => {
             >
               {loading ? "Saving..." : "Take me to the Resource Hub"}
             </Button>
-            <button
-              onClick={handleSkip}
-              className="w-full text-sm text-stone-ui hover:text-midnight transition-colors"
-            >
-              Skip for now
-            </button>
           </div>
         </div>
       </div>
