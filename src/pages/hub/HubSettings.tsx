@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { ArrowLeft } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import HubLayout from "@/components/hub/HubLayout";
@@ -120,6 +121,13 @@ const HubSettings = () => {
   return (
     <HubLayout>
       <div className="max-w-2xl mx-auto px-4 py-8">
+        <button
+          onClick={() => window.history.back()}
+          className="flex items-center gap-1.5 text-sm text-primary hover:text-primary/80 mb-4 transition-colors"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          Back to Hub
+        </button>
         <h1 className="text-3xl font-bold text-midnight mb-8">Account Settings</h1>
 
         {/* Profile */}
