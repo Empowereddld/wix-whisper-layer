@@ -41,14 +41,12 @@ const HubHeader = ({ activeAudience = "", onAudienceChange }: HubHeaderProps) =>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14 gap-4">
           {/* Logo */}
-          <a
-            href="https://empowereddld.com"
+          <button
+            onClick={() => navigate("/hub")}
             className="flex-shrink-0 -my-4"
-            target="_blank"
-            rel="noopener noreferrer"
           >
             <img src={empoweredLogoWhite} alt="Empowered DLD" className="h-24" />
-          </a>
+          </button>
 
           {/* Spacer for centering */}
           <div className="flex-1" />
