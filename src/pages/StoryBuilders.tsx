@@ -111,10 +111,10 @@ const StoryBuilders = () => {
               <p className="text-[11px] md:text-[12px] font-bold uppercase tracking-[0.22em] text-white/60">
                 FOR FAMILIES, EDUCATORS &amp; PROFESSIONALS
               </p>
-              <h1 className="text-[32px] md:text-[44px] lg:text-[50px] font-black text-white leading-[1.1] mt-4">
+              <h1 className="text-[32px] md:text-[44px] lg:text-[50px] font-black text-white leading-[1.1] mt-4 [text-shadow:0_1px_8px_rgba(0,0,0,0.5)]">
                 The First App Built<br className="hidden md:inline lg:hidden" /> For Kids With DLD
               </h1>
-              <p className="text-[14px] md:text-[16px] text-white/80 leading-[1.7] mt-4">
+              <p className="text-[14px] md:text-[16px] text-white/90 leading-[1.7] mt-4 [text-shadow:0_1px_6px_rgba(0,0,0,0.4)]">
                 Join the Story Builders Launch Team and help us bring daily 20-minute story sessions that build vocabulary, comprehension, and confidence to children with DLD worldwide.
               </p>
               {!wl.joined ? (
