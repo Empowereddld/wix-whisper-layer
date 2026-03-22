@@ -1,15 +1,41 @@
 
 
-## Vertically Center Hero Content on StoryBuilders Page
+## Add "How It Works" Section After StatBand
 
-The hero text and form currently use top padding (`py-20 md:py-28 lg:py-32`) to push content down, but since the section is full viewport height, this leaves an awkward empty gap below the form fields. The fix is to vertically center the content within the hero.
+Create a new dedicated `StoryBuildersHowItWorks` component that sits between the StatBand and the emotional hook section. The style should match the premium editorial aesthetic — clean, minimal, no images (since you only have 3 steps), using numbered cards on a light background.
 
-### Changes (single file: `src/pages/StoryBuilders.tsx`)
+### Recommended Layout
 
-1. **Vertically center the content container** — Change the inner content `div` (line 110) from top-padded layout to a flex centered layout:
-   - Remove `py-20 md:py-28 lg:py-32`
-   - Add `min-h-[600px] md:min-h-[calc(100vh-70px)] lg:min-h-[calc(100vh-80px)] justify-center`
-   - Keep horizontal padding and `items-start` for left-aligned text
+```text
+┌─────────────────────────────────────────────────┐
+│  Here's How StoryBuilders Works                 │
+│  Simple enough for home. Powerful enough to     │
+│  make a difference.                             │
+│                                                 │
+│  ┌─────────┐  ┌─────────┐  ┌─────────┐         │
+│  │   01    │  │   02    │  │   03    │         │
+│  │ Pick a  │  │  Read   │  │ Watch   │         │
+│  │  Story  │  │Together │  │  Them   │         │
+│  │         │  │         │  │  Grow   │         │
+│  │ desc... │  │ desc... │  │ desc... │         │
+│  └─────────┘  └─────────┘  └─────────┘         │
+└─────────────────────────────────────────────────┘
+```
 
-This ensures the text block + form sit in the vertical middle of the hero image rather than floating near the top.
+### Style Details
+
+- **Background**: `bg-muted` (light grey) to contrast against the dark StatBand above and white emotional hook below
+- **Heading**: "Here's How StoryBuilders Works" — `text-[32px] md:text-[42px] lg:text-[46px] font-bold` centered
+- **Subheading**: "Simple enough for home. Powerful enough to make a difference." — muted-foreground, centered, `max-w-[500px]`
+- **3 cards in a row** (stacked on mobile): white background, rounded-xl, border, subtle shadow — each with:
+  - Large step number in primary color (`text-[40px] font-black text-primary/20`)
+  - Bold title
+  - Description text in muted-foreground
+- Uses the existing `FadeSection` wrapper for scroll animation
+- Max-width `900px` centered, matching existing grid sections
+
+### Files
+
+1. **Create** `src/components/StoryBuildersHowItWorks.tsx` — New component with the layout above
+2. **Edit** `src/pages/StoryBuilders.tsx` — Import and place it between `<StatBand />` and the emotional hook section (after line 166)
 
