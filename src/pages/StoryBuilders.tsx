@@ -100,7 +100,7 @@ const StoryBuilders = () => {
         <img
           src={storybuildersHero}
           alt="Mother and son laughing together while using a tablet"
-          className="absolute inset-0 w-full h-full object-cover object-[50%_20%] md:object-[50%_30%] lg:object-[50%_40%]"
+          className="absolute inset-0 w-full h-full object-cover object-[65%_20%] md:object-[50%_30%] lg:object-[50%_40%]"
           loading="eager"
         />
         {/* Dark purple overlay — gradient fades from solid left to transparent right; on mobile full overlay for readability */}
