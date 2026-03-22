@@ -111,12 +111,10 @@ const StoryBuilders = () => {
                 FOR FAMILIES, EDUCATORS &amp; PROFESSIONALS
               </p>
               <h1 className="text-[32px] md:text-[44px] lg:text-[50px] font-black text-white leading-[1.1] max-w-[800px]">
-                Help Us Build Something That Could Change How Children Experience Storytelling
+                The First App Built For Kids With DLD
               </h1>
               <p className="text-[14px] md:text-[16px] text-white/80 leading-[1.7] max-w-[620px]">
-                Join the StoryBuilders Launch Team and be part of a movement supporting
-                children with Developmental Language Disorder through stories, connection,
-                and confidence.
+                Join the StoryBuilders Launch Team and help us bring daily 20-minute story sessions that build vocabulary, comprehension, and confidence to children with DLD worldwide.
               </p>
               {!wl.joined ? (
                 <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row flex-wrap gap-3 w-full max-w-[520px] mt-1">
