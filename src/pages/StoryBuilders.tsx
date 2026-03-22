@@ -103,21 +103,22 @@ const StoryBuilders = () => {
           className="absolute inset-0 w-full h-full object-cover object-center"
           loading="eager"
         />
-        {/* Dark purple overlay */}
-        <div className="absolute inset-0 bg-deep-purple/75" />
+        {/* Dark purple overlay — gradient fades from solid left to transparent right */}
+        <div className="absolute inset-0 bg-gradient-to-r from-deep-purple/90 via-deep-purple/70 to-deep-purple/40" />
 
-        <div className="relative z-10 container px-6 md:px-8 py-20 md:py-28 lg:py-32 flex flex-col items-center text-center gap-5">
+        <div className="relative z-10 container px-6 md:px-8 py-20 md:py-28 lg:py-32 flex flex-col items-start text-left gap-5 max-w-none">
+          <div className="max-w-[560px]">
               <p className="text-[11px] md:text-[12px] font-bold uppercase tracking-[0.22em] text-white/60">
                 FOR FAMILIES, EDUCATORS &amp; PROFESSIONALS
               </p>
-              <h1 className="text-[32px] md:text-[44px] lg:text-[50px] font-black text-white leading-[1.1] max-w-[800px]">
+              <h1 className="text-[32px] md:text-[44px] lg:text-[50px] font-black text-white leading-[1.1] mt-4">
                 The First App Built For Kids With DLD
               </h1>
-              <p className="text-[14px] md:text-[16px] text-white/80 leading-[1.7] max-w-[620px]">
+              <p className="text-[14px] md:text-[16px] text-white/80 leading-[1.7] mt-4">
                 Join the StoryBuilders Launch Team and help us bring daily 20-minute story sessions that build vocabulary, comprehension, and confidence to children with DLD worldwide.
               </p>
               {!wl.joined ? (
-                <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row flex-wrap gap-3 w-full max-w-[520px] mt-1">
+                <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row flex-wrap gap-3 w-full max-w-[520px] mt-5">
                   <Input
                     placeholder="Your name"
                     value={name}
@@ -142,7 +143,7 @@ const StoryBuilders = () => {
                   </Button>
                 </form>
               ) : (
-                <div className="flex items-center gap-2 mt-1">
+                <div className="flex items-center gap-2 mt-5">
                   <code className="bg-white/10 border border-white/20 rounded-md px-4 py-2.5 text-white text-[13px] max-w-[320px] truncate">
                     {wl.referralLink}
                   </code>
@@ -156,6 +157,7 @@ const StoryBuilders = () => {
                 </div>
               )}
               {wl.error && <p className="text-white/70 text-[13px]">{wl.error}</p>}
+          </div>
         </div>
       </section>
 
