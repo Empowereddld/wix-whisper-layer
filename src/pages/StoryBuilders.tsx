@@ -158,7 +158,6 @@ const StoryBuilders = () => {
                 </div>
               )}
               {wl.error && <p className="text-white/70 text-[13px]">{wl.error}</p>}
-          </div>
         </div>
       </section>
 
