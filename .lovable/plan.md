@@ -1,12 +1,16 @@
 
 
-## Readability Tweaks for StoryBuilders Hero
+## Larger, Bolder Heading + Tighter Layout for StatBand
 
-Two small changes to improve text legibility on mobile:
+Refine the StatBand on the StoryBuilders page to feel more impactful and visually balanced.
 
-1. **Increase subheadline opacity** — Change `text-white/80` to `text-white/90` on line 117
-2. **Add text shadow** — Add a subtle text shadow to the headline (line 114) and subheadline (line 117) using inline style or a Tailwind utility class like `[text-shadow:0_1px_8px_rgba(0,0,0,0.5)]`
+### Changes (all in `src/components/StatBand.tsx`)
 
-### Files to edit
-- `src/pages/StoryBuilders.tsx` — lines 114 and 117
+1. **Bigger heading** — Increase desktop size from `42px` to `52px` and widen `max-w` from `320px` to `480px` so the text breathes better
+2. **Vertically center** both columns using `md:items-center` instead of `md:items-start`
+3. **Bump body text** — Increase desktop paragraph size from `16px` to `17px` and opacity from `background/80` to `background/85`
+4. **Tighten vertical padding** — Reduce desktop padding from `py-16` to `py-12` so the section feels more compact and punchy
+5. **Reduce gap** — Shrink the column gap from `gap-6` to `gap-4` on mobile
+
+These are purely CSS/class changes — no structural or prop changes needed. The homepage StatBand will also benefit from the same refinements.
 
