@@ -2,9 +2,6 @@ import { useState, useRef } from "react";
 import SEOHead from "@/components/SEOHead";
 import StatBand from "@/components/StatBand";
 import StoryBuildersHowItWorks from "@/components/StoryBuildersHowItWorks";
-import HowItWorksOptionA from "@/components/HowItWorksOptionA";
-import HowItWorksOptionB from "@/components/HowItWorksOptionB";
-import HowItWorksOptionC from "@/components/HowItWorksOptionC";
 import storybuildersHero from "@/assets/storybuilders-hero.png";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -171,11 +168,6 @@ const StoryBuilders = () => {
 
       {/* ─── HOW IT WORKS ─── */}
       <StoryBuildersHowItWorks />
-
-      {/* ─── HOW IT WORKS OPTIONS ─── */}
-      <HowItWorksOptionA />
-      <HowItWorksOptionB />
-      <HowItWorksOptionC />
 
       {/* ─── S2: EMOTIONAL HOOK ─── */}
       <section className="py-16 md:py-[120px]">
