@@ -96,7 +96,7 @@ const StoryBuilders = () => {
       <Header />
 
       {/* ─── S1: HERO ─── */}
-      <section className="relative overflow-hidden min-h-[600px] md:min-h-[500px] lg:min-h-0">
+      <section className="relative overflow-hidden min-h-[600px] md:min-h-[calc(100vh-70px)] lg:min-h-[calc(100vh-80px)]">
         {/* Full-width background image */}
         <img
           src={storybuildersHero}
