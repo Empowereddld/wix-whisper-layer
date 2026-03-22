@@ -1,35 +1,15 @@
 
 
-## Improve StatBand Layout
+## Vertically Center Hero Content on StoryBuilders Page
 
-The section currently feels sparse — the heading sits far left and the bullets float far right with a big gap in between, making the whole band feel disconnected and overly tall.
+The hero text and form currently use top padding (`py-20 md:py-28 lg:py-32`) to push content down, but since the section is full viewport height, this leaves an awkward empty gap below the form fields. The fix is to vertically center the content within the hero.
 
-### Proposed changes (all in `src/components/StatBand.tsx`)
+### Changes (single file: `src/pages/StoryBuilders.tsx`)
 
-1. **Constrain the inner width** — Wrap content in a narrower max-width container (~`max-w-5xl`) so the two columns sit closer together instead of spanning the full container width
-2. **Add a subtle left accent border** on the right-side content block — a thin `border-l-2 border-background/20 pl-8` creates a visual divider connecting the two halves
-3. **Reduce the right column gap** between the two bullet groups from `gap-5` to `gap-4`
-4. **Add more vertical padding on mobile** — bump mobile from `py-10` to `py-12` so it doesn't feel cramped on small screens while keeping desktop at `py-12`
-5. **Close the closing line** — Make "And still wondering where to start." italic and slightly larger (`text-[15px] md:text-[19px] italic`) to act as a soft emotional closer
+1. **Vertically center the content container** — Change the inner content `div` (line 110) from top-padded layout to a flex centered layout:
+   - Remove `py-20 md:py-28 lg:py-32`
+   - Add `min-h-[600px] md:min-h-[calc(100vh-70px)] lg:min-h-[calc(100vh-80px)] justify-center`
+   - Keep horizontal padding and `items-start` for left-aligned text
 
-### Visual result
-```text
-┌──────────────────────────────────────────────────┐
-│  You can see your    │  They may have trouble:   │
-│  child struggling    │  · following stories      │
-│  with language...    │  · answering questions    │
-│                      │  · explaining school      │
-│                      │                           │
-│                      │  You might be:            │
-│                      │  · waiting for therapy    │
-│                      │  · supporting sessions    │
-│                      │                           │
-│                      │  And still wondering...   │
-└──────────────────────────────────────────────────┘
-```
-
-The accent border and tighter max-width will make the layout feel intentional and connected rather than two disconnected pieces floating apart.
-
-### Files to edit
-- `src/components/StatBand.tsx`
+This ensures the text block + form sit in the vertical middle of the hero image rather than floating near the top.
 
