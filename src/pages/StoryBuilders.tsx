@@ -95,16 +95,16 @@ const StoryBuilders = () => {
       <Header />
 
       {/* ─── S1: HERO ─── */}
-      <section className="relative overflow-hidden">
+      <section className="relative overflow-hidden min-h-[600px] md:min-h-[500px] lg:min-h-0">
         {/* Full-width background image */}
         <img
           src={storybuildersHero}
           alt="Mother and son laughing together while using a tablet"
-          className="absolute inset-0 w-full h-full object-cover object-center"
+          className="absolute inset-0 w-full h-full object-cover object-[50%_20%] md:object-[50%_30%] lg:object-[50%_40%]"
           loading="eager"
         />
-        {/* Dark purple overlay — gradient fades from solid left to transparent right */}
-        <div className="absolute inset-0 bg-gradient-to-r from-deep-purple/90 via-deep-purple/70 to-deep-purple/40" />
+        {/* Dark purple overlay — gradient fades from solid left to transparent right; on mobile full overlay for readability */}
+        <div className="absolute inset-0 bg-deep-purple/70 md:bg-transparent md:bg-gradient-to-r md:from-deep-purple/90 md:via-deep-purple/70 md:to-deep-purple/40" />
 
         <div className="relative z-10 container px-6 md:px-8 py-20 md:py-28 lg:py-32 flex flex-col items-start text-left gap-5 max-w-none">
           <div className="max-w-[560px]">
