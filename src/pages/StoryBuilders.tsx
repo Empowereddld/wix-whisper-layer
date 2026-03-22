@@ -163,7 +163,10 @@ const StoryBuilders = () => {
       </section>
 
       {/* ─── STAT BAND ─── */}
-      <StatBand />
+      <StatBand
+        description="They have trouble following stories, answering questions, or explaining what happened at school. You're on a waitlist for speech therapy, or you want to support what they're learning between sessions. But you don't know where to start."
+        hideButton
+      />
 
       {/* ─── S2: EMOTIONAL HOOK ─── */}
       <section className="py-16 md:py-[120px]">
