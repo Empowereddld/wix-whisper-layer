@@ -95,24 +95,31 @@ const StoryBuilders = () => {
       <Header />
 
       {/* ─── S1: HERO ─── */}
-      <section className="relative overflow-hidden bg-deep-purple">
-        <div className="container px-6 md:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-8 lg:gap-12 py-16 md:py-24 lg:py-28">
-            {/* Text side */}
-            <div className="relative z-10 flex flex-col gap-5 text-center lg:text-left items-center lg:items-start">
+      <section className="relative overflow-hidden">
+        {/* Full-width background image */}
+        <img
+          src={storybuildersHero}
+          alt="Mother and son laughing together while using a tablet"
+          className="absolute inset-0 w-full h-full object-cover object-center"
+          loading="eager"
+        />
+        {/* Dark purple overlay */}
+        <div className="absolute inset-0 bg-deep-purple/75" />
+
+        <div className="relative z-10 container px-6 md:px-8 py-20 md:py-28 lg:py-32 flex flex-col items-center text-center gap-5">
               <p className="text-[11px] md:text-[12px] font-bold uppercase tracking-[0.22em] text-white/60">
                 FOR FAMILIES, EDUCATORS &amp; PROFESSIONALS
               </p>
-              <h1 className="text-[32px] md:text-[44px] lg:text-[50px] font-black text-white leading-[1.1] max-w-[540px]">
+              <h1 className="text-[32px] md:text-[44px] lg:text-[50px] font-black text-white leading-[1.1] max-w-[800px]">
                 Help Us Build Something That Could Change How Children Experience Storytelling
               </h1>
-              <p className="text-[14px] md:text-[16px] text-white/80 leading-[1.7] max-w-[480px]">
+              <p className="text-[14px] md:text-[16px] text-white/80 leading-[1.7] max-w-[620px]">
                 Join the StoryBuilders Launch Team and be part of a movement supporting
                 children with Developmental Language Disorder through stories, connection,
                 and confidence.
               </p>
               {!wl.joined ? (
-                <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row flex-wrap gap-3 w-full max-w-[480px] mt-1">
+                <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row flex-wrap gap-3 w-full max-w-[520px] mt-1">
                   <Input
                     placeholder="Your name"
                     value={name}
@@ -151,19 +158,6 @@ const StoryBuilders = () => {
                 </div>
               )}
               {wl.error && <p className="text-white/70 text-[13px]">{wl.error}</p>}
-            </div>
-
-            {/* Image side */}
-            <div className="relative rounded-xl overflow-hidden h-[300px] md:h-[400px] lg:h-[480px]">
-              <img
-                src={storybuildersHero}
-                alt="Mother and son laughing together while using a tablet"
-                className="w-full h-full object-cover object-center"
-                loading="eager"
-              />
-              <div className="absolute inset-0 bg-deep-purple/20" />
-            </div>
-          </div>
         </div>
       </section>
 
