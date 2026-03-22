@@ -1,3 +1,4 @@
+import React from "react";
 import { useScrollFadeIn } from "@/hooks/useScrollFadeIn";
 
 const steps = [
