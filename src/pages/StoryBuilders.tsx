@@ -162,6 +162,9 @@ const StoryBuilders = () => {
         </div>
       </section>
 
+      {/* ─── STAT BAND ─── */}
+      <StatBand />
+
       {/* ─── S2: EMOTIONAL HOOK ─── */}
       <section className="py-16 md:py-[120px]">
         <FadeSection className="max-w-[650px] mx-auto px-6 md:px-8 text-center">
