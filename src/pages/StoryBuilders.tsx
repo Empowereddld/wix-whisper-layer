@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import SEOHead from "@/components/SEOHead";
 import StatBand from "@/components/StatBand";
+import StoryBuildersHowItWorks from "@/components/StoryBuildersHowItWorks";
 import storybuildersHero from "@/assets/storybuilders-hero.png";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -164,6 +165,9 @@ const StoryBuilders = () => {
 
       {/* ─── STAT BAND ─── */}
       <StatBand />
+
+      {/* ─── HOW IT WORKS ─── */}
+      <StoryBuildersHowItWorks />
 
       {/* ─── S2: EMOTIONAL HOOK ─── */}
       <section className="py-16 md:py-[120px]">
