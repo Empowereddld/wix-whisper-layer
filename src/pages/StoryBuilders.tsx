@@ -164,7 +164,7 @@ const StoryBuilders = () => {
       </section>
 
       {/* ─── STAT BAND ─── */}
-      <StatBand />
+      <StoryBuildersStatBand />
 
       {/* ─── HOW IT WORKS ─── */}
       <StoryBuildersHowItWorks />
