@@ -112,7 +112,7 @@ const StoryBuilders = () => {
                 FOR FAMILIES, EDUCATORS &amp; PROFESSIONALS
               </p>
               <h1 className="text-[32px] md:text-[44px] lg:text-[50px] font-black text-white leading-[1.1] mt-4">
-                The First App Built For Kids With DLD
+                The First App Built<br className="hidden md:inline lg:hidden" /> For Kids With DLD
               </h1>
               <p className="text-[14px] md:text-[16px] text-white/80 leading-[1.7] mt-4">
                 Join the StoryBuilders Launch Team and help us bring daily 20-minute story sessions that build vocabulary, comprehension, and confidence to children with DLD worldwide.
