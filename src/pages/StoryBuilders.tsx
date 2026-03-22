@@ -115,7 +115,7 @@ const StoryBuilders = () => {
                 The First App Built<br className="hidden md:inline lg:hidden" /> For Kids With DLD
               </h1>
               <p className="text-[14px] md:text-[16px] text-white/80 leading-[1.7] mt-4">
-                Join the StoryBuilders Launch Team and help us bring daily 20-minute story sessions that build vocabulary, comprehension, and confidence to children with DLD worldwide.
+                Join the Story Builders Launch Team and help us bring daily 20-minute story sessions that build vocabulary, comprehension, and confidence to children with DLD worldwide.
               </p>
               {!wl.joined ? (
                 <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row flex-wrap gap-3 w-full max-w-[520px] mt-5">
