@@ -107,7 +107,7 @@ const StoryBuilders = () => {
         {/* Dark purple overlay — gradient fades from solid left to transparent right; on mobile full overlay for readability */}
         <div className="absolute inset-0 bg-deep-purple/70 md:bg-transparent md:bg-gradient-to-r md:from-deep-purple/90 md:via-deep-purple/70 md:to-deep-purple/40" />
 
-        <div className="relative z-10 container px-6 md:px-8 py-20 md:py-28 lg:py-32 flex flex-col items-start text-left gap-5 max-w-none">
+        <div className="relative z-10 container px-6 md:px-8 min-h-[600px] md:min-h-[calc(100vh-70px)] lg:min-h-[calc(100vh-80px)] flex flex-col justify-center items-start text-left gap-5 max-w-none">
           <div className="max-w-[560px]">
               <p className="text-[11px] md:text-[12px] font-bold uppercase tracking-[0.22em] text-white/60">
                 FOR FAMILIES, EDUCATORS &amp; PROFESSIONALS
