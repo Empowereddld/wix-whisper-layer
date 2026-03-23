@@ -36,6 +36,10 @@ const BookBirthdayPartySection = () => {
                 Buy on Amazon
               </a>
             </div>
+            <p className="mt-3 text-[12px] text-muted-foreground">
+              Also available in{" "}
+              <a href="https://www.amazon.co.uk/Dan-Daria-Mynd-Barti-Pen-Blwydd/dp/B0FRXSCBZN/ref=sr_1_2?crid=1VN0HAPAN2G3E&dib=eyJ2IjoiMSJ9.LTQoy-0VGe5yMAEBGTNgdWDz9-n8sKJmbU1v2QbUCdY.hXPerJv5p9ofaS4H3_A5ivb7VT6x37e0100eZ7kw5vU&dib_tag=se&keywords=Dan+Daria+Byw+Bywyd+Gydag+Anhwylder+Datblygu+Iaith&qid=1774280656&sprefix=dan+daria+byw+bywyd+gydag+anhwylder+datblygu+iaith%2Caps%2C392&sr=8-2" target="_blank" rel="noopener noreferrer" className="underline hover:text-primary transition-colors">Welsh</a>.
+            </p>
           </div>
 
           {/* Image */}
