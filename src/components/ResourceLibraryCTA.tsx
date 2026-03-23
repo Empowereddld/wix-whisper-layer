@@ -26,7 +26,7 @@ const ResourceLibraryCTA = () => {
             </h2>
             <p className="text-white/70 text-[15px] leading-relaxed max-w-md">
               Guides, posters, and tools to support children with DLD at home, in therapy, and in the classroom.
-              <span className="block mt-1 text-white/50 text-sm">All free. All in one place.</span>
+              <span className="block mt-1 text-white/50 text-sm">All in one place.</span>
             </p>
           </div>
 
