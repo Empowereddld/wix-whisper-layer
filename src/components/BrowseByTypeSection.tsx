@@ -49,7 +49,7 @@ const BrowseByTypeSection = () => {
             Find What You Need
           </h2>
           <p className="text-[15px] md:text-[16px] text-muted-foreground leading-relaxed max-w-[500px]">
-            Each resource is free and designed specifically for you.
+            Each resource is designed specifically for you.
           </p>
         </div>
 
