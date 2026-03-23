@@ -20,7 +20,7 @@ const categories = [
   "Half-day or full-day sessions tailored to your team. Build practical skills your staff can use immediately in classrooms, therapy rooms, and beyond.",
   image: workshopsImg,
   cta: "Explore Workshops",
-  href: "#contact"
+  href: "/for-organizations#partnership-packages"
 },
 {
   label: "CONSULTATION",
