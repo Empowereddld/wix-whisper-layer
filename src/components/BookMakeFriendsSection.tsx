@@ -45,6 +45,11 @@ const BookMakeFriendsSection = () => {
                 Buy on Amazon
               </a>
             </div>
+            <p className="mt-3 text-[12px] text-muted-foreground">
+              Also available in{" "}
+              <a href="https://www.amazon.ca/Dan-Daria-Deviennent-Amis-d%C3%A9veloppemental/dp/B0G4DGGN5V/ref=sr_1_1?crid=W0OMSGQXMAAD&dib=eyJ2IjoiMSJ9.NfrlOBmyLaEPz9mzEsRvtw._mpkkkLj8kbld0YyZC5tHwTTJTnglgjYGrgN19jVLkM&dib_tag=se&keywords=Dan+et+Daria+Deviennet+Amis+Vivre+avec+un+trouble&qid=1774280603&s=books&sprefix=dan+et+daria+deviennet+amis+vivre+avec+un+trouble%2Cstripbooks%2C96&sr=1-1" target="_blank" rel="noopener noreferrer" className="underline hover:text-primary transition-colors">French</a> and{" "}
+              <a href="https://www.amazon.co.uk/Dan-Daria-Gwneud-Ffrindiau-Anhwylder/dp/B0FR9K8JJT/ref=sr_1_1?crid=1VN0HAPAN2G3E&dib=eyJ2IjoiMSJ9.LTQoy-0VGe5yMAEBGTNgdWDz9-n8sKJmbU1v2QbUCdY.hXPerJv5p9ofaS4H3_A5ivb7VT6x37e0100eZ7kw5vU&dib_tag=se&keywords=Dan+Daria+Byw+Bywyd+Gydag+Anhwylder+Datblygu+Iaith&qid=1774280656&sprefix=dan+daria+byw+bywyd+gydag+anhwylder+datblygu+iaith%2Caps%2C392&sr=8-1" target="_blank" rel="noopener noreferrer" className="underline hover:text-primary transition-colors">Welsh</a>.
+            </p>
           </div>
         </div>
       </div>
