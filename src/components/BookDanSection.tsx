@@ -47,6 +47,9 @@ const BookDanSection = () => {
               <a href="https://www.amazon.co.uk/Dan-Awyren-Bapur-Anhwylder-Datblygu/dp/B0FR8Y17HG/ref=sr_1_1?crid=DFQWOE2BGPZX&dib=eyJ2IjoiMSJ9.tJFbtuAaVpz6uTWV_WQRkA.tnkabk_Yi1bJA3eVR92gJoziisxXlPI3c9gn3-nmhHQ&dib_tag=se&keywords=Dan+A%27r+Awyren+Bapur+Byw+Bywyd+Gydag+Anhwylder+Datblygu+Iaith&qid=1774280466&sprefix=dan+a%27r+awyren+bapur+byw+bywyd+gydag+anhwylder+datblygu+iaith%2Caps%2C363&sr=8-1" target="_blank" rel="noopener noreferrer" className="underline hover:text-primary transition-colors">Welsh</a> and{" "}
               <a href="https://www.amazon.com/Paper-Airplane-Persian-Camesha-Russell/dp/1069763616" target="_blank" rel="noopener noreferrer" className="underline hover:text-primary transition-colors">Persian</a>.
             </p>
+            <p className="mt-1 text-[12px] text-muted-foreground italic">
+              Chinese and Arabic coming soon!
+            </p>
           </div>
         </div>
       </div>
