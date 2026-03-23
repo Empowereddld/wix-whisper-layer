@@ -2,7 +2,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import WorkWithUsHero from "@/components/WorkWithUsHero";
 import WorkWithUsBrowseSection from "@/components/WorkWithUsBrowseSection";
-import DoesSoundFamiliarSection from "@/components/DoesSoundFamiliarSection";
+import WorkWithUsWhoSection from "@/components/WorkWithUsWhoSection";
 import WhatMakesUsDifferentSection from "@/components/WhatMakesUsDifferentSection";
 import WorkWithUsSocialProof from "@/components/WorkWithUsSocialProof";
 import ContactSection from "@/components/ContactSection";
@@ -19,7 +19,7 @@ const WorkWithUs = () => {
       <Header />
       <WorkWithUsHero />
       <WorkWithUsBrowseSection />
-      <DoesSoundFamiliarSection />
+      <WorkWithUsWhoSection />
       <WhatMakesUsDifferentSection />
       <WorkWithUsSocialProof />
       <ContactSection />
