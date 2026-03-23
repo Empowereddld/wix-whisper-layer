@@ -22,6 +22,7 @@ const WhoWeServe = () => {
         <ChoosePathSection />
         <ShopGlobalCommunity />
         <RealityOfDLDSection />
+        <ResourceBooksSection />
         <EveryChildSection />
         <ChoosePathCTA />
       </main>
