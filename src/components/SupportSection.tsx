@@ -63,8 +63,9 @@ const features = [
     icon: ShoppingCart,
     title: "DLD Awareness Merch",
     description: "Stuffies, bracelets, action figures, and t-shirts celebrating kids with DLD.",
-    cta: "SHOP MERCH",
+    cta: "COMING SOON",
     href: "/shop",
+    comingSoon: true,
   },
 ];
 
@@ -95,7 +96,11 @@ const SupportSection = () => {
               <f.icon className="w-12 h-12 text-foreground stroke-[1.2] mb-5" />
               <h3 className="text-[18px] font-bold text-foreground mb-2">{f.title}</h3>
               <p className="text-[14px] text-muted-foreground leading-[1.65] mb-5 flex-1">{f.description}</p>
-              {"external" in f && f.external ? (
+              {"comingSoon" in f && f.comingSoon ? (
+                <span className="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-[0.14em] text-muted-foreground cursor-default">
+                  {f.cta}
+                </span>
+              ) : "external" in f && f.external ? (
                 <a
                   href={f.href}
                   target="_blank"
