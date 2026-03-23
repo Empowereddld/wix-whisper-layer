@@ -4,6 +4,7 @@ import AboutDLDHero from "@/components/AboutDLDHero";
 import WhatIsDLDSection from "@/components/WhatIsDLDSection";
 import DLDFaqSection, { faqs } from "@/components/DLDFaqSection";
 import ResourceLibraryCTA from "@/components/ResourceLibraryCTA";
+import ResourceBooksSection from "@/components/ResourceBooksSection";
 import SEOHead from "@/components/SEOHead";
 
 const faqJsonLd = {
