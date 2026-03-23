@@ -40,6 +40,7 @@ const Resources = () => {
       <main>
         <ResourcesHero />
         <BrowseByTypeSection />
+        <ResourceBooksSection />
         <ShopGlobalCommunity />
         <EveryChildSection />
         <ChoosePathCTA />
