@@ -4,6 +4,7 @@ import AboutDLDHero from "@/components/AboutDLDHero";
 import WhatIsDLDSection from "@/components/WhatIsDLDSection";
 import DLDFaqSection, { faqs } from "@/components/DLDFaqSection";
 import ResourceLibraryCTA from "@/components/ResourceLibraryCTA";
+import ResourceBooksSection from "@/components/ResourceBooksSection";
 import SEOHead from "@/components/SEOHead";
 
 const faqJsonLd = {
@@ -35,6 +36,7 @@ const AboutDLD = () => {
       <Header />
       <main>
         <AboutDLDHero />
+        <ResourceBooksSection />
         <div className="bg-foreground py-5 md:py-6 lg:py-7">
           <div className="container px-6 md:px-8">
             <span className="text-background text-[20px] md:text-[22px] lg:text-[24px] font-bold tracking-[0.18em]">What is Developmental Language Disorder?
