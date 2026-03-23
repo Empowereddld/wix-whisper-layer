@@ -55,7 +55,7 @@ const Header = () => {
 
   return (
     <header className="sticky top-0 z-50 h-[70px] lg:h-[80px] bg-background backdrop-blur-md border-b border-border/20">
-      <div className="max-w-[1200px] mx-auto px-6 lg:px-10 h-full flex items-center justify-between gap-6">
+      <div className="max-w-[1400px] mx-auto px-4 lg:px-6 h-full flex items-center justify-between gap-6">
         <Link to="/" className="flex-shrink-0">
           <img src={logoImage} alt="EmpoweredDLD" className="h-[32px] lg:h-[38px] w-auto" />
         </Link>
