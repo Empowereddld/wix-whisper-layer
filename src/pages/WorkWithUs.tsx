@@ -19,7 +19,7 @@ const WorkWithUs = () => {
       <Header />
       <WorkWithUsHero />
       <WorkWithUsBrowseSection />
-      <DoesSoundFamiliarSection />
+      <WorkWithUsWhoSection />
       <WhatMakesUsDifferentSection />
       <WorkWithUsSocialProof />
       <ContactSection />
