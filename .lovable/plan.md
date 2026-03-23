@@ -1,14 +1,16 @@
 
 
-## Add "Coming Soon" Languages to BookDanSection
+## Add Language Links to BookMakeFriendsSection
 
-**Change**: In `src/components/BookDanSection.tsx`, after the existing language links paragraph (line 49), add a new line:
+**Change**: In `src/components/BookMakeFriendsSection.tsx`, after the "Buy on Amazon" button `<div>`, add:
 
 ```tsx
-<p className="mt-1 text-[12px] text-muted-foreground italic">
-  Chinese and Arabic coming soon!
+<p className="mt-3 text-[12px] text-muted-foreground">
+  Also available in{" "}
+  <a href="https://www.amazon.ca/Dan-Daria-Deviennent-Amis-d%C3%A9veloppemental/dp/B0G4DGGN5V/..." target="_blank" rel="noopener noreferrer" className="underline hover:text-primary transition-colors">French</a> and{" "}
+  <a href="https://www.amazon.co.uk/Dan-Daria-Gwneud-Ffrindiau-Anhwylder/dp/B0FR9K8JJT/..." target="_blank" rel="noopener noreferrer" className="underline hover:text-primary transition-colors">Welsh</a>.
 </p>
 ```
 
-One file, one addition. Italic text to differentiate from the active links above.
+Same styling as the BookDanSection language links. One file, one addition.
 
