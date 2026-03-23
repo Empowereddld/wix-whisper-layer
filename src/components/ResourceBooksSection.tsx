@@ -25,7 +25,9 @@ const ResourceBooksSection = () => {
               Stories That Help Children With DLD Feel Seen
             </h2>
             <p className="text-[14px] md:text-[15px] text-muted-foreground leading-relaxed mb-8 max-w-[480px]">
-              Meet Dan, Daria, Ming, and Millen — four characters living with DLD who learn to understand their diagnosis, find the right support, and self-advocate with confidence. Trusted by families, therapists, and educators around the world.
+              Meet Dan, Daria, Ming, and Millen — four children with DLD who are learning to understand themselves, navigate challenges, and advocate for what they need.
+              <br /><br />
+              Trusted by families, therapists, and educators around the world.
             </p>
             <a
               href="https://mybook.to/nwINcA"
