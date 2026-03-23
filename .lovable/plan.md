@@ -1,10 +1,14 @@
 
 
-## Add Welsh and Persian Links to BookDanSection
+## Add "Coming Soon" Languages to BookDanSection
 
-**Change**: Update the language links line in `src/components/BookDanSection.tsx` (lines 42-47) to include Welsh and Persian after the existing French, Spanish, and Czech links.
+**Change**: In `src/components/BookDanSection.tsx`, after the existing language links paragraph (line 49), add a new line:
 
-Updated text will read: "Also available in French, Spanish, Czech, Welsh and Persian."
+```tsx
+<p className="mt-1 text-[12px] text-muted-foreground italic">
+  Chinese and Arabic coming soon!
+</p>
+```
 
-Each language hyperlinked to its respective Amazon listing, opening in new tabs. One file, one edit.
+One file, one addition. Italic text to differentiate from the active links above.
 
