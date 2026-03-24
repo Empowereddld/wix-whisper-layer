@@ -1,21 +1,12 @@
 
 
-## Add "Books" Card to the Resources Page
+## Link "Implementation Kits" to Implementation Packages section on For Educators
 
-### Layout
+### Changes (2 files)
 
-Full-width two-column card below `BrowseByTypeSection` — book collection photo on the left, copy + CTA on the right. Stacks vertically on mobile.
+1. **`src/components/ImplementationPackagesSection.tsx`** — Add `id="implementation-packages"` to the root `<section>` element.
 
-### Copy
+2. **`src/components/SupportSection.tsx`** — Change `href` on line 24 from `"/for-educators"` to `"/for-educators#implementation-packages"`.
 
-- **Tag**: OUR BOOKS
-- **Heading**: "Stories That Help Children With DLD Feel Seen"
-- **Body**: "Meet Dan, Daria, Ming, and Millen — four characters living with DLD who learn to understand their diagnosis, find the right support, and self-advocate with confidence. Trusted by families, therapists, and educators around the world."
-- **CTA button**: "Shop on Amazon" → `https://mybook.to/nwINcA` (new tab)
-
-### Changes
-
-1. **Save uploaded image** as `src/assets/resource-books-collection.png`
-2. **Create `src/components/ResourceBooksSection.tsx`** — Two-column layout matching site conventions (purple accents, rounded card, muted background)
-3. **Edit `src/pages/Resources.tsx`** — Insert `ResourceBooksSection` between `BrowseByTypeSection` and `ShopGlobalCommunity`
+The existing scroll-to-hash behavior (100ms delay smooth scroll) will handle scrolling to the section automatically.
 
