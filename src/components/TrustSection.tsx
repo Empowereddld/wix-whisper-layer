@@ -35,7 +35,7 @@ const TrustSection = () => {
               Created by an SLP and teacher
             </h2>
             <p className="text-muted-foreground text-[14px] mb-3.5 leading-[1.65] max-w-[420px]">
-              We're Jinean and Camesha. We believe children need to understand how their brain works. A great tool for that is seeing themselves in stories.
+              We're Jinean and Camesha. We believe children need to understand how their brains work. A great tool for that is seeing themselves in stories.
             </p>
             <p className="text-muted-foreground text-[14px] mb-5 leading-[1.65] max-w-[420px]">
               When we visited our local library, we found over 600 books on autism, over 100 on ADHD, and zero on DLD. We built Empowered DLD to change that.
