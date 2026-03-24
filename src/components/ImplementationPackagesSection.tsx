@@ -2,7 +2,7 @@ const packages = [
   {
     name: "Resource Package",
     price: "$1,500",
-    bestFor: "Schools that want high-quality DLD materials without training.",
+    bestFor: "Schools that want high-quality DLD materials.",
     items: [
       "Full DLD book series (print + digital)",
       "Discussion guides for each book",
