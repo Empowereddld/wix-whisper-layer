@@ -56,7 +56,7 @@ const features = [
     icon: Play,
     title: "Free YouTube Course",
     description: "Video lessons teaching families and educators how to support children with DLD.",
-    cta: "WATCH NOW",
+    cta: "LEARN MORE",
     href: "/resources/free-course",
   },
   {
