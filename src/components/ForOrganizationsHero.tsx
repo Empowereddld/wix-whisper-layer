@@ -13,7 +13,7 @@ const ForOrganizationsHero = () => {
               </span>
             </div>
             <h1 className="text-[30px] md:text-[36px] lg:text-[48px] font-black text-foreground leading-[1.12] mb-4 md:mb-5 max-w-[500px]">
-              DLD Support for Your Organization
+              For Organizations and Non-Profits
             </h1>
             <p className="text-[13px] md:text-[14px] lg:text-[15px] text-muted-foreground leading-[1.7] mb-6 md:mb-8 max-w-[500px]">
               We train your staff and educate the families you serve about Developmental Language Disorder. From one-time workshops to comprehensive partnerships.
