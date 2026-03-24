@@ -10,7 +10,7 @@ const categories = [
   description:
   "Conference sessions, staff development, and parent nights that inspire action. Practical, engaging talks on DLD awareness and classroom strategies from real-world experience.",
   image: speakingImg,
-  cta: "Book a Speaker",
+  cta: "Pricing",
   href: "#contact"
 },
 {
