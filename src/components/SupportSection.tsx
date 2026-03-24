@@ -27,7 +27,7 @@ const features = [
     icon: Mic,
     title: "Life with DLD Podcast",
     description: "Animated, candid talk with Dan and Daria about how it feels to experience life with DLD and what helps.",
-    cta: "LISTEN NOW",
+    cta: "LEARN MORE",
     href: "/resources/podcasts",
   },
   {
