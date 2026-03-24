@@ -11,7 +11,7 @@ const features = [
   },
   {
     icon: Download,
-    title: "Free Downloadable Resources",
+    title: "Downloadable Resources",
     description: "Printable guides, posters, discussion prompts, and parent resources to use immediately.",
     cta: "DOWNLOAD NOW",
     href: "/resources/downloadables",
