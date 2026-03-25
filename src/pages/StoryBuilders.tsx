@@ -1,7 +1,6 @@
 import { useState, useRef } from "react";
 import SEOHead from "@/components/SEOHead";
 import StoryBuildersStatBand from "@/components/StoryBuildersStatBand";
-import StoryBuildersHowItWorks from "@/components/StoryBuildersHowItWorks";
 import storybuildersHero from "@/assets/storybuilders-hero.png";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -12,21 +11,11 @@ import { useScrollFadeIn } from "@/hooks/useScrollFadeIn";
 import { useStorybuildersWaitlist } from "@/hooks/useStorybuildersWaitlist";
 import { toast } from "sonner";
 import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import {
-  BookOpen,
-  RefreshCw,
-  BarChart3,
-  Layers,
-  GraduationCap,
-  BrainCircuit,
-  Users,
   Copy,
   Check,
+  Megaphone,
+  Wrench,
+  Heart,
 } from "lucide-react";
 
 /* ─── Milestones ─── */
@@ -38,14 +27,6 @@ const milestones = [
   { invites: 10, label: "Invite 10 storytellers", reward: "Founder pricing at $5.99/month for life. Available to the first 100 people who reach this milestone." },
   { invites: -1, label: "Top 50 contributors", reward: "Recognized as a Founding Family or Founding Professional on our website (opt-in)" },
   { invites: -2, label: "Top 10 contributors", reward: "Dan and Daria t-shirt and a book signed by the voices of Dan and Daria" },
-];
-
-const faqs = [
-  { q: "What is StoryBuilders?", a: "StoryBuilders is an interactive storytelling app designed to support children with Developmental Language Disorder. It helps children understand, retell, and create stories with structured support." },
-  { q: "Who is the Launch Team for?", a: "The Launch Team is for families, educators, speech-language professionals, and anyone who believes in supporting children with language difficulties through storytelling." },
-  { q: "Is there a cost to join?", a: "Joining the Launch Team is completely free. You will also have the opportunity to unlock exclusive rewards by inviting others." },
-  { q: "When will StoryBuilders launch?", a: "We are currently in development. Launch Team members will be the first to know when early access becomes available." },
-  { q: "How does the referral system work?", a: "When you join, you receive a unique link. Each person who joins through your link counts toward your milestone progress and unlocks rewards." },
 ];
 
 const COLLECTIVE_GOAL = 4000;
@@ -98,14 +79,12 @@ const StoryBuilders = () => {
 
       {/* ─── S1: HERO ─── */}
       <section className="relative overflow-hidden min-h-[600px] md:min-h-[calc(100vh-70px)] lg:min-h-[calc(100vh-80px)]">
-        {/* Full-width background image */}
         <img
           src={storybuildersHero}
           alt="Mother and son laughing together while using a tablet"
           className="absolute inset-0 w-full h-full object-cover object-[82%_20%] md:object-[50%_30%] lg:object-[50%_40%]"
           loading="eager"
         />
-        {/* Dark purple overlay — gradient fades from solid left to transparent right; on mobile full overlay for readability */}
         <div className="absolute inset-0 bg-deep-purple/70 md:bg-transparent md:bg-gradient-to-r md:from-deep-purple/90 md:via-deep-purple/70 md:to-deep-purple/40" />
 
         <div className="relative z-10 container px-6 md:px-8 min-h-[600px] md:min-h-[calc(100vh-70px)] lg:min-h-[calc(100vh-80px)] flex flex-col justify-center items-start text-left gap-5 max-w-none">
@@ -166,15 +145,18 @@ const StoryBuilders = () => {
       {/* ─── STAT BAND ─── */}
       <StoryBuildersStatBand />
 
-      {/* ─── HOW IT WORKS ─── */}
-      <StoryBuildersHowItWorks />
-
-      {/* ─── S2: EMOTIONAL HOOK ─── */}
+      {/* ─── S2: HOOK ─── */}
       <section className="py-16 md:py-[120px]">
         <FadeSection className="max-w-[650px] mx-auto px-6 md:px-8 text-center">
-          <p className="text-[16px] text-foreground leading-[1.7]">
-            For so many children, telling a story about their day is not simple. Words
-            get stuck. Details get lost. And over time, confidence starts to fade.
+          <p className="text-[16px] md:text-[17px] text-foreground leading-[1.8]">
+            For many children, telling a story about their day is not simple.
+          </p>
+          <p className="text-[16px] md:text-[17px] text-foreground leading-[1.8] mt-4">
+            Words get stuck.<br />
+            Details get lost.<br />
+            And over time, confidence starts to fade.
+          </p>
+          <p className="text-[16px] md:text-[17px] text-foreground leading-[1.8] mt-4 font-semibold">
             StoryBuilders was created to change that.
           </p>
         </FadeSection>
@@ -185,54 +167,29 @@ const StoryBuilders = () => {
       {/* ─── S3: WHAT IS STORYBUILDERS ─── */}
       <section className="bg-muted py-16 md:py-[120px]">
         <div className="container px-6 md:px-8">
-          <FadeSection className="text-center mb-12 md:mb-16">
-            <h2 className="text-[32px] md:text-[42px] lg:text-[46px] font-bold tracking-tight text-foreground">
+          <FadeSection className="max-w-[650px] mx-auto">
+            <h2 className="text-[32px] md:text-[42px] lg:text-[46px] font-bold tracking-tight text-foreground text-center mb-6">
               What Is StoryBuilders
             </h2>
-            <p className="mt-5 text-[15px] md:text-[16px] text-muted-foreground leading-[1.7] max-w-[650px] mx-auto">
-              StoryBuilders is an interactive app designed to help children understand
-              and retell stories, build vocabulary and sentence structure, share their
-              ideas with more confidence, and feel proud of how they communicate. It was
-              built for children with Developmental Language Disorder and supports many
-              other learners too.
+            <p className="text-[15px] md:text-[16px] text-muted-foreground leading-[1.7] mb-6">
+              StoryBuilders is an interactive app designed to help children:
             </p>
-          </FadeSection>
-
-          {/* Steps */}
-          <FadeSection delay={100}>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-[900px] mx-auto mb-12 md:mb-16">
+            <ul className="space-y-3 mb-6">
               {[
-                { num: "1", title: "Pick a Story", icon: BookOpen },
-                { num: "2", title: "Learn Through Repetition", icon: RefreshCw },
-                { num: "3", title: "Track Progress Together", icon: BarChart3 },
-              ].map((step) => (
-                <div key={step.num} className="bg-background rounded-xl border border-border p-6 text-center premium-card">
-                  <div className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center mx-auto mb-3 text-sm font-bold">
-                    {step.num}
-                  </div>
-                  <step.icon className="w-6 h-6 text-primary mx-auto mb-2" />
-                  <p className="font-semibold text-foreground text-[15px]">{step.title}</p>
-                </div>
+                "Understand and retell stories",
+                "Build vocabulary and sentence structure",
+                "Share their ideas with more confidence",
+                "Feel proud of how they communicate",
+              ].map((item) => (
+                <li key={item} className="flex items-start gap-3">
+                  <Check className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+                  <span className="text-[15px] md:text-[16px] text-foreground leading-[1.6]">{item}</span>
+                </li>
               ))}
-            </div>
-          </FadeSection>
-
-          {/* Feature tiles */}
-          <FadeSection delay={200}>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-5 max-w-[900px] mx-auto">
-              {[
-                { icon: Layers, title: "Builds Story Framework", desc: "Helps children understand the structure behind every story." },
-                { icon: GraduationCap, title: "Vocabulary Learning", desc: "Teaches new words in context through repeated, meaningful exposure." },
-                { icon: BrainCircuit, title: "Metacognitive Checks", desc: "Encourages children to reflect on their own understanding." },
-                { icon: Users, title: "Family Dashboard", desc: "Lets families and professionals track growth together." },
-              ].map((f) => (
-                <div key={f.title} className="bg-background rounded-xl border border-border p-5 premium-card">
-                  <f.icon className="w-5 h-5 text-primary mb-2" />
-                  <p className="font-semibold text-foreground text-[14px] mb-1">{f.title}</p>
-                  <p className="text-muted-foreground text-[13px] leading-[1.6]">{f.desc}</p>
-                </div>
-              ))}
-            </div>
+            </ul>
+            <p className="text-[15px] md:text-[16px] text-muted-foreground leading-[1.7]">
+              It was designed for children with Developmental Language Disorder and can be used at home, in therapy, or in the classroom.
+            </p>
           </FadeSection>
         </div>
       </section>
@@ -241,18 +198,29 @@ const StoryBuilders = () => {
 
       {/* ─── S4: WHY JOIN ─── */}
       <section className="py-16 md:py-[120px]">
-        <FadeSection className="max-w-[650px] mx-auto px-6 md:px-8 text-center">
-          <h2 className="text-[32px] md:text-[42px] lg:text-[46px] font-bold tracking-tight text-foreground mb-6">
-            Why Join the Launch Team
-          </h2>
-          <p className="text-[15px] md:text-[16px] text-muted-foreground leading-[1.7]">
-            We are not just launching an app. We are building something alongside
-            families, educators, and professionals who understand how important this
-            work is. When you join, you are helping spread awareness of DLD, shape a
-            tool that will support thousands of children, and be part of something
-            meaningful from the very beginning.
-          </p>
-        </FadeSection>
+        <div className="container px-6 md:px-8">
+          <FadeSection className="text-center mb-12 md:mb-16">
+            <h2 className="text-[32px] md:text-[42px] lg:text-[46px] font-bold tracking-tight text-foreground">
+              Why Join the Launch Team
+            </h2>
+          </FadeSection>
+          <FadeSection delay={100}>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-[900px] mx-auto">
+              {[
+                { icon: Megaphone, title: "Spread awareness of DLD" },
+                { icon: Wrench, title: "Help shape a tool used across home, school, and therapy" },
+                { icon: Heart, title: "Be part of something meaningful from the beginning" },
+              ].map((card) => (
+                <div key={card.title} className="bg-muted rounded-xl border border-border p-6 text-center premium-card">
+                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                    <card.icon className="w-5 h-5 text-primary" />
+                  </div>
+                  <p className="text-[14px] md:text-[15px] text-foreground font-semibold leading-[1.5]">{card.title}</p>
+                </div>
+              ))}
+            </div>
+          </FadeSection>
+        </div>
       </section>
 
       <div className="w-16 h-px bg-border mx-auto" />
@@ -266,12 +234,11 @@ const StoryBuilders = () => {
             </h2>
           </FadeSection>
           <FadeSection delay={100}>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 max-w-[900px] mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-[900px] mx-auto">
               {[
-                "Join the StoryBuilders Launch Team",
-                "Invite other storytellers to join",
-                "Unlock meaningful milestones along the way",
-                "Help more children feel seen, supported, and understood",
+                "Join the Launch Team",
+                "Invite other storytellers",
+                "Unlock meaningful milestones",
               ].map((step, i) => (
                 <div key={i} className="bg-background rounded-xl border border-border p-6 text-center premium-card">
                   <div className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center mx-auto mb-4 text-[15px] font-bold">
@@ -296,7 +263,6 @@ const StoryBuilders = () => {
             </h2>
           </FadeSection>
 
-          {/* Milestone ladder */}
           <FadeSection delay={100}>
             <div className="max-w-[600px] mx-auto space-y-4">
               {milestones.map((m, i) => {
@@ -419,32 +385,7 @@ const StoryBuilders = () => {
 
       <div className="w-16 h-px bg-border mx-auto" />
 
-      {/* ─── S9: FAQ ─── */}
-      <section className="bg-muted py-16 md:py-[120px]">
-        <div className="container px-6 md:px-8">
-          <FadeSection className="max-w-[720px] mx-auto border border-border rounded-2xl p-8 md:p-12 bg-background">
-            <h2 className="font-bold text-[28px] md:text-[38px] lg:text-[42px] leading-[1.1] tracking-tight text-foreground mb-8 md:mb-10">
-              Frequently Asked Questions
-            </h2>
-            <Accordion type="single" collapsible className="w-full">
-              {faqs.map((faq, i) => (
-                <AccordionItem key={i} value={`faq-${i}`} className="border-border">
-                  <AccordionTrigger className="font-sans text-[15px] md:text-[16px] font-bold text-foreground text-left py-5 hover:no-underline tracking-tight">
-                    {faq.q}
-                  </AccordionTrigger>
-                  <AccordionContent className="text-[13px] md:text-[14px] text-muted-foreground leading-[1.8] pb-5">
-                    {faq.a}
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
-          </FadeSection>
-        </div>
-      </section>
-
-      <div className="w-16 h-px bg-border mx-auto" />
-
-      {/* ─── S10: CLOSING CTA + FORM ─── */}
+      {/* ─── S9: CLOSING CTA + FORM ─── */}
       <section ref={formRef} className="bg-deep-purple py-20 md:py-28 lg:py-32">
         <div className="container px-6 md:px-8 flex flex-col items-center text-center gap-6">
           <h2 className="text-[28px] md:text-[42px] lg:text-[48px] font-black text-white leading-[1.1] max-w-[800px]">
