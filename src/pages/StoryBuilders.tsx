@@ -146,15 +146,10 @@ const StoryBuilders = () => {
       <StoryBuildersStatBand />
 
       {/* ─── S2: HOOK ─── */}
-      <section className="bg-lavender py-[100px] md:py-[180px]">
+      <section className="bg-gradient-to-b from-white to-lavender py-[100px] md:py-[180px]">
         <FadeSection className="max-w-[900px] mx-auto px-6 md:px-8 text-center">
           <p className="text-[22px] md:text-[34px] lg:text-[38px] text-foreground leading-[1.6] md:leading-[1.55] font-normal">
-            For many children, telling a story about their day is not simple.
-          </p>
-          <p className="text-[22px] md:text-[34px] lg:text-[38px] text-foreground leading-[1.6] md:leading-[1.55] font-normal mt-8 md:mt-12">
-            <span className="text-primary font-medium">Words get stuck.</span><br />
-            <span className="text-primary font-medium">Details get lost.</span><br />
-            And over time, <span className="text-primary font-medium">confidence starts to fade.</span>
+            For many children, telling a story about their day is not simple. <span className="text-primary font-medium">Words get stuck.</span> <span className="text-primary font-medium">Details get lost.</span> And over time, <span className="text-primary font-medium">confidence starts to fade.</span>
           </p>
           <p className="text-[22px] md:text-[34px] lg:text-[38px] leading-[1.6] md:leading-[1.55] mt-8 md:mt-12 font-semibold text-deep-purple">
             Story Builders was created to change that.
