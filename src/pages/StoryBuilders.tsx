@@ -146,7 +146,7 @@ const StoryBuilders = () => {
       <StoryBuildersStatBand />
 
       {/* ─── S2: HOOK ─── */}
-      <section className="bg-[linear-gradient(to_bottom,white_70%,hsl(266,100%,97%)_100%)] py-[100px] md:py-[180px]">
+      <section className="bg-white bg-[radial-gradient(ellipse_80%_50%_at_50%_100%,hsl(266,100%,97%)_0%,transparent_100%)] py-[100px] md:py-[180px]">
         <FadeSection className="max-w-[900px] mx-auto px-6 md:px-8 text-center">
           <p className="text-[22px] md:text-[34px] lg:text-[38px] text-foreground leading-[1.6] md:leading-[1.55] font-normal">
             For many children, telling a story about their day is not simple. <span className="text-primary font-medium">Words get stuck.</span> <span className="text-primary font-medium">Details get lost.</span> And over time, <span className="text-primary font-medium">confidence starts to fade.</span>
