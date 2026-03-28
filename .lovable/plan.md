@@ -1,20 +1,21 @@
 
 
-## Fix Hook Section Gradient to Match Framer Reference
+## Make Hook Gradient a Radial Bottom-Center Wash
 
 ### The issue
-The current gradient spreads lavender evenly from top to bottom. The Framer reference keeps the top ~75% pure white and only fades in color at the very bottom ~25%.
+The Framer reference shows the colored wash concentrated in the **bottom-center** like a soft semicircle/ellipse radiating outward — not a flat horizontal band that spans the full width evenly.
 
 ### Fix
 
-**File: `src/pages/StoryBuilders.tsx`** — Change the gradient on the Hook section from:
-```
-bg-gradient-to-b from-white to-lavender
-```
-to a multi-stop gradient that stays white much longer before fading:
+**File: `src/pages/StoryBuilders.tsx`** (line 149) — Replace the linear gradient with a radial gradient centered at the bottom:
+
 ```
 bg-[linear-gradient(to_bottom,white_70%,hsl(266,100%,97%)_100%)]
 ```
+→
+```
+bg-[radial-gradient(ellipse_80%_50%_at_50%_100%,hsl(266,100%,97%)_0%,transparent_100%)]
+```
 
-This keeps the top 70% pure white and only introduces the lavender wash in the bottom 30%, matching the Framer reference pattern.
+This creates an elliptical lavender wash that's strongest at the bottom-center and fades out radially — matching the Framer reference's semicircle effect. The section background itself stays white, with the radial gradient layered on top.
 
