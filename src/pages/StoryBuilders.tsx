@@ -146,23 +146,21 @@ const StoryBuilders = () => {
       <StoryBuildersStatBand />
 
       {/* ─── S2: HOOK ─── */}
-      <section className="py-16 md:py-[120px]">
-        <FadeSection className="max-w-[650px] mx-auto px-6 md:px-8 text-center">
-          <p className="text-[16px] md:text-[17px] text-foreground leading-[1.8]">
+      <section className="bg-lavender py-[100px] md:py-[180px]">
+        <FadeSection className="max-w-[900px] mx-auto px-6 md:px-8 text-center">
+          <p className="text-[22px] md:text-[34px] lg:text-[38px] text-foreground leading-[1.6] md:leading-[1.55] font-normal">
             For many children, telling a story about their day is not simple.
           </p>
-          <p className="text-[16px] md:text-[17px] text-foreground leading-[1.8] mt-4">
-            Words get stuck.<br />
-            Details get lost.<br />
-            And over time, confidence starts to fade.
+          <p className="text-[22px] md:text-[34px] lg:text-[38px] text-foreground leading-[1.6] md:leading-[1.55] font-normal mt-8 md:mt-12">
+            <span className="text-primary font-medium">Words get stuck.</span><br />
+            <span className="text-primary font-medium">Details get lost.</span><br />
+            And over time, <span className="text-primary font-medium">confidence starts to fade.</span>
           </p>
-          <p className="text-[16px] md:text-[17px] text-foreground leading-[1.8] mt-4 font-semibold">
-            StoryBuilders was created to change that.
+          <p className="text-[22px] md:text-[34px] lg:text-[38px] leading-[1.6] md:leading-[1.55] mt-8 md:mt-12 font-semibold text-deep-purple">
+            Story Builders was created to change that.
           </p>
         </FadeSection>
       </section>
-
-      <div className="w-16 h-px bg-border mx-auto" />
 
       {/* ─── S3: WHAT IS STORYBUILDERS ─── */}
       <section className="bg-muted py-16 md:py-[120px]">
