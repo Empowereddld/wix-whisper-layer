@@ -88,7 +88,7 @@ const WhatIsStoryBuildersSection = () => {
               <img
                 src={storybuildersAppMockup}
                 alt="Story Builders app interface showing an interactive storytelling session"
-                className="w-full max-w-[420px] rounded-2xl"
+                className="w-full max-w-[520px] rounded-2xl"
                 style={{ boxShadow: "0 8px 60px -12px hsl(258, 50%, 50%, 0.25)" }}
                 loading="lazy"
               />
