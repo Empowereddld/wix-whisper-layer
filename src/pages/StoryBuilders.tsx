@@ -248,7 +248,53 @@ const StoryBuilders = () => {
           <p className="text-base md:text-xl lg:text-2xl leading-[1.7] font-bold text-deep-purple">
             Story Builders was created to change that.
           </p>
-        </FadeSection>
+      </FadeSection>
+      </section>
+
+      {/* ─── PREMIUM PROMO SECTION ─── */}
+      <section className="py-12 md:py-20">
+        <div className="container px-6 md:px-8">
+          <FadeSection>
+            <div className="bg-lavender rounded-3xl p-10 md:p-14 lg:p-16 overflow-hidden">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+                {/* Left column — text */}
+                <div className="flex flex-col gap-6">
+                  <span className="inline-flex items-center self-start rounded-full border border-primary/30 bg-white px-4 py-1.5 text-xs font-semibold text-primary tracking-wide uppercase">
+                    Story Builders
+                  </span>
+                  <h2 className="text-[28px] md:text-[34px] lg:text-[38px] font-bold tracking-tight text-foreground leading-[1.15]">
+                    The first storytelling app designed for children with DLD.
+                  </h2>
+                  <p className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-[500px]">
+                    20-minute guided sessions that build vocabulary, comprehension, and confidence — at home, in school, or during therapy.
+                  </p>
+                  <button
+                    onClick={() => document.getElementById("signup-form")?.scrollIntoView({ behavior: "smooth" })}
+                    className="inline-flex items-center self-start rounded-xl bg-deep-purple text-white font-semibold px-8 py-3.5 text-base hover:opacity-90 transition-opacity"
+                  >
+                    Join the Launch Team
+                  </button>
+                  <div className="flex flex-wrap items-center gap-4 mt-1">
+                    {["Evidence-informed", "Built by SLPs", "Made for families"].map((point) => (
+                      <span key={point} className="flex items-center gap-1.5 text-sm text-muted-foreground">
+                        <Check className="w-4 h-4 text-primary" />
+                        {point}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                {/* Right column — mockup */}
+                <div className="flex justify-center lg:justify-end">
+                  <img
+                    src={storybuildersAppMockup}
+                    alt="Story Builders app on iPad"
+                    className="w-full max-w-[440px] drop-shadow-2xl"
+                  />
+                </div>
+              </div>
+            </div>
+          </FadeSection>
+        </div>
       </section>
 
       {/* ─── S3: WHAT IS STORYBUILDERS ─── */}
