@@ -292,8 +292,6 @@ const StoryBuilders = () => {
               </div>
           </FadeSection>
         </div>
-          </FadeSection>
-        </div>
       </section>
 
       {/* ─── S3: WHAT IS STORYBUILDERS ─── */}
