@@ -187,30 +187,35 @@ const StoryBuilders = () => {
                 Join the Story Builders Launch Team and help us bring daily 20-minute story sessions that build vocabulary, comprehension, and confidence to children with DLD worldwide.
               </p>
               {!wl.joined ? (
-                <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row flex-wrap gap-3 w-full max-w-[520px] mt-5">
-                  <Input
-                    placeholder="Your name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    required
-                    className="h-12 bg-white/10 border-white/20 text-white placeholder:text-white/50 rounded-md focus-visible:ring-primary flex-1 min-w-[140px]"
-                  />
-                  <Input
-                    type="email"
-                    placeholder="Your email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    className="h-12 bg-white/10 border-white/20 text-white placeholder:text-white/50 rounded-md focus-visible:ring-primary flex-1 min-w-[140px]"
-                  />
-                  <Button
-                    type="submit"
-                    disabled={wl.loading}
-                    className="h-12 px-8 bg-primary text-primary-foreground font-bold rounded-md hover:bg-primary/90 transition-colors shadow-[var(--shadow-button)] whitespace-nowrap w-full sm:w-auto"
-                  >
-                    {wl.loading ? "Joining…" : "Join Now"}
-                  </Button>
-                </form>
+                <>
+                  <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row flex-wrap gap-3 w-full max-w-[520px] mt-5">
+                    <Input
+                      placeholder="Name"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      required
+                      className="h-12 bg-white/10 border-white/20 text-white placeholder:text-white/50 rounded-md focus-visible:ring-primary flex-1 min-w-[140px]"
+                    />
+                    <Input
+                      type="email"
+                      placeholder="Email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                      className="h-12 bg-white/10 border-white/20 text-white placeholder:text-white/50 rounded-md focus-visible:ring-primary flex-1 min-w-[140px]"
+                    />
+                    <Button
+                      type="submit"
+                      disabled={wl.loading}
+                      className="h-12 px-8 bg-primary text-primary-foreground font-bold rounded-md hover:bg-primary/90 transition-colors shadow-[var(--shadow-button)] whitespace-nowrap w-full sm:w-auto"
+                    >
+                      {wl.loading ? "Joining…" : "Join Now"}
+                    </Button>
+                  </form>
+                  <p className="text-[13px] text-white/60 mt-3 leading-[1.6]">
+                    <span className="font-semibold text-white/80">Not just stories</span> — A guided way to build language step by step
+                  </p>
+                </>
               ) : (
                 <div className="flex items-center gap-2 mt-5">
                   <code className="bg-white/10 border border-white/20 rounded-md px-4 py-2.5 text-white text-[13px] max-w-[320px] truncate">
@@ -494,7 +499,7 @@ const StoryBuilders = () => {
           {!wl.joined ? (
             <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 w-full max-w-[520px] mt-4">
               <Input
-                placeholder="Your name"
+                placeholder="Name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
@@ -502,7 +507,7 @@ const StoryBuilders = () => {
               />
               <Input
                 type="email"
-                placeholder="Your email"
+                placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
