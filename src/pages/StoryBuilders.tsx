@@ -255,7 +255,7 @@ const StoryBuilders = () => {
       <section className="py-12 md:py-20">
         <div className="max-w-[1300px] mx-auto px-6 md:px-8">
           <FadeSection>
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+              <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-10 lg:gap-16 items-center">
                 {/* Left column — text */}
                 <div className="flex flex-col gap-6">
                   <h2 className="text-[28px] md:text-[34px] lg:text-[38px] font-bold tracking-tight text-foreground leading-[1.15] whitespace-nowrap">
