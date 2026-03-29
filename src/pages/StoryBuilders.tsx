@@ -259,14 +259,27 @@ const StoryBuilders = () => {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
                 {/* Left column — text */}
                 <div className="flex flex-col gap-6">
-                  <span className="inline-flex items-center self-start rounded-full border border-primary/30 bg-white px-4 py-1.5 text-xs font-semibold text-primary tracking-wide uppercase">
-                    Story Builders
-                  </span>
                   <h2 className="text-[28px] md:text-[34px] lg:text-[38px] font-bold tracking-tight text-foreground leading-[1.15]">
-                    The first storytelling app designed for children with DLD.
+                    What is Story Builders?
                   </h2>
                   <p className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-[500px]">
-                    20-minute guided sessions that build vocabulary, comprehension, and confidence — at home, in school, or during therapy.
+                    Story Builders is an interactive app designed to help children:
+                  </p>
+                  <ul className="flex flex-col gap-2 max-w-[500px]">
+                    {[
+                      "Understand and retell stories",
+                      "Build vocabulary and sentence structure",
+                      "Share their ideas with more confidence",
+                      "Feel proud of how they communicate",
+                    ].map((item) => (
+                      <li key={item} className="flex items-start gap-2.5 text-base md:text-lg text-muted-foreground leading-relaxed">
+                        <Check className="w-4 h-4 text-primary mt-1.5 shrink-0" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                  <p className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-[500px]">
+                    It was designed for children with Developmental Language Disorder and can be used at home, in therapy, or in the classroom.
                   </p>
                   <button
                     onClick={() => document.getElementById("signup-form")?.scrollIntoView({ behavior: "smooth" })}
