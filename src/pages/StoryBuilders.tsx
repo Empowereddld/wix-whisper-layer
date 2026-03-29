@@ -294,10 +294,6 @@ const StoryBuilders = () => {
         </div>
       </section>
 
-      {/* ─── S3: WHAT IS STORYBUILDERS ─── */}
-      <WhatIsStoryBuildersSection />
-
-      <div className="w-16 h-px bg-border mx-auto" />
 
       {/* ─── S4: WHY JOIN ─── */}
       <section className="py-16 md:py-[120px]">
