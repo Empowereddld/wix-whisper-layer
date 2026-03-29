@@ -102,9 +102,9 @@ const WhatIsStoryBuildersSection = () => {
             </p>
             <ul className="space-y-3 mb-6">
               {[
-                "Follow, understand, and retell stories step by step",
-                "Learn new words and how to use them in real sentences",
-                "Talk about their own experiences using what they learned",
+                "Understand and retell stories",
+                "Build vocabulary and sentence structure",
+                "Share their ideas with more confidence",
                 "Feel proud of how they communicate",
               ].map((item) => (
                 <li key={item} className="flex items-start gap-3">
@@ -269,9 +269,9 @@ const StoryBuilders = () => {
                   </p>
                   <ul className="flex flex-col gap-2 max-w-[500px]">
                     {[
-                      "Follow, understand, and retell stories step by step",
-                      "Learn new words and how to use them in real sentences",
-                      "Talk about their own experiences using what they learned",
+                      "Understand and retell stories",
+                      "Build vocabulary and sentence structure",
+                      "Share their ideas with more confidence",
                       "Feel proud of how they communicate",
                     ].map((item) => (
                       <li key={item} className="flex items-start gap-2.5 text-base md:text-lg text-muted-foreground leading-relaxed">
