@@ -1,22 +1,56 @@
 
 
-## Restyle "What Is Story Builders" Section
+## Add Premium Promo Section Above "What Is Story Builders"
 
-### Changes to `src/pages/StoryBuilders.tsx` (lines 64–113)
+### What we're building
 
-**1. Swap columns** — Move the iPad mockup to the left, text to the right (reverse grid order with `lg:order` classes).
+A new section placed between the Hook (S2) and the "What Is Story Builders" (S3) section. It replicates the Framer reference exactly:
 
-**2. Smaller title** — Reduce from `text-[32px] md:text-[42px] lg:text-[46px]` to `text-[24px] md:text-[30px] lg:text-[34px]`.
+```text
+┌──────────────────────────────────────────────────────────┐
+│  ┌──────────────────────────────────────────────────┐    │
+│  │  (soft lavender rounded container, ~24px radius) │    │
+│  │                                                  │    │
+│  │  [pill badge]                                    │    │
+│  │                                                  │    │
+│  │  Large bold heading         │  Floating iPad     │    │
+│  │  Lighter subtitle text      │  mockup with       │    │
+│  │                             │  subtle shadow,    │    │
+│  │  [Dark CTA Button]         │  slightly rotated  │    │
+│  │                             │  or offset         │    │
+│  │  ✓ trust point  ✓ trust    │                    │    │
+│  │                             │                    │    │
+│  └──────────────────────────────────────────────────┘    │
+└──────────────────────────────────────────────────────────┘
+```
 
-**3. White background** — Change `bg-muted` to `bg-white`.
+### Key design elements (matching the Framer reference exactly)
 
-**4. Premium styling suggestions** (to eliminate the "bla" feel):
-- Add a **subtle lavender accent line** above the title (a short 40px horizontal bar in primary purple)
-- Give the mockup image a **soft lavender glow/shadow** instead of a plain shadow (`shadow-[0_8px_60px_-12px_hsl(258,50%,50%,0.25)]`)
-- Add a **light lavender dot pattern** behind the mockup using the existing `DotBackground` component (scoped to the image column) for visual texture
-- Make the checklist checkmarks slightly larger and use a subtle purple background circle behind each one
-- Add a thin **top border** (`border-t border-border`) to separate from the hook section above
+1. **Outer container** — White/transparent page background. Inner container has a soft lavender/purple background (`hsl(266, 100%, 97%)` or similar), generous `rounded-3xl` corners, large padding (`p-10 md:p-14 lg:p-16`)
 
-### Result
-The section will feel more polished and layered — the dot texture + glow shadow + accent bar add depth without clutter, and swapping columns puts the visual (mockup) first for stronger impact.
+2. **Left column:**
+   - Small pill/badge at the top — rounded-full, small text, subtle border or light background (e.g. white/purple outline pill)
+   - Large bold heading — site's standard bold/black weight, ~32-40px
+   - Lighter subtitle paragraph — muted text color, smaller size
+   - Dark CTA button — deep purple background, white text, rounded, generous padding
+   - Row of small checkmark trust points below the button — inline, with check icons
+
+3. **Right column:**
+   - The iPad/app mockup image floating with a subtle drop shadow
+   - Slightly overlapping the container edge or positioned to feel "elevated"
+   - No background clutter — clean float
+
+4. **Layout** — Two-column grid on desktop (`lg:grid-cols-2`), stacked on mobile (text first, image below)
+
+### Content
+
+- **Pill:** "Story Builders"
+- **Heading:** "The first storytelling app designed for children with DLD."
+- **Subtitle:** "20-minute guided sessions that build vocabulary, comprehension, and confidence — at home, in school, or during therapy."
+- **CTA:** "Join the Launch Team" (scrolls to the signup form)
+- **Trust points:** "Evidence-informed", "Built by SLPs", "Made for families"
+
+### File changes
+
+**`src/pages/StoryBuilders.tsx`** — Insert a new section between the Hook (line 252) and the `WhatIsStoryBuildersSection` (line 255). Uses the existing `storybuildersAppMockup` image import and `FadeSection` wrapper. No new files needed.
 
