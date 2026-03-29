@@ -278,7 +278,7 @@ const StoryBuilders = () => {
                       </li>
                     ))}
                   </ul>
-                  <p className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-[500px]">
+                  <p className="text-sm md:text-base text-muted-foreground leading-relaxed max-w-[500px]">
                     It was designed for children with Developmental Language Disorder and can be used at home, in therapy, or in the classroom.
                   </p>
                 </div>
