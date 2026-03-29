@@ -286,7 +286,7 @@ const StoryBuilders = () => {
                   <img
                     src={storybuildersAppMockup}
                     alt="Story Builders app on iPad"
-                    className="w-full max-w-[1200px]"
+                    className="w-full max-w-[500px] lg:max-w-[600px] mx-auto lg:mx-0"
                   />
                 </div>
               </div>
