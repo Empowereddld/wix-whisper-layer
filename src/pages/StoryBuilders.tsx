@@ -62,17 +62,40 @@ const WhatIsStoryBuildersSection = () => {
   const rotateX = 10 * (1 - progress);
 
   return (
-    <section ref={sectionRef} className="bg-muted py-16 md:py-[120px]">
+    <section ref={sectionRef} className="bg-white border-t border-border py-16 md:py-[120px]">
       <div className="container px-6 md:px-8">
         <FadeSection className="text-center mb-10 md:mb-14">
-          <h2 className="text-[32px] md:text-[42px] lg:text-[46px] font-bold tracking-tight text-foreground">
+          <div className="flex justify-center mb-4">
+            <div className="w-10 h-1 rounded-full bg-primary" />
+          </div>
+          <h2 className="text-[24px] md:text-[30px] lg:text-[34px] font-bold tracking-tight text-foreground">
             What Is Story Builders
           </h2>
         </FadeSection>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center max-w-[1100px] mx-auto">
-          {/* Left: description */}
-          <FadeSection>
+          {/* Left: app mockup with scroll-driven tilt */}
+          <div className="flex justify-center lg:justify-start lg:order-1 order-2 relative">
+            <DotBackground className="rounded-2xl opacity-40" dotColor="hsl(258, 50%, 50%, 0.12)" />
+            <div
+              style={{
+                transform: `perspective(1000px) rotateY(${rotateY}deg) rotateX(${rotateX}deg)`,
+                willChange: "transform",
+              }}
+              className="relative z-10"
+            >
+              <img
+                src={storybuildersAppMockup}
+                alt="Story Builders app interface showing an interactive storytelling session"
+                className="w-full max-w-[420px] rounded-2xl"
+                style={{ boxShadow: "0 8px 60px -12px hsl(258, 50%, 50%, 0.25)" }}
+                loading="lazy"
+              />
+            </div>
+          </div>
+
+          {/* Right: description */}
+          <FadeSection className="lg:order-2 order-1">
             <p className="text-[15px] md:text-[16px] text-muted-foreground leading-[1.7] mb-6">
               Story Builders is an interactive app designed to help children:
             </p>
@@ -84,7 +107,9 @@ const WhatIsStoryBuildersSection = () => {
                 "Feel proud of how they communicate",
               ].map((item) => (
                 <li key={item} className="flex items-start gap-3">
-                  <Check className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+                  <span className="flex items-center justify-center w-6 h-6 rounded-full bg-primary/10 shrink-0 mt-0.5">
+                    <Check className="w-4 h-4 text-primary" />
+                  </span>
                   <span className="text-[15px] md:text-[16px] text-foreground leading-[1.6]">{item}</span>
                 </li>
               ))}
@@ -93,23 +118,6 @@ const WhatIsStoryBuildersSection = () => {
               It was designed for children with Developmental Language Disorder and can be used at home, in therapy, or in the classroom.
             </p>
           </FadeSection>
-
-          {/* Right: app mockup with scroll-driven tilt */}
-          <div className="flex justify-center lg:justify-end">
-            <div
-              style={{
-                transform: `perspective(1000px) rotateY(${rotateY}deg) rotateX(${rotateX}deg)`,
-                willChange: "transform",
-              }}
-            >
-              <img
-                src={storybuildersAppMockup}
-                alt="Story Builders app interface showing an interactive storytelling session"
-                className="w-full max-w-[420px] rounded-2xl shadow-xl"
-                loading="lazy"
-              />
-            </div>
-          </div>
         </div>
       </div>
     </section>
