@@ -1,52 +1,22 @@
 
 
-## Redesign "What Is StoryBuilders" as a Scroll-Animated Two-Column Section
+## Restyle "What Is Story Builders" Section
 
-### What we're building
+### Changes to `src/pages/StoryBuilders.tsx` (lines 64–113)
 
-A new version of the "What Is StoryBuilders" section (S3) that:
+**1. Swap columns** — Move the iPad mockup to the left, text to the right (reverse grid order with `lg:order` classes).
 
-1. **Two-column layout** — Text/description on the left, app mockup image on the right
-2. **Scroll-driven tilt animation** — The iPad mockup image starts tilted (perspective/rotated) and gradually stands upright as the user scrolls through the section, matching the effect from the screen recording
-3. Title: "What Is Story Builders"
+**2. Smaller title** — Reduce from `text-[32px] md:text-[42px] lg:text-[46px]` to `text-[24px] md:text-[30px] lg:text-[34px]`.
 
-### Layout
+**3. White background** — Change `bg-muted` to `bg-white`.
 
-```text
-┌──────────────────────────────────────────────┐
-│           What Is Story Builders             │
-├──────────────────┬───────────────────────────┤
-│                  │                           │
-│  Description     │   iPad mockup image       │
-│  + check list    │   (tilted → upright       │
-│  + closing line  │    on scroll)             │
-│                  │                           │
-└──────────────────┴───────────────────────────┘
-```
+**4. Premium styling suggestions** (to eliminate the "bla" feel):
+- Add a **subtle lavender accent line** above the title (a short 40px horizontal bar in primary purple)
+- Give the mockup image a **soft lavender glow/shadow** instead of a plain shadow (`shadow-[0_8px_60px_-12px_hsl(258,50%,50%,0.25)]`)
+- Add a **light lavender dot pattern** behind the mockup using the existing `DotBackground` component (scoped to the image column) for visual texture
+- Make the checklist checkmarks slightly larger and use a subtle purple background circle behind each one
+- Add a thin **top border** (`border-t border-border`) to separate from the hook section above
 
-On mobile: stacks vertically (text first, then image below).
-
-### Scroll animation approach
-
-- Use a `useRef` + `useEffect` with a scroll event listener (or IntersectionObserver with threshold steps) to calculate how far the section is scrolled into view
-- Map scroll progress (0 to 1) to a CSS `transform: perspective(1000px) rotateY(Xdeg) rotateX(Ydeg)` that goes from tilted (~15-20deg) to 0deg (upright)
-- Apply via inline style for smooth, frame-by-frame updates
-- CSS `will-change: transform` for performance
-
-### Files changed
-
-1. **Copy uploaded mockup image** — `user-uploads://ChatGPT_Image_Mar_28_2026_09_31_53_PM.png` to `src/assets/storybuilders-app-mockup.png`
-2. **`src/pages/StoryBuilders.tsx`** — Rewrite the S3 section:
-   - Two-column grid (`lg:grid-cols-2`)
-   - Left column: title, intro text, checklist, closing paragraph (keep existing copy)
-   - Right column: mockup image with scroll-driven tilt-to-upright animation
-   - Add scroll progress calculation logic (ref + scroll listener)
-3. **Keep** all existing content/copy from the current section
-
-### Technical details
-
-- Scroll progress calculated as: how far the section's top has passed the viewport center, clamped 0-1
-- Transform interpolation: `rotateY(${15 * (1 - progress)}deg) rotateX(${8 * (1 - progress)}deg)`
-- Smooth transition with `will-change: transform` and no CSS transition (direct scroll-linked)
-- The image import uses `@/assets/storybuilders-app-mockup.png`
+### Result
+The section will feel more polished and layered — the dot texture + glow shadow + accent bar add depth without clutter, and swapping columns puts the visual (mockup) first for stronger impact.
 
