@@ -298,6 +298,24 @@ const StoryBuilders = () => {
       </section>
 
 
+      {/* ─── BIGGER THAN AN APP ─── */}
+      <section className="py-12 md:py-16">
+        <FadeSection className="max-w-[900px] mx-auto px-6 md:px-8">
+          <div className="bg-[hsl(266,100%,97%)] rounded-2xl px-8 py-10 md:px-12 md:py-14 text-center space-y-5">
+            <h3 className="text-[22px] md:text-[28px] lg:text-[32px] font-bold tracking-tight text-foreground leading-[1.2]">
+              We're Building Something Bigger Than an App
+            </h3>
+            <p className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-[700px] mx-auto">
+              StoryBuilders is being created for children who struggle to understand and express their ideas
+              — and for the parents, educators, and therapists supporting them every day.
+            </p>
+            <p className="text-base md:text-lg text-foreground font-semibold leading-relaxed">
+              We're inviting you to be part of it from the very beginning.
+            </p>
+          </div>
+        </FadeSection>
+      </section>
+
       {/* ─── S4: WHY JOIN ─── */}
       <section className="py-16 md:py-[120px]">
         <div className="container px-6 md:px-8">
