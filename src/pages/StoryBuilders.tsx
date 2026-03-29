@@ -235,8 +235,6 @@ const StoryBuilders = () => {
         </div>
       </section>
 
-      {/* ─── STAT BAND ─── */}
-      <StoryBuildersStatBand />
 
       {/* ─── S2: HOOK ─── */}
       <section className="bg-white bg-[radial-gradient(ellipse_80%_50%_at_50%_100%,hsl(266,100%,97%)_0%,transparent_100%)] py-16 md:py-24">
