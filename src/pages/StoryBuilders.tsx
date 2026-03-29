@@ -253,9 +253,8 @@ const StoryBuilders = () => {
 
       {/* ─── PREMIUM PROMO SECTION ─── */}
       <section className="py-12 md:py-20">
-        <div className="container px-6 md:px-8">
+        <div className="max-w-[1300px] mx-auto px-6 md:px-8">
           <FadeSection>
-            <div className="bg-lavender rounded-3xl p-10 md:p-14 lg:p-16 overflow-hidden">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
                 {/* Left column — text */}
                 <div className="flex flex-col gap-6">
@@ -283,7 +282,7 @@ const StoryBuilders = () => {
                   </p>
                 </div>
                 {/* Right column — mockup */}
-                <div className="flex justify-center lg:justify-end -mr-10 md:-mr-14 lg:-mr-16 -mb-10 md:-mb-14 lg:-mb-16">
+                <div className="flex justify-center lg:justify-end">
                   <img
                     src={storybuildersAppMockup}
                     alt="Story Builders app on iPad"
@@ -291,7 +290,6 @@ const StoryBuilders = () => {
                   />
                 </div>
               </div>
-            </div>
           </FadeSection>
         </div>
       </section>
