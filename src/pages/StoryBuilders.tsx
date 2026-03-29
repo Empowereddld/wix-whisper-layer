@@ -283,11 +283,11 @@ const StoryBuilders = () => {
                   </p>
                 </div>
                 {/* Right column — mockup */}
-                <div className="flex justify-center lg:justify-end">
+                <div className="flex justify-center lg:justify-end -mr-10 md:-mr-14 lg:-mr-16 -mb-10 md:-mb-14 lg:-mb-16">
                   <img
                     src={storybuildersAppMockup}
                     alt="Story Builders app on iPad"
-                    className="w-full max-w-[440px] drop-shadow-2xl"
+                    className="w-full max-w-[500px]"
                   />
                 </div>
               </div>
