@@ -1,7 +1,8 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import SEOHead from "@/components/SEOHead";
 import StoryBuildersStatBand from "@/components/StoryBuildersStatBand";
 import storybuildersHero from "@/assets/storybuilders-hero.png";
+import storybuildersAppMockup from "@/assets/storybuilders-app-mockup.png";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -37,7 +38,85 @@ const FadeSection = ({ children, className = "", delay = 0 }: { children: React.
   return <div ref={ref} className={`${fadeClass} ${className}`}>{children}</div>;
 };
 
-/* ─── Page ─── */
+/* ─── Scroll-animated "What Is StoryBuilders" section ─── */
+const WhatIsStoryBuildersSection = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const [progress, setProgress] = useState(0);
+
+  const handleScroll = useCallback(() => {
+    if (!sectionRef.current) return;
+    const rect = sectionRef.current.getBoundingClientRect();
+    const windowH = window.innerHeight;
+    // Progress 0 when section top enters viewport bottom, 1 when section top reaches viewport top
+    const raw = 1 - rect.top / windowH;
+    setProgress(Math.max(0, Math.min(1, raw)));
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [handleScroll]);
+
+  const rotateY = 18 * (1 - progress);
+  const rotateX = 10 * (1 - progress);
+
+  return (
+    <section ref={sectionRef} className="bg-muted py-16 md:py-[120px]">
+      <div className="container px-6 md:px-8">
+        <FadeSection className="text-center mb-10 md:mb-14">
+          <h2 className="text-[32px] md:text-[42px] lg:text-[46px] font-bold tracking-tight text-foreground">
+            What Is Story Builders
+          </h2>
+        </FadeSection>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center max-w-[1100px] mx-auto">
+          {/* Left: description */}
+          <FadeSection>
+            <p className="text-[15px] md:text-[16px] text-muted-foreground leading-[1.7] mb-6">
+              Story Builders is an interactive app designed to help children:
+            </p>
+            <ul className="space-y-3 mb-6">
+              {[
+                "Understand and retell stories",
+                "Build vocabulary and sentence structure",
+                "Share their ideas with more confidence",
+                "Feel proud of how they communicate",
+              ].map((item) => (
+                <li key={item} className="flex items-start gap-3">
+                  <Check className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+                  <span className="text-[15px] md:text-[16px] text-foreground leading-[1.6]">{item}</span>
+                </li>
+              ))}
+            </ul>
+            <p className="text-[15px] md:text-[16px] text-muted-foreground leading-[1.7]">
+              It was designed for children with Developmental Language Disorder and can be used at home, in therapy, or in the classroom.
+            </p>
+          </FadeSection>
+
+          {/* Right: app mockup with scroll-driven tilt */}
+          <div className="flex justify-center lg:justify-end">
+            <div
+              style={{
+                transform: `perspective(1000px) rotateY(${rotateY}deg) rotateX(${rotateX}deg)`,
+                willChange: "transform",
+              }}
+            >
+              <img
+                src={storybuildersAppMockup}
+                alt="Story Builders app interface showing an interactive storytelling session"
+                className="w-full max-w-[420px] rounded-2xl shadow-xl"
+                loading="lazy"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+
 const StoryBuilders = () => {
   const formRef = useRef<HTMLDivElement>(null);
   const [name, setName] = useState("");
@@ -164,34 +243,7 @@ const StoryBuilders = () => {
       </section>
 
       {/* ─── S3: WHAT IS STORYBUILDERS ─── */}
-      <section className="bg-muted py-16 md:py-[120px]">
-        <div className="container px-6 md:px-8">
-          <FadeSection className="max-w-[650px] mx-auto">
-            <h2 className="text-[32px] md:text-[42px] lg:text-[46px] font-bold tracking-tight text-foreground text-center mb-6">
-              What Is StoryBuilders
-            </h2>
-            <p className="text-[15px] md:text-[16px] text-muted-foreground leading-[1.7] mb-6">
-              StoryBuilders is an interactive app designed to help children:
-            </p>
-            <ul className="space-y-3 mb-6">
-              {[
-                "Understand and retell stories",
-                "Build vocabulary and sentence structure",
-                "Share their ideas with more confidence",
-                "Feel proud of how they communicate",
-              ].map((item) => (
-                <li key={item} className="flex items-start gap-3">
-                  <Check className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                  <span className="text-[15px] md:text-[16px] text-foreground leading-[1.6]">{item}</span>
-                </li>
-              ))}
-            </ul>
-            <p className="text-[15px] md:text-[16px] text-muted-foreground leading-[1.7]">
-              It was designed for children with Developmental Language Disorder and can be used at home, in therapy, or in the classroom.
-            </p>
-          </FadeSection>
-        </div>
-      </section>
+      <WhatIsStoryBuildersSection />
 
       <div className="w-16 h-px bg-border mx-auto" />
 
