@@ -1,21 +1,52 @@
 
 
-## Make Hook Gradient a Radial Bottom-Center Wash
+## Redesign "What Is StoryBuilders" as a Scroll-Animated Two-Column Section
 
-### The issue
-The Framer reference shows the colored wash concentrated in the **bottom-center** like a soft semicircle/ellipse radiating outward — not a flat horizontal band that spans the full width evenly.
+### What we're building
 
-### Fix
+A new version of the "What Is StoryBuilders" section (S3) that:
 
-**File: `src/pages/StoryBuilders.tsx`** (line 149) — Replace the linear gradient with a radial gradient centered at the bottom:
+1. **Two-column layout** — Text/description on the left, app mockup image on the right
+2. **Scroll-driven tilt animation** — The iPad mockup image starts tilted (perspective/rotated) and gradually stands upright as the user scrolls through the section, matching the effect from the screen recording
+3. Title: "What Is Story Builders"
 
+### Layout
+
+```text
+┌──────────────────────────────────────────────┐
+│           What Is Story Builders             │
+├──────────────────┬───────────────────────────┤
+│                  │                           │
+│  Description     │   iPad mockup image       │
+│  + check list    │   (tilted → upright       │
+│  + closing line  │    on scroll)             │
+│                  │                           │
+└──────────────────┴───────────────────────────┘
 ```
-bg-[linear-gradient(to_bottom,white_70%,hsl(266,100%,97%)_100%)]
-```
-→
-```
-bg-[radial-gradient(ellipse_80%_50%_at_50%_100%,hsl(266,100%,97%)_0%,transparent_100%)]
-```
 
-This creates an elliptical lavender wash that's strongest at the bottom-center and fades out radially — matching the Framer reference's semicircle effect. The section background itself stays white, with the radial gradient layered on top.
+On mobile: stacks vertically (text first, then image below).
+
+### Scroll animation approach
+
+- Use a `useRef` + `useEffect` with a scroll event listener (or IntersectionObserver with threshold steps) to calculate how far the section is scrolled into view
+- Map scroll progress (0 to 1) to a CSS `transform: perspective(1000px) rotateY(Xdeg) rotateX(Ydeg)` that goes from tilted (~15-20deg) to 0deg (upright)
+- Apply via inline style for smooth, frame-by-frame updates
+- CSS `will-change: transform` for performance
+
+### Files changed
+
+1. **Copy uploaded mockup image** — `user-uploads://ChatGPT_Image_Mar_28_2026_09_31_53_PM.png` to `src/assets/storybuilders-app-mockup.png`
+2. **`src/pages/StoryBuilders.tsx`** — Rewrite the S3 section:
+   - Two-column grid (`lg:grid-cols-2`)
+   - Left column: title, intro text, checklist, closing paragraph (keep existing copy)
+   - Right column: mockup image with scroll-driven tilt-to-upright animation
+   - Add scroll progress calculation logic (ref + scroll listener)
+3. **Keep** all existing content/copy from the current section
+
+### Technical details
+
+- Scroll progress calculated as: how far the section's top has passed the viewport center, clamped 0-1
+- Transform interpolation: `rotateY(${15 * (1 - progress)}deg) rotateX(${8 * (1 - progress)}deg)`
+- Smooth transition with `will-change: transform` and no CSS transition (direct scroll-linked)
+- The image import uses `@/assets/storybuilders-app-mockup.png`
 
