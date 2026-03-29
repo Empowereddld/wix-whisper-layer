@@ -165,34 +165,7 @@ const StoryBuilders = () => {
       </section>
 
       {/* ─── S3: WHAT IS STORYBUILDERS ─── */}
-      <section className="bg-muted py-16 md:py-[120px]">
-        <div className="container px-6 md:px-8">
-          <FadeSection className="max-w-[650px] mx-auto">
-            <h2 className="text-[32px] md:text-[42px] lg:text-[46px] font-bold tracking-tight text-foreground text-center mb-6">
-              What Is StoryBuilders
-            </h2>
-            <p className="text-[15px] md:text-[16px] text-muted-foreground leading-[1.7] mb-6">
-              StoryBuilders is an interactive app designed to help children:
-            </p>
-            <ul className="space-y-3 mb-6">
-              {[
-                "Understand and retell stories",
-                "Build vocabulary and sentence structure",
-                "Share their ideas with more confidence",
-                "Feel proud of how they communicate",
-              ].map((item) => (
-                <li key={item} className="flex items-start gap-3">
-                  <Check className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                  <span className="text-[15px] md:text-[16px] text-foreground leading-[1.6]">{item}</span>
-                </li>
-              ))}
-            </ul>
-            <p className="text-[15px] md:text-[16px] text-muted-foreground leading-[1.7]">
-              It was designed for children with Developmental Language Disorder and can be used at home, in therapy, or in the classroom.
-            </p>
-          </FadeSection>
-        </div>
-      </section>
+      <WhatIsStoryBuildersSection />
 
       <div className="w-16 h-px bg-border mx-auto" />
 
