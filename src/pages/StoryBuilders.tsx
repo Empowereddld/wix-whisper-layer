@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from "react";
+import { DotBackground } from "@/components/ui/dot-background";
 import SEOHead from "@/components/SEOHead";
 import StoryBuildersStatBand from "@/components/StoryBuildersStatBand";
 import storybuildersHero from "@/assets/storybuilders-hero.png";
