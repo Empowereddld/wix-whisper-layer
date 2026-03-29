@@ -259,7 +259,7 @@ const StoryBuilders = () => {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
                 {/* Left column — text */}
                 <div className="flex flex-col gap-6">
-                  <h2 className="text-[28px] md:text-[34px] lg:text-[38px] font-bold tracking-tight text-foreground leading-[1.15]">
+                  <h2 className="text-[28px] md:text-[34px] lg:text-[38px] font-bold tracking-tight text-foreground leading-[1.15] whitespace-nowrap">
                     What is Story Builders?
                   </h2>
                   <p className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-[500px]">
