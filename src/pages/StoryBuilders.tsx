@@ -211,11 +211,9 @@ const StoryBuilders = () => {
                     {wl.loading ? "Joining…" : "Join Now"}
                   </Button>
                 </form>
-              {!wl.joined && (
                 <p className="text-[13px] text-white/60 mt-3 leading-[1.6]">
                   <span className="font-semibold text-white/80">Not just stories</span> — A guided way to build language step by step
                 </p>
-              )}
               ) : (
                 <div className="flex items-center gap-2 mt-5">
                   <code className="bg-white/10 border border-white/20 rounded-md px-4 py-2.5 text-white text-[13px] max-w-[320px] truncate">
