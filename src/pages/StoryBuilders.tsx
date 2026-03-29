@@ -281,20 +281,6 @@ const StoryBuilders = () => {
                   <p className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-[500px]">
                     It was designed for children with Developmental Language Disorder and can be used at home, in therapy, or in the classroom.
                   </p>
-                  <button
-                    onClick={() => document.getElementById("signup-form")?.scrollIntoView({ behavior: "smooth" })}
-                    className="inline-flex items-center self-start rounded-xl bg-deep-purple text-white font-semibold px-8 py-3.5 text-base hover:opacity-90 transition-opacity"
-                  >
-                    Join the Launch Team
-                  </button>
-                  <div className="flex flex-wrap items-center gap-4 mt-1">
-                    {["Evidence-informed", "Built by SLPs", "Made for families"].map((point) => (
-                      <span key={point} className="flex items-center gap-1.5 text-sm text-muted-foreground">
-                        <Check className="w-4 h-4 text-primary" />
-                        {point}
-                      </span>
-                    ))}
-                  </div>
                 </div>
                 {/* Right column — mockup */}
                 <div className="flex justify-center lg:justify-end">
