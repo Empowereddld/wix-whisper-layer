@@ -320,7 +320,73 @@ const StoryBuilders = () => {
         </FadeSection>
       </section>
 
-      {/* ─── S4: WHY JOIN ─── */}
+      {/* ─── WHAT WE'RE BUILDING TOGETHER ─── */}
+      <section className="py-16 md:py-[100px]">
+        <div className="max-w-[1100px] mx-auto px-6 md:px-8">
+          <FadeSection className="text-center mb-10 md:mb-14">
+            <h2 className="text-[28px] md:text-[38px] lg:text-[46px] font-bold tracking-tight text-foreground leading-[1.1] mb-3">
+              What We're Building Together
+            </h2>
+            <p className="text-[13px] md:text-[14px] lg:text-[16px] text-muted-foreground leading-[1.7] max-w-[600px] mx-auto">
+              StoryBuilders is designed to help children grow their language through stories in a way that feels clear, supportive, and actually works in real life.
+            </p>
+            <p className="text-[14px] md:text-[15px] font-semibold text-foreground mt-6">
+              Here's what that looks like:
+            </p>
+          </FadeSection>
+
+          <FadeSection delay={100}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
+              {[
+                {
+                  icon: BookOpen,
+                  title: "Read and Listen",
+                  subtitle: "Stories your child can follow with confidence",
+                  description: "Short, supported stories help your child stay engaged without feeling lost or overwhelmed.",
+                },
+                {
+                  icon: Lightbulb,
+                  title: "Understand the Story",
+                  subtitle: "Make sense of what happened",
+                  description: "Simple prompts help your child understand: who, where, what happened, and why.",
+                },
+                {
+                  icon: MessageCircle,
+                  title: "Retell with Support",
+                  subtitle: "Practice expressing ideas step by step",
+                  description: "Your child is guided to retell the story so they can organize and share their thoughts more clearly.",
+                },
+                {
+                  icon: HeartHandshake,
+                  title: "Connect to Real Life",
+                  subtitle: "Turn stories into real conversations",
+                  description: "Guided questions help your child talk about their own experiences with more clarity and confidence.",
+                },
+              ].map((card) => (
+                <div
+                  key={card.title}
+                  className="bg-lavender rounded-xl p-8 md:p-10 text-center flex flex-col items-center"
+                >
+                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-5">
+                    <card.icon className="w-6 h-6 text-primary" />
+                  </div>
+                  <h3 className="text-[20px] md:text-[22px] font-bold text-foreground mb-2">
+                    {card.title}
+                  </h3>
+                  <p className="text-[14px] md:text-[15px] text-primary font-medium mb-3">
+                    {card.subtitle}
+                  </p>
+                  <p className="text-[13px] md:text-[14px] text-muted-foreground leading-[1.7] max-w-[320px]">
+                    {card.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </FadeSection>
+        </div>
+      </section>
+
+
       <section className="py-16 md:py-[120px]">
         <div className="container px-6 md:px-8">
           <FadeSection className="text-center mb-12 md:mb-16">
