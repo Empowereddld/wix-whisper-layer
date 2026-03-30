@@ -387,8 +387,8 @@ const StoryBuilders = () => {
                   {/* Image placeholder */}
                   <div className={`bg-border/30 flex items-center justify-center min-h-[200px] sm:min-h-0 p-6 ${i % 2 !== 0 ? 'sm:order-1' : ''}`}>
                     {card.image ? (
-                      <div className="rounded-2xl overflow-hidden shadow-[0_8px_40px_-8px_rgba(0,0,0,0.25)] border border-border/20">
-                        <img src={card.image} alt={card.title} className="w-full h-auto object-cover" />
+                      <div className="drop-shadow-[0_12px_28px_rgba(0,0,0,0.15)]">
+                        <img src={card.image} alt={card.title} className="w-full h-auto object-contain" />
                       </div>
                     ) : (
                       <div className="text-muted-foreground/40 text-[13px] font-medium tracking-wide uppercase">
