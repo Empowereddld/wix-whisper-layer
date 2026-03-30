@@ -362,23 +362,32 @@ const StoryBuilders = () => {
                   subtitle: "Turn stories into real conversations",
                   description: "Guided questions help your child talk about their own experiences with more clarity and confidence.",
                 },
-              ].map((card) => (
+              ].map((card, i) => (
                 <div
                   key={card.title}
-                  className="bg-lavender rounded-xl p-8 md:p-10 text-center flex flex-col items-center"
+                  className="bg-lavender rounded-xl overflow-hidden grid grid-cols-1 sm:grid-cols-[1fr_1fr] min-h-[280px]"
                 >
-                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-5">
-                    <card.icon className="w-6 h-6 text-primary" />
+                  {/* Text side */}
+                  <div className={`p-7 md:p-9 flex flex-col justify-center ${i % 2 !== 0 ? 'sm:order-2' : ''}`}>
+                    <div className="w-11 h-11 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+                      <card.icon className="w-5 h-5 text-primary" />
+                    </div>
+                    <h3 className="text-[18px] md:text-[20px] font-bold text-foreground mb-1.5">
+                      {card.title}
+                    </h3>
+                    <p className="text-[13px] md:text-[14px] text-primary font-medium mb-2.5">
+                      {card.subtitle}
+                    </p>
+                    <p className="text-[12px] md:text-[13px] text-muted-foreground leading-[1.7]">
+                      {card.description}
+                    </p>
                   </div>
-                  <h3 className="text-[20px] md:text-[22px] font-bold text-foreground mb-2">
-                    {card.title}
-                  </h3>
-                  <p className="text-[14px] md:text-[15px] text-primary font-medium mb-3">
-                    {card.subtitle}
-                  </p>
-                  <p className="text-[13px] md:text-[14px] text-muted-foreground leading-[1.7] max-w-[320px]">
-                    {card.description}
-                  </p>
+                  {/* Image placeholder */}
+                  <div className={`bg-border/30 flex items-center justify-center min-h-[200px] sm:min-h-0 ${i % 2 !== 0 ? 'sm:order-1' : ''}`}>
+                    <div className="text-muted-foreground/40 text-[13px] font-medium tracking-wide uppercase">
+                      Image coming soon
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>
