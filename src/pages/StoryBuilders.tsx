@@ -344,6 +344,7 @@ const StoryBuilders = () => {
                   title: "Read and Listen",
                   subtitle: "Stories your child can follow with confidence",
                   description: "Short, supported stories help your child stay engaged without feeling lost or overwhelmed.",
+                  image: storybuildersReadListen,
                 },
                 {
                   icon: Lightbulb,
