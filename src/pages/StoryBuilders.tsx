@@ -18,6 +18,10 @@ import {
   Megaphone,
   Wrench,
   Heart,
+  BookOpen,
+  Lightbulb,
+  MessageCircle,
+  HeartHandshake,
 } from "lucide-react";
 
 /* ─── Milestones ─── */
