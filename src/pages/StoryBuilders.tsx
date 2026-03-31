@@ -644,7 +644,7 @@ const StoryBuilders = () => {
               {
                 task: "Invite 1 family",
                 impact: "Help another child feel more confident sharing their ideas",
-                reward: { icon: "✨", title: "Early access to StoryBuilders", desc: "Be among the first to explore the app before anyone else" },
+                reward: { icon: <Rocket size={20} />, title: "Early access to StoryBuilders", desc: "Be among the first to explore the app before anyone else" },
                 invites: 1,
               },
               {
