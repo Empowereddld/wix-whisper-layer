@@ -419,79 +419,17 @@ const StoryBuilders = () => {
             </p>
           </FadeSection>
 
-          <FadeSection delay={100}>
-            <div className="max-w-[520px] mx-auto relative">
-              {/* Continuous vertical track line */}
-              <div className="absolute left-[22px] top-[24px] bottom-[24px] w-[2px] bg-primary/10 rounded-full" />
-              {/* Filled progress line */}
-              {(() => {
-                const steps = [0, 1, 3, 5, 10];
-                const completedIdx = steps.filter(s => wl.inviteCount >= s).length - 1;
-                const pct = completedIdx <= 0 ? 0 : (completedIdx / (steps.length - 1)) * 100;
-                return (
-                  <div
-                    className="absolute left-[22px] top-[24px] w-[2px] rounded-full transition-all duration-700"
-                    style={{
-                      height: `${pct}%`,
-                      background: "linear-gradient(180deg, hsl(258,50%,50%) 0%, hsl(266,80%,70%) 100%)",
-                    }}
-                  />
-                );
-              })()}
+          {(() => {
+            const progressSteps = [
+              { title: "You joined the Launch Team", desc: "You're part of something from the very beginning", unlock: null, invites: 0 },
+              { title: "Invite 1 family", desc: "Help another child build stronger language skills", unlock: "early access", invites: 1 },
+              { title: "Invite 3 families", desc: "Help more children understand and tell stories clearly", unlock: "Story Pack", invites: 3 },
+              { title: "Invite 5 families", desc: "Help build a community where children feel more confident communicating", unlock: "exclusive episode", invites: 5 },
+              { title: "Invite 10 families", desc: "Help more children feel successful sharing their ideas", unlock: "founder pricing", invites: 10 },
+            ];
 
-              {[
-                { title: "You joined the Launch Team", desc: "You're part of something from the very beginning", unlock: null, invites: 0 },
-                { title: "Invite 1 family", desc: "Help another child build stronger language skills", unlock: "early access", invites: 1 },
-                { title: "Invite 3 families", desc: "Help more children understand and tell stories clearly", unlock: "Story Pack", invites: 3 },
-                { title: "Invite 5 families", desc: "Help build a community where children feel more confident communicating", unlock: "exclusive episode", invites: 5 },
-                { title: "Invite 10 families", desc: "Help more children feel successful sharing their ideas", unlock: "founder pricing", invites: 10 },
-              ].map((step, i, arr) => {
-                const completed = wl.inviteCount >= step.invites;
-                const isCurrent = !completed && (i === 0 || wl.inviteCount >= arr[i - 1].invites);
-                const locked = !completed && !isCurrent;
-
-                return (
-                  <div key={i} className={`relative flex items-start gap-5 ${i < arr.length - 1 ? "pb-10 md:pb-14" : ""}`}>
-                    {/* Circle on the track */}
-                    <div className="relative z-10 shrink-0 flex items-center justify-center w-[46px]">
-                      <div
-                        className={`rounded-full transition-all duration-300 ${
-                          completed
-                            ? "w-[16px] h-[16px] bg-primary shadow-[0_0_10px_hsl(258,50%,50%,0.3)]"
-                            : isCurrent
-                            ? "w-[16px] h-[16px] bg-primary/50 shadow-[0_0_16px_hsl(258,50%,50%,0.4)] ring-4 ring-primary/10"
-                            : "w-[12px] h-[12px] bg-primary/15 border-2 border-primary/20"
-                        }`}
-                      />
-                    </div>
-                    {/* Content pill */}
-                    <div
-                      className={`flex-1 rounded-2xl px-5 py-4 transition-all duration-300 ${locked ? "opacity-45" : "opacity-100"}`}
-                      style={{
-                        background: completed
-                          ? "linear-gradient(135deg, hsla(258,50%,50%,0.08) 0%, hsla(266,80%,80%,0.10) 100%)"
-                          : isCurrent
-                          ? "linear-gradient(135deg, hsla(258,50%,50%,0.06) 0%, hsla(266,80%,85%,0.08) 100%)"
-                          : "linear-gradient(135deg, hsla(258,50%,50%,0.03) 0%, hsla(266,80%,90%,0.04) 100%)",
-                      }}
-                    >
-                      <p className="text-[16px] md:text-[17px] leading-[1.5]" style={{ color: "#4A4C5C", fontWeight: 400 }}>
-                        {step.title}
-                      </p>
-                      <p className="text-[14px] md:text-[15px] leading-[1.6] mt-1" style={{ color: "#6B6B7B", fontWeight: 400 }}>
-                        {step.desc}
-                      </p>
-                      {step.unlock && (
-                        <p className="text-[13px] mt-1.5" style={{ color: "#9B8FBB", fontWeight: 400 }}>
-                          Unlock: {step.unlock}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </FadeSection>
+            return <ScrollProgress steps={progressSteps} inviteCount={wl.inviteCount} />;
+          })()}
         </div>
       </section>
 
