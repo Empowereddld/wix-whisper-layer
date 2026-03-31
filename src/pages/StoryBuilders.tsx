@@ -835,9 +835,7 @@ const StoryBuilders = () => {
             </h2>
             <div className="bg-lavender rounded-xl border border-border p-6 text-left mb-5">
               <p className="text-[14px] md:text-[15px] text-foreground leading-[1.7] italic">
-                "I just joined the StoryBuilders Launch Team. It's an app being built
-                to help children with DLD gain confidence in storytelling. If this
-                matters to you, come join us."
+                "I just came across an app called StoryBuilders and have been trying to spread the word about it. It's being built to help kids feel more confident understanding and explaining their ideas. Thought of you. You can join the waitlist here."
               </p>
             </div>
             {wl.joined && wl.referralLink ? (
