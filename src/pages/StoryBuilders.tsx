@@ -622,21 +622,49 @@ const StoryBuilders = () => {
       <section className="py-16 md:py-[120px]" style={{ backgroundColor: "#FAFAFC" }}>
         <div className="container px-6 md:px-8">
           <FadeSection className="text-center mb-14 md:mb-20">
-            <h2 className="text-[28px] md:text-[30px] tracking-tight leading-[1.2]" style={{ color: "#2F2F3A", fontWeight: 600 }}>
+            <h2 className="text-[28px] md:text-[30px] tracking-tight leading-[1.2]" style={{ color: "#2F2F3A", fontWeight: 600, fontFamily: "Poppins, sans-serif" }}>
               Your Progress
             </h2>
-            <p className="text-[15px] md:text-[16px] mt-3 leading-[1.7]" style={{ color: "#6B6B6B" }}>
-              You're helping more children understand and express their ideas.
+            <p className="text-[15px] md:text-[16px] mt-2 leading-[1.6]" style={{ color: "#6B6B6B", fontFamily: "Nunito, sans-serif" }}>
+              Each step unlocks something new.
+            </p>
+            <p className="text-[13px] mt-1 leading-[1.6]" style={{ color: "#9B9BAB", fontFamily: "Nunito, sans-serif" }}>
+              You're helping more children feel confident communicating.
             </p>
           </FadeSection>
 
           {(() => {
-            const progressSteps = [
-              { title: "You joined the Launch Team", desc: "You're part of this from the very beginning", unlock: null, invites: 0 },
-              { title: "Invite 1 family", desc: "Help another child feel more confident sharing their ideas", unlock: "early access", invites: 1 },
-              { title: "Invite 3 families", desc: "Help more children understand what's happening and explain it clearly", unlock: "Story Pack", invites: 3 },
-              { title: "Invite 5 families", desc: "Help build a community where children feel understood and confident", unlock: "exclusive episode", invites: 5 },
-              { title: "Invite 10 families", desc: "Help more children feel successful when expressing their ideas", unlock: "founder pricing", invites: 10 },
+            const progressSteps: ProgressStep[] = [
+              {
+                task: "You joined the Launch Team",
+                impact: "You're part of this from the very beginning",
+                reward: null,
+                invites: 0,
+              },
+              {
+                task: "Invite 1 family",
+                impact: "Help another child feel more confident sharing their ideas",
+                reward: { icon: "✨", title: "Early access to StoryBuilders", desc: "Be among the first to explore the app before anyone else" },
+                invites: 1,
+              },
+              {
+                task: "Invite 3 families",
+                impact: "Help more children understand what's happening and explain it clearly",
+                reward: { icon: "🎁", title: "Get your Story Pack", desc: "Visual supports, retell tools, and parent prompts" },
+                invites: 3,
+              },
+              {
+                task: "Invite 5 families",
+                impact: "Help build a community where children feel understood and confident",
+                reward: { icon: "🎧", title: "Unlock a private Dan & Daria episode", desc: "Exclusive content only for Launch Team members" },
+                invites: 5,
+              },
+              {
+                task: "Invite 10 families",
+                impact: "Help more children feel successful when expressing their ideas",
+                reward: { icon: "💜", title: "Lock in founder pricing for life", desc: "$5.99/month forever — available to the first 100 who reach this milestone" },
+                invites: 10,
+              },
             ];
 
             return <ScrollProgress steps={progressSteps} inviteCount={wl.inviteCount} />;
