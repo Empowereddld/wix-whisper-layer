@@ -19,9 +19,6 @@ import { toast } from "sonner";
 import {
   Copy,
   Check,
-  Megaphone,
-  Wrench,
-  Heart,
   BookOpen,
   Lightbulb,
   MessageCircle,
