@@ -179,7 +179,7 @@ const ScrollProgress = ({ steps, inviteCount }: { steps: ProgressStep[]; inviteC
               <p
                 style={{
                   fontSize: "13px",
-                  color: locked ? "#ABABBB" : "#8A8A9A",
+                  color: "#8A8A9A",
                   fontWeight: 400,
                   lineHeight: 1.6,
                   marginBottom: step.reward ? "12px" : "0",
