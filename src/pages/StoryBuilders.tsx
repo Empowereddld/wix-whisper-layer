@@ -636,13 +636,13 @@ const StoryBuilders = () => {
       <section className="py-16 md:py-[120px]" style={{ backgroundColor: "#FAFAFC" }}>
         <div className="container px-6 md:px-8">
           <FadeSection className="text-center mb-14 md:mb-20">
-            <h2 className="text-[28px] md:text-[30px] tracking-tight leading-[1.2]" style={{ color: "#2F2F3A", fontWeight: 600, fontFamily: "Poppins, sans-serif" }}>
+            <h2 className="text-[34px] md:text-[40px] tracking-tight leading-[1.2]" style={{ color: "#2F2F3A", fontWeight: 700, fontFamily: "Poppins, sans-serif" }}>
               Your Progress
             </h2>
-            <p className="text-[15px] md:text-[16px] mt-2 leading-[1.6]" style={{ color: "#6B6B6B", fontFamily: "Nunito, sans-serif" }}>
+            <p className="text-[16px] md:text-[18px] mt-3 leading-[1.6]" style={{ color: "#6B6B6B", fontFamily: "Nunito, sans-serif" }}>
               Each step unlocks something new.
             </p>
-            <p className="text-[13px] mt-1 leading-[1.6]" style={{ color: "#9B9BAB", fontFamily: "Nunito, sans-serif" }}>
+            <p className="text-[14px] mt-1.5 leading-[1.6]" style={{ color: "#9B9BAB", fontFamily: "Nunito, sans-serif" }}>
               You're just getting started — your next reward is one step away.
             </p>
           </FadeSection>
