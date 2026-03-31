@@ -662,7 +662,7 @@ const StoryBuilders = () => {
               {
                 task: "Invite 10 families",
                 impact: "Help more children feel successful when expressing their ideas",
-                reward: { icon: "💜", title: "Lock in founder pricing for life", desc: "$5.99/month forever — available to the first 100 who reach this milestone" },
+                reward: { icon: <Crown size={20} />, title: "Lock in founder pricing for life", desc: "$5.99/month forever — available to the first 100 who reach this milestone" },
                 invites: 10,
               },
             ];
