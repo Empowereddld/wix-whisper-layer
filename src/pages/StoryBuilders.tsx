@@ -238,7 +238,7 @@ const StoryBuilders = () => {
 
 
       {/* ─── S2: HOOK ─── */}
-      <section className="bg-white bg-[radial-gradient(ellipse_80%_50%_at_50%_0%,hsl(266,100%,97%)_0%,transparent_100%)] py-16 md:py-24">
+      <section className="bg-white bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,hsl(266,100%,92%)_0%,transparent_100%)] py-16 md:py-24">
         <FadeSection className="max-w-[700px] mx-auto px-6 md:px-8 text-center space-y-6 md:space-y-8">
           <p className="text-base md:text-xl lg:text-2xl text-foreground leading-[1.7] font-normal">
             For many children, telling a story about their day is not simple.
