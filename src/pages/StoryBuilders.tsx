@@ -209,7 +209,7 @@ const ScrollProgress = ({ steps, inviteCount }: { steps: ProgressStep[]; inviteC
                   }}
                 >
                   <div className="flex items-start gap-3">
-                    <span style={{ fontSize: "22px", lineHeight: 1, marginTop: "2px" }}>
+                    <span className="text-primary" style={{ lineHeight: 1, marginTop: "2px" }}>
                       {step.reward.icon}
                     </span>
                     <div>
