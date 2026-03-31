@@ -81,7 +81,10 @@ const ScrollProgress = ({ steps, inviteCount }: { steps: ProgressStep[]; inviteC
           const targetRect = targetStep.getBoundingClientRect();
           const targetY = targetRect.top + 12 - containerRect.top;
           const trackStart = 24;
-          const trackEnd = containerH - 24;
+          const lastStep = stepRefs.current[stepRefs.current.length - 1];
+          const trackEnd = lastStep
+            ? lastStep.getBoundingClientRect().top + 12 - containerRect.top
+            : containerH - 24;
           const pct = Math.max(0, Math.min(100, ((targetY - trackStart) / (trackEnd - trackStart)) * 100));
           setLinePct(pct);
         }
