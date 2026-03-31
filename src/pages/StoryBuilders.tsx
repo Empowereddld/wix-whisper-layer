@@ -35,6 +35,114 @@ const milestones = [
 
 const COLLECTIVE_GOAL = 4000;
 
+/* ─── Scroll-animated Progress Journey ─── */
+type ProgressStep = { title: string; desc: string; unlock: string | null; invites: number };
+
+const ScrollProgress = ({ steps, inviteCount }: { steps: ProgressStep[]; inviteCount: number }) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [scrollPct, setScrollPct] = useState(0);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const onScroll = () => {
+      const rect = el.getBoundingClientRect();
+      const windowH = window.innerHeight;
+      // Start when section enters viewport, end when section top reaches top of viewport
+      const sectionH = rect.height;
+      const start = windowH * 0.8; // trigger point
+      const travel = sectionH + start - windowH * 0.3;
+      const scrolled = start - rect.top;
+      const pct = Math.max(0, Math.min(1, scrolled / travel));
+      setScrollPct(pct);
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // How many steps are "revealed" by scroll
+  const revealedSteps = Math.floor(scrollPct * (steps.length + 0.5));
+
+  return (
+    <div ref={containerRef} className="max-w-[520px] mx-auto relative">
+      {/* Background track */}
+      <div className="absolute left-[22px] top-[24px] bottom-[24px] w-[2px] bg-primary/10 rounded-full" />
+      {/* Animated fill line */}
+      <div
+        className="absolute left-[22px] top-[24px] w-[2px] rounded-full"
+        style={{
+          height: `${Math.min(scrollPct * 100, 100)}%`,
+          maxHeight: "calc(100% - 48px)",
+          background: "linear-gradient(180deg, hsl(258,50%,50%) 0%, hsl(266,80%,70%) 100%)",
+          transition: "height 0.15s ease-out",
+        }}
+      />
+
+      {steps.map((step, i, arr) => {
+        const completed = inviteCount >= step.invites;
+        const isCurrent = !completed && (i === 0 || inviteCount >= arr[i - 1].invites);
+        const locked = !completed && !isCurrent;
+        const revealed = i < revealedSteps;
+
+        return (
+          <div
+            key={i}
+            className={`relative flex items-start gap-5 ${i < arr.length - 1 ? "pb-10 md:pb-14" : ""}`}
+            style={{
+              opacity: revealed ? (locked ? 0.45 : 1) : 0,
+              transform: revealed ? "translateY(0)" : "translateY(20px)",
+              transition: "opacity 0.5s ease-out, transform 0.5s ease-out",
+            }}
+          >
+            {/* Circle on the track */}
+            <div className="relative z-10 shrink-0 flex items-center justify-center w-[46px]">
+              <div
+                className={`rounded-full transition-all duration-500 ${
+                  completed
+                    ? "w-[16px] h-[16px] bg-primary shadow-[0_0_10px_hsl(258,50%,50%,0.3)]"
+                    : isCurrent
+                    ? "w-[16px] h-[16px] bg-primary/50 shadow-[0_0_16px_hsl(258,50%,50%,0.4)] ring-4 ring-primary/10"
+                    : "w-[12px] h-[12px] bg-primary/15 border-2 border-primary/20"
+                }`}
+                style={{
+                  transform: revealed ? "scale(1)" : "scale(0)",
+                  transition: "transform 0.4s cubic-bezier(0.34,1.56,0.64,1)",
+                }}
+              />
+            </div>
+            {/* Content pill */}
+            <div
+              className="flex-1 rounded-2xl px-5 py-4"
+              style={{
+                background: completed
+                  ? "linear-gradient(135deg, hsla(258,50%,50%,0.08) 0%, hsla(266,80%,80%,0.10) 100%)"
+                  : isCurrent
+                  ? "linear-gradient(135deg, hsla(258,50%,50%,0.06) 0%, hsla(266,80%,85%,0.08) 100%)"
+                  : "linear-gradient(135deg, hsla(258,50%,50%,0.03) 0%, hsla(266,80%,90%,0.04) 100%)",
+              }}
+            >
+              <p className="text-[16px] md:text-[17px] leading-[1.5]" style={{ color: "#4A4C5C", fontWeight: 400 }}>
+                {step.title}
+              </p>
+              <p className="text-[14px] md:text-[15px] leading-[1.6] mt-1" style={{ color: "#6B6B7B", fontWeight: 400 }}>
+                {step.desc}
+              </p>
+              {step.unlock && (
+                <p className="text-[13px] mt-1.5" style={{ color: "#9B8FBB", fontWeight: 400 }}>
+                  Unlock: {step.unlock}
+                </p>
+              )}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
 /* ─── Fade wrapper ─── */
 const FadeSection = ({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) => {
   const { ref, className: fadeClass } = useScrollFadeIn({ delay });
