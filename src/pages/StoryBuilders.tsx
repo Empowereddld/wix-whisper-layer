@@ -95,14 +95,14 @@ const ScrollProgress = ({ steps, inviteCount }: { steps: ProgressStep[]; inviteC
   return (
     <div ref={containerRef} className="max-w-[520px] mx-auto relative">
       {/* Background track */}
-      <div className="absolute left-[22px] top-[24px] bottom-[24px] w-[2px] bg-primary/10 rounded-full" />
+      <div className="absolute left-[22px] top-[24px] bottom-[24px] w-[3px] bg-primary/20 rounded-full" />
       {/* Animated fill line */}
       <div
-        className="absolute left-[22px] top-[24px] w-[2px] rounded-full"
+        className="absolute left-[22px] top-[24px] w-[3px] rounded-full"
         style={{
           height: `${linePct}%`,
           maxHeight: "calc(100% - 48px)",
-          background: "linear-gradient(180deg, hsl(258,50%,50%) 0%, hsl(266,80%,70%) 100%)",
+          background: "hsl(258,50%,50%)",
           transition: "height 0.25s ease-out",
         }}
       />
@@ -122,16 +122,10 @@ const ScrollProgress = ({ steps, inviteCount }: { steps: ProgressStep[]; inviteC
             {/* Circle on the track */}
             <div className="relative z-10 shrink-0 flex items-center justify-center w-[46px]">
               <div
-                className={`rounded-full ${
-                  completed
-                    ? "w-[16px] h-[16px] bg-primary shadow-[0_0_10px_hsl(258,50%,50%,0.3)]"
-                    : isCurrent
-                    ? "w-[16px] h-[16px] bg-primary/50 shadow-[0_0_16px_hsl(258,50%,50%,0.4)] ring-4 ring-primary/10"
-                    : "w-[12px] h-[12px] bg-primary/15 border-2 border-primary/20"
-                }`}
+                className="rounded-full w-[14px] h-[14px] bg-primary"
                 style={{
                   transform: reached ? "scale(1)" : "scale(0.6)",
-                  opacity: reached ? 1 : 0.4,
+                  opacity: reached ? 1 : 0,
                   transition: "transform 0.4s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s ease-out",
                 }}
               />
@@ -140,11 +134,7 @@ const ScrollProgress = ({ steps, inviteCount }: { steps: ProgressStep[]; inviteC
             <div
               className="flex-1 rounded-2xl px-5 py-4"
               style={{
-                background: completed
-                  ? "linear-gradient(135deg, hsla(258,50%,50%,0.08) 0%, hsla(266,80%,80%,0.10) 100%)"
-                  : isCurrent
-                  ? "linear-gradient(135deg, hsla(258,50%,50%,0.06) 0%, hsla(266,80%,85%,0.08) 100%)"
-                  : "linear-gradient(135deg, hsla(258,50%,50%,0.03) 0%, hsla(266,80%,90%,0.04) 100%)",
+                background: "linear-gradient(135deg, hsla(258,50%,50%,0.08) 0%, hsla(266,80%,80%,0.10) 100%)",
                 transform: reached && i === activeStep ? "scale(1.03)" : "scale(1)",
                 transition: "transform 0.4s cubic-bezier(0.34,1.56,0.64,1)",
               }}
