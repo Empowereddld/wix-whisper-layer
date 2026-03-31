@@ -548,7 +548,7 @@ const StoryBuilders = () => {
 
           {(() => {
             const progressSteps = [
-              { title: "You joined the Launch Team", desc: "You're part of something from the very beginning", unlock: null, invites: 0 },
+              { title: "You joined the Launch Team", desc: "You're part of this from the very beginning", unlock: null, invites: 0 },
               { title: "Invite 1 family", desc: "Help another child build stronger language skills", unlock: "early access", invites: 1 },
               { title: "Invite 3 families", desc: "Help more children understand and tell stories clearly", unlock: "Story Pack", invites: 3 },
               { title: "Invite 5 families", desc: "Help build a community where children feel more confident communicating", unlock: "exclusive episode", invites: 5 },
