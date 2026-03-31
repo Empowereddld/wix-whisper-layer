@@ -1,4 +1,5 @@
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback, useMemo } from "react";
+import confetti from "canvas-confetti";
 import { DotBackground } from "@/components/ui/dot-background";
 import SEOHead from "@/components/SEOHead";
 import StoryBuildersStatBand from "@/components/StoryBuildersStatBand";
@@ -559,29 +560,140 @@ const StoryBuilders = () => {
       <div className="w-16 h-px bg-border mx-auto" />
 
       {/* ─── S7: COLLECTIVE GOAL ─── */}
-      <section className="bg-lavender py-16 md:py-[120px]">
-        <div className="container px-6 md:px-8">
-          <FadeSection className="max-w-[650px] mx-auto text-center">
-            <h2 className="text-[32px] md:text-[42px] lg:text-[46px] font-bold tracking-tight text-foreground mb-6">
-              Our Collective Goal
-            </h2>
-            <p className="text-[15px] md:text-[16px] text-muted-foreground leading-[1.7] mb-8">
-              If we reach 4,000 storytellers, we will create a brand new Dan and Daria
-              story together. The community will help choose the theme, and this story
-              will become the fifth book in our Living Life with DLD book series.
-            </p>
-            <div className="bg-background/60 rounded-xl border border-border p-6">
-              <p className="text-[14px] font-semibold text-foreground mb-3">
-                {wl.totalCount.toLocaleString()} storyteller{wl.totalCount !== 1 ? "s" : ""} and counting.{" "}
-                <span className="text-muted-foreground font-normal">
-                  {(COLLECTIVE_GOAL - wl.totalCount).toLocaleString()} to go.
-                </span>
-              </p>
-              <Progress value={collectivePct} className="h-3 bg-border [&>div]:bg-primary rounded-full" />
-            </div>
-          </FadeSection>
-        </div>
-      </section>
+      {(() => {
+        const GOAL = COLLECTIVE_GOAL;
+        const FILL_DURATION = 4000; // ms
+        const HOLD_DURATION = 5000; // ms
+
+        const AnimatedGoal = () => {
+          const sectionRef = useRef<HTMLDivElement>(null);
+          const barRef = useRef<HTMLDivElement>(null);
+          const [displayCount, setDisplayCount] = useState(0);
+          const [isVisible, setIsVisible] = useState(false);
+          const phaseRef = useRef<"idle" | "filling" | "celebrating" | "holding">("idle");
+          const rafRef = useRef<number>(0);
+          const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
+
+          // Ease-out cubic
+          const ease = (t: number) => 1 - Math.pow(1 - t, 3);
+
+          const fireConfetti = useCallback(() => {
+            if (!barRef.current) return;
+            const rect = barRef.current.getBoundingClientRect();
+            const x = (rect.right - 4) / window.innerWidth;
+            const y = (rect.top + rect.height / 2) / window.innerHeight;
+
+            // Fire a few bursts for effect
+            const colors = ["#7E5BEF", "#B794F6", "#DDD6FE", "#EDE9FE"];
+            confetti({ particleCount: 60, spread: 45, origin: { x, y }, colors, gravity: 1.2, scalar: 0.9, ticks: 80 });
+            setTimeout(() => {
+              confetti({ particleCount: 40, spread: 35, origin: { x: x - 0.02, y: y - 0.02 }, colors, gravity: 1, scalar: 0.7, ticks: 60 });
+            }, 150);
+          }, []);
+
+          const runCycle = useCallback(() => {
+            phaseRef.current = "filling";
+            const start = performance.now();
+
+            const tick = (now: number) => {
+              if (phaseRef.current !== "filling") return;
+              const elapsed = now - start;
+              const progress = Math.min(elapsed / FILL_DURATION, 1);
+              const eased = ease(progress);
+              setDisplayCount(Math.round(eased * GOAL));
+
+              if (progress < 1) {
+                rafRef.current = requestAnimationFrame(tick);
+              } else {
+                // Reached goal — celebrate
+                phaseRef.current = "celebrating";
+                setDisplayCount(GOAL);
+                fireConfetti();
+
+                // Hold phase
+                phaseRef.current = "holding";
+                timeoutRef.current = setTimeout(() => {
+                  if (phaseRef.current === "holding") {
+                    setDisplayCount(0);
+                    // Restart cycle
+                    runCycle();
+                  }
+                }, HOLD_DURATION);
+              }
+            };
+
+            rafRef.current = requestAnimationFrame(tick);
+          }, [fireConfetti]);
+
+          const stopAll = useCallback(() => {
+            phaseRef.current = "idle";
+            cancelAnimationFrame(rafRef.current);
+            if (timeoutRef.current) clearTimeout(timeoutRef.current);
+          }, []);
+
+          useEffect(() => {
+            const el = sectionRef.current;
+            if (!el) return;
+
+            const obs = new IntersectionObserver(
+              ([entry]) => {
+                if (entry.isIntersecting) {
+                  setIsVisible(true);
+                } else {
+                  setIsVisible(false);
+                  stopAll();
+                  setDisplayCount(0);
+                }
+              },
+              { threshold: 0.85 }
+            );
+            obs.observe(el);
+            return () => { obs.disconnect(); stopAll(); };
+          }, [stopAll]);
+
+          useEffect(() => {
+            if (isVisible && phaseRef.current === "idle") {
+              runCycle();
+            }
+          }, [isVisible, runCycle]);
+
+          const pct = Math.min((displayCount / GOAL) * 100, 100);
+          const remaining = GOAL - displayCount;
+
+          return (
+            <section ref={sectionRef} className="bg-lavender py-16 md:py-[120px]">
+              <div className="container px-6 md:px-8">
+                <div className="max-w-[650px] mx-auto text-center">
+                  <h2 className="text-[32px] md:text-[42px] lg:text-[46px] font-bold tracking-tight text-foreground mb-6">
+                    Our Collective Goal
+                  </h2>
+                  <p className="text-[15px] md:text-[16px] text-muted-foreground leading-[1.7] mb-8">
+                    If we reach 4,000 storytellers, we will create a brand new Dan and Daria
+                    story together. The community will help choose the theme, and this story
+                    will become the fifth book in our Living Life with DLD book series.
+                  </p>
+                  <div className="bg-background/60 rounded-xl border border-border p-6">
+                    <p className="text-[14px] font-semibold text-foreground mb-3">
+                      {displayCount.toLocaleString()} storyteller{displayCount !== 1 ? "s" : ""} and counting.{" "}
+                      <span className="text-muted-foreground font-normal">
+                        {remaining > 0 ? `${remaining.toLocaleString()} to go.` : "Goal reached! 🎉"}
+                      </span>
+                    </p>
+                    <div ref={barRef} className="relative h-3 w-full rounded-full bg-border overflow-hidden">
+                      <div
+                        className="h-full rounded-full bg-primary transition-none"
+                        style={{ width: `${pct}%` }}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          );
+        };
+
+        return <AnimatedGoal />;
+      })()}
 
       <div className="w-16 h-px bg-border mx-auto" />
 
