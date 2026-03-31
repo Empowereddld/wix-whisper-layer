@@ -1,4 +1,5 @@
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback, useMemo } from "react";
+import confetti from "canvas-confetti";
 import { DotBackground } from "@/components/ui/dot-background";
 import SEOHead from "@/components/SEOHead";
 import StoryBuildersStatBand from "@/components/StoryBuildersStatBand";
