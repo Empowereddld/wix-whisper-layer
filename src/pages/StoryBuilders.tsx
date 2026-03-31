@@ -542,7 +542,7 @@ const StoryBuilders = () => {
               Your Progress
             </h2>
             <p className="text-[15px] md:text-[16px] mt-3 leading-[1.7]" style={{ color: "#6B6B6B" }}>
-              You're helping build something meaningful.
+              You're helping more children understand and express their ideas.
             </p>
           </FadeSection>
 
