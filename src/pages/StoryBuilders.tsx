@@ -95,14 +95,14 @@ const ScrollProgress = ({ steps, inviteCount }: { steps: ProgressStep[]; inviteC
   return (
     <div ref={containerRef} className="max-w-[520px] mx-auto relative">
       {/* Background track */}
-      <div className="absolute left-[22px] top-[24px] bottom-[24px] w-[2px] bg-primary/10 rounded-full" />
+      <div className="absolute left-[22px] top-[24px] bottom-[24px] w-[3px] bg-primary/20 rounded-full" />
       {/* Animated fill line */}
       <div
-        className="absolute left-[22px] top-[24px] w-[2px] rounded-full"
+        className="absolute left-[22px] top-[24px] w-[3px] rounded-full"
         style={{
           height: `${linePct}%`,
           maxHeight: "calc(100% - 48px)",
-          background: "linear-gradient(180deg, hsl(258,50%,50%) 0%, hsl(266,80%,70%) 100%)",
+          background: "hsl(258,50%,50%)",
           transition: "height 0.25s ease-out",
         }}
       />
