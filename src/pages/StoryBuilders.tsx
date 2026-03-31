@@ -422,7 +422,7 @@ const StoryBuilders = () => {
           <FadeSection delay={100}>
             <div className="max-w-[520px] mx-auto relative">
               {/* Continuous vertical track line */}
-              <div className="absolute left-[22px] top-[7px] bottom-[7px] w-[2px] bg-primary/10 rounded-full" />
+              <div className="absolute left-[22px] top-[24px] bottom-[24px] w-[2px] bg-primary/10 rounded-full" />
               {/* Filled progress line */}
               {(() => {
                 const steps = [0, 1, 3, 5, 10];
@@ -430,7 +430,7 @@ const StoryBuilders = () => {
                 const pct = completedIdx <= 0 ? 0 : (completedIdx / (steps.length - 1)) * 100;
                 return (
                   <div
-                    className="absolute left-[22px] top-[7px] w-[2px] rounded-full transition-all duration-700"
+                    className="absolute left-[22px] top-[24px] w-[2px] rounded-full transition-all duration-700"
                     style={{
                       height: `${pct}%`,
                       background: "linear-gradient(180deg, hsl(258,50%,50%) 0%, hsl(266,80%,70%) 100%)",
