@@ -4,7 +4,7 @@ import SEOHead from "@/components/SEOHead";
 import StoryBuildersStatBand from "@/components/StoryBuildersStatBand";
 import storybuildersHero from "@/assets/storybuilders-hero.png";
 import storybuildersAppMockup from "@/assets/storybuilders-app-mockup.png";
-import storybuildersReadListen from "@/assets/storybuilders-read-listen.png";
+
 import storybuildersMovement from "@/assets/storybuilders-movement.png";
 import storybuildersAwareness from "@/assets/storybuilders-awareness.png";
 import storybuildersUnderstood from "@/assets/storybuilders-understood.png";
@@ -19,10 +19,6 @@ import { toast } from "sonner";
 import {
   Copy,
   Check,
-  BookOpen,
-  Lightbulb,
-  MessageCircle,
-  HeartHandshake,
 } from "lucide-react";
 
 /* ─── Milestones ─── */
@@ -319,86 +315,6 @@ const StoryBuilders = () => {
             </p>
           </div>
         </FadeSection>
-      </section>
-
-      {/* ─── WHAT WE'RE BUILDING TOGETHER ─── */}
-      <section className="py-16 md:py-[100px]">
-        <div className="max-w-[1100px] mx-auto px-6 md:px-8">
-          <FadeSection className="text-center mb-10 md:mb-14">
-            <h2 className="text-[28px] md:text-[38px] lg:text-[46px] font-bold tracking-tight text-foreground leading-[1.1] mb-3">
-              What We're Building Together
-            </h2>
-            <p className="text-[13px] md:text-[14px] lg:text-[16px] text-muted-foreground leading-[1.7] max-w-[600px] mx-auto">
-              StoryBuilders is designed to help children grow their language through stories in a way that feels clear, supportive, and actually works in real life.
-            </p>
-            <p className="text-[14px] md:text-[15px] font-semibold text-foreground mt-6">
-              Here's what that looks like:
-            </p>
-          </FadeSection>
-
-          <FadeSection delay={100}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
-              {[
-                {
-                  icon: BookOpen,
-                  title: "Read and Listen",
-                  subtitle: "Stories your child can follow with confidence",
-                  description: "Short, supported stories help your child stay engaged without feeling lost or overwhelmed.",
-                  image: storybuildersReadListen,
-                },
-                {
-                  icon: Lightbulb,
-                  title: "Understand the Story",
-                  subtitle: "Make sense of what happened",
-                  description: "Simple prompts help your child understand: who, where, what happened, and why.",
-                },
-                {
-                  icon: MessageCircle,
-                  title: "Retell with Support",
-                  subtitle: "Practice expressing ideas step by step",
-                  description: "Your child is guided to retell the story so they can organize and share their thoughts more clearly.",
-                },
-                {
-                  icon: HeartHandshake,
-                  title: "Connect to Real Life",
-                  subtitle: "Turn stories into real conversations",
-                  description: "Guided questions help your child talk about their own experiences with more clarity and confidence.",
-                },
-              ].map((card, i) => (
-                <div
-                  key={card.title}
-                  className="bg-lavender rounded-xl overflow-hidden grid grid-cols-1 sm:grid-cols-[1fr_1fr] min-h-[280px]"
-                >
-                  {/* Text side */}
-                  <div className={`p-7 md:p-9 flex flex-col justify-center ${i % 2 !== 0 ? 'sm:order-2' : ''}`}>
-                    <div className="w-11 h-11 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-                      <card.icon className="w-5 h-5 text-primary" />
-                    </div>
-                    <h3 className="text-[18px] md:text-[20px] font-bold text-foreground mb-1.5">
-                      {card.title}
-                    </h3>
-                    <p className="text-[13px] md:text-[14px] text-primary font-medium mb-2.5">
-                      {card.subtitle}
-                    </p>
-                    <p className="text-[12px] md:text-[13px] text-muted-foreground leading-[1.7]">
-                      {card.description}
-                    </p>
-                  </div>
-                  {/* Image placeholder */}
-                  <div className={`bg-border/30 relative overflow-hidden min-h-[200px] sm:min-h-0 ${!card.image ? 'flex items-center justify-center' : ''} ${i % 2 !== 0 ? 'sm:order-1' : ''}`}>
-                    {card.image ? (
-                      <img src={card.image} alt={card.title} className="absolute inset-0 w-full h-full object-cover" />
-                    ) : (
-                      <div className="text-muted-foreground/40 text-[13px] font-medium tracking-wide uppercase">
-                        Image coming soon
-                      </div>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </FadeSection>
-        </div>
       </section>
 
 
