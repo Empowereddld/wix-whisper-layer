@@ -55,7 +55,7 @@ const ScrollProgress = ({ steps, inviteCount }: { steps: ProgressStep[]; inviteC
 
       // Calculate which step the line has reached based on scroll
       const windowH = window.innerHeight;
-      const triggerY = windowH * 0.65; // line "cursor" position on screen
+      const triggerY = windowH * 0.85; // line "cursor" position on screen
 
       // Find how far the line should extend
       let reachedStep = -1;
