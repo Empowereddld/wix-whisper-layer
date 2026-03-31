@@ -21,6 +21,10 @@ import { toast } from "sonner";
 import {
   Copy,
   Check,
+  Rocket,
+  Gift,
+  Headphones,
+  Crown,
 } from "lucide-react";
 
 /* ─── Milestones ─── */
@@ -40,7 +44,7 @@ const COLLECTIVE_GOAL = 4000;
 type ProgressStep = {
   task: string;
   impact: string;
-  reward: { icon: string; title: string; desc: string } | null;
+  reward: { icon: React.ReactNode; title: string; desc: string } | null;
   invites: number;
 };
 
@@ -205,7 +209,7 @@ const ScrollProgress = ({ steps, inviteCount }: { steps: ProgressStep[]; inviteC
                   }}
                 >
                   <div className="flex items-start gap-3">
-                    <span style={{ fontSize: "22px", lineHeight: 1, marginTop: "2px" }}>
+                    <span className="text-primary" style={{ lineHeight: 1, marginTop: "2px" }}>
                       {step.reward.icon}
                     </span>
                     <div>
@@ -640,25 +644,25 @@ const StoryBuilders = () => {
               {
                 task: "Invite 1 family",
                 impact: "Help another child feel more confident sharing their ideas",
-                reward: { icon: "✨", title: "Early access to StoryBuilders", desc: "Be among the first to explore the app before anyone else" },
+                reward: { icon: <Rocket size={20} />, title: "Early access to StoryBuilders", desc: "Be among the first to explore the app before anyone else" },
                 invites: 1,
               },
               {
                 task: "Invite 3 families",
                 impact: "Help more children understand what's happening and explain it clearly",
-                reward: { icon: "🎁", title: "Get your Story Pack", desc: "Visual supports, retell tools, and parent prompts" },
+                reward: { icon: <Gift size={20} />, title: "Get your Story Pack", desc: "Visual supports, retell tools, and parent prompts" },
                 invites: 3,
               },
               {
                 task: "Invite 5 families",
                 impact: "Help build a community where children feel understood and confident",
-                reward: { icon: "🎧", title: "Unlock a private Dan & Daria episode", desc: "Exclusive content only for Launch Team members" },
+                reward: { icon: <Headphones size={20} />, title: "Unlock a private Dan & Daria episode", desc: "Exclusive content only for Launch Team members" },
                 invites: 5,
               },
               {
                 task: "Invite 10 families",
                 impact: "Help more children feel successful when expressing their ideas",
-                reward: { icon: "💜", title: "Lock in founder pricing for life", desc: "$5.99/month forever — available to the first 100 who reach this milestone" },
+                reward: { icon: <Crown size={20} />, title: "Lock in founder pricing for life", desc: "$5.99/month forever — available to the first 100 who reach this milestone" },
                 invites: 10,
               },
             ];
