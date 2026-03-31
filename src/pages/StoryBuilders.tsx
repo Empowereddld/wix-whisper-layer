@@ -25,6 +25,7 @@ import {
   Gift,
   Headphones,
   Crown,
+  Sparkles,
 } from "lucide-react";
 
 /* ─── Milestones ─── */
@@ -44,7 +45,7 @@ const COLLECTIVE_GOAL = 4000;
 type ProgressStep = {
   task: string;
   impact: string;
-  reward: { icon: React.ReactNode; title: string; desc: string } | null;
+  reward: { icon: React.ReactNode; title: string; desc: string; subdesc?: string } | null;
   invites: number;
 };
 
@@ -234,6 +235,19 @@ const ScrollProgress = ({ steps, inviteCount }: { steps: ProgressStep[]; inviteC
                       >
                         {step.reward.desc}
                       </p>
+                      {step.reward.subdesc && (
+                        <p
+                          style={{
+                            fontSize: "12px",
+                            fontWeight: 400,
+                            color: "#9B9BAB",
+                            lineHeight: 1.5,
+                            marginTop: "4px",
+                          }}
+                        >
+                          {step.reward.subdesc}
+                        </p>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -629,7 +643,7 @@ const StoryBuilders = () => {
               Each step unlocks something new.
             </p>
             <p className="text-[13px] mt-1 leading-[1.6]" style={{ color: "#9B9BAB", fontFamily: "Nunito, sans-serif" }}>
-              You're helping more children feel confident communicating.
+              You're just getting started — your next reward is one step away.
             </p>
           </FadeSection>
 
@@ -637,32 +651,32 @@ const StoryBuilders = () => {
             const progressSteps: ProgressStep[] = [
               {
                 task: "You joined the Launch Team",
-                impact: "You're part of this from the very beginning",
-                reward: null,
+                impact: "Welcome to the Launch Team",
+                reward: { icon: <Sparkles size={20} />, title: "You're officially in", desc: "You're part of this from the very beginning" },
                 invites: 0,
               },
               {
                 task: "Invite 1 family",
                 impact: "Help another child feel more confident sharing their ideas",
-                reward: { icon: <Rocket size={20} />, title: "Early access to StoryBuilders", desc: "Be among the first to explore the app before anyone else" },
+                reward: { icon: <Rocket size={20} />, title: "Be one of the first to explore StoryBuilders", desc: "Be among the first to explore the app before anyone else" },
                 invites: 1,
               },
               {
                 task: "Invite 3 families",
-                impact: "Help more children understand what's happening and explain it clearly",
-                reward: { icon: <Gift size={20} />, title: "Get your Story Pack", desc: "Visual supports, retell tools, and parent prompts" },
+                impact: "Help more children understand what happened and explain it clearly",
+                reward: { icon: <Gift size={20} />, title: "Unlock your Story Pack", desc: "Visual supports, retell tools, and parent prompts" },
                 invites: 3,
               },
               {
                 task: "Invite 5 families",
                 impact: "Help build a community where children feel understood and confident",
-                reward: { icon: <Headphones size={20} />, title: "Unlock a private Dan & Daria episode", desc: "Exclusive content only for Launch Team members" },
+                reward: { icon: <Headphones size={20} />, title: "Listen to a private Dan & Daria episode", desc: "Exclusive content only for Launch Team members" },
                 invites: 5,
               },
               {
                 task: "Invite 10 families",
                 impact: "Help more children feel successful when expressing their ideas",
-                reward: { icon: <Crown size={20} />, title: "Lock in founder pricing for life", desc: "$5.99/month forever — available to the first 100 who reach this milestone" },
+                reward: { icon: <Crown size={20} />, title: "Lock in founder pricing for life", desc: "$5.99/month forever", subdesc: "Only for the first 100 families" },
                 invites: 10,
               },
             ];
