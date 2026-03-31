@@ -21,6 +21,10 @@ import { toast } from "sonner";
 import {
   Copy,
   Check,
+  Rocket,
+  Gift,
+  Headphones,
+  Crown,
 } from "lucide-react";
 
 /* ─── Milestones ─── */
