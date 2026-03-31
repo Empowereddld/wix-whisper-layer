@@ -8,6 +8,7 @@ import storybuildersAppMockup from "@/assets/storybuilders-app-mockup.png";
 import storybuildersMovement from "@/assets/storybuilders-movement.png";
 import storybuildersAwareness from "@/assets/storybuilders-awareness.png";
 import storybuildersUnderstood from "@/assets/storybuilders-understood.png";
+import howItWorksSteps from "@/assets/how-it-works-steps.png";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
