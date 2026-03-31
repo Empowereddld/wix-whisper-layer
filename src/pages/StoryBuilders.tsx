@@ -96,8 +96,20 @@ const ScrollProgress = ({ steps, inviteCount }: { steps: ProgressStep[]; inviteC
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const completedCount = steps.filter(s => inviteCount >= s.invites).length;
+  const nextRewardStep = steps.find(s => inviteCount < s.invites && s.unlock);
+  const anchorText = completedCount >= steps.length
+    ? "You've unlocked every reward — amazing!"
+    : nextRewardStep
+      ? `You're ${completedCount} step${completedCount !== 1 ? "s" : ""} in — keep going to unlock ${nextRewardStep.unlock}`
+      : `You're ${completedCount} step${completedCount !== 1 ? "s" : ""} in — keep going`;
+
   return (
     <div ref={containerRef} className="max-w-[520px] mx-auto relative">
+      {/* Progress anchor */}
+      <p className="text-center text-[13px] font-semibold mb-6" style={{ color: "hsl(258,50%,50%)", fontFamily: "Nunito, sans-serif" }}>
+        {anchorText}
+      </p>
       {/* Background track */}
       <div className="absolute left-[22px] top-[24px] bottom-[24px] w-[3px] bg-primary/20 rounded-full" />
       {/* Animated fill line */}
@@ -549,10 +561,10 @@ const StoryBuilders = () => {
           {(() => {
             const progressSteps = [
               { title: "You joined the Launch Team", desc: "You're part of this from the very beginning", unlock: null, invites: 0 },
-              { title: "Invite 1 family", desc: "Help another child build stronger language skills", unlock: "early access", invites: 1 },
-              { title: "Invite 3 families", desc: "Help more children understand and tell stories clearly", unlock: "Story Pack", invites: 3 },
-              { title: "Invite 5 families", desc: "Help build a community where children feel more confident communicating", unlock: "exclusive episode", invites: 5 },
-              { title: "Invite 10 families", desc: "Help more children feel successful sharing their ideas", unlock: "founder pricing", invites: 10 },
+              { title: "Invite 1 family", desc: "Help another child feel more confident sharing their ideas", unlock: "early access", invites: 1 },
+              { title: "Invite 3 families", desc: "Help more children understand what's happening and explain it clearly", unlock: "Story Pack", invites: 3 },
+              { title: "Invite 5 families", desc: "Help build a community where children feel understood and confident", unlock: "exclusive episode", invites: 5 },
+              { title: "Invite 10 families", desc: "Help more children feel successful when expressing their ideas", unlock: "founder pricing", invites: 10 },
             ];
 
             return <ScrollProgress steps={progressSteps} inviteCount={wl.inviteCount} />;
