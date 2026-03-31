@@ -5,6 +5,9 @@ import StoryBuildersStatBand from "@/components/StoryBuildersStatBand";
 import storybuildersHero from "@/assets/storybuilders-hero.png";
 import storybuildersAppMockup from "@/assets/storybuilders-app-mockup.png";
 import storybuildersReadListen from "@/assets/storybuilders-read-listen.png";
+import storybuildersMovement from "@/assets/storybuilders-movement.png";
+import storybuildersAwareness from "@/assets/storybuilders-awareness.png";
+import storybuildersUnderstood from "@/assets/storybuilders-understood.png";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -16,9 +19,6 @@ import { toast } from "sonner";
 import {
   Copy,
   Check,
-  Megaphone,
-  Wrench,
-  Heart,
   BookOpen,
   Lightbulb,
   MessageCircle,
@@ -402,27 +402,64 @@ const StoryBuilders = () => {
       </section>
 
 
-      <section className="py-16 md:py-[120px]">
-        <div className="container px-6 md:px-8">
-          <FadeSection className="text-center mb-12 md:mb-16">
-            <h2 className="text-[32px] md:text-[42px] lg:text-[46px] font-bold tracking-tight text-foreground">
-              Why Join the Launch Team
-            </h2>
+      <section className="py-16 md:py-[120px] bg-background">
+        <div className="max-w-[1100px] mx-auto px-6 md:px-8">
+          {/* Header row */}
+          <FadeSection className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10 md:mb-14">
+            <div className="max-w-[500px]">
+              <span className="text-primary text-[11px] tracking-[0.22em] uppercase font-semibold block mb-3">
+                WHY JOIN
+              </span>
+              <h2 className="text-[32px] md:text-[42px] lg:text-[46px] font-black tracking-tight text-foreground leading-[1.1]">
+                Every child deserves to tell their story.
+              </h2>
+            </div>
+            <p className="text-muted-foreground text-[16px] leading-relaxed max-w-[400px] md:text-right">
+              StoryBuilders is being built for children who deserve to be heard. Your support helps make sure they are.
+            </p>
           </FadeSection>
+
+          {/* Bento card grid */}
           <FadeSection delay={100}>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-[900px] mx-auto">
-              {[
-                { icon: Megaphone, title: "Spread awareness of DLD" },
-                { icon: Wrench, title: "Help shape a tool used across home, school, and therapy" },
-                { icon: Heart, title: "Be part of something meaningful from the beginning" },
-              ].map((card) => (
-                <div key={card.title} className="bg-muted rounded-xl border border-border p-6 text-center premium-card">
-                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                    <card.icon className="w-5 h-5 text-primary" />
-                  </div>
-                  <p className="text-[14px] md:text-[15px] text-foreground font-semibold leading-[1.5]">{card.title}</p>
+            <div className="grid grid-cols-1 md:grid-cols-[1.2fr_1fr] gap-4 min-h-[560px]">
+              {/* Left tall card */}
+              <div className="relative overflow-hidden rounded-xl group cursor-pointer min-h-[300px] md:min-h-0">
+                <img src={storybuildersMovement} alt="Be a part of the movement" className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent transition-all duration-300 group-hover:from-black/80" />
+                <div className="absolute bottom-0 left-0 p-6 md:p-8">
+                  <p className="text-white font-semibold text-[18px] md:text-[20px]">Be a part of the movement</p>
+                  <p className="text-white/80 text-sm max-w-[280px] mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    Some people talk about change. You just helped create it.
+                  </p>
                 </div>
-              ))}
+              </div>
+
+              {/* Right stacked cards */}
+              <div className="grid grid-rows-2 gap-4">
+                {/* Top right */}
+                <div className="relative overflow-hidden rounded-xl group cursor-pointer min-h-[200px] md:min-h-0">
+                  <img src={storybuildersAwareness} alt="Spread awareness of DLD" className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent transition-all duration-300 group-hover:from-black/80" />
+                  <div className="absolute bottom-0 left-0 p-6">
+                    <p className="text-white font-semibold text-[16px] md:text-[18px]">Spread awareness of DLD</p>
+                    <p className="text-white/80 text-sm max-w-[280px] mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      Most people have never heard of DLD. Every person you invite is one more who will.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Bottom right */}
+                <div className="relative overflow-hidden rounded-xl group cursor-pointer min-h-[200px] md:min-h-0">
+                  <img src={storybuildersUnderstood} alt="Help more children feel understood" className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent transition-all duration-300 group-hover:from-black/80" />
+                  <div className="absolute bottom-0 left-0 p-6">
+                    <p className="text-white font-semibold text-[16px] md:text-[18px]">Help more children feel understood</p>
+                    <p className="text-white/80 text-sm max-w-[280px] mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      When more families find StoryBuilders, more children get a tool built specifically for how they think and communicate.
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
           </FadeSection>
         </div>
