@@ -650,7 +650,7 @@ const StoryBuilders = () => {
               {
                 task: "Invite 3 families",
                 impact: "Help more children understand what's happening and explain it clearly",
-                reward: { icon: "🎁", title: "Get your Story Pack", desc: "Visual supports, retell tools, and parent prompts" },
+                reward: { icon: <Gift size={20} />, title: "Get your Story Pack", desc: "Visual supports, retell tools, and parent prompts" },
                 invites: 3,
               },
               {
