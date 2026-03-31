@@ -1,44 +1,31 @@
 
 
-## Plan: Animated collective goal progress with confetti celebration
+## Plan: Fix scroll progress line not reaching the end
 
-**Goal**: When the "Our Collective Goal" section fully enters the viewport, animate the progress bar filling from 0 to 4000 over ~4 seconds. When it hits 4000, trigger a localized confetti burst around the progress bar endpoint. Hold for 5 seconds, then reset and repeat while the section is visible.
+**Problem**: The progress line stops short of the last step because the line percentage calculation caps based on a `trackEnd` value of `containerH - 24`, but the last step's circle center is higher than that. So `linePct` never reaches 100%.
 
-### Steps
+**File**: `src/pages/StoryBuilders.tsx` (lines 76–88)
 
-**1. Install canvas-confetti library**
-- `npm install canvas-confetti` + `@types/canvas-confetti`
-- Lightweight, no-dependency confetti library perfect for localized bursts
+### Fix
 
-**2. Create the animated collective goal section**
+Change the line percentage calculation so that when the last step is reached, the line extends fully to that step's position. The issue is that `trackEnd` is hardcoded to `containerH - 24` but the actual last circle might be at a different Y position.
 
-Replace the static `<Progress>` bar in the S7 section (lines 562–584) with an animated version:
+Replace the linePct calculation (lines 76–88) so that:
+- `trackEnd` is calculated from the **actual last step's circle position** instead of hardcoded `containerH - 24`
+- When all steps are reached, the line extends fully to the last step's circle
 
-- **Intersection Observer**: Use `IntersectionObserver` with `threshold: 0.9` on the section so the animation only starts when the entire section is visible
-- **Animated counter + bar**: When triggered, animate `displayCount` from 0 → 4000 and `displayPct` from 0 → 100 over ~4 seconds using `requestAnimationFrame` with easing
-- **Counter text**: Show the animated number instead of `wl.totalCount` during the animation (e.g., "2,347 storytellers and counting")
-- **Confetti on completion**: When the bar reaches 100%, fire a confetti burst:
-  - Use `confetti({ particleCount: 80, spread: 50, origin: { x, y } })` where x/y is calculated from the progress bar's right end position
-  - Colors: purples and lavenders matching the brand (`#7E5BEF`, `#B794F6`, `#DDD6FE`)
-  - Small area of effect — localized to the end of the progress bar
-- **Hold 5 seconds**: After confetti, hold the completed state for 5 seconds
-- **Reset & repeat**: After the hold, reset to 0 and animate again (loop while section is in view)
-- **Stop when out of view**: When the section scrolls out, cancel the animation loop and reset
+Specifically:
+```ts
+// Calculate trackEnd from the actual last step position
+const lastStep = stepRefs.current[stepRefs.current.length - 1];
+const lastStepY = lastStep 
+  ? lastStep.getBoundingClientRect().top + 12 - containerRect.top 
+  : containerH - 24;
+const trackStart = 24;
+const trackEnd = lastStepY;
+```
 
-**3. Implementation details**
+And update the CSS track `bottom` to match (change `bottom-[24px]` on the background track to align with the last step's actual position, or simply keep it as-is since the fill line will now reach the correct spot).
 
-File: `src/pages/StoryBuilders.tsx`
-
-- Add a new `AnimatedCollectiveGoal` component (or inline the logic in the section)
-- Refs: `sectionRef` for IntersectionObserver, `progressBarRef` for confetti origin calculation
-- State: `displayCount`, `isAnimating`, `animationPhase` (filling | celebrating | holding | idle)
-- The easing function: ease-out cubic for smooth deceleration as it approaches 4000
-- Confetti origin: get `progressBarRef.getBoundingClientRect()`, calculate the right edge position relative to the viewport, convert to 0-1 ratio for `confetti()`
-
-### Technical summary
-- New dependency: `canvas-confetti`
-- Single file edit: `src/pages/StoryBuilders.tsx` (lines 562–584)
-- Animation cycle: 4s fill → confetti burst → 5s hold → reset → repeat
-- Trigger: IntersectionObserver at 90% visibility
-- Confetti scoped to progress bar endpoint area
+This ensures the animated fill line reaches the last circle marker exactly.
 
