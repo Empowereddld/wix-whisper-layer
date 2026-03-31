@@ -424,7 +424,7 @@ const StoryBuilders = () => {
             <div className="grid grid-cols-1 md:grid-cols-[1.2fr_1fr] gap-4 min-h-[560px]">
               {/* Left tall card */}
               <div className="relative overflow-hidden rounded-xl group cursor-pointer min-h-[300px] md:min-h-0">
-                <img src={storybuildersMovement} alt="Be a part of the movement" className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
+                <img src={storybuildersUnderstood} alt="Be a part of the movement" className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent transition-all duration-300 group-hover:from-black/80" />
                 <div className="absolute bottom-0 left-0 p-6 md:p-8">
                   <p className="text-white font-semibold text-[18px] md:text-[20px]">Be a part of the movement</p>
