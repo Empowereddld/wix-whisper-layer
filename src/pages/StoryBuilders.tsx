@@ -40,31 +40,57 @@ type ProgressStep = { title: string; desc: string; unlock: string | null; invite
 
 const ScrollProgress = ({ steps, inviteCount }: { steps: ProgressStep[]; inviteCount: number }) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [scrollPct, setScrollPct] = useState(0);
+  const stepRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [linePct, setLinePct] = useState(0);
+  const [activeStep, setActiveStep] = useState(-1);
 
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
 
     const onScroll = () => {
-      const rect = el.getBoundingClientRect();
+      const containerRect = el.getBoundingClientRect();
+      const containerH = containerRect.height;
+      if (containerH === 0) return;
+
+      // Calculate which step the line has reached based on scroll
       const windowH = window.innerHeight;
-      // Start when section enters viewport, end when section top reaches top of viewport
-      const sectionH = rect.height;
-      const start = windowH * 0.8; // trigger point
-      const travel = sectionH + start - windowH * 0.3;
-      const scrolled = start - rect.top;
-      const pct = Math.max(0, Math.min(1, scrolled / travel));
-      setScrollPct(pct);
+      const triggerY = windowH * 0.65; // line "cursor" position on screen
+
+      // Find how far the line should extend
+      let reachedStep = -1;
+      for (let i = 0; i < stepRefs.current.length; i++) {
+        const stepEl = stepRefs.current[i];
+        if (!stepEl) continue;
+        const stepRect = stepEl.getBoundingClientRect();
+        const circleCenter = stepRect.top + 12; // approx center of circle
+        if (circleCenter <= triggerY) {
+          reachedStep = i;
+        }
+      }
+
+      setActiveStep(reachedStep);
+
+      // Calculate line height as percentage to reach the current step's circle
+      if (reachedStep < 0) {
+        setLinePct(0);
+      } else {
+        const targetStep = stepRefs.current[reachedStep];
+        if (targetStep) {
+          const targetRect = targetStep.getBoundingClientRect();
+          const targetY = targetRect.top + 12 - containerRect.top;
+          const trackStart = 24;
+          const trackEnd = containerH - 24;
+          const pct = Math.max(0, Math.min(100, ((targetY - trackStart) / (trackEnd - trackStart)) * 100));
+          setLinePct(pct);
+        }
+      }
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  // How many steps are "revealed" by scroll
-  const revealedSteps = Math.floor(scrollPct * (steps.length + 0.5));
 
   return (
     <div ref={containerRef} className="max-w-[520px] mx-auto relative">
@@ -74,10 +100,10 @@ const ScrollProgress = ({ steps, inviteCount }: { steps: ProgressStep[]; inviteC
       <div
         className="absolute left-[22px] top-[24px] w-[2px] rounded-full"
         style={{
-          height: `${Math.min(scrollPct * 100, 100)}%`,
+          height: `${linePct}%`,
           maxHeight: "calc(100% - 48px)",
           background: "linear-gradient(180deg, hsl(258,50%,50%) 0%, hsl(266,80%,70%) 100%)",
-          transition: "height 0.15s ease-out",
+          transition: "height 0.25s ease-out",
         }}
       />
 
@@ -85,22 +111,18 @@ const ScrollProgress = ({ steps, inviteCount }: { steps: ProgressStep[]; inviteC
         const completed = inviteCount >= step.invites;
         const isCurrent = !completed && (i === 0 || inviteCount >= arr[i - 1].invites);
         const locked = !completed && !isCurrent;
-        const revealed = i < revealedSteps;
+        const reached = i <= activeStep;
 
         return (
           <div
             key={i}
-            className={`relative flex items-start gap-5 ${i < arr.length - 1 ? "pb-10 md:pb-14" : ""}`}
-            style={{
-              opacity: revealed ? (locked ? 0.45 : 1) : 0,
-              transform: revealed ? "translateY(0)" : "translateY(20px)",
-              transition: "opacity 0.5s ease-out, transform 0.5s ease-out",
-            }}
+            ref={(el) => { stepRefs.current[i] = el; }}
+            className={`relative flex items-start gap-5 ${i < arr.length - 1 ? "pb-10 md:pb-14" : ""} ${locked ? "opacity-45" : "opacity-100"}`}
           >
             {/* Circle on the track */}
             <div className="relative z-10 shrink-0 flex items-center justify-center w-[46px]">
               <div
-                className={`rounded-full transition-all duration-500 ${
+                className={`rounded-full ${
                   completed
                     ? "w-[16px] h-[16px] bg-primary shadow-[0_0_10px_hsl(258,50%,50%,0.3)]"
                     : isCurrent
@@ -108,8 +130,9 @@ const ScrollProgress = ({ steps, inviteCount }: { steps: ProgressStep[]; inviteC
                     : "w-[12px] h-[12px] bg-primary/15 border-2 border-primary/20"
                 }`}
                 style={{
-                  transform: revealed ? "scale(1)" : "scale(0)",
-                  transition: "transform 0.4s cubic-bezier(0.34,1.56,0.64,1)",
+                  transform: reached ? "scale(1)" : "scale(0.6)",
+                  opacity: reached ? 1 : 0.4,
+                  transition: "transform 0.4s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s ease-out",
                 }}
               />
             </div>
@@ -122,6 +145,8 @@ const ScrollProgress = ({ steps, inviteCount }: { steps: ProgressStep[]; inviteC
                   : isCurrent
                   ? "linear-gradient(135deg, hsla(258,50%,50%,0.06) 0%, hsla(266,80%,85%,0.08) 100%)"
                   : "linear-gradient(135deg, hsla(258,50%,50%,0.03) 0%, hsla(266,80%,90%,0.04) 100%)",
+                transform: reached && i === activeStep ? "scale(1.03)" : "scale(1)",
+                transition: "transform 0.4s cubic-bezier(0.34,1.56,0.64,1)",
               }}
             >
               <p className="text-[16px] md:text-[17px] leading-[1.5]" style={{ color: "#4A4C5C", fontWeight: 400 }}>
