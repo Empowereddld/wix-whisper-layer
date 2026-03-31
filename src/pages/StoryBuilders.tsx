@@ -4,7 +4,7 @@ import SEOHead from "@/components/SEOHead";
 import StoryBuildersStatBand from "@/components/StoryBuildersStatBand";
 import storybuildersHero from "@/assets/storybuilders-hero.png";
 import storybuildersAppMockup from "@/assets/storybuilders-app-mockup.png";
-import storybuildersReadListen from "@/assets/storybuilders-read-listen.png";
+
 import storybuildersMovement from "@/assets/storybuilders-movement.png";
 import storybuildersAwareness from "@/assets/storybuilders-awareness.png";
 import storybuildersUnderstood from "@/assets/storybuilders-understood.png";
