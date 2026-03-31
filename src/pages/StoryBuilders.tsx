@@ -160,7 +160,7 @@ const ScrollProgress = ({ steps, inviteCount }: { steps: ProgressStep[]; inviteC
             <div
               className="flex-1"
               style={{
-                opacity: locked ? 0.5 : 1,
+                opacity: 1,
                 transition: "opacity 0.4s ease-out",
               }}
             >
