@@ -224,7 +224,7 @@ const ScrollProgress = ({ steps, inviteCount }: { steps: ProgressStep[]; inviteC
                         style={{
                           fontSize: "13px",
                           fontWeight: 400,
-                          color: locked ? "#ABABBB" : "#7A7A8A",
+                          color: "#7A7A8A",
                           lineHeight: 1.5,
                         }}
                       >
