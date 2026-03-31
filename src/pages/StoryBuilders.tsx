@@ -656,7 +656,7 @@ const StoryBuilders = () => {
               {
                 task: "Invite 5 families",
                 impact: "Help build a community where children feel understood and confident",
-                reward: { icon: "🎧", title: "Unlock a private Dan & Daria episode", desc: "Exclusive content only for Launch Team members" },
+                reward: { icon: <Headphones size={20} />, title: "Unlock a private Dan & Daria episode", desc: "Exclusive content only for Launch Team members" },
                 invites: 5,
               },
               {
