@@ -19,10 +19,6 @@ import { toast } from "sonner";
 import {
   Copy,
   Check,
-  BookOpen,
-  Lightbulb,
-  MessageCircle,
-  HeartHandshake,
 } from "lucide-react";
 
 /* ─── Milestones ─── */
