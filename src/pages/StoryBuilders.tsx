@@ -150,7 +150,7 @@ const ScrollProgress = ({ steps, inviteCount }: { steps: ProgressStep[]; inviteC
                     ? "0 0 0 6px hsl(258,50%,50%,0.15)"
                     : "none",
                   transform: reached ? "scale(1)" : "scale(0.8)",
-                  opacity: reached ? 1 : 0.4,
+                  opacity: 1,
                   transition: "all 0.4s cubic-bezier(0.34,1.56,0.64,1)",
                 }}
               />
@@ -168,7 +168,7 @@ const ScrollProgress = ({ steps, inviteCount }: { steps: ProgressStep[]; inviteC
               <p
                 style={{
                   fontSize: "14px",
-                  color: locked ? "#9B9BAB" : "#6B6B7B",
+                  color: "#6B6B7B",
                   fontWeight: 400,
                   lineHeight: 1.5,
                   marginBottom: "4px",
@@ -179,7 +179,7 @@ const ScrollProgress = ({ steps, inviteCount }: { steps: ProgressStep[]; inviteC
               <p
                 style={{
                   fontSize: "13px",
-                  color: locked ? "#ABABBB" : "#8A8A9A",
+                  color: "#8A8A9A",
                   fontWeight: 400,
                   lineHeight: 1.6,
                   marginBottom: step.reward ? "12px" : "0",
@@ -193,17 +193,13 @@ const ScrollProgress = ({ steps, inviteCount }: { steps: ProgressStep[]; inviteC
                 <div
                   style={{
                     background: isCurrent
-                      ? "linear-gradient(135deg, hsla(258,60%,55%,0.10) 0%, hsla(270,70%,75%,0.12) 100%)"
-                      : completed
-                        ? "linear-gradient(135deg, hsla(258,60%,55%,0.08) 0%, hsla(270,70%,75%,0.10) 100%)"
-                        : "linear-gradient(135deg, hsla(258,50%,50%,0.04) 0%, hsla(270,60%,80%,0.06) 100%)",
+                      ? "linear-gradient(135deg, hsla(258,60%,55%,0.12) 0%, hsla(270,70%,75%,0.14) 100%)"
+                      : "linear-gradient(135deg, hsla(258,60%,55%,0.08) 0%, hsla(270,70%,75%,0.10) 100%)",
                     borderRadius: "16px",
                     padding: "18px 20px",
                     boxShadow: isCurrent
                       ? "0 8px 24px -4px hsl(258,50%,50%,0.12), 0 0 0 1px hsl(258,50%,50%,0.08)"
-                      : completed
-                        ? "0 4px 16px -4px hsl(258,50%,50%,0.08)"
-                        : "0 2px 8px -2px hsl(258,50%,50%,0.04)",
+                      : "0 4px 16px -4px hsl(258,50%,50%,0.08)",
                     transform: reached && i === activeStep ? "scale(1.02)" : "scale(1)",
                     transition: "transform 0.4s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s ease",
                   }}
@@ -217,7 +213,7 @@ const ScrollProgress = ({ steps, inviteCount }: { steps: ProgressStep[]; inviteC
                         style={{
                           fontSize: "16px",
                           fontWeight: 600,
-                          color: locked ? "#8A8A9A" : "#2F2F3A",
+                          color: "#2F2F3A",
                           lineHeight: 1.3,
                           marginBottom: "4px",
                         }}
@@ -228,7 +224,7 @@ const ScrollProgress = ({ steps, inviteCount }: { steps: ProgressStep[]; inviteC
                         style={{
                           fontSize: "13px",
                           fontWeight: 400,
-                          color: locked ? "#ABABBB" : "#7A7A8A",
+                          color: "#7A7A8A",
                           lineHeight: 1.5,
                         }}
                       >
