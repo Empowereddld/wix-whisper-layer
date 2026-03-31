@@ -193,10 +193,8 @@ const ScrollProgress = ({ steps, inviteCount }: { steps: ProgressStep[]; inviteC
                 <div
                   style={{
                     background: isCurrent
-                      ? "linear-gradient(135deg, hsla(258,60%,55%,0.10) 0%, hsla(270,70%,75%,0.12) 100%)"
-                      : completed
-                        ? "linear-gradient(135deg, hsla(258,60%,55%,0.08) 0%, hsla(270,70%,75%,0.10) 100%)"
-                        : "linear-gradient(135deg, hsla(258,50%,50%,0.04) 0%, hsla(270,60%,80%,0.06) 100%)",
+                      ? "linear-gradient(135deg, hsla(258,60%,55%,0.12) 0%, hsla(270,70%,75%,0.14) 100%)"
+                      : "linear-gradient(135deg, hsla(258,60%,55%,0.08) 0%, hsla(270,70%,75%,0.10) 100%)",
                     borderRadius: "16px",
                     padding: "18px 20px",
                     boxShadow: isCurrent
