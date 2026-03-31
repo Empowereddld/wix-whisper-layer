@@ -1,28 +1,44 @@
 
 
-## Plan: Fix progress line & circle opacity consistency
+## Plan: Animated collective goal progress with confetti celebration
 
-**File**: `src/pages/StoryBuilders.tsx` (ScrollProgress component, lines 95–168)
+**Goal**: When the "Our Collective Goal" section fully enters the viewport, animate the progress bar filling from 0 to 4000 over ~4 seconds. When it hits 4000, trigger a localized confetti burst around the progress bar endpoint. Hold for 5 seconds, then reset and repeat while the section is visible.
 
-### Changes
+### Steps
 
-**1. Progress line — uniform opacity throughout**
-- Background track: change `bg-primary/10` → `bg-primary/20` (line 98)
-- Fill line: increase width from `2px` → `3px` for both track and fill
-- Use a solid, consistent purple gradient with higher opacity
+**1. Install canvas-confetti library**
+- `npm install canvas-confetti` + `@types/canvas-confetti`
+- Lightweight, no-dependency confetti library perfect for localized bursts
 
-**2. Circle markers — start hidden, become 100% when reached and stay**
-- Currently: unreached circles are `scale(0.6)` + `opacity: 0.4`, reached ones are `scale(1)` + `opacity: 1`
-- Fix: All circles that have been reached (`i <= activeStep`) get full `opacity: 1` and `scale(1)` and **stay that way** (this part already works but the issue is the locked styling makes them look faded)
-- Unreached circles: keep at `opacity: 0` (fully hidden) instead of `0.4`, so they pop in cleanly when reached
-- When reached, all circles use the same solid purple styling regardless of completed/current/locked status: `w-[14px] h-[14px] bg-primary` with full opacity
+**2. Create the animated collective goal section**
 
-**3. Card backgrounds — uniform opacity for all steps**
-- Change the locked card gradient from `0.03/0.04` → `0.06/0.08` to match completed/current cards
-- All cards look the same regardless of status
+Replace the static `<Progress>` bar in the S7 section (lines 562–584) with an animated version:
 
-### Technical details
-- Lines 125–137: Simplify circle rendering — if `reached`, show solid purple circle at full opacity; if not reached, render the circle at `opacity: 0`
-- Lines 143–147: Use the same gradient values for all three states
-- Lines 98, 101: Increase track/line width and opacity
+- **Intersection Observer**: Use `IntersectionObserver` with `threshold: 0.9` on the section so the animation only starts when the entire section is visible
+- **Animated counter + bar**: When triggered, animate `displayCount` from 0 → 4000 and `displayPct` from 0 → 100 over ~4 seconds using `requestAnimationFrame` with easing
+- **Counter text**: Show the animated number instead of `wl.totalCount` during the animation (e.g., "2,347 storytellers and counting")
+- **Confetti on completion**: When the bar reaches 100%, fire a confetti burst:
+  - Use `confetti({ particleCount: 80, spread: 50, origin: { x, y } })` where x/y is calculated from the progress bar's right end position
+  - Colors: purples and lavenders matching the brand (`#7E5BEF`, `#B794F6`, `#DDD6FE`)
+  - Small area of effect — localized to the end of the progress bar
+- **Hold 5 seconds**: After confetti, hold the completed state for 5 seconds
+- **Reset & repeat**: After the hold, reset to 0 and animate again (loop while section is in view)
+- **Stop when out of view**: When the section scrolls out, cancel the animation loop and reset
+
+**3. Implementation details**
+
+File: `src/pages/StoryBuilders.tsx`
+
+- Add a new `AnimatedCollectiveGoal` component (or inline the logic in the section)
+- Refs: `sectionRef` for IntersectionObserver, `progressBarRef` for confetti origin calculation
+- State: `displayCount`, `isAnimating`, `animationPhase` (filling | celebrating | holding | idle)
+- The easing function: ease-out cubic for smooth deceleration as it approaches 4000
+- Confetti origin: get `progressBarRef.getBoundingClientRect()`, calculate the right edge position relative to the viewport, convert to 0-1 ratio for `confetti()`
+
+### Technical summary
+- New dependency: `canvas-confetti`
+- Single file edit: `src/pages/StoryBuilders.tsx` (lines 562–584)
+- Animation cycle: 4s fill → confetti burst → 5s hold → reset → repeat
+- Trigger: IntersectionObserver at 90% visibility
+- Confetti scoped to progress bar endpoint area
 
