@@ -1,31 +1,32 @@
 
+Root cause:
+- The faint look is coming from the new `ScrollProgress` locked-state styling in `src/pages/StoryBuilders.tsx` (not a rendering bug).
+- Locked items are still intentionally dimmed via:
+  - lighter text colors (`locked ? ...` on task/impact/reward text)
+  - lower-opacity reward gradients (`0.04/0.06`)
+  - softer locked shadows
+  - marker opacity fallback (`opacity: 0.4`) for unreached points
 
-## Plan: Fix scroll progress line not reaching the end
+Plan to fix:
+1. Remove locked dimming from text
+- In `ScrollProgress`, replace all `locked ? ... : ...` color branches for:
+  - task text
+  - impact text
+  - reward title
+  - reward description
+- Use one consistent readable color set so cards/text stay fully visible.
 
-**Problem**: The progress line stops short of the last step because the line percentage calculation caps based on a `trackEnd` value of `containerH - 24`, but the last step's circle center is higher than that. So `linePct` never reaches 100%.
+2. Make reward card surface equally strong for all steps
+- Use a single base gradient + base elevation for locked/completed/current so cards are never washed out.
+- Keep “current” differentiation via glow/ring/scale only (not opacity reduction).
 
-**File**: `src/pages/StoryBuilders.tsx` (lines 76–88)
+3. Keep progression cues without fading content
+- Keep timeline progression behavior and pulse-on-reach.
+- If needed, keep unreached marker distinction using size/ring/border instead of low opacity.
 
-### Fix
+4. Verify visually across the whole section
+- Scroll top-to-bottom and confirm steps 3–5 are no longer faint.
+- Confirm line/markers/cards maintain consistent visual strength at every scroll position.
 
-Change the line percentage calculation so that when the last step is reached, the line extends fully to that step's position. The issue is that `trackEnd` is hardcoded to `containerH - 24` but the actual last circle might be at a different Y position.
-
-Replace the linePct calculation (lines 76–88) so that:
-- `trackEnd` is calculated from the **actual last step's circle position** instead of hardcoded `containerH - 24`
-- When all steps are reached, the line extends fully to the last step's circle
-
-Specifically:
-```ts
-// Calculate trackEnd from the actual last step position
-const lastStep = stepRefs.current[stepRefs.current.length - 1];
-const lastStepY = lastStep 
-  ? lastStep.getBoundingClientRect().top + 12 - containerRect.top 
-  : containerH - 24;
-const trackStart = 24;
-const trackEnd = lastStepY;
-```
-
-And update the CSS track `bottom` to match (change `bottom-[24px]` on the background track to align with the last step's actual position, or simply keep it as-is since the fill line will now reach the correct spot).
-
-This ensures the animated fill line reaches the last circle marker exactly.
-
+File to update:
+- `src/pages/StoryBuilders.tsx` (ScrollProgress component only).
