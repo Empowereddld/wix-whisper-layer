@@ -630,7 +630,7 @@ const StoryBuilders = () => {
               Each step unlocks something new.
             </p>
             <p className="text-[13px] mt-1 leading-[1.6]" style={{ color: "#9B9BAB", fontFamily: "Nunito, sans-serif" }}>
-              You're helping more children feel confident communicating.
+              You're just getting started — your next reward is one step away.
             </p>
           </FadeSection>
 
