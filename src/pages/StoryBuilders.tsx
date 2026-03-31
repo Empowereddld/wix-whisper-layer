@@ -37,7 +37,12 @@ const milestones = [
 const COLLECTIVE_GOAL = 4000;
 
 /* ─── Scroll-animated Progress Journey ─── */
-type ProgressStep = { title: string; desc: string; unlock: string | null; invites: number };
+type ProgressStep = {
+  task: string;
+  impact: string;
+  reward: { icon: string; title: string; desc: string } | null;
+  invites: number;
+};
 
 const ScrollProgress = ({ steps, inviteCount }: { steps: ProgressStep[]; inviteCount: number }) => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -54,17 +59,15 @@ const ScrollProgress = ({ steps, inviteCount }: { steps: ProgressStep[]; inviteC
       const containerH = containerRect.height;
       if (containerH === 0) return;
 
-      // Calculate which step the line has reached based on scroll
       const windowH = window.innerHeight;
-      const triggerY = windowH * 0.85; // line "cursor" position on screen
+      const triggerY = windowH * 0.85;
 
-      // Find how far the line should extend
       let reachedStep = -1;
       for (let i = 0; i < stepRefs.current.length; i++) {
         const stepEl = stepRefs.current[i];
         if (!stepEl) continue;
         const stepRect = stepEl.getBoundingClientRect();
-        const circleCenter = stepRect.top + 12; // approx center of circle
+        const circleCenter = stepRect.top + 12;
         if (circleCenter <= triggerY) {
           reachedStep = i;
         }
@@ -72,7 +75,6 @@ const ScrollProgress = ({ steps, inviteCount }: { steps: ProgressStep[]; inviteC
 
       setActiveStep(reachedStep);
 
-      // Calculate line height as percentage to reach the current step's circle
       if (reachedStep < 0) {
         setLinePct(0);
       } else {
@@ -80,11 +82,11 @@ const ScrollProgress = ({ steps, inviteCount }: { steps: ProgressStep[]; inviteC
         if (targetStep) {
           const targetRect = targetStep.getBoundingClientRect();
           const targetY = targetRect.top + 12 - containerRect.top;
-          const trackStart = 24;
+          const trackStart = 12;
           const lastStep = stepRefs.current[stepRefs.current.length - 1];
           const trackEnd = lastStep
             ? lastStep.getBoundingClientRect().top + 12 - containerRect.top
-            : containerH - 24;
+            : containerH - 12;
           const pct = Math.max(0, Math.min(100, ((targetY - trackStart) / (trackEnd - trackStart)) * 100));
           setLinePct(pct);
         }
@@ -96,28 +98,26 @@ const ScrollProgress = ({ steps, inviteCount }: { steps: ProgressStep[]; inviteC
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const completedCount = steps.filter(s => inviteCount >= s.invites).length;
-  const nextRewardStep = steps.find(s => inviteCount < s.invites && s.unlock);
-  const anchorText = completedCount >= steps.length
-    ? "You've unlocked every reward — amazing!"
-    : nextRewardStep
-      ? `You're ${completedCount} step${completedCount !== 1 ? "s" : ""} in — keep going to unlock ${nextRewardStep.unlock}`
-      : `You're ${completedCount} step${completedCount !== 1 ? "s" : ""} in — keep going`;
-
   return (
-    <div ref={containerRef} className="max-w-[520px] mx-auto relative">
-      {/* Progress anchor */}
-      <p className="text-center text-[13px] font-semibold mb-6" style={{ color: "hsl(258,50%,50%)", fontFamily: "Nunito, sans-serif" }}>
-        {anchorText}
-      </p>
+    <div ref={containerRef} className="max-w-[560px] mx-auto relative" style={{ fontFamily: "Nunito, sans-serif" }}>
       {/* Background track */}
-      <div className="absolute left-[22px] top-[24px] bottom-[24px] w-[3px] bg-primary/20 rounded-full" />
+      <div
+        className="absolute w-[3px] rounded-full"
+        style={{
+          left: "11px",
+          top: "12px",
+          bottom: "12px",
+          background: "hsl(258,50%,50%,0.15)",
+        }}
+      />
       {/* Animated fill line */}
       <div
-        className="absolute left-[22px] top-[24px] w-[3px] rounded-full"
+        className="absolute w-[3px] rounded-full"
         style={{
+          left: "11px",
+          top: "12px",
           height: `${linePct}%`,
-          maxHeight: "calc(100% - 48px)",
+          maxHeight: "calc(100% - 24px)",
           background: "hsl(258,50%,50%)",
           transition: "height 0.25s ease-out",
         }}
@@ -133,38 +133,110 @@ const ScrollProgress = ({ steps, inviteCount }: { steps: ProgressStep[]; inviteC
           <div
             key={i}
             ref={(el) => { stepRefs.current[i] = el; }}
-            className={`relative flex items-start gap-5 ${i < arr.length - 1 ? "pb-10 md:pb-14" : ""}`}
+            className="relative flex items-start gap-5"
+            style={{ paddingBottom: i < arr.length - 1 ? "56px" : "0" }}
           >
-            {/* Circle on the track */}
-            <div className="relative z-10 shrink-0 flex items-center justify-center w-[46px]">
+            {/* Circle marker */}
+            <div className="relative z-10 shrink-0 flex items-center justify-center w-[24px]">
               <div
-                className="rounded-full w-[14px] h-[14px] bg-primary"
+                className="rounded-full"
                 style={{
-                  transform: reached ? "scale(1)" : "scale(0.6)",
-                  opacity: reached ? 1 : 0,
-                  transition: "transform 0.4s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s ease-out",
+                  width: reached ? "14px" : "10px",
+                  height: reached ? "14px" : "10px",
+                  background: reached
+                    ? "hsl(258,50%,50%)"
+                    : "hsl(258,50%,50%,0.2)",
+                  boxShadow: isCurrent && reached
+                    ? "0 0 0 6px hsl(258,50%,50%,0.15)"
+                    : "none",
+                  transform: reached ? "scale(1)" : "scale(0.8)",
+                  opacity: reached ? 1 : 0.4,
+                  transition: "all 0.4s cubic-bezier(0.34,1.56,0.64,1)",
                 }}
               />
             </div>
-            {/* Content pill */}
+
+            {/* Content */}
             <div
-              className="flex-1 rounded-2xl px-5 py-4"
+              className="flex-1"
               style={{
-                background: "linear-gradient(135deg, hsla(258,50%,50%,0.08) 0%, hsla(266,80%,80%,0.10) 100%)",
-                transform: reached && i === activeStep ? "scale(1.03)" : "scale(1)",
-                transition: "transform 0.4s cubic-bezier(0.34,1.56,0.64,1)",
+                opacity: locked ? 0.5 : 1,
+                transition: "opacity 0.4s ease-out",
               }}
             >
-              <p className="text-[16px] md:text-[17px] leading-[1.5]" style={{ color: "#4A4C5C", fontWeight: 400 }}>
-                {step.title}
+              {/* Task line (secondary) */}
+              <p
+                style={{
+                  fontSize: "14px",
+                  color: locked ? "#9B9BAB" : "#6B6B7B",
+                  fontWeight: 400,
+                  lineHeight: 1.5,
+                  marginBottom: "4px",
+                }}
+              >
+                {step.task}
               </p>
-              <p className="text-[14px] md:text-[15px] leading-[1.6] mt-1" style={{ color: "#6B6B7B", fontWeight: 400 }}>
-                {step.desc}
+              <p
+                style={{
+                  fontSize: "13px",
+                  color: locked ? "#ABABBB" : "#8A8A9A",
+                  fontWeight: 400,
+                  lineHeight: 1.6,
+                  marginBottom: step.reward ? "12px" : "0",
+                }}
+              >
+                {step.impact}
               </p>
-              {step.unlock && (
-                <p className="text-[13px] mt-1.5" style={{ color: "#9B8FBB", fontWeight: 400 }}>
-                  Unlock: {step.unlock}
-                </p>
+
+              {/* Reward card (focal point) */}
+              {step.reward && (
+                <div
+                  style={{
+                    background: isCurrent
+                      ? "linear-gradient(135deg, hsla(258,60%,55%,0.10) 0%, hsla(270,70%,75%,0.12) 100%)"
+                      : completed
+                        ? "linear-gradient(135deg, hsla(258,60%,55%,0.08) 0%, hsla(270,70%,75%,0.10) 100%)"
+                        : "linear-gradient(135deg, hsla(258,50%,50%,0.04) 0%, hsla(270,60%,80%,0.06) 100%)",
+                    borderRadius: "16px",
+                    padding: "18px 20px",
+                    boxShadow: isCurrent
+                      ? "0 8px 24px -4px hsl(258,50%,50%,0.12), 0 0 0 1px hsl(258,50%,50%,0.08)"
+                      : completed
+                        ? "0 4px 16px -4px hsl(258,50%,50%,0.08)"
+                        : "0 2px 8px -2px hsl(258,50%,50%,0.04)",
+                    transform: reached && i === activeStep ? "scale(1.02)" : "scale(1)",
+                    transition: "transform 0.4s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s ease",
+                  }}
+                >
+                  <div className="flex items-start gap-3">
+                    <span style={{ fontSize: "22px", lineHeight: 1, marginTop: "2px" }}>
+                      {step.reward.icon}
+                    </span>
+                    <div>
+                      <p
+                        style={{
+                          fontSize: "16px",
+                          fontWeight: 600,
+                          color: locked ? "#8A8A9A" : "#2F2F3A",
+                          lineHeight: 1.3,
+                          marginBottom: "4px",
+                        }}
+                      >
+                        {step.reward.title}
+                      </p>
+                      <p
+                        style={{
+                          fontSize: "13px",
+                          fontWeight: 400,
+                          color: locked ? "#ABABBB" : "#7A7A8A",
+                          lineHeight: 1.5,
+                        }}
+                      >
+                        {step.reward.desc}
+                      </p>
+                    </div>
+                  </div>
+                </div>
               )}
             </div>
           </div>
@@ -550,21 +622,49 @@ const StoryBuilders = () => {
       <section className="py-16 md:py-[120px]" style={{ backgroundColor: "#FAFAFC" }}>
         <div className="container px-6 md:px-8">
           <FadeSection className="text-center mb-14 md:mb-20">
-            <h2 className="text-[28px] md:text-[30px] tracking-tight leading-[1.2]" style={{ color: "#2F2F3A", fontWeight: 600 }}>
+            <h2 className="text-[28px] md:text-[30px] tracking-tight leading-[1.2]" style={{ color: "#2F2F3A", fontWeight: 600, fontFamily: "Poppins, sans-serif" }}>
               Your Progress
             </h2>
-            <p className="text-[15px] md:text-[16px] mt-3 leading-[1.7]" style={{ color: "#6B6B6B" }}>
-              You're helping more children understand and express their ideas.
+            <p className="text-[15px] md:text-[16px] mt-2 leading-[1.6]" style={{ color: "#6B6B6B", fontFamily: "Nunito, sans-serif" }}>
+              Each step unlocks something new.
+            </p>
+            <p className="text-[13px] mt-1 leading-[1.6]" style={{ color: "#9B9BAB", fontFamily: "Nunito, sans-serif" }}>
+              You're helping more children feel confident communicating.
             </p>
           </FadeSection>
 
           {(() => {
-            const progressSteps = [
-              { title: "You joined the Launch Team", desc: "You're part of this from the very beginning", unlock: null, invites: 0 },
-              { title: "Invite 1 family", desc: "Help another child feel more confident sharing their ideas", unlock: "early access", invites: 1 },
-              { title: "Invite 3 families", desc: "Help more children understand what's happening and explain it clearly", unlock: "Story Pack", invites: 3 },
-              { title: "Invite 5 families", desc: "Help build a community where children feel understood and confident", unlock: "exclusive episode", invites: 5 },
-              { title: "Invite 10 families", desc: "Help more children feel successful when expressing their ideas", unlock: "founder pricing", invites: 10 },
+            const progressSteps: ProgressStep[] = [
+              {
+                task: "You joined the Launch Team",
+                impact: "You're part of this from the very beginning",
+                reward: null,
+                invites: 0,
+              },
+              {
+                task: "Invite 1 family",
+                impact: "Help another child feel more confident sharing their ideas",
+                reward: { icon: "✨", title: "Early access to StoryBuilders", desc: "Be among the first to explore the app before anyone else" },
+                invites: 1,
+              },
+              {
+                task: "Invite 3 families",
+                impact: "Help more children understand what's happening and explain it clearly",
+                reward: { icon: "🎁", title: "Get your Story Pack", desc: "Visual supports, retell tools, and parent prompts" },
+                invites: 3,
+              },
+              {
+                task: "Invite 5 families",
+                impact: "Help build a community where children feel understood and confident",
+                reward: { icon: "🎧", title: "Unlock a private Dan & Daria episode", desc: "Exclusive content only for Launch Team members" },
+                invites: 5,
+              },
+              {
+                task: "Invite 10 families",
+                impact: "Help more children feel successful when expressing their ideas",
+                reward: { icon: "💜", title: "Lock in founder pricing for life", desc: "$5.99/month forever — available to the first 100 who reach this milestone" },
+                invites: 10,
+              },
             ];
 
             return <ScrollProgress steps={progressSteps} inviteCount={wl.inviteCount} />;
