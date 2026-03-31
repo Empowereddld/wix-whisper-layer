@@ -369,7 +369,7 @@ const StoryBuilders = () => {
                   <img src={storybuildersMovement} alt="Help more children feel understood" className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent transition-all duration-300 group-hover:from-black/80" />
                     <div className="absolute bottom-0 left-0 p-6">
-                    <p className="text-white font-semibold text-[16px] md:text-[18px] translate-y-4 group-hover:translate-y-0 transition-transform duration-300">Help more children feel understood</p>
+                    <p className="text-white font-semibold text-[16px] md:text-[18px] translate-y-8 group-hover:translate-y-0 transition-transform duration-300">Help more children feel understood</p>
                     <p className="text-white/80 text-sm max-w-[280px] mt-2 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
                       When more families find StoryBuilders, more children get a tool built specifically for how they think and communicate.
                     </p>
