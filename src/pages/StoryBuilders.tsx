@@ -235,6 +235,19 @@ const ScrollProgress = ({ steps, inviteCount }: { steps: ProgressStep[]; inviteC
                       >
                         {step.reward.desc}
                       </p>
+                      {step.reward.subdesc && (
+                        <p
+                          style={{
+                            fontSize: "12px",
+                            fontWeight: 400,
+                            color: "#9B9BAB",
+                            lineHeight: 1.5,
+                            marginTop: "4px",
+                          }}
+                        >
+                          {step.reward.subdesc}
+                        </p>
+                      )}
                     </div>
                   </div>
                 </div>
