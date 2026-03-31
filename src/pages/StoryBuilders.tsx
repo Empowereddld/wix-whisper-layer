@@ -450,7 +450,7 @@ const StoryBuilders = () => {
 
                 {/* Bottom right */}
                 <div className="relative overflow-hidden rounded-xl group cursor-pointer min-h-[200px] md:min-h-0">
-                  <img src={storybuildersUnderstood} alt="Help more children feel understood" className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
+                  <img src={storybuildersMovement} alt="Help more children feel understood" className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent transition-all duration-300 group-hover:from-black/80" />
                   <div className="absolute bottom-0 left-0 p-6">
                     <p className="text-white font-semibold text-[16px] md:text-[18px]">Help more children feel understood</p>
