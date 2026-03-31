@@ -45,7 +45,7 @@ const COLLECTIVE_GOAL = 4000;
 type ProgressStep = {
   task: string;
   impact: string;
-  reward: { icon: React.ReactNode; title: string; desc: string } | null;
+  reward: { icon: React.ReactNode; title: string; desc: string; subdesc?: string } | null;
   invites: number;
 };
 
