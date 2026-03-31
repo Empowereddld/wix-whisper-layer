@@ -385,51 +385,21 @@ const StoryBuilders = () => {
       <div className="w-16 h-px bg-border mx-auto" />
 
       {/* ─── S5: HOW IT WORKS ─── */}
-      <section className="py-20 md:py-24 lg:py-28" style={{ backgroundColor: '#FAFAFC' }}>
+      <section className="bg-muted py-16 md:py-[120px]">
         <div className="container px-6 md:px-8">
-          <FadeSection className="text-center mb-14 md:mb-20">
-            <h2 className="text-[28px] md:text-[30px] font-semibold tracking-tight" style={{ color: '#2F2F3A', fontFamily: 'Poppins, sans-serif' }}>
+          <FadeSection className="text-center mb-12 md:mb-16">
+            <h2 className="text-[32px] md:text-[42px] lg:text-[46px] font-bold tracking-tight text-foreground">
               How It Works
             </h2>
           </FadeSection>
-
           <FadeSection delay={100}>
-            <div className="max-w-[900px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-[100px]">
-              {[
-                { step: 1, line1: "Join the", line2: "Launch Team", pos: "17%" },
-                { step: 2, line1: "Invite other", line2: "families", pos: "50%" },
-                { step: 3, line1: "Unlock meaningful", line2: "milestones", pos: "83%" },
-              ].map((item) => (
-                <div key={item.step} className="flex flex-col items-center text-center">
-                  {/* Icon */}
-                  <div className="w-[120px] h-[120px] overflow-hidden rounded-2xl mb-4">
-                    <img
-                      src={howItWorksSteps}
-                      alt={`Step ${item.step}: ${item.line1} ${item.line2}`}
-                      className="w-[360px] h-[120px] object-cover"
-                      style={{ objectPosition: `${item.pos} center` }}
-                      loading="lazy"
-                    />
-                  </div>
-
-                  {/* Step number */}
-                  <div
-                    className="w-7 h-7 rounded-full flex items-center justify-center mb-3"
-                    style={{ backgroundColor: '#EDE9FE' }}
-                  >
-                    <span className="text-[14px] font-semibold" style={{ color: '#A78BFA', fontFamily: 'Nunito, sans-serif' }}>
-                      {item.step}
-                    </span>
-                  </div>
-
-                  {/* Text */}
-                  <p className="text-[18px] leading-[1.3]" style={{ color: '#4A4C5C', fontFamily: 'Nunito, sans-serif', fontWeight: 400 }}>
-                    {item.line1}
-                    <br />
-                    {item.line2}
-                  </p>
-                </div>
-              ))}
+            <div className="max-w-[900px] mx-auto">
+              <img
+                src={howItWorksSteps}
+                alt="How it works: Join the Launch Team, Invite others to join, Unlock meaningful milestones"
+                className="w-full h-auto"
+                loading="lazy"
+              />
             </div>
           </FadeSection>
         </div>
