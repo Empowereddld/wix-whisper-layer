@@ -1,32 +1,34 @@
 
-Root cause:
-- The faint look is coming from the new `ScrollProgress` locked-state styling in `src/pages/StoryBuilders.tsx` (not a rendering bug).
-- Locked items are still intentionally dimmed via:
-  - lighter text colors (`locked ? ...` on task/impact/reward text)
-  - lower-opacity reward gradients (`0.04/0.06`)
-  - softer locked shadows
-  - marker opacity fallback (`opacity: 0.4`) for unreached points
 
-Plan to fix:
-1. Remove locked dimming from text
-- In `ScrollProgress`, replace all `locked ? ... : ...` color branches for:
-  - task text
-  - impact text
-  - reward title
-  - reward description
-- Use one consistent readable color set so cards/text stay fully visible.
+## Plan: Replace emoji icons with Lucide React icons in Progress section
 
-2. Make reward card surface equally strong for all steps
-- Use a single base gradient + base elevation for locked/completed/current so cards are never washed out.
-- Keep “current” differentiation via glow/ring/scale only (not opacity reduction).
+**File**: `src/pages/StoryBuilders.tsx`
 
-3. Keep progression cues without fading content
-- Keep timeline progression behavior and pulse-on-reach.
-- If needed, keep unreached marker distinction using size/ring/border instead of low opacity.
+### Icon mapping for each reward step
 
-4. Verify visually across the whole section
-- Scroll top-to-bottom and confirm steps 3–5 are no longer faint.
-- Confirm line/markers/cards maintain consistent visual strength at every scroll position.
+| Step | Current | New Lucide Icon | Why |
+|------|---------|-----------------|-----|
+| Step 2 — Early access to StoryBuilders | ✨ | `Rocket` | Conveys early launch/access |
+| Step 3 — Get your Story Pack | 🎁 | `Gift` | Direct match for a reward pack |
+| Step 4 — Private Dan & Daria episode | 🎧 | `Headphones` | Matches audio/episode content |
+| Step 5 — Founder pricing for life | 💜 | `Crown` | Premium/founder status |
 
-File to update:
-- `src/pages/StoryBuilders.tsx` (ScrollProgress component only).
+### Changes
+
+1. **Add imports** at the top of the file:
+   ```ts
+   import { Rocket, Gift, Headphones, Crown } from "lucide-react";
+   ```
+
+2. **Change the `icon` field type** in the `ProgressStep` type from `string` to `React.ReactNode`
+
+3. **Update step data** — replace emoji strings with JSX components:
+   - `icon: "✨"` → `icon: <Rocket size={20} />`
+   - `icon: "🎁"` → `icon: <Gift size={20} />`
+   - `icon: "🎧"` → `icon: <Headphones size={20} />`
+   - `icon: "💜"` → `icon: <Crown size={20} />`
+
+4. **Update the render** — the `<span>` that displays `step.reward.icon` will now render a React component instead of a string, which works without any JSX changes since it's already in a `{}` expression.
+
+The icons will inherit the purple accent color from their parent container. Each icon is sized at 20px to fit the reward card layout.
+
