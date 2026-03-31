@@ -134,11 +134,7 @@ const ScrollProgress = ({ steps, inviteCount }: { steps: ProgressStep[]; inviteC
             <div
               className="flex-1 rounded-2xl px-5 py-4"
               style={{
-                background: completed
-                  ? "linear-gradient(135deg, hsla(258,50%,50%,0.08) 0%, hsla(266,80%,80%,0.10) 100%)"
-                  : isCurrent
-                  ? "linear-gradient(135deg, hsla(258,50%,50%,0.06) 0%, hsla(266,80%,85%,0.08) 100%)"
-                  : "linear-gradient(135deg, hsla(258,50%,50%,0.03) 0%, hsla(266,80%,90%,0.04) 100%)",
+                background: "linear-gradient(135deg, hsla(258,50%,50%,0.08) 0%, hsla(266,80%,80%,0.10) 100%)",
                 transform: reached && i === activeStep ? "scale(1.03)" : "scale(1)",
                 transition: "transform 0.4s cubic-bezier(0.34,1.56,0.64,1)",
               }}
