@@ -407,69 +407,71 @@ const StoryBuilders = () => {
 
       <div className="w-16 h-px bg-border mx-auto" />
 
-      {/* ─── S6: MILESTONES ─── */}
-      <section className="py-16 md:py-[120px]">
+      {/* ─── S6: YOUR PROGRESS ─── */}
+      <section className="py-16 md:py-[120px]" style={{ backgroundColor: "#FAFAFC" }}>
         <div className="container px-6 md:px-8">
-          <FadeSection className="text-center mb-12 md:mb-16">
-            <h2 className="text-[32px] md:text-[42px] lg:text-[46px] font-bold tracking-tight text-foreground">
-              Your Milestones
+          <FadeSection className="text-center mb-14 md:mb-20">
+            <h2 className="text-[28px] md:text-[30px] tracking-tight leading-[1.2]" style={{ color: "#2F2F3A", fontWeight: 600 }}>
+              Your Progress
             </h2>
+            <p className="text-[15px] md:text-[16px] mt-3 leading-[1.7]" style={{ color: "#6B6B6B" }}>
+              You're helping build something meaningful.
+            </p>
           </FadeSection>
 
           <FadeSection delay={100}>
-            <div className="max-w-[600px] mx-auto space-y-4">
-              {milestones.map((m, i) => {
-                const unlocked = m.invites >= 0 && wl.inviteCount >= m.invites;
+            <div className="max-w-[480px] mx-auto">
+              {[
+                { title: "You joined the Launch Team", desc: "You're part of something from the very beginning", unlock: null, invites: 0 },
+                { title: "Invite 1 family", desc: "Help another child build stronger language skills", unlock: "early access", invites: 1 },
+                { title: "Invite 3 families", desc: "Help more children understand and tell stories clearly", unlock: "Story Pack", invites: 3 },
+                { title: "Invite 5 families", desc: "Help build a community where children feel more confident communicating", unlock: "exclusive episode", invites: 5 },
+                { title: "Invite 10 families", desc: "Help more children feel successful sharing their ideas", unlock: "founder pricing", invites: 10 },
+              ].map((step, i, arr) => {
+                const completed = wl.inviteCount >= step.invites;
+                const isCurrent = !completed && (i === 0 || wl.inviteCount >= arr[i - 1].invites);
+                const locked = !completed && !isCurrent;
+
                 return (
-                  <div
-                    key={i}
-                    className={`rounded-xl border p-5 transition-colors ${
-                      unlocked ? "bg-background border-coral/40" : "bg-muted border-border"
-                    }`}
-                  >
-                    <div className="flex items-start gap-4">
-                      <div
-                        className={`w-8 h-8 rounded-full flex items-center justify-center text-[13px] font-bold shrink-0 ${
-                          unlocked
-                            ? "bg-coral/15 text-coral"
-                            : "bg-primary/10 text-primary"
-                        }`}
-                      >
-                        {m.invites >= 0 ? m.invites : "★"}
+                  <div key={i} className="flex flex-col items-center">
+                    {/* Step row */}
+                    <div className={`flex items-start gap-5 w-full transition-opacity duration-300 ${locked ? "opacity-45" : "opacity-100"}`}>
+                      {/* Circle indicator */}
+                      <div className="flex flex-col items-center shrink-0 pt-0.5">
+                        <div
+                          className={`w-[14px] h-[14px] rounded-full transition-all duration-300 ${
+                            completed
+                              ? "bg-primary"
+                              : isCurrent
+                              ? "bg-primary/60 shadow-[0_0_12px_hsl(258,50%,50%,0.35)]"
+                              : "bg-primary/20"
+                          }`}
+                        />
                       </div>
-                      <div>
-                        <p className="font-semibold text-foreground text-[14px] md:text-[15px]">
-                          {m.label}
-                          {unlocked && m.invites >= 0 && (
-                            <span className="ml-2 text-coral text-[12px] font-bold uppercase tracking-wide">
-                              Unlocked
-                            </span>
-                          )}
+                      {/* Text */}
+                      <div className="pb-1">
+                        <p className="text-[16px] md:text-[17px] leading-[1.5]" style={{ color: "#4A4C5C", fontWeight: 400 }}>
+                          {step.title}
                         </p>
-                        <p className="text-muted-foreground text-[13px] leading-[1.6] mt-1">{m.reward}</p>
+                        <p className="text-[15px] md:text-[16px] leading-[1.6] mt-1" style={{ color: "#4A4C5C", fontWeight: 400 }}>
+                          {step.desc}
+                        </p>
+                        {step.unlock && (
+                          <p className="text-[13px] mt-1.5" style={{ color: "#9B8FBB", fontWeight: 400 }}>
+                            Unlock: {step.unlock}
+                          </p>
+                        )}
                       </div>
                     </div>
+                    {/* Connector line */}
+                    {i < arr.length - 1 && (
+                      <div className="w-px h-[50px] bg-primary/15 my-1" />
+                    )}
                   </div>
                 );
               })}
             </div>
           </FadeSection>
-
-          {/* Individual progress */}
-          {wl.joined && (
-            <FadeSection delay={200} className="max-w-[600px] mx-auto mt-10">
-              <div className="rounded-xl border border-border bg-muted p-6">
-                <p className="font-semibold text-foreground text-[15px]">Your progress</p>
-                <p className="text-muted-foreground text-[13px] mt-1 mb-4">
-                  You've invited {wl.inviteCount} storyteller{wl.inviteCount !== 1 ? "s" : ""}.
-                  {nextMilestone
-                    ? ` ${invitesNeeded} more to unlock your next milestone.`
-                    : " You've unlocked all numbered milestones!"}
-                </p>
-                <Progress value={progressPct} className="h-2.5 bg-border [&>div]:bg-primary rounded-full" />
-              </div>
-            </FadeSection>
-          )}
         </div>
       </section>
 
