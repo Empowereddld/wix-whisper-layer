@@ -356,9 +356,9 @@ const StoryBuilders = () => {
                 <div className="relative overflow-hidden rounded-xl group cursor-pointer min-h-[200px] md:min-h-0">
                   <img src={storybuildersAwareness} alt="Spread awareness of DLD" className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent transition-all duration-300 group-hover:from-black/80" />
-                  <div className="absolute bottom-0 left-0 p-6">
-                    <p className="text-white font-semibold text-[16px] md:text-[18px]">Spread awareness of DLD</p>
-                    <p className="text-white/80 text-sm max-w-[280px] mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="absolute bottom-0 left-0 p-6">
+                    <p className="text-white font-semibold text-[16px] md:text-[18px] translate-y-4 group-hover:translate-y-0 transition-transform duration-300">Spread awareness of DLD</p>
+                    <p className="text-white/80 text-sm max-w-[280px] mt-2 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
                       Most people have never heard of DLD. Every person you invite is one more who will.
                     </p>
                   </div>
