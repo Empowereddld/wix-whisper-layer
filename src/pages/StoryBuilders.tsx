@@ -122,16 +122,10 @@ const ScrollProgress = ({ steps, inviteCount }: { steps: ProgressStep[]; inviteC
             {/* Circle on the track */}
             <div className="relative z-10 shrink-0 flex items-center justify-center w-[46px]">
               <div
-                className={`rounded-full ${
-                  completed
-                    ? "w-[16px] h-[16px] bg-primary shadow-[0_0_10px_hsl(258,50%,50%,0.3)]"
-                    : isCurrent
-                    ? "w-[16px] h-[16px] bg-primary/50 shadow-[0_0_16px_hsl(258,50%,50%,0.4)] ring-4 ring-primary/10"
-                    : "w-[12px] h-[12px] bg-primary/15 border-2 border-primary/20"
-                }`}
+                className="rounded-full w-[14px] h-[14px] bg-primary"
                 style={{
                   transform: reached ? "scale(1)" : "scale(0.6)",
-                  opacity: reached ? 1 : 0.4,
+                  opacity: reached ? 1 : 0,
                   transition: "transform 0.4s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s ease-out",
                 }}
               />
