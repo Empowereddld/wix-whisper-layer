@@ -150,7 +150,7 @@ const ScrollProgress = ({ steps, inviteCount }: { steps: ProgressStep[]; inviteC
                     ? "0 0 0 6px hsl(258,50%,50%,0.15)"
                     : "none",
                   transform: reached ? "scale(1)" : "scale(0.8)",
-                  opacity: reached ? 1 : 0.4,
+                  opacity: 1,
                   transition: "all 0.4s cubic-bezier(0.34,1.56,0.64,1)",
                 }}
               />
