@@ -25,6 +25,7 @@ import {
   Gift,
   Headphones,
   Crown,
+  Sparkles,
 } from "lucide-react";
 
 /* ─── Milestones ─── */
