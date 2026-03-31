@@ -55,7 +55,7 @@ const ScrollProgress = ({ steps, inviteCount }: { steps: ProgressStep[]; inviteC
 
       // Calculate which step the line has reached based on scroll
       const windowH = window.innerHeight;
-      const triggerY = windowH * 0.65; // line "cursor" position on screen
+      const triggerY = windowH * 0.85; // line "cursor" position on screen
 
       // Find how far the line should extend
       let reachedStep = -1;
@@ -117,7 +117,7 @@ const ScrollProgress = ({ steps, inviteCount }: { steps: ProgressStep[]; inviteC
           <div
             key={i}
             ref={(el) => { stepRefs.current[i] = el; }}
-            className={`relative flex items-start gap-5 ${i < arr.length - 1 ? "pb-10 md:pb-14" : ""} ${locked ? "opacity-45" : "opacity-100"}`}
+            className={`relative flex items-start gap-5 ${i < arr.length - 1 ? "pb-10 md:pb-14" : ""}`}
           >
             {/* Circle on the track */}
             <div className="relative z-10 shrink-0 flex items-center justify-center w-[46px]">
