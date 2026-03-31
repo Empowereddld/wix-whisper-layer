@@ -8,6 +8,7 @@ import storybuildersAppMockup from "@/assets/storybuilders-app-mockup.png";
 import storybuildersMovement from "@/assets/storybuilders-movement.png";
 import storybuildersAwareness from "@/assets/storybuilders-awareness.png";
 import storybuildersUnderstood from "@/assets/storybuilders-understood.png";
+import howItWorksSteps from "@/assets/how-it-works-steps.png";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -392,17 +393,27 @@ const StoryBuilders = () => {
             </h2>
           </FadeSection>
           <FadeSection delay={100}>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-[900px] mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-[900px] mx-auto">
               {[
-                "Join the Launch Team",
-                "Invite other storytellers",
-                "Unlock meaningful milestones",
+                { label: "Join the Launch Team", position: "17%" },
+                { label: "Invite other storytellers", position: "50%" },
+                { label: "Unlock meaningful milestones", position: "83%" },
               ].map((step, i) => (
-                <div key={i} className="bg-background rounded-xl border border-border p-6 text-center premium-card">
-                  <div className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center mx-auto mb-4 text-[15px] font-bold">
-                    {i + 1}
+                <div key={i} className="bg-background rounded-xl overflow-hidden text-center shadow-sm">
+                  <div className="relative h-[180px] flex items-center justify-center bg-[radial-gradient(circle,hsl(266_80%_95%)_0%,transparent_70%)]">
+                    <img
+                      src={howItWorksSteps}
+                      alt={step.label}
+                      className="h-[160px] w-auto object-contain"
+                      style={{ objectPosition: step.position }}
+                    />
                   </div>
-                  <p className="text-[14px] md:text-[15px] text-foreground font-medium leading-[1.5]">{step}</p>
+                  <div className="p-5 pt-3">
+                    <div className="w-9 h-9 rounded-full bg-primary/10 text-primary flex items-center justify-center mx-auto mb-3 text-[14px] font-bold">
+                      {i + 1}
+                    </div>
+                    <p className="text-[14px] md:text-[15px] text-foreground font-semibold leading-[1.5]">{step.label}</p>
+                  </div>
                 </div>
               ))}
             </div>
