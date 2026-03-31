@@ -1,8 +1,8 @@
 
 
-## Plan: Add period to heading text
+## Plan: Update heading text
 
-**File**: `src/pages/StoryBuilders.tsx`
+**File**: `src/pages/StoryBuilders.tsx` (line 331)
 
-Find the heading text `Every child deserves to understand and share their ideas clearly` and add a period at the end: `Every child deserves to understand and share their ideas clearly.`
+Change `Every child deserves to tell their story.` → `Every child deserves to understand and share their ideas clearly.`
 
