@@ -8,7 +8,7 @@ const paths = [
   {
     icon: iconParents,
     title: "For Parents and Caregivers",
-    description: "Help your child understand DLD, build confidence, and feel supported at home and school using stories and strategies, that strengthen communication.",
+    description: "Help your child understand DLD, build confidence, and feel supported at home and school using stories and strategies that strengthen communication.",
     cta: "LEARN MORE",
     href: "/for-parents",
   },
