@@ -37,7 +37,7 @@ const circles = Array.from({ length: 14 }, (_, i) => i);
 
 const DLDFaqSection = () => {
   return (
-    <section className="py-16 md:py-[80px] bg-muted">
+    <section className="py-16 md:py-[80px] bg-background">
       <div className="container px-6 md:px-8">
         <div className="max-w-[720px] mx-auto border border-foreground/15 rounded-2xl p-8 md:p-12">
           <h2 className="font-sans font-bold text-[28px] md:text-[38px] lg:text-[42px] leading-[1.1] tracking-tight text-foreground mb-3">
