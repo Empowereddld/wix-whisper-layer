@@ -13,7 +13,7 @@ const ForParentsHero = () => {
               </span>
             </div>
             <h1 className="text-[30px] md:text-[36px] lg:text-[48px] font-black text-foreground leading-[1.12] mb-4 md:mb-5 max-w-[500px]">
-              Does Your Child Struggle to Express Themself?
+              Do you need a place to feel seen and supported as you journey with your child?
             </h1>
             <p className="text-[13px] md:text-[14px] lg:text-[15px] text-muted-foreground leading-[1.7] mb-6 md:mb-8 max-w-[500px]">
               Join 4,000+ parents learning about language challenges, gaining practical strategies, and discovering they're not alone.
