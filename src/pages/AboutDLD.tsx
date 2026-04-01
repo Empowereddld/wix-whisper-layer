@@ -46,6 +46,7 @@ const AboutDLD = () => {
         </div>
         <WhatIsDLDSection />
         <RealityOfDLDSection />
+        <NotWholeStoryLamp />
         <DLDFaqSection />
         <ResourceBooksSection />
         <ResourceLibraryCTA />
