@@ -1,12 +1,11 @@
 import { ChevronRight } from "lucide-react";
+import { useState } from "react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 const cards = [
-  {
-    title: "Parent Workshops",
-    description: "Get the knowledge and tools you need to confidently support your child with DLD. Connect with experts and other parents who understand.",
-    link: "Join Workshop Waitlist",
-    href: "/contact",
-  },
   {
     title: "Books and Resources",
     description: "Stories featuring diverse characters with DLD your child can relate to. Available in 7+ languages with discussion guides and parent guidebook.",
@@ -39,6 +38,83 @@ const cards = [
   },
 ];
 
+const ParentWorkshopWaitlistCard = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [joined, setJoined] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!name.trim() || !email.trim()) return;
+    setLoading(true);
+    const { error } = await supabase.from("waitlist").insert({
+      name: name.trim(),
+      email: email.trim(),
+      role: "parent",
+      notes: "Parent Workshop waitlist",
+    });
+    setLoading(false);
+    if (error) {
+      toast.error(error.message.includes("duplicate") ? "You're already on the list!" : "Something went wrong. Please try again.");
+      return;
+    }
+    setJoined(true);
+    toast.success("You're on the list! We'll keep you posted.");
+  };
+
+  return (
+    <div className="bg-lavender border border-border/30 rounded-lg p-6 md:p-8 lg:p-10 flex flex-col min-h-[220px] md:min-h-[260px]">
+      <h3 className="text-[20px] md:text-[24px] font-black text-foreground mb-4 text-center">
+        Parent Workshops
+      </h3>
+      {joined ? (
+        <div className="flex flex-col gap-4 flex-1">
+          <p className="text-[13px] md:text-[14px] text-muted-foreground leading-[1.7]">
+            🎉 You're on the list! We'll let you know when our next Parent Workshop is announced.
+          </p>
+          <p className="text-[13px] md:text-[14px] text-muted-foreground leading-[1.7]">
+            In the meantime, check out our <strong>free course</strong> on YouTube:
+          </p>
+          <a
+            href="https://youtube.com/playlist?list=PLzfiOYFA1If7CpwIvkvipjplTZawhjw97&si=I11C55OX3Wbz0hcS"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 text-[11px] md:text-[12px] font-bold uppercase tracking-[0.12em] text-foreground hover:text-primary transition-colors mt-auto pt-2"
+          >
+            Watch Free Course
+            <ChevronRight className="w-4 h-4" />
+          </a>
+        </div>
+      ) : (
+        <form onSubmit={handleSubmit} className="flex flex-col gap-3 flex-1">
+          <p className="text-[13px] md:text-[14px] text-muted-foreground leading-[1.7]">
+            Sign up and we'll keep you posted on our next upcoming Parent Workshop!
+          </p>
+          <Input
+            placeholder="Your name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+            className="bg-white/80"
+          />
+          <Input
+            placeholder="Your email"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            className="bg-white/80"
+          />
+          <Button type="submit" disabled={loading} className="mt-auto">
+            {loading ? "Joining..." : "Join Workshop Waitlist"}
+          </Button>
+        </form>
+      )}
+    </div>
+  );
+};
+
 const HowWeSupportParentsSection = () => {
   return (
     <section className="py-10 md:py-16 lg:py-[120px]">
@@ -53,6 +129,7 @@ const HowWeSupportParentsSection = () => {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6 lg:gap-8">
+          <ParentWorkshopWaitlistCard />
           {cards.map((card) => (
             <div
               key={card.title}
