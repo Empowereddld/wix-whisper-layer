@@ -12,7 +12,7 @@ const EducatorsFamiliarSection = () => {
       <div className="container px-6 md:px-8">
         <div className="max-w-[650px]">
           <p className="text-[14px] md:text-[15px] text-muted-foreground leading-[1.7] mb-6">
-            Students with Developmental Language Disorder (DLD) are often identified late — or not at all. Teachers may not recognize the signs. Behavior issues get addressed, but the underlying language difficulties don't.
+            Students with Developmental Language Disorder (DLD) are often identified late — or not at all. Teachers may not recognize the signs. Behaviour issues get addressed but the root language and executive function skills do not.
           </p>
 
           <p className="text-[14px] md:text-[15px] text-muted-foreground font-semibold mb-3">
