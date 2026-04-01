@@ -1,21 +1,18 @@
 
 
-## Plan: White background lamp section
+## Plan: Add animated bullet points below the lamp heading
 
-The lamp effect uses `bg-foreground` (dark/black) in ~8 places as the base that masks and blends with the purple glow. Switching to white means:
+**File**: `src/components/NotWholeStoryLamp.tsx`
 
-### Changes in `src/components/ui/lamp.tsx`
-- Replace all `bg-foreground` references with `bg-white` (6 occurrences: main container, 4 mask divs, 1 top block)
+### Changes
+Add three bullet points below the `<motion.h2>` heading, each wrapped in its own `<motion.div>` with the same `whileInView` fade-up animation (staggered delays: 0.8, 1.0, 1.2s).
 
-### Changes in `src/components/NotWholeStoryLamp.tsx`
-- Change text gradient from `from-primary-foreground to-primary-foreground/60` to `from-foreground to-foreground/80` (dark text on white background)
+**Bullets:**
+- People with DLD have strengths and talents
+- Children with DLD can be thoughtful, kind, and great friends
+- With the right support, people with DLD can thrive
 
-### Will it look weird?
-Honestly — the purple glow on white can look elegant, almost like a soft spotlight effect. It shifts from "dramatic/cinematic" to "clean/modern." Since the rest of the About DLD page uses light backgrounds, a white lamp section would flow more naturally with the surrounding content instead of being a jarring dark block. Worth trying — easy to revert if you don't like it.
+Each bullet will use the same animation pattern as the heading (`initial={{ opacity: 0, y: 20 }}`, `whileInView={{ opacity: 1, y: 0 }}`), with incrementing delays so they cascade in after the title. Styled as a centered list with subtle text styling to complement the heading.
 
-### Files
-| File | Change |
-|------|--------|
-| `src/components/ui/lamp.tsx` | Replace `bg-foreground` → `bg-white` in 6 places |
-| `src/components/NotWholeStoryLamp.tsx` | Update text color to dark gradient |
+**Single file change**: `src/components/NotWholeStoryLamp.tsx`
 
