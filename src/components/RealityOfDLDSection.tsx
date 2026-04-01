@@ -46,7 +46,7 @@ const facts = [
 
 const RealityOfDLDSection = () => {
   return (
-    <section className="py-14 md:py-20">
+    <section className="py-14 md:py-20 bg-muted">
       <div className="container px-6 md:px-8">
         <div className="text-center mb-10 md:mb-14">
           <h2 className="text-[30px] md:text-[46px] font-black text-foreground mb-3 leading-[1.1]">
