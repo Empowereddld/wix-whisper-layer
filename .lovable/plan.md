@@ -1,33 +1,21 @@
 
 
-## Plan: Add "Lamp" transition section after Reality of DLD
+## Plan: White background lamp section
 
-**Goal**: Add a visually striking lamp-glow section between `RealityOfDLDSection` and `DLDFaqSection` on the About DLD page, displaying the text **"But this is not the whole story."**
+The lamp effect uses `bg-foreground` (dark/black) in ~8 places as the base that masks and blends with the purple glow. Switching to white means:
 
-### 1. Create `src/components/ui/lamp.tsx`
-- Build the `LampContainer` component using `motion` (already installed as `motion` v12)
-- Animated gradient glow effect with conic gradients and expanding width
-- Dark background (`bg-foreground` / near-black to match site theme) with purple/brand-colored lamp glow
+### Changes in `src/components/ui/lamp.tsx`
+- Replace all `bg-foreground` references with `bg-white` (6 occurrences: main container, 4 mask divs, 1 top block)
 
-### 2. Create `src/components/NotWholeStoryLamp.tsx`
-- Uses `LampContainer` to wrap the heading text
-- Text: **"But this is not the whole story."**
-- Animated text fade-up using `motion`
-- Styled to match site typography (bold, large heading)
+### Changes in `src/components/NotWholeStoryLamp.tsx`
+- Change text gradient from `from-primary-foreground to-primary-foreground/60` to `from-foreground to-foreground/80` (dark text on white background)
 
-### 3. Update `src/pages/AboutDLD.tsx`
-- Import `NotWholeStoryLamp`
-- Place it between `<RealityOfDLDSection />` and `<DLDFaqSection />`
+### Will it look weird?
+Honestly — the purple glow on white can look elegant, almost like a soft spotlight effect. It shifts from "dramatic/cinematic" to "clean/modern." Since the rest of the About DLD page uses light backgrounds, a white lamp section would flow more naturally with the surrounding content instead of being a jarring dark block. Worth trying — easy to revert if you don't like it.
 
-### Files changed
-| File | Action |
+### Files
+| File | Change |
 |------|--------|
-| `src/components/ui/lamp.tsx` | Create — LampContainer animation component |
-| `src/components/NotWholeStoryLamp.tsx` | Create — section with lamp + text |
-| `src/pages/AboutDLD.tsx` | Edit — add new section between Reality and FAQ |
-
-### Technical notes
-- Uses `motion` package (already in dependencies) via `import { motion } from "motion/react"`
-- The lamp glow will use the site's purple accent color (`#7c3aed` / brand purple) for the conic gradient
-- No new dependencies needed
+| `src/components/ui/lamp.tsx` | Replace `bg-foreground` → `bg-white` in 6 places |
+| `src/components/NotWholeStoryLamp.tsx` | Update text color to dark gradient |
 
