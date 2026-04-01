@@ -5,6 +5,7 @@ import WhatIsDLDSection from "@/components/WhatIsDLDSection";
 import DLDFaqSection, { faqs } from "@/components/DLDFaqSection";
 import ResourceLibraryCTA from "@/components/ResourceLibraryCTA";
 import ResourceBooksSection from "@/components/ResourceBooksSection";
+import RealityOfDLDSection from "@/components/RealityOfDLDSection";
 import SEOHead from "@/components/SEOHead";
 
 const faqJsonLd = {
@@ -43,6 +44,7 @@ const AboutDLD = () => {
           </div>
         </div>
         <WhatIsDLDSection />
+        <RealityOfDLDSection />
         <DLDFaqSection />
         <ResourceBooksSection />
         <ResourceLibraryCTA />
