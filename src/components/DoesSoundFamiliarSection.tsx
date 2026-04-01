@@ -12,26 +12,26 @@ const DoesSoundFamiliarSection = () => {
       <div className="container px-6 md:px-8">
         <div className="max-w-[650px]">
           <p className="text-[14px] md:text-[15px] text-muted-foreground leading-[1.7] mb-6">
-            You know your child is struggling with language but your concerns are being dismissed.
+            You know your child is <span className="font-semibold text-foreground">struggling with language</span> but your concerns are being dismissed.
           </p>
 
           <p className="text-[14px] md:text-[15px] text-muted-foreground leading-[1.7] mb-6">
-            Maybe you've been told "they'll grow out of it" or "they're fine" but that doesn't feel right.
+            Maybe you've been told <span className="font-semibold text-foreground">"they'll grow out of it"</span> or <span className="font-semibold text-foreground">"they're fine"</span> but that doesn't feel right.
           </p>
 
           <p className="text-[14px] md:text-[15px] text-muted-foreground leading-[1.7] mb-6">
-            It is exhausting to watch your child struggle and feel like nobody in their life has even heard of DLD.
+            It is exhausting to watch your child struggle and feel like <span className="font-semibold text-foreground">nobody in their life has even heard of DLD</span>.
           </p>
 
           <p className="text-[14px] md:text-[15px] text-muted-foreground leading-[1.7] mb-6">
-            It shouldn't be up to parents to do all the educating. It is not fair that many teachers, doctors, and other adults haven't heard of DLD. Maybe you had to find this term during late night internet searches because your child's therapist hadn't even heard of it!
+            <span className="font-semibold text-foreground">It shouldn't be up to parents to do all the educating.</span> It is not fair that many teachers, doctors, and other adults haven't heard of DLD. Maybe you had to find this term during <span className="font-semibold text-foreground">late night internet searches</span> because your child's therapist hadn't even heard of it!
           </p>
 
           <p className="text-[14px] md:text-[15px] text-muted-foreground leading-[1.7] mb-6">
-            Empowered DLD was created to give families like yours the resources, language, and support to understand your child and help them thrive.
+            <span className="font-semibold text-foreground">Empowered DLD</span> was created to give families like yours the resources, language, and support to understand your child and help them thrive.
           </p>
 
-          <p className="text-[14px] md:text-[15px] text-muted-foreground leading-[1.7]">
+          <p className="text-[14px] md:text-[15px] text-muted-foreground leading-[1.7] font-semibold text-foreground">
             We can help you educate teachers and other professionals so your child can access what they need to thrive! You are not alone!
           </p>
         </div>
