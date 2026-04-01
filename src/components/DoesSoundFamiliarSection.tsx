@@ -12,26 +12,27 @@ const DoesSoundFamiliarSection = () => {
       <div className="container px-6 md:px-8">
         <div className="max-w-[650px]">
           <p className="text-[14px] md:text-[15px] text-muted-foreground leading-[1.7] mb-6">
-            You know something isn't quite right with your child's language — but no one seems to have the answers. Maybe you've been told they'll "grow out of it," or that they're "just a late talker." Meanwhile, you're watching them fall behind.
+            You know your child is struggling with language but your concerns are being dismissed.
           </p>
-
-          <p className="text-[14px] md:text-[15px] text-muted-foreground font-semibold mb-3">
-            You may be experiencing:
-          </p>
-          <ul className="list-disc pl-5 space-y-2 text-[14px] md:text-[15px] text-muted-foreground leading-[1.7] mb-6">
-            <li>Your child struggles to express what they're thinking or feeling</li>
-            <li>Teachers say they're "just shy" or "will catch up"</li>
-            <li>You've searched online but nothing quite fits</li>
-            <li>Homework battles that end in tears — for both of you</li>
-            <li>Feeling alone and unsure where to get help</li>
-          </ul>
 
           <p className="text-[14px] md:text-[15px] text-muted-foreground leading-[1.7] mb-6">
-            DLD affects 1 in 14 people — which means it's more common than autism, yet most parents have never heard of it.
+            Maybe you've been told "they'll grow out of it" or "they're fine" but that doesn't feel right.
+          </p>
+
+          <p className="text-[14px] md:text-[15px] text-muted-foreground leading-[1.7] mb-6">
+            It is exhausting to watch your child struggle and feel like nobody in their life has even heard of DLD.
+          </p>
+
+          <p className="text-[14px] md:text-[15px] text-muted-foreground leading-[1.7] mb-6">
+            It shouldn't be up to parents to do all the educating. It is not fair that many teachers, doctors, and other adults haven't heard of DLD. Maybe you had to find this term during late night internet searches because your child's therapist hadn't even heard of it!
+          </p>
+
+          <p className="text-[14px] md:text-[15px] text-muted-foreground leading-[1.7] mb-6">
+            Empowered DLD was created to give families like yours the resources, language, and support to understand your child and help them thrive.
           </p>
 
           <p className="text-[14px] md:text-[15px] text-muted-foreground leading-[1.7]">
-            You're not imagining it. And you're not alone. Empowered DLD was created to give families like yours the resources, language, and support to understand your child — and help them thrive.
+            We can help you educate teachers and other professionals so your child can access what they need to thrive! You are not alone!
           </p>
         </div>
       </div>
