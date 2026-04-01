@@ -10,7 +10,7 @@ const cards = [
   },
   {
     title: "Parent Resources",
-    description: "Give families practical strategies that bridge clinic and home practice. Includes activities, conversation starters, and confidence-building tools families can use independently.",
+    description: "Give families practical strategies that bridge clinic and home practice. Check out our activities, conversation starters, and confidence-building tools families can use independently.",
     link: "Browse Resources",
     href: "/hub/preview",
   },
