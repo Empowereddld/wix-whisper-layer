@@ -52,9 +52,6 @@ const RealityOfDLDSection = () => {
           <h2 className="text-[30px] md:text-[46px] font-black text-foreground mb-3 leading-[1.1]">
             The Reality of DLD
           </h2>
-          <p className="text-muted-foreground text-[14px] md:text-[16px] leading-[1.7] max-w-[520px] mx-auto">
-            DLD affects 1 in 14 people, but it's still widely misunderstood. Here's the reality.
-          </p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10 max-w-[900px] mx-auto">
