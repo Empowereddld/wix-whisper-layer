@@ -1,18 +1,16 @@
 
 
-## Plan: Add animated bullet points below the lamp heading
+## Plan: Replace lamp effect with a simple clean section
 
-**File**: `src/components/NotWholeStoryLamp.tsx`
+The purple lamp glow isn't working. Replace the entire `NotWholeStoryLamp` component with a simple, clean section that matches the rest of the page.
 
 ### Changes
-Add three bullet points below the `<motion.h2>` heading, each wrapped in its own `<motion.div>` with the same `whileInView` fade-up animation (staggered delays: 0.8, 1.0, 1.2s).
 
-**Bullets:**
-- People with DLD have strengths and talents
-- Children with DLD can be thoughtful, kind, and great friends
-- With the right support, people with DLD can thrive
+**File: `src/components/NotWholeStoryLamp.tsx`**
+- Remove the `LampContainer` import and usage
+- Replace with a simple white-background section using standard `motion` fade-in animations
+- Keep the heading "But this is not the whole story." and the three bullet points
+- Style consistently with the rest of the About DLD page (clean, minimal)
 
-Each bullet will use the same animation pattern as the heading (`initial={{ opacity: 0, y: 20 }}`, `whileInView={{ opacity: 1, y: 0 }}`), with incrementing delays so they cascade in after the title. Styled as a centered list with subtle text styling to complement the heading.
-
-**Single file change**: `src/components/NotWholeStoryLamp.tsx`
+No other files need to change — `AboutDLD.tsx` already imports this component.
 
