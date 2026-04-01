@@ -18,6 +18,28 @@ const NotWholeStoryLamp = () => {
         <br />
         the whole story.
       </motion.h2>
+
+      <div className="mt-8 flex flex-col items-center gap-4">
+        {[
+          { text: "People with DLD have strengths and talents", delay: 0.8 },
+          { text: "Children with DLD can be thoughtful, kind, and great friends", delay: 1.0 },
+          { text: "With the right support, people with DLD can thrive", delay: 1.2 },
+        ].map((item) => (
+          <motion.p
+            key={item.text}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{
+              delay: item.delay,
+              duration: 0.8,
+              ease: "easeInOut",
+            }}
+            className="text-center text-base md:text-lg text-foreground/70 font-medium"
+          >
+            ✦ {item.text}
+          </motion.p>
+        ))}
+      </div>
     </LampContainer>
   );
 };
