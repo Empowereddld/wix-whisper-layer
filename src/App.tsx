@@ -65,9 +65,11 @@ const AdminWaitlist = lazy(() => import("./pages/admin/AdminWaitlist"));
 const AdminResourceRequests = lazy(() => import("./pages/admin/AdminResourceRequests"));
 const AdminReferrals = lazy(() => import("./pages/admin/AdminReferrals"));
 const AdminStoryBuilders = lazy(() => import("./pages/AdminStoryBuilders"));
+const AdminWaitlistGuide = lazy(() => import("./pages/AdminWaitlistGuide"));
 
 // Lazy-loaded: Legal & misc
 const StoryBuilders = lazy(() => import("./pages/StoryBuilders"));
+const WaitlistUserGuide = lazy(() => import("./pages/WaitlistUserGuide"));
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
 const TermsAndConditions = lazy(() => import("./pages/TermsAndConditions"));
 const Disclaimer = lazy(() => import("./pages/Disclaimer"));
@@ -109,6 +111,7 @@ const App = () => (
               <Route path="/contact" element={<ContactUs />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/storybuilders" element={<StoryBuilders />} />
+              <Route path="/storybuilders/guide" element={<WaitlistUserGuide />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
               <Route path="/disclaimer" element={<Disclaimer />} />
@@ -140,6 +143,7 @@ const App = () => (
               <Route path="/admin/emails" element={<AdminProtectedRoute><AdminEmails /></AdminProtectedRoute>} />
               <Route path="/admin/audit" element={<AdminProtectedRoute><AdminAuditLog /></AdminProtectedRoute>} />
               <Route path="/admin/storybuilders" element={<AdminProtectedRoute><AdminStoryBuilders /></AdminProtectedRoute>} />
+              <Route path="/admin/waitlist-guide" element={<AdminProtectedRoute><AdminWaitlistGuide /></AdminProtectedRoute>} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>

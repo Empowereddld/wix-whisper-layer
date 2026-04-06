@@ -13,6 +13,7 @@ import {
   ClipboardList,
   MessageSquare,
   UserPlus,
+  HelpCircle,
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import {
@@ -42,6 +43,7 @@ const navItems = [
   { title: "Discounts", url: "/admin/discounts", icon: Tag },
   { title: "Emails", url: "/admin/emails", icon: Mail },
   { title: "Audit Log", url: "/admin/audit", icon: Shield },
+  { title: "Waitlist Guide", url: "/admin/waitlist-guide", icon: HelpCircle },
 ];
 
 const AdminSidebar = () => {
