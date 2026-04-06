@@ -8,12 +8,12 @@ export const TIER_NAMES = [
 ] as const;
 
 export const TIER_COLORS = [
-  "#9CA3AF",
-  "#8B5CF6",
-  "#3B82F6",
-  "#F59E0B",
-  "#EF4444",
-  "#5B2D8E",
+  "#8B7355",   // Storyteller - warm brown
+  "#D4920B",   // Advocate - amber
+  "#C67B5C",   // Champion - terracotta
+  "#8BA888",   // Hero - sage green
+  "#C4A0A0",   // Legend - dusty rose
+  "#3D2B1F",   // Founding Elite - dark chocolate
 ] as const;
 
 export const TIER_THRESHOLDS = [0, 35, 85, 135, 260, 510] as const;

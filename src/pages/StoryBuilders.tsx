@@ -132,7 +132,7 @@ const StoryBuilders = () => {
 
       {/* ==================== PRE-JOIN MODE ==================== */}
       {!joined ? (
-        <div className="relative min-h-screen w-full overflow-hidden bg-gradient-to-b from-slate-900 via-purple-900 to-slate-900">
+        <div className="relative min-h-screen w-full overflow-hidden bg-[#FDF8F0]">
           <AnimatedBackground />
 
           {/* Social Proof Banner */}
@@ -148,13 +148,13 @@ const StoryBuilders = () => {
               className="pt-20 pb-16 text-center"
             >
               <div className="mb-8">
-                <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black bg-gradient-to-r from-purple-300 via-pink-300 to-purple-400 bg-clip-text text-transparent mb-6">
+                <h1 className="text-5xl sm:text-6xl lg:text-7xl font-serif italic text-[#3D2B1F] mb-6">
                   Story Builders
                 </h1>
-                <p className="text-xl sm:text-2xl text-white/80 mb-4 max-w-3xl mx-auto">
+                <p className="text-xl sm:text-2xl text-[#5C4033] mb-4 max-w-3xl mx-auto">
                   The app that helps kids with DLD (Developmental Language Disorder) learn to read and communicate through personalized storytelling.
                 </p>
-                <p className="text-lg text-white/60 max-w-2xl mx-auto">
+                <p className="text-lg text-[#8B7355] max-w-2xl mx-auto">
                   Built by parents and professionals. Launching soon.
                 </p>
               </div>
@@ -173,15 +173,15 @@ const StoryBuilders = () => {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
               >
-                <GlassCard>
+                <div className="bg-[#FEFCF9] border border-[#E8DDD0] rounded-2xl shadow-sm overflow-hidden">
                   <div className="p-8">
                     {isLoggedIn && !joined ? (
                       // Pre-join mode for logged-in users
                       <div>
-                        <h2 className="text-2xl font-bold text-white mb-2">
+                        <h2 className="text-2xl font-serif italic text-[#3D2B1F] mb-2">
                           Hey {profile?.first_name}!
                         </h2>
-                        <p className="text-white/70 text-sm mb-6">
+                        <p className="text-[#8B7355] text-sm mb-6">
                           Join the Story Builders launch team with one click.
                         </p>
 
@@ -189,7 +189,7 @@ const StoryBuilders = () => {
                           <motion.div
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
-                            className="mb-4 p-3 bg-yellow-500/20 border border-yellow-500/50 rounded-lg text-yellow-300 text-sm"
+                            className="mb-4 p-3 bg-amber-50 border border-[#D4920B] rounded-xl text-[#C67B5C] text-sm"
                           >
                             {error}
                           </motion.div>
@@ -198,7 +198,7 @@ const StoryBuilders = () => {
                         <Button
                           onClick={() => handleSignup()}
                           disabled={formLoading}
-                          className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-3 rounded-lg transition-all disabled:opacity-50"
+                          className="w-full bg-[#C67B5C] hover:bg-[#B06A4B] text-white font-bold py-3 rounded-xl transition-all disabled:opacity-50"
                         >
                           {formLoading ? (
                             <motion.div
@@ -212,8 +212,8 @@ const StoryBuilders = () => {
                         </Button>
 
                         {/* Trust Section */}
-                        <div className="mt-6 p-4 bg-white/5 border border-white/10 rounded-lg text-center">
-                          <p className="text-white/70 text-xs">
+                        <div className="mt-6 p-4 bg-[#FDF8F0] border border-[#E8DDD0] rounded-xl text-center">
+                          <p className="text-[#8B7355] text-xs">
                             We're building the most evidence-based, family-centered app for kids with DLD.
                           </p>
                         </div>
@@ -221,8 +221,8 @@ const StoryBuilders = () => {
                     ) : (
                       // Standard form for non-logged-in users
                       <div>
-                        <h2 className="text-2xl font-bold text-white mb-2">Join the Launch Team</h2>
-                        <p className="text-white/70 text-sm mb-6">
+                        <h2 className="text-2xl font-serif italic text-[#3D2B1F] mb-2">Join the Launch Team</h2>
+                        <p className="text-[#8B7355] text-sm mb-6">
                           Be among the first to access Story Builders. Earn rewards by inviting others.
                         </p>
 
@@ -230,7 +230,7 @@ const StoryBuilders = () => {
                           <motion.div
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
-                            className="mb-4 p-3 bg-yellow-500/20 border border-yellow-500/50 rounded-lg text-yellow-300 text-sm"
+                            className="mb-4 p-3 bg-amber-50 border border-[#D4920B] rounded-xl text-[#C67B5C] text-sm"
                           >
                             {error}
                           </motion.div>
@@ -242,7 +242,7 @@ const StoryBuilders = () => {
                           <form onSubmit={handleSignup} className="space-y-4">
                             {/* Name Input */}
                             <div>
-                              <label className="block text-white/80 text-sm font-medium mb-2">
+                              <label className="block text-[#5C4033] text-sm font-medium mb-2">
                                 Full Name
                               </label>
                               <input
@@ -250,14 +250,14 @@ const StoryBuilders = () => {
                                 value={formName}
                                 onChange={(e) => setFormName(e.target.value)}
                                 placeholder="Sarah Johnson"
-                                className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                                className="w-full bg-[#FEFCF9] border border-[#E8DDD0] rounded-xl px-4 py-3 text-[#3D2B1F] placeholder-[#8B7355] focus:outline-none focus:border-[#D4920B] focus:ring-2 focus:ring-[#D4920B]/20 transition-all"
                                 disabled={formLoading}
                               />
                             </div>
 
                             {/* Email Input */}
                             <div>
-                              <label className="block text-white/80 text-sm font-medium mb-2">
+                              <label className="block text-[#5C4033] text-sm font-medium mb-2">
                                 Email Address
                               </label>
                               <input
@@ -265,7 +265,7 @@ const StoryBuilders = () => {
                                 value={formEmail}
                                 onChange={(e) => setFormEmail(e.target.value)}
                                 placeholder="sarah@example.com"
-                                className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                                className="w-full bg-[#FEFCF9] border border-[#E8DDD0] rounded-xl px-4 py-3 text-[#3D2B1F] placeholder-[#8B7355] focus:outline-none focus:border-[#D4920B] focus:ring-2 focus:ring-[#D4920B]/20 transition-all"
                                 disabled={formLoading}
                               />
                             </div>
@@ -274,7 +274,7 @@ const StoryBuilders = () => {
                             <Button
                               type="submit"
                               disabled={formLoading}
-                              className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-3 rounded-lg transition-all disabled:opacity-50"
+                              className="w-full bg-[#C67B5C] hover:bg-[#B06A4B] text-white font-bold py-3 rounded-xl transition-all disabled:opacity-50"
                             >
                               {formLoading ? (
                                 <motion.div
@@ -290,15 +290,15 @@ const StoryBuilders = () => {
                         )}
 
                         {/* Trust Section */}
-                        <div className="mt-6 p-4 bg-white/5 border border-white/10 rounded-lg text-center">
-                          <p className="text-white/70 text-xs">
+                        <div className="mt-6 p-4 bg-[#FDF8F0] border border-[#E8DDD0] rounded-xl text-center">
+                          <p className="text-[#8B7355] text-xs">
                             We're building the most evidence-based, family-centered app for kids with DLD.
                           </p>
                         </div>
                       </div>
                     )}
                   </div>
-                </GlassCard>
+                </div>
               </motion.div>
 
               {/* Community & Mission */}
@@ -312,31 +312,31 @@ const StoryBuilders = () => {
                 <CommunityMilestone totalParticipants={totalCount} />
 
                 {/* Testimonial Section */}
-                <GlassCard>
+                <div className="bg-[#FEFCF9] border border-[#E8DDD0] rounded-2xl shadow-sm overflow-hidden">
                   <div className="p-6">
-                    <h3 className="text-lg font-bold text-white mb-4">Our Mission</h3>
+                    <h3 className="text-lg font-serif italic text-[#3D2B1F] mb-4">Our Mission</h3>
                     <div className="space-y-3">
-                      <p className="text-white/80 text-sm">
+                      <p className="text-[#5C4033] text-sm">
                         DLD affects 1 in 40 kids. Many don't get the support they need. Story Builders changes that.
                       </p>
-                      <p className="text-white/70 text-sm">
+                      <p className="text-[#8B7355] text-sm">
                         Built by parents who've walked this journey, with guidance from speech-language pathologists and educators, Story Builders makes language development engaging, evidence-based, and fun.
                       </p>
-                      <div className="mt-4 p-3 bg-purple-500/20 border border-purple-500/30 rounded-lg">
-                        <p className="text-purple-300 text-sm font-semibold">
+                      <div className="mt-4 p-3 bg-amber-50 border border-[#D4920B] rounded-xl">
+                        <p className="text-[#C67B5C] text-sm font-semibold">
                           "Every child deserves to tell their story." - Dan & Daria
                         </p>
                       </div>
                     </div>
                   </div>
-                </GlassCard>
+                </div>
               </motion.div>
             </div>
           </div>
         </div>
       ) : (
         /* ==================== POST-JOIN MODE ==================== */
-        <div className="relative min-h-screen w-full overflow-hidden bg-gradient-to-b from-slate-900 via-purple-900 to-slate-900">
+        <div className="relative min-h-screen w-full overflow-hidden bg-[#FDF8F0]">
           <AnimatedBackground />
 
           {/* Show confetti on first join */}
@@ -367,10 +367,10 @@ const StoryBuilders = () => {
               transition={{ duration: 0.6 }}
               className="mb-12 text-center"
             >
-              <h1 className="text-4xl sm:text-5xl font-black bg-gradient-to-r from-purple-300 via-pink-300 to-purple-400 bg-clip-text text-transparent mb-2">
+              <h1 className="text-4xl sm:text-5xl font-serif italic text-[#3D2B1F] mb-2">
                 Welcome to the Launch Team!
               </h1>
-              <p className="text-white/70 text-lg">
+              <p className="text-[#8B7355] text-lg">
                 You're helping shape the future of language learning for kids with DLD.
               </p>
             </motion.div>
@@ -382,7 +382,7 @@ const StoryBuilders = () => {
               transition={{ duration: 0.6, delay: 0.1 }}
               className="mb-12"
             >
-              <h2 className="text-2xl font-bold text-white mb-6">Your Impact</h2>
+              <h2 className="text-2xl font-serif italic text-[#3D2B1F] mb-6">Your Impact</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {/* Position Card */}
                 <div>
@@ -442,7 +442,7 @@ const StoryBuilders = () => {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="mb-12"
             >
-              <h2 className="text-2xl font-bold text-white mb-6">Grow Your Team</h2>
+              <h2 className="text-2xl font-serif italic text-[#3D2B1F] mb-6">Grow Your Team</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {/* Referral Link Card */}
                 <div>
@@ -485,7 +485,7 @@ const StoryBuilders = () => {
               transition={{ duration: 0.6, delay: 0.3 }}
               className="mb-12"
             >
-              <h2 className="text-2xl font-bold text-white mb-6">Community</h2>
+              <h2 className="text-2xl font-serif italic text-[#3D2B1F] mb-6">Community</h2>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Leaderboard */}
                 <div>
@@ -511,7 +511,7 @@ const StoryBuilders = () => {
               transition={{ duration: 0.6, delay: 0.4 }}
               className="mb-12"
             >
-              <h2 className="text-2xl font-bold text-white mb-6">Your Achievements</h2>
+              <h2 className="text-2xl font-serif italic text-[#3D2B1F] mb-6">Your Achievements</h2>
               <BadgeShowcase
                 earnedBadges={badges.map((badge) => ({
                   badge_id: badge,
@@ -530,18 +530,18 @@ const StoryBuilders = () => {
               {isLoggedIn ? (
                 <Button
                   onClick={() => navigate("/hub")}
-                  className="bg-white/10 hover:bg-white/20 border border-white/20 text-white font-medium px-6 py-3 rounded-lg transition-all"
+                  className="bg-[#FEFCF9] hover:bg-[#F5EFE5] border border-[#E8DDD0] text-[#5C4033] font-medium px-6 py-3 rounded-xl transition-all"
                 >
                   Back to Resource Hub
                 </Button>
               ) : (
                 <div className="text-center">
-                  <p className="text-white/80 mb-4 text-lg">
+                  <p className="text-[#8B7355] mb-4 text-lg">
                     Want access to our free DLD resources?
                   </p>
                   <Button
                     onClick={() => navigate("/hub/signup")}
-                    className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold px-8 py-3 rounded-lg transition-all"
+                    className="bg-[#C67B5C] hover:bg-[#B06A4B] text-white font-bold px-8 py-3 rounded-xl transition-all"
                   >
                     Join the Resource Hub
                   </Button>

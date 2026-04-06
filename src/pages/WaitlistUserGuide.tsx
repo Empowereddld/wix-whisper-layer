@@ -130,9 +130,9 @@ const WaitlistUserGuide = () => {
         description="Learn how to maximize your position on the Story Builders launch team, earn rewards, and make the most of our referral system."
       />
 
-      <div className="min-h-screen bg-gradient-to-br from-purple-950 via-purple-900 to-slate-900 text-white overflow-hidden">
-        {/* Animated background mesh */}
-        <div className={`fixed inset-0 pointer-events-none ${gradients.mesh}`} />
+      <div className="min-h-screen bg-[#FDF8F0] text-[#5C4033] overflow-hidden">
+        {/* Earthy background */}
+        <div className="fixed inset-0 pointer-events-none opacity-5 bg-gradient-to-br from-[#8B7355] via-[#D4920B] to-[#C67B5C]" />
 
         {/* Header */}
         <motion.div
@@ -145,14 +145,14 @@ const WaitlistUserGuide = () => {
             <Button
               onClick={() => navigate("/storybuilders")}
               variant="ghost"
-              className="mb-8 text-purple-300 hover:text-white"
+              className="mb-8 text-[#C67B5C] hover:text-[#3D2B1F]"
             >
               ← Back to Waitlist
             </Button>
-            <h1 className={`${typography.h1} mb-4 bg-gradient-to-r from-purple-200 to-pink-200 bg-clip-text text-transparent`}>
+            <h1 className={`text-4xl font-bold font-serif italic mb-4 text-[#3D2B1F]`}>
               Your Story Builders Launch Team Playbook
             </h1>
-            <p className={`${typography.body} text-purple-200 max-w-3xl`}>
+            <p className={`text-lg max-w-3xl text-[#8B7355]`}>
               Welcome to the exclusive community of early supporters! This guide will show you how to maximize your position, unlock rewards, and help other families discover Story Builders.
             </p>
           </div>
@@ -162,17 +162,17 @@ const WaitlistUserGuide = () => {
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
           {/* Section 1: Welcome */}
           <motion.section
-            className={`mb-16 p-8 rounded-3xl ${glass.cardPurple}`}
+            className={`mb-16 p-8 rounded-2xl bg-[#FEFCF9] border border-[#E8DDD0]`}
             {...animations.fadeInUp}
           >
             <div className="flex items-start gap-4 mb-4">
-              <Heart className="w-8 h-8 text-pink-400 flex-shrink-0 mt-1" />
+              <Heart className="w-8 h-8 text-[#C67B5C] flex-shrink-0 mt-1" />
               <div>
-                <h2 className={`${typography.h2} mb-3 text-purple-200`}>Welcome to the Launch Team</h2>
-                <p className={`${typography.body} text-purple-100 mb-4`}>
+                <h2 className={`text-2xl font-bold font-serif italic mb-3 text-[#3D2B1F]`}>Welcome to the Launch Team</h2>
+                <p className={`text-base mb-4 text-[#5C4033]`}>
                   You're part of something special. Story Builders is an educational app designed with love for children with Developmental Language Disorder. We're building a community where kids feel celebrated for who they are, not measured by what they can't do yet.
                 </p>
-                <p className={`${typography.body} text-purple-100`}>
+                <p className={`text-base text-[#5C4033]`}>
                   Early supporters like you are helping shape the future of language learning. Your referrals, feedback, and enthusiasm matter more than you know. Together, we're creating a movement to support families navigating DLD.
                 </p>
               </div>
@@ -181,8 +181,8 @@ const WaitlistUserGuide = () => {
 
           {/* Section 2: Tier System */}
           <motion.section className="mb-16" {...animations.fadeInUp}>
-            <h2 className={`${typography.h2} mb-8 text-purple-200`}>The Tier System: Your Path to Rewards</h2>
-            <p className={`${typography.body} text-purple-200 mb-8`}>
+            <h2 className={`text-2xl font-bold font-serif italic mb-8 text-[#3D2B1F]`}>The Tier System: Your Path to Rewards</h2>
+            <p className={`text-base text-[#8B7355] mb-8`}>
               Earn points through referrals, sharing, and engagement. Watch your tier climb and unlock exclusive rewards at each level.
             </p>
 
@@ -190,10 +190,9 @@ const WaitlistUserGuide = () => {
               {TIER_NAMES.map((tier, index) => (
                 <motion.div
                   key={tier}
-                  className={`p-6 rounded-2xl border-2 transition-all duration-300 hover:scale-102`}
+                  className={`p-6 rounded-2xl border-2 transition-all duration-300 hover:scale-102 bg-[#FEFCF9]`}
                   style={{
                     borderColor: TIER_COLORS[index],
-                    backgroundColor: `${TIER_COLORS[index]}15`,
                   }}
                   whileHover={{ x: 8 }}
                   initial={{ opacity: 0, x: -20 }}
@@ -203,13 +202,13 @@ const WaitlistUserGuide = () => {
                   <div className="flex items-center gap-4 mb-3">
                     <div
                       className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0"
-                      style={{ backgroundColor: `${TIER_COLORS[index]}40` }}
+                      style={{ backgroundColor: `${TIER_COLORS[index]}20` }}
                     >
                       {getTierIcon(index)}
                     </div>
                     <div className="flex-grow">
-                      <h3 className="text-2xl font-bold mb-1">{tier}</h3>
-                      <p className="text-sm text-purple-300">
+                      <h3 className="text-2xl font-bold mb-1 text-[#3D2B1F]">{tier}</h3>
+                      <p className="text-sm text-[#8B7355]">
                         {TIER_REFERRALS[index]} referral{TIER_REFERRALS[index] !== 1 ? "s" : ""} required
                       </p>
                     </div>
@@ -221,7 +220,7 @@ const WaitlistUserGuide = () => {
                       </div>
                     )}
                   </div>
-                  <p className="text-purple-100 ml-16">{TIER_REWARDS[index]}</p>
+                  <p className="text-[#5C4033] ml-16">{TIER_REWARDS[index]}</p>
                 </motion.div>
               ))}
             </div>
@@ -229,8 +228,8 @@ const WaitlistUserGuide = () => {
 
           {/* Section 3: How to Earn Points */}
           <motion.section className="mb-16" {...animations.fadeInUp}>
-            <h2 className={`${typography.h2} mb-8 text-purple-200`}>How to Earn Points</h2>
-            <p className={`${typography.body} text-purple-200 mb-8`}>
+            <h2 className={`text-2xl font-bold font-serif italic mb-8 text-[#3D2B1F]`}>How to Earn Points</h2>
+            <p className={`text-base text-[#8B7355] mb-8`}>
               There are many ways to earn points — referrals give the most, but every action counts!
             </p>
 
@@ -246,21 +245,21 @@ const WaitlistUserGuide = () => {
               ].map((item, idx) => (
                 <motion.div
                   key={idx}
-                  className={`p-6 rounded-xl ${glass.cardPurple} flex items-center justify-between`}
+                  className={`p-6 rounded-xl bg-[#FEFCF9] border border-[#E8DDD0] flex items-center justify-between`}
                   whileHover={{ y: -4 }}
                 >
                   <div className="flex items-center gap-3">
                     <span className="text-3xl">{item.emoji}</span>
-                    <span className="font-semibold">{item.label}</span>
+                    <span className="font-semibold text-[#5C4033]">{item.label}</span>
                   </div>
-                  <div className="text-2xl font-bold text-purple-300">+{item.points}</div>
+                  <div className="text-2xl font-bold text-[#D4920B]">+{item.points}</div>
                 </motion.div>
               ))}
             </div>
 
-            <motion.div className={`mt-8 p-6 rounded-xl ${glass.card}`} whileHover={{ scale: 1.02 }}>
-              <Sparkles className="w-5 h-5 text-purple-400 inline mr-2" />
-              <span className="text-purple-200">
+            <motion.div className={`mt-8 p-6 rounded-xl bg-[#FEFCF9] border border-[#E8DDD0]`} whileHover={{ scale: 1.02 }}>
+              <Sparkles className="w-5 h-5 text-[#D4920B] inline mr-2" />
+              <span className="text-[#5C4033]">
                 <strong>Pro Tip:</strong> Maintain a daily streak by visiting even if you don't share. You'll earn 3 bonus points every day you check in!
               </span>
             </motion.div>
@@ -268,28 +267,28 @@ const WaitlistUserGuide = () => {
 
           {/* Section 4: Sharing Your Referral Link */}
           <motion.section className="mb-16" {...animations.fadeInUp}>
-            <h2 className={`${typography.h2} mb-8 text-purple-200`}>Sharing Your Referral Link</h2>
+            <h2 className={`text-2xl font-bold font-serif italic mb-8 text-[#3D2B1F]`}>Sharing Your Referral Link</h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-              <motion.div className={`p-6 rounded-2xl ${glass.cardPurple}`}>
-                <h3 className="text-xl font-bold mb-4">Your Link</h3>
-                <div className={`p-4 rounded-lg ${glass.input} mb-4 font-mono text-sm break-all text-purple-200`}>
+              <motion.div className={`p-6 rounded-2xl bg-[#FEFCF9] border border-[#E8DDD0]`}>
+                <h3 className="text-xl font-bold mb-4 text-[#3D2B1F]">Your Link</h3>
+                <div className={`p-4 rounded-lg bg-[#FDF8F0] border border-[#E8DDD0] mb-4 font-mono text-sm break-all text-[#5C4033]`}>
                   https://storybuilders.com?ref=YOUR_CODE
                 </div>
                 <Button
                   onClick={() => copyToClipboard("https://storybuilders.com?ref=YOUR_CODE")}
-                  className="w-full bg-purple-600 hover:bg-purple-700"
+                  className="w-full bg-[#C67B5C] hover:bg-[#A85A48] text-white"
                 >
                   <Copy className="w-4 h-4 mr-2" />
                   Copy Link
                 </Button>
               </motion.div>
 
-              <motion.div className={`p-6 rounded-2xl ${glass.cardPurple}`}>
-                <h3 className="text-xl font-bold mb-4">Share on Platforms</h3>
+              <motion.div className={`p-6 rounded-2xl bg-[#FEFCF9] border border-[#E8DDD0]`}>
+                <h3 className="text-xl font-bold mb-4 text-[#3D2B1F]">Share on Platforms</h3>
                 <div className="space-y-3">
                   {["Facebook", "WhatsApp", "Email", "Text Message"].map((platform, idx) => (
-                    <Button key={idx} variant="outline" className="w-full text-left justify-start">
+                    <Button key={idx} variant="outline" className="w-full text-left justify-start border-[#E8DDD0] text-[#5C4033] hover:bg-[#F5EDE3]">
                       <Share2 className="w-4 h-4 mr-2" />
                       Share on {platform}
                     </Button>
@@ -298,18 +297,18 @@ const WaitlistUserGuide = () => {
               </motion.div>
             </div>
 
-            <motion.div className={`p-8 rounded-2xl ${glass.card}`}>
-              <h3 className="text-xl font-bold mb-4">Sample Messages</h3>
+            <motion.div className={`p-8 rounded-2xl bg-[#FEFCF9] border border-[#E8DDD0]`}>
+              <h3 className="text-xl font-bold mb-4 text-[#3D2B1F]">Sample Messages</h3>
               <div className="space-y-4">
-                <div className="bg-purple-900/30 p-4 rounded-lg">
-                  <p className="text-sm text-purple-300 mb-2">For Parent Groups:</p>
-                  <p className="text-purple-100">
+                <div className="bg-[#F5EDE3] p-4 rounded-lg border border-[#E8DDD0]">
+                  <p className="text-sm text-[#8B7355] mb-2">For Parent Groups:</p>
+                  <p className="text-[#5C4033]">
                     "I'm so excited about Story Builders — an app designed specifically for kids with language challenges. If you know families navigating DLD, check this out! <strong>storybuilders.com?ref=YOUR_CODE</strong>"
                   </p>
                 </div>
-                <div className="bg-purple-900/30 p-4 rounded-lg">
-                  <p className="text-sm text-purple-300 mb-2">For Therapist/Educator Referrals:</p>
-                  <p className="text-purple-100">
+                <div className="bg-[#F5EDE3] p-4 rounded-lg border border-[#E8DDD0]">
+                  <p className="text-sm text-[#8B7355] mb-2">For Therapist/Educator Referrals:</p>
+                  <p className="text-[#5C4033]">
                     "I'm part of the launch team for Story Builders, an educational app built for kids with DLD. I think your families would love it. Join the waitlist: <strong>storybuilders.com?ref=YOUR_CODE</strong>"
                   </p>
                 </div>
@@ -319,8 +318,8 @@ const WaitlistUserGuide = () => {
 
           {/* Section 5: Your Dashboard */}
           <motion.section className="mb-16" {...animations.fadeInUp}>
-            <h2 className={`${typography.h2} mb-8 text-purple-200`}>Your Dashboard Explained</h2>
-            <p className={`${typography.body} text-purple-200 mb-8`}>
+            <h2 className={`text-2xl font-bold font-serif italic mb-8 text-[#3D2B1F]`}>Your Dashboard Explained</h2>
+            <p className={`text-base text-[#8B7355] mb-8`}>
               Your dashboard is your command center. Here's what you'll see:
             </p>
 
@@ -361,14 +360,14 @@ const WaitlistUserGuide = () => {
               ].map((item, idx) => (
                 <motion.div
                   key={idx}
-                  className={`p-6 rounded-xl ${glass.cardPurple}`}
+                  className={`p-6 rounded-xl bg-[#FEFCF9] border border-[#E8DDD0]`}
                   whileHover={{ y: -4 }}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: idx * 0.05 }}
                 >
-                  <h4 className="text-lg font-bold mb-2">{item.title}</h4>
-                  <p className="text-purple-200 text-sm">{item.description}</p>
+                  <h4 className="text-lg font-bold mb-2 text-[#3D2B1F]">{item.title}</h4>
+                  <p className="text-[#8B7355] text-sm">{item.description}</p>
                 </motion.div>
               ))}
             </div>
@@ -376,8 +375,8 @@ const WaitlistUserGuide = () => {
 
           {/* Section 6: Badges & Achievements */}
           <motion.section className="mb-16" {...animations.fadeInUp}>
-            <h2 className={`${typography.h2} mb-8 text-purple-200`}>Badges & Achievements</h2>
-            <p className={`${typography.body} text-purple-200 mb-8`}>
+            <h2 className={`text-2xl font-bold font-serif italic mb-8 text-[#3D2B1F]`}>Badges & Achievements</h2>
+            <p className={`text-base text-[#8B7355] mb-8`}>
               Earn exclusive badges by hitting milestones. Each badge tells your story in the community.
             </p>
 
@@ -385,15 +384,15 @@ const WaitlistUserGuide = () => {
               {badges.map((badge, idx) => (
                 <motion.div
                   key={idx}
-                  className={`p-6 rounded-xl ${glass.cardPurple} text-center cursor-pointer`}
+                  className={`p-6 rounded-xl bg-[#FEFCF9] border border-[#E8DDD0] text-center cursor-pointer`}
                   whileHover={{ scale: 1.05 }}
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: idx * 0.05 }}
                 >
                   <div className="text-4xl mb-3">{badge.icon}</div>
-                  <h4 className="font-bold text-sm mb-1">{badge.name}</h4>
-                  <p className="text-xs text-purple-300">{badge.description}</p>
+                  <h4 className="font-bold text-sm mb-1 text-[#3D2B1F]">{badge.name}</h4>
+                  <p className="text-xs text-[#8B7355]">{badge.description}</p>
                 </motion.div>
               ))}
             </div>
@@ -401,8 +400,8 @@ const WaitlistUserGuide = () => {
 
           {/* Section 7: Community Milestones */}
           <motion.section className="mb-16" {...animations.fadeInUp}>
-            <h2 className={`${typography.h2} mb-8 text-purple-200`}>Community Milestones</h2>
-            <p className={`${typography.body} text-purple-200 mb-8`}>
+            <h2 className={`text-2xl font-bold font-serif italic mb-8 text-[#3D2B1F]`}>Community Milestones</h2>
+            <p className={`text-base text-[#8B7355] mb-8`}>
               We succeed together! As our community grows, we all unlock exclusive rewards.
             </p>
 
@@ -410,19 +409,19 @@ const WaitlistUserGuide = () => {
               {COMMUNITY_MILESTONES.map((milestone, idx) => (
                 <motion.div
                   key={idx}
-                  className={`p-6 rounded-xl ${glass.card} border border-purple-400/30`}
+                  className={`p-6 rounded-xl bg-[#FEFCF9] border border-[#E8DDD0]`}
                   whileHover={{ x: 8 }}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: idx * 0.1 }}
                 >
                   <div className="flex items-center gap-4">
-                    <div className="flex items-center justify-center w-16 h-16 rounded-full bg-purple-600/30 flex-shrink-0">
-                      <Users className="w-8 h-8 text-purple-300" />
+                    <div className="flex items-center justify-center w-16 h-16 rounded-full bg-[#D4920B]/20 flex-shrink-0">
+                      <Users className="w-8 h-8 text-[#D4920B]" />
                     </div>
                     <div className="flex-grow">
-                      <h4 className="text-2xl font-bold text-purple-200 mb-1">{milestone.target.toLocaleString()} Members</h4>
-                      <p className="text-purple-100">{milestone.reward}</p>
+                      <h4 className="text-2xl font-bold text-[#3D2B1F] mb-1">{milestone.target.toLocaleString()} Members</h4>
+                      <p className="text-[#5C4033]">{milestone.reward}</p>
                     </div>
                   </div>
                 </motion.div>
@@ -432,13 +431,14 @@ const WaitlistUserGuide = () => {
 
           {/* Section 8: Pro Tips */}
           <motion.section className="mb-16" {...animations.fadeInUp}>
-            <h2 className={`${typography.h2} mb-8 text-purple-200`}>Pro Tips to Climb Faster</h2>
+            <h2 className={`text-2xl font-bold font-serif italic mb-8 text-[#3D2B1F]`}>Pro Tips to Climb Faster</h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {proTips.map((tip, idx) => (
                 <motion.div
                   key={idx}
-                  className={`p-6 rounded-2xl ${glass.cardPurple} border-l-4 border-purple-400`}
+                  className={`p-6 rounded-2xl bg-[#FEFCF9] border border-[#E8DDD0] border-l-4`}
+                  style={{ borderLeftColor: "#D4920B" }}
                   whileHover={{ x: 8 }}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -447,8 +447,8 @@ const WaitlistUserGuide = () => {
                   <div className="flex items-start gap-4">
                     <span className="text-3xl flex-shrink-0">{tip.icon}</span>
                     <div>
-                      <h4 className="text-lg font-bold mb-2">{tip.title}</h4>
-                      <p className="text-purple-200 text-sm">{tip.description}</p>
+                      <h4 className="text-lg font-bold mb-2 text-[#3D2B1F]">{tip.title}</h4>
+                      <p className="text-[#8B7355] text-sm">{tip.description}</p>
                     </div>
                   </div>
                 </motion.div>
@@ -458,24 +458,24 @@ const WaitlistUserGuide = () => {
 
           {/* Section 9: FAQ */}
           <motion.section {...animations.fadeInUp}>
-            <h2 className={`${typography.h2} mb-8 text-purple-200`}>Frequently Asked Questions</h2>
+            <h2 className={`text-2xl font-bold font-serif italic mb-8 text-[#3D2B1F]`}>Frequently Asked Questions</h2>
 
             <div className="space-y-3">
               {faqItems.map((item, idx) => (
                 <motion.div
                   key={idx}
-                  className={`rounded-lg overflow-hidden ${glass.card}`}
+                  className={`rounded-lg overflow-hidden bg-[#FEFCF9] border border-[#E8DDD0]`}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: idx * 0.05 }}
                 >
                   <button
                     onClick={() => setExpandedFAQ(expandedFAQ === idx ? null : idx)}
-                    className="w-full p-4 flex items-center justify-between hover:bg-white/5 transition-colors"
+                    className="w-full p-4 flex items-center justify-between hover:bg-[#F5EDE3] transition-colors"
                   >
-                    <span className="font-semibold text-left text-purple-200">{item.q}</span>
+                    <span className="font-semibold text-left text-[#3D2B1F]">{item.q}</span>
                     <ChevronDown
-                      className="w-5 h-5 flex-shrink-0 transition-transform"
+                      className="w-5 h-5 flex-shrink-0 transition-transform text-[#D4920B]"
                       style={{
                         transform: expandedFAQ === idx ? "rotate(180deg)" : "rotate(0deg)",
                       }}
@@ -483,7 +483,7 @@ const WaitlistUserGuide = () => {
                   </button>
                   {expandedFAQ === idx && (
                     <motion.div
-                      className="px-4 pb-4 text-purple-100 border-t border-white/10"
+                      className="px-4 pb-4 text-[#5C4033] border-t border-[#E8DDD0]"
                       initial={{ opacity: 0, height: 0 }}
                       animate={{ opacity: 1, height: "auto" }}
                       exit={{ opacity: 0, height: 0 }}
@@ -498,18 +498,18 @@ const WaitlistUserGuide = () => {
 
           {/* CTA */}
           <motion.div
-            className={`mt-16 p-8 rounded-2xl ${glass.cardPurple} border-2 border-purple-400/50 text-center`}
+            className={`mt-16 p-8 rounded-2xl bg-[#FEFCF9] border-2 border-[#D4920B] text-center`}
             whileHover={{ scale: 1.02 }}
           >
-            <Gift className="w-12 h-12 text-pink-400 mx-auto mb-4" />
-            <h3 className={`${typography.h3} mb-3 text-purple-200`}>Ready to Start Your Journey?</h3>
-            <p className={`${typography.body} text-purple-100 mb-6 max-w-2xl mx-auto`}>
+            <Gift className="w-12 h-12 text-[#D4920B] mx-auto mb-4" />
+            <h3 className={`text-2xl font-bold font-serif italic mb-3 text-[#3D2B1F]`}>Ready to Start Your Journey?</h3>
+            <p className={`text-base text-[#5C4033] mb-6 max-w-2xl mx-auto`}>
               Head back to your dashboard and start earning points today. Share your referral link, complete daily activities, and watch your tier climb!
             </p>
             <Button
               onClick={() => navigate("/storybuilders")}
               size="lg"
-              className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white"
+              className="bg-[#C67B5C] hover:bg-[#A85A48] text-white"
             >
               Return to Dashboard →
             </Button>

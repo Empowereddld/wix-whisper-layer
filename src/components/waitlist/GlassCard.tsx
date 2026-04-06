@@ -1,6 +1,6 @@
 /**
- * Reusable glassmorphism card wrapper component
- * Provides consistent glass-effect styling with optional hover and glow effects
+ * Earthy card wrapper component
+ * Provides warm, feminine styling with optional hover and glow effects
  */
 
 import { motion } from "motion/react";
@@ -8,18 +8,18 @@ import { glass } from "../../lib/glassmorphism";
 import { ReactNode } from "react";
 
 interface GlassCardProps {
-  variant?: "default" | "purple" | "dark";
+  variant?: "default" | "accent" | "warm";
   hover?: boolean;
   glow?: boolean;
   className?: string;
   children: ReactNode;
 }
 
-const getVariantClass = (variant: "default" | "purple" | "dark"): string => {
+const getVariantClass = (variant: "default" | "accent" | "warm"): string => {
   switch (variant) {
-    case "purple":
+    case "accent":
       return glass.cardPurple;
-    case "dark":
+    case "warm":
       return glass.cardDark;
     case "default":
     default:
@@ -27,15 +27,15 @@ const getVariantClass = (variant: "default" | "purple" | "dark"): string => {
   }
 };
 
-const getGlowColor = (variant: "default" | "purple" | "dark"): string => {
+const getGlowColor = (variant: "default" | "accent" | "warm"): string => {
   switch (variant) {
-    case "purple":
-      return "from-purple-500/30 to-purple-600/20";
-    case "dark":
-      return "from-slate-500/20 to-slate-600/10";
+    case "accent":
+      return "from-[#D4920B]/20 to-[#F5E6C8]/10";
+    case "warm":
+      return "from-[#C67B5C]/15 to-[#F5EDE3]/10";
     case "default":
     default:
-      return "from-purple-500/20 to-indigo-500/10";
+      return "from-[#D4920B]/15 to-[#C67B5C]/10";
   }
 };
 

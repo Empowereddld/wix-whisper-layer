@@ -1,6 +1,6 @@
 /**
- * Beautiful animated background for waitlist page
- * Features gradient mesh, floating animated orbs, and subtle parallax effects
+ * Beautiful animated background for waitlist page (earthy theme)
+ * Features warm gradient mesh, floating animated orbs, and subtle parallax effects
  * Performance-optimized with GPU-accelerated transforms
  */
 
@@ -20,10 +20,10 @@ interface FloatingOrb {
 
 const generateOrbs = (count: number = 8): FloatingOrb[] => {
   const colors = [
-    "from-purple-500/30 to-purple-700/20",
-    "from-indigo-500/30 to-indigo-700/20",
-    "from-pink-500/20 to-pink-700/10",
-    "from-blue-500/20 to-blue-700/10",
+    "from-[#D4920B]/20 to-[#F5E6C8]/10",
+    "from-[#C67B5C]/20 to-[#F5EDE3]/10",
+    "from-[#8BA888]/15 to-[#E8F0E6]/8",
+    "from-[#C4A0A0]/15 to-[#F5EDE3]/8",
   ];
 
   return Array.from({ length: count }, (_, i) => ({
@@ -81,7 +81,7 @@ const AnimatedBackground = ({ parallaxIntensity = 0.5 }: AnimatedBackgroundProps
             left: `${orb.x}%`,
             top: `${orb.y}%`,
             background: `linear-gradient(135deg, var(--tw-gradient-stops))`,
-            backgroundImage: `conic-gradient(from 0deg, rgb(168, 85, 247, 0.3), rgb(59, 130, 246, 0.2), rgb(91, 45, 142, 0.3))`,
+            backgroundImage: `conic-gradient(from 0deg, rgb(212, 146, 11, 0.15), rgb(198, 123, 92, 0.15), rgb(139, 115, 85, 0.1))`,
           }}
           animate={{
             x: [0, 30, -20, 0],
@@ -98,11 +98,11 @@ const AnimatedBackground = ({ parallaxIntensity = 0.5 }: AnimatedBackgroundProps
       ))}
 
       {/* Static gradient overlays for depth */}
-      <div className="absolute top-0 left-0 w-1/2 h-1/2 bg-gradient-to-br from-purple-500/10 via-transparent to-transparent pointer-events-none" />
-      <div className="absolute bottom-0 right-0 w-1/2 h-1/2 bg-gradient-to-tl from-indigo-500/10 via-transparent to-transparent pointer-events-none" />
+      <div className="absolute top-0 left-0 w-1/2 h-1/2 bg-gradient-to-br from-[#D4920B]/8 via-transparent to-transparent pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-1/2 h-1/2 bg-gradient-to-tl from-[#C67B5C]/8 via-transparent to-transparent pointer-events-none" />
 
       {/* Subtle vignette effect */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/10 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#3D2B1F]/5 pointer-events-none" />
     </div>
   );
 };
