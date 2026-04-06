@@ -161,7 +161,7 @@ const StoryBuilders = () => {
 
               {/* Launch Countdown */}
               <div className="mb-16">
-                <LaunchCountdown launchDate="2025-06-01" />
+                <LaunchCountdown launchDate="2026-09-01" />
               </div>
             </motion.div>
 

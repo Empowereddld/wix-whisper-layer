@@ -8,3 +8,21 @@ verify_jwt = false
 
 [functions.verify-payment]
 verify_jwt = false
+
+[functions.storybuilders-signup]
+verify_jwt = false
+
+[functions.send-waitlist-email]
+verify_jwt = false
+
+[functions.verify-email-waitlist]
+verify_jwt = false
+
+[functions.check-fraud]
+verify_jwt = false
+
+[functions.track-referral-click]
+verify_jwt = false
+
+[functions.resend-webhook]
+verify_jwt = false

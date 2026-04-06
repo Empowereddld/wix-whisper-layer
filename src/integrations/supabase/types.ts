@@ -564,31 +564,73 @@ export type Database = {
       }
       storybuilders_waitlist: {
         Row: {
+          click_count: number
           created_at: string
+          current_tier: number
           email: string
+          email_verified: boolean
+          fraud_flagged: boolean
+          fraud_reason: string | null
           id: string
           invite_count: number
+          ip_address: string | null
+          last_active_at: string | null
           name: string
+          points: number
+          queue_position: number | null
           referral_code: string
           referred_by_code: string | null
+          share_count: number
+          streak_days: number
+          user_id: string | null
+          verification_sent_at: string | null
+          verification_token: string | null
         }
         Insert: {
+          click_count?: number
           created_at?: string
+          current_tier?: number
           email: string
+          email_verified?: boolean
+          fraud_flagged?: boolean
+          fraud_reason?: string | null
           id?: string
           invite_count?: number
+          ip_address?: string | null
+          last_active_at?: string | null
           name: string
+          points?: number
+          queue_position?: number | null
           referral_code: string
           referred_by_code?: string | null
+          share_count?: number
+          streak_days?: number
+          user_id?: string | null
+          verification_sent_at?: string | null
+          verification_token?: string | null
         }
         Update: {
+          click_count?: number
           created_at?: string
+          current_tier?: number
           email?: string
+          email_verified?: boolean
+          fraud_flagged?: boolean
+          fraud_reason?: string | null
           id?: string
           invite_count?: number
+          ip_address?: string | null
+          last_active_at?: string | null
           name?: string
+          points?: number
+          queue_position?: number | null
           referral_code?: string
           referred_by_code?: string | null
+          share_count?: number
+          streak_days?: number
+          user_id?: string | null
+          verification_sent_at?: string | null
+          verification_token?: string | null
         }
         Relationships: []
       }
@@ -695,6 +737,204 @@ export type Database = {
         }
         Relationships: []
       }
+      waitlist_badges: {
+        Row: {
+          badge_type: string
+          earned_at: string
+          id: string
+          waitlist_id: string
+        }
+        Insert: {
+          badge_type: string
+          earned_at?: string
+          id?: string
+          waitlist_id: string
+        }
+        Update: {
+          badge_type?: string
+          earned_at?: string
+          id?: string
+          waitlist_id?: string
+        }
+        Relationships: []
+      }
+      waitlist_emails: {
+        Row: {
+          bounced: boolean
+          clicked_at: string | null
+          delivered_at: string | null
+          id: string
+          metadata: Json | null
+          opened_at: string | null
+          sent_at: string
+          subject: string | null
+          template: string
+          waitlist_id: string
+        }
+        Insert: {
+          bounced?: boolean
+          clicked_at?: string | null
+          delivered_at?: string | null
+          id?: string
+          metadata?: Json | null
+          opened_at?: string | null
+          sent_at?: string
+          subject?: string | null
+          template: string
+          waitlist_id: string
+        }
+        Update: {
+          bounced?: boolean
+          clicked_at?: string | null
+          delivered_at?: string | null
+          id?: string
+          metadata?: Json | null
+          opened_at?: string | null
+          sent_at?: string
+          subject?: string | null
+          template?: string
+          waitlist_id?: string
+        }
+        Relationships: []
+      }
+      waitlist_events: {
+        Row: {
+          created_at: string
+          event_type: string
+          id: string
+          metadata: Json | null
+          waitlist_id: string
+        }
+        Insert: {
+          created_at?: string
+          event_type: string
+          id?: string
+          metadata?: Json | null
+          waitlist_id: string
+        }
+        Update: {
+          created_at?: string
+          event_type?: string
+          id?: string
+          metadata?: Json | null
+          waitlist_id?: string
+        }
+        Relationships: []
+      }
+      waitlist_fraud_log: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          ip_address: string | null
+          reason: string
+          resolved: boolean
+          resolved_by: string | null
+          risk_score: number | null
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          ip_address?: string | null
+          reason: string
+          resolved?: boolean
+          resolved_by?: string | null
+          risk_score?: number | null
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          ip_address?: string | null
+          reason?: string
+          resolved?: boolean
+          resolved_by?: string | null
+          risk_score?: number | null
+        }
+        Relationships: []
+      }
+      waitlist_milestones: {
+        Row: {
+          id: string
+          milestone_type: string
+          points_at_time: number | null
+          tier_reached: number | null
+          unlocked_at: string
+          waitlist_id: string
+        }
+        Insert: {
+          id?: string
+          milestone_type: string
+          points_at_time?: number | null
+          tier_reached?: number | null
+          unlocked_at?: string
+          waitlist_id: string
+        }
+        Update: {
+          id?: string
+          milestone_type?: string
+          points_at_time?: number | null
+          tier_reached?: number | null
+          unlocked_at?: string
+          waitlist_id?: string
+        }
+        Relationships: []
+      }
+      waitlist_suggestion_votes: {
+        Row: {
+          created_at: string
+          id: string
+          suggestion_id: string
+          waitlist_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          suggestion_id: string
+          waitlist_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          suggestion_id?: string
+          waitlist_id?: string
+        }
+        Relationships: []
+      }
+      waitlist_suggestions: {
+        Row: {
+          category: string | null
+          created_at: string
+          description: string | null
+          id: string
+          status: string
+          title: string
+          votes: number
+          waitlist_id: string
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          status?: string
+          title: string
+          votes?: number
+          waitlist_id: string
+        }
+        Update: {
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          status?: string
+          title?: string
+          votes?: number
+          waitlist_id?: string
+        }
+        Relationships: []
+      }
       waitlist: {
         Row: {
           created_at: string
@@ -727,8 +967,20 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      award_waitlist_points: {
+        Args: { p_points: number; p_reason: string; p_waitlist_id: string }
+        Returns: void
+      }
       get_resource_price: { Args: { p_resource_id: string }; Returns: number }
       get_storybuilders_waitlist_count: { Args: never; Returns: number }
+      get_waitlist_activity: {
+        Args: { p_limit?: number }
+        Returns: Json
+      }
+      get_waitlist_analytics: {
+        Args: {}
+        Returns: Json
+      }
       get_waitlist_by_referral: {
         Args: { p_code: string }
         Returns: {
@@ -739,6 +991,18 @@ export type Database = {
           name: string
           referral_code: string
         }[]
+      }
+      get_waitlist_leaderboard: {
+        Args: { p_limit?: number }
+        Returns: Json
+      }
+      get_waitlist_user_stats: {
+        Args: { p_referral_code: string }
+        Returns: Json
+      }
+      get_recent_waitlist_signups: {
+        Args: { p_limit?: number }
+        Returns: Json
       }
       has_role: {
         Args: {
@@ -754,6 +1018,14 @@ export type Database = {
       increment_waitlist_invites: {
         Args: { p_code: string }
         Returns: undefined
+      }
+      link_waitlist_to_auth: {
+        Args: { p_email: string; p_user_id: string }
+        Returns: boolean
+      }
+      recalculate_waitlist_positions: {
+        Args: {}
+        Returns: void
       }
     }
     Enums: {
