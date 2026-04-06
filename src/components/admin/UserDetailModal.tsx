@@ -34,12 +34,12 @@ interface WaitlistUser {
   name: string;
   email: string;
   referral_code: string;
-  points: number;
-  current_tier: number;
   invite_count: number;
-  email_verified: boolean;
-  flagged: boolean;
   created_at: string;
+  points?: number;
+  current_tier?: number;
+  email_verified?: boolean;
+  flagged?: boolean;
 }
 
 interface UserDetailModalProps {
