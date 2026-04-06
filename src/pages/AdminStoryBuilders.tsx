@@ -29,24 +29,18 @@ import {
 import {
   Users,
   TrendingUp,
-  AlertTriangle,
   Mail,
-  Lightbulb,
   Settings,
   Download,
   Send,
-  Filter,
   Search,
-  CheckCircle,
-  XCircle,
-  Clock,
   Eye,
 } from "lucide-react";
 import UserPreviewMode from "@/components/admin/UserPreviewMode";
 import StatsCard from "@/components/admin/StatsCard";
 import WaitlistAnalyticsChart from "@/components/admin/WaitlistAnalyticsChart";
 import BulkEmailComposer from "@/components/admin/BulkEmailComposer";
-import { getTierName, getTierColor } from "@/lib/waitlist-utils";
+import { getTierName, getTierForPoints } from "@/lib/waitlist-utils";
 import { format } from "date-fns";
 
 // Aligned with actual storybuilders_waitlist table columns
@@ -149,6 +143,9 @@ const AdminStoryBuilders = () => {
       .slice(0, 5);
   }, [users]);
 
+  const totalReferrals = useMemo(() => users.reduce((sum, u) => sum + u.invite_count, 0), [users]);
+  const avgReferrals = totalSignups > 0 ? (totalReferrals / totalSignups).toFixed(1) : "0";
+
   if (isLoading) {
     return (
       <AdminLayout>
@@ -181,7 +178,7 @@ const AdminStoryBuilders = () => {
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-7 mb-8 bg-[#FEFCF9] border border-[#E8DDD0]">
+          <TabsList className="grid w-full grid-cols-5 mb-8 bg-[#FEFCF9] border border-[#E8DDD0]">
             <TabsTrigger
               value="overview"
               className="flex items-center gap-2 data-[state=active]:bg-[#D4A574] data-[state=active]:text-[#3D2B1F] text-[#8B7355]"
@@ -204,25 +201,11 @@ const AdminStoryBuilders = () => {
               <span className="hidden sm:inline">Referrals</span>
             </TabsTrigger>
             <TabsTrigger
-              value="fraud"
-              className="flex items-center gap-2 data-[state=active]:bg-[#D4A574] data-[state=active]:text-[#3D2B1F] text-[#8B7355]"
-            >
-              <AlertTriangle className="h-4 w-4" />
-              <span className="hidden sm:inline">Fraud</span>
-            </TabsTrigger>
-            <TabsTrigger
               value="emails"
               className="flex items-center gap-2 data-[state=active]:bg-[#D4A574] data-[state=active]:text-[#3D2B1F] text-[#8B7355]"
             >
               <Mail className="h-4 w-4" />
               <span className="hidden sm:inline">Emails</span>
-            </TabsTrigger>
-            <TabsTrigger
-              value="suggestions"
-              className="flex items-center gap-2 data-[state=active]:bg-[#D4A574] data-[state=active]:text-[#3D2B1F] text-[#8B7355]"
-            >
-              <Lightbulb className="h-4 w-4" />
-              <span className="hidden sm:inline">Suggestions</span>
             </TabsTrigger>
             <TabsTrigger
               value="settings"
@@ -235,7 +218,7 @@ const AdminStoryBuilders = () => {
 
           {/* Overview Tab */}
           <TabsContent value="overview" className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4" style={{ perspective: "1000px" }}>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" style={{ perspective: "1000px" }}>
               <StatsCard
                 title="Total Signups"
                 value={totalSignups}
@@ -244,13 +227,13 @@ const AdminStoryBuilders = () => {
               />
               <StatsCard
                 title="Total Referrals"
-                value={users.reduce((sum, u) => sum + u.invite_count, 0)}
+                value={totalReferrals}
                 icon={TrendingUp}
                 subtitle="across all users"
               />
               <StatsCard
                 title="Avg Referrals"
-                value={totalSignups > 0 ? (users.reduce((sum, u) => sum + u.invite_count, 0) / totalSignups).toFixed(1) : "0"}
+                value={avgReferrals}
                 icon={TrendingUp}
                 subtitle="per user"
               />
@@ -292,13 +275,13 @@ const AdminStoryBuilders = () => {
                       </div>
                       <div className="text-right ml-2">
                         <p className="font-semibold text-sm text-[#3D2B1F]">
-                          {user.invite_count}
+                          {user.invite_count} referrals
                         </p>
                         <Badge
                           variant="outline"
                           className="text-xs mt-1 bg-[#D4A574] text-[#3D2B1F] border-[#C67B5C]"
                         >
-                          {getTierName(user.current_tier)}
+                          {getTierName(getTierForPoints(user.invite_count * 10))}
                         </Badge>
                       </div>
                     </div>
@@ -363,24 +346,16 @@ const AdminStoryBuilders = () => {
                         <TableHead className="text-[#3D2B1F]">Name</TableHead>
                         <TableHead className="text-[#3D2B1F]">Email</TableHead>
                         <TableHead className="text-[#3D2B1F]">Referral Code</TableHead>
-                        <TableHead className="text-right text-[#3D2B1F]">Points</TableHead>
-                        <TableHead className="text-[#3D2B1F]">Tier</TableHead>
                         <TableHead className="text-right text-[#3D2B1F]">Referrals</TableHead>
-                        <TableHead className="text-center text-[#3D2B1F]">Verified</TableHead>
-                        <TableHead className="text-center text-[#3D2B1F]">Flagged</TableHead>
+                        <TableHead className="text-[#3D2B1F]">Tier</TableHead>
                         <TableHead className="text-[#3D2B1F]">Joined</TableHead>
-                        <TableHead></TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
                       {filteredUsers.map((user) => (
                         <TableRow
                           key={user.id}
-                          className="cursor-pointer hover:bg-[#F5F0E8] border-b border-[#E8DDD0]"
-                          onClick={() => {
-                            setSelectedUser(user);
-                            setShowUserDetail(true);
-                          }}
+                          className="hover:bg-[#F5F0E8] border-b border-[#E8DDD0]"
                         >
                           <TableCell className="font-medium text-[#3D2B1F]">
                             {user.name}
@@ -392,48 +367,18 @@ const AdminStoryBuilders = () => {
                             {user.referral_code}
                           </TableCell>
                           <TableCell className="text-right font-semibold text-[#3D2B1F]">
-                            {user.points}
+                            {user.invite_count}
                           </TableCell>
                           <TableCell>
                             <Badge
-                              style={{
-                                backgroundColor: getTierColor(user.current_tier) + "20",
-                                color: getTierColor(user.current_tier),
-                              }}
+                              variant="outline"
+                              className="bg-[#D4A574] text-[#3D2B1F] border-[#C67B5C]"
                             >
-                              {getTierName(user.current_tier)}
+                              {getTierName(getTierForPoints(user.invite_count * 10))}
                             </Badge>
-                          </TableCell>
-                          <TableCell className="text-right text-[#3D2B1F]">
-                            {user.invite_count}
-                          </TableCell>
-                          <TableCell className="text-center">
-                            {user.email_verified ? (
-                              <CheckCircle className="h-4 w-4 text-[#7CB342] mx-auto" />
-                            ) : (
-                              <XCircle className="h-4 w-4 text-[#8B7355] mx-auto" />
-                            )}
-                          </TableCell>
-                          <TableCell className="text-center">
-                            {user.flagged && (
-                              <AlertTriangle className="h-4 w-4 text-[#D4A574] mx-auto" />
-                            )}
                           </TableCell>
                           <TableCell className="text-sm text-[#8B7355]">
                             {format(new Date(user.created_at), "MMM dd, yyyy")}
-                          </TableCell>
-                          <TableCell>
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              className="text-[#C67B5C] hover:bg-[#F5F0E8]"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handleFlagUser(user.id, user.flagged);
-                              }}
-                            >
-                              {user.flagged ? "Unflag" : "Flag"}
-                            </Button>
                           </TableCell>
                         </TableRow>
                       ))}
@@ -457,19 +402,19 @@ const AdminStoryBuilders = () => {
                   <div className="p-4 bg-[#F5F0E8] border border-[#E8DDD0] rounded-lg">
                     <p className="text-sm text-[#8B7355]">Total Referral Chains</p>
                     <p className="text-2xl font-bold text-[#3D2B1F]">
-                      {users.filter((u) => u.referral_code && u.invite_count > 0).length}
+                      {users.filter((u) => u.invite_count > 0).length}
                     </p>
                   </div>
                   <div className="p-4 bg-[#F5F0E8] border border-[#E8DDD0] rounded-lg">
                     <p className="text-sm text-[#8B7355]">Total Referrals Made</p>
                     <p className="text-2xl font-bold text-[#3D2B1F]">
-                      {users.reduce((sum, u) => sum + u.invite_count, 0)}
+                      {totalReferrals}
                     </p>
                   </div>
                   <div className="p-4 bg-[#F5F0E8] border border-[#E8DDD0] rounded-lg">
                     <p className="text-sm text-[#8B7355]">Avg Referrals Per User</p>
                     <p className="text-2xl font-bold text-[#3D2B1F]">
-                      {stats?.avg_referrals.toFixed(2) || "0"}
+                      {avgReferrals}
                     </p>
                   </div>
                 </div>
@@ -478,97 +423,6 @@ const AdminStoryBuilders = () => {
                     <strong>Note:</strong> Detailed referral network visualization is coming soon. For now, use the Users tab to analyze individual referral chains.
                   </p>
                 </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          {/* Fraud Tab */}
-          <TabsContent value="fraud" className="space-y-4">
-            <div className="flex gap-3">
-              <Select value={fraudFilterRisk} onValueChange={(v) => setFraudFilterRisk(v as "all" | "high" | "medium")}>
-                <SelectTrigger className="w-48 bg-[#FEFCF9] border-[#E8DDD0] text-[#3D2B1F]">
-                  <SelectValue placeholder="Filter by risk" />
-                </SelectTrigger>
-                <SelectContent className="bg-[#FEFCF9]">
-                  <SelectItem value="all">All Risk Levels</SelectItem>
-                  <SelectItem value="high">High Risk (80+)</SelectItem>
-                  <SelectItem value="medium">Medium Risk (50-79)</SelectItem>
-                </SelectContent>
-              </Select>
-              <Button
-                variant="outline"
-                size="sm"
-                className="border-[#E8DDD0] text-[#3D2B1F] hover:bg-[#F5F0E8]"
-              >
-                <Filter className="h-4 w-4 mr-2" />
-                Advanced Filters
-              </Button>
-            </div>
-
-            <Card className="bg-[#FEFCF9] border border-[#E8DDD0] rounded-2xl shadow-sm">
-              <CardHeader>
-                <CardTitle className="font-serif italic text-[#3D2B1F]">
-                  Fraud Alerts ({filteredFraudLogs.length})
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="p-0">
-                {filteredFraudLogs.length === 0 ? (
-                  <div className="p-6 text-center text-[#8B7355]">
-                    No fraud alerts detected
-                  </div>
-                ) : (
-                  <div className="overflow-x-auto">
-                    <Table>
-                      <TableHeader className="bg-[#F5F0E8]">
-                        <TableRow className="border-b border-[#E8DDD0]">
-                          <TableHead className="text-[#3D2B1F]">Email</TableHead>
-                          <TableHead className="text-[#3D2B1F]">Reason</TableHead>
-                          <TableHead className="text-right text-[#3D2B1F]">
-                            Risk Score
-                          </TableHead>
-                          <TableHead className="text-[#3D2B1F]">Detected</TableHead>
-                          <TableHead></TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {filteredFraudLogs.map((log) => (
-                          <TableRow key={log.id} className="border-b border-[#E8DDD0]">
-                            <TableCell className="font-medium text-[#3D2B1F]">
-                              {log.user_email}
-                            </TableCell>
-                            <TableCell className="text-[#5C4033]">{log.reason}</TableCell>
-                            <TableCell className="text-right">
-                              <Badge
-                                variant={
-                                  log.risk_score >= 80
-                                    ? "destructive"
-                                    : log.risk_score >= 50
-                                    ? "default"
-                                    : "secondary"
-                                }
-                              >
-                                {log.risk_score}
-                              </Badge>
-                            </TableCell>
-                            <TableCell className="text-sm text-[#8B7355]">
-                              {format(new Date(log.created_at), "MMM dd, HH:mm")}
-                            </TableCell>
-                            <TableCell>
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                className="text-[#C67B5C] hover:bg-[#F5F0E8]"
-                                onClick={() => handleDismissFraudAlert(log.id)}
-                              >
-                                Dismiss
-                              </Button>
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </div>
-                )}
               </CardContent>
             </Card>
           </TabsContent>
@@ -583,80 +437,22 @@ const AdminStoryBuilders = () => {
                 <Mail className="h-4 w-4 mr-2" />
                 Compose Email
               </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                className="border-[#E8DDD0] text-[#3D2B1F] hover:bg-[#F5F0E8]"
-              >
-                <Filter className="h-4 w-4 mr-2" />
-                Filter
-              </Button>
             </div>
 
             <Card className="bg-[#FEFCF9] border border-[#E8DDD0] rounded-2xl shadow-sm">
               <CardHeader>
                 <CardTitle className="font-serif italic text-[#3D2B1F]">
-                  Email Log (Last 100)
+                  Email Campaigns
                 </CardTitle>
               </CardHeader>
-              <CardContent className="p-0">
-                <div className="overflow-x-auto">
-                  <Table>
-                    <TableHeader className="bg-[#F5F0E8]">
-                      <TableRow className="border-b border-[#E8DDD0]">
-                        <TableHead className="text-[#3D2B1F]">Recipient</TableHead>
-                        <TableHead className="text-[#3D2B1F]">Template</TableHead>
-                        <TableHead className="text-[#3D2B1F]">Status</TableHead>
-                        <TableHead className="text-[#3D2B1F]">Sent</TableHead>
-                        <TableHead className="text-[#3D2B1F]">Opened</TableHead>
-                        <TableHead className="text-[#3D2B1F]">Clicked</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {emailLogs.map((log) => (
-                        <TableRow key={log.id} className="border-b border-[#E8DDD0]">
-                          <TableCell className="font-medium text-sm text-[#3D2B1F]">
-                            {log.recipient_email}
-                          </TableCell>
-                          <TableCell className="text-sm text-[#5C4033]">
-                            {log.template.replace(/_/g, " ")}
-                          </TableCell>
-                          <TableCell>
-                            <Badge
-                              variant={
-                                log.status === "sent"
-                                  ? "default"
-                                  : log.status === "failed"
-                                  ? "destructive"
-                                  : "secondary"
-                              }
-                            >
-                              {log.status}
-                            </Badge>
-                          </TableCell>
-                          <TableCell className="text-xs text-[#8B7355]">
-                            {format(new Date(log.sent_at), "MMM dd, HH:mm")}
-                          </TableCell>
-                          <TableCell className="text-xs text-[#8B7355]">
-                            {log.opened_at ? format(new Date(log.opened_at), "MMM dd, HH:mm") : "-"}
-                          </TableCell>
-                          <TableCell className="text-xs text-[#8B7355]">
-                            {log.clicked_at ? format(new Date(log.clicked_at), "MMM dd, HH:mm") : "-"}
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
+              <CardContent>
+                <div className="p-4 bg-[#E8D5C4] border border-[#D4A574] rounded-lg">
+                  <p className="text-sm text-[#5C4033]">
+                    Use the Compose Email button to send bulk emails to your waitlist members. Email history will appear here once campaigns are sent.
+                  </p>
                 </div>
               </CardContent>
             </Card>
-          </TabsContent>
-
-          {/* Suggestions Tab */}
-          <TabsContent value="suggestions" className="space-y-4">
-            <div className="bg-[#FEFCF9] border border-[#E8DDD0] rounded-2xl shadow-sm p-6">
-              <SuggestionBoard />
-            </div>
           </TabsContent>
 
           {/* Settings Tab */}
