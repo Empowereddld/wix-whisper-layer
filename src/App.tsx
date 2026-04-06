@@ -64,6 +64,7 @@ const AdminProducts = lazy(() => import("./pages/admin/AdminProducts"));
 const AdminWaitlist = lazy(() => import("./pages/admin/AdminWaitlist"));
 const AdminResourceRequests = lazy(() => import("./pages/admin/AdminResourceRequests"));
 const AdminReferrals = lazy(() => import("./pages/admin/AdminReferrals"));
+const AdminStoryBuilders = lazy(() => import("./pages/AdminStoryBuilders"));
 
 // Lazy-loaded: Legal & misc
 const StoryBuilders = lazy(() => import("./pages/StoryBuilders"));
@@ -138,6 +139,7 @@ const App = () => (
               <Route path="/admin/referrals" element={<AdminProtectedRoute><AdminReferrals /></AdminProtectedRoute>} />
               <Route path="/admin/emails" element={<AdminProtectedRoute><AdminEmails /></AdminProtectedRoute>} />
               <Route path="/admin/audit" element={<AdminProtectedRoute><AdminAuditLog /></AdminProtectedRoute>} />
+              <Route path="/admin/storybuilders" element={<AdminProtectedRoute><AdminStoryBuilders /></AdminProtectedRoute>} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>

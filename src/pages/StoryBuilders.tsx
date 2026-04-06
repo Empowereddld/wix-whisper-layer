@@ -1,925 +1,467 @@
-import { useState, useRef, useEffect, useCallback, useMemo } from "react";
+import { useState, useEffect, useCallback } from "react";
+import { motion } from "motion/react";
 import confetti from "canvas-confetti";
-import { DotBackground } from "@/components/ui/dot-background";
 import SEOHead from "@/components/SEOHead";
-import StoryBuildersStatBand from "@/components/StoryBuildersStatBand";
-import storybuildersHero from "@/assets/storybuilders-hero.png";
-import storybuildersAppMockup from "@/assets/storybuilders-app-mockup.png";
-
-import storybuildersMovement from "@/assets/storybuilders-movement.png";
-import storybuildersAwareness from "@/assets/storybuilders-awareness.png";
-import storybuildersUnderstood from "@/assets/storybuilders-understood.png";
-import howItWorksSteps from "@/assets/how-it-works-steps.png";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Progress } from "@/components/ui/progress";
-import { useScrollFadeIn } from "@/hooks/useScrollFadeIn";
 import { useStorybuildersWaitlist } from "@/hooks/useStorybuildersWaitlist";
 import { toast } from "sonner";
+
+// Waitlist Components
 import {
-  Copy,
-  Check,
-  Rocket,
-  Gift,
-  Headphones,
-  Crown,
-  Sparkles,
-} from "lucide-react";
-
-/* ─── Milestones ─── */
-const milestones = [
-  { invites: 0, label: "Just joined", reward: "Early behind-the-scenes access and first look at new features" },
-  { invites: 1, label: "Invite 1 storyteller", reward: "Early access to StoryBuilders before public launch" },
-  { invites: 3, label: "Invite 3 storytellers", reward: "Printable Story Pack (story retell template, visual supports, parent prompts)" },
-  { invites: 5, label: "Invite 5 storytellers", reward: "Exclusive Dan and Daria podcast episode, private access for Launch Team members only" },
-  { invites: 10, label: "Invite 10 storytellers", reward: "Founder pricing at $5.99/month for life. Available to the first 100 people who reach this milestone." },
-  { invites: -1, label: "Top 50 contributors", reward: "Recognized as a Founding Family or Founding Professional on our website (opt-in)" },
-  { invites: -2, label: "Top 10 contributors", reward: "Dan and Daria t-shirt and a book signed by the voices of Dan and Daria" },
-];
-
-const COLLECTIVE_GOAL = 4000;
-
-/* ─── Scroll-animated Progress Journey ─── */
-type ProgressStep = {
-  task: string;
-  impact: string;
-  reward: { icon: React.ReactNode; title: string; desc: string; subdesc?: string } | null;
-  invites: number;
-};
-
-const ScrollProgress = ({ steps, inviteCount }: { steps: ProgressStep[]; inviteCount: number }) => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const stepRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const [linePct, setLinePct] = useState(0);
-  const [activeStep, setActiveStep] = useState(-1);
-
-  useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
-
-    const onScroll = () => {
-      const containerRect = el.getBoundingClientRect();
-      const containerH = containerRect.height;
-      if (containerH === 0) return;
-
-      const windowH = window.innerHeight;
-      const triggerY = windowH * 0.85;
-
-      let reachedStep = -1;
-      for (let i = 0; i < stepRefs.current.length; i++) {
-        const stepEl = stepRefs.current[i];
-        if (!stepEl) continue;
-        const stepRect = stepEl.getBoundingClientRect();
-        const circleCenter = stepRect.top + 12;
-        if (circleCenter <= triggerY) {
-          reachedStep = i;
-        }
-      }
-
-      setActiveStep(reachedStep);
-
-      if (reachedStep < 0) {
-        setLinePct(0);
-      } else {
-        const targetStep = stepRefs.current[reachedStep];
-        if (targetStep) {
-          const targetRect = targetStep.getBoundingClientRect();
-          const targetY = targetRect.top + 12 - containerRect.top;
-          const trackStart = 12;
-          const lastStep = stepRefs.current[stepRefs.current.length - 1];
-          const trackEnd = lastStep
-            ? lastStep.getBoundingClientRect().top + 12 - containerRect.top
-            : containerH - 12;
-          const pct = Math.max(0, Math.min(100, ((targetY - trackStart) / (trackEnd - trackStart)) * 100));
-          setLinePct(pct);
-        }
-      }
-    };
-
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  return (
-    <div ref={containerRef} className="max-w-[560px] mx-auto relative" style={{ fontFamily: "Nunito, sans-serif" }}>
-      {/* Background track */}
-      <div
-        className="absolute w-[3px] rounded-full"
-        style={{
-          left: "11px",
-          top: "12px",
-          bottom: "12px",
-          background: "hsl(258,50%,50%,0.15)",
-        }}
-      />
-      {/* Animated fill line */}
-      <div
-        className="absolute w-[3px] rounded-full"
-        style={{
-          left: "11px",
-          top: "12px",
-          height: `${linePct}%`,
-          maxHeight: "calc(100% - 24px)",
-          background: "hsl(258,50%,50%)",
-          transition: "height 0.25s ease-out",
-        }}
-      />
-
-      {steps.map((step, i, arr) => {
-        const completed = inviteCount >= step.invites;
-        const isCurrent = !completed && (i === 0 || inviteCount >= arr[i - 1].invites);
-        const locked = !completed && !isCurrent;
-        const reached = i <= activeStep;
-
-        return (
-          <div
-            key={i}
-            ref={(el) => { stepRefs.current[i] = el; }}
-            className="relative flex items-start gap-5"
-            style={{ paddingBottom: i < arr.length - 1 ? "56px" : "0" }}
-          >
-            {/* Circle marker */}
-            <div className="relative z-10 shrink-0 flex items-center justify-center w-[24px]">
-              <div
-                className="rounded-full"
-                style={{
-                  width: reached ? "14px" : "10px",
-                  height: reached ? "14px" : "10px",
-                  background: reached
-                    ? "hsl(258,50%,50%)"
-                    : "hsl(258,50%,50%,0.2)",
-                  boxShadow: isCurrent && reached
-                    ? "0 0 0 6px hsl(258,50%,50%,0.15)"
-                    : "none",
-                  transform: reached ? "scale(1)" : "scale(0.8)",
-                  opacity: 1,
-                  transition: "all 0.4s cubic-bezier(0.34,1.56,0.64,1)",
-                }}
-              />
-            </div>
-
-            {/* Content */}
-            <div
-              className="flex-1"
-              style={{
-                opacity: 1,
-                transition: "opacity 0.4s ease-out",
-              }}
-            >
-              {/* Task line (secondary) */}
-              <p
-                style={{
-                  fontSize: "14px",
-                  color: "#6B6B7B",
-                  fontWeight: 600,
-                  lineHeight: 1.5,
-                  marginBottom: "4px",
-                }}
-              >
-                {step.task}
-              </p>
-              <p
-                style={{
-                  fontSize: "13px",
-                  color: "#8A8A9A",
-                  fontWeight: 400,
-                  lineHeight: 1.6,
-                  marginBottom: step.reward ? "12px" : "0",
-                }}
-              >
-                {step.impact}
-              </p>
-
-              {/* Reward card (focal point) */}
-              {step.reward && (
-                <div
-                  style={{
-                    background: isCurrent
-                      ? "linear-gradient(135deg, hsla(258,60%,55%,0.12) 0%, hsla(270,70%,75%,0.14) 100%)"
-                      : "linear-gradient(135deg, hsla(258,60%,55%,0.08) 0%, hsla(270,70%,75%,0.10) 100%)",
-                    borderRadius: "16px",
-                    padding: "18px 20px",
-                    boxShadow: isCurrent
-                      ? "0 8px 24px -4px hsl(258,50%,50%,0.12), 0 0 0 1px hsl(258,50%,50%,0.08)"
-                      : "0 4px 16px -4px hsl(258,50%,50%,0.08)",
-                    transform: reached && i === activeStep ? "scale(1.02)" : "scale(1)",
-                    transition: "transform 0.4s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s ease",
-                  }}
-                >
-                  <div className="flex items-start gap-3">
-                    <span className="text-primary" style={{ lineHeight: 1, marginTop: "2px" }}>
-                      {step.reward.icon}
-                    </span>
-                    <div>
-                      <p
-                        style={{
-                          fontSize: "16px",
-                          fontWeight: 600,
-                          color: "#2F2F3A",
-                          lineHeight: 1.3,
-                          marginBottom: "4px",
-                        }}
-                      >
-                        {step.reward.title}
-                      </p>
-                      <p
-                        style={{
-                          fontSize: "13px",
-                          fontWeight: 400,
-                          color: "#7A7A8A",
-                          lineHeight: 1.5,
-                        }}
-                      >
-                        {step.reward.desc}
-                      </p>
-                      {step.reward.subdesc && (
-                        <p
-                          style={{
-                            fontSize: "12px",
-                            fontWeight: 400,
-                            color: "#9B9BAB",
-                            lineHeight: 1.5,
-                            marginTop: "4px",
-                          }}
-                        >
-                          {step.reward.subdesc}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        );
-      })}
-    </div>
-  );
-};
-
-/* ─── Fade wrapper ─── */
-const FadeSection = ({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) => {
-  const { ref, className: fadeClass } = useScrollFadeIn({ delay });
-  return <div ref={ref} className={`${fadeClass} ${className}`}>{children}</div>;
-};
-
-/* ─── Scroll-animated "What Is StoryBuilders" section ─── */
-const WhatIsStoryBuildersSection = () => {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [progress, setProgress] = useState(0);
-
-  const handleScroll = useCallback(() => {
-    if (!sectionRef.current) return;
-    const rect = sectionRef.current.getBoundingClientRect();
-    const windowH = window.innerHeight;
-    // Progress 0 when section top enters viewport bottom, 1 when section top reaches viewport top
-    const raw = 1 - rect.top / windowH;
-    setProgress(Math.max(0, Math.min(1, raw)));
-  }, []);
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [handleScroll]);
-
-  const rotateY = 18 * (1 - progress);
-  const rotateX = 10 * (1 - progress);
-
-  return (
-    <section ref={sectionRef} className="bg-white border-t border-border py-16 md:py-[120px]">
-      <div className="container px-6 md:px-8">
-        <FadeSection className="text-center mb-10 md:mb-14">
-          <div className="flex justify-center mb-4">
-            <div className="w-10 h-1 rounded-full bg-primary" />
-          </div>
-          <h2 className="text-[24px] md:text-[30px] lg:text-[34px] font-bold tracking-tight text-foreground">
-            What Is Story Builders
-          </h2>
-        </FadeSection>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center max-w-[1100px] mx-auto">
-          {/* Left: app mockup with scroll-driven tilt */}
-          <div className="flex justify-center lg:justify-start lg:order-1 order-2 relative">
-            <DotBackground className="rounded-2xl opacity-40" dotColor="hsl(258, 50%, 50%, 0.12)" />
-            <div
-              style={{
-                transform: `perspective(1000px) rotateY(${rotateY}deg) rotateX(${rotateX}deg)`,
-                willChange: "transform",
-              }}
-              className="relative z-10"
-            >
-              <img
-                src={storybuildersAppMockup}
-                alt="Story Builders app interface showing an interactive storytelling session"
-                className="w-full max-w-[520px] rounded-2xl"
-                style={{ boxShadow: "0 8px 60px -12px hsl(258, 50%, 50%, 0.25)" }}
-                loading="lazy"
-              />
-            </div>
-          </div>
-
-          {/* Right: description */}
-          <FadeSection className="lg:order-2 order-1">
-            <p className="text-[15px] md:text-[16px] text-muted-foreground leading-[1.7] mb-6">
-              Story Builders is an interactive app designed to help children:
-            </p>
-            <ul className="space-y-3 mb-6">
-              {[
-                "Understand and retell stories",
-                "Build vocabulary and sentence structure",
-                "Share their ideas with more confidence",
-                "Feel proud of how they communicate",
-              ].map((item) => (
-                <li key={item} className="flex items-start gap-3">
-                  <span className="flex items-center justify-center w-6 h-6 rounded-full bg-primary/10 shrink-0 mt-0.5">
-                    <Check className="w-4 h-4 text-primary" />
-                  </span>
-                  <span className="text-[15px] md:text-[16px] text-foreground leading-[1.6]">{item}</span>
-                </li>
-              ))}
-            </ul>
-            <p className="text-[15px] md:text-[16px] text-muted-foreground leading-[1.7]">
-              It was designed for children with Developmental Language Disorder and can be used at home, in therapy, or in the classroom.
-            </p>
-          </FadeSection>
-        </div>
-      </div>
-    </section>
-  );
-};
-
+  AnimatedBackground,
+  SocialProofBanner,
+  LaunchCountdown,
+  PositionCard,
+  TierProgressBar,
+  ReferralLinkCard,
+  SharePanel,
+  InviteFriendForm,
+  ReferralTracker,
+  Leaderboard,
+  ActivityFeed,
+  CommunityMilestone,
+  BadgeShowcase,
+  ImpactCounter,
+  AlmostThereNudge,
+  VerificationBanner,
+  ProgressRing,
+  NotificationBell,
+  ConfettiEffect,
+  GlassCard,
+  WaitlistFormSkeleton,
+  PositionCardSkeleton,
+  TierProgressSkeleton,
+} from "@/components/waitlist";
 
 const StoryBuilders = () => {
-  const formRef = useRef<HTMLDivElement>(null);
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [copied, setCopied] = useState(false);
-  const wl = useStorybuildersWaitlist();
+  const state = useStorybuildersWaitlist();
+  const {
+    joined,
+    referralCode,
+    inviteCount,
+    totalCount,
+    points,
+    currentTier,
+    queuePosition,
+    emailVerified,
+    badges,
+    streakDays,
+    shareCount,
+    clickCount,
+    loading,
+    error,
+    notifications,
+    joinWaitlist,
+    refreshStats,
+    trackShare,
+    resendVerification,
+    dismissNotification,
+    referralLink,
+    tierInfo,
+  } = state;
 
-  const scrollToForm = () => formRef.current?.scrollIntoView({ behavior: "smooth" });
+  // Local state
+  const [formName, setFormName] = useState("");
+  const [formEmail, setFormEmail] = useState("");
+  const [formLoading, setFormLoading] = useState(false);
+  const [showConfetti, setShowConfetti] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!name.trim() || !email.trim()) return;
-    const result = await wl.joinWaitlist(name, email);
-    if (result) {
-      toast.success(result.already_joined ? "Welcome back!" : "You're on the Launch Team!");
+  // Trigger confetti on join success
+  useEffect(() => {
+    if (joined && !showConfetti) {
+      setShowConfetti(true);
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 },
+      });
+      setTimeout(() => setShowConfetti(false), 1000);
     }
-  };
+  }, [joined, showConfetti]);
 
-  const handleCopy = async (text: string) => {
-    await navigator.clipboard.writeText(text);
-    setCopied(true);
-    toast.success("Copied to clipboard!");
-    setTimeout(() => setCopied(false), 2000);
-  };
+  // Handle form submission
+  const handleSignup = useCallback(
+    async (e: React.FormEvent) => {
+      e.preventDefault();
 
-  const nextMilestone = milestones.find((m) => m.invites > 0 && m.invites > wl.inviteCount);
-  const invitesNeeded = nextMilestone ? nextMilestone.invites - wl.inviteCount : 0;
-  const progressPct = nextMilestone ? Math.min(100, (wl.inviteCount / nextMilestone.invites) * 100) : 100;
-  const collectivePct = Math.min(100, (wl.totalCount / COLLECTIVE_GOAL) * 100);
+      if (!formName.trim() || !formEmail.trim()) {
+        toast.error("Please fill in all fields");
+        return;
+      }
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(formEmail)) {
+        toast.error("Please enter a valid email address");
+        return;
+      }
+
+      setFormLoading(true);
+      const result = await joinWaitlist(formName, formEmail);
+      setFormLoading(false);
+
+      if (result) {
+        setFormName("");
+        setFormEmail("");
+      }
+    },
+    [joinWaitlist]
+  );
+
+  // Get tier info
+  const tier = tierInfo();
 
   return (
-    <div className="min-h-screen bg-background text-foreground font-sans antialiased">
+    <>
       <SEOHead
-        title="StoryBuilders Launch Team — Join the Movement | Empowered DLD"
-        description="Join the StoryBuilders Launch Team and help build a storytelling app for children with Developmental Language Disorder. Invite others, unlock rewards, and be part of something meaningful."
-        path="/storybuilders"
+        title="Story Builders Launch Team - Viral Waitlist"
+        description="Join the Story Builders launch team. Help kids with DLD learn to read and communicate through personalized storytelling."
       />
-      <Header />
 
-      {/* ─── S1: HERO ─── */}
-      <section className="relative overflow-hidden min-h-[600px] md:min-h-[calc(100vh-70px)] lg:min-h-[calc(100vh-80px)]">
-        <img
-          src={storybuildersHero}
-          alt="Mother and son laughing together while using a tablet"
-          className="absolute inset-0 w-full h-full object-cover object-[82%_20%] md:object-[50%_30%] lg:object-[50%_40%]"
-          loading="eager"
-        />
-        <div className="absolute inset-0 bg-deep-purple/70 md:bg-transparent md:bg-gradient-to-r md:from-deep-purple/90 md:via-deep-purple/70 md:to-deep-purple/40" />
+      {/* ==================== PRE-JOIN MODE ==================== */}
+      {!joined ? (
+        <div className="relative min-h-screen w-full overflow-hidden bg-gradient-to-b from-slate-900 via-purple-900 to-slate-900">
+          <AnimatedBackground />
 
-        <div className="relative z-10 container px-6 md:px-8 min-h-[600px] md:min-h-[calc(100vh-70px)] lg:min-h-[calc(100vh-80px)] flex flex-col justify-center items-start text-left gap-5 max-w-none">
-          <div className="max-w-[560px]">
-              <p className="text-[11px] md:text-[12px] font-bold uppercase tracking-[0.22em] text-white/60">
-                FOR FAMILIES, EDUCATORS &amp; PROFESSIONALS
-              </p>
-              <h1 className="text-[32px] md:text-[44px] lg:text-[50px] font-black text-white leading-[1.1] mt-4 [text-shadow:0_1px_8px_rgba(0,0,0,0.5)]">
-                The First App Built<br className="hidden md:inline lg:hidden" /> For Kids With DLD
-              </h1>
-              <p className="text-[14px] md:text-[16px] text-white/90 leading-[1.7] mt-4 [text-shadow:0_1px_6px_rgba(0,0,0,0.4)]">
-                Join the Story Builders Launch Team and help us bring daily 20-minute story sessions that build vocabulary, comprehension, and confidence to children with DLD worldwide.
-              </p>
-              {!wl.joined ? (
-                <>
-                  <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row flex-wrap gap-3 w-full max-w-[520px] mt-5">
-                    <Input
-                      placeholder="Name"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      required
-                      className="h-12 bg-white/10 border-white/20 text-white placeholder:text-white/50 rounded-md focus-visible:ring-primary flex-1 min-w-[140px]"
-                    />
-                    <Input
-                      type="email"
-                      placeholder="Email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      required
-                      className="h-12 bg-white/10 border-white/20 text-white placeholder:text-white/50 rounded-md focus-visible:ring-primary flex-1 min-w-[140px]"
-                    />
-                    <Button
-                      type="submit"
-                      disabled={wl.loading}
-                      className="h-12 px-8 bg-primary text-primary-foreground font-bold rounded-md hover:bg-primary/90 transition-colors shadow-[var(--shadow-button)] whitespace-nowrap w-full sm:w-auto"
-                    >
-                      {wl.loading ? "Joining…" : "Join Now"}
-                    </Button>
-                  </form>
-                  <p className="text-[13px] text-white/60 mt-6 leading-[1.6]">
-                    <span className="font-semibold text-white/80">Not just stories</span> — A guided way to build language step by step
-                  </p>
-                </>
-              ) : (
-                <div className="flex items-center gap-2 mt-5">
-                  <code className="bg-white/10 border border-white/20 rounded-md px-4 py-2.5 text-white text-[13px] max-w-[320px] truncate">
-                    {wl.referralLink}
-                  </code>
-                  <Button
-                    onClick={() => handleCopy(wl.referralLink)}
-                    variant="outline"
-                    className="h-10 px-4 border-white/30 text-white bg-transparent hover:bg-white/10 rounded-md"
-                  >
-                    {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-                  </Button>
-                </div>
-              )}
-              {wl.error && <p className="text-white/70 text-[13px]">{wl.error}</p>}
-          </div>
-        </div>
-      </section>
+          {/* Social Proof Banner */}
+          <SocialProofBanner totalJoined={totalCount} dailyJoins={Math.floor(totalCount * 0.15)} />
 
-
-      {/* ─── S2: HOOK ─── */}
-      <section className="bg-white bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,hsl(266,100%,92%)_0%,transparent_100%)] py-16 md:py-24">
-        <FadeSection className="max-w-[700px] mx-auto px-6 md:px-8 text-center space-y-6 md:space-y-8">
-          <p className="text-base md:text-xl lg:text-2xl text-foreground leading-[1.7] font-normal">
-            For many children, telling a story about their day is not simple.
-          </p>
-          <p className="text-base md:text-xl lg:text-2xl text-foreground leading-[1.7]">
-            <span className="text-primary font-semibold">Words get stuck.</span>{" "}
-            <span className="text-primary font-semibold">Details get lost.</span>
-            <br />
-            And over time, <span className="text-primary font-semibold">confidence starts to fade.</span>
-          </p>
-          <p className="text-base md:text-xl lg:text-2xl leading-[1.7] font-bold text-deep-purple">
-            Story Builders was created to change that.
-          </p>
-      </FadeSection>
-      </section>
-
-      {/* ─── PREMIUM PROMO SECTION ─── */}
-      <section className="py-12 md:py-20">
-        <div className="max-w-[1300px] mx-auto px-6 md:px-8">
-          <FadeSection>
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-10 items-start">
-                {/* Left column — text */}
-                <div className="flex flex-col gap-6">
-                  <h2 className="text-[28px] md:text-[34px] lg:text-[38px] font-bold tracking-tight text-foreground leading-[1.15] whitespace-nowrap">
-                    What is Story Builders?
-                  </h2>
-                  <p className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-[500px]">
-                    Story Builders is an interactive app designed to help children:
-                  </p>
-                  <ul className="flex flex-col gap-2 max-w-[500px]">
-                    {[
-                      "Understand and retell stories",
-                      "Build vocabulary and sentence structure",
-                      "Share their ideas with more confidence",
-                      "Feel proud of how they communicate",
-                    ].map((item) => (
-                      <li key={item} className="flex items-start gap-2.5 text-base md:text-lg text-muted-foreground leading-relaxed">
-                        <Check className="w-4 h-4 text-primary mt-1.5 shrink-0" />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                  <p className="text-sm md:text-base text-muted-foreground leading-relaxed max-w-[500px]">
-                    It was designed for children with Developmental Language Disorder and can be used at home, in therapy, or in the classroom.
-                  </p>
-                </div>
-                {/* Right column — mockup */}
-                <div className="flex justify-center lg:justify-start">
-                  <img
-                    src={storybuildersAppMockup}
-                    alt="Story Builders app on iPad"
-                    className="w-full max-w-[500px] lg:max-w-none mx-auto lg:mx-0"
-                  />
-                </div>
-              </div>
-          </FadeSection>
-        </div>
-      </section>
-
-
-      {/* ─── BIGGER THAN AN APP ─── */}
-      <section className="py-12 md:py-16">
-        <FadeSection className="max-w-[900px] mx-auto px-6 md:px-8">
-          <div className="bg-[hsl(266,100%,97%)] rounded-2xl px-8 py-10 md:px-12 md:py-14 text-center space-y-5">
-            <h3 className="text-[22px] md:text-[28px] lg:text-[32px] font-bold tracking-tight text-foreground leading-[1.2]">
-              We're Building Something Bigger Than an App
-            </h3>
-            <p className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-[700px] mx-auto">
-              StoryBuilders is being created for children who struggle to understand and express their ideas
-              — and for the parents, educators, and therapists supporting them every day.
-            </p>
-            <p className="text-base md:text-lg text-foreground font-semibold leading-relaxed">
-              We're inviting you to be part of it from the very beginning.
-            </p>
-          </div>
-        </FadeSection>
-      </section>
-
-
-      <section className="py-16 md:py-[120px] bg-background">
-        <div className="max-w-[1100px] mx-auto px-6 md:px-8">
-          {/* Header row */}
-          <FadeSection className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10 md:mb-14">
-            <div className="max-w-[500px]">
-              <span className="text-primary text-[11px] tracking-[0.22em] uppercase font-semibold block mb-3">
-                WHY JOIN
-              </span>
-              <h2 className="text-[32px] md:text-[42px] lg:text-[46px] font-black tracking-tight text-foreground leading-[1.1]">
-                Every child deserves to understand and share their ideas clearly.
-              </h2>
-            </div>
-            <p className="text-muted-foreground text-[16px] leading-relaxed max-w-[400px] md:text-right">
-              StoryBuilders is being built for children who deserve to be heard. Your support helps make sure they are.
-            </p>
-          </FadeSection>
-
-          {/* Bento card grid */}
-          <FadeSection delay={100}>
-            <div className="grid grid-cols-1 md:grid-cols-[1.2fr_1fr] gap-4 min-h-[560px]">
-              {/* Left tall card */}
-              <div className="relative overflow-hidden rounded-xl group cursor-pointer min-h-[300px] md:min-h-0">
-                <img src={storybuildersUnderstood} alt="Be a part of the movement" className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent transition-all duration-300 group-hover:from-black/80" />
-                <div className="absolute bottom-0 left-0 p-6 md:p-8">
-                  <p className="text-white font-semibold text-[18px] md:text-[20px] translate-y-8 group-hover:translate-y-0 transition-transform duration-300">Be a part of the movement</p>
-                  <p className="text-white/80 text-sm max-w-[280px] mt-2 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
-                    Some people talk about change. You just helped create it.
-                  </p>
-                </div>
+          {/* Main Content */}
+          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            {/* Hero Section */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="pt-20 pb-16 text-center"
+            >
+              <div className="mb-8">
+                <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black bg-gradient-to-r from-purple-300 via-pink-300 to-purple-400 bg-clip-text text-transparent mb-6">
+                  Story Builders
+                </h1>
+                <p className="text-xl sm:text-2xl text-white/80 mb-4 max-w-3xl mx-auto">
+                  The app that helps kids with DLD (Developmental Language Disorder) learn to read and communicate through personalized storytelling.
+                </p>
+                <p className="text-lg text-white/60 max-w-2xl mx-auto">
+                  Built by parents and professionals. Launching soon.
+                </p>
               </div>
 
-              {/* Right stacked cards */}
-              <div className="grid grid-rows-2 gap-4">
-                {/* Top right */}
-                <div className="relative overflow-hidden rounded-xl group cursor-pointer min-h-[200px] md:min-h-0">
-                  <img src={storybuildersAwareness} alt="Spread awareness of DLD" className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent transition-all duration-300 group-hover:from-black/80" />
-                    <div className="absolute bottom-0 left-0 p-6">
-                    <p className="text-white font-semibold text-[16px] md:text-[18px] translate-y-8 group-hover:translate-y-0 transition-transform duration-300">Spread awareness of DLD</p>
-                    <p className="text-white/80 text-sm max-w-[280px] mt-2 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
-                      Most people have never heard of DLD. Every person you invite is one more who will.
-                    </p>
-                  </div>
-                </div>
-
-                {/* Bottom right */}
-                <div className="relative overflow-hidden rounded-xl group cursor-pointer min-h-[200px] md:min-h-0">
-                  <img src={storybuildersMovement} alt="Help more children feel understood" className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent transition-all duration-300 group-hover:from-black/80" />
-                    <div className="absolute bottom-0 left-0 p-6">
-                    <p className="text-white font-semibold text-[16px] md:text-[18px] translate-y-8 group-hover:translate-y-0 transition-transform duration-300">Help more children feel understood</p>
-                    <p className="text-white/80 text-sm max-w-[280px] mt-2 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
-                      When more families find StoryBuilders, more children get a tool built specifically for how they think and communicate.
-                    </p>
-                  </div>
-                </div>
+              {/* Launch Countdown */}
+              <div className="mb-16">
+                <LaunchCountdown launchDate="2025-06-01" />
               </div>
-            </div>
-          </FadeSection>
-        </div>
-      </section>
+            </motion.div>
 
-      <div className="w-16 h-px bg-border mx-auto" />
-
-      {/* ─── S5: HOW IT WORKS ─── */}
-      <section className="bg-muted py-16 md:py-[120px]">
-        <div className="container px-6 md:px-8">
-          <FadeSection className="text-center mb-12 md:mb-16">
-            <h2 className="text-[32px] md:text-[42px] lg:text-[46px] font-bold tracking-tight text-foreground">
-              How It Works
-            </h2>
-          </FadeSection>
-          <FadeSection delay={100}>
-            <div className="max-w-[900px] mx-auto">
-              <img
-                src={howItWorksSteps}
-                alt="How it works: Join the Launch Team, Invite others to join, Unlock meaningful milestones"
-                className="w-full h-auto"
-                loading="lazy"
-              />
-            </div>
-          </FadeSection>
-        </div>
-      </section>
-
-      <div className="w-16 h-px bg-border mx-auto" />
-
-      {/* ─── S6: YOUR PROGRESS ─── */}
-      <section className="py-16 md:py-[120px]" style={{ backgroundColor: "#FAFAFC" }}>
-        <div className="container px-6 md:px-8">
-          <FadeSection className="text-center mb-14 md:mb-20">
-            <h2 className="text-[34px] md:text-[40px] tracking-tight leading-[1.2]" style={{ color: "#2F2F3A", fontWeight: 700, fontFamily: "Poppins, sans-serif" }}>
-              Your Progress
-            </h2>
-            <p className="text-[16px] md:text-[18px] mt-3 leading-[1.6]" style={{ color: "#6B6B6B", fontFamily: "Nunito, sans-serif" }}>
-              Each step unlocks something new.
-            </p>
-            <p className="text-[14px] mt-1.5 leading-[1.6]" style={{ color: "#9B9BAB", fontFamily: "Nunito, sans-serif" }}>
-              You're just getting started — your next reward is one step away.
-            </p>
-          </FadeSection>
-
-          {(() => {
-            const progressSteps: ProgressStep[] = [
-              {
-                task: "You joined the Launch Team",
-                impact: "Welcome to the Launch Team",
-                reward: { icon: <Sparkles size={20} />, title: "You're officially in", desc: "You're part of this from the very beginning" },
-                invites: 0,
-              },
-              {
-                task: "Invite 1 family",
-                impact: "Help another child feel more confident sharing their ideas",
-                reward: { icon: <Rocket size={20} />, title: "Be one of the first to explore StoryBuilders", desc: "Be among the first to explore the app before anyone else" },
-                invites: 1,
-              },
-              {
-                task: "Invite 3 families",
-                impact: "Help more children understand what happened and explain it clearly",
-                reward: { icon: <Gift size={20} />, title: "Unlock your Story Pack", desc: "Visual supports, retell tools, and parent prompts" },
-                invites: 3,
-              },
-              {
-                task: "Invite 5 families",
-                impact: "Help build a community where children feel understood and confident",
-                reward: { icon: <Headphones size={20} />, title: "Listen to a private Dan & Daria episode", desc: "Exclusive content only for Launch Team members" },
-                invites: 5,
-              },
-              {
-                task: "Invite 10 families",
-                impact: "Help more children feel successful when expressing their ideas",
-                reward: { icon: <Crown size={20} />, title: "Lock in founder pricing for life", desc: "$5.99/month forever", subdesc: "Only for the first 100 families" },
-                invites: 10,
-              },
-            ];
-
-            return <ScrollProgress steps={progressSteps} inviteCount={wl.inviteCount} />;
-          })()}
-        </div>
-      </section>
-
-      <div className="w-16 h-px bg-border mx-auto" />
-
-      {/* ─── S7: COLLECTIVE GOAL ─── */}
-      {(() => {
-        const GOAL = COLLECTIVE_GOAL;
-        const FILL_DURATION = 4000; // ms
-        const HOLD_DURATION = 5000; // ms
-
-        const AnimatedGoal = () => {
-          const sectionRef = useRef<HTMLDivElement>(null);
-          const barRef = useRef<HTMLDivElement>(null);
-          const [displayCount, setDisplayCount] = useState(0);
-          const [isVisible, setIsVisible] = useState(false);
-          const phaseRef = useRef<"idle" | "filling" | "celebrating" | "holding">("idle");
-          const rafRef = useRef<number>(0);
-          const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
-
-          // Ease-out cubic
-          const ease = (t: number) => 1 - Math.pow(1 - t, 3);
-
-          const fireConfetti = useCallback(() => {
-            if (!barRef.current) return;
-            const rect = barRef.current.getBoundingClientRect();
-            const x = (rect.right - 4) / window.innerWidth;
-            const y = (rect.top + rect.height / 2) / window.innerHeight;
-
-            // Fire a few bursts for effect
-            const colors = ["#7E5BEF", "#B794F6", "#DDD6FE", "#EDE9FE"];
-            confetti({ particleCount: 60, spread: 45, origin: { x, y }, colors, gravity: 1.2, scalar: 0.9, ticks: 80 });
-            setTimeout(() => {
-              confetti({ particleCount: 40, spread: 35, origin: { x: x - 0.02, y: y - 0.02 }, colors, gravity: 1, scalar: 0.7, ticks: 60 });
-            }, 150);
-          }, []);
-
-          const runCycle = useCallback(() => {
-            phaseRef.current = "filling";
-            const start = performance.now();
-
-            const tick = (now: number) => {
-              if (phaseRef.current !== "filling") return;
-              const elapsed = now - start;
-              const progress = Math.min(elapsed / FILL_DURATION, 1);
-              const eased = ease(progress);
-              setDisplayCount(Math.round(eased * GOAL));
-
-              if (progress < 1) {
-                rafRef.current = requestAnimationFrame(tick);
-              } else {
-                // Reached goal — celebrate
-                phaseRef.current = "celebrating";
-                setDisplayCount(GOAL);
-                fireConfetti();
-
-                // Hold phase
-                phaseRef.current = "holding";
-                timeoutRef.current = setTimeout(() => {
-                  if (phaseRef.current === "holding") {
-                    setDisplayCount(0);
-                    // Restart cycle
-                    runCycle();
-                  }
-                }, HOLD_DURATION);
-              }
-            };
-
-            rafRef.current = requestAnimationFrame(tick);
-          }, [fireConfetti]);
-
-          const stopAll = useCallback(() => {
-            phaseRef.current = "idle";
-            cancelAnimationFrame(rafRef.current);
-            if (timeoutRef.current) clearTimeout(timeoutRef.current);
-          }, []);
-
-          useEffect(() => {
-            const el = sectionRef.current;
-            if (!el) return;
-
-            const obs = new IntersectionObserver(
-              ([entry]) => {
-                if (entry.isIntersecting) {
-                  setIsVisible(true);
-                } else {
-                  setIsVisible(false);
-                  stopAll();
-                  setDisplayCount(0);
-                }
-              },
-              { threshold: 0.85 }
-            );
-            obs.observe(el);
-            return () => { obs.disconnect(); stopAll(); };
-          }, [stopAll]);
-
-          useEffect(() => {
-            if (isVisible && phaseRef.current === "idle") {
-              runCycle();
-            }
-          }, [isVisible, runCycle]);
-
-          const pct = Math.min((displayCount / GOAL) * 100, 100);
-          const remaining = GOAL - displayCount;
-
-          return (
-            <section ref={sectionRef} className="bg-lavender py-16 md:py-[120px]">
-              <div className="container px-6 md:px-8">
-                <div className="max-w-[650px] mx-auto text-center">
-                  <h2 className="text-[32px] md:text-[42px] lg:text-[46px] font-bold tracking-tight text-foreground mb-6">
-                    Our Collective Goal
-                  </h2>
-                  <p className="text-[15px] md:text-[16px] text-muted-foreground leading-[1.7] mb-8">
-                    If we reach 4,000 storytellers, we will create a brand new Dan and Daria
-                    story together. The community will help choose the theme, and this story
-                    will become the fifth book in our Living Life with DLD book series.
-                  </p>
-                  <div className="bg-background/60 rounded-xl border border-border p-6">
-                    <p className="text-[14px] font-semibold text-foreground mb-3">
-                      {displayCount.toLocaleString()} storyteller{displayCount !== 1 ? "s" : ""} and counting.{" "}
-                      <span className="text-muted-foreground font-normal">
-                        {remaining > 0 ? `${remaining.toLocaleString()} to go.` : "Goal reached! 🎉"}
-                      </span>
+            {/* Two Column Layout */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+              {/* Signup Form */}
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+              >
+                <GlassCard>
+                  <div className="p-8">
+                    <h2 className="text-2xl font-bold text-white mb-2">Join the Launch Team</h2>
+                    <p className="text-white/70 text-sm mb-6">
+                      Be among the first to access Story Builders. Earn rewards by inviting others.
                     </p>
-                    <div ref={barRef} className="relative h-3 w-full rounded-full bg-border overflow-hidden">
-                      <div
-                        className="h-full rounded-full bg-primary transition-none"
-                        style={{ width: `${pct}%` }}
-                      />
+
+                    {error && (
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        className="mb-4 p-3 bg-yellow-500/20 border border-yellow-500/50 rounded-lg text-yellow-300 text-sm"
+                      >
+                        {error}
+                      </motion.div>
+                    )}
+
+                    {loading ? (
+                      <WaitlistFormSkeleton />
+                    ) : (
+                      <form onSubmit={handleSignup} className="space-y-4">
+                        {/* Name Input */}
+                        <div>
+                          <label className="block text-white/80 text-sm font-medium mb-2">
+                            Full Name
+                          </label>
+                          <input
+                            type="text"
+                            value={formName}
+                            onChange={(e) => setFormName(e.target.value)}
+                            placeholder="Sarah Johnson"
+                            className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                            disabled={formLoading}
+                          />
+                        </div>
+
+                        {/* Email Input */}
+                        <div>
+                          <label className="block text-white/80 text-sm font-medium mb-2">
+                            Email Address
+                          </label>
+                          <input
+                            type="email"
+                            value={formEmail}
+                            onChange={(e) => setFormEmail(e.target.value)}
+                            placeholder="sarah@example.com"
+                            className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                            disabled={formLoading}
+                          />
+                        </div>
+
+                        {/* Submit Button */}
+                        <Button
+                          type="submit"
+                          disabled={formLoading}
+                          className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-3 rounded-lg transition-all disabled:opacity-50"
+                        >
+                          {formLoading ? (
+                            <motion.div
+                              animate={{ rotate: 360 }}
+                              transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                              className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full"
+                            />
+                          ) : (
+                            "Join the Launch Team"
+                          )}
+                        </Button>
+                      </form>
+                    )}
+
+                    {/* Trust Section */}
+                    <div className="mt-6 p-4 bg-white/5 border border-white/10 rounded-lg text-center">
+                      <p className="text-white/70 text-xs">
+                        We're building the most evidence-based, family-centered app for kids with DLD.
+                      </p>
                     </div>
                   </div>
+                </GlassCard>
+              </motion.div>
+
+              {/* Community & Mission */}
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="space-y-6"
+              >
+                {/* Community Milestone */}
+                <CommunityMilestone totalParticipants={totalCount} />
+
+                {/* Testimonial Section */}
+                <GlassCard>
+                  <div className="p-6">
+                    <h3 className="text-lg font-bold text-white mb-4">Our Mission</h3>
+                    <div className="space-y-3">
+                      <p className="text-white/80 text-sm">
+                        DLD affects 1 in 40 kids. Many don't get the support they need. Story Builders changes that.
+                      </p>
+                      <p className="text-white/70 text-sm">
+                        Built by parents who've walked this journey, with guidance from speech-language pathologists and educators, Story Builders makes language development engaging, evidence-based, and fun.
+                      </p>
+                      <div className="mt-4 p-3 bg-purple-500/20 border border-purple-500/30 rounded-lg">
+                        <p className="text-purple-300 text-sm font-semibold">
+                          "Every child deserves to tell their story." - Dan & Daria
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </GlassCard>
+              </motion.div>
+            </div>
+          </div>
+        </div>
+      ) : (
+        /* ==================== POST-JOIN MODE ==================== */
+        <div className="relative min-h-screen w-full overflow-hidden bg-gradient-to-b from-slate-900 via-purple-900 to-slate-900">
+          <AnimatedBackground />
+
+          {/* Show confetti on first join */}
+          {showConfetti && <ConfettiEffect />}
+
+          {/* Social Proof Banner */}
+          <SocialProofBanner totalJoined={totalCount} dailyJoins={Math.floor(totalCount * 0.15)} />
+
+          {/* Notification Bell */}
+          <div className="fixed top-20 right-4 sm:right-8 z-40">
+            <NotificationBell notifications={notifications} onDismiss={dismissNotification} />
+          </div>
+
+          {/* Verification Banner */}
+          {!emailVerified && (
+            <VerificationBanner
+              onResend={resendVerification}
+              isLoading={loading}
+            />
+          )}
+
+          {/* Main Content */}
+          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            {/* Welcome Header */}
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="mb-12 text-center"
+            >
+              <h1 className="text-4xl sm:text-5xl font-black bg-gradient-to-r from-purple-300 via-pink-300 to-purple-400 bg-clip-text text-transparent mb-2">
+                Welcome to the Launch Team!
+              </h1>
+              <p className="text-white/70 text-lg">
+                You're helping shape the future of language learning for kids with DLD.
+              </p>
+            </motion.div>
+
+            {/* Section 1: Your Impact */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="mb-12"
+            >
+              <h2 className="text-2xl font-bold text-white mb-6">Your Impact</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {/* Position Card */}
+                <div>
+                  {loading || !queuePosition ? (
+                    <PositionCardSkeleton />
+                  ) : (
+                    <PositionCard
+                      position={queuePosition}
+                      totalUsers={totalCount}
+                      points={points}
+                      tier={currentTier}
+                      tierName={tier.name}
+                    />
+                  )}
+                </div>
+
+                {/* Tier Progress Bar */}
+                <div className="md:col-span-2">
+                  {loading ? (
+                    <TierProgressSkeleton />
+                  ) : (
+                    <TierProgressBar currentPoints={points} currentTier={currentTier} />
+                  )}
+                </div>
+
+                {/* Almost There Nudge */}
+                {currentTier < 5 && points > tier.nextTierThreshold! * 0.75 && (
+                  <div>
+                    <AlmostThereNudge
+                      nextTierName={tier.name}
+                      nextReward={`Reward for ${tier.name}`}
+                      referralLink={referralLink}
+                    />
+                  </div>
+                )}
+
+                {/* Progress Ring */}
+                <div>
+                  <ProgressRing
+                    currentPoints={points}
+                    nextTierPoints={tier.nextTierThreshold || 510}
+                    nextTierName={tier.name}
+                  />
+                </div>
+
+                {/* Impact Counter */}
+                <div className="md:col-span-2">
+                  <ImpactCounter referralCount={inviteCount} />
                 </div>
               </div>
-            </section>
-          );
-        };
+            </motion.div>
 
-        return <AnimatedGoal />;
-      })()}
+            {/* Section 2: Grow Your Team */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="mb-12"
+            >
+              <h2 className="text-2xl font-bold text-white mb-6">Grow Your Team</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {/* Referral Link Card */}
+                <div>
+                  <ReferralLinkCard
+                    referralLink={referralLink}
+                    stats={{
+                      clicks: clickCount,
+                      signups: inviteCount,
+                    }}
+                  />
+                </div>
 
-      <div className="w-16 h-px bg-border mx-auto" />
+                {/* Share Panel */}
+                <div className="md:col-span-2">
+                  <SharePanel
+                    referralLink={referralLink}
+                    onShare={(platform) => trackShare(platform)}
+                  />
+                </div>
 
-      {/* ─── S8: SHARE THIS ─── */}
-      <section className="py-16 md:py-[120px]">
-        <div className="container px-6 md:px-8">
-          <FadeSection className="max-w-[650px] mx-auto text-center">
-            <h2 className="text-[32px] md:text-[42px] lg:text-[46px] font-bold tracking-tight text-foreground mb-6">
-              Know Someone Who Would Care About This?
-            </h2>
-            <div className="bg-lavender rounded-xl border border-border p-6 text-left mb-5">
-              <p className="text-[14px] md:text-[15px] text-foreground leading-[1.7] italic">
-                "I just came across an app called StoryBuilders and have been trying to spread the word about it. It's being built to help kids feel more confident understanding and explaining their ideas. Thought of you. You can join the waitlist here."
-              </p>
-            </div>
-            {wl.joined && wl.referralLink ? (
-              <Button
-                onClick={() => handleCopy(wl.referralLink)}
-                className="h-12 px-8 bg-primary text-primary-foreground font-bold rounded-md hover:bg-primary/90 transition-colors shadow-[var(--shadow-button)] gap-2"
-              >
-                {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-                {copied ? "Copied!" : "Copy Your Link"}
-              </Button>
-            ) : (
-              <Button
-                onClick={scrollToForm}
-                className="h-12 px-8 bg-primary text-primary-foreground font-bold rounded-md hover:bg-primary/90 transition-colors shadow-[var(--shadow-button)]"
-              >
-                Join First to Get Your Link
-              </Button>
-            )}
-          </FadeSection>
-        </div>
-      </section>
+                {/* Invite Friend Form */}
+                <div className="lg:col-span-2">
+                  <InviteFriendForm
+                    referralCode={referralCode}
+                    userName={formName || "Friend"}
+                  />
+                </div>
 
-      <div className="w-16 h-px bg-border mx-auto" />
-
-      {/* ─── S9: CLOSING CTA + FORM ─── */}
-      <section ref={formRef} className="bg-deep-purple py-20 md:py-28 lg:py-32">
-        <div className="container px-6 md:px-8 flex flex-col items-center text-center gap-6">
-          <h2 className="text-[28px] md:text-[42px] lg:text-[48px] font-black text-white leading-[1.1] max-w-[800px]">
-            Be Part of Something That Could Change How Children Experience Communication
-          </h2>
-
-          {!wl.joined ? (
-            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 w-full max-w-[520px] mt-4">
-              <Input
-                placeholder="Name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-                className="h-12 bg-white/10 border-white/20 text-white placeholder:text-white/50 rounded-md"
-              />
-              <Input
-                type="email"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                className="h-12 bg-white/10 border-white/20 text-white placeholder:text-white/50 rounded-md"
-              />
-              <Button
-                type="submit"
-                disabled={wl.loading}
-                className="h-12 px-8 bg-primary text-primary-foreground font-bold rounded-md hover:bg-primary/90 transition-colors shadow-[var(--shadow-button)] whitespace-nowrap"
-              >
-                {wl.loading ? "Joining…" : "Join Now"}
-              </Button>
-            </form>
-          ) : (
-            <div className="mt-4 text-center">
-              <p className="text-white/80 text-[15px] mb-3">
-                You're on the team! Share your link to unlock milestones:
-              </p>
-              <div className="flex items-center gap-2 justify-center">
-                <code className="bg-white/10 border border-white/20 rounded-md px-4 py-2.5 text-white text-[13px] max-w-[320px] truncate">
-                  {wl.referralLink}
-                </code>
-                <Button
-                  onClick={() => handleCopy(wl.referralLink)}
-                  variant="outline"
-                  className="h-10 px-4 border-white/30 text-white bg-transparent hover:bg-white/10 rounded-md"
-                >
-                  {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-                </Button>
+                {/* Referral Tracker */}
+                <div>
+                  <ReferralTracker inviteCount={inviteCount} />
+                </div>
               </div>
-            </div>
-          )}
+            </motion.div>
 
-          {wl.error && (
-            <p className="text-white/70 text-[13px]">{wl.error}</p>
-          )}
+            {/* Section 3: Community */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="mb-12"
+            >
+              <h2 className="text-2xl font-bold text-white mb-6">Community</h2>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {/* Leaderboard */}
+                <div>
+                  <Leaderboard />
+                </div>
+
+                {/* Activity Feed */}
+                <div>
+                  <ActivityFeed />
+                </div>
+              </div>
+
+              {/* Community Milestone */}
+              <div className="mt-6">
+                <CommunityMilestone totalParticipants={totalCount} />
+              </div>
+            </motion.div>
+
+            {/* Section 4: Your Achievements */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="mb-12"
+            >
+              <h2 className="text-2xl font-bold text-white mb-6">Your Achievements</h2>
+              <BadgeShowcase
+                earnedBadges={badges.map((badge) => ({
+                  badge_id: badge,
+                  earned_at: new Date().toISOString(),
+                }))}
+              />
+            </motion.div>
+          </div>
         </div>
-      </section>
-
-      <Footer />
-    </div>
+      )}
+    </>
   );
 };
 
