@@ -62,8 +62,8 @@ const UserDetailModal = ({
   const [isSendingEmail, setIsSendingEmail] = useState(false);
   const [selectedTemplate, setSelectedTemplate] = useState("verification_resend");
 
-  const nextTierThreshold = getNextTierThreshold(user.current_tier);
-  const progressToNextTier = getProgressToNextTier(user.points, user.current_tier);
+  const nextTierThreshold = getNextTierThreshold(user.current_tier || 0);
+  const progressToNextTier = getProgressToNextTier(user.points || 0, user.current_tier || 0);
 
   const handleCopyReferralCode = () => {
     navigator.clipboard.writeText(user.referral_code);
