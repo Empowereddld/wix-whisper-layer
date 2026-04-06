@@ -27,7 +27,6 @@ import {
   AlmostThereNudge,
   VerificationBanner,
   ProgressRing,
-  NotificationBell,
   ConfettiEffect,
   GlassCard,
   WaitlistFormSkeleton,
@@ -128,6 +127,7 @@ const StoryBuilders = () => {
       <SEOHead
         title="Story Builders Launch Team - Viral Waitlist"
         description="Join the Story Builders launch team. Help kids with DLD learn to read and communicate through personalized storytelling."
+        path="/storybuilders"
       />
 
       {/* ==================== PRE-JOIN MODE ==================== */}
@@ -136,7 +136,7 @@ const StoryBuilders = () => {
           <AnimatedBackground />
 
           {/* Social Proof Banner */}
-          <SocialProofBanner totalJoined={totalCount} dailyJoins={Math.floor(totalCount * 0.15)} />
+          <SocialProofBanner />
 
           {/* Main Content */}
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -176,7 +176,6 @@ const StoryBuilders = () => {
                 <GlassCard>
                   <div className="p-8">
                     {isLoggedIn && !joined ? (
-                      // Pre-join mode for logged-in users
                       <div>
                         <h2 className="text-2xl font-bold text-white mb-2">
                           Hey {profile?.first_name}!
@@ -211,7 +210,6 @@ const StoryBuilders = () => {
                           )}
                         </Button>
 
-                        {/* Trust Section */}
                         <div className="mt-6 p-4 bg-white/5 border border-white/10 rounded-lg text-center">
                           <p className="text-white/70 text-xs">
                             We're building the most evidence-based, family-centered app for kids with DLD.
@@ -219,7 +217,6 @@ const StoryBuilders = () => {
                         </div>
                       </div>
                     ) : (
-                      // Standard form for non-logged-in users
                       <div>
                         <h2 className="text-2xl font-bold text-white mb-2">Join the Launch Team</h2>
                         <p className="text-white/70 text-sm mb-6">
@@ -240,7 +237,6 @@ const StoryBuilders = () => {
                           <WaitlistFormSkeleton />
                         ) : (
                           <form onSubmit={handleSignup} className="space-y-4">
-                            {/* Name Input */}
                             <div>
                               <label className="block text-white/80 text-sm font-medium mb-2">
                                 Full Name
@@ -255,7 +251,6 @@ const StoryBuilders = () => {
                               />
                             </div>
 
-                            {/* Email Input */}
                             <div>
                               <label className="block text-white/80 text-sm font-medium mb-2">
                                 Email Address
@@ -270,7 +265,6 @@ const StoryBuilders = () => {
                               />
                             </div>
 
-                            {/* Submit Button */}
                             <Button
                               type="submit"
                               disabled={formLoading}
@@ -289,7 +283,6 @@ const StoryBuilders = () => {
                           </form>
                         )}
 
-                        {/* Trust Section */}
                         <div className="mt-6 p-4 bg-white/5 border border-white/10 rounded-lg text-center">
                           <p className="text-white/70 text-xs">
                             We're building the most evidence-based, family-centered app for kids with DLD.
@@ -308,10 +301,8 @@ const StoryBuilders = () => {
                 transition={{ duration: 0.6, delay: 0.2 }}
                 className="space-y-6"
               >
-                {/* Community Milestone */}
-                <CommunityMilestone totalParticipants={totalCount} />
+                <CommunityMilestone totalCount={totalCount} />
 
-                {/* Testimonial Section */}
                 <GlassCard>
                   <div className="p-6">
                     <h3 className="text-lg font-bold text-white mb-4">Our Mission</h3>
@@ -339,22 +330,15 @@ const StoryBuilders = () => {
         <div className="relative min-h-screen w-full overflow-hidden bg-gradient-to-b from-slate-900 via-purple-900 to-slate-900">
           <AnimatedBackground />
 
-          {/* Show confetti on first join */}
-          {showConfetti && <ConfettiEffect />}
+          {showConfetti && <ConfettiEffect trigger={showConfetti} />}
 
-          {/* Social Proof Banner */}
-          <SocialProofBanner totalJoined={totalCount} dailyJoins={Math.floor(totalCount * 0.15)} />
+          <SocialProofBanner />
 
-          {/* Notification Bell */}
-          <div className="fixed top-20 right-4 sm:right-8 z-40">
-            <NotificationBell notifications={notifications} onDismiss={dismissNotification} />
-          </div>
-
-          {/* Verification Banner */}
           {!emailVerified && (
             <VerificationBanner
-              onResend={resendVerification}
-              isLoading={loading}
+              emailVerified={emailVerified}
+              email={formEmail || "your email"}
+              onResendClick={async () => { await resendVerification(); }}
             />
           )}
 
@@ -384,7 +368,6 @@ const StoryBuilders = () => {
             >
               <h2 className="text-2xl font-bold text-white mb-6">Your Impact</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {/* Position Card */}
                 <div>
                   {loading || !queuePosition ? (
                     <PositionCardSkeleton />
@@ -399,7 +382,6 @@ const StoryBuilders = () => {
                   )}
                 </div>
 
-                {/* Tier Progress Bar */}
                 <div className="md:col-span-2">
                   {loading ? (
                     <TierProgressSkeleton />
@@ -408,8 +390,7 @@ const StoryBuilders = () => {
                   )}
                 </div>
 
-                {/* Almost There Nudge */}
-                {currentTier < 5 && points > tier.nextTierThreshold! * 0.75 && (
+                {currentTier < 5 && tier.nextTierThreshold && points > tier.nextTierThreshold * 0.75 && (
                   <div>
                     <AlmostThereNudge
                       nextTierName={tier.name}
@@ -419,7 +400,6 @@ const StoryBuilders = () => {
                   </div>
                 )}
 
-                {/* Progress Ring */}
                 <div>
                   <ProgressRing
                     currentPoints={points}
@@ -428,7 +408,6 @@ const StoryBuilders = () => {
                   />
                 </div>
 
-                {/* Impact Counter */}
                 <div className="md:col-span-2">
                   <ImpactCounter referralCount={inviteCount} />
                 </div>
@@ -444,7 +423,6 @@ const StoryBuilders = () => {
             >
               <h2 className="text-2xl font-bold text-white mb-6">Grow Your Team</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {/* Referral Link Card */}
                 <div>
                   <ReferralLinkCard
                     referralLink={referralLink}
@@ -455,7 +433,6 @@ const StoryBuilders = () => {
                   />
                 </div>
 
-                {/* Share Panel */}
                 <div className="md:col-span-2">
                   <SharePanel
                     referralLink={referralLink}
@@ -463,7 +440,6 @@ const StoryBuilders = () => {
                   />
                 </div>
 
-                {/* Invite Friend Form */}
                 <div className="lg:col-span-2">
                   <InviteFriendForm
                     referralCode={referralCode}
@@ -471,9 +447,8 @@ const StoryBuilders = () => {
                   />
                 </div>
 
-                {/* Referral Tracker */}
                 <div>
-                  <ReferralTracker inviteCount={inviteCount} />
+                  <ReferralTracker referralCode={referralCode} />
                 </div>
               </div>
             </motion.div>
@@ -487,20 +462,17 @@ const StoryBuilders = () => {
             >
               <h2 className="text-2xl font-bold text-white mb-6">Community</h2>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                {/* Leaderboard */}
                 <div>
                   <Leaderboard />
                 </div>
 
-                {/* Activity Feed */}
                 <div>
                   <ActivityFeed />
                 </div>
               </div>
 
-              {/* Community Milestone */}
               <div className="mt-6">
-                <CommunityMilestone totalParticipants={totalCount} />
+                <CommunityMilestone totalCount={totalCount} />
               </div>
             </motion.div>
 

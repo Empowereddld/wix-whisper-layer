@@ -163,7 +163,7 @@ const MilestoneModal: React.FC<MilestoneModalProps> = ({
           />
 
           {/* Confetti */}
-          <Confetti tierColor={getTierColor(tier.name) as keyof typeof TIER_COLORS} />
+          <Confetti tierColor={Object.keys(TIER_COLORS).find(k => k === tier.name.toLowerCase().replace(/\s+/g, "")) as keyof typeof TIER_COLORS || "storyteller"} />
 
           {/* Modal */}
           <motion.div

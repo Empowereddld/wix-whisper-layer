@@ -25,7 +25,7 @@ export { default as CommunityMilestone } from "./CommunityMilestone";
 export { default as ImpactCounter } from "./ImpactCounter";
 export { default as InviteFriendForm } from "./InviteFriendForm";
 export { default as AlmostThereNudge } from "./AlmostThereNudge";
-export { default as VerificationBanner } from "./VerificationBanner";
+export { VerificationBanner } from "./VerificationBanner";
 
 // Phase 8: Premium UI Polish + Performance
 export { default as AnimatedBackground } from "./AnimatedBackground";

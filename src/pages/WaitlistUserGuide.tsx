@@ -128,6 +128,7 @@ const WaitlistUserGuide = () => {
       <SEOHead
         title="Waitlist User Guide | Story Builders"
         description="Learn how to maximize your position on the Story Builders launch team, earn rewards, and make the most of our referral system."
+        path="/waitlist-guide"
       />
 
       <div className="min-h-screen bg-gradient-to-br from-purple-950 via-purple-900 to-slate-900 text-white overflow-hidden">

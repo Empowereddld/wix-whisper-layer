@@ -10,10 +10,6 @@ interface ActivityEvent {
   displayName: string;
   message: string;
   timestamp: string;
-  metadata?: {
-    tierName?: string;
-    badgeName?: string;
-  };
 }
 
 const getEventIcon = (eventType: string) => {
@@ -35,12 +31,6 @@ const getEventColor = (eventType: string) => {
   switch (eventType) {
     case "signup":
       return "from-blue-500/10 to-blue-600/10 border-blue-500/20";
-    case "tier_promotion":
-      return "from-yellow-500/10 to-yellow-600/10 border-yellow-500/20";
-    case "badge_earned":
-      return "from-purple-500/10 to-purple-600/10 border-purple-500/20";
-    case "referral":
-      return "from-red-500/10 to-red-600/10 border-red-500/20";
     default:
       return "from-white/5 to-white/10 border-white/20";
   }
@@ -54,30 +44,21 @@ const ActivityFeed = () => {
     const fetchEvents = async () => {
       try {
         setLoading(true);
+        // Use storybuilders_waitlist as the source of activity (recent signups)
         const { data, error } = await supabase
-          .from("waitlist_events")
-          .select(
-            `
-            id,
-            event_type,
-            user:user_id(display_name),
-            created_at,
-            metadata
-          `
-          )
-          .in("event_type", ["signup", "tier_promotion", "badge_earned", "referral"])
+          .from("storybuilders_waitlist")
+          .select("id, name, created_at")
           .order("created_at", { ascending: false })
           .limit(20);
 
         if (error) throw error;
 
-        const formatted = (data || []).map((event: any) => ({
-          id: event.id,
-          eventType: event.event_type,
-          displayName: event.user?.display_name || "Anonymous",
-          message: getEventMessage(event.event_type, event.metadata),
-          timestamp: event.created_at,
-          metadata: event.metadata,
+        const formatted: ActivityEvent[] = (data || []).map((entry) => ({
+          id: entry.id,
+          eventType: "signup" as const,
+          displayName: entry.name || "Anonymous",
+          message: "just joined the waitlist!",
+          timestamp: entry.created_at,
         }));
 
         setEvents(formatted);
@@ -90,7 +71,6 @@ const ActivityFeed = () => {
 
     fetchEvents();
 
-    // Subscribe to real-time updates
     const channel = supabase
       .channel("activity-feed")
       .on(
@@ -98,17 +78,16 @@ const ActivityFeed = () => {
         {
           event: "INSERT",
           schema: "public",
-          table: "waitlist_events",
+          table: "storybuilders_waitlist",
         },
         (payload) => {
-          const event = payload.new as any;
+          const entry = payload.new as any;
           const newEvent: ActivityEvent = {
-            id: event.id,
-            eventType: event.event_type,
-            displayName: "New Member",
-            message: getEventMessage(event.event_type, event.metadata),
-            timestamp: event.created_at,
-            metadata: event.metadata,
+            id: entry.id,
+            eventType: "signup",
+            displayName: entry.name || "New Member",
+            message: "just joined the waitlist!",
+            timestamp: entry.created_at,
           };
           setEvents((prev) => [newEvent, ...prev].slice(0, 20));
         }
@@ -119,21 +98,6 @@ const ActivityFeed = () => {
       channel.unsubscribe();
     };
   }, []);
-
-  const getEventMessage = (eventType: string, metadata?: any): string => {
-    switch (eventType) {
-      case "signup":
-        return "just joined the waitlist!";
-      case "tier_promotion":
-        return `reached ${metadata?.tierName || "a new tier"}!`;
-      case "badge_earned":
-        return `earned the ${metadata?.badgeName || "achievement"} badge!`;
-      case "referral":
-        return "brought a friend to the community!";
-      default:
-        return "made an update";
-    }
-  };
 
   if (loading) {
     return (
@@ -177,12 +141,10 @@ const ActivityFeed = () => {
               transition={{ delay: index * 0.05 }}
               className={`bg-gradient-to-r ${getEventColor(event.eventType)} border rounded-lg p-4 flex items-start gap-3 backdrop-blur-sm`}
             >
-              {/* Icon */}
               <div className="flex-shrink-0 mt-1">
                 {getEventIcon(event.eventType)}
               </div>
 
-              {/* Content */}
               <div className="flex-1 min-w-0">
                 <div className="flex items-baseline gap-2">
                   <p className="text-white font-semibold truncate">
