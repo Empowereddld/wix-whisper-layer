@@ -26,9 +26,12 @@ interface WaitlistUser {
   id: string;
   name: string;
   email: string;
-  email_verified: boolean;
-  current_tier: number;
-  flagged: boolean;
+  invite_count: number;
+  referral_code: string;
+  created_at: string;
+  email_verified?: boolean;
+  current_tier?: number;
+  flagged?: boolean;
 }
 
 interface BulkEmailComposerProps {

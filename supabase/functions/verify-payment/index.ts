@@ -107,7 +107,7 @@ Deno.serve(async (req) => {
     });
   } catch (err) {
     console.error("Verify error:", err);
-    return new Response(JSON.stringify({ error: err.message || "Internal server error" }), {
+    return new Response(JSON.stringify({ error: err instanceof Error ? err.message : "Internal server error" }), {
       status: 500,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });

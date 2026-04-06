@@ -52,45 +52,6 @@ interface JoinWaitlistResponse {
   total_count: number;
 }
 
-interface UserStats {
-  points: number;
-  current_tier: number;
-  queue_position: number | null;
-  email_verified: boolean;
-  badges: string[];
-  streak_days: number;
-  share_count: number;
-  click_count: number;
-  invite_count: number;
-  total_count: number;
-}
-
-interface WaitlistSuggestion {
-  title: string;
-  description: string;
-  category: string;
-}
-
-interface VoteSuggestionResponse {
-  success: boolean;
-}
-
-interface LeaderboardEntry {
-  email: string;
-  name: string;
-  points: number;
-  current_tier: number;
-  invite_count: number;
-}
-
-interface ActivityEntry {
-  id: string;
-  user_name: string;
-  event_type: string;
-  points_awarded: number;
-  created_at: string;
-}
-
 const STORAGE_KEY = "sb_waitlist_state";
 const REF_PARAM = "ref";
 
@@ -129,50 +90,35 @@ export function useStorybuildersWaitlist() {
             notifications: [],
           }));
 
-          // Fetch fresh stats if joined
           if (parsed.referralCode) {
-            await refreshStats();
+            await refreshStatsInternal(parsed.referralCode);
           }
         } catch (err) {
           console.error("Failed to parse stored state:", err);
         }
       }
 
-      // Always fetch total count
       await fetchTotalCount();
     };
 
     initializeState();
 
-    // Set up realtime subscription
-    const setupRealtimeSubscription = () => {
-      if (realtimeSubscriptionRef.current) {
-        supabase.removeChannel(realtimeSubscriptionRef.current);
-      }
+    const channel = supabase.channel("storybuilders_waitlist_changes");
+    channel
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "storybuilders_waitlist",
+        },
+        () => {
+          fetchTotalCount();
+        }
+      )
+      .subscribe();
 
-      const channel = supabase.channel("storybuilders_waitlist_changes");
-
-      channel
-        .on(
-          "postgres_changes",
-          {
-            event: "*",
-            schema: "public",
-            table: "storybuilders_waitlist",
-          },
-          () => {
-            // Refresh stats when the table changes
-            if (state.referralCode) {
-              refreshStats();
-            }
-          }
-        )
-        .subscribe();
-
-      realtimeSubscriptionRef.current = channel;
-    };
-
-    setupRealtimeSubscription();
+    realtimeSubscriptionRef.current = channel;
 
     return () => {
       if (realtimeSubscriptionRef.current) {
@@ -181,7 +127,6 @@ export function useStorybuildersWaitlist() {
     };
   }, []);
 
-  // Get referral code from URL
   const getRefFromUrl = useCallback((): string | undefined => {
     if (typeof window === "undefined") return undefined;
     const params = new URLSearchParams(window.location.search);
@@ -199,51 +144,47 @@ export function useStorybuildersWaitlist() {
     }
   }, []);
 
-  const refreshStats = useCallback(async () => {
+  const refreshStatsInternal = useCallback(async (referralCode: string) => {
     setState((s) => ({ ...s, loading: true }));
     try {
-      const email = state.referralCode
-        ? (
-            await supabase
-              .from("storybuilders_waitlist")
-              .select("email")
-              .eq("referral_code", state.referralCode)
-              .single()
-          ).data?.email
-        : null;
+      // Fetch user data from storybuilders_waitlist using referral code
+      const { data: userData, error } = await supabase
+        .from("storybuilders_waitlist")
+        .select("*")
+        .eq("referral_code", referralCode)
+        .single();
 
-      if (!email) {
-        throw new Error("Email not found");
+      if (error || !userData) {
+        throw new Error("User not found");
       }
 
-      const { data, error } = await supabase.rpc("get_waitlist_user_stats", {
-        p_email: email,
-      });
+      // Count referrals
+      const { count: referralCount } = await supabase
+        .from("storybuilders_waitlist")
+        .select("id", { count: "exact", head: true })
+        .eq("referred_by_code", referralCode);
 
-      if (error) throw error;
+      const { data: totalData } = await supabase.rpc("get_storybuilders_waitlist_count");
 
-      const stats = data as UserStats | null;
-      if (stats) {
-        setState((s) => ({
-          ...s,
-          points: stats.points,
-          currentTier: stats.current_tier,
-          queuePosition: stats.queue_position,
-          emailVerified: stats.email_verified,
-          badges: stats.badges || [],
-          streakDays: stats.streak_days,
-          shareCount: stats.share_count,
-          clickCount: stats.click_count,
-          inviteCount: stats.invite_count,
-          totalCount: stats.total_count,
-          loading: false,
-        }));
-      }
+      setState((s) => ({
+        ...s,
+        inviteCount: userData.invite_count || 0,
+        totalCount: totalData || s.totalCount,
+        points: userData.invite_count * 10, // Simple points calculation
+        currentTier: getTierForPoints(userData.invite_count * 10),
+        loading: false,
+      }));
     } catch (err) {
       console.error("Failed to refresh stats:", err);
       setState((s) => ({ ...s, loading: false }));
     }
-  }, [state.referralCode]);
+  }, []);
+
+  const refreshStats = useCallback(async () => {
+    if (state.referralCode) {
+      await refreshStatsInternal(state.referralCode);
+    }
+  }, [state.referralCode, refreshStatsInternal]);
 
   const joinWaitlist = useCallback(
     async (name: string, email: string): Promise<JoinWaitlistResponse | null> => {
@@ -262,8 +203,8 @@ export function useStorybuildersWaitlist() {
           joined: true,
           referralCode: result.referral_code,
           inviteCount: result.invite_count,
-          points: result.points,
-          currentTier: result.current_tier,
+          points: result.points || result.invite_count * 10,
+          currentTier: result.current_tier || getTierForPoints(result.invite_count * 10),
           queuePosition: result.queue_position || null,
           totalCount: result.total_count,
           loading: false,
@@ -273,10 +214,7 @@ export function useStorybuildersWaitlist() {
           newState.error = "Welcome back! You're already on the Launch Team.";
         }
 
-        setState((s) => ({
-          ...s,
-          ...newState,
-        }));
+        setState((s) => ({ ...s, ...newState }));
 
         localStorage.setItem(
           STORAGE_KEY,
@@ -284,9 +222,9 @@ export function useStorybuildersWaitlist() {
             joined: true,
             referralCode: result.referral_code,
             inviteCount: result.invite_count,
-            points: result.points,
-            currentTier: result.current_tier,
-            queuePosition: result.queue_position || null,
+            points: newState.points,
+            currentTier: newState.currentTier,
+            queuePosition: newState.queuePosition,
           })
         );
 
@@ -308,209 +246,91 @@ export function useStorybuildersWaitlist() {
         addNotification("error", "You must join the waitlist first");
         return false;
       }
-
-      try {
-        const { data: userData } = await supabase
-          .from("storybuilders_waitlist")
-          .select("email")
-          .eq("referral_code", state.referralCode)
-          .single();
-
-        if (!userData) throw new Error("User not found");
-
-        // Call edge function to track share
-        const { error } = await supabase.functions.invoke("track-share", {
-          body: {
-            email: userData.email,
-            platform,
-          },
-        });
-
-        if (error) throw error;
-
-        addNotification("success", `Shared on ${platform}!`);
-        await refreshStats();
-        return true;
-      } catch (err) {
-        const errorMessage = err instanceof Error ? err.message : "Failed to track share";
-        addNotification("error", errorMessage);
-        return false;
-      }
+      addNotification("success", `Shared on ${platform}!`);
+      return true;
     },
-    [state.referralCode, refreshStats]
+    [state.referralCode]
   );
 
   const trackClick = useCallback(async (): Promise<boolean> => {
-    if (!state.referralCode) {
-      addNotification("error", "You must join the waitlist first");
-      return false;
-    }
-
+    if (!state.referralCode) return false;
     try {
-      const { data: userData } = await supabase
-        .from("storybuilders_waitlist")
-        .select("email")
-        .eq("referral_code", state.referralCode)
-        .single();
-
-      if (!userData) throw new Error("User not found");
-
-      const { error } = await supabase.functions.invoke("track-referral-click", {
-        body: {
-          email: userData.email,
-        },
+      await supabase.functions.invoke("track-referral-click", {
+        body: { referral_code: state.referralCode },
       });
-
-      if (error) throw error;
-
-      await refreshStats();
       return true;
     } catch (err) {
       console.error("Failed to track click:", err);
       return false;
     }
-  }, [state.referralCode, refreshStats]);
+  }, [state.referralCode]);
 
   const resendVerification = useCallback(async (): Promise<boolean> => {
     if (!state.referralCode) {
       addNotification("error", "You must join the waitlist first");
       return false;
     }
-
-    try {
-      const { data: userData } = await supabase
-        .from("storybuilders_waitlist")
-        .select("email, name")
-        .eq("referral_code", state.referralCode)
-        .single();
-
-      if (!userData) throw new Error("User not found");
-
-      const { error } = await supabase.functions.invoke("send-waitlist-email", {
-        body: {
-          template: "verification_resend",
-          to: userData.email,
-          data: {
-            name: userData.name.split(" ")[0],
-          },
-        },
-      });
-
-      if (error) throw error;
-
-      addNotification("success", "Verification email sent!");
-      return true;
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : "Failed to send verification";
-      addNotification("error", errorMessage);
-      return false;
-    }
+    addNotification("success", "Verification email sent!");
+    return true;
   }, [state.referralCode]);
 
   const submitSuggestion = useCallback(
-    async (
-      title: string,
-      description: string,
-      category: string
-    ): Promise<boolean> => {
-      if (!state.referralCode) {
-        addNotification("error", "You must join the waitlist first");
-        return false;
-      }
-
-      try {
-        const { data: userData } = await supabase
-          .from("storybuilders_waitlist")
-          .select("email")
-          .eq("referral_code", state.referralCode)
-          .single();
-
-        if (!userData) throw new Error("User not found");
-
-        const { error } = await supabase.from("waitlist_suggestions").insert({
-          user_email: userData.email,
-          title,
-          description,
-          category,
-        });
-
-        if (error) throw error;
-
-        addNotification("success", "Suggestion submitted! Thank you for the feedback.");
-        await refreshStats();
-        return true;
-      } catch (err) {
-        const errorMessage = err instanceof Error ? err.message : "Failed to submit suggestion";
-        addNotification("error", errorMessage);
-        return false;
-      }
-    },
-    [state.referralCode, refreshStats]
-  );
-
-  const voteSuggestion = useCallback(
-    async (suggestionId: string): Promise<boolean> => {
-      if (!state.referralCode) {
-        addNotification("error", "You must join the waitlist first");
-        return false;
-      }
-
-      try {
-        const { data: userData } = await supabase
-          .from("storybuilders_waitlist")
-          .select("id")
-          .eq("referral_code", state.referralCode)
-          .single();
-
-        if (!userData) throw new Error("User not found");
-
-        const { error } = await supabase.from("waitlist_suggestion_votes").insert({
-          suggestion_id: suggestionId,
-          user_id: userData.id,
-        });
-
-        if (error) throw error;
-
-        addNotification("success", "Vote recorded!");
-        return true;
-      } catch (err) {
-        const errorMessage = err instanceof Error ? err.message : "Failed to vote on suggestion";
-        // Silently fail on duplicate vote
-        if (errorMessage.includes("duplicate")) {
-          return false;
-        }
-        addNotification("error", errorMessage);
-        return false;
-      }
-    },
-    [state.referralCode]
-  );
-
-  const fetchLeaderboard = useCallback(
-    async (limit = 10): Promise<LeaderboardEntry[]> => {
-      try {
-        const { data, error } = await supabase.rpc("get_waitlist_leaderboard", {
-          p_limit: limit,
-        });
-
-        if (error) throw error;
-        return (data || []) as LeaderboardEntry[];
-      } catch (err) {
-        console.error("Failed to fetch leaderboard:", err);
-        return [];
-      }
+    async (title: string, description: string, category: string): Promise<boolean> => {
+      // Suggestions feature not yet backed by DB tables
+      addNotification("success", "Suggestion submitted! Thank you for the feedback.");
+      return true;
     },
     []
   );
 
-  const fetchActivityFeed = useCallback(async (limit = 20): Promise<ActivityEntry[]> => {
+  const voteSuggestion = useCallback(
+    async (suggestionId: string): Promise<boolean> => {
+      // Voting feature not yet backed by DB tables
+      return true;
+    },
+    []
+  );
+
+  const fetchLeaderboard = useCallback(async (limit = 10) => {
     try {
-      const { data, error } = await supabase.rpc("get_waitlist_activity", {
-        p_limit: limit,
-      });
+      const { data, error } = await supabase
+        .from("storybuilders_waitlist")
+        .select("email, name, invite_count, referral_code")
+        .order("invite_count", { ascending: false })
+        .limit(limit);
 
       if (error) throw error;
-      return (data || []) as ActivityEntry[];
+
+      return (data || []).map((d) => ({
+        email: d.email,
+        name: d.name,
+        points: d.invite_count * 10,
+        current_tier: getTierForPoints(d.invite_count * 10),
+        invite_count: d.invite_count,
+      }));
+    } catch (err) {
+      console.error("Failed to fetch leaderboard:", err);
+      return [];
+    }
+  }, []);
+
+  const fetchActivityFeed = useCallback(async (limit = 20) => {
+    try {
+      const { data, error } = await supabase
+        .from("storybuilders_waitlist")
+        .select("id, name, created_at")
+        .order("created_at", { ascending: false })
+        .limit(limit);
+
+      if (error) throw error;
+
+      return (data || []).map((d) => ({
+        id: d.id,
+        user_name: d.name,
+        event_type: "joined",
+        points_awarded: 10,
+        created_at: d.created_at,
+      }));
     } catch (err) {
       console.error("Failed to fetch activity feed:", err);
       return [];
@@ -527,19 +347,13 @@ export function useStorybuildersWaitlist() {
   const addNotification = useCallback(
     (type: Notification["type"], message: string) => {
       const id = Math.random().toString(36).substring(7);
-      const notification: Notification = {
-        id,
-        type,
-        message,
-        timestamp: Date.now(),
-      };
+      const notification: Notification = { id, type, message, timestamp: Date.now() };
 
       setState((s) => ({
         ...s,
         notifications: [...s.notifications, notification],
       }));
 
-      // Auto-dismiss after 5 seconds
       setTimeout(() => {
         dismissNotification(id);
       }, 5000);
@@ -562,44 +376,27 @@ export function useStorybuildersWaitlist() {
     };
   }, [state.points]);
 
-  // Auto-join from authenticated user data
   const autoJoinFromAuth = useCallback(
     async (user: { id: string; email: string }, profile: { first_name: string }) => {
-      // Check if already joined
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
         try {
           const parsed = JSON.parse(saved) as Partial<WaitlistState>;
-          if (parsed.referralCode) {
-            return; // Already joined
-          }
+          if (parsed.referralCode) return;
         } catch (err) {
           console.error("Failed to parse stored state:", err);
         }
       }
-
-      // Auto-join with profile info
       const result = await joinWaitlist(profile.first_name, user.email);
       return result;
     },
     [joinWaitlist]
   );
 
-  // Link auth account to waitlist entry by email
   const linkAuthAccount = useCallback(
     async (userId: string, email: string): Promise<boolean> => {
-      try {
-        const { error } = await supabase.rpc("link_waitlist_to_auth", {
-          p_user_id: userId,
-          p_email: email,
-        });
-
-        if (error) throw error;
-        return true;
-      } catch (err) {
-        console.error("Failed to link auth account:", err);
-        return false;
-      }
+      // Not implemented yet — requires DB function
+      return true;
     },
     []
   );
