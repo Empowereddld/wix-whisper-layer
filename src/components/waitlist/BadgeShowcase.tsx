@@ -68,7 +68,7 @@ const BADGES: BadgeDefinition[] = [
     id: "social_butterfly",
     name: "Social Butterfly",
     description: "Shared on 3+ platforms",
-    icon: Butterfly,
+    icon: Heart,
     howToEarn: "Share your link on at least 3 different platforms",
     colors: {
       bg: "from-pink-400 to-pink-600",

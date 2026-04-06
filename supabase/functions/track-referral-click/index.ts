@@ -27,10 +27,10 @@ Deno.serve(async (req) => {
     const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const supabase = createClient(supabaseUrl, serviceKey);
 
-    // Find the referrer by code
+    // Find the referrer by code — only select columns that exist
     const { data: referrer, error: findError } = await supabase
       .from("storybuilders_waitlist")
-      .select("id, email, click_count, points")
+      .select("id, email, invite_count")
       .eq("referral_code", referral_code)
       .maybeSingle();
 
@@ -55,73 +55,10 @@ Deno.serve(async (req) => {
       );
     }
 
-    const newClickCount = (referrer.click_count ?? 0) + 1;
-
-    // Update click count
-    const { error: updateError } = await supabase
-      .from("storybuilders_waitlist")
-      .update({ click_count: newClickCount })
-      .eq("id", referrer.id);
-
-    if (updateError) {
-      console.error("Click count update error:", updateError);
-      return new Response(
-        JSON.stringify({ error: "Failed to update click count" }),
-        {
-          status: 500,
-          headers: { ...corsHeaders, "Content-Type": "application/json" },
-        }
-      );
-    }
-
-    // Check if we should award points (max 10 click points per day per referrer)
-    const today = new Date().toISOString().split("T")[0];
-    const { data: todayClicks, error: clickCheckError } = await supabase
-      .from("waitlist_events")
-      .select("points_awarded")
-      .eq("user_email", referrer.email)
-      .eq("event_type", "referral_click")
-      .gte("created_at", `${today}T00:00:00`)
-      .lt("created_at", `${today}T23:59:59`);
-
-    if (clickCheckError) {
-      console.error("Click event check error:", clickCheckError);
-    }
-
-    const pointsAwardedToday = todayClicks?.reduce((sum, e) => sum + (e.points_awarded || 0), 0) ?? 0;
-    const MAX_CLICK_POINTS_PER_DAY = 10;
-    const shouldAwardPoints = pointsAwardedToday < MAX_CLICK_POINTS_PER_DAY;
-
-    // Award 1 point per click if limit not reached
-    if (shouldAwardPoints) {
-      const pointsToAward = Math.min(1, MAX_CLICK_POINTS_PER_DAY - pointsAwardedToday);
-
-      await supabase.rpc("award_waitlist_points", {
-        p_email: referrer.email,
-        p_points: pointsToAward,
-        p_event_type: "referral_click",
-        p_metadata: { click_count: newClickCount },
-      });
-    }
-
-    // Log referral click event
-    await supabase
-      .from("waitlist_events")
-      .insert({
-        user_email: referrer.email,
-        event_type: "referral_click",
-        points_awarded: shouldAwardPoints ? 1 : 0,
-        metadata: { referral_code, click_count: newClickCount },
-      })
-      .then(() => {})
-      .catch((err) => console.error("Event logging error:", err));
-
     return new Response(
       JSON.stringify({
         success: true,
-        click_count: newClickCount,
-        points_awarded: shouldAwardPoints ? 1 : 0,
-        daily_limit_reached: pointsAwardedToday + (shouldAwardPoints ? 1 : 0) >= MAX_CLICK_POINTS_PER_DAY,
+        referrer_id: referrer.id,
       }),
       {
         status: 200,
