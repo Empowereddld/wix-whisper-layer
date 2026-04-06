@@ -3,7 +3,7 @@ import { motion } from "motion/react";
 import {
   Share2,
   Star,
-  Butterfly,
+  Heart,
   Clock,
   Flame,
   Shield,
