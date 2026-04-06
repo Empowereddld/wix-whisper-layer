@@ -1,9 +1,11 @@
 import { useState, useEffect, useCallback } from "react";
 import { motion } from "motion/react";
 import confetti from "canvas-confetti";
+import { useNavigate } from "react-router-dom";
 import SEOHead from "@/components/SEOHead";
 import { Button } from "@/components/ui/button";
 import { useStorybuildersWaitlist } from "@/hooks/useStorybuildersWaitlist";
+import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
 
 // Waitlist Components
@@ -35,6 +37,8 @@ import {
 
 const StoryBuilders = () => {
   const state = useStorybuildersWaitlist();
+  const { user, profile } = useAuth();
+  const navigate = useNavigate();
   const {
     joined,
     referralCode,
@@ -65,6 +69,15 @@ const StoryBuilders = () => {
   const [formEmail, setFormEmail] = useState("");
   const [formLoading, setFormLoading] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
+  const isLoggedIn = !!user;
+
+  // Pre-fill form when user is logged in
+  useEffect(() => {
+    if (isLoggedIn && !joined && profile?.first_name && user?.email) {
+      setFormName(profile.first_name);
+      setFormEmail(user.email);
+    }
+  }, [isLoggedIn, joined, profile?.first_name, user?.email]);
 
   // Trigger confetti on join success
   useEffect(() => {
@@ -81,8 +94,8 @@ const StoryBuilders = () => {
 
   // Handle form submission
   const handleSignup = useCallback(
-    async (e: React.FormEvent) => {
-      e.preventDefault();
+    async (e?: React.FormEvent) => {
+      if (e) e.preventDefault();
 
       if (!formName.trim() || !formEmail.trim()) {
         toast.error("Please fill in all fields");
@@ -104,7 +117,7 @@ const StoryBuilders = () => {
         setFormEmail("");
       }
     },
-    [joinWaitlist]
+    [formName, formEmail, joinWaitlist]
   );
 
   // Get tier info
@@ -162,58 +175,28 @@ const StoryBuilders = () => {
               >
                 <GlassCard>
                   <div className="p-8">
-                    <h2 className="text-2xl font-bold text-white mb-2">Join the Launch Team</h2>
-                    <p className="text-white/70 text-sm mb-6">
-                      Be among the first to access Story Builders. Earn rewards by inviting others.
-                    </p>
+                    {isLoggedIn && !joined ? (
+                      // Pre-join mode for logged-in users
+                      <div>
+                        <h2 className="text-2xl font-bold text-white mb-2">
+                          Hey {profile?.first_name}!
+                        </h2>
+                        <p className="text-white/70 text-sm mb-6">
+                          Join the Story Builders launch team with one click.
+                        </p>
 
-                    {error && (
-                      <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        className="mb-4 p-3 bg-yellow-500/20 border border-yellow-500/50 rounded-lg text-yellow-300 text-sm"
-                      >
-                        {error}
-                      </motion.div>
-                    )}
+                        {error && (
+                          <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            className="mb-4 p-3 bg-yellow-500/20 border border-yellow-500/50 rounded-lg text-yellow-300 text-sm"
+                          >
+                            {error}
+                          </motion.div>
+                        )}
 
-                    {loading ? (
-                      <WaitlistFormSkeleton />
-                    ) : (
-                      <form onSubmit={handleSignup} className="space-y-4">
-                        {/* Name Input */}
-                        <div>
-                          <label className="block text-white/80 text-sm font-medium mb-2">
-                            Full Name
-                          </label>
-                          <input
-                            type="text"
-                            value={formName}
-                            onChange={(e) => setFormName(e.target.value)}
-                            placeholder="Sarah Johnson"
-                            className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-                            disabled={formLoading}
-                          />
-                        </div>
-
-                        {/* Email Input */}
-                        <div>
-                          <label className="block text-white/80 text-sm font-medium mb-2">
-                            Email Address
-                          </label>
-                          <input
-                            type="email"
-                            value={formEmail}
-                            onChange={(e) => setFormEmail(e.target.value)}
-                            placeholder="sarah@example.com"
-                            className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-                            disabled={formLoading}
-                          />
-                        </div>
-
-                        {/* Submit Button */}
                         <Button
-                          type="submit"
+                          onClick={() => handleSignup()}
                           disabled={formLoading}
                           className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-3 rounded-lg transition-all disabled:opacity-50"
                         >
@@ -227,15 +210,93 @@ const StoryBuilders = () => {
                             "Join the Launch Team"
                           )}
                         </Button>
-                      </form>
-                    )}
 
-                    {/* Trust Section */}
-                    <div className="mt-6 p-4 bg-white/5 border border-white/10 rounded-lg text-center">
-                      <p className="text-white/70 text-xs">
-                        We're building the most evidence-based, family-centered app for kids with DLD.
-                      </p>
-                    </div>
+                        {/* Trust Section */}
+                        <div className="mt-6 p-4 bg-white/5 border border-white/10 rounded-lg text-center">
+                          <p className="text-white/70 text-xs">
+                            We're building the most evidence-based, family-centered app for kids with DLD.
+                          </p>
+                        </div>
+                      </div>
+                    ) : (
+                      // Standard form for non-logged-in users
+                      <div>
+                        <h2 className="text-2xl font-bold text-white mb-2">Join the Launch Team</h2>
+                        <p className="text-white/70 text-sm mb-6">
+                          Be among the first to access Story Builders. Earn rewards by inviting others.
+                        </p>
+
+                        {error && (
+                          <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            className="mb-4 p-3 bg-yellow-500/20 border border-yellow-500/50 rounded-lg text-yellow-300 text-sm"
+                          >
+                            {error}
+                          </motion.div>
+                        )}
+
+                        {loading ? (
+                          <WaitlistFormSkeleton />
+                        ) : (
+                          <form onSubmit={handleSignup} className="space-y-4">
+                            {/* Name Input */}
+                            <div>
+                              <label className="block text-white/80 text-sm font-medium mb-2">
+                                Full Name
+                              </label>
+                              <input
+                                type="text"
+                                value={formName}
+                                onChange={(e) => setFormName(e.target.value)}
+                                placeholder="Sarah Johnson"
+                                className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                                disabled={formLoading}
+                              />
+                            </div>
+
+                            {/* Email Input */}
+                            <div>
+                              <label className="block text-white/80 text-sm font-medium mb-2">
+                                Email Address
+                              </label>
+                              <input
+                                type="email"
+                                value={formEmail}
+                                onChange={(e) => setFormEmail(e.target.value)}
+                                placeholder="sarah@example.com"
+                                className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                                disabled={formLoading}
+                              />
+                            </div>
+
+                            {/* Submit Button */}
+                            <Button
+                              type="submit"
+                              disabled={formLoading}
+                              className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-3 rounded-lg transition-all disabled:opacity-50"
+                            >
+                              {formLoading ? (
+                                <motion.div
+                                  animate={{ rotate: 360 }}
+                                  transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                                  className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full"
+                                />
+                              ) : (
+                                "Join the Launch Team"
+                              )}
+                            </Button>
+                          </form>
+                        )}
+
+                        {/* Trust Section */}
+                        <div className="mt-6 p-4 bg-white/5 border border-white/10 rounded-lg text-center">
+                          <p className="text-white/70 text-xs">
+                            We're building the most evidence-based, family-centered app for kids with DLD.
+                          </p>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </GlassCard>
               </motion.div>
@@ -457,6 +518,35 @@ const StoryBuilders = () => {
                   earned_at: new Date().toISOString(),
                 }))}
               />
+            </motion.div>
+
+            {/* Post-join navigation */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
+              className="flex justify-center gap-4 mb-12"
+            >
+              {isLoggedIn ? (
+                <Button
+                  onClick={() => navigate("/hub")}
+                  className="bg-white/10 hover:bg-white/20 border border-white/20 text-white font-medium px-6 py-3 rounded-lg transition-all"
+                >
+                  Back to Resource Hub
+                </Button>
+              ) : (
+                <div className="text-center">
+                  <p className="text-white/80 mb-4 text-lg">
+                    Want access to our free DLD resources?
+                  </p>
+                  <Button
+                    onClick={() => navigate("/hub/signup")}
+                    className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold px-8 py-3 rounded-lg transition-all"
+                  >
+                    Join the Resource Hub
+                  </Button>
+                </div>
+              )}
             </motion.div>
           </div>
         </div>

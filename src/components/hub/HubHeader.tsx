@@ -1,7 +1,7 @@
 import { useAuth } from "@/contexts/AuthContext";
 import { useAdminCheck } from "@/hooks/useAdminCheck";
 import { useNavigate } from "react-router-dom";
-import { LogOut, Settings, ChevronDown, Shield } from "lucide-react";
+import { LogOut, Settings, ChevronDown, Shield, Rocket } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -50,6 +50,15 @@ const HubHeader = ({ activeAudience = "", onAudienceChange }: HubHeaderProps) =>
 
           {/* Spacer for centering */}
           <div className="flex-1" />
+
+          {/* Story Builders Link */}
+          <button
+            onClick={() => navigate("/storybuilders")}
+            className="flex items-center gap-1 px-3 py-1 rounded-full bg-purple-600/20 hover:bg-purple-600/30 border border-purple-500/30 text-purple-300 hover:text-purple-200 text-sm font-medium transition-all mr-4 flex-shrink-0"
+          >
+            <Rocket className="h-4 w-4" />
+            <span className="hidden sm:inline">Launch Team</span>
+          </button>
 
           {/* User menu */}
           <DropdownMenu>

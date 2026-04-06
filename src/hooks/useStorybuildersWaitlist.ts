@@ -562,6 +562,48 @@ export function useStorybuildersWaitlist() {
     };
   }, [state.points]);
 
+  // Auto-join from authenticated user data
+  const autoJoinFromAuth = useCallback(
+    async (user: { id: string; email: string }, profile: { first_name: string }) => {
+      // Check if already joined
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved) as Partial<WaitlistState>;
+          if (parsed.referralCode) {
+            return; // Already joined
+          }
+        } catch (err) {
+          console.error("Failed to parse stored state:", err);
+        }
+      }
+
+      // Auto-join with profile info
+      const result = await joinWaitlist(profile.first_name, user.email);
+      return result;
+    },
+    [joinWaitlist]
+  );
+
+  // Link auth account to waitlist entry by email
+  const linkAuthAccount = useCallback(
+    async (userId: string, email: string): Promise<boolean> => {
+      try {
+        const { error } = await supabase.rpc("link_waitlist_to_auth", {
+          p_user_id: userId,
+          p_email: email,
+        });
+
+        if (error) throw error;
+        return true;
+      } catch (err) {
+        console.error("Failed to link auth account:", err);
+        return false;
+      }
+    },
+    []
+  );
+
   return {
     ...state,
     joinWaitlist,
@@ -576,5 +618,7 @@ export function useStorybuildersWaitlist() {
     dismissNotification,
     referralLink,
     tierInfo,
+    autoJoinFromAuth,
+    linkAuthAccount,
   };
 }
