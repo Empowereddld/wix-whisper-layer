@@ -58,7 +58,7 @@ const UserDetailModal = ({
   onClose,
 }: UserDetailModalProps) => {
   const [isEditingPoints, setIsEditingPoints] = useState(false);
-  const [newPoints, setNewPoints] = useState(user.points);
+  const [newPoints, setNewPoints] = useState(user.points || 0);
   const [isSendingEmail, setIsSendingEmail] = useState(false);
   const [selectedTemplate, setSelectedTemplate] = useState("verification_resend");
 
