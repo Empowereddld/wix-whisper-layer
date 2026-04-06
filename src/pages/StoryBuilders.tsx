@@ -338,7 +338,7 @@ const StoryBuilders = () => {
             <VerificationBanner
               emailVerified={emailVerified}
               email={formEmail || "your email"}
-              onResendClick={resendVerification}
+              onResendClick={async () => { await resendVerification(); }}
             />
           )}
 

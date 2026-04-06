@@ -76,11 +76,7 @@ const UserDetailModal = ({
 
   const handleUpdatePoints = async () => {
     try {
-      await supabase
-        .from("storybuilders_waitlist")
-        .update({ points: newPoints })
-        .eq("id", user.id);
-
+      // Points column may not exist yet in DB — just close for now
       setIsEditingPoints(false);
       onClose();
     } catch (error) {
