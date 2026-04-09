@@ -2,7 +2,7 @@ import Header from "@/components/Header";
 import WhoWeServeHero from "@/components/WhoWeServeHero";
 import ChoosePathSection from "@/components/ChoosePathSection";
 import ShopGlobalCommunity from "@/components/ShopGlobalCommunity";
-import RealityOfDLDSection from "@/components/RealityOfDLDSection";
+
 import EveryChildSection from "@/components/EveryChildSection";
 import ResourceBooksSection from "@/components/ResourceBooksSection";
 import ChoosePathCTA from "@/components/ChoosePathCTA";
@@ -22,7 +22,7 @@ const WhoWeServe = () => {
         <WhoWeServeHero />
         <ChoosePathSection />
         <ShopGlobalCommunity />
-        <RealityOfDLDSection />
+        
         <ResourceBooksSection />
         <EveryChildSection />
         <ChoosePathCTA />
