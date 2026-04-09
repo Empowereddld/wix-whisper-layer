@@ -85,14 +85,14 @@ const TrustSection = () => {
           </div>
 
           {/* Column 2 – Stacked images (lg only) */}
-          <div className="hidden lg:flex flex-col gap-4">
+          <div className="hidden lg:flex flex-col gap-4 justify-between">
             <img
               src={foundersPhoto}
               alt="Jinean and Camesha, founders of Empowered DLD"
               className="w-full max-w-[280px] h-auto mx-auto"
               loading="lazy"
             />
-            <div className="rounded-2xl overflow-hidden flex-1 min-h-[200px]">
+            <div className="rounded-2xl overflow-hidden h-[160px]">
               <img
                 src={boyReading}
                 alt="Boy reading a book about DLD"
