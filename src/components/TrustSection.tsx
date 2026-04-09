@@ -92,7 +92,7 @@ const TrustSection = () => {
               className="w-full max-w-[280px] h-auto mx-auto"
               loading="lazy"
             />
-            <div className="rounded-2xl overflow-hidden h-[160px]">
+            <div className="rounded-2xl overflow-hidden h-[220px]">
               <img
                 src={boyReading}
                 alt="Boy reading a book about DLD"
