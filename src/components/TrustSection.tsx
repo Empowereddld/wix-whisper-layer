@@ -34,10 +34,7 @@ const TrustSection = () => {
               Changing how the world understands DLD
             </h2>
             <p className="text-muted-foreground text-[14px] mb-2.5 leading-[1.65]">
-              We created Empowered DLD to change how the world understands children with Developmental Language Disorder.
-            </p>
-            <p className="text-muted-foreground text-[14px] mb-2.5 leading-[1.65]">
-              We are Jinean and Camesha, an SLP and a teacher.
+              We are Jinean and Camesha, an SLP and a teacher team. We created Empowered DLD to change how the world understands children with Developmental Language Disorder.
             </p>
             <p className="text-muted-foreground text-[14px] mb-3.5 leading-[1.65]">
               Too many children with DLD go unseen, misunderstood, or unsupported.
