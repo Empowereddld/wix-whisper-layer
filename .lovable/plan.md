@@ -1,28 +1,33 @@
 
 
-## Plan: Update "Why Empowered DLD" Section Text
+## Plan: Stack Founders Photo Above Boy Reading in Same Column
 
-The new copy is longer than the current text, but it can still look clean with proper formatting. I'll structure it with visual breathing room — short paragraphs, indented list-style lines for the "Children need…" and "Adults need…" blocks, and keep the "What makes us different" checklist removed since the new copy covers that ground.
+**Goal:** Move the founders photo into the same column as the boy reading image (column 3), stacking founders on top. This frees columns 1–2 for the text to span wider.
 
 ### Changes to `src/components/TrustSection.tsx`
 
-**Replace lines 34–57** (the heading, paragraphs, and checklist) with:
+**Desktop (lg) layout:** `lg:grid-cols-[2fr_1fr]`
+- **Column 1 (wide):** All text content — heading, paragraphs, indented blocks, final paragraph, CTA button
+- **Column 2:** Founders photo on top, boy reading below, in a single `flex flex-col gap-4` container
 
-- **Heading** → "Changing how the world understands DLD"
-- **Paragraphs** structured as:
-  1. "We created Empowered DLD to change how the world understands children with Developmental Language Disorder."
-  2. "We are Jinean and Camesha, an SLP and a teacher."
-  3. "Too many children with DLD go unseen, misunderstood, or unsupported."
-  4. Three indented lines starting with "Children need…" / "They need…" / "They deserve…" — styled as a subtle list block
-  5. Three indented lines starting with "Adults need…" / "They need…" / "They need…" — same style
-  6. Final paragraph: "That is why we create tools that go beyond awareness…"
+```text
+┌──────────────────────────────────────────┐  ┌──────────────┐
+│  WHY EMPOWERED DLD?                      │  │ Founders     │
+│  Changing how the world understands DLD  │  │ photo        │
+│                                          │  ├──────────────┤
+│  All paragraphs spanning wide            │  │ Boy reading  │
+│  "Children need..." block                │  │ photo        │
+│  "Adults need..." block                  │  │              │
+│  Final paragraph                         │  │              │
+│  [FIND WHAT WORKS FOR YOU]               │  │              │
+└──────────────────────────────────────────┘  └──────────────┘
+```
 
-**Formatting approach:**
-- Keep `max-w-[420px]` on paragraphs for readability
-- Use slightly tighter spacing (`mb-2.5`) between paragraphs within each group
-- The "Children need…" and "Adults need…" blocks will use `pl-3 border-l-2 border-primary/30` for a subtle left-accent to visually separate them
-- Remove the "What makes us different" checklist and bullet items (the new copy replaces this)
-- Keep the CTA button as-is
-
-This keeps the section clean and scannable despite the longer copy.
+**Specific edits:**
+1. Change grid from `lg:grid-cols-[1fr_1fr_1fr]` to `lg:grid-cols-[2fr_1fr]`
+2. Remove `max-w-[420px]` from heading and paragraphs so text uses the wider column
+3. Remove the standalone founders photo column (the one with `md:hidden lg:flex`)
+4. Combine founders photo and boy reading into one column: founders on top (rounded, ~200px), boy reading below (fills remaining height)
+5. Update tablet (md) layout to stack both images in the sidebar column
+6. Mobile stays single-column stacked
 
