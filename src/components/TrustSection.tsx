@@ -32,29 +32,33 @@ const TrustSection = () => {
               Why Empowered DLD?
             </p>
             <h2 className="text-[26px] md:text-[30px] font-bold text-foreground mb-3.5 leading-[1.08]">
-              Created by an SLP and teacher
+              Changing how the world understands DLD
             </h2>
-            <p className="text-muted-foreground text-[14px] mb-3.5 leading-[1.65] max-w-[420px]">
-              We're Jinean and Camesha. We believe children need to understand how their brains work. A great tool for that is seeing themselves in stories.
+            <p className="text-muted-foreground text-[14px] mb-2.5 leading-[1.65] max-w-[420px]">
+              We created Empowered DLD to change how the world understands children with Developmental Language Disorder.
             </p>
-            <p className="text-muted-foreground text-[14px] mb-5 leading-[1.65] max-w-[420px]">
-              When we visited our local library, we found over 600 books on autism, over 100 on ADHD, and zero on DLD. We built Empowered DLD to change that.
+            <p className="text-muted-foreground text-[14px] mb-2.5 leading-[1.65] max-w-[420px]">
+              We are Jinean and Camesha, an SLP and a teacher.
+            </p>
+            <p className="text-muted-foreground text-[14px] mb-3.5 leading-[1.65] max-w-[420px]">
+              Too many children with DLD go unseen, misunderstood, or unsupported.
             </p>
 
-            <p className="text-[12px] font-bold text-foreground mb-2">What makes us different:</p>
-            <ul className="space-y-1 mb-6">
-              {[
-                "Built from years of clinical and classroom experience",
-                "Help children understand how their brains work",
-                "Flexible tools for home, school, and therapy",
-                "Easy to share with families and school teams",
-              ].map((b) => (
-                <li key={b} className="flex items-start gap-2 text-[12px] text-muted-foreground leading-[1.55]">
-                  <Check className="text-primary mt-0.5 w-3.5 h-3.5 shrink-0" strokeWidth={3} />
-                  {b}
-                </li>
-              ))}
-            </ul>
+            <div className="pl-3 border-l-2 border-primary/30 mb-3.5 max-w-[420px]">
+              <p className="text-muted-foreground text-[14px] leading-[1.65]">Children need to understand how their brain works.</p>
+              <p className="text-muted-foreground text-[14px] leading-[1.65]">They need to know that they are not alone.</p>
+              <p className="text-muted-foreground text-[14px] leading-[1.65]">They deserve to see themselves reflected in stories.</p>
+            </div>
+
+            <div className="pl-3 border-l-2 border-primary/30 mb-3.5 max-w-[420px]">
+              <p className="text-muted-foreground text-[14px] leading-[1.65]">Adults need clear, practical ways to understand and support those children.</p>
+              <p className="text-muted-foreground text-[14px] leading-[1.65]">They need tools that translate knowledge into real everyday interactions.</p>
+              <p className="text-muted-foreground text-[14px] leading-[1.65]">They need guidance that builds confidence, not confusion.</p>
+            </div>
+
+            <p className="text-muted-foreground text-[14px] mb-6 leading-[1.65] max-w-[420px]">
+              That is why we create tools that go beyond awareness. Our resources help adults understand DLD and support children in building confidence, communication, and self-advocacy in everyday life.
+            </p>
 
             <a href="/who-we-serve">
               <Button className="w-fit h-[46px] px-7 rounded-lg text-[11px] font-bold uppercase tracking-[0.14em] shadow-[0_2px_8px_hsl(258_50%_50%/0.2)] hover:shadow-[0_4px_14px_hsl(258_50%_50%/0.25)] hover:brightness-[0.96] transition-all duration-300">
