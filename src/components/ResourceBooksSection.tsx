@@ -5,7 +5,7 @@ const ResourceBooksSection = () => {
   return (
     <section className="pb-16 md:pb-24 lg:pb-28">
       <div className="max-w-[1300px] mx-auto px-6 md:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 bg-muted rounded-xl border border-border/40 overflow-hidden">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 bg-background rounded-xl border border-border/40 overflow-hidden">
           {/* Image */}
           <div className="aspect-[4/3] lg:aspect-auto lg:min-h-[380px]">
             <img
