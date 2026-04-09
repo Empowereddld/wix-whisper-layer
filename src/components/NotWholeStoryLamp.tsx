@@ -9,7 +9,7 @@ const NotWholeStoryLamp = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
           viewport={{ once: true }}
-          className="border border-foreground/15 rounded-2xl p-10 md:p-14 text-center shadow-[0_8px_30px_-12px_rgba(0,0,0,0.08)]"
+          className="border border-foreground/15 rounded-2xl p-10 md:p-14 text-center shadow-[0_8px_30px_-12px_rgba(0,0,0,0.08)] bg-[hsl(258,60%,96%)]"
         >
           <h2 className="text-3xl md:text-4xl lg:text-[46px] font-black tracking-tight text-foreground leading-tight">
             But this is not
