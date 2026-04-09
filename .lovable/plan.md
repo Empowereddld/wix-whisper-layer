@@ -1,82 +1,28 @@
 
 
-## Plan: Fix All Build Errors from Claude Coworker's Changes
+## Plan: Update "Why Empowered DLD" Section Text
 
-Your Claude coworker made changes that reference database columns, tables, and function signatures that don't match what actually exists in your database types. There are also some TypeScript issues in edge functions. **You do NOT need to run any SQL migrations or set up Resend** -- I'll fix the code to work with what your database actually has.
+The new copy is longer than the current text, but it can still look clean with proper formatting. I'll structure it with visual breathing room — short paragraphs, indented list-style lines for the "Children need…" and "Adults need…" blocks, and keep the "What makes us different" checklist removed since the new copy covers that ground.
 
-Here's the breakdown of all errors and fixes:
+### Changes to `src/components/TrustSection.tsx`
 
----
+**Replace lines 34–57** (the heading, paragraphs, and checklist) with:
 
-### 1. Fix Edge Function TypeScript Errors
+- **Heading** → "Changing how the world understands DLD"
+- **Paragraphs** structured as:
+  1. "We created Empowered DLD to change how the world understands children with Developmental Language Disorder."
+  2. "We are Jinean and Camesha, an SLP and a teacher."
+  3. "Too many children with DLD go unseen, misunderstood, or unsupported."
+  4. Three indented lines starting with "Children need…" / "They need…" / "They deserve…" — styled as a subtle list block
+  5. Three indented lines starting with "Adults need…" / "They need…" / "They need…" — same style
+  6. Final paragraph: "That is why we create tools that go beyond awareness…"
 
-**Files:** `create-checkout/index.ts`, `verify-payment/index.ts`
-- Change `err.message` to `(err instanceof Error ? err.message : "Internal server error")` (err is `unknown`)
+**Formatting approach:**
+- Keep `max-w-[420px]` on paragraphs for readability
+- Use slightly tighter spacing (`mb-2.5`) between paragraphs within each group
+- The "Children need…" and "Adults need…" blocks will use `pl-3 border-l-2 border-primary/30` for a subtle left-accent to visually separate them
+- Remove the "What makes us different" checklist and bullet items (the new copy replaces this)
+- Keep the CTA button as-is
 
-**Files:** `track-referral-click/index.ts`, `verify-email-waitlist/index.ts`
-- Replace `.then(() => {}).catch(...)` with a proper `try/catch` or just `await` the insert (`.catch` doesn't exist on the Supabase PromiseLike type)
-
----
-
-### 2. Fix Waitlist Component Type Mismatches
-
-**`src/components/waitlist/BadgeShowcase.tsx`**
-- Remove `Butterfly` import from lucide-react (doesn't exist) — replace with an available icon like `Heart` or `Sparkles`
-
-**`src/components/waitlist/MilestoneModal.tsx` (line 166)**
-- Fix the type cast of `getTierColor()` result — cast through `unknown` or adjust the type
-
-**`src/components/waitlist/ReferralTracker.tsx` (lines 71-72)**
-- The code queries `waitlist_referrals` table which doesn't exist in the types. Replace with a query against `storybuilders_waitlist` using `referred_by_code` to find referrals
-
-**`src/components/waitlist/index.ts` (line 28)**
-- `VerificationBanner` uses a named export, not a default export. Change to `export { VerificationBanner } from "./VerificationBanner"`
-
----
-
-### 3. Fix `useStorybuildersWaitlist.ts` Hook Errors
-
-**Line 220:** `get_waitlist_user_stats` RPC expects `p_referral_code`, not `p_email` — change argument name
-
-**Line 225:** Cast `data` through `unknown` before casting to `UserStats`
-
-**Line 431:** `waitlist_suggestions` table expects `waitlist_id`, not `user_email` — need to look up the user's waitlist ID first and use that
-
-**Line 468:** `waitlist_suggestion_votes` expects `waitlist_id`, not `user_id` — same fix, use the waitlist entry ID
-
-**Lines 497, 513:** Cast RPC results through `unknown` before casting to `LeaderboardEntry[]` / `ActivityEntry[]`
-
----
-
-### 4. Fix `AdminStoryBuilders.tsx` Type Mismatches
-
-**Interface fixes:** The `WaitlistUser`, `FraudLog`, and `EmailLog` interfaces don't match actual DB columns:
-- `WaitlistUser.flagged` → should be `fraud_flagged` (matches DB)
-- `FraudLog.user_email` → should be `email`, `dismissed` → should be `resolved`
-- `EmailLog.recipient_email` → doesn't exist (table has `waitlist_id`), `status` → doesn't exist
-
-**Line 216:** `.update({ flagged: ... })` → should be `.update({ fraud_flagged: ... })`
-**Line 242:** `.update({ dismissed: ... })` → should be `.update({ resolved: ... })`
-
----
-
-### 5. Fix `StoryBuilders.tsx` Page Errors
-
-**Line 128:** `SEOHead` missing required `path` prop — add `path="/storybuilders"`
-
-**Lines 139, 346:** `SocialProofBanner` doesn't accept `totalJoined`/`dailyJoins` props — it fetches its own data internally. Remove the props.
-
-**Line 312:** `CommunityMilestone` expects `totalCount`, not `totalParticipants`
-
-**Line 343:** `ConfettiEffect` requires `trigger` prop — pass `trigger={showConfetti}`
-
-**Line 350:** `NotificationBell` expects `userEmail` prop, not `notifications`/`onDismiss`
-
-**Line 355-358:** `VerificationBanner` expects `emailVerified`, `email`, `onResendClick` props — not `onResend`/`isLoading`
-
----
-
-### Summary
-
-All fixes are code-side adjustments to align with the actual database schema and component APIs. No new migrations needed. No Resend setup needed (the edge functions already exist). Around 10 files need editing.
+This keeps the section clean and scannable despite the longer copy.
 
