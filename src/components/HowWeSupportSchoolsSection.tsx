@@ -3,7 +3,7 @@ import { ChevronRight } from "lucide-react";
 const cards = [
   {
     title: "Diverse Children's Books",
-    description: "Our DLD book series features characters from diverse backgrounds, available in 7+ languages. Each book contains a visual glossary.",
+    description: "Our DLD book series features characters from diverse backgrounds, available in 7+ languages. Each book contains a visual glossary. Discussion guides and character-themed strategy posters available in our resource hub.",
     link: "Explore the Books",
     href: "/shop/books",
   },
