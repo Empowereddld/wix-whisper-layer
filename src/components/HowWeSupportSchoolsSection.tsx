@@ -11,7 +11,7 @@ const cards = [
     title: "Professional Development",
     description: "Interactive training sessions for teachers, support staff, and administrators. Learn to recognize DLD, implement classroom accommodations, and support students across all subject areas.",
     link: "Learn About Training",
-    href: "/contact",
+    href: "#implementation-packages",
   },
   {
     title: "Implementation Toolkit",
