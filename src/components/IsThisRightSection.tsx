@@ -20,7 +20,7 @@ const IsThisRightSection = () => {
 
           <div className="flex flex-col justify-start pt-0 md:pt-2 order-1 lg:order-2">
             <p className="text-[14px] md:text-[15px] text-muted-foreground font-semibold mb-3">
-              This program is designed for schools that:
+              These programs are designed for schools that:
             </p>
             <ul className="list-disc pl-5 space-y-2 md:space-y-4 text-[13px] md:text-[14px] lg:text-[15px] text-muted-foreground leading-[1.7] mb-6 md:mb-8">
               <li>Want to improve outcomes for students with language disorders</li>
