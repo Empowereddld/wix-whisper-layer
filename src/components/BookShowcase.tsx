@@ -16,7 +16,7 @@ const BookShowcase = () => {
   return (
     <section className="py-12 md:py-18" id="books">
       <div className="container px-6 md:px-8">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-primary mb-2 opacity-80">
+        <p className="text-[13px] md:text-[14px] font-semibold uppercase tracking-[0.2em] text-primary mb-2 opacity-80">
           Our Books
         </p>
 
