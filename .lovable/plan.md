@@ -1,33 +1,19 @@
 
 
-## Plan: Stack Founders Photo Above Boy Reading in Same Column
+## Plan: Add YouTube Video to "What is DLD?" FAQ Answer
 
-**Goal:** Move the founders photo into the same column as the boy reading image (column 3), stacking founders on top. This frees columns 1–2 for the text to span wider.
+Add a styled callout link below the existing answer text for the "What is Developmental Language Disorder?" FAQ item, encouraging users to watch Dan and Daria explain DLD.
 
-### Changes to `src/components/TrustSection.tsx`
+### What changes
 
-**Desktop (lg) layout:** `lg:grid-cols-[2fr_1fr]`
-- **Column 1 (wide):** All text content — heading, paragraphs, indented blocks, final paragraph, CTA button
-- **Column 2:** Founders photo on top, boy reading below, in a single `flex flex-col gap-4` container
+**File: `src/components/DLDFaqSection.tsx`**
+- Update the first FAQ answer to include a clickable callout link after the text
+- The link will say something like: **"🎧 Listen to Dan and Daria explain DLD →"**
+- It will open `https://www.youtube.com/watch?v=Zf6PcH4f7rk` in a new tab
+- Styled as a subtle, branded inline link with an accent color and hover effect — consistent with the minimalist FAQ design
 
-```text
-┌──────────────────────────────────────────┐  ┌──────────────┐
-│  WHY EMPOWERED DLD?                      │  │ Founders     │
-│  Changing how the world understands DLD  │  │ photo        │
-│                                          │  ├──────────────┤
-│  All paragraphs spanning wide            │  │ Boy reading  │
-│  "Children need..." block                │  │ photo        │
-│  "Adults need..." block                  │  │              │
-│  Final paragraph                         │  │              │
-│  [FIND WHAT WORKS FOR YOU]               │  │              │
-└──────────────────────────────────────────┘  └──────────────┘
-```
-
-**Specific edits:**
-1. Change grid from `lg:grid-cols-[1fr_1fr_1fr]` to `lg:grid-cols-[2fr_1fr]`
-2. Remove `max-w-[420px]` from heading and paragraphs so text uses the wider column
-3. Remove the standalone founders photo column (the one with `md:hidden lg:flex`)
-4. Combine founders photo and boy reading into one column: founders on top (rounded, ~200px), boy reading below (fills remaining height)
-5. Update tablet (md) layout to stack both images in the sidebar column
-6. Mobile stays single-column stacked
+### Design approach
+- Keep it as a text link (not a full embed) so the FAQ stays clean and scannable
+- Use a small top margin to separate it from the answer paragraph
+- Opens in a new tab so users don't leave the page
 
