@@ -29,7 +29,7 @@ export const faqs = [
   {
     question: "How do we support DLD awareness?",
     answer:
-      "At Empowered DLD we create practical resources that help families, educators, and professionals better understand Developmental Language Disorder. Our work includes children's books, free resources, workshops, and awareness initiatives designed to make DLD easier to recognize and support.",
+      "At Empowered DLD we create practical resources that help families, educators, and professionals better understand Developmental Language Disorder. Our work includes children's books, free and paid resources, workshops, and awareness initiatives designed to make DLD easier to recognize and support.",
   },
 ];
 
