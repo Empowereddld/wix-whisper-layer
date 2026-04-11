@@ -10,6 +10,10 @@ export const faqs = [
     question: "What is Developmental Language Disorder?",
     answer:
       "Developmental Language Disorder (DLD) affects how people understand and use language. Individuals with DLD may have difficulty learning new words, following instructions, or expressing ideas clearly. DLD is lifelong, but with the right understanding and support, people with DLD can develop strategies and strengths that help them thrive.",
+    link: {
+      text: "🎧 Listen to Dan and Daria explain DLD →",
+      url: "https://www.youtube.com/watch?v=Zf6PcH4f7rk",
+    },
   },
   {
     question: "How common is DLD?",
@@ -60,6 +64,16 @@ const DLDFaqSection = () => {
                   </AccordionTrigger>
                   <AccordionContent className="text-[13px] md:text-[14px] text-muted-foreground leading-[1.8] pb-5">
                     {faq.answer}
+                    {faq.link && (
+                      <a
+                        href={faq.link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-3 inline-block text-primary font-semibold hover:underline transition-colors"
+                      >
+                        {faq.link.text}
+                      </a>
+                    )}
                   </AccordionContent>
                 </AccordionItem>
               ))}
