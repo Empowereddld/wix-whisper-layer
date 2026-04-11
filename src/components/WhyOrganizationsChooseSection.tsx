@@ -18,10 +18,6 @@ const trustPoints = [
     title: "Fits your budget and timeline",
     description: "From one-time workshops to comprehensive year-long partnerships, with everything in between",
   },
-  {
-    title: "Trusted by organizations like yours",
-    description: "Working with family service agencies, newcomer programs, and EarlyON centers across Ontario and beyond",
-  },
 ];
 
 const WhyOrganizationsChooseSection = () => {
