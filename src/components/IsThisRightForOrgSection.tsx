@@ -22,7 +22,7 @@ const IsThisRightForOrgSection = () => {
             </h2>
 
             <p className="text-[13px] md:text-[14px] lg:text-[15px] text-muted-foreground leading-[1.7] mb-5 md:mb-6">
-              We partner with organizations committed to supporting underserved families, including:
+              Designed to support:
             </p>
 
             <ul className="list-disc pl-5 space-y-3 md:space-y-4 text-[13px] md:text-[14px] lg:text-[15px] text-muted-foreground leading-[1.7] mb-8 md:mb-10">
