@@ -69,7 +69,7 @@ const DLDFaqSection = () => {
                         href={faq.link.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="mt-3 inline-block text-primary font-semibold hover:underline transition-colors"
+                        className="inline ml-1 text-primary font-semibold hover:underline transition-colors"
                       >
                         {faq.link.text}
                       </a>
