@@ -20,10 +20,10 @@ interface FloatingOrb {
 
 const generateOrbs = (count: number = 8): FloatingOrb[] => {
   const colors = [
-    "from-[#D4920B]/20 to-[#F5E6C8]/10",
-    "from-[#C67B5C]/20 to-[#F5EDE3]/10",
-    "from-[#8BA888]/15 to-[#E8F0E6]/8",
-    "from-[#C4A0A0]/15 to-[#F5EDE3]/8",
+    "from-[#8861d4]/20 to-[#f3ebf8]/10",
+    "from-[#7451c4]/20 to-[#f3ebf8]/10",
+    "from-[#8861d4]/15 to-[#ecfdf5]/8",
+    "from-[#7451c4]/15 to-[#f3ebf8]/8",
   ];
 
   return Array.from({ length: count }, (_, i) => ({
@@ -81,7 +81,7 @@ const AnimatedBackground = ({ parallaxIntensity = 0.5 }: AnimatedBackgroundProps
             left: `${orb.x}%`,
             top: `${orb.y}%`,
             background: `linear-gradient(135deg, var(--tw-gradient-stops))`,
-            backgroundImage: `conic-gradient(from 0deg, rgb(212, 146, 11, 0.15), rgb(198, 123, 92, 0.15), rgb(139, 115, 85, 0.1))`,
+            backgroundImage: `conic-gradient(from 0deg, rgb(136, 97, 212, 0.15), rgb(116, 81, 196, 0.15), rgb(136, 97, 212, 0.1))`,
           }}
           animate={{
             x: [0, 30, -20, 0],
@@ -98,11 +98,11 @@ const AnimatedBackground = ({ parallaxIntensity = 0.5 }: AnimatedBackgroundProps
       ))}
 
       {/* Static gradient overlays for depth */}
-      <div className="absolute top-0 left-0 w-1/2 h-1/2 bg-gradient-to-br from-[#D4920B]/8 via-transparent to-transparent pointer-events-none" />
-      <div className="absolute bottom-0 right-0 w-1/2 h-1/2 bg-gradient-to-tl from-[#C67B5C]/8 via-transparent to-transparent pointer-events-none" />
+      <div className="absolute top-0 left-0 w-1/2 h-1/2 bg-gradient-to-br from-[#8861d4]/8 via-transparent to-transparent pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-1/2 h-1/2 bg-gradient-to-tl from-[#7451c4]/8 via-transparent to-transparent pointer-events-none" />
 
       {/* Subtle vignette effect */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#3D2B1F]/5 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#3b1f59]/5 pointer-events-none" />
     </div>
   );
 };

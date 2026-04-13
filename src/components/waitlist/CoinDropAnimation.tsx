@@ -49,7 +49,7 @@ export default function CoinDropAnimation({
                 duration: 0.8,
                 repeat: Infinity,
               }}
-              className="font-serif italic text-4xl sm:text-5xl font-bold text-[#D4920B] drop-shadow-lg"
+              className="font-sans text-4xl sm:text-5xl font-bold text-[#8861d4] drop-shadow-lg"
             >
               +{amount} Coins!
             </motion.h2>
@@ -78,8 +78,8 @@ export default function CoinDropAnimation({
               }}
               className="absolute left-1/2 top-0 -translate-x-1/2"
             >
-              <div className="flex items-center justify-center w-8 h-8 rounded-full bg-[#D4920B] shadow-lg">
-                <span className="text-white font-serif italic font-bold text-sm">S</span>
+              <div className="flex items-center justify-center w-8 h-8 rounded-full bg-[#8861d4] shadow-lg">
+                <span className="text-white font-sans font-bold text-sm">S</span>
               </div>
             </motion.div>
           ))}
@@ -110,7 +110,7 @@ export default function CoinDropAnimation({
               }}
               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
             >
-              <div className="w-2 h-2 bg-[#F5E6C8] rounded-full shadow-sm"></div>
+              <div className="w-2 h-2 bg-[#f3ebf8] rounded-full shadow-sm"></div>
             </motion.div>
           ))}
         </div>

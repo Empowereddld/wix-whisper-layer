@@ -38,15 +38,15 @@ export default function CoinBalance({ coins }: CoinBalanceProps) {
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.2 }}
-      className="flex items-center gap-2 px-4 py-2 bg-[#F5E6C8] border border-[#D4920B]/30 rounded-full"
+      className="flex items-center gap-2 px-4 py-2 bg-[#f3ebf8] border border-[#8861d4]/30 rounded-full"
     >
       {/* Coin icon */}
       <motion.div
         animate={isAnimating ? { scale: [1, 1.2, 1] } : {}}
         transition={{ duration: 0.3, repeat: isAnimating ? Infinity : 0 }}
-        className="flex items-center justify-center w-6 h-6 rounded-full bg-[#D4920B]"
+        className="flex items-center justify-center w-6 h-6 rounded-full bg-[#8861d4]"
       >
-        <span className="text-white font-serif italic font-bold text-sm">S</span>
+        <span className="text-white font-sans font-bold text-sm">S</span>
       </motion.div>
 
       {/* Coin count */}
@@ -55,13 +55,13 @@ export default function CoinBalance({ coins }: CoinBalanceProps) {
         initial={isAnimating ? { y: -10, opacity: 0 } : {}}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.2 }}
-        className="font-semibold text-[#D4920B] text-sm whitespace-nowrap"
+        className="font-semibold text-[#8861d4] text-sm whitespace-nowrap"
       >
         {displayCoins}
       </motion.span>
 
       {/* Label */}
-      <span className="text-xs font-medium text-[#8B7355] hidden sm:inline">
+      <span className="text-xs font-medium text-gray-500 hidden sm:inline">
         coins
       </span>
     </motion.div>

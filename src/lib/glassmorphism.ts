@@ -1,90 +1,90 @@
 /**
- * Earthy design system for StoryBuilders waitlist
- * Warm, feminine, Etsy-like aesthetic with natural colors and rounded corners
+ * Purple design system for StoryBuilders admin dashboard
+ * Modern, professional aesthetic with purple and lavender colors
  */
 
-// Earthy color palette
+// Purple color palette
 export const colors = {
-  cream: "#FDF8F0",        // Main background
-  warmWhite: "#FEFCF9",    // Card backgrounds
-  sand: "#F5EDE3",         // Secondary background / borders
-  sandDark: "#E8DDD0",     // Hover states, dividers
-  brown: "#5C4033",        // Primary text
-  brownLight: "#8B7355",   // Secondary text
-  brownDark: "#3D2B1F",    // Headings
-  amber: "#D4920B",        // Accent / highlights / badges
-  amberLight: "#F5E6C8",   // Light accent backgrounds
-  amberDark: "#B07A09",    // Accent hover
-  terracotta: "#C67B5C",   // Warm accent (for CTAs, progress)
-  sage: "#8BA888",         // Success / positive
-  sageLight: "#E8F0E6",    // Success background
-  dustyRose: "#C4A0A0",    // Secondary accent
+  cream: "#ffffff",        // Main background - white
+  warmWhite: "#ffffff",    // Card backgrounds - white
+  sand: "#f3ebf8",         // Secondary background / borders - lavender
+  sandDark: "#dedede",     // Hover states, dividers - light gray
+  brown: "#121212",        // Primary text - near black
+  brownLight: "#6b7280",   // Secondary text - gray-500
+  brownDark: "#3b1f59",    // Headings - deep purple
+  amber: "#8861d4",        // Accent / highlights / badges - primary purple
+  amberLight: "#f3ebf8",   // Light accent backgrounds - lavender
+  amberDark: "#7451c4",    // Accent hover - darker purple
+  terracotta: "#8861d4",   // Warm accent (for CTAs, progress) - primary purple
+  sage: "#8BA888",         // Success / positive (kept earthy for badges)
+  sageLight: "#E8F0E6",    // Success background (kept earthy)
+  dustyRose: "#C4A0A0",    // Secondary accent (kept earthy)
   charcoal: "#2C2C2C",     // Dark text for contrast
 };
 
 // Card styles (warm, rounded, soft shadows)
 export const cards = {
-  base: "bg-[#FEFCF9] border border-[#E8DDD0] rounded-2xl shadow-sm",
-  hover: "bg-[#FEFCF9] border border-[#E8DDD0] rounded-2xl shadow-sm hover:shadow-md hover:border-[#D4920B]/30 transition-all duration-300",
-  accent: "bg-[#F5E6C8]/30 border border-[#D4920B]/20 rounded-2xl shadow-sm",
-  stat: "bg-[#FEFCF9] border border-[#E8DDD0] rounded-2xl p-6",
+  base: "bg-white border border-[#dedede] rounded-2xl shadow-sm",
+  hover: "bg-white border border-[#dedede] rounded-2xl shadow-sm hover:shadow-md hover:border-[#8861d4]/30 transition-all duration-300",
+  accent: "bg-[#f3ebf8]/30 border border-[#8861d4]/20 rounded-2xl shadow-sm",
+  stat: "bg-white border border-[#dedede] rounded-2xl p-6",
 };
 
 // Button styles
 export const buttons = {
-  primary: "bg-[#C67B5C] hover:bg-[#B06A4B] text-white rounded-xl px-6 py-3 font-medium transition-all duration-200 shadow-sm hover:shadow-md",
-  secondary: "bg-[#F5EDE3] hover:bg-[#E8DDD0] text-[#5C4033] rounded-xl px-6 py-3 font-medium transition-all duration-200 border border-[#E8DDD0]",
-  ghost: "hover:bg-[#F5EDE3] text-[#8B7355] rounded-xl px-4 py-2 transition-all duration-200",
-  amber: "bg-[#D4920B] hover:bg-[#B07A09] text-white rounded-xl px-6 py-3 font-medium transition-all duration-200 shadow-sm",
+  primary: "bg-[#8861d4] hover:bg-[#7451c4] text-white rounded-xl px-6 py-3 font-medium transition-all duration-200 shadow-sm hover:shadow-md",
+  secondary: "bg-[#f3ebf8] hover:bg-[#e5d8f0] text-[#3b1f59] rounded-xl px-6 py-3 font-medium transition-all duration-200 border border-[#dedede]",
+  ghost: "hover:bg-[#f3ebf8] text-[#6b7280] rounded-xl px-4 py-2 transition-all duration-200",
+  amber: "bg-[#8861d4] hover:bg-[#7451c4] text-white rounded-xl px-6 py-3 font-medium transition-all duration-200 shadow-sm",
 };
 
 // Typography
 export const typography = {
-  heading: "font-serif text-[#3D2B1F] italic",
-  subheading: "font-serif text-[#5C4033]",
-  body: "text-[#5C4033]",
-  muted: "text-[#8B7355]",
-  accent: "text-[#D4920B] font-medium",
+  heading: "font-sans font-bold text-[#3b1f59]",
+  subheading: "font-sans font-bold text-[#121212]",
+  body: "text-[#121212]",
+  muted: "text-[#6b7280]",
+  accent: "text-[#8861d4] font-medium",
 };
 
 // Badge styles (for tier badges, status indicators)
 export const badges = {
-  default: "bg-[#F5EDE3] text-[#8B7355] rounded-full px-3 py-1 text-sm font-medium",
-  amber: "bg-[#F5E6C8] text-[#D4920B] rounded-full px-3 py-1 text-sm font-medium border border-[#D4920B]/20",
+  default: "bg-[#f3ebf8] text-[#6b7280] rounded-full px-3 py-1 text-sm font-medium",
+  amber: "bg-[#f3ebf8] text-[#8861d4] rounded-full px-3 py-1 text-sm font-medium border border-[#8861d4]/20",
   success: "bg-[#E8F0E6] text-[#5A8A55] rounded-full px-3 py-1 text-sm font-medium",
-  warning: "bg-[#FFF3E0] text-[#C67B5C] rounded-full px-3 py-1 text-sm font-medium",
+  warning: "bg-[#f3ebf8] text-[#8861d4] rounded-full px-3 py-1 text-sm font-medium",
 };
 
 // Page layout
 export const layout = {
-  page: "min-h-screen bg-[#FDF8F0]",
+  page: "min-h-screen bg-white",
   container: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8",
   section: "py-8",
 };
 
 // Input styles
 export const inputs = {
-  base: "bg-[#FEFCF9] border border-[#E8DDD0] rounded-xl px-4 py-3 text-[#5C4033] placeholder-[#8B7355]/50 focus:border-[#D4920B] focus:ring-1 focus:ring-[#D4920B]/20 outline-none transition-all",
+  base: "bg-white border border-[#dedede] rounded-xl px-4 py-3 text-[#121212] placeholder-[#6b7280]/50 focus:border-[#8861d4] focus:ring-1 focus:ring-[#8861d4]/20 outline-none transition-all",
 };
 
 // Legacy glass exports for backward compatibility with old components
 export const glass = {
-  card: "bg-[#FEFCF9] border border-[#E8DDD0] rounded-2xl shadow-sm",
-  cardDark: "bg-[#F5EDE3] border border-[#E8DDD0] rounded-2xl shadow-sm",
-  cardPurple: "bg-[#F5E6C8]/30 border border-[#D4920B]/20 rounded-2xl shadow-sm",
-  input: "bg-[#FEFCF9] border border-[#E8DDD0] rounded-xl px-4 py-3",
-  button: "bg-[#F5EDE3] hover:bg-[#E8DDD0] text-[#5C4033] rounded-xl px-6 py-3 transition-all duration-200",
-  buttonPrimary: "bg-[#C67B5C] hover:bg-[#B06A4B] text-white rounded-xl px-6 py-3 transition-all duration-200 shadow-sm",
+  card: "bg-white border border-[#dedede] rounded-2xl shadow-sm",
+  cardDark: "bg-[#f3ebf8] border border-[#dedede] rounded-2xl shadow-sm",
+  cardPurple: "bg-[#f3ebf8]/30 border border-[#8861d4]/20 rounded-2xl shadow-sm",
+  input: "bg-white border border-[#dedede] rounded-xl px-4 py-3",
+  button: "bg-[#f3ebf8] hover:bg-[#e5d8f0] text-[#3b1f59] rounded-xl px-6 py-3 transition-all duration-200",
+  buttonPrimary: "bg-[#8861d4] hover:bg-[#7451c4] text-white rounded-xl px-6 py-3 transition-all duration-200 shadow-sm",
   overlay: "bg-black/40",
-  nav: "bg-[#FEFCF9] border-b border-[#E8DDD0]",
+  nav: "bg-white border-b border-[#dedede]",
 };
 
 export const gradients = {
-  hero: "bg-gradient-to-br from-[#FDF8F0] via-[#F5EDE3] to-[#F5EDE3]",
-  card: "bg-gradient-to-br from-[#F5E6C8]/20 to-[#F5EDE3]/10",
-  text: "bg-gradient-to-r from-[#D4920B] to-[#C67B5C] bg-clip-text text-transparent",
-  button: "bg-gradient-to-r from-[#C67B5C] to-[#D4920B]",
-  mesh: "bg-[radial-gradient(at_40%_20%,rgba(212,146,11,0.1)_0px,transparent_50%),radial-gradient(at_80%_80%,rgba(139,115,85,0.08)_0px,transparent_50%),radial-gradient(at_0%_50%,rgba(198,123,92,0.1)_0px,transparent_50%)]",
+  hero: "bg-gradient-to-br from-white via-[#f3ebf8] to-[#f3ebf8]",
+  card: "bg-gradient-to-br from-[#8861d4]/10 to-[#f3ebf8]/10",
+  text: "bg-gradient-to-r from-[#8861d4] to-[#7451c4] bg-clip-text text-transparent",
+  button: "bg-gradient-to-r from-[#7451c4] to-[#8861d4]",
+  mesh: "bg-[radial-gradient(at_40%_20%,rgba(136,97,212,0.1)_0px,transparent_50%),radial-gradient(at_80%_80%,rgba(107,114,128,0.08)_0px,transparent_50%),radial-gradient(at_0%_50%,rgba(116,81,196,0.1)_0px,transparent_50%)]",
 };
 
 // Animation presets for framer-motion (motion/react)
@@ -142,7 +142,7 @@ export const states = {
   loading: "animate-pulse",
   disabled: "opacity-50 cursor-not-allowed",
   hover: "hover:scale-105 hover:shadow-lg transition-all duration-200",
-  active: "ring-2 ring-[#D4920B] ring-offset-2 ring-offset-transparent",
+  active: "ring-2 ring-[#8861d4] ring-offset-2 ring-offset-transparent",
 };
 
 // Tier colors (earthy palette)

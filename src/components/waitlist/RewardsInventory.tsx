@@ -184,7 +184,7 @@ export default function RewardsInventory({
   };
 
   return (
-    <div className="bg-[#FDF8F0] min-h-screen">
+    <div className="bg-white min-h-screen">
       <CoinDropAnimation
         amount={coinDropAmount}
         trigger={coinDropTrigger}
@@ -193,10 +193,10 @@ export default function RewardsInventory({
 
       {/* Header */}
       <div className="mb-8">
-        <h1 className="font-serif italic text-4xl font-bold text-[#3D2B1F] mb-2">
+        <h1 className="font-sans text-4xl font-bold text-[#3b1f59] mb-2">
           My Rewards
         </h1>
-        <p className="text-[#5C4033]">
+        <p className="text-[#121212]">
           Discover and claim your earned rewards, unlock special badges, and
           redeem coins for exclusive perks.
         </p>
@@ -214,8 +214,8 @@ export default function RewardsInventory({
             onClick={() => setActiveTab(tab.id as typeof activeTab)}
             className={`flex items-center gap-2 px-4 py-2 rounded-xl font-medium whitespace-nowrap transition-all duration-200 ${
               activeTab === tab.id
-                ? "bg-[#C67B5C] text-white shadow-md"
-                : "bg-[#FEFCF9] text-[#5C4033] border border-[#E8DDD0] hover:border-[#D4920B]/30"
+                ? "bg-[#8861d4] text-white shadow-md"
+                : "bg-white text-[#121212] border border-[#dedede] hover:border-[#8861d4]/30"
             }`}
           >
             <tab.icon className="w-4 h-4" />
@@ -274,15 +274,15 @@ export default function RewardsInventory({
           >
             {/* Current Coin Balance */}
             <motion.div
-              className="bg-gradient-to-br from-[#F5E6C8] to-[#FDF8F0] border border-[#D4920B]/30 rounded-2xl p-6"
+              className="bg-gradient-to-br from-[#f3ebf8] to-white border border-[#8861d4]/30 rounded-2xl p-6"
               whileHover={{ scale: 1.02 }}
             >
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-[#8B7355] text-sm font-medium mb-1">
+                  <p className="text-gray-500 text-sm font-medium mb-1">
                     Current Balance
                   </p>
-                  <p className="font-serif italic text-4xl font-bold text-[#D4920B]">
+                  <p className="font-sans text-4xl font-bold text-[#8861d4]">
                     {coins} coins
                   </p>
                 </div>
@@ -301,39 +301,39 @@ export default function RewardsInventory({
               return (
                 <motion.div
                   key={pack.packId}
-                  className="bg-[#FEFCF9] border border-[#E8DDD0] rounded-2xl p-6 hover:border-[#D4920B]/30 transition-all duration-200"
+                  className="bg-white border border-[#dedede] rounded-2xl p-6 hover:border-[#8861d4]/30 transition-all duration-200"
                 >
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex items-start gap-4">
                       <div className="text-4xl">{pack.icon}</div>
                       <div>
-                        <h3 className="font-serif italic text-lg font-semibold text-[#3D2B1F] mb-1">
+                        <h3 className="font-sans text-lg font-bold text-[#3b1f59] mb-1">
                           {pack.name}
                         </h3>
-                        <p className="text-[#5C4033] text-sm mb-2">
+                        <p className="text-[#121212] text-sm mb-2">
                           {pack.description}
                         </p>
-                        <p className="text-[#D4920B] font-bold">
+                        <p className="text-[#8861d4] font-bold">
                           {pack.cost} coins
                         </p>
                       </div>
                     </div>
                     {isRedeemed && (
-                      <div className="bg-[#E8F0E6] text-[#5A8A55] px-3 py-1 rounded-full text-xs font-medium">
+                      <div className="bg-emerald-50 text-emerald-600 px-3 py-1 rounded-full text-xs font-medium">
                         Redeemed
                       </div>
                     )}
                   </div>
 
                   {/* Rewards List */}
-                  <div className="bg-[#FDF8F0] rounded-xl p-4 mb-4">
-                    <p className="text-xs font-semibold text-[#8B7355] mb-2">
+                  <div className="bg-[#f3ebf8] rounded-xl p-4 mb-4">
+                    <p className="text-xs font-semibold text-gray-500 mb-2">
                       Includes:
                     </p>
                     <ul className="space-y-1">
                       {pack.rewards.map((reward, idx) => (
-                        <li key={idx} className="text-sm text-[#5C4033] flex gap-2">
-                          <span className="text-[#D4920B]">•</span>
+                        <li key={idx} className="text-sm text-[#121212] flex gap-2">
+                          <span className="text-[#8861d4]">•</span>
                           {reward}
                         </li>
                       ))}
@@ -349,8 +349,8 @@ export default function RewardsInventory({
                       disabled={!canRedeem}
                       className={`w-full py-2 px-4 rounded-xl font-medium transition-all duration-200 ${
                         canRedeem
-                          ? "bg-[#C67B5C] hover:bg-[#B06A4B] text-white shadow-sm hover:shadow-md"
-                          : "bg-[#F5EDE3] text-[#8B7355] opacity-60 cursor-not-allowed"
+                          ? "bg-[#8861d4] hover:bg-[#7451c4] text-white shadow-sm hover:shadow-md"
+                          : "bg-[#f3ebf8] text-gray-500 opacity-60 cursor-not-allowed"
                       }`}
                     >
                       {canRedeem ? "Redeem Now" : `Need ${pack.cost - coins} more coins`}
@@ -358,7 +358,7 @@ export default function RewardsInventory({
                   ) : (
                     <button
                       disabled
-                      className="w-full bg-[#E8F0E6] text-[#5A8A55] py-2 px-4 rounded-xl font-medium"
+                      className="w-full bg-emerald-50 text-emerald-600 py-2 px-4 rounded-xl font-medium"
                     >
                       ✓ Already Redeemed
                     </button>
@@ -389,8 +389,8 @@ export default function RewardsInventory({
                     whileHover={isEarned ? { scale: 1.05 } : {}}
                     className={`relative rounded-2xl p-4 text-center transition-all duration-200 ${
                       isEarned
-                        ? "bg-[#FEFCF9] border-2 border-[#D4920B] shadow-md"
-                        : "bg-[#F5EDE3] border border-[#E8DDD0] opacity-60"
+                        ? "bg-white border-2 border-[#8861d4] shadow-md"
+                        : "bg-[#f3ebf8] border border-[#dedede] opacity-60"
                     }`}
                   >
                     {isEarned && (
@@ -398,17 +398,17 @@ export default function RewardsInventory({
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
                         transition={{ type: "spring", stiffness: 300 }}
-                        className="absolute -top-2 -right-2 bg-[#C67B5C] text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold"
+                        className="absolute -top-2 -right-2 bg-[#8861d4] text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold"
                       >
                         ✓
                       </motion.div>
                     )}
 
                     <div className="text-4xl mb-2">{badge.icon}</div>
-                    <h4 className="font-serif italic font-semibold text-[#3D2B1F] text-sm mb-1">
+                    <h4 className="font-sans font-bold text-[#3b1f59] text-sm mb-1">
                       {badge.name}
                     </h4>
-                    <p className="text-xs text-[#8B7355]">
+                    <p className="text-xs text-gray-500">
                       {isEarned
                         ? "Earned"
                         : `Unlock at Tier ${badge.tier + 1}`}

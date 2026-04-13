@@ -612,8 +612,8 @@ Reason: Bonus for social media share`} />
           {/* Email System */}
           <section id="email-system" className="mb-12 scroll-mt-20">
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 rounded-lg bg-[#C4A0A0]/20 flex items-center justify-center">
-                <Mail className="h-6 w-6 text-[#C4A0A0]" />
+              <div className="w-12 h-12 rounded-lg bg-[#8861d4]/20 flex items-center justify-center">
+                <Mail className="h-6 w-6 text-[#8861d4]" />
               </div>
               <h2 className="text-3xl font-bold text-[#3b1f59] font-sans font-bold">Email System</h2>
             </div>

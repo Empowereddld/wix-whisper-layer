@@ -36,8 +36,8 @@ export default function RewardCard({
         border-2 rounded-2xl p-6 transition-all duration-300
         ${
           isLocked
-            ? "bg-[#FEFCF9] border-[#E8DDD0] opacity-60"
-            : "bg-[#FEFCF9] border-[#E8DDD0] hover:border-[#D4920B]/30"
+            ? "bg-white border-[#dedede] opacity-60"
+            : "bg-white border-[#dedede] hover:border-[#8861d4]/30"
         }
       `}
     >
@@ -54,7 +54,7 @@ export default function RewardCard({
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              className="inline-flex items-center gap-1 bg-[#E8F0E6] text-[#5A8A55] px-3 py-1 rounded-full text-sm font-medium"
+              className="inline-flex items-center gap-1 bg-emerald-50 text-emerald-600 px-3 py-1 rounded-full text-sm font-medium"
             >
               <Check className="w-4 h-4" />
               Claimed
@@ -64,21 +64,21 @@ export default function RewardCard({
             <motion.div
               animate={{
                 boxShadow: [
-                  "0 0 0 0 rgba(198, 123, 92, 0.3)",
-                  "0 0 0 8px rgba(198, 123, 92, 0)",
+                  "0 0 0 0 rgba(136, 97, 212, 0.3)",
+                  "0 0 0 8px rgba(136, 97, 212, 0)",
                 ],
               }}
               transition={{
                 duration: 2,
                 repeat: Infinity,
               }}
-              className="inline-block bg-[#C67B5C] text-white px-3 py-1 rounded-full text-sm font-medium"
+              className="inline-block bg-[#8861d4] text-white px-3 py-1 rounded-full text-sm font-medium"
             >
               Ready
             </motion.div>
           )}
           {isLocked && (
-            <div className="inline-flex items-center gap-1 bg-[#F5EDE3] text-[#8B7355] px-3 py-1 rounded-full text-sm font-medium">
+            <div className="inline-flex items-center gap-1 bg-[#f3ebf8] text-gray-500 px-3 py-1 rounded-full text-sm font-medium">
               <Lock className="w-4 h-4" />
               Locked
             </div>
@@ -89,24 +89,24 @@ export default function RewardCard({
       {/* Title and description */}
       <div className="mb-4">
         <h3
-          className={`font-serif italic text-lg font-semibold mb-1 ${
-            isLocked ? "text-[#8B7355]" : "text-[#3D2B1F]"
+          className={`font-sans font-bold text-lg mb-1 ${
+            isLocked ? "text-gray-500" : "text-[#3b1f59]"
           }`}
         >
           {title}
         </h3>
-        <p className={`text-sm ${isLocked ? "text-[#8B7355]" : "text-[#5C4033]"}`}>
+        <p className={`text-sm ${isLocked ? "text-gray-500" : "text-[#121212]"}`}>
           {description}
         </p>
       </div>
 
       {/* How earned / Requirement */}
-      <div className="mb-4 pt-4 border-t border-[#E8DDD0]">
-        <p className="text-xs font-medium text-[#8B7355] mb-2">
+      <div className="mb-4 pt-4 border-t border-[#dedede]">
+        <p className="text-xs font-medium text-gray-500 mb-2">
           {isLocked ? "Unlock:" : "Earned via:"}
         </p>
         <p className={`text-sm font-medium ${
-          isLocked ? "text-[#8B7355]" : "text-[#D4920B]"
+          isLocked ? "text-gray-500" : "text-[#8861d4]"
         }`}>
           {requirement || earnedVia}
         </p>
@@ -114,7 +114,7 @@ export default function RewardCard({
 
       {/* Claimed date */}
       {isClaimed && claimedAt && (
-        <div className="mb-4 text-xs text-[#8B7355]">
+        <div className="mb-4 text-xs text-gray-500">
           Claimed on {new Date(claimedAt).toLocaleDateString()}
         </div>
       )}
@@ -125,7 +125,7 @@ export default function RewardCard({
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           onClick={onClaim}
-          className="w-full bg-[#C67B5C] hover:bg-[#B06A4B] text-white font-medium py-2 px-4 rounded-xl transition-all duration-200 shadow-sm hover:shadow-md"
+          className="w-full bg-[#8861d4] hover:bg-[#7451c4] text-white font-medium py-2 px-4 rounded-xl transition-all duration-200 shadow-sm hover:shadow-md"
         >
           Claim Reward
         </motion.button>
@@ -134,7 +134,7 @@ export default function RewardCard({
       {isLocked && (
         <button
           disabled
-          className="w-full bg-[#F5EDE3] text-[#8B7355] font-medium py-2 px-4 rounded-xl opacity-60 cursor-not-allowed"
+          className="w-full bg-[#f3ebf8] text-gray-500 font-medium py-2 px-4 rounded-xl opacity-60 cursor-not-allowed"
         >
           Locked
         </button>
@@ -143,7 +143,7 @@ export default function RewardCard({
       {isClaimed && (
         <button
           disabled
-          className="w-full bg-[#E8F0E6] text-[#5A8A55] font-medium py-2 px-4 rounded-xl flex items-center justify-center gap-2"
+          className="w-full bg-emerald-50 text-emerald-600 font-medium py-2 px-4 rounded-xl flex items-center justify-center gap-2"
         >
           <Check className="w-4 h-4" />
           Claimed

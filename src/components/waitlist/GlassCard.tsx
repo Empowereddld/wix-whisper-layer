@@ -30,12 +30,12 @@ const getVariantClass = (variant: "default" | "accent" | "warm"): string => {
 const getGlowColor = (variant: "default" | "accent" | "warm"): string => {
   switch (variant) {
     case "accent":
-      return "from-[#D4920B]/20 to-[#F5E6C8]/10";
+      return "from-[#8861d4]/20 to-[#f3ebf8]/10";
     case "warm":
-      return "from-[#C67B5C]/15 to-[#F5EDE3]/10";
+      return "from-[#7451c4]/15 to-[#f3ebf8]/10";
     case "default":
     default:
-      return "from-[#D4920B]/15 to-[#C67B5C]/10";
+      return "from-[#8861d4]/15 to-[#7451c4]/10";
   }
 };
 

@@ -52,31 +52,31 @@ const TIER_PREVIEW_DATA: Record<number, TierData> = {
   },
   1: {
     name: "Sarah M.",
-    points: 45,
-    position: 623,
+    points: 48,
+    position: 312,
     referrals: 1,
     badges: ["welcome", "first_referral"],
     streakDays: 5,
   },
   2: {
     name: "Sarah M.",
-    points: 110,
-    position: 312,
+    points: 115,
+    position: 89,
     referrals: 3,
     badges: ["welcome", "first_referral", "social_butterfly"],
     streakDays: 12,
   },
   3: {
     name: "Sarah M.",
-    points: 175,
-    position: 89,
+    points: 195,
+    position: 34,
     referrals: 5,
     badges: ["welcome", "first_referral", "social_butterfly", "champion"],
     streakDays: 20,
   },
   4: {
     name: "Sarah M.",
-    points: 320,
+    points: 358,
     position: 8,
     referrals: 10,
     badges: [
@@ -91,7 +91,7 @@ const TIER_PREVIEW_DATA: Record<number, TierData> = {
   },
   5: {
     name: "Sarah M.",
-    points: 547,
+    points: 647,
     position: 2,
     referrals: 20,
     badges: [
@@ -152,7 +152,7 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
         exit={{ opacity: 0 }}
         className="fixed inset-0 bg-black/50 z-50 overflow-y-auto"
       >
-        <div className="min-h-screen bg-secondary">
+        <div className="min-h-screen bg-white">
           {/* Preview Mode Header */}
           <motion.div
             initial={{ y: -20, opacity: 0 }}
@@ -216,7 +216,7 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
                     <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
                       Queue Position
                     </p>
-                    <h2 className="text-5xl font-serif italic text-foreground mt-2">
+                    <h2 className="text-5xl font-sans font-bold text-foreground mt-2">
                       #{tierData.position.toLocaleString()}
                     </h2>
                     <p className="text-sm text-muted-foreground mt-2">
@@ -246,7 +246,7 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
                   <div className="space-y-4">
                     <div>
                       <div className="flex items-center justify-between mb-2">
-                        <h3 className="font-serif italic text-foreground font-semibold">
+                        <h3 className="font-sans font-bold text-foreground">
                           Tier Progress
                         </h3>
                         <Badge className="bg-primary/10 text-primary">
@@ -319,7 +319,7 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
               transition={{ delay: 0.4 }}
             >
               <Card className="bg-background border border-border rounded-2xl shadow-sm p-6">
-                <h3 className="font-serif italic text-foreground font-semibold mb-4">
+                <h3 className="font-sans font-bold text-foreground mb-4">
                   Your Referral Link
                 </h3>
                 <div className="flex gap-2">
@@ -343,7 +343,7 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
               transition={{ delay: 0.5 }}
             >
               <Card className="bg-background border border-border rounded-2xl shadow-sm p-6">
-                <h3 className="font-serif italic text-foreground font-semibold mb-4">
+                <h3 className="font-sans font-bold text-foreground mb-4">
                   Share & Earn Referrals
                 </h3>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
@@ -382,7 +382,7 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
               transition={{ delay: 0.6 }}
             >
               <Card className="bg-background border border-border rounded-2xl shadow-sm p-6">
-                <h3 className="font-serif italic text-foreground font-semibold mb-4">
+                <h3 className="font-sans font-bold text-foreground mb-4">
                   Your Referrals
                 </h3>
                 {tierData.referrals > 0 ? (
@@ -430,7 +430,7 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
             >
               <Card className="bg-background border border-border rounded-2xl shadow-sm p-6">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="font-serif italic text-foreground font-semibold">
+                  <h3 className="font-sans font-bold text-foreground">
                     Achievements
                   </h3>
                   <span className="text-sm text-muted-foreground">
@@ -472,7 +472,7 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
                   <p className="text-sm font-semibold uppercase tracking-wide opacity-90">
                     Your Impact
                   </p>
-                  <h3 className="font-serif italic text-4xl font-bold">
+                  <h3 className="font-sans font-bold text-4xl">
                     {Math.min(tierData.referrals * 5, 120)} Families
                   </h3>
                   <p className="text-sm opacity-90">
@@ -489,7 +489,7 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
               transition={{ delay: 0.9 }}
             >
               <Card className="bg-background border border-border rounded-2xl shadow-sm p-6">
-                <h3 className="font-serif italic text-foreground font-semibold mb-4">
+                <h3 className="font-sans font-bold text-foreground mb-4">
                   Community Milestones
                 </h3>
                 <div className="space-y-4">
@@ -528,7 +528,7 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
               transition={{ delay: 1.0 }}
             >
               <Card className="bg-background border border-border rounded-2xl shadow-sm p-6">
-                <h3 className="font-serif italic text-foreground font-semibold mb-4">
+                <h3 className="font-sans font-bold text-foreground mb-4">
                   Top Referrers
                 </h3>
                 <div className="space-y-2">

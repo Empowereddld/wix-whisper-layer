@@ -108,9 +108,9 @@ const WaitlistAnalyticsChart = () => {
         <Line
           type="monotone"
           dataKey="signups"
-          stroke="#5B2D8E"
+          stroke="#8861d4"
           strokeWidth={2}
-          dot={{ fill: "#5B2D8E", r: 4 }}
+          dot={{ fill: "#8861d4", r: 4 }}
           activeDot={{ r: 6 }}
           isAnimationActive={true}
         />
