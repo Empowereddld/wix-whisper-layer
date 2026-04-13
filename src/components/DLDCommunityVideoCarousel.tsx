@@ -58,11 +58,13 @@ const DLDCommunityVideoCarousel = () => {
 
   const scroll = (direction: "left" | "right") => {
     if (!scrollRef.current) return;
+    isPaused.current = true;
     const amount = scrollRef.current.clientWidth * 0.6;
-    scrollRef.current.scrollBy({
-      left: direction === "left" ? -amount : amount,
+    scrollRef.current.scrollTo({
+      left: scrollRef.current.scrollLeft + (direction === "left" ? -amount : amount),
       behavior: "smooth",
     });
+    setTimeout(() => { isPaused.current = false; }, 800);
   };
 
   return (
@@ -107,7 +109,7 @@ const DLDCommunityVideoCarousel = () => {
           {/* Scroll container */}
           <div
             ref={scrollRef}
-            className="flex gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-4 -mx-1 px-1"
+            className="flex gap-4 overflow-x-auto pb-4 -mx-1 px-1"
             style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
           >
             <style>{`div::-webkit-scrollbar { display: none; }`}</style>
@@ -119,7 +121,7 @@ const DLDCommunityVideoCarousel = () => {
                 transition={{ delay: i * 0.05, duration: 0.5, ease: "easeOut" }}
                 viewport={{ once: true }}
                 onClick={() => setSelectedVideo(video.id)}
-                className="flex-shrink-0 snap-start w-[180px] md:w-[200px] group cursor-pointer"
+                className="flex-shrink-0 w-[180px] md:w-[200px] group cursor-pointer"
               >
                 <div className="relative aspect-[9/16] rounded-2xl overflow-hidden shadow-lg border border-foreground/10">
                   <img
