@@ -16,7 +16,7 @@ export const TIER_COLORS = [
   "#3D2B1F",   // Founding Elite - dark chocolate
 ] as const;
 
-export const TIER_THRESHOLDS = [0, 35, 85, 135, 260, 510] as const;
+export const TIER_THRESHOLDS = [0, 40, 100, 175, 325, 600] as const;
 
 export const TIER_REFERRALS = [0, 1, 3, 5, 10, 20] as const;
 
@@ -113,16 +113,77 @@ export const COMMUNITY_MILESTONES = [
   { target: 5000, reward: "Exclusive launch event invitation" },
 ] as const;
 
+// ===========================================
+// POINTS SYSTEM — 10/10 Edition
+// ===========================================
+
+// --- ONE-TIME ACTIONS (do once, big early impact) ---
+export const ONETIME_POINTS = {
+  SIGNUP: 10,              // Join the waitlist
+  VERIFY_EMAIL: 5,         // Confirm your email
+  COMPLETE_PROFILE: 10,    // Fill in name, role, age range
+  FOLLOW_INSTAGRAM: 8,     // Follow on Instagram (honor system, opens profile)
+  FOLLOW_FACEBOOK: 8,      // Follow on Facebook
+  SUBSCRIBE_YOUTUBE: 8,    // Subscribe on YouTube
+  FIRST_SHARE: 5,          // Bonus for your very first share (any platform)
+  FIRST_REFERRAL_BONUS: 10, // Bonus on top of the 25 referral pts for first one
+} as const;
+// MAX from one-time actions: 10+5+10+8+8+8+5+10 = 64 pts
+// A user who joins, verifies, completes profile, follows 2 platforms = 49 pts → Tier 1 ✓
+
+// --- REPEATABLE ACTIONS (the engine) ---
+export const REPEATABLE_POINTS = {
+  REFERRAL: 25,            // Friend joins via your link
+  SHARE: 3,                // Share on social media (bumped from 2)
+  CLICK: 1,                // Friend clicks your link
+  SUGGESTION: 5,           // Submit a suggestion (Tier 3+)
+  DAILY_CHECKIN: 2,        // Visit your dashboard (max once/day)
+} as const;
+
+// --- STREAK BONUSES (escalating, stacks with daily check-in) ---
+export const STREAK_BONUSES = {
+  DAYS_3: 3,               // 3-day streak bonus
+  DAYS_7: 10,              // 7-day streak bonus
+  DAYS_14: 20,             // 14-day streak bonus
+  DAYS_30: 50,             // 30-day streak bonus
+} as const;
+// A 30-day daily visitor earns: (30×2) + 3 + 10 + 20 + 50 = 143 pts from engagement alone
+
+// --- DAILY CAPS (prevent farming) ---
+export const DAILY_CAPS = {
+  MAX_SHARE_POINTS: 15,    // 5 shares per day max (5×3)
+  MAX_CLICK_POINTS: 10,    // 10 clicks per day max
+  MAX_CHECKIN_POINTS: 2,   // 1 check-in per day
+} as const;
+
+// --- SOCIAL LINKS (for follow/subscribe buttons) ---
+export const SOCIAL_LINKS = {
+  INSTAGRAM: "https://www.instagram.com/empowereddld",
+  FACEBOOK: "https://www.facebook.com/empowereddld",
+  YOUTUBE: "https://www.youtube.com/@empowereddld",
+} as const;
+
+// --- BACKWARD COMPAT (combined flat export for existing code) ---
 export const POINTS = {
-  SIGNUP: 10,
-  VERIFY_EMAIL: 5,
-  REFERRAL: 25,
-  SHARE: 2,
-  CLICK: 1,
-  SUGGESTION: 5,
-  STREAK_BONUS: 3,
-  MAX_CLICK_POINTS_PER_DAY: 10,
-  MAX_SHARE_POINTS_PER_DAY: 20,
+  SIGNUP: ONETIME_POINTS.SIGNUP,
+  VERIFY_EMAIL: ONETIME_POINTS.VERIFY_EMAIL,
+  COMPLETE_PROFILE: ONETIME_POINTS.COMPLETE_PROFILE,
+  FOLLOW_INSTAGRAM: ONETIME_POINTS.FOLLOW_INSTAGRAM,
+  FOLLOW_FACEBOOK: ONETIME_POINTS.FOLLOW_FACEBOOK,
+  SUBSCRIBE_YOUTUBE: ONETIME_POINTS.SUBSCRIBE_YOUTUBE,
+  FIRST_SHARE: ONETIME_POINTS.FIRST_SHARE,
+  FIRST_REFERRAL_BONUS: ONETIME_POINTS.FIRST_REFERRAL_BONUS,
+  REFERRAL: REPEATABLE_POINTS.REFERRAL,
+  SHARE: REPEATABLE_POINTS.SHARE,
+  CLICK: REPEATABLE_POINTS.CLICK,
+  SUGGESTION: REPEATABLE_POINTS.SUGGESTION,
+  DAILY_CHECKIN: REPEATABLE_POINTS.DAILY_CHECKIN,
+  STREAK_3: STREAK_BONUSES.DAYS_3,
+  STREAK_7: STREAK_BONUSES.DAYS_7,
+  STREAK_14: STREAK_BONUSES.DAYS_14,
+  STREAK_30: STREAK_BONUSES.DAYS_30,
+  MAX_CLICK_POINTS_PER_DAY: DAILY_CAPS.MAX_CLICK_POINTS,
+  MAX_SHARE_POINTS_PER_DAY: DAILY_CAPS.MAX_SHARE_POINTS,
 } as const;
 
 export type TierLevel = typeof TIER_NAMES[number];
