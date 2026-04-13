@@ -119,7 +119,7 @@ const DLDCommunityVideoCarousel = () => {
                 transition={{ delay: i * 0.05, duration: 0.5, ease: "easeOut" }}
                 viewport={{ once: true }}
                 onClick={() => setSelectedVideo(video.id)}
-                className="flex-shrink-0 snap-start w-[180px] md:w-[200px] group cursor-pointer"
+                className="flex-shrink-0 w-[180px] md:w-[200px] group cursor-pointer"
               >
                 <div className="relative aspect-[9/16] rounded-2xl overflow-hidden shadow-lg border border-foreground/10">
                   <img
