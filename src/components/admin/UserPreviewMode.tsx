@@ -12,7 +12,6 @@ import {
   Flame,
   Award,
   Users,
-  TrendingUp,
   Eye,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -26,7 +25,16 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { getTierName, getTierColor } from "@/lib/waitlist-utils";
-import { TIER_NAMES, TIER_THRESHOLDS } from "@/lib/waitlist-constants";
+import {
+  TIER_NAMES,
+  TIER_THRESHOLDS,
+  ONETIME_POINTS,
+  REPEATABLE_POINTS,
+  STREAK_BONUSES,
+  DAILY_CAPS,
+  COIN_DROPS,
+} from "@/lib/waitlist-constants";
+import RewardsInventory from "@/components/waitlist/RewardsInventory";
 
 interface UserPreviewModeProps {
   onClose: () => void;
@@ -35,7 +43,6 @@ interface UserPreviewModeProps {
 interface TierData {
   name: string;
   points: number;
-  position: number;
   referrals: number;
   badges: string[];
   streakDays: number;
@@ -45,7 +52,6 @@ const TIER_PREVIEW_DATA: Record<number, TierData> = {
   0: {
     name: "Sarah M.",
     points: 10,
-    position: 847,
     referrals: 0,
     badges: ["welcome"],
     streakDays: 1,
@@ -53,7 +59,6 @@ const TIER_PREVIEW_DATA: Record<number, TierData> = {
   1: {
     name: "Sarah M.",
     points: 48,
-    position: 312,
     referrals: 1,
     badges: ["welcome", "first_referral"],
     streakDays: 5,
@@ -61,7 +66,6 @@ const TIER_PREVIEW_DATA: Record<number, TierData> = {
   2: {
     name: "Sarah M.",
     points: 115,
-    position: 89,
     referrals: 3,
     badges: ["welcome", "first_referral", "social_butterfly"],
     streakDays: 12,
@@ -69,7 +73,6 @@ const TIER_PREVIEW_DATA: Record<number, TierData> = {
   3: {
     name: "Sarah M.",
     points: 195,
-    position: 34,
     referrals: 5,
     badges: ["welcome", "first_referral", "social_butterfly", "champion"],
     streakDays: 20,
@@ -77,7 +80,6 @@ const TIER_PREVIEW_DATA: Record<number, TierData> = {
   4: {
     name: "Sarah M.",
     points: 358,
-    position: 8,
     referrals: 10,
     badges: [
       "welcome",
@@ -92,7 +94,6 @@ const TIER_PREVIEW_DATA: Record<number, TierData> = {
   5: {
     name: "Sarah M.",
     points: 647,
-    position: 2,
     referrals: 20,
     badges: [
       "welcome",
@@ -206,36 +207,6 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
 
           {/* Main Content */}
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
-            {/* Position Card */}
-            <motion.div
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.1 }}
-            >
-              <Card className="bg-gradient-to-br from-background to-muted border border-border rounded-2xl shadow-sm overflow-hidden">
-                <div className="p-8 flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
-                      Queue Position
-                    </p>
-                    <h2 className="text-5xl font-sans font-bold text-foreground mt-2">
-                      #{tierData.position.toLocaleString()}
-                    </h2>
-                    <p className="text-sm text-muted-foreground mt-2">
-                      of 1,247 waitlist members
-                    </p>
-                  </div>
-                  <div className="text-right">
-                    <TrendingUp className="h-12 w-12 text-primary mb-2 ml-auto" />
-                    <p className="text-2xl font-bold text-primary">
-                      {Math.round((tierData.position / 1247) * 100)}%
-                    </p>
-                    <p className="text-xs text-muted-foreground">ahead of queue</p>
-                  </div>
-                </div>
-              </Card>
-            </motion.div>
-
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {/* Tier Progress Card */}
               <motion.div
@@ -313,6 +284,65 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
                 </Card>
               </motion.div>
             </div>
+
+            {/* Daily Streak Card */}
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.35 }}
+            >
+              <Card className="bg-gradient-to-br from-[#f3ebf8] to-white border border-[#8861d4]/30 rounded-2xl shadow-sm p-6">
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <h3 className="font-sans font-bold text-[#3b1f59]">
+                      Daily Streak
+                    </h3>
+                    <div className="flex items-center gap-2">
+                      <Flame className="h-5 w-5 text-orange-500" />
+                      <span className="text-2xl font-bold text-orange-500">
+                        {tierData.streakDays}
+                      </span>
+                    </div>
+                  </div>
+                  <p className="text-sm text-gray-700">
+                    Check in daily to earn{" "}
+                    <span className="font-semibold text-[#8861d4]">
+                      {REPEATABLE_POINTS.DAILY_CHECKIN} pts
+                    </span>
+                    . Bonus milestones:
+                  </p>
+                  <div className="bg-white rounded-lg p-3 space-y-2">
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-gray-700">3-day streak</span>
+                      <span className="font-semibold text-[#8861d4]">
+                        +{STREAK_BONUSES.DAYS_3} pts
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-gray-700">7-day streak</span>
+                      <span className="font-semibold text-[#8861d4]">
+                        +{STREAK_BONUSES.DAYS_7} pts
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-gray-700">14-day streak</span>
+                      <span className="font-semibold text-[#8861d4]">
+                        +{STREAK_BONUSES.DAYS_14} pts
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-gray-700">30-day streak</span>
+                      <span className="font-semibold text-[#8861d4]">
+                        +{STREAK_BONUSES.DAYS_30} pts
+                      </span>
+                    </div>
+                  </div>
+                  <Button className="w-full bg-[#8861d4] hover:bg-[#7551c4] text-white mt-2">
+                    Check In Today
+                  </Button>
+                </div>
+              </Card>
+            </motion.div>
 
             {/* Referral Link Card */}
             <motion.div
@@ -421,6 +451,120 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
                     </p>
                   </div>
                 )}
+              </Card>
+            </motion.div>
+
+            {/* How to Earn Section */}
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.65 }}
+            >
+              <Card className="bg-background border border-border rounded-2xl shadow-sm p-6">
+                <h3 className="font-sans font-bold text-foreground mb-6">
+                  How to Earn Points & Coins
+                </h3>
+
+                <div className="grid md:grid-cols-2 gap-6">
+                  {/* Points Breakdown */}
+                  <div>
+                    <h4 className="font-semibold text-[#3b1f59] mb-4">Story Coins</h4>
+                    <div className="space-y-3">
+                      <div className="bg-[#f3ebf8] rounded-lg p-3">
+                        <div className="flex justify-between items-center mb-1">
+                          <span className="text-sm font-medium text-foreground">
+                            Reach Champion Tier (100 pts)
+                          </span>
+                        </div>
+                        <p className="text-sm font-bold text-[#8861d4]">
+                          +{COIN_DROPS[2]} coins
+                        </p>
+                      </div>
+                      <div className="bg-[#f3ebf8] rounded-lg p-3">
+                        <div className="flex justify-between items-center mb-1">
+                          <span className="text-sm font-medium text-foreground">
+                            Reach Legend Tier (325 pts)
+                          </span>
+                        </div>
+                        <p className="text-sm font-bold text-[#8861d4]">
+                          +{COIN_DROPS[4]} coins
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Earnings Ways */}
+                  <div>
+                    <h4 className="font-semibold text-[#3b1f59] mb-4">Earn Points</h4>
+                    <div className="space-y-2 text-sm">
+                      <div className="flex justify-between">
+                        <span className="text-foreground">Sign up</span>
+                        <span className="font-bold text-[#8861d4]">
+                          {ONETIME_POINTS.SIGNUP} pts (once)
+                        </span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-foreground">Verify email</span>
+                        <span className="font-bold text-[#8861d4]">
+                          {ONETIME_POINTS.VERIFY_EMAIL} pts (once)
+                        </span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-foreground">Complete profile</span>
+                        <span className="font-bold text-[#8861d4]">
+                          {ONETIME_POINTS.COMPLETE_PROFILE} pts (once)
+                        </span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-foreground">Follow Instagram</span>
+                        <span className="font-bold text-[#8861d4]">
+                          {ONETIME_POINTS.FOLLOW_INSTAGRAM} pts (once)
+                        </span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-foreground">Follow Facebook</span>
+                        <span className="font-bold text-[#8861d4]">
+                          {ONETIME_POINTS.FOLLOW_FACEBOOK} pts (once)
+                        </span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-foreground">Subscribe YouTube</span>
+                        <span className="font-bold text-[#8861d4]">
+                          {ONETIME_POINTS.SUBSCRIBE_YOUTUBE} pts (once)
+                        </span>
+                      </div>
+                      <div className="border-t border-border pt-2 mt-2">
+                        <div className="flex justify-between">
+                          <span className="text-foreground">Refer a friend</span>
+                          <span className="font-bold text-[#8861d4]">
+                            {REPEATABLE_POINTS.REFERRAL} pts
+                          </span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-foreground">
+                            Share link
+                          </span>
+                          <span className="font-bold text-[#8861d4]">
+                            {REPEATABLE_POINTS.SHARE} pts (max{" "}
+                            {DAILY_CAPS.MAX_SHARE_POINTS}/day)
+                          </span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-foreground">Daily check-in</span>
+                          <span className="font-bold text-[#8861d4]">
+                            {REPEATABLE_POINTS.DAILY_CHECKIN} pts/day
+                          </span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-foreground">Feature suggestion</span>
+                          <span className="font-bold text-[#8861d4]">
+                            {REPEATABLE_POINTS.SUGGESTION} pts
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </Card>
             </motion.div>
 
@@ -575,6 +719,45 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
                   ))}
                 </div>
               </Card>
+            </motion.div>
+
+            {/* Rewards Inventory Section */}
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 1.1 }}
+              className="bg-background border border-border rounded-2xl shadow-sm p-6"
+            >
+              <h3 className="font-sans font-bold text-foreground mb-6">
+                Rewards Inventory
+              </h3>
+              <RewardsInventory
+                currentTier={selectedTier}
+                coins={
+                  selectedTier === 0
+                    ? 0
+                    : selectedTier === 1
+                      ? 0
+                      : selectedTier === 2
+                        ? 75
+                        : selectedTier === 3
+                          ? 75
+                          : selectedTier === 4
+                            ? 275
+                            : 275
+                }
+                badges={tierData.badges}
+                inventory={{
+                  tier_0_updates: { claimed: true },
+                  tier_1_pdf: { claimed: selectedTier >= 1 },
+                  tier_2_coins: { claimed: selectedTier >= 2 },
+                  tier_3_voice: { claimed: selectedTier >= 3 },
+                  tier_4_founder: { claimed: selectedTier >= 4 },
+                  tier_5_elite: { claimed: selectedTier >= 5 },
+                }}
+                onClaimReward={() => {}}
+                onRedeemCoinPack={() => {}}
+              />
             </motion.div>
 
             {/* Bottom Spacing */}
