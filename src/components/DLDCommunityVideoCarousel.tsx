@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { Play, ChevronLeft, ChevronRight } from "lucide-react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { motion } from "motion/react";
@@ -21,9 +21,40 @@ const videos = [
   { id: "ppZa6eoKF3c" },
 ];
 
+const AUTO_SCROLL_SPEED = 0.5; // pixels per frame
+
 const DLDCommunityVideoCarousel = () => {
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const animationRef = useRef<number>();
+  const isPaused = useRef(false);
+
+  const startAutoScroll = useCallback(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+
+    const step = () => {
+      if (!isPaused.current && el) {
+        el.scrollLeft += AUTO_SCROLL_SPEED;
+        // Loop back when reaching the end
+        if (el.scrollLeft >= el.scrollWidth - el.clientWidth - 1) {
+          el.scrollLeft = 0;
+        }
+      }
+      animationRef.current = requestAnimationFrame(step);
+    };
+    animationRef.current = requestAnimationFrame(step);
+  }, []);
+
+  useEffect(() => {
+    startAutoScroll();
+    return () => {
+      if (animationRef.current) cancelAnimationFrame(animationRef.current);
+    };
+  }, [startAutoScroll]);
+
+  const handleMouseEnter = () => { isPaused.current = true; };
+  const handleMouseLeave = () => { isPaused.current = false; };
 
   const scroll = (direction: "left" | "right") => {
     if (!scrollRef.current) return;
@@ -36,7 +67,7 @@ const DLDCommunityVideoCarousel = () => {
 
   return (
     <section className="py-16 md:py-24 bg-[hsl(258,60%,96%)]">
-      <div className="max-w-[720px] mx-auto px-6">
+      <div className="max-w-5xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -53,7 +84,10 @@ const DLDCommunityVideoCarousel = () => {
         </motion.div>
 
         {/* Carousel */}
-        <div className="relative">
+        <div className="relative"
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
           {/* Arrows */}
           <button
             onClick={() => scroll("left")}
@@ -85,7 +119,7 @@ const DLDCommunityVideoCarousel = () => {
                 transition={{ delay: i * 0.05, duration: 0.5, ease: "easeOut" }}
                 viewport={{ once: true }}
                 onClick={() => setSelectedVideo(video.id)}
-                className="flex-shrink-0 snap-start w-[160px] md:w-[180px] group cursor-pointer"
+                className="flex-shrink-0 snap-start w-[180px] md:w-[200px] group cursor-pointer"
               >
                 <div className="relative aspect-[9/16] rounded-2xl overflow-hidden shadow-lg border border-foreground/10">
                   <img
