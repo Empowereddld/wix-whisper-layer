@@ -107,7 +107,7 @@ const DLDCommunityVideoCarousel = () => {
           {/* Scroll container */}
           <div
             ref={scrollRef}
-            className="flex gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-4 -mx-1 px-1"
+            className="flex gap-4 overflow-x-auto pb-4 -mx-1 px-1"
             style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
           >
             <style>{`div::-webkit-scrollbar { display: none; }`}</style>
