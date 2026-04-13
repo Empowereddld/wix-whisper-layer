@@ -388,7 +388,7 @@ const StoryBuilders = () => {
       <SEOHead
         title="StoryBuilders Launch Team — Join the Movement | Empowered DLD"
         description="Join the StoryBuilders Launch Team and help build a storytelling app for children with Developmental Language Disorder. Invite others, unlock rewards, and be part of something meaningful."
-        path="/storybuilders"
+        path="/storypros"
       />
       <Header />
 
