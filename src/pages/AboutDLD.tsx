@@ -7,6 +7,7 @@ import ResourceLibraryCTA from "@/components/ResourceLibraryCTA";
 import ResourceBooksSection from "@/components/ResourceBooksSection";
 import RealityOfDLDSection from "@/components/RealityOfDLDSection";
 import NotWholeStoryLamp from "@/components/NotWholeStoryLamp";
+import DLDCommunityVideoCarousel from "@/components/DLDCommunityVideoCarousel";
 import SEOHead from "@/components/SEOHead";
 
 const faqJsonLd = {
@@ -47,6 +48,7 @@ const AboutDLD = () => {
         <WhatIsDLDSection />
         <RealityOfDLDSection />
         <NotWholeStoryLamp />
+        <DLDCommunityVideoCarousel />
         <DLDFaqSection />
         <ResourceBooksSection />
         <ResourceLibraryCTA />
