@@ -104,7 +104,7 @@ function getEmailTemplate(
                   <strong>What's next?</strong> Keep an eye on your inbox for exclusive updates,
                   behind-the-scenes content, and opportunities to climb the waitlist ladder.
                 </p>
-                <a href="https://storypros.app" style="${buttonStyles}">Explore Story Pros</a>
+                <a href="https://empowereddld.com/storypros" style="${buttonStyles}">Explore Story Pros</a>
                 <p style="${baseStyles}">
                   Questions? Reply to this email and we'll get back to you soon.
                 </p>
@@ -151,7 +151,7 @@ function getEmailTemplate(
                   <li>Legend Tier (10 referrals)</li>
                   <li>Founding Elite (20 referrals)</li>
                 </ul>
-                <a href="https://storypros.app/dashboard" style="${buttonStyles}">View Your Progress</a>
+                <a href="https://empowereddld.com/storypros/dashboard" style="${buttonStyles}">View Your Progress</a>
                 <p style="${baseStyles}">
                   The Story Pros Team
                 </p>
@@ -189,7 +189,7 @@ function getEmailTemplate(
                   As a ${data.tier_name}, you now have access to exclusive benefits and early features.
                   We'll be reaching out soon with all the details about your special rewards.
                 </p>
-                <a href="https://storypros.app/dashboard" style="${buttonStyles}">View Your Rewards</a>
+                <a href="https://empowereddld.com/storypros/dashboard" style="${buttonStyles}">View Your Rewards</a>
                 <p style="${baseStyles}">
                   Thank you for being an amazing part of our community!
                 </p>
@@ -272,7 +272,7 @@ function getEmailTemplate(
                   You have <strong>${data.points || 0}</strong> points. Keep sharing your referral code
                   to climb higher and unlock exclusive tier rewards!
                 </p>
-                <a href="https://storypros.app/dashboard" style="${buttonStyles}">Check Your Dashboard</a>
+                <a href="https://empowereddld.com/storypros/dashboard" style="${buttonStyles}">Check Your Dashboard</a>
                 <p style="${baseStyles}">
                   The Story Pros Team
                 </p>
@@ -309,7 +309,7 @@ function getEmailTemplate(
                   Share your referral code with 1-2 more friends and you'll unlock amazing benefits.
                   Your friends get early access, and you get exclusive rewards. Win-win!
                 </p>
-                <a href="https://storypros.app/dashboard?action=share" style="${buttonStyles}">Share Your Code</a>
+                <a href="https://empowereddld.com/storypros/dashboard?action=share" style="${buttonStyles}">Share Your Code</a>
                 <p style="${baseStyles}">
                   The Story Pros Team
                 </p>
@@ -413,7 +413,7 @@ Deno.serve(async (req) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "Story Pros <noreply@storypros.app>",
+        from: "Story Pros <noreply@empowereddld.com>",
         to,
         subject,
         html,
