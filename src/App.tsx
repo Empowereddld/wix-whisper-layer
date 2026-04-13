@@ -59,6 +59,7 @@ const AdminBlog = lazy(() => import("./pages/admin/AdminBlog"));
 const AdminPurchases = lazy(() => import("./pages/admin/AdminPurchases"));
 const AdminDiscounts = lazy(() => import("./pages/admin/AdminDiscounts"));
 const AdminEmails = lazy(() => import("./pages/admin/AdminEmails"));
+const AdminNewsletter = lazy(() => import("./pages/admin/AdminNewsletter"));
 const AdminAuditLog = lazy(() => import("./pages/admin/AdminAuditLog"));
 const AdminProducts = lazy(() => import("./pages/admin/AdminProducts"));
 const AdminWaitlist = lazy(() => import("./pages/admin/AdminWaitlist"));
@@ -141,6 +142,7 @@ const App = () => (
               <Route path="/admin/resource-requests" element={<AdminProtectedRoute><AdminResourceRequests /></AdminProtectedRoute>} />
               <Route path="/admin/referrals" element={<AdminProtectedRoute><AdminReferrals /></AdminProtectedRoute>} />
               <Route path="/admin/emails" element={<AdminProtectedRoute><AdminEmails /></AdminProtectedRoute>} />
+              <Route path="/admin/newsletter" element={<AdminProtectedRoute><AdminNewsletter /></AdminProtectedRoute>} />
               <Route path="/admin/audit" element={<AdminProtectedRoute><AdminAuditLog /></AdminProtectedRoute>} />
               <Route path="/admin/storybuilders" element={<AdminProtectedRoute><AdminStoryBuilders /></AdminProtectedRoute>} />
               <Route path="/admin/waitlist-guide" element={<AdminProtectedRoute><AdminWaitlistGuide /></AdminProtectedRoute>} />

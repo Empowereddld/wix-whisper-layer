@@ -8,6 +8,7 @@ import {
   ShoppingCart,
   Tag,
   Mail,
+  Newspaper,
   Shield,
   Package,
   ClipboardList,
@@ -42,6 +43,7 @@ const navItems = [
   { title: "Purchases", url: "/admin/purchases", icon: ShoppingCart },
   { title: "Discounts", url: "/admin/discounts", icon: Tag },
   { title: "Emails", url: "/admin/emails", icon: Mail },
+  { title: "Newsletter", url: "/admin/newsletter", icon: Newspaper },
   { title: "Audit Log", url: "/admin/audit", icon: Shield },
   { title: "Waitlist Guide", url: "/admin/waitlist-guide", icon: HelpCircle },
 ];
