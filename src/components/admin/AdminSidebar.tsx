@@ -8,6 +8,7 @@ import {
   ShoppingCart,
   Tag,
   Mail,
+  Newspaper,
   Shield,
   Package,
   ClipboardList,

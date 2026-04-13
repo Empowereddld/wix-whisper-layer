@@ -59,6 +59,7 @@ const AdminBlog = lazy(() => import("./pages/admin/AdminBlog"));
 const AdminPurchases = lazy(() => import("./pages/admin/AdminPurchases"));
 const AdminDiscounts = lazy(() => import("./pages/admin/AdminDiscounts"));
 const AdminEmails = lazy(() => import("./pages/admin/AdminEmails"));
+const AdminNewsletter = lazy(() => import("./pages/admin/AdminNewsletter"));
 const AdminAuditLog = lazy(() => import("./pages/admin/AdminAuditLog"));
 const AdminProducts = lazy(() => import("./pages/admin/AdminProducts"));
 const AdminWaitlist = lazy(() => import("./pages/admin/AdminWaitlist"));
