@@ -186,3 +186,27 @@ export const POINTS = {
 
 export type TierLevel = typeof TIER_NAMES[number];
 export type TierColor = typeof TIER_COLORS[number];
+
+// ===========================================
+// FEATURE 1: Story Theme Voting
+// ===========================================
+
+export const INITIAL_STORY_THEMES = [
+  { id: "adventure", title: "Adventure Quest", description: "Dan and Daria explore a magical forest, learning new words along the way", emoji: "🌲", votes: 0 },
+  { id: "space", title: "Space Explorers", description: "A journey through the solar system where every planet teaches a new skill", emoji: "🚀", votes: 0 },
+  { id: "ocean", title: "Ocean Discovery", description: "Underwater adventures helping sea creatures communicate and solve problems", emoji: "🌊", votes: 0 },
+  { id: "garden", title: "Secret Garden", description: "Growing a magical garden where each plant represents a different emotion", emoji: "🌻", votes: 0 },
+  { id: "music", title: "Rhythm & Words", description: "A musical adventure where sounds and words come together to tell stories", emoji: "🎵", votes: 0 },
+] as const;
+
+export const BRAND_COLORS = {
+  PRIMARY: "#8861d4",      // Brand purple
+  LIGHT: "#f3ebf8",        // Light purple background
+  DARK: "#3b1f59",         // Dark purple
+} as const;
+
+// ===========================================
+// FEATURE 2: SLP Referral Bonus
+// ===========================================
+
+export const SLP_REFERRAL_BONUS = 50; // On top of normal 25 = 75 total

@@ -38,6 +38,7 @@ export { default as RewardsInventory } from "./RewardsInventory";
 export { default as CoinBalance } from "./CoinBalance";
 export { default as CoinDropAnimation } from "./CoinDropAnimation";
 export { default as RewardCard } from "./RewardCard";
+export { default as FounderCertificate } from "./FounderCertificate";
 export {
   WaitlistFormSkeleton,
   PositionCardSkeleton,

@@ -16,6 +16,8 @@ import {
   Gift,
   User,
   Check,
+  Zap,
+  Lock,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -37,6 +39,7 @@ import {
   DAILY_CAPS,
   COIN_DROPS,
   COMMUNITY_MILESTONES,
+  TIER_REWARDS,
 } from "@/lib/waitlist-constants";
 import RewardsInventory from "@/components/waitlist/RewardsInventory";
 
@@ -261,6 +264,24 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
             </div>
           </motion.div>
 
+          {/* 2x Power-Up Banner */}
+          {selectedTier >= 4 && (
+            <motion.div
+              initial={{ y: -10, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              className="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-6 py-3 flex items-center justify-between"
+            >
+              <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <Zap className="h-5 w-5" />
+                  <span className="font-semibold">2x Referral Power-Up Active!</span>
+                  <span className="text-sm opacity-90">We're helping you push to our top tier!</span>
+                </div>
+                <span className="text-sm font-medium bg-white/20 px-3 py-1 rounded-full">23h left</span>
+              </div>
+            </motion.div>
+          )}
+
           {/* Main Content */}
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -399,6 +420,47 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
                 </div>
               </Card>
             </motion.div>
+
+            {/* Interactive Story Preview - Hero+ tier */}
+            {selectedTier >= 3 && (
+              <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.75 }}>
+                <Card className="bg-background border border-border rounded-2xl shadow-sm p-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="font-sans font-bold text-foreground">Interactive Story Preview</h3>
+                    <Badge className="bg-[#8BA888]/20 text-[#8BA888]">Hero Exclusive</Badge>
+                  </div>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    As a Hero tier member, you get an exclusive sneak peek at the Story Pros experience. Try an interactive story below!
+                  </p>
+                  <div className="rounded-xl overflow-hidden border border-border" style={{ aspectRatio: "16/9" }}>
+                    <iframe
+                      src="https://storyprospreview.lovable.app/preview/story/11111111-1111-1111-1111-111111111111"
+                      className="w-full h-full"
+                      title="Story Pros Interactive Preview"
+                      allow="fullscreen"
+                      style={{ minHeight: "500px" }}
+                    />
+                  </div>
+                </Card>
+              </motion.div>
+            )}
+
+            {/* Interactive Story Preview - Locked teaser for lower tiers */}
+            {selectedTier < 3 && (
+              <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.75 }}>
+                <Card className="bg-background border border-border rounded-2xl shadow-sm p-6 relative overflow-hidden">
+                  <div className="absolute inset-0 bg-white/80 backdrop-blur-sm z-10 flex flex-col items-center justify-center">
+                    <Lock className="h-8 w-8 text-muted-foreground mb-2" />
+                    <p className="font-semibold text-foreground">Interactive Preview</p>
+                    <p className="text-sm text-muted-foreground">Reach Hero tier (175 pts) to unlock</p>
+                  </div>
+                  <div className="opacity-20">
+                    <h3 className="font-sans font-bold text-foreground mb-4">Interactive Story Preview</h3>
+                    <div className="rounded-xl bg-muted h-64" />
+                  </div>
+                </Card>
+              </motion.div>
+            )}
 
             {/* Referral Link Card */}
             <motion.div
@@ -676,6 +738,46 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
               </Card>
             </motion.div>
 
+            {/* Theme Voting */}
+            <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
+              <Card className="bg-background border border-border rounded-2xl shadow-sm p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="font-sans font-bold text-foreground">Story Theme Voting</h3>
+                  {selectedTier >= 4 ? (
+                    <Badge className="bg-emerald-500/20 text-emerald-600">Unlocked</Badge>
+                  ) : (
+                    <Badge className="bg-gray-200 text-gray-500">Story Champion Pack Required</Badge>
+                  )}
+                </div>
+                <p className="text-sm text-muted-foreground mb-4">
+                  Help choose the next Story Pros adventure! Vote for your favorite theme.
+                </p>
+                <div className="space-y-3">
+                  {/* Show 5 theme options with vote counts */}
+                  {[
+                    { emoji: "🌲", title: "Adventure Quest", votes: 142, pct: 32 },
+                    { emoji: "🚀", title: "Space Explorers", votes: 98, pct: 22 },
+                    { emoji: "🌊", title: "Ocean Discovery", votes: 87, pct: 20 },
+                    { emoji: "🌻", title: "Secret Garden", votes: 73, pct: 16 },
+                    { emoji: "🎵", title: "Rhythm & Words", votes: 45, pct: 10 },
+                  ].map((theme, idx) => (
+                    <div key={idx} className={`flex items-center gap-3 p-3 rounded-lg border ${selectedTier >= 4 ? "border-border hover:border-[#8861d4] cursor-pointer" : "border-border opacity-60"}`}>
+                      <span className="text-2xl">{theme.emoji}</span>
+                      <div className="flex-1">
+                        <div className="flex justify-between">
+                          <span className="font-medium text-foreground">{theme.title}</span>
+                          <span className="text-sm text-muted-foreground">{theme.votes} votes</span>
+                        </div>
+                        <div className="h-1.5 bg-border rounded-full mt-1 overflow-hidden">
+                          <div className="h-full bg-[#8861d4] rounded-full" style={{ width: `${theme.pct}%` }} />
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </Card>
+            </motion.div>
+
             {/* Badge Showcase */}
             <motion.div
               initial={{ y: 20, opacity: 0 }}
@@ -770,6 +872,25 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
                 </div>
               </Card>
             </motion.div>
+
+            {/* Upcoming Rewards */}
+            {selectedTier < 5 && (
+              <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
+                <Card className="bg-gradient-to-br from-[#f3ebf8] to-white border border-[#8861d4]/20 rounded-2xl shadow-sm p-6">
+                  <h3 className="font-sans font-bold text-[#3b1f59] mb-2">
+                    Coming at {TIER_NAMES[selectedTier + 1]} ({TIER_THRESHOLDS[selectedTier + 1]} pts)
+                  </h3>
+                  <p className="text-sm text-gray-600 mb-4">
+                    You're {TIER_THRESHOLDS[selectedTier + 1] - tierData.points} points away from your next reward!
+                  </p>
+                  {/* Show the next tier's reward from TIER_REWARDS */}
+                  <div className="bg-white rounded-lg p-4 border border-[#dedede]">
+                    <p className="font-semibold text-[#3b1f59]">{TIER_REWARDS[selectedTier + 1]?.name}</p>
+                    <p className="text-sm text-gray-500 mt-1">{TIER_REWARDS[selectedTier + 1]?.description}</p>
+                  </div>
+                </Card>
+              </motion.div>
+            )}
 
             {/* Leaderboard */}
             <motion.div

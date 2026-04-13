@@ -71,6 +71,7 @@ const AdminWaitlistGuide = lazy(() => import("./pages/AdminWaitlistGuide"));
 // Lazy-loaded: Legal & misc
 const StoryBuilders = lazy(() => import("./pages/StoryBuilders"));
 const WaitlistUserGuide = lazy(() => import("./pages/WaitlistUserGuide"));
+const EarlySupportersWall = lazy(() => import("./pages/EarlySupportersWall"));
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
 const TermsAndConditions = lazy(() => import("./pages/TermsAndConditions"));
 const Disclaimer = lazy(() => import("./pages/Disclaimer"));
@@ -114,6 +115,7 @@ const App = () => (
               <Route path="/storypros" element={<StoryBuilders />} />
               <Route path="/storybuilders" element={<Navigate to="/storypros" replace />} />
               <Route path="/storypros/guide" element={<WaitlistUserGuide />} />
+              <Route path="/storypros/supporters" element={<EarlySupportersWall />} />
               <Route path="/storybuilders/guide" element={<Navigate to="/storypros/guide" replace />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
