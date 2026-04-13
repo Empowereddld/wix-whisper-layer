@@ -32,6 +32,12 @@ export { default as AnimatedBackground } from "./AnimatedBackground";
 export { default as ConfettiEffect } from "./ConfettiEffect";
 export { default as GlassCard } from "./GlassCard";
 export { default as AnimatedCounter } from "./AnimatedCounter";
+
+// Phase 9: Rewards & Coin System
+export { default as RewardsInventory } from "./RewardsInventory";
+export { default as CoinBalance } from "./CoinBalance";
+export { default as CoinDropAnimation } from "./CoinDropAnimation";
+export { default as RewardCard } from "./RewardCard";
 export {
   WaitlistFormSkeleton,
   PositionCardSkeleton,
