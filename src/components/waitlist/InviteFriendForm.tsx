@@ -14,7 +14,7 @@ const InviteFriendForm = ({ referralCode, userName }: InviteFriendFormProps) => 
   const [friendName, setFriendName] = useState("");
   const [friendEmail, setFriendEmail] = useState("");
   const [customMessage, setCustomMessage] = useState(
-    `Hey! I wanted to share something amazing with you. There's this new app called Story Builders that's being built for kids with DLD (Developmental Language Disorder). I think it could be really meaningful, and I'd love for you to check it out!\n\nJoin the waitlist: ${referralCode}`
+    `Hey! I wanted to share something amazing with you. There's this new app called Story Pros that's being built for kids with DLD (Developmental Language Disorder). I think it could be really meaningful, and I'd love for you to check it out!\n\nJoin the waitlist: ${referralCode}`
   );
   const [isLoading, setIsLoading] = useState(false);
   const [sent, setSent] = useState(false);
@@ -60,7 +60,7 @@ const InviteFriendForm = ({ referralCode, userName }: InviteFriendFormProps) => 
         setFriendEmail("");
         setSent(false);
         setCustomMessage(
-          `Hey! I wanted to share something amazing with you. There's this new app called Story Builders that's being built for kids with DLD (Developmental Language Disorder). I think it could be really meaningful, and I'd love for you to check it out!\n\nJoin the waitlist: ${referralCode}`
+          `Hey! I wanted to share something amazing with you. There's this new app called Story Pros that's being built for kids with DLD (Developmental Language Disorder). I think it could be really meaningful, and I'd love for you to check it out!\n\nJoin the waitlist: ${referralCode}`
         );
       }, 2000);
     } catch (error) {

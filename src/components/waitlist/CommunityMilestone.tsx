@@ -331,7 +331,7 @@ const CommunityMilestone: React.FC<CommunityMilestoneProps> = ({
             We've Reached All Milestones!
           </h4>
           <p className="text-white/70 text-sm">
-            Thanks to our amazing community, Story Builders has achieved
+            Thanks to our amazing community, Story Pros has achieved
             incredible growth. You're all legends!
           </p>
         </motion.div>

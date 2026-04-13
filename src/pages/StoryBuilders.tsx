@@ -297,7 +297,7 @@ const WhatIsStoryBuildersSection = () => {
             <div className="w-10 h-1 rounded-full bg-primary" />
           </div>
           <h2 className="text-[24px] md:text-[30px] lg:text-[34px] font-bold tracking-tight text-foreground">
-            What Is Story Builders
+            What Is Story Pros
           </h2>
         </FadeSection>
 
@@ -314,7 +314,7 @@ const WhatIsStoryBuildersSection = () => {
             >
               <img
                 src={storybuildersAppMockup}
-                alt="Story Builders app interface showing an interactive storytelling session"
+                alt="Story Pros app interface showing an interactive storytelling session"
                 className="w-full max-w-[520px] rounded-2xl"
                 style={{ boxShadow: "0 8px 60px -12px hsl(258, 50%, 50%, 0.25)" }}
                 loading="lazy"
@@ -325,7 +325,7 @@ const WhatIsStoryBuildersSection = () => {
           {/* Right: description */}
           <FadeSection className="lg:order-2 order-1">
             <p className="text-[15px] md:text-[16px] text-muted-foreground leading-[1.7] mb-6">
-              Story Builders is an interactive app designed to help children:
+              Story Pros is an interactive app designed to help children:
             </p>
             <ul className="space-y-3 mb-6">
               {[
@@ -411,7 +411,7 @@ const StoryBuilders = () => {
                 The First App Built<br className="hidden md:inline lg:hidden" /> For Kids With DLD
               </h1>
               <p className="text-[14px] md:text-[16px] text-white/90 leading-[1.7] mt-4 [text-shadow:0_1px_6px_rgba(0,0,0,0.4)]">
-                Join the Story Builders Launch Team and help us bring daily 20-minute story sessions that build vocabulary, comprehension, and confidence to children with DLD worldwide.
+                Join the Story Pros Launch Team and help us bring daily 20-minute story sessions that build vocabulary, comprehension, and confidence to children with DLD worldwide.
               </p>
               {!wl.joined ? (
                 <>
@@ -476,7 +476,7 @@ const StoryBuilders = () => {
             And over time, <span className="text-primary font-semibold">confidence starts to fade.</span>
           </p>
           <p className="text-base md:text-xl lg:text-2xl leading-[1.7] font-bold text-deep-purple">
-            Story Builders was created to change that.
+            Story Pros was created to change that.
           </p>
       </FadeSection>
       </section>
@@ -489,10 +489,10 @@ const StoryBuilders = () => {
                 {/* Left column — text */}
                 <div className="flex flex-col gap-6">
                   <h2 className="text-[28px] md:text-[34px] lg:text-[38px] font-bold tracking-tight text-foreground leading-[1.15] whitespace-nowrap">
-                    What is Story Builders?
+                    What is Story Pros?
                   </h2>
                   <p className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-[500px]">
-                    Story Builders is an interactive app designed to help children:
+                    Story Pros is an interactive app designed to help children:
                   </p>
                   <ul className="flex flex-col gap-2 max-w-[500px]">
                     {[
@@ -515,7 +515,7 @@ const StoryBuilders = () => {
                 <div className="flex justify-center lg:justify-start">
                   <img
                     src={storybuildersAppMockup}
-                    alt="Story Builders app on iPad"
+                    alt="Story Pros app on iPad"
                     className="w-full max-w-[500px] lg:max-w-none mx-auto lg:mx-0"
                   />
                 </div>

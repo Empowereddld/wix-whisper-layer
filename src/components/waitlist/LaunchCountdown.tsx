@@ -121,7 +121,7 @@ const LaunchCountdown: React.FC<LaunchCountdownProps> = ({ launchDate }) => {
 
             <h2 className="text-4xl font-bold text-white mb-4">Coming Soon</h2>
             <p className="text-white/80 text-lg mb-8">
-              Story Builders is being crafted with care. Lock in your position
+              Story Pros is being crafted with care. Lock in your position
               on the waitlist to be first in line when we launch!
             </p>
 
@@ -217,7 +217,7 @@ const LaunchCountdown: React.FC<LaunchCountdownProps> = ({ launchDate }) => {
               We've Launched!
             </h2>
             <p className="text-white/90 text-lg">
-              Story Builders is now live. Thank you for being part of this
+              Story Pros is now live. Thank you for being part of this
               journey from the beginning!
             </p>
           </div>
@@ -241,7 +241,7 @@ const LaunchCountdown: React.FC<LaunchCountdownProps> = ({ launchDate }) => {
           Launch Countdown
         </h2>
         <p className="text-white/60">
-          Lock in your position before Story Builders launches!
+          Lock in your position before Story Pros launches!
         </p>
       </div>
 
@@ -334,7 +334,7 @@ const LaunchCountdown: React.FC<LaunchCountdownProps> = ({ launchDate }) => {
         transition={{ delay: 0.5, duration: 0.5 }}
       >
         <p className="text-white/60 text-sm">
-          Get ready for something amazing. We're building Story Builders with
+          Get ready for something amazing. We're building Story Pros with
           care.
         </p>
       </motion.div>

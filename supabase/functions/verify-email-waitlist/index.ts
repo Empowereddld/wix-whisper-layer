@@ -16,7 +16,7 @@ function getSuccessHTML(email: string): string {
     <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Email Verified - Story Builders</title>
+      <title>Email Verified - Story Pros</title>
       <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -50,7 +50,7 @@ function getSuccessHTML(email: string): string {
           <a href="https://wix-whisper-layer.lovable.app/storybuilders" class="button">Go to Dashboard</a>
         </div>
         <div class="footer">
-          <p>Thank you for joining Story Builders!</p>
+          <p>Thank you for joining Story Pros!</p>
         </div>
       </div>
     </body>
@@ -68,7 +68,7 @@ function getErrorHTML(reason: string = "Invalid or expired token"): string {
     <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Verification Failed - Story Builders</title>
+      <title>Verification Failed - Story Pros</title>
       <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -96,7 +96,7 @@ function getErrorHTML(reason: string = "Invalid or expired token"): string {
         <div class="content">
           <p>We couldn't verify your email address.</p>
           <div class="reason"><strong>Reason:</strong> ${reason}</div>
-          <a href="https://wix-whisper-layer.lovable.app/storybuilders" class="button">Return to Story Builders</a>
+          <a href="https://wix-whisper-layer.lovable.app/storybuilders" class="button">Return to Story Pros</a>
         </div>
         <div class="footer">
           <p>Questions? Contact us at hello@empowereddld.com</p>

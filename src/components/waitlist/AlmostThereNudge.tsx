@@ -39,8 +39,8 @@ const AlmostThereNudge: React.FC<AlmostThereNudgeProps> = ({
     try {
       if (navigator.share) {
         await navigator.share({
-          title: "Story Builders",
-          text: `Help me reach ${nextTierName} on Story Builders! Join me and earn ${nextReward}!`,
+          title: "Story Pros",
+          text: `Help me reach ${nextTierName} on Story Pros! Join me and earn ${nextReward}!`,
           url: referralLink,
         });
       } else {

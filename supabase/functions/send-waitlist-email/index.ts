@@ -81,12 +81,12 @@ function getEmailTemplate(
   switch (template) {
     case "welcome": {
       return {
-        subject: `Welcome to Story Builders, ${data.name}!`,
+        subject: `Welcome to Story Pros, ${data.name}!`,
         html: `
           <div style="${containerStyles}">
             <div style="${cardStyles}">
               <div style="${headerStyles}">
-                <h1 style="margin: 0; font-size: 28px;">Welcome to Story Builders</h1>
+                <h1 style="margin: 0; font-size: 28px;">Welcome to Story Pros</h1>
               </div>
               <div style="padding: 20px 0;">
                 <p style="${baseStyles}">Hi ${data.name},</p>
@@ -104,16 +104,16 @@ function getEmailTemplate(
                   <strong>What's next?</strong> Keep an eye on your inbox for exclusive updates,
                   behind-the-scenes content, and opportunities to climb the waitlist ladder.
                 </p>
-                <a href="https://storybuilders.app" style="${buttonStyles}">Explore Story Builders</a>
+                <a href="https://storybuilders.app" style="${buttonStyles}">Explore Story Pros</a>
                 <p style="${baseStyles}">
                   Questions? Reply to this email and we'll get back to you soon.
                 </p>
                 <p style="${baseStyles}">
-                  The Story Builders Team
+                  The Story Pros Team
                 </p>
               </div>
               <div style="${footerStyles}">
-                <p>You received this because you signed up for the Story Builders waitlist.</p>
+                <p>You received this because you signed up for the Story Pros waitlist.</p>
                 <p><a href="#" style="color: ${brandColor}; text-decoration: none;">Unsubscribe</a></p>
               </div>
             </div>
@@ -134,7 +134,7 @@ function getEmailTemplate(
               <div style="padding: 20px 0;">
                 <p style="${baseStyles}">Great news!</p>
                 <p style="${baseStyles}">
-                  <strong>${data.name}</strong> just joined Story Builders using your referral code!
+                  <strong>${data.name}</strong> just joined Story Pros using your referral code!
                   You've earned 25 points and are now closer to unlocking exclusive rewards.
                 </p>
                 <p style="${baseStyles}">
@@ -153,7 +153,7 @@ function getEmailTemplate(
                 </ul>
                 <a href="https://storybuilders.app/dashboard" style="${buttonStyles}">View Your Progress</a>
                 <p style="${baseStyles}">
-                  The Story Builders Team
+                  The Story Pros Team
                 </p>
               </div>
               <div style="${footerStyles}">
@@ -194,7 +194,7 @@ function getEmailTemplate(
                   Thank you for being an amazing part of our community!
                 </p>
                 <p style="${baseStyles}">
-                  The Story Builders Team
+                  The Story Pros Team
                 </p>
               </div>
               <div style="${footerStyles}">
@@ -209,7 +209,7 @@ function getEmailTemplate(
 
     case "verification": {
       return {
-        subject: "Verify your email for Story Builders",
+        subject: "Verify your email for Story Pros",
         html: `
           <div style="${containerStyles}">
             <div style="${cardStyles}">
@@ -220,7 +220,7 @@ function getEmailTemplate(
                 <p style="${baseStyles}">Hi ${data.name},</p>
                 <p style="${baseStyles}">
                   Thank you for signing up! Please verify your email address to activate your account
-                  and unlock all the benefits of Story Builders.
+                  and unlock all the benefits of Story Pros.
                 </p>
                 <p style="${baseStyles}">
                   <a href="${data.verification_link}" style="${buttonStyles}">Verify Email</a>
@@ -235,11 +235,11 @@ function getEmailTemplate(
                   This link expires in 24 hours.
                 </p>
                 <p style="${baseStyles}">
-                  The Story Builders Team
+                  The Story Pros Team
                 </p>
               </div>
               <div style="${footerStyles}">
-                <p>You received this because you signed up for Story Builders.</p>
+                <p>You received this because you signed up for Story Pros.</p>
                 <p><a href="#" style="color: ${brandColor}; text-decoration: none;">Unsubscribe</a></p>
               </div>
             </div>
@@ -250,7 +250,7 @@ function getEmailTemplate(
 
     case "weekly_digest": {
       return {
-        subject: "Your Story Builders Weekly Digest",
+        subject: "Your Story Pros Weekly Digest",
         html: `
           <div style="${containerStyles}">
             <div style="${cardStyles}">
@@ -260,7 +260,7 @@ function getEmailTemplate(
               <div style="padding: 20px 0;">
                 <p style="${baseStyles}">Hi ${data.name},</p>
                 <p style="${baseStyles}">
-                  Here's what's been happening in the Story Builders community this week!
+                  Here's what's been happening in the Story Pros community this week!
                 </p>
                 <h3 style="${baseStyles}; color: ${brandColor};">Community Growth</h3>
                 <p style="${baseStyles}">
@@ -274,11 +274,11 @@ function getEmailTemplate(
                 </p>
                 <a href="https://storybuilders.app/dashboard" style="${buttonStyles}">Check Your Dashboard</a>
                 <p style="${baseStyles}">
-                  The Story Builders Team
+                  The Story Pros Team
                 </p>
               </div>
               <div style="${footerStyles}">
-                <p>You received this as a subscriber to the Story Builders waitlist.</p>
+                <p>You received this as a subscriber to the Story Pros waitlist.</p>
                 <p><a href="#" style="color: ${brandColor}; text-decoration: none;">Unsubscribe</a></p>
               </div>
             </div>
@@ -311,11 +311,11 @@ function getEmailTemplate(
                 </p>
                 <a href="https://storybuilders.app/dashboard?action=share" style="${buttonStyles}">Share Your Code</a>
                 <p style="${baseStyles}">
-                  The Story Builders Team
+                  The Story Pros Team
                 </p>
               </div>
               <div style="${footerStyles}">
-                <p>You received this to help you progress in the Story Builders waitlist.</p>
+                <p>You received this to help you progress in the Story Pros waitlist.</p>
                 <p><a href="#" style="color: ${brandColor}; text-decoration: none;">Unsubscribe</a></p>
               </div>
             </div>
@@ -326,7 +326,7 @@ function getEmailTemplate(
 
     case "announcement": {
       return {
-        subject: data.subject || "Exciting News from Story Builders!",
+        subject: data.subject || "Exciting News from Story Pros!",
         html: `
           <div style="${containerStyles}">
             <div style="${cardStyles}">
@@ -344,11 +344,11 @@ function getEmailTemplate(
                     : ""
                 }
                 <p style="${baseStyles}">
-                  The Story Builders Team
+                  The Story Pros Team
                 </p>
               </div>
               <div style="${footerStyles}">
-                <p>You received this announcement as a Story Builders waitlist member.</p>
+                <p>You received this announcement as a Story Pros waitlist member.</p>
                 <p><a href="#" style="color: ${brandColor}; text-decoration: none;">Unsubscribe</a></p>
               </div>
             </div>
@@ -359,12 +359,12 @@ function getEmailTemplate(
 
     default: {
       return {
-        subject: "Story Builders",
+        subject: "Story Pros",
         html: `
           <div style="${containerStyles}">
             <div style="${cardStyles}">
               <p style="${baseStyles}">Hello ${data.name || 'there'},</p>
-              <p style="${baseStyles}">Thank you for being part of Story Builders!</p>
+              <p style="${baseStyles}">Thank you for being part of Story Pros!</p>
             </div>
           </div>
         `,
@@ -413,7 +413,7 @@ Deno.serve(async (req) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "Story Builders <noreply@storybuilders.app>",
+        from: "Story Pros <noreply@storybuilders.app>",
         to,
         subject,
         html,

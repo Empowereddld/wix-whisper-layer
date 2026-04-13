@@ -50,7 +50,7 @@ const WaitlistUserGuide = () => {
     },
     {
       title: "Tell Your Speech Therapist",
-      description: "Your speech-language pathologist can share Story Builders with other families. They know people who need it!",
+      description: "Your speech-language pathologist can share Story Pros with other families. They know people who need it!",
       icon: "🗣️",
     },
     {
@@ -65,7 +65,7 @@ const WaitlistUserGuide = () => {
     },
     {
       title: "Share Your Story",
-      description: "Tell people how Story Builders helps your child. Real stories are the most powerful marketing!",
+      description: "Tell people how Story Pros helps your child. Real stories are the most powerful marketing!",
       icon: "📖",
     },
     {
@@ -77,11 +77,11 @@ const WaitlistUserGuide = () => {
 
   const faqItems = [
     {
-      q: "What is Story Builders?",
-      a: "Story Builders is an innovative educational app designed specifically for children with Developmental Language Disorder (DLD). It uses interactive storytelling to help kids build language skills, confidence, and creativity in a fun, judgment-free environment.",
+      q: "What is Story Pros?",
+      a: "Story Pros is an innovative educational app designed specifically for children with Developmental Language Disorder (DLD). It uses interactive storytelling to help kids build language skills, confidence, and creativity in a fun, judgment-free environment.",
     },
     {
-      q: "When will Story Builders launch?",
+      q: "When will Story Pros launch?",
       a: "We're in final beta testing! The exact launch date will be announced to all waitlist members first. Being on the waitlist guarantees you'll get in on day one.",
     },
     {
@@ -126,8 +126,8 @@ const WaitlistUserGuide = () => {
   return (
     <>
       <SEOHead
-        title="Waitlist User Guide | Story Builders"
-        description="Learn how to maximize your position on the Story Builders launch team, earn rewards, and make the most of our referral system."
+        title="Waitlist User Guide | Story Pros"
+        description="Learn how to maximize your position on the Story Pros launch team, earn rewards, and make the most of our referral system."
         path="/waitlist-guide"
       />
 
@@ -151,10 +151,10 @@ const WaitlistUserGuide = () => {
               ← Back to Waitlist
             </Button>
             <h1 className={`text-4xl font-bold font-serif italic mb-4 text-[#3D2B1F]`}>
-              Your Story Builders Launch Team Playbook
+              Your Story Pros Launch Team Playbook
             </h1>
             <p className={`text-lg max-w-3xl text-[#8B7355]`}>
-              Welcome to the exclusive community of early supporters! This guide will show you how to maximize your position, unlock rewards, and help other families discover Story Builders.
+              Welcome to the exclusive community of early supporters! This guide will show you how to maximize your position, unlock rewards, and help other families discover Story Pros.
             </p>
           </div>
         </motion.div>
@@ -171,7 +171,7 @@ const WaitlistUserGuide = () => {
               <div>
                 <h2 className={`text-2xl font-bold font-serif italic mb-3 text-[#3D2B1F]`}>Welcome to the Launch Team</h2>
                 <p className={`text-base mb-4 text-[#5C4033]`}>
-                  You're part of something special. Story Builders is an educational app designed with love for children with Developmental Language Disorder. We're building a community where kids feel celebrated for who they are, not measured by what they can't do yet.
+                  You're part of something special. Story Pros is an educational app designed with love for children with Developmental Language Disorder. We're building a community where kids feel celebrated for who they are, not measured by what they can't do yet.
                 </p>
                 <p className={`text-base text-[#5C4033]`}>
                   Early supporters like you are helping shape the future of language learning. Your referrals, feedback, and enthusiasm matter more than you know. Together, we're creating a movement to support families navigating DLD.
@@ -304,13 +304,13 @@ const WaitlistUserGuide = () => {
                 <div className="bg-[#F5EDE3] p-4 rounded-lg border border-[#E8DDD0]">
                   <p className="text-sm text-[#8B7355] mb-2">For Parent Groups:</p>
                   <p className="text-[#5C4033]">
-                    "I'm so excited about Story Builders — an app designed specifically for kids with language challenges. If you know families navigating DLD, check this out! <strong>storybuilders.com?ref=YOUR_CODE</strong>"
+                    "I'm so excited about Story Pros — an app designed specifically for kids with language challenges. If you know families navigating DLD, check this out! <strong>storybuilders.com?ref=YOUR_CODE</strong>"
                   </p>
                 </div>
                 <div className="bg-[#F5EDE3] p-4 rounded-lg border border-[#E8DDD0]">
                   <p className="text-sm text-[#8B7355] mb-2">For Therapist/Educator Referrals:</p>
                   <p className="text-[#5C4033]">
-                    "I'm part of the launch team for Story Builders, an educational app built for kids with DLD. I think your families would love it. Join the waitlist: <strong>storybuilders.com?ref=YOUR_CODE</strong>"
+                    "I'm part of the launch team for Story Pros, an educational app built for kids with DLD. I think your families would love it. Join the waitlist: <strong>storybuilders.com?ref=YOUR_CODE</strong>"
                   </p>
                 </div>
               </div>

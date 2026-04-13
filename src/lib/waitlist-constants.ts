@@ -23,7 +23,7 @@ export const TIER_REFERRALS = [0, 1, 3, 5, 10, 20] as const;
 export const TIER_REWARDS = [
   "Early access updates & behind-the-scenes content",
   "Exclusive DLD Resource Guide PDF",
-  "Access to Story Builders Podcast",
+  "Access to Story Pros Podcast",
   "Story Builder Activity Pack + Suggestion Box access",
   "Founder recognition on website + Founder pricing ($5.99/mo)",
   "VIP Founding Elite: Virtual meet & greet + Signed Dan & Daria book",
