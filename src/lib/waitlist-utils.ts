@@ -85,14 +85,14 @@ export function formatQueuePosition(position: number): string {
  * Get platform-specific share message for social media.
  */
 export function getShareMessage(platform: string, referralLink: string): string {
-  const baseMessage = "I'm on the waitlist for StoryBuilders! 📚";
+  const baseMessage = "I'm on the waitlist for Story Pros! 📚";
 
   const messages: Record<string, string> = {
     twitter: `${baseMessage} Join me and unlock exclusive rewards! ${referralLink}`,
     facebook: `${baseMessage} Come join the Launch Team and get early access! ${referralLink}`,
     linkedin:
-      `I'm excited about StoryBuilders - a platform designed to transform how teachers engage students with storytelling. ${referralLink}`,
-    email: `Join me on the StoryBuilders waitlist!\n\nI'm part of the Launch Team and would love to have you join too. Get exclusive rewards, early access, and more.\n\n${referralLink}`,
+      `I'm excited about Story Pros - a platform designed to transform how teachers engage students with storytelling. ${referralLink}`,
+    email: `Join me on the Story Pros waitlist!\n\nI'm part of the Launch Team and would love to have you join too. Get exclusive rewards, early access, and more.\n\n${referralLink}`,
     whatsapp: `${baseMessage}\n\nJoin me on the waitlist and get amazing rewards! 🎁\n${referralLink}`,
     copy: referralLink,
   };
@@ -102,13 +102,10 @@ export function getShareMessage(platform: string, referralLink: string): string 
 
 /**
  * Generate a referral link from a referral code.
+ * Uses the production domain with /storypros path.
  */
 export function generateReferralLink(code: string): string {
-  if (typeof window === "undefined") {
-    // Server-side safety check
-    return `https://storybuilders.example.com?ref=${code}`;
-  }
-  return `${window.location.origin}/storybuilders?ref=${code}`;
+  return `https://www.empowereddld.com/storypros?ref=${code}`;
 }
 
 /**
