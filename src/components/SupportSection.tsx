@@ -43,7 +43,7 @@ const features = [
     title: "Story Pros App",
     description: "Interactive stories building vocabulary, grammar, and narrative skills. Join the waitlist for beta access.",
     cta: "JOIN WAITLIST",
-    href: "/storybuilders",
+    href: "/storypros",
   },
   {
     icon: Briefcase,

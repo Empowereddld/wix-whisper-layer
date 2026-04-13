@@ -22,7 +22,7 @@ const resourcesLinks = [
 const shopLinks = [
   { label: "Books", href: "/shop/books" },
   { label: "Bulk Orders", href: "/shop/bulk-orders" },
-  { label: "Educational App", href: "/storybuilders" },
+  { label: "Educational App", href: "/storypros" },
 ];
 
 const navLinks = [

@@ -251,7 +251,7 @@ const AdminWaitlistGuide = () => {
 
             <CollapsibleSection title="Access Admin Dashboard">
               <p className="text-sm text-gray-500 mb-4">
-                Admins access the Story Pros waitlist dashboard at <code className="bg-[#ffffff] px-2 py-1 rounded text-[#3b1f59]">/admin/storybuilders</code>. This
+                Admins access the Story Pros waitlist dashboard at <code className="bg-[#ffffff] px-2 py-1 rounded text-[#3b1f59]">/admin/storypros</code>. This
                 requires:
               </p>
               <ul className="space-y-2 text-sm list-disc list-inside text-[#121212]">

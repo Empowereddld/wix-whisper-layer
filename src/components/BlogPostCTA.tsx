@@ -46,7 +46,7 @@ const SECONDARY_CTAS = [
     id: "waitlist",
     title: "Join the Waitlist",
     description: "Get early access to our app — tools built for families navigating DLD",
-    href: "/storybuilders",
+    href: "/storypros",
     label: "Join Now",
     icon: Rocket,
     categories: [],

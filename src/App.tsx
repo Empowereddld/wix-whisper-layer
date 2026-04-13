@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import ScrollToTop from "./components/ScrollToTop";
 
@@ -111,10 +111,10 @@ const App = () => (
               <Route path="/about-dld" element={<AboutDLD />} />
               <Route path="/contact" element={<ContactUs />} />
               <Route path="/signup" element={<Signup />} />
-              <Route path="/storybuilders" element={<StoryBuilders />} />
               <Route path="/storypros" element={<StoryBuilders />} />
-              <Route path="/storybuilders/guide" element={<WaitlistUserGuide />} />
+              <Route path="/storybuilders" element={<Navigate to="/storypros" replace />} />
               <Route path="/storypros/guide" element={<WaitlistUserGuide />} />
+              <Route path="/storybuilders/guide" element={<Navigate to="/storypros/guide" replace />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
               <Route path="/disclaimer" element={<Disclaimer />} />
@@ -146,7 +146,8 @@ const App = () => (
               <Route path="/admin/emails" element={<AdminProtectedRoute><AdminEmails /></AdminProtectedRoute>} />
               <Route path="/admin/newsletter" element={<AdminProtectedRoute><AdminNewsletter /></AdminProtectedRoute>} />
               <Route path="/admin/audit" element={<AdminProtectedRoute><AdminAuditLog /></AdminProtectedRoute>} />
-              <Route path="/admin/storybuilders" element={<AdminProtectedRoute><AdminStoryBuilders /></AdminProtectedRoute>} />
+              <Route path="/admin/storypros" element={<AdminProtectedRoute><AdminStoryBuilders /></AdminProtectedRoute>} />
+              <Route path="/admin/storybuilders" element={<Navigate to="/admin/storypros" replace />} />
               <Route path="/admin/waitlist-guide" element={<AdminProtectedRoute><AdminWaitlistGuide /></AdminProtectedRoute>} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />

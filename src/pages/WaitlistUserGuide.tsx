@@ -144,7 +144,7 @@ const WaitlistUserGuide = () => {
         >
           <div className="max-w-6xl mx-auto">
             <Button
-              onClick={() => navigate("/storybuilders")}
+              onClick={() => navigate("/storypros")}
               variant="ghost"
               className="mb-8 text-[#8861d4] hover:text-[#3b1f59]"
             >
@@ -522,7 +522,7 @@ const WaitlistUserGuide = () => {
               Head back to your dashboard and start earning points today. Share your referral link, complete daily activities, and watch your tier climb!
             </p>
             <Button
-              onClick={() => navigate("/storybuilders")}
+              onClick={() => navigate("/storypros")}
               size="lg"
               className="bg-[#8861d4] hover:bg-[#7451c4] text-white"
             >
