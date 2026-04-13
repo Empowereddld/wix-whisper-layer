@@ -112,7 +112,9 @@ const App = () => (
               <Route path="/contact" element={<ContactUs />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/storybuilders" element={<StoryBuilders />} />
+              <Route path="/storypros" element={<StoryBuilders />} />
               <Route path="/storybuilders/guide" element={<WaitlistUserGuide />} />
+              <Route path="/storypros/guide" element={<WaitlistUserGuide />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
               <Route path="/disclaimer" element={<Disclaimer />} />
