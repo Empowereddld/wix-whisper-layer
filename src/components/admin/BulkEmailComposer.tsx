@@ -44,8 +44,8 @@ type RecipientFilter = "all" | "verified_only" | "tier" | "flagged" | "custom";
 
 const TEMPLATES: Record<string, { subject: string; body: string }> = {
   announcement: {
-    subject: "Exciting Update from StoryBuilders",
-    body: "Hello {name},\n\nWe have some exciting news to share with you!\n\nStay tuned for updates.\n\nBest regards,\nThe StoryBuilders Team",
+    subject: "Exciting Update from Story Pros",
+    body: "Hello {name},\n\nWe have some exciting news to share with you!\n\nStay tuned for updates.\n\nBest regards,\nThe Story Pros Team",
   },
   nudge: {
     subject: "Earn more rewards - Share your referral link",
@@ -53,11 +53,11 @@ const TEMPLATES: Record<string, { subject: string; body: string }> = {
   },
   milestone_unlocked: {
     subject: "Congratulations! You've unlocked a new milestone",
-    body: "Hey {name},\n\nCongratulations on reaching a new milestone! Your dedication to the StoryBuilders community is amazing.\n\nYou've unlocked exclusive benefits as a thank you for your support.\n\nWe're excited to have you with us!",
+    body: "Hey {name},\n\nCongratulations on reaching a new milestone! Your dedication to the Story Pros community is amazing.\n\nYou've unlocked exclusive benefits as a thank you for your support.\n\nWe're excited to have you with us!",
   },
   weekly_digest: {
-    subject: "Your StoryBuilders Weekly Digest",
-    body: "Hello {name},\n\nHere's your weekly digest of community highlights and your progress on the waitlist.\n\nKeep up the great work!\n\nBest regards,\nThe StoryBuilders Team",
+    subject: "Your Story Pros Weekly Digest",
+    body: "Hello {name},\n\nHere's your weekly digest of community highlights and your progress on the waitlist.\n\nKeep up the great work!\n\nBest regards,\nThe Story Pros Team",
   },
 };
 

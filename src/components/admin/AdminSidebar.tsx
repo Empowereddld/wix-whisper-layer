@@ -30,7 +30,7 @@ import {
 
 const navItems = [
   { title: "Dashboard", url: "/admin", icon: LayoutDashboard },
-  { title: "StoryBuilders", url: "/admin/storybuilders", icon: ClipboardList },
+  { title: "Story Pros", url: "/admin/storybuilders", icon: ClipboardList },
   { title: "Resources", url: "/admin/resources", icon: FileText },
   { title: "Products", url: "/admin/products", icon: Package },
   { title: "Users", url: "/admin/users", icon: Users },
