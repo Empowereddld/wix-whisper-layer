@@ -13,6 +13,9 @@ import {
   Award,
   Users,
   Eye,
+  Gift,
+  User,
+  Check,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -33,6 +36,7 @@ import {
   STREAK_BONUSES,
   DAILY_CAPS,
   COIN_DROPS,
+  COMMUNITY_MILESTONES,
 } from "@/lib/waitlist-constants";
 import RewardsInventory from "@/components/waitlist/RewardsInventory";
 
@@ -203,6 +207,58 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
             >
               PREVIEW MODE - This is not the real user experience
             </motion.div>
+          </motion.div>
+
+          {/* User Dashboard Header */}
+          <motion.div
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.1 }}
+            className="bg-white border-b border-[#dedede] py-6"
+          >
+            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-4">
+                  {/* Profile Icon */}
+                  <div className="w-12 h-12 rounded-full bg-[#8861d4] flex items-center justify-center text-white font-bold text-lg">
+                    {tierData.name.charAt(0)}
+                  </div>
+                  <div>
+                    <h2 className="text-xl font-bold text-[#121212]">
+                      Welcome back, {tierData.name.split(" ")[0]}!
+                    </h2>
+                    <p className="text-sm text-gray-500">
+                      {currentTierName} · {tierData.points} points
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-4">
+                  {/* Coin Balance */}
+                  <div className="flex items-center gap-2 bg-[#f3ebf8] px-4 py-2 rounded-full">
+                    <span className="text-lg">🪙</span>
+                    <span className="font-bold text-[#8861d4]">
+                      {selectedTier >= 4 ? 275 : selectedTier >= 2 ? 75 : 0}
+                    </span>
+                    <span className="text-sm text-[#3b1f59]">coins</span>
+                  </div>
+                  {/* Inventory Button */}
+                  <Button
+                    className="bg-[#8861d4] hover:bg-[#7551c4] text-white flex items-center gap-2"
+                    onClick={() => {
+                      const el = document.getElementById("rewards-inventory-section");
+                      el?.scrollIntoView({ behavior: "smooth" });
+                    }}
+                  >
+                    <Gift className="h-4 w-4" />
+                    My Rewards
+                  </Button>
+                  {/* Profile Icon Button */}
+                  <div className="w-10 h-10 rounded-full border-2 border-[#dedede] bg-gray-100 flex items-center justify-center cursor-pointer hover:border-[#8861d4] transition-colors">
+                    <User className="h-5 w-5 text-gray-500" />
+                  </div>
+                </div>
+              </div>
+            </div>
           </motion.div>
 
           {/* Main Content */}
@@ -497,42 +553,94 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
                   <div>
                     <h4 className="font-semibold text-[#3b1f59] mb-4">Earn Points</h4>
                     <div className="space-y-2 text-sm">
+                      {/* Sign up */}
                       <div className="flex justify-between">
-                        <span className="text-foreground">Sign up</span>
-                        <span className="font-bold text-[#8861d4]">
-                          {ONETIME_POINTS.SIGNUP} pts (once)
+                        <span className={selectedTier >= 0 ? "text-emerald-600 flex items-center gap-1" : "text-foreground"}>
+                          {selectedTier >= 0 && <Check className="h-3 w-3" />}
+                          Sign up
+                        </span>
+                        <span className={selectedTier >= 0 ? "font-bold text-emerald-500" : "font-bold text-[#8861d4]"}>
+                          {selectedTier >= 0 ? "✓ Done" : `${ONETIME_POINTS.SIGNUP} pts (once)`}
                         </span>
                       </div>
+
+                      {/* Verify email */}
                       <div className="flex justify-between">
-                        <span className="text-foreground">Verify email</span>
-                        <span className="font-bold text-[#8861d4]">
-                          {ONETIME_POINTS.VERIFY_EMAIL} pts (once)
+                        <span className={selectedTier >= 1 ? "text-emerald-600 flex items-center gap-1" : "text-foreground"}>
+                          {selectedTier >= 1 && <Check className="h-3 w-3" />}
+                          Verify email
+                        </span>
+                        <span className={selectedTier >= 1 ? "font-bold text-emerald-500" : "font-bold text-[#8861d4]"}>
+                          {selectedTier >= 1 ? "✓ Done" : `${ONETIME_POINTS.VERIFY_EMAIL} pts (once)`}
                         </span>
                       </div>
+
+                      {/* Complete profile */}
                       <div className="flex justify-between">
-                        <span className="text-foreground">Complete profile</span>
-                        <span className="font-bold text-[#8861d4]">
-                          {ONETIME_POINTS.COMPLETE_PROFILE} pts (once)
+                        <span className={selectedTier >= 1 ? "text-emerald-600 flex items-center gap-1" : "text-foreground"}>
+                          {selectedTier >= 1 && <Check className="h-3 w-3" />}
+                          Complete profile
+                        </span>
+                        <span className={selectedTier >= 1 ? "font-bold text-emerald-500" : "font-bold text-[#8861d4]"}>
+                          {selectedTier >= 1 ? "✓ Done" : `${ONETIME_POINTS.COMPLETE_PROFILE} pts (once)`}
                         </span>
                       </div>
+
+                      {/* Follow Instagram */}
                       <div className="flex justify-between">
-                        <span className="text-foreground">Follow Instagram</span>
-                        <span className="font-bold text-[#8861d4]">
-                          {ONETIME_POINTS.FOLLOW_INSTAGRAM} pts (once)
+                        <span className={selectedTier >= 1 ? "text-emerald-600 flex items-center gap-1" : "text-foreground"}>
+                          {selectedTier >= 1 && <Check className="h-3 w-3" />}
+                          Follow Instagram
+                        </span>
+                        <span className={selectedTier >= 1 ? "font-bold text-emerald-500" : "font-bold text-[#8861d4]"}>
+                          {selectedTier >= 1 ? "✓ Done" : `${ONETIME_POINTS.FOLLOW_INSTAGRAM} pts (once)`}
                         </span>
                       </div>
+
+                      {/* Follow Facebook */}
                       <div className="flex justify-between">
-                        <span className="text-foreground">Follow Facebook</span>
-                        <span className="font-bold text-[#8861d4]">
-                          {ONETIME_POINTS.FOLLOW_FACEBOOK} pts (once)
+                        <span className={selectedTier >= 1 ? "text-emerald-600 flex items-center gap-1" : "text-foreground"}>
+                          {selectedTier >= 1 && <Check className="h-3 w-3" />}
+                          Follow Facebook
+                        </span>
+                        <span className={selectedTier >= 1 ? "font-bold text-emerald-500" : "font-bold text-[#8861d4]"}>
+                          {selectedTier >= 1 ? "✓ Done" : `${ONETIME_POINTS.FOLLOW_FACEBOOK} pts (once)`}
                         </span>
                       </div>
+
+                      {/* Subscribe YouTube */}
                       <div className="flex justify-between">
-                        <span className="text-foreground">Subscribe YouTube</span>
-                        <span className="font-bold text-[#8861d4]">
-                          {ONETIME_POINTS.SUBSCRIBE_YOUTUBE} pts (once)
+                        <span className={selectedTier >= 1 ? "text-emerald-600 flex items-center gap-1" : "text-foreground"}>
+                          {selectedTier >= 1 && <Check className="h-3 w-3" />}
+                          Subscribe YouTube
+                        </span>
+                        <span className={selectedTier >= 1 ? "font-bold text-emerald-500" : "font-bold text-[#8861d4]"}>
+                          {selectedTier >= 1 ? "✓ Done" : `${ONETIME_POINTS.SUBSCRIBE_YOUTUBE} pts (once)`}
                         </span>
                       </div>
+
+                      {/* First share */}
+                      <div className="flex justify-between">
+                        <span className={selectedTier >= 2 ? "text-emerald-600 flex items-center gap-1" : "text-foreground"}>
+                          {selectedTier >= 2 && <Check className="h-3 w-3" />}
+                          First share
+                        </span>
+                        <span className={selectedTier >= 2 ? "font-bold text-emerald-500" : "font-bold text-[#8861d4]"}>
+                          {selectedTier >= 2 ? "✓ Done" : `${ONETIME_POINTS.FIRST_SHARE} pts (once)`}
+                        </span>
+                      </div>
+
+                      {/* First referral bonus */}
+                      <div className="flex justify-between">
+                        <span className={selectedTier >= 2 ? "text-emerald-600 flex items-center gap-1" : "text-foreground"}>
+                          {selectedTier >= 2 && <Check className="h-3 w-3" />}
+                          First referral bonus
+                        </span>
+                        <span className={selectedTier >= 2 ? "font-bold text-emerald-500" : "font-bold text-[#8861d4]"}>
+                          {selectedTier >= 2 ? "✓ Done" : `${ONETIME_POINTS.FIRST_REFERRAL_BONUS} pts (once)`}
+                        </span>
+                      </div>
+
                       <div className="border-t border-border pt-2 mt-2">
                         <div className="flex justify-between">
                           <span className="text-foreground">Refer a friend</span>
@@ -639,15 +747,11 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
                   Community Milestones
                 </h3>
                 <div className="space-y-4">
-                  {[
-                    { target: 500, label: "Unlock community Discord" },
-                    { target: 1000, label: "Early beta access for everyone" },
-                    { target: 2500, label: "Free first month for all" },
-                  ].map((milestone, idx) => (
+                  {COMMUNITY_MILESTONES.map((milestone, idx) => (
                     <div key={idx}>
                       <div className="flex justify-between mb-2">
                         <span className="text-sm text-foreground font-medium">
-                          {milestone.label}
+                          {milestone.reward}
                         </span>
                         <span className="text-xs text-muted-foreground">
                           847 / {milestone.target}
@@ -723,6 +827,7 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
 
             {/* Rewards Inventory Section */}
             <motion.div
+              id="rewards-inventory-section"
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 1.1 }}

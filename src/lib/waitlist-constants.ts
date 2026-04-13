@@ -74,43 +74,41 @@ export const TIER_REWARDS = [
   },
   {
     tier: 1,
-    name: "5 Language Activities PDF",
-    description: "One-page guide with language activities to try tonight",
-    claimType: "download",
+    name: "Early Access Pass",
+    description: "Early access to Story Pros on launch day, before the general public",
+    claimType: "auto",
   },
   {
     tier: 2,
-    name: "75 Bonus Coins + Story Starter Pack",
-    description: "A treasure chest of coins and your first reward pack",
-    claimType: "activate",
+    name: "75 Bonus Story Coins",
+    description: "A bonus coin drop to spend on in-app extras at launch",
+    claimType: "auto",
   },
   {
     tier: 3,
-    name: "Founding Voice + Sneak Peek",
-    description: "Shape the app with your suggestions + preview video",
-    claimType: "unlock",
+    name: "Founder Pricing Locked",
+    description: "$5.99/month for life instead of $7.99 — permanent 25% discount",
+    claimType: "auto",
   },
   {
     tier: 4,
-    name: "Founder Recognition + Pricing + 200 Coins",
-    description:
-      "Your name on our wall, $5.99/mo forever, and 200 bonus coins",
-    claimType: "activate",
+    name: "VIP Beta Access + 200 Coins",
+    description: "Test Story Pros before launch and shape the final product, plus 200 bonus coins",
+    claimType: "unlock",
   },
   {
     tier: 5,
-    name: "VIP Founding Elite Package",
-    description:
-      "Meet & greet, signed book, app credits — the full experience",
-    claimType: "onboard",
+    name: "Founding Elite Package",
+    description: "Named in Story Pros founder credits forever — limited to first 50 members",
+    claimType: "activate",
   },
 ] as const;
 
 export const COMMUNITY_MILESTONES = [
-  { target: 500, reward: "Unlock community Discord channel" },
-  { target: 1000, reward: "Early beta access for everyone" },
-  { target: 2500, reward: "Free first month for all waitlisters" },
-  { target: 5000, reward: "Exclusive launch event invitation" },
+  { target: 250, reward: "Exclusive community Q&A with the Story Pros team" },
+  { target: 500, reward: "Community unlocks bonus 25 coins for everyone" },
+  { target: 1000, reward: "Story Pros app preview video released to all waitlisters" },
+  { target: 2500, reward: "Community vote: choose a Story Pros character or theme" },
 ] as const;
 
 // ===========================================
