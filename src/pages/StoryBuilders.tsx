@@ -30,13 +30,12 @@ import {
 
 /* ─── Milestones ─── */
 const milestones = [
-  { invites: 0, label: "Just joined (0 pts)", reward: "Behind-the-scenes updates on Story Pros development" },
-  { invites: 1, label: "Storyteller (40 pts)", reward: "Early access to Story Pros before public launch" },
-  { invites: 3, label: "Advocate (100 pts)", reward: "Story Pros Advocate badge + 75 Story Coins" },
-  { invites: 5, label: "Champion (175 pts)", reward: "Founder pricing locked in at $5.99/month for life" },
-  { invites: 10, label: "Hero (325 pts)", reward: "VIP Beta access + 200 Story Coins bonus" },
-  { invites: -1, label: "Legend (600 pts)", reward: "Story Pros Legend badge + named in Founder credits" },
-  { invites: -2, label: "Founding Elite (First 50)", reward: "Founding Elite badge + lifetime founder pricing + all rewards" },
+  { invites: 0, label: "Storyteller (0 pts)", reward: "Behind-the-scenes updates on Story Pros development as it's being built" },
+  { invites: 1, label: "Advocate (40 pts)", reward: "Early access on launch day — get into Story Pros before the general public" },
+  { invites: 3, label: "Champion (100 pts)", reward: "75 Story Coins dropped into your account to spend on in-app extras at launch" },
+  { invites: 5, label: "Hero (175 pts)", reward: "Founder pricing at $5.99/month for life — 25% off the regular $7.99 price, permanently" },
+  { invites: 10, label: "Legend (325 pts)", reward: "VIP Beta access to test the app before launch + 200 bonus Story Coins + Legend badge" },
+  { invites: -1, label: "Founding Elite (600 pts)", reward: "Named in the Story Pros founder credits forever — limited to the first 50 members who reach this tier" },
 ];
 
 const COLLECTIVE_GOAL = 4000;
@@ -650,33 +649,33 @@ const StoryBuilders = () => {
           {(() => {
             const progressSteps: ProgressStep[] = [
               {
-                task: "You joined the Launch Team",
-                impact: "Welcome to the Launch Team — you earned 10 points just for signing up",
-                reward: { icon: <Sparkles size={20} />, title: "You're officially a Storyteller", desc: "Behind-the-scenes updates on Story Pros development" },
+                task: "Storyteller — 0 points",
+                impact: "You earned 10 points just for signing up. Complete your profile (+10 pts), verify your email (+5 pts), and follow us on Instagram, Facebook, or YouTube (+8 pts each) to start climbing.",
+                reward: { icon: <Sparkles size={20} />, title: "You're officially on the Launch Team", desc: "Get behind-the-scenes updates on Story Pros development and be first to hear about new features" },
                 invites: 0,
               },
               {
-                task: "Reach 40 points",
-                impact: "Complete your profile, follow us on social media, and share with friends",
-                reward: { icon: <Rocket size={20} />, title: "Unlock Advocate status", desc: "Early access to Story Pros before public launch" },
+                task: "Advocate — 40 points",
+                impact: "Share your referral link with other families (+25 pts per signup), post on social media (+3 pts per share), and check in daily (+2 pts with streak bonuses up to +50). You can reach this tier without any referrals.",
+                reward: { icon: <Rocket size={20} />, title: "Early access when Story Pros launches", desc: "You'll get into the full app before the general public on launch day — plus your Advocate badge", subdesc: "Tip: Profile + email + 3 social follows = 49 pts — that's Advocate right there" },
                 invites: 1,
               },
               {
-                task: "Reach 100 points",
-                impact: "Keep sharing, referring friends, and checking in daily for streak bonuses",
-                reward: { icon: <Gift size={20} />, title: "Champion tier + 75 Story Coins", desc: "Story Coins to spend on in-app rewards at launch" },
+                task: "Champion — 100 points",
+                impact: "Keep referring families, sharing your link, and building your daily check-in streak. A 7-day streak earns +10 bonus points, and a 14-day streak earns +20. Every referral is worth 25 points.",
+                reward: { icon: <Gift size={20} />, title: "75 Story Coins dropped into your account", desc: "Story Coins are in-app currency you can spend on upgrades and extras when the app launches — plus your Champion badge" },
                 invites: 3,
               },
               {
-                task: "Reach 175 points",
-                impact: "Your referrals and engagement are making a real difference for families",
-                reward: { icon: <Headphones size={20} />, title: "Lock in founder pricing for life", desc: "$5.99/month forever instead of $7.99" },
+                task: "Hero — 175 points",
+                impact: "You're making a real difference for families navigating DLD, ADHD, and Dyslexia. Your referrals bring more children into a tool designed specifically for how they think and communicate.",
+                reward: { icon: <Headphones size={20} />, title: "Founder pricing locked in for life", desc: "$5.99/month forever instead of the regular $7.99 — a permanent 25% discount as long as your subscription stays active", subdesc: "This reward never expires. Once you earn it, it's yours" },
                 invites: 5,
               },
               {
-                task: "Reach 325 points",
-                impact: "You're in the top tier — helping more children get tools built for them",
-                reward: { icon: <Crown size={20} />, title: "Hero status + 200 Story Coins", desc: "VIP Beta access + bonus coin drop", subdesc: "First 50 to reach 600 pts become Founding Elite" },
+                task: "Legend — 325 points",
+                impact: "You're among our most dedicated supporters. At this level, you've likely referred several families, built a strong streak, and consistently engaged with the community.",
+                reward: { icon: <Crown size={20} />, title: "VIP Beta access + 200 Story Coins", desc: "Test Story Pros before it officially launches — give feedback that shapes the final product, plus a 200 coin bonus drop and your Legend badge", subdesc: "First 50 members to reach 600 pts earn Founding Elite status — named in the app credits forever" },
                 invites: 10,
               },
             ];
