@@ -106,7 +106,7 @@ const AdminStoryBuilders = () => {
 
     const element = document.createElement("a");
     element.setAttribute("href", "data:text/csv;charset=utf-8," + encodeURIComponent(csv));
-    element.setAttribute("download", `storybuilders-waitlist-${Date.now()}.csv`);
+    element.setAttribute("download", `storypros-waitlist-${Date.now()}.csv`);
     element.style.display = "none";
     document.body.appendChild(element);
     element.click();
@@ -118,11 +118,11 @@ const AdminStoryBuilders = () => {
 
     if (searchTerm) {
       const term = searchTerm.toLowerCase();
-      filtered = filtered.filter(
+      filtered = users.filter(
         (u) =>
           u.name.toLowerCase().includes(term) ||
           u.email.toLowerCase().includes(term) ||
-          u.referral_code.includes(term)
+          u.referral_code.toLowerCase().includes(term)
       );
     }
 
@@ -158,19 +158,19 @@ const AdminStoryBuilders = () => {
 
   return (
     <AdminLayout>
-      <div className="min-h-screen bg-[#FDF8F0] space-y-8">
+      <div className="min-h-screen bg-secondary space-y-8">
         <div className="flex items-center justify-between">
           <div className="flex-1">
-            <h1 className="text-4xl font-serif italic text-[#3D2B1F] tracking-tight">
-              StoryBuilders Waitlist
+            <h1 className="text-4xl font-serif italic text-foreground tracking-tight">
+              Story Pros Waitlist
             </h1>
-            <p className="text-[#8B7355] mt-2">
+            <p className="text-muted-foreground mt-2">
               Manage the entire waitlist operation and monitor key metrics
             </p>
           </div>
           <Button
             onClick={() => setShowUserPreview(true)}
-            className="bg-[#C67B5C] hover:bg-[#B86B4C] text-white flex items-center gap-2"
+            className="bg-primary hover:bg-primary/90 text-primary-foreground flex items-center gap-2"
           >
             <Eye className="h-4 w-4" />
             User Preview
@@ -178,38 +178,38 @@ const AdminStoryBuilders = () => {
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-5 mb-8 bg-[#FEFCF9] border border-[#E8DDD0]">
+          <TabsList className="grid w-full grid-cols-5 mb-8 bg-background border border-border">
             <TabsTrigger
               value="overview"
-              className="flex items-center gap-2 data-[state=active]:bg-[#D4A574] data-[state=active]:text-[#3D2B1F] text-[#8B7355]"
+              className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-muted-foreground"
             >
               <TrendingUp className="h-4 w-4" />
               <span className="hidden sm:inline">Overview</span>
             </TabsTrigger>
             <TabsTrigger
               value="users"
-              className="flex items-center gap-2 data-[state=active]:bg-[#D4A574] data-[state=active]:text-[#3D2B1F] text-[#8B7355]"
+              className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-muted-foreground"
             >
               <Users className="h-4 w-4" />
               <span className="hidden sm:inline">Users</span>
             </TabsTrigger>
             <TabsTrigger
               value="referrals"
-              className="flex items-center gap-2 data-[state=active]:bg-[#D4A574] data-[state=active]:text-[#3D2B1F] text-[#8B7355]"
+              className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-muted-foreground"
             >
               <TrendingUp className="h-4 w-4" />
               <span className="hidden sm:inline">Referrals</span>
             </TabsTrigger>
             <TabsTrigger
               value="emails"
-              className="flex items-center gap-2 data-[state=active]:bg-[#D4A574] data-[state=active]:text-[#3D2B1F] text-[#8B7355]"
+              className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-muted-foreground"
             >
               <Mail className="h-4 w-4" />
               <span className="hidden sm:inline">Emails</span>
             </TabsTrigger>
             <TabsTrigger
               value="settings"
-              className="flex items-center gap-2 data-[state=active]:bg-[#D4A574] data-[state=active]:text-[#3D2B1F] text-[#8B7355]"
+              className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-muted-foreground"
             >
               <Settings className="h-4 w-4" />
               <span className="hidden sm:inline">Settings</span>
@@ -241,9 +241,9 @@ const AdminStoryBuilders = () => {
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               <div className="lg:col-span-2">
-                <Card className="bg-[#FEFCF9] border border-[#E8DDD0] rounded-2xl shadow-sm">
+                <Card className="bg-background border border-border rounded-2xl shadow-sm">
                   <CardHeader>
-                    <CardTitle className="font-serif italic text-[#3D2B1F]">
+                    <CardTitle className="font-serif italic text-foreground">
                       Signups Over Time
                     </CardTitle>
                   </CardHeader>
@@ -253,9 +253,9 @@ const AdminStoryBuilders = () => {
                 </Card>
               </div>
 
-              <Card className="bg-[#FEFCF9] border border-[#E8DDD0] rounded-2xl shadow-sm">
+              <Card className="bg-background border border-border rounded-2xl shadow-sm">
                 <CardHeader>
-                  <CardTitle className="text-lg font-serif italic text-[#3D2B1F]">
+                  <CardTitle className="text-lg font-serif italic text-foreground">
                     Top Referrers
                   </CardTitle>
                 </CardHeader>
@@ -263,23 +263,23 @@ const AdminStoryBuilders = () => {
                   {topReferrers.map((user) => (
                     <div
                       key={user.id}
-                      className="flex items-center justify-between pb-3 border-b border-[#E8DDD0] last:border-0"
+                      className="flex items-center justify-between pb-3 border-b border-border last:border-0"
                     >
                       <div className="flex-1 min-w-0">
-                        <p className="font-medium text-sm truncate text-[#3D2B1F]">
+                        <p className="font-medium text-sm truncate text-foreground">
                           {user.name}
                         </p>
-                        <p className="text-xs text-[#8B7355] truncate">
+                        <p className="text-xs text-muted-foreground truncate">
                           {user.email}
                         </p>
                       </div>
                       <div className="text-right ml-2">
-                        <p className="font-semibold text-sm text-[#3D2B1F]">
+                        <p className="font-semibold text-sm text-foreground">
                           {user.invite_count} referrals
                         </p>
                         <Badge
                           variant="outline"
-                          className="text-xs mt-1 bg-[#D4A574] text-[#3D2B1F] border-[#C67B5C]"
+                          className="text-xs mt-1 bg-primary/10 text-primary border-primary/30"
                         >
                           {getTierName(getTierForPoints(user.invite_count * 10))}
                         </Badge>
@@ -287,7 +287,7 @@ const AdminStoryBuilders = () => {
                     </div>
                   ))}
                   {topReferrers.length === 0 && (
-                    <p className="text-sm text-[#8B7355] text-center py-4">
+                    <p className="text-sm text-muted-foreground text-center py-4">
                       No referrals yet
                     </p>
                   )}
@@ -300,12 +300,12 @@ const AdminStoryBuilders = () => {
           <TabsContent value="users" className="space-y-4">
             <div className="flex flex-col sm:flex-row gap-3">
               <div className="flex-1 relative">
-                <Search className="absolute left-3 top-3 h-4 w-4 text-[#8B7355]" />
+                <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                 <Input
                   placeholder="Search by name, email, or referral code..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 bg-[#FEFCF9] border-[#E8DDD0] text-[#3D2B1F] placeholder:text-[#8B7355]"
+                  className="pl-10 bg-background border-border text-foreground placeholder:text-muted-foreground"
                 />
               </div>
               <Select value={sortBy} onValueChange={(v) => setSortBy(v as "invites" | "name" | "date")}>
@@ -322,7 +322,7 @@ const AdminStoryBuilders = () => {
                 onClick={handleExportCSV}
                 variant="outline"
                 size="sm"
-                className="border-[#E8DDD0] text-[#3D2B1F] hover:bg-[#F5F0E8]"
+                className="border-border text-foreground hover:bg-muted"
               >
                 <Download className="h-4 w-4 mr-2" />
                 Export CSV
@@ -330,54 +330,54 @@ const AdminStoryBuilders = () => {
               <Button
                 onClick={() => setShowBulkEmailComposer(true)}
                 size="sm"
-                className="bg-[#C67B5C] hover:bg-[#B86B4C] text-white"
+                className="bg-primary hover:bg-primary/90 text-primary-foreground"
               >
                 <Send className="h-4 w-4 mr-2" />
                 Email
               </Button>
             </div>
 
-            <Card className="bg-[#FEFCF9] border border-[#E8DDD0] rounded-2xl shadow-sm">
+            <Card className="bg-background border border-border rounded-2xl shadow-sm">
               <CardContent className="p-0">
                 <div className="overflow-x-auto">
                   <Table>
-                    <TableHeader className="bg-[#F5F0E8]">
-                      <TableRow className="border-b border-[#E8DDD0]">
-                        <TableHead className="text-[#3D2B1F]">Name</TableHead>
-                        <TableHead className="text-[#3D2B1F]">Email</TableHead>
-                        <TableHead className="text-[#3D2B1F]">Referral Code</TableHead>
-                        <TableHead className="text-right text-[#3D2B1F]">Referrals</TableHead>
-                        <TableHead className="text-[#3D2B1F]">Tier</TableHead>
-                        <TableHead className="text-[#3D2B1F]">Joined</TableHead>
+                    <TableHeader className="bg-muted">
+                      <TableRow className="border-b border-border">
+                        <TableHead className="text-foreground">Name</TableHead>
+                        <TableHead className="text-foreground">Email</TableHead>
+                        <TableHead className="text-foreground">Referral Code</TableHead>
+                        <TableHead className="text-right text-foreground">Referrals</TableHead>
+                        <TableHead className="text-foreground">Tier</TableHead>
+                        <TableHead className="text-foreground">Joined</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
                       {filteredUsers.map((user) => (
                         <TableRow
                           key={user.id}
-                          className="hover:bg-[#F5F0E8] border-b border-[#E8DDD0]"
+                          className="hover:bg-muted border-b border-border"
                         >
-                          <TableCell className="font-medium text-[#3D2B1F]">
+                          <TableCell className="font-medium text-foreground">
                             {user.name}
                           </TableCell>
-                          <TableCell className="text-sm text-[#5C4033]">
+                          <TableCell className="text-sm text-muted-foreground">
                             {user.email}
                           </TableCell>
-                          <TableCell className="font-mono text-xs text-[#8B7355]">
+                          <TableCell className="font-mono text-xs text-muted-foreground">
                             {user.referral_code}
                           </TableCell>
-                          <TableCell className="text-right font-semibold text-[#3D2B1F]">
+                          <TableCell className="text-right font-semibold text-foreground">
                             {user.invite_count}
                           </TableCell>
                           <TableCell>
                             <Badge
                               variant="outline"
-                              className="bg-[#D4A574] text-[#3D2B1F] border-[#C67B5C]"
+                              className="bg-primary/10 text-primary border-primary/30"
                             >
                               {getTierName(getTierForPoints(user.invite_count * 10))}
                             </Badge>
                           </TableCell>
-                          <TableCell className="text-sm text-[#8B7355]">
+                          <TableCell className="text-sm text-muted-foreground">
                             {format(new Date(user.created_at), "MMM dd, yyyy")}
                           </TableCell>
                         </TableRow>
@@ -391,35 +391,35 @@ const AdminStoryBuilders = () => {
 
           {/* Referrals Tab */}
           <TabsContent value="referrals" className="space-y-4">
-            <Card className="bg-[#FEFCF9] border border-[#E8DDD0] rounded-2xl shadow-sm">
+            <Card className="bg-background border border-border rounded-2xl shadow-sm">
               <CardHeader>
-                <CardTitle className="font-serif italic text-[#3D2B1F]">
+                <CardTitle className="font-serif italic text-foreground">
                   Referral Network Overview
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div className="p-4 bg-[#F5F0E8] border border-[#E8DDD0] rounded-lg">
-                    <p className="text-sm text-[#8B7355]">Total Referral Chains</p>
-                    <p className="text-2xl font-bold text-[#3D2B1F]">
+                  <div className="p-4 bg-muted border border-border rounded-lg">
+                    <p className="text-sm text-muted-foreground">Total Referral Chains</p>
+                    <p className="text-2xl font-bold text-foreground">
                       {users.filter((u) => u.invite_count > 0).length}
                     </p>
                   </div>
-                  <div className="p-4 bg-[#F5F0E8] border border-[#E8DDD0] rounded-lg">
-                    <p className="text-sm text-[#8B7355]">Total Referrals Made</p>
-                    <p className="text-2xl font-bold text-[#3D2B1F]">
+                  <div className="p-4 bg-muted border border-border rounded-lg">
+                    <p className="text-sm text-muted-foreground">Total Referrals Made</p>
+                    <p className="text-2xl font-bold text-foreground">
                       {totalReferrals}
                     </p>
                   </div>
-                  <div className="p-4 bg-[#F5F0E8] border border-[#E8DDD0] rounded-lg">
-                    <p className="text-sm text-[#8B7355]">Avg Referrals Per User</p>
-                    <p className="text-2xl font-bold text-[#3D2B1F]">
+                  <div className="p-4 bg-muted border border-border rounded-lg">
+                    <p className="text-sm text-muted-foreground">Avg Referrals Per User</p>
+                    <p className="text-2xl font-bold text-foreground">
                       {avgReferrals}
                     </p>
                   </div>
                 </div>
-                <div className="mt-6 p-4 bg-[#E8D5C4] border border-[#D4A574] rounded-lg">
-                  <p className="text-sm text-[#5C4033]">
+                <div className="mt-6 p-4 bg-accent border border-primary/20 rounded-lg">
+                  <p className="text-sm text-foreground">
                     <strong>Note:</strong> Detailed referral network visualization is coming soon. For now, use the Users tab to analyze individual referral chains.
                   </p>
                 </div>
@@ -432,22 +432,22 @@ const AdminStoryBuilders = () => {
             <div className="flex gap-3">
               <Button
                 onClick={() => setShowBulkEmailComposer(true)}
-                className="bg-[#C67B5C] hover:bg-[#B86B4C] text-white"
+                className="bg-primary hover:bg-primary/90 text-primary-foreground"
               >
                 <Mail className="h-4 w-4 mr-2" />
                 Compose Email
               </Button>
             </div>
 
-            <Card className="bg-[#FEFCF9] border border-[#E8DDD0] rounded-2xl shadow-sm">
+            <Card className="bg-background border border-border rounded-2xl shadow-sm">
               <CardHeader>
-                <CardTitle className="font-serif italic text-[#3D2B1F]">
+                <CardTitle className="font-serif italic text-foreground">
                   Email Campaigns
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="p-4 bg-[#E8D5C4] border border-[#D4A574] rounded-lg">
-                  <p className="text-sm text-[#5C4033]">
+                <div className="p-4 bg-accent border border-primary/20 rounded-lg">
+                  <p className="text-sm text-foreground">
                     Use the Compose Email button to send bulk emails to your waitlist members. Email history will appear here once campaigns are sent.
                   </p>
                 </div>
@@ -457,15 +457,15 @@ const AdminStoryBuilders = () => {
 
           {/* Settings Tab */}
           <TabsContent value="settings" className="space-y-4">
-            <Card className="bg-[#FEFCF9] border border-[#E8DDD0] rounded-2xl shadow-sm">
+            <Card className="bg-background border border-border rounded-2xl shadow-sm">
               <CardHeader>
-                <CardTitle className="font-serif italic text-[#3D2B1F]">
+                <CardTitle className="font-serif italic text-foreground">
                   Settings
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="p-4 bg-[#E8D5C4] border border-[#D4A574] rounded-lg">
-                  <p className="text-sm text-[#5C4033]">
+                <div className="p-4 bg-accent border border-primary/20 rounded-lg">
+                  <p className="text-sm text-foreground">
                     Settings management interface coming soon. You can configure tier rewards, point values, launch dates, and community milestones.
                   </p>
                 </div>

@@ -44,8 +44,8 @@ type RecipientFilter = "all" | "verified_only" | "tier" | "flagged" | "custom";
 
 const TEMPLATES: Record<string, { subject: string; body: string }> = {
   announcement: {
-    subject: "Exciting Update from StoryBuilders",
-    body: "Hello {name},\n\nWe have some exciting news to share with you!\n\nStay tuned for updates.\n\nBest regards,\nThe StoryBuilders Team",
+    subject: "Exciting Update from Story Pros",
+    body: "Hello {name},\n\nWe have some exciting news to share with you!\n\nStay tuned for updates.\n\nBest regards,\nThe Story Pros Team",
   },
   nudge: {
     subject: "Earn more rewards - Share your referral link",

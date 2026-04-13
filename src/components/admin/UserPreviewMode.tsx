@@ -52,31 +52,31 @@ const TIER_PREVIEW_DATA: Record<number, TierData> = {
   },
   1: {
     name: "Sarah M.",
-    points: 42,
-    position: 312,
+    points: 45,
+    position: 623,
     referrals: 1,
     badges: ["welcome", "first_referral"],
     streakDays: 5,
   },
   2: {
     name: "Sarah M.",
-    points: 98,
-    position: 89,
+    points: 110,
+    position: 312,
     referrals: 3,
     badges: ["welcome", "first_referral", "social_butterfly"],
     streakDays: 12,
   },
   3: {
     name: "Sarah M.",
-    points: 156,
-    position: 34,
+    points: 175,
+    position: 89,
     referrals: 5,
     badges: ["welcome", "first_referral", "social_butterfly", "champion"],
-    streakDays: 21,
+    streakDays: 20,
   },
   4: {
     name: "Sarah M.",
-    points: 289,
+    points: 320,
     position: 8,
     referrals: 10,
     badges: [
@@ -118,13 +118,13 @@ const BADGE_NAMES: Record<string, string> = {
 };
 
 const BADGE_COLORS: Record<string, string> = {
-  welcome: "bg-[#D4A574] text-[#3D2B1F]",
-  first_referral: "bg-[#C67B5C] text-white",
-  social_butterfly: "bg-[#8BA888] text-white",
-  champion: "bg-[#D4920B] text-white",
-  streak_master: "bg-[#C4A0A0] text-white",
-  super_referrer: "bg-[#8B7355] text-white",
-  founding_elite: "bg-[#3D2B1F] text-white",
+  welcome: "bg-primary/20 text-primary",
+  first_referral: "bg-primary/80 text-primary-foreground",
+  social_butterfly: "bg-emerald-600 text-white",
+  champion: "bg-amber-500 text-white",
+  streak_master: "bg-rose-400 text-white",
+  super_referrer: "bg-primary/60 text-white",
+  founding_elite: "bg-deep-purple text-white",
 };
 
 const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
@@ -152,12 +152,12 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
         exit={{ opacity: 0 }}
         className="fixed inset-0 bg-black/50 z-50 overflow-y-auto"
       >
-        <div className="min-h-screen bg-[#FDF8F0]">
+        <div className="min-h-screen bg-secondary">
           {/* Preview Mode Header */}
           <motion.div
             initial={{ y: -20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            className="sticky top-0 z-50 bg-[#3D2B1F] text-white shadow-lg"
+            className="sticky top-0 z-50 bg-deep-purple text-white shadow-lg"
           >
             <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
               <div className="flex items-center gap-3">
@@ -172,7 +172,7 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
                   <SelectTrigger className="w-40 bg-white/10 border-white/20 text-white">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent className="bg-[#FEFCF9]">
+                  <SelectContent className="bg-background">
                     {TIER_NAMES.map((name, idx) => (
                       <SelectItem key={idx} value={String(idx)}>
                         {name}
@@ -210,25 +210,25 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.1 }}
             >
-              <Card className="bg-gradient-to-br from-[#FEFCF9] to-[#F5F0E8] border border-[#E8DDD0] rounded-2xl shadow-sm overflow-hidden">
+              <Card className="bg-gradient-to-br from-background to-muted border border-border rounded-2xl shadow-sm overflow-hidden">
                 <div className="p-8 flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-semibold text-[#8B7355] uppercase tracking-wide">
+                    <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
                       Queue Position
                     </p>
-                    <h2 className="text-5xl font-serif italic text-[#3D2B1F] mt-2">
+                    <h2 className="text-5xl font-serif italic text-foreground mt-2">
                       #{tierData.position.toLocaleString()}
                     </h2>
-                    <p className="text-sm text-[#8B7355] mt-2">
+                    <p className="text-sm text-muted-foreground mt-2">
                       of 1,247 waitlist members
                     </p>
                   </div>
                   <div className="text-right">
-                    <TrendingUp className="h-12 w-12 text-[#C67B5C] mb-2 ml-auto" />
-                    <p className="text-2xl font-bold text-[#C67B5C]">
+                    <TrendingUp className="h-12 w-12 text-primary mb-2 ml-auto" />
+                    <p className="text-2xl font-bold text-primary">
                       {Math.round((tierData.position / 1247) * 100)}%
                     </p>
-                    <p className="text-xs text-[#8B7355]">ahead of queue</p>
+                    <p className="text-xs text-muted-foreground">ahead of queue</p>
                   </div>
                 </div>
               </Card>
@@ -242,37 +242,37 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
                 transition={{ delay: 0.2 }}
                 className="md:col-span-2"
               >
-                <Card className="bg-[#FEFCF9] border border-[#E8DDD0] rounded-2xl shadow-sm p-6">
+                <Card className="bg-background border border-border rounded-2xl shadow-sm p-6">
                   <div className="space-y-4">
                     <div>
                       <div className="flex items-center justify-between mb-2">
-                        <h3 className="font-serif italic text-[#3D2B1F] font-semibold">
+                        <h3 className="font-serif italic text-foreground font-semibold">
                           Tier Progress
                         </h3>
-                        <Badge className="bg-[#D4A574] text-[#3D2B1F]">
+                        <Badge className="bg-primary/10 text-primary">
                           {currentTierName}
                         </Badge>
                       </div>
-                      <p className="text-sm text-[#8B7355]">
+                      <p className="text-sm text-muted-foreground">
                         {tierData.points} / {nextTierThreshold || tierData.points} points
                       </p>
                     </div>
 
-                    <div className="relative h-3 bg-[#E8DDD0] rounded-full overflow-hidden">
+                    <div className="relative h-3 bg-border rounded-full overflow-hidden">
                       <motion.div
                         initial={{ width: 0 }}
                         animate={{
                           width: `${Math.min(progressPercent, 100)}%`,
                         }}
                         transition={{ duration: 0.8, ease: "easeOut" }}
-                        className="h-full bg-gradient-to-r from-[#C67B5C] to-[#D4A574]"
+                        className="h-full bg-gradient-to-r from-primary to-primary/70"
                       />
                     </div>
 
                     {nextTierThreshold && (
                       <div className="flex items-center justify-between text-xs">
-                        <span className="text-[#8B7355]">Current Tier</span>
-                        <span className="font-semibold text-[#C67B5C]">
+                        <span className="text-muted-foreground">Current Tier</span>
+                        <span className="font-semibold text-primary">
                           {nextTierThreshold - tierData.points} points to next tier
                         </span>
                       </div>
@@ -287,26 +287,26 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.3 }}
               >
-                <Card className="bg-[#FEFCF9] border border-[#E8DDD0] rounded-2xl shadow-sm p-6 space-y-4">
+                <Card className="bg-background border border-border rounded-2xl shadow-sm p-6 space-y-4">
                   <div>
-                    <p className="text-xs text-[#8B7355] uppercase tracking-wide font-semibold">
+                    <p className="text-xs text-muted-foreground uppercase tracking-wide font-semibold">
                       Referrals
                     </p>
-                    <p className="text-3xl font-bold text-[#C67B5C] mt-1">
+                    <p className="text-3xl font-bold text-primary mt-1">
                       {tierData.referrals}
                     </p>
                   </div>
-                  <div className="border-t border-[#E8DDD0] pt-4">
+                  <div className="border-t border-border pt-4">
                     <div className="flex items-center gap-2 mb-2">
-                      <Flame className="h-4 w-4 text-[#D4A574]" />
-                      <p className="text-xs text-[#8B7355] uppercase tracking-wide font-semibold">
+                      <Flame className="h-4 w-4 text-primary/70" />
+                      <p className="text-xs text-muted-foreground uppercase tracking-wide font-semibold">
                         Streak
                       </p>
                     </div>
-                    <p className="text-2xl font-bold text-[#D4A574]">
+                    <p className="text-2xl font-bold text-primary/70">
                       {tierData.streakDays}
                     </p>
-                    <p className="text-xs text-[#8B7355]">days</p>
+                    <p className="text-xs text-muted-foreground">days</p>
                   </div>
                 </Card>
               </motion.div>
@@ -318,16 +318,16 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.4 }}
             >
-              <Card className="bg-[#FEFCF9] border border-[#E8DDD0] rounded-2xl shadow-sm p-6">
-                <h3 className="font-serif italic text-[#3D2B1F] font-semibold mb-4">
+              <Card className="bg-background border border-border rounded-2xl shadow-sm p-6">
+                <h3 className="font-serif italic text-foreground font-semibold mb-4">
                   Your Referral Link
                 </h3>
                 <div className="flex gap-2">
-                  <div className="flex-1 bg-[#F5F0E8] border border-[#E8DDD0] rounded-lg px-4 py-3 font-mono text-sm text-[#5C4033]">
-                    https://storybuilders.co/?ref=SARAH_M_2847
+                  <div className="flex-1 bg-muted border border-border rounded-lg px-4 py-3 font-mono text-sm text-foreground">
+                    https://storypros.co/?ref=SARAH_M_2847
                   </div>
                   <Button
-                    className="bg-[#C67B5C] hover:bg-[#B86B4C] text-white"
+                    className="bg-primary hover:bg-primary/90 text-primary-foreground"
                     size="sm"
                   >
                     <Copy className="h-4 w-4" />
@@ -342,12 +342,12 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.5 }}
             >
-              <Card className="bg-[#FEFCF9] border border-[#E8DDD0] rounded-2xl shadow-sm p-6">
-                <h3 className="font-serif italic text-[#3D2B1F] font-semibold mb-4">
+              <Card className="bg-background border border-border rounded-2xl shadow-sm p-6">
+                <h3 className="font-serif italic text-foreground font-semibold mb-4">
                   Share & Earn Referrals
                 </h3>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                  <Button className="bg-[#3D2B1F] hover:bg-[#2B1F15] text-white flex items-center gap-2">
+                  <Button className="bg-foreground hover:bg-foreground/90 text-background flex items-center gap-2">
                     <Twitter className="h-4 w-4" />
                     <span className="hidden sm:inline">Twitter</span>
                   </Button>
@@ -367,7 +367,7 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
                     <LinkIcon className="h-4 w-4" />
                     <span className="hidden sm:inline">LinkedIn</span>
                   </Button>
-                  <Button className="bg-[#8B7355] hover:bg-[#6B5345] text-white flex items-center gap-2">
+                  <Button className="bg-primary hover:bg-primary/90 text-primary-foreground flex items-center gap-2">
                     <Copy className="h-4 w-4" />
                     <span className="hidden sm:inline">Copy</span>
                   </Button>
@@ -381,8 +381,8 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.6 }}
             >
-              <Card className="bg-[#FEFCF9] border border-[#E8DDD0] rounded-2xl shadow-sm p-6">
-                <h3 className="font-serif italic text-[#3D2B1F] font-semibold mb-4">
+              <Card className="bg-background border border-border rounded-2xl shadow-sm p-6">
+                <h3 className="font-serif italic text-foreground font-semibold mb-4">
                   Your Referrals
                 </h3>
                 {tierData.referrals > 0 ? (
@@ -390,22 +390,22 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
                     {Array.from({ length: tierData.referrals }).map((_, idx) => (
                       <div
                         key={idx}
-                        className="flex items-center justify-between p-3 bg-[#F5F0E8] border border-[#E8DDD0] rounded-lg"
+                        className="flex items-center justify-between p-3 bg-muted border border-border rounded-lg"
                       >
                         <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-full bg-[#D4A574] flex items-center justify-center text-[#3D2B1F] font-semibold text-sm">
+                          <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-semibold text-sm">
                             {idx + 1}
                           </div>
                           <div>
-                            <p className="text-sm font-medium text-[#3D2B1F]">
+                            <p className="text-sm font-medium text-foreground">
                               Referral {idx + 1}
                             </p>
-                            <p className="text-xs text-[#8B7355]">
+                            <p className="text-xs text-muted-foreground">
                               25 points earned
                             </p>
                           </div>
                         </div>
-                        <Badge className="bg-[#7CB342] text-white">
+                        <Badge className="bg-emerald-500 text-white">
                           Verified
                         </Badge>
                       </div>
@@ -413,8 +413,8 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
                   </div>
                 ) : (
                   <div className="text-center py-8">
-                    <Users className="h-8 w-8 text-[#E8DDD0] mx-auto mb-2" />
-                    <p className="text-sm text-[#8B7355]">
+                    <Users className="h-8 w-8 text-border mx-auto mb-2" />
+                    <p className="text-sm text-muted-foreground">
                       No referrals yet. Start sharing to earn points!
                     </p>
                   </div>
@@ -428,12 +428,12 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.7 }}
             >
-              <Card className="bg-[#FEFCF9] border border-[#E8DDD0] rounded-2xl shadow-sm p-6">
+              <Card className="bg-background border border-border rounded-2xl shadow-sm p-6">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="font-serif italic text-[#3D2B1F] font-semibold">
+                  <h3 className="font-serif italic text-foreground font-semibold">
                     Achievements
                   </h3>
-                  <span className="text-sm text-[#8B7355]">
+                  <span className="text-sm text-muted-foreground">
                     {tierData.badges.length} of {allBadges.length}
                   </span>
                 </div>
@@ -446,8 +446,8 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
                         whileHover={isEarned ? { scale: 1.05 } : {}}
                         className={`p-3 rounded-lg border-2 text-center transition-all ${
                           isEarned
-                            ? `${BADGE_COLORS[badge]} border-[#D4A574]`
-                            : "bg-[#F5F0E8] border-[#E8DDD0] text-[#8B7355] opacity-50"
+                            ? `${BADGE_COLORS[badge]} border-primary/30`
+                            : "bg-muted border-border text-muted-foreground opacity-50"
                         }`}
                       >
                         <Award className="h-5 w-5 mx-auto mb-2" />
@@ -467,7 +467,7 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.8 }}
             >
-              <Card className="bg-gradient-to-br from-[#D4A574] to-[#C67B5C] text-white rounded-2xl shadow-sm p-8">
+              <Card className="bg-gradient-to-br from-primary to-primary/80 text-primary-foreground rounded-2xl shadow-sm p-8">
                 <div className="text-center space-y-2">
                   <p className="text-sm font-semibold uppercase tracking-wide opacity-90">
                     Your Impact
@@ -488,8 +488,8 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.9 }}
             >
-              <Card className="bg-[#FEFCF9] border border-[#E8DDD0] rounded-2xl shadow-sm p-6">
-                <h3 className="font-serif italic text-[#3D2B1F] font-semibold mb-4">
+              <Card className="bg-background border border-border rounded-2xl shadow-sm p-6">
+                <h3 className="font-serif italic text-foreground font-semibold mb-4">
                   Community Milestones
                 </h3>
                 <div className="space-y-4">
@@ -500,19 +500,19 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
                   ].map((milestone, idx) => (
                     <div key={idx}>
                       <div className="flex justify-between mb-2">
-                        <span className="text-sm text-[#5C4033] font-medium">
+                        <span className="text-sm text-foreground font-medium">
                           {milestone.label}
                         </span>
-                        <span className="text-xs text-[#8B7355]">
+                        <span className="text-xs text-muted-foreground">
                           847 / {milestone.target}
                         </span>
                       </div>
-                      <div className="h-2 bg-[#E8DDD0] rounded-full overflow-hidden">
+                      <div className="h-2 bg-border rounded-full overflow-hidden">
                         <motion.div
                           initial={{ width: 0 }}
                           animate={{ width: `${(847 / milestone.target) * 100}%` }}
                           transition={{ duration: 0.8, ease: "easeOut" }}
-                          className="h-full bg-gradient-to-r from-[#8BA888] to-[#7CB342]"
+                          className="h-full bg-gradient-to-r from-emerald-500 to-emerald-400"
                         />
                       </div>
                     </div>
@@ -527,8 +527,8 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 1.0 }}
             >
-              <Card className="bg-[#FEFCF9] border border-[#E8DDD0] rounded-2xl shadow-sm p-6">
-                <h3 className="font-serif italic text-[#3D2B1F] font-semibold mb-4">
+              <Card className="bg-background border border-border rounded-2xl shadow-sm p-6">
+                <h3 className="font-serif italic text-foreground font-semibold mb-4">
                   Top Referrers
                 </h3>
                 <div className="space-y-2">
@@ -549,16 +549,16 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
                       initial={{ x: -20, opacity: 0 }}
                       animate={{ x: 0, opacity: 1 }}
                       transition={{ delay: 1.0 + idx * 0.05 }}
-                      className="flex items-center gap-3 p-3 hover:bg-[#F5F0E8] rounded-lg transition-colors"
+                      className="flex items-center gap-3 p-3 hover:bg-muted rounded-lg transition-colors"
                     >
-                      <div className="w-8 h-8 rounded-full bg-[#D4A574] flex items-center justify-center text-[#3D2B1F] font-bold text-sm">
+                      <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-sm">
                         {idx + 1}
                       </div>
                       <div className="flex-1">
-                        <p className="text-sm font-medium text-[#3D2B1F]">
+                        <p className="text-sm font-medium text-foreground">
                           {user.name}
                         </p>
-                        <p className="text-xs text-[#8B7355]">{user.points} points</p>
+                        <p className="text-xs text-muted-foreground">{user.points} points</p>
                       </div>
                       <Badge
                         style={{
