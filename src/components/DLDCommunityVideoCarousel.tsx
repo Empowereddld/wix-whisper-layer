@@ -58,11 +58,13 @@ const DLDCommunityVideoCarousel = () => {
 
   const scroll = (direction: "left" | "right") => {
     if (!scrollRef.current) return;
+    isPaused.current = true;
     const amount = scrollRef.current.clientWidth * 0.6;
-    scrollRef.current.scrollBy({
-      left: direction === "left" ? -amount : amount,
+    scrollRef.current.scrollTo({
+      left: scrollRef.current.scrollLeft + (direction === "left" ? -amount : amount),
       behavior: "smooth",
     });
+    setTimeout(() => { isPaused.current = false; }, 800);
   };
 
   return (
