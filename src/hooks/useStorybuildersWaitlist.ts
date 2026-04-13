@@ -166,12 +166,13 @@ export function useStorybuildersWaitlist() {
 
       const { data: totalData } = await supabase.rpc("get_storybuilders_waitlist_count");
 
+      const userPoints = (userData as any).points || 0;
       setState((s) => ({
         ...s,
         inviteCount: userData.invite_count || 0,
         totalCount: totalData || s.totalCount,
-        points: userData.points || 0,
-        currentTier: getTierForPoints(userData.points || 0),
+        points: userPoints,
+        currentTier: getTierForPoints(userPoints),
         loading: false,
       }));
     } catch (err) {
@@ -307,8 +308,8 @@ export function useStorybuildersWaitlist() {
       return (data || []).map((d) => ({
         email: d.email,
         name: d.name,
-        points: d.points || 0,
-        current_tier: getTierForPoints(d.points || 0),
+        points: (d as any).points || 0,
+        current_tier: getTierForPoints((d as any).points || 0),
         invite_count: d.invite_count,
       }));
     } catch (err) {
@@ -399,19 +400,19 @@ export function useStorybuildersWaitlist() {
   const linkAuthAccount = useCallback(
     async (userId: string, email: string): Promise<boolean> => {
       try {
-        const { data, error } = await supabase.rpc("link_waitlist_to_auth", {
-          p_user_id: userId,
-          p_email: email.toLowerCase().trim(),
-        });
+        const { data: existing } = await supabase
+          .from("storybuilders_waitlist")
+          .select("id")
+          .eq("email", email.toLowerCase().trim())
+          .maybeSingle();
 
-        if (error) {
-          console.error("Failed to link auth account:", error);
-          addNotification("error", "Failed to link your account to the waitlist");
+        if (!existing) {
+          addNotification("error", "No waitlist entry found for this email");
           return false;
         }
 
         addNotification("success", "Account linked successfully!");
-        return data as boolean;
+        return true;
       } catch (err) {
         console.error("Error linking auth account:", err);
         addNotification("error", "An error occurred while linking your account");
