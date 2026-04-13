@@ -1,5 +1,6 @@
 import { useState, useMemo } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 import {
   Dialog,
   DialogContent,
@@ -113,6 +114,16 @@ const BulkEmailComposer = ({ users, onClose }: BulkEmailComposerProps) => {
   }, [filteredRecipients]);
 
   const handleSendEmail = async () => {
+    // Validate subject and body
+    if (!subject.trim()) {
+      toast.error("Subject is required");
+      return;
+    }
+    if (!body.trim()) {
+      toast.error("Body is required");
+      return;
+    }
+
     setIsSending(true);
     try {
       let sentCount = 0;
@@ -146,12 +157,12 @@ const BulkEmailComposer = ({ users, onClose }: BulkEmailComposerProps) => {
         }
       }
 
-      alert(`Email sending complete!\nSuccessfully sent: ${sentCount}\nFailed: ${failedCount}`);
+      toast.success(`Email sending complete! Successfully sent: ${sentCount}. Failed: ${failedCount}`);
       setShowConfirmation(false);
       onClose();
     } catch (error) {
       console.error("Error in batch send:", error);
-      alert("An error occurred while sending emails");
+      toast.error("An error occurred while sending emails");
     } finally {
       setIsSending(false);
     }

@@ -118,45 +118,50 @@ const InviteFriendForm = ({ referralCode, userName }: InviteFriendFormProps) => 
           >
             {/* Friend Name */}
             <div>
-              <label className="block text-white/80 text-sm font-medium mb-2">
-                Friend's Name
+              <label htmlFor="friendName" className="block text-white/80 text-sm font-medium mb-2">
+                Friend's Name <span aria-label="required">*</span>
               </label>
               <input
+                id="friendName"
                 type="text"
                 value={friendName}
                 onChange={(e) => setFriendName(e.target.value)}
                 placeholder="John Doe"
-                className="w-full bg-white/5 border border-white/20 rounded-lg px-4 py-2 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                aria-required="true"
+                className="w-full bg-white/5 border border-white/20 rounded-lg px-4 py-2 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-[#8861d4] focus:border-transparent transition-all"
                 disabled={isLoading}
               />
             </div>
 
             {/* Friend Email */}
             <div>
-              <label className="block text-white/80 text-sm font-medium mb-2">
-                Friend's Email
+              <label htmlFor="friendEmail" className="block text-white/80 text-sm font-medium mb-2">
+                Friend's Email <span aria-label="required">*</span>
               </label>
               <input
+                id="friendEmail"
                 type="email"
                 value={friendEmail}
                 onChange={(e) => setFriendEmail(e.target.value)}
                 placeholder="john@example.com"
-                className="w-full bg-white/5 border border-white/20 rounded-lg px-4 py-2 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                aria-required="true"
+                className="w-full bg-white/5 border border-white/20 rounded-lg px-4 py-2 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-[#8861d4] focus:border-transparent transition-all"
                 disabled={isLoading}
               />
             </div>
 
             {/* Message Preview */}
             <div>
-              <label className="block text-white/80 text-sm font-medium mb-2">
+              <label htmlFor="customMessage" className="block text-white/80 text-sm font-medium mb-2">
                 Message (optional)
               </label>
               <textarea
+                id="customMessage"
                 value={customMessage}
                 onChange={(e) => setCustomMessage(e.target.value)}
                 placeholder="Customize the message sent to your friend"
                 rows={4}
-                className="w-full bg-white/5 border border-white/20 rounded-lg px-4 py-2 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all resize-none"
+                className="w-full bg-white/5 border border-white/20 rounded-lg px-4 py-2 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-[#8861d4] focus:border-transparent transition-all resize-none"
                 disabled={isLoading}
               />
               <p className="text-white/50 text-xs mt-1">
@@ -168,7 +173,7 @@ const InviteFriendForm = ({ referralCode, userName }: InviteFriendFormProps) => 
             <Button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-purple-600 hover:bg-purple-700 text-white rounded-lg px-4 py-3 font-semibold flex items-center justify-center gap-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-[#8861d4] hover:bg-[#7551c4] text-white rounded-lg px-4 py-3 font-semibold flex items-center justify-center gap-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isLoading ? (
                 <>

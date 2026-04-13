@@ -211,9 +211,8 @@ Deno.serve(async (req) => {
           email: normalizedEmail,
           ip_address,
           risk_score: riskScore,
-          fraud_reasons: reasons,
-          flagged: true,
-          created_at: new Date().toISOString(),
+          fraud_reasons: reasons, // Array of reason strings
+          user_agent: req.headers.get("user-agent"),
         });
       } catch (logError) {
         console.error("Failed to log fraud attempt:", logError);

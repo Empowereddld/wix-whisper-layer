@@ -173,8 +173,8 @@ const AdminWaitlistGuide = () => {
         <main className="flex-1 min-w-0">
           <div className="flex items-center justify-between mb-8">
             <div>
-              <h1 className="text-4xl font-bold text-[#3b1f59] font-sans font-bold">StoryBuilders Waitlist Admin Guide</h1>
-              <p className="text-gray-500 mt-2">Everything you need to run the viral waitlist system</p>
+              <h1 className="text-4xl font-bold text-[#3b1f59] font-sans font-bold">Story Pros Waitlist Admin Guide</h1>
+              <p className="text-gray-500 mt-2">Everything you need to manage the Story Pros waitlist</p>
             </div>
             <Button onClick={handlePrint} variant="outline" size="sm" className="print:hidden border-[#dedede] text-[#121212] hover:bg-[#f3ebf8]">
               <Printer className="h-4 w-4 mr-2" />
@@ -193,7 +193,7 @@ const AdminWaitlistGuide = () => {
 
             <CollapsibleSection title="System Architecture">
               <p className="text-gray-500 mb-4">
-                The StoryBuilders waitlist is built on a serverless stack with three main components:
+                The Story Pros waitlist is built on a serverless stack with three main components:
               </p>
               <ul className="space-y-2 mb-4 text-sm">
                 <li className="flex items-start gap-2">
@@ -251,7 +251,7 @@ const AdminWaitlistGuide = () => {
 
             <CollapsibleSection title="Access Admin Dashboard">
               <p className="text-sm text-gray-500 mb-4">
-                Admins access the StoryBuilders waitlist dashboard at <code className="bg-[#ffffff] px-2 py-1 rounded text-[#3b1f59]">/admin/storybuilders</code>. This
+                Admins access the Story Pros waitlist dashboard at <code className="bg-[#ffffff] px-2 py-1 rounded text-[#3b1f59]">/admin/storybuilders</code>. This
                 requires:
               </p>
               <ul className="space-y-2 text-sm list-disc list-inside text-[#121212]">

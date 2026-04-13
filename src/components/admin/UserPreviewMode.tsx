@@ -194,6 +194,8 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
 
             {/* Preview Mode Watermark Banner */}
             <motion.div
+              aria-live="polite"
+              aria-label="Preview mode banner"
               animate={{ opacity: [0.5, 0.7, 0.5] }}
               transition={{ duration: 2, repeat: Infinity }}
               className="text-center text-xs text-white/70 py-1 border-t border-white/10"

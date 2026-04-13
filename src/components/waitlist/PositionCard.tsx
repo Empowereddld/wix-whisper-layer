@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { motion } from "motion/react";
 import { TrendingUp } from "lucide-react";
+import { TIER_THRESHOLDS, TIER_NAMES } from "@/lib/waitlist-constants";
 
 interface PositionCardProps {
   position: number;
@@ -23,12 +24,12 @@ const getTierGradient = (tier: number): string => {
 };
 
 const getTierThresholds = () => [
-  { name: "Storyteller", points: 0, icon: "📖" },
-  { name: "Advocate", points: 35, icon: "🗣️" },
-  { name: "Champion", points: 85, icon: "🏆" },
-  { name: "Hero", points: 135, icon: "🦸" },
-  { name: "Legend", points: 260, icon: "👑" },
-  { name: "Founding Elite", points: 510, icon: "💎" },
+  { name: TIER_NAMES[0], points: TIER_THRESHOLDS[0], icon: "📖" },
+  { name: TIER_NAMES[1], points: TIER_THRESHOLDS[1], icon: "🗣️" },
+  { name: TIER_NAMES[2], points: TIER_THRESHOLDS[2], icon: "🏆" },
+  { name: TIER_NAMES[3], points: TIER_THRESHOLDS[3], icon: "🦸" },
+  { name: TIER_NAMES[4], points: TIER_THRESHOLDS[4], icon: "👑" },
+  { name: TIER_NAMES[5], points: TIER_THRESHOLDS[5], icon: "💎" },
 ];
 
 const AnimatedCounter = ({ value }: { value: number }) => {

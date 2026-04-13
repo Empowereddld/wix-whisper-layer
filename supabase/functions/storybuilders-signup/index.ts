@@ -24,7 +24,7 @@ async function sendWelcomeEmail(
   try {
     const emailFunctionUrl = `${supabaseUrl}/functions/v1/send-waitlist-email`;
     const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-    const appUrl = "https://storypros.app"; // Replace with your actual domain
+    const appUrl = Deno.env.get("APP_URL") || "https://storypros.app";
 
     const verificationLink = `${appUrl}/verify?token=${verificationToken}`;
 
@@ -132,6 +132,37 @@ async function checkFraud(
   }
 }
 
+const SIGNUP_RATE_LIMIT = 5; // 5 signups per hour per IP
+
+async function checkSignupRateLimit(
+  supabase: any,
+  ipAddress: string
+): Promise<{ allowed: boolean; remaining: number }> {
+  try {
+    const oneHourAgo = new Date(Date.now() - 3600000).toISOString();
+    const { count, error } = await supabase
+      .from("waitlist_events")
+      .select("*", { count: "exact", head: true })
+      .eq("metadata->>ip_address", ipAddress)
+      .eq("event_type", "signup")
+      .gte("created_at", oneHourAgo);
+
+    if (error) {
+      console.warn("Rate limit check error (allowing by default):", error);
+      return { allowed: true, remaining: SIGNUP_RATE_LIMIT };
+    }
+
+    const requests = count || 0;
+    const allowed = requests < SIGNUP_RATE_LIMIT;
+    const remaining = Math.max(0, SIGNUP_RATE_LIMIT - requests);
+
+    return { allowed, remaining };
+  } catch (error) {
+    console.warn("Rate limit check failed (allowing by default):", error);
+    return { allowed: true, remaining: SIGNUP_RATE_LIMIT };
+  }
+}
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -195,6 +226,21 @@ Deno.serve(async (req) => {
                       req.headers.get("cf-connecting-ip") ||
                       "unknown";
 
+    // Check rate limit (5 signups per hour per IP)
+    const rateLimit = await checkSignupRateLimit(supabase, ipAddress);
+    if (!rateLimit.allowed) {
+      return new Response(
+        JSON.stringify({
+          error: "Too many signup attempts. Please try again later.",
+          remaining: rateLimit.remaining,
+        }),
+        {
+          status: 429,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        }
+      );
+    }
+
     // Check for fraud
     const fraudCheck = await checkFraud(supabaseUrl, normalizedEmail, ipAddress, ref || null);
 
@@ -237,7 +283,7 @@ Deno.serve(async (req) => {
         user_email: normalizedEmail,
         event_type: "signup",
         points_awarded: 10,
-        metadata: { referral_code: referralCode },
+        metadata: { referral_code: referralCode, ip_address: ipAddress },
       });
 
     // Calculate queue position for this user

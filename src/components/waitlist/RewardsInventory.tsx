@@ -212,6 +212,9 @@ export default function RewardsInventory({
           <motion.button
             key={tab.id}
             onClick={() => setActiveTab(tab.id as typeof activeTab)}
+            role="tab"
+            aria-selected={activeTab === tab.id}
+            aria-controls={`${tab.id}-panel`}
             className={`flex items-center gap-2 px-4 py-2 rounded-xl font-medium whitespace-nowrap transition-all duration-200 ${
               activeTab === tab.id
                 ? "bg-[#8861d4] text-white shadow-md"
@@ -347,9 +350,10 @@ export default function RewardsInventory({
                       whileTap={canRedeem ? { scale: 0.98 } : {}}
                       onClick={() => handleRedeemPack(pack.level)}
                       disabled={!canRedeem}
+                      aria-label={`Redeem ${pack.name}`}
                       className={`w-full py-2 px-4 rounded-xl font-medium transition-all duration-200 ${
                         canRedeem
-                          ? "bg-[#8861d4] hover:bg-[#7451c4] text-white shadow-sm hover:shadow-md"
+                          ? "bg-[#8861d4] hover:bg-[#7551c4] text-white shadow-sm hover:shadow-md"
                           : "bg-[#f3ebf8] text-gray-500 opacity-60 cursor-not-allowed"
                       }`}
                     >

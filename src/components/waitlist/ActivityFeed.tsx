@@ -19,7 +19,7 @@ const getEventIcon = (eventType: string) => {
     case "tier_promotion":
       return <Trophy className="w-5 h-5 text-yellow-400" />;
     case "badge_earned":
-      return <Award className="w-5 h-5 text-purple-400" />;
+      return <Award className="w-5 h-5 text-[#8861d4]" />;
     case "referral":
       return <Heart className="w-5 h-5 text-red-400" />;
     default:

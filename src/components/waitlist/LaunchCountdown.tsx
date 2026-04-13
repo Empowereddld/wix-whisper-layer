@@ -72,7 +72,7 @@ const LaunchCountdown: React.FC<LaunchCountdownProps> = ({ launchDate }) => {
       >
         <div className="relative rounded-3xl overflow-hidden">
           {/* Animated background */}
-          <div className="absolute inset-0 bg-gradient-to-br from-purple-600 via-pink-600 to-red-600" />
+          <div className="absolute inset-0 bg-gradient-to-br from-[#8861d4] via-pink-600 to-red-600" />
           <motion.div
             className="absolute inset-0 opacity-50"
             animate={{
@@ -263,7 +263,7 @@ const LaunchCountdown: React.FC<LaunchCountdownProps> = ({ launchDate }) => {
             {/* Card */}
             <div className="relative rounded-2xl overflow-hidden h-full">
               {/* Gradient background */}
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/30 via-purple-500/30 to-pink-500/30 backdrop-blur border border-white/20" />
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/30 via-[#8861d4]/30 to-pink-500/30 backdrop-blur border border-white/20" />
 
               {/* Flip animation on value change */}
               <motion.div
@@ -308,7 +308,7 @@ const LaunchCountdown: React.FC<LaunchCountdownProps> = ({ launchDate }) => {
 
       {/* Call to action */}
       <motion.div
-        className="p-6 bg-gradient-to-r from-purple-500/20 to-pink-500/20 backdrop-blur border border-white/20 rounded-2xl text-center"
+        className="p-6 bg-gradient-to-r from-[#8861d4]/20 to-pink-500/20 backdrop-blur border border-white/20 rounded-2xl text-center"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}

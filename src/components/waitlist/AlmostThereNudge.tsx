@@ -3,20 +3,48 @@ import { motion, AnimatePresence } from "motion/react";
 import { X, Zap, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import { TIER_THRESHOLDS } from "@/lib/waitlist-constants";
 
 interface AlmostThereNudgeProps {
   nextTierName: string;
   nextReward: string;
   referralLink: string;
+  currentPoints?: number;
+  currentTierIndex?: number;
 }
 
 const AlmostThereNudge: React.FC<AlmostThereNudgeProps> = ({
   nextTierName,
   nextReward,
   referralLink,
+  currentPoints = 0,
+  currentTierIndex = 0,
 }) => {
   const [isVisible, setIsVisible] = useState(true);
   const [isDismissed, setIsDismissed] = useState(false);
+  const [progressPercentage, setProgressPercentage] = useState(0);
+
+  // Calculate progress percentage based on current points vs next tier threshold
+  useEffect(() => {
+    // Get current and next tier thresholds
+    const currentTierThreshold = TIER_THRESHOLDS[currentTierIndex] || 0;
+    const nextTierThreshold =
+      TIER_THRESHOLDS[currentTierIndex + 1] || TIER_THRESHOLDS[TIER_THRESHOLDS.length - 1];
+
+    // Calculate progress within the current tier
+    const pointsInCurrentTier = currentPoints - currentTierThreshold;
+    const pointsNeededForNextTier = nextTierThreshold - currentTierThreshold;
+
+    const percentage =
+      pointsNeededForNextTier > 0
+        ? Math.min(
+            (pointsInCurrentTier / pointsNeededForNextTier) * 100,
+            100
+          )
+        : 100;
+
+    setProgressPercentage(Math.round(percentage));
+  }, [currentPoints, currentTierIndex]);
 
   // Check if user has dismissed this nudge before
   useEffect(() => {
@@ -182,18 +210,17 @@ const AlmostThereNudge: React.FC<AlmostThereNudgeProps> = ({
               <div className="flex-1 h-1.5 bg-white/10 rounded-full overflow-hidden">
                 <motion.div
                   className="h-full bg-gradient-to-r from-green-400 to-cyan-400"
-                  initial={{ width: "90%" }}
+                  initial={{ width: "0%" }}
                   animate={{
-                    width: ["90%", "95%", "90%"],
+                    width: `${progressPercentage}%`,
                   }}
                   transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    ease: "easeInOut",
+                    duration: 0.8,
+                    ease: "easeOut",
                   }}
                 />
               </div>
-              <span>90%</span>
+              <span>{progressPercentage}%</span>
             </motion.div>
           </div>
         </motion.div>

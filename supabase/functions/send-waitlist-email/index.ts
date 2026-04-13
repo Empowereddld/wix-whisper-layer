@@ -104,7 +104,7 @@ function getEmailTemplate(
                   <strong>What's next?</strong> Keep an eye on your inbox for exclusive updates,
                   behind-the-scenes content, and opportunities to climb the waitlist ladder.
                 </p>
-                <a href="https://storybuilders.app" style="${buttonStyles}">Explore Story Pros</a>
+                <a href="https://storypros.app" style="${buttonStyles}">Explore Story Pros</a>
                 <p style="${baseStyles}">
                   Questions? Reply to this email and we'll get back to you soon.
                 </p>
@@ -272,7 +272,7 @@ function getEmailTemplate(
                   You have <strong>${data.points || 0}</strong> points. Keep sharing your referral code
                   to climb higher and unlock exclusive tier rewards!
                 </p>
-                <a href="https://storybuilders.app/dashboard" style="${buttonStyles}">Check Your Dashboard</a>
+                <a href="https://storypros.app/dashboard" style="${buttonStyles}">Check Your Dashboard</a>
                 <p style="${baseStyles}">
                   The Story Pros Team
                 </p>

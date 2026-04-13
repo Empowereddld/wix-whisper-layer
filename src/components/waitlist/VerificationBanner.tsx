@@ -77,6 +77,7 @@ export function VerificationBanner({
                 <button
                   onClick={handleResend}
                   disabled={isResending || resendSuccess}
+                  aria-label="Resend verification email"
                   className="inline-flex items-center gap-2 px-3 py-1.5 bg-amber-600 hover:bg-amber-700 disabled:bg-amber-400 disabled:cursor-not-allowed text-white text-sm font-medium rounded-md transition-colors duration-200"
                 >
                   {isResending ? (

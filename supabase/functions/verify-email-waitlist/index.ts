@@ -127,17 +127,45 @@ Deno.serve(async (req) => {
     const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const supabase = createClient(supabaseUrl, serviceKey);
 
-    // Look up the waitlist entry by referral_code (used as token for simplicity)
+    // Look up the waitlist entry by verification_token
     const { data: user, error: findError } = await supabase
       .from("storybuilders_waitlist")
-      .select("id, email, referral_code")
-      .eq("referral_code", token)
+      .select("id, email, verification_token, verification_sent_at")
+      .eq("verification_token", token)
       .maybeSingle();
 
     if (findError || !user) {
       console.error("Token lookup error:", findError);
       return new Response(getErrorHTML("Invalid or expired verification token"), {
         status: 404,
+        headers: { ...corsHeaders, "Content-Type": "text/html" },
+      });
+    }
+
+    // Check token expiry - must be within 24 hours
+    if (user.verification_sent_at) {
+      const sentAt = new Date(user.verification_sent_at);
+      const now = new Date();
+      const hoursDiff = (now.getTime() - sentAt.getTime()) / (1000 * 60 * 60);
+
+      if (hoursDiff > 24) {
+        return new Response(getErrorHTML("This verification link has expired. Please request a new one."), {
+          status: 410,
+          headers: { ...corsHeaders, "Content-Type": "text/html" },
+        });
+      }
+    }
+
+    // Update the database to mark email as verified
+    const { error: updateError } = await supabase
+      .from("storybuilders_waitlist")
+      .update({ email_verified: true, verified_at: new Date().toISOString() })
+      .eq("id", user.id);
+
+    if (updateError) {
+      console.error("Update error:", updateError);
+      return new Response(getErrorHTML("Failed to verify email. Please try again."), {
+        status: 500,
         headers: { ...corsHeaders, "Content-Type": "text/html" },
       });
     }

@@ -170,8 +170,8 @@ export function useStorybuildersWaitlist() {
         ...s,
         inviteCount: userData.invite_count || 0,
         totalCount: totalData || s.totalCount,
-        points: userData.invite_count * 10, // Simple points calculation
-        currentTier: getTierForPoints(userData.invite_count * 10),
+        points: userData.points || 0,
+        currentTier: getTierForPoints(userData.points || 0),
         loading: false,
       }));
     } catch (err) {
@@ -203,8 +203,8 @@ export function useStorybuildersWaitlist() {
           joined: true,
           referralCode: result.referral_code,
           inviteCount: result.invite_count,
-          points: result.points || result.invite_count * 10,
-          currentTier: result.current_tier || getTierForPoints(result.invite_count * 10),
+          points: result.points || 0,
+          currentTier: result.current_tier || getTierForPoints(result.points || 0),
           queuePosition: result.queue_position || null,
           totalCount: result.total_count,
           loading: false,
@@ -275,18 +275,21 @@ export function useStorybuildersWaitlist() {
   }, [state.referralCode]);
 
   const submitSuggestion = useCallback(
-    async (title: string, description: string, category: string): Promise<boolean> => {
-      // Suggestions feature not yet backed by DB tables
-      addNotification("success", "Suggestion submitted! Thank you for the feedback.");
-      return true;
+    async (title: string, description: string, category: string): Promise<{ success: boolean; message: string }> => {
+      // TODO: Wire up to suggestions database table when schema is ready
+      console.warn("submitSuggestion not yet implemented - suggestions feature coming soon");
+      addNotification("info", "Coming soon - suggestions feature is under development");
+      return { success: false, message: "Coming soon" };
     },
     []
   );
 
   const voteSuggestion = useCallback(
-    async (suggestionId: string): Promise<boolean> => {
-      // Voting feature not yet backed by DB tables
-      return true;
+    async (suggestionId: string): Promise<{ success: boolean; message: string }> => {
+      // TODO: Wire up to voting system in database when schema is ready
+      console.warn("voteSuggestion not yet implemented - voting feature coming soon");
+      addNotification("info", "Coming soon - voting feature is under development");
+      return { success: false, message: "Coming soon" };
     },
     []
   );
@@ -304,8 +307,8 @@ export function useStorybuildersWaitlist() {
       return (data || []).map((d) => ({
         email: d.email,
         name: d.name,
-        points: d.invite_count * 10,
-        current_tier: getTierForPoints(d.invite_count * 10),
+        points: d.points || 0,
+        current_tier: getTierForPoints(d.points || 0),
         invite_count: d.invite_count,
       }));
     } catch (err) {
@@ -395,8 +398,25 @@ export function useStorybuildersWaitlist() {
 
   const linkAuthAccount = useCallback(
     async (userId: string, email: string): Promise<boolean> => {
-      // Not implemented yet — requires DB function
-      return true;
+      try {
+        const { data, error } = await supabase.rpc("link_waitlist_to_auth", {
+          p_user_id: userId,
+          p_email: email.toLowerCase().trim(),
+        });
+
+        if (error) {
+          console.error("Failed to link auth account:", error);
+          addNotification("error", "Failed to link your account to the waitlist");
+          return false;
+        }
+
+        addNotification("success", "Account linked successfully!");
+        return data as boolean;
+      } catch (err) {
+        console.error("Error linking auth account:", err);
+        addNotification("error", "An error occurred while linking your account");
+        return false;
+      }
     },
     []
   );

@@ -80,7 +80,7 @@ const Leaderboard = ({ currentUserEmail }: LeaderboardProps) => {
         {
           event: "*",
           schema: "public",
-          table: "waitlist_entries",
+          table: "storybuilders_waitlist",
         },
         () => {
           fetchLeaderboard();
@@ -123,17 +123,17 @@ const Leaderboard = ({ currentUserEmail }: LeaderboardProps) => {
     >
       <h3 className="text-xl font-semibold text-white mb-6">Top 10 Leaderboard</h3>
 
-      <div className="space-y-3">
-        {entries.map((entry, index) => (
+      <div className="space-y-3" role="table">
+        {entries.map((entry) => (
           <motion.div
             key={entry.id}
             layout
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: index * 0.05 }}
+            transition={{ delay: entries.indexOf(entry) * 0.05 }}
             className={`backdrop-blur-sm bg-white/5 border border-white/10 rounded-xl p-4 transition-all duration-300 ${
               currentUserEmail === entry.email
-                ? "ring-2 ring-purple-500/50 bg-white/10"
+                ? "ring-2 ring-[#8861d4]/50 bg-white/10"
                 : "hover:bg-white/8"
             }`}
           >

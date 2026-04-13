@@ -7,18 +7,39 @@ import {
   Linkedin,
   Link2,
   Share2,
+  Instagram,
+  Youtube,
+  Check,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import {
+  SOCIAL_LINKS,
+  ONETIME_POINTS,
+} from "@/lib/waitlist-constants";
 
 interface SharePanelProps {
   referralLink: string;
   onShare?: (platform: string) => void;
+  userFollows?: {
+    instagram: boolean;
+    facebook: boolean;
+    youtube: boolean;
+  };
+  onFollowClick?: (platform: "instagram" | "facebook" | "youtube") => void;
 }
 
-const SharePanel = ({ referralLink, onShare }: SharePanelProps) => {
+const SharePanel = ({
+  referralLink,
+  onShare,
+  userFollows = { instagram: false, facebook: false, youtube: false },
+  onFollowClick,
+}: SharePanelProps) => {
   const [isSharing, setIsSharing] = useState(false);
+  const [followedPlatforms, setFollowedPlatforms] = useState<
+    Record<string, boolean>
+  >(userFollows);
 
   const messages = {
     whatsapp: `Hey! I just found this app being built for kids with DLD (Developmental Language Disorder). Story Pros helps them learn to read and communicate through personalized storytelling. Check it out and join the waitlist! ${referralLink}`,
@@ -93,12 +114,42 @@ const SharePanel = ({ referralLink, onShare }: SharePanelProps) => {
       id: "copy",
       label: "Copy Link",
       icon: Link2,
-      color: "bg-purple-600",
-      hoverColor: "hover:bg-purple-700",
+      color: "bg-[#8861d4]",
+      hoverColor: "hover:bg-[#7551c4]",
       action: async () => {
         await navigator.clipboard.writeText(referralLink);
         toast.success("Link copied to clipboard!");
       },
+    },
+  ];
+
+  const socialFollowConfigs = [
+    {
+      id: "instagram",
+      label: "Instagram",
+      icon: Instagram,
+      color: "bg-gradient-to-r from-purple-500 via-pink-500 to-red-500",
+      hoverColor: "hover:opacity-90",
+      url: SOCIAL_LINKS.INSTAGRAM,
+      points: ONETIME_POINTS.FOLLOW_INSTAGRAM,
+    },
+    {
+      id: "facebook",
+      label: "Facebook",
+      icon: Facebook,
+      color: "bg-[#1877F2]",
+      hoverColor: "hover:bg-[#0A66C2]",
+      url: SOCIAL_LINKS.FACEBOOK,
+      points: ONETIME_POINTS.FOLLOW_FACEBOOK,
+    },
+    {
+      id: "youtube",
+      label: "YouTube",
+      icon: Youtube,
+      color: "bg-red-600",
+      hoverColor: "hover:bg-red-700",
+      url: SOCIAL_LINKS.YOUTUBE,
+      points: ONETIME_POINTS.SUBSCRIBE_YOUTUBE,
     },
   ];
 
@@ -131,6 +182,40 @@ const SharePanel = ({ referralLink, onShare }: SharePanelProps) => {
     }
   };
 
+  const handleFollowClick = async (
+    config: typeof socialFollowConfigs[0]
+  ) => {
+    try {
+      // Open social link in new tab
+      window.open(config.url, "_blank");
+
+      // Mark as followed
+      setFollowedPlatforms((prev) => ({
+        ...prev,
+        [config.id]: true,
+      }));
+
+      // Log follow event to Supabase
+      await supabase.functions.invoke("log-waitlist-event", {
+        body: {
+          eventType: `follow_${config.id}`,
+          platform: config.id,
+          points: config.points,
+        },
+      });
+
+      // Call the optional callback
+      onFollowClick?.(config.id as "instagram" | "facebook" | "youtube");
+
+      toast.success(
+        `Great! You followed us on ${config.label}. ${config.points} points awarded!`
+      );
+    } catch (error) {
+      console.error("Follow error:", error);
+      toast.error("Failed to open link");
+    }
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -145,7 +230,7 @@ const SharePanel = ({ referralLink, onShare }: SharePanelProps) => {
         </p>
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-8">
         {shareConfigs.map((config, index) => {
           const IconComponent = config.icon;
           return (
@@ -158,6 +243,13 @@ const SharePanel = ({ referralLink, onShare }: SharePanelProps) => {
               <Button
                 onClick={() => handleShare(config)}
                 disabled={isSharing}
+                aria-label={`Share on ${config.label}`}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    handleShare(config);
+                  }
+                }}
                 className={`w-full h-12 sm:h-14 rounded-xl flex items-center justify-center gap-2 text-white font-medium transition-all duration-200 ${config.color} ${config.hoverColor} disabled:opacity-50`}
               >
                 <IconComponent className="w-5 h-5" />
@@ -168,9 +260,53 @@ const SharePanel = ({ referralLink, onShare }: SharePanelProps) => {
         })}
       </div>
 
+      {/* Follow Us Section */}
+      <div className="border-t border-white/20 pt-6">
+        <h4 className="text-lg font-semibold text-white mb-4">Follow Us</h4>
+        <p className="text-white/70 text-sm mb-4">
+          Follow on social media to earn {ONETIME_POINTS.FOLLOW_INSTAGRAM} bonus points per platform!
+        </p>
+
+        <div className="grid grid-cols-3 gap-3">
+          {socialFollowConfigs.map((config, index) => {
+            const IconComponent = config.icon;
+            const isFollowed = followedPlatforms[config.id];
+
+            return (
+              <motion.div
+                key={config.id}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: index * 0.05 }}
+              >
+                <Button
+                  onClick={() => handleFollowClick(config)}
+                  disabled={isFollowed}
+                  aria-label={`Follow on ${config.label}`}
+                  className={`w-full h-12 rounded-xl flex items-center justify-center gap-2 text-white font-medium transition-all duration-200 ${
+                    isFollowed
+                      ? "bg-white/10 border border-green-500/50"
+                      : `${config.color} ${config.hoverColor}`
+                  } disabled:opacity-100`}
+                >
+                  {isFollowed ? (
+                    <Check className="w-5 h-5 text-green-400" />
+                  ) : (
+                    <IconComponent className="w-5 h-5" />
+                  )}
+                  <span className="hidden sm:inline text-sm">
+                    {isFollowed ? "Followed!" : config.label}
+                  </span>
+                </Button>
+              </motion.div>
+            );
+          })}
+        </div>
+      </div>
+
       <div className="mt-6 p-4 bg-white/5 rounded-lg border border-white/10">
         <p className="text-xs sm:text-sm text-white/60">
-          💡 Tip: Each share helps you climb the leaderboard and unlock exclusive rewards!
+          💡 Tip: Each share and follow helps you climb the leaderboard and unlock exclusive rewards!
         </p>
       </div>
     </motion.div>

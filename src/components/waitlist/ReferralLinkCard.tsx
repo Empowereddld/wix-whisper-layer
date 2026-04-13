@@ -23,6 +23,7 @@ const generateQRCode = (text: string): string => {
 
 const ReferralLinkCard = ({ referralLink, stats }: ReferralLinkCardProps) => {
   const [copied, setCopied] = useState(false);
+  const [qrCodeError, setQrCodeError] = useState(false);
   const qrCodeUrl = useMemo(() => generateQRCode(referralLink), [referralLink]);
 
   const handleCopy = async () => {
@@ -34,6 +35,11 @@ const ReferralLinkCard = ({ referralLink, stats }: ReferralLinkCardProps) => {
     } catch (error) {
       toast.error("Failed to copy link");
     }
+  };
+
+  const handleQRCodeError = () => {
+    setQrCodeError(true);
+    console.error("QR code service unavailable");
   };
 
   const conversionRate =
@@ -60,7 +66,8 @@ const ReferralLinkCard = ({ referralLink, stats }: ReferralLinkCardProps) => {
           </div>
           <Button
             onClick={handleCopy}
-            className="bg-purple-600 hover:bg-purple-700 text-white rounded-xl px-6 h-12 flex items-center gap-2 transition-all duration-200"
+            aria-label="Copy referral link"
+            className="bg-[#8861d4] hover:bg-[#7551c4] text-white rounded-xl px-6 h-12 flex items-center gap-2 transition-all duration-200"
           >
             <AnimatePresence mode="wait">
               {copied ? (
@@ -136,21 +143,24 @@ const ReferralLinkCard = ({ referralLink, stats }: ReferralLinkCardProps) => {
         </div>
 
         {/* QR Code */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.2 }}
-          className="flex flex-col items-center justify-center bg-white/5 border border-white/10 rounded-xl p-4"
-        >
-          <p className="text-white/60 text-sm mb-4">Scan to Share</p>
-          <motion.img
-            src={qrCodeUrl}
-            alt="QR Code"
-            className="w-40 h-40 bg-white rounded-lg p-2"
-            whileHover={{ scale: 1.05 }}
-            transition={{ duration: 0.2 }}
-          />
-        </motion.div>
+        {!qrCodeError && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.2 }}
+            className="flex flex-col items-center justify-center bg-white/5 border border-white/10 rounded-xl p-4"
+          >
+            <p className="text-white/60 text-sm mb-4">Scan to Share</p>
+            <motion.img
+              src={qrCodeUrl}
+              alt="QR code for referral link - scan to share Story Pros"
+              onError={handleQRCodeError}
+              className="w-40 h-40 bg-white rounded-lg p-2"
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.2 }}
+            />
+          </motion.div>
+        )}
       </div>
 
       <div className="mt-6 p-4 bg-white/5 rounded-lg border border-white/10">

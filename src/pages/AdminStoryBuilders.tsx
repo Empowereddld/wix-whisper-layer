@@ -56,6 +56,7 @@ interface WaitlistUser {
 const AdminStoryBuilders = () => {
   const [activeTab, setActiveTab] = useState("overview");
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [totalSignups, setTotalSignups] = useState(0);
   const [users, setUsers] = useState<WaitlistUser[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -65,16 +66,24 @@ const AdminStoryBuilders = () => {
 
   const fetchUsers = useCallback(async () => {
     try {
-      const { data } = await supabase
+      setError(null);
+      const { data, error: fetchError } = await supabase
         .from("storybuilders_waitlist")
         .select("id, name, email, referral_code, invite_count, created_at")
         .order("created_at", { ascending: false });
+
+      if (fetchError) {
+        setError(`Failed to load users: ${fetchError.message}`);
+        return;
+      }
 
       if (data) {
         setUsers(data);
         setTotalSignups(data.length);
       }
     } catch (error) {
+      const message = error instanceof Error ? error.message : "Unknown error occurred";
+      setError(`Error fetching users: ${message}`);
       console.error("Error fetching users:", error);
     }
   }, []);
@@ -151,6 +160,46 @@ const AdminStoryBuilders = () => {
       <AdminLayout>
         <div className="flex items-center justify-center h-96">
           <div className="text-muted-foreground">Loading dashboard...</div>
+        </div>
+      </AdminLayout>
+    );
+  }
+
+  if (error) {
+    return (
+      <AdminLayout>
+        <div className="min-h-screen bg-secondary space-y-8">
+          <div>
+            <h1 className="text-4xl font-serif italic text-foreground tracking-tight">
+              Story Pros Waitlist
+            </h1>
+            <p className="text-muted-foreground mt-2">
+              Manage the entire waitlist operation and monitor key metrics
+            </p>
+          </div>
+          <Card className="border-red-500/50 bg-red-50 dark:bg-red-950/20">
+            <CardContent className="pt-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="font-semibold text-red-900 dark:text-red-200 mb-2">
+                    Error Loading Data
+                  </h3>
+                  <p className="text-sm text-red-800 dark:text-red-300">
+                    {error}
+                  </p>
+                </div>
+                <Button
+                  onClick={() => {
+                    setIsLoading(true);
+                    fetchUsers().then(() => setIsLoading(false));
+                  }}
+                  className="ml-4"
+                >
+                  Retry
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </AdminLayout>
     );
@@ -352,36 +401,46 @@ const AdminStoryBuilders = () => {
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {filteredUsers.map((user) => (
-                        <TableRow
-                          key={user.id}
-                          className="hover:bg-muted border-b border-border"
-                        >
-                          <TableCell className="font-medium text-foreground">
-                            {user.name}
-                          </TableCell>
-                          <TableCell className="text-sm text-muted-foreground">
-                            {user.email}
-                          </TableCell>
-                          <TableCell className="font-mono text-xs text-muted-foreground">
-                            {user.referral_code}
-                          </TableCell>
-                          <TableCell className="text-right font-semibold text-foreground">
-                            {user.invite_count}
-                          </TableCell>
-                          <TableCell>
-                            <Badge
-                              variant="outline"
-                              className="bg-primary/10 text-primary border-primary/30"
-                            >
-                              {getTierName(getTierForPoints(user.invite_count * 10))}
-                            </Badge>
-                          </TableCell>
-                          <TableCell className="text-sm text-muted-foreground">
-                            {format(new Date(user.created_at), "MMM dd, yyyy")}
+                      {filteredUsers.length > 0 ? (
+                        filteredUsers.map((user) => (
+                          <TableRow
+                            key={user.id}
+                            className="hover:bg-muted border-b border-border"
+                          >
+                            <TableCell className="font-medium text-foreground">
+                              {user.name}
+                            </TableCell>
+                            <TableCell className="text-sm text-muted-foreground">
+                              {user.email}
+                            </TableCell>
+                            <TableCell className="font-mono text-xs text-muted-foreground">
+                              {user.referral_code}
+                            </TableCell>
+                            <TableCell className="text-right font-semibold text-foreground">
+                              {user.invite_count}
+                            </TableCell>
+                            <TableCell>
+                              <Badge
+                                variant="outline"
+                                className="bg-primary/10 text-primary border-primary/30"
+                              >
+                                {getTierName(getTierForPoints(user.invite_count * 10))}
+                              </Badge>
+                            </TableCell>
+                            <TableCell className="text-sm text-muted-foreground">
+                              {format(new Date(user.created_at), "MMM dd, yyyy")}
+                            </TableCell>
+                          </TableRow>
+                        ))
+                      ) : (
+                        <TableRow>
+                          <TableCell colSpan={6} className="text-center py-12">
+                            <p className="text-muted-foreground">
+                              {users.length === 0 ? "No users in the waitlist yet" : "No results matching your search"}
+                            </p>
                           </TableCell>
                         </TableRow>
-                      ))}
+                      )}
                     </TableBody>
                   </Table>
                 </div>

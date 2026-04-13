@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { X, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import { tierColors } from "@/lib/glassmorphism";
 
 interface Tier {
   id: number;
@@ -167,6 +168,9 @@ const MilestoneModal: React.FC<MilestoneModalProps> = ({
 
           {/* Modal */}
           <motion.div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="tier-title"
             initial={{ opacity: 0, scale: 0.8, y: 50 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.8, y: 50 }}
@@ -233,7 +237,7 @@ const MilestoneModal: React.FC<MilestoneModalProps> = ({
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.5, duration: 0.4 }}
                   >
-                    <h2 className="text-4xl font-bold text-white mb-2">
+                    <h2 id="tier-title" className="text-4xl font-bold text-white mb-2">
                       {tier.name}
                     </h2>
                     <p className={`text-lg font-semibold ${tierColor.accent} mb-6`}>
