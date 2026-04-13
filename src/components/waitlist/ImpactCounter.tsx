@@ -150,7 +150,7 @@ const ImpactCounter = ({ referralCount }: ImpactCounterProps) => {
             </span>{" "}
             more{" "}
             <span className="text-pink-300">families with children who have DLD</span>{" "}
-            will have access to Story Builders.
+            will have access to Story Pros.
           </p>
         </motion.div>
 

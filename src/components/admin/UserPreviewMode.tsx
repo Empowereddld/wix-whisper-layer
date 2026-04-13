@@ -476,7 +476,7 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
                     {Math.min(tierData.referrals * 5, 120)} Families
                   </h3>
                   <p className="text-sm opacity-90">
-                    discovered Story Builders because of you
+                    discovered Story Pros because of you
                   </p>
                 </div>
               </Card>

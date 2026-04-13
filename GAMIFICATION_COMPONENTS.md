@@ -1,4 +1,4 @@
-# Story Builders Gamification Components
+# Story Pros Gamification Components
 
 All gamification components have been created in `src/components/waitlist/` and are ready for production use.
 

@@ -21,11 +21,11 @@ const SharePanel = ({ referralLink, onShare }: SharePanelProps) => {
   const [isSharing, setIsSharing] = useState(false);
 
   const messages = {
-    whatsapp: `Hey! I just found this app being built for kids with DLD (Developmental Language Disorder). Story Builders helps them learn to read and communicate through personalized storytelling. Check it out and join the waitlist! ${referralLink}`,
+    whatsapp: `Hey! I just found this app being built for kids with DLD (Developmental Language Disorder). Story Pros helps them learn to read and communicate through personalized storytelling. Check it out and join the waitlist! ${referralLink}`,
     twitter: `Just discovered @StoryBuildersApp - an incredible new app helping kids with DLD learn to read and communicate through personalized stories. Excited to see this launch! ${referralLink} #Education #EdTech #Accessibility`,
-    facebook: `I'm so excited about a new app called Story Builders! It's designed specifically to help children with Developmental Language Disorders learn to read and communicate through personalized storytelling. It's such an important tool for families like mine. Join the waitlist! ${referralLink}`,
-    linkedin: `I'm thrilled to share Story Builders - a pioneering educational app designed to support children with Developmental Language Disorders. By combining personalized storytelling with evidence-based techniques, Story Builders is making a real impact on literacy and communication. If you care about accessibility in edtech, check it out! ${referralLink}`,
-    email: `Hi!\n\nI wanted to share something I think you'll love. There's a new app called Story Builders that's being built specifically to help kids with DLD (Developmental Language Disorder) learn to read and communicate through personalized storytelling.\n\nI think this could be really meaningful, and I'd love for you to check it out and join the waitlist!\n\n${referralLink}\n\nLet me know what you think!\n\nBest`,
+    facebook: `I'm so excited about a new app called Story Pros! It's designed specifically to help children with Developmental Language Disorders learn to read and communicate through personalized storytelling. It's such an important tool for families like mine. Join the waitlist! ${referralLink}`,
+    linkedin: `I'm thrilled to share Story Pros - a pioneering educational app designed to support children with Developmental Language Disorders. By combining personalized storytelling with evidence-based techniques, Story Pros is making a real impact on literacy and communication. If you care about accessibility in edtech, check it out! ${referralLink}`,
+    email: `Hi!\n\nI wanted to share something I think you'll love. There's a new app called Story Pros that's being built specifically to help kids with DLD (Developmental Language Disorder) learn to read and communicate through personalized storytelling.\n\nI think this could be really meaningful, and I'd love for you to check it out and join the waitlist!\n\n${referralLink}\n\nLet me know what you think!\n\nBest`,
   };
 
   const shareConfigs = [
@@ -84,7 +84,7 @@ const SharePanel = ({ referralLink, onShare }: SharePanelProps) => {
       color: "bg-[#EA4335]",
       hoverColor: "hover:bg-[#C5221F]",
       action: async () => {
-        const subject = encodeURIComponent("Check out Story Builders");
+        const subject = encodeURIComponent("Check out Story Pros");
         const body = encodeURIComponent(messages.email);
         window.location.href = `mailto:?subject=${subject}&body=${body}`;
       },

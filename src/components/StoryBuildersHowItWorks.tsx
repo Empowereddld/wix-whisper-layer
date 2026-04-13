@@ -201,7 +201,7 @@ const StoryBuildersHowItWorks = () => {
           {/* Left: Text */}
           <FadeSection>
             <h2 className="text-[32px] md:text-[42px] lg:text-[46px] font-bold text-foreground leading-[1.1] mb-4">
-              How Story Builders Works
+              How Story Pros Works
             </h2>
             <p className="text-[14px] md:text-[16px] text-muted-foreground leading-[1.7] max-w-[400px]">
               Simple, structured, and designed to fit into everyday life.

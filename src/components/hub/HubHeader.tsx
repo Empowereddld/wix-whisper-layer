@@ -51,7 +51,7 @@ const HubHeader = ({ activeAudience = "", onAudienceChange }: HubHeaderProps) =>
           {/* Spacer for centering */}
           <div className="flex-1" />
 
-          {/* Story Builders Link */}
+          {/* Story Pros Link */}
           <button
             onClick={() => navigate("/storybuilders")}
             className="flex items-center gap-1 px-3 py-1 rounded-full bg-purple-600/20 hover:bg-purple-600/30 border border-purple-500/30 text-purple-300 hover:text-purple-200 text-sm font-medium transition-all mr-4 flex-shrink-0"

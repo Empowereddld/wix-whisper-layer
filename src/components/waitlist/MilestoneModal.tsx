@@ -132,12 +132,12 @@ const MilestoneModal: React.FC<MilestoneModalProps> = ({
   const tierColor = getTierColor(tier.name);
 
   const handleShare = async () => {
-    const text = `I just unlocked ${tier.name} tier and earned "${tier.reward}" on Story Builders! Join me on the waitlist and climb the leaderboard!`;
+    const text = `I just unlocked ${tier.name} tier and earned "${tier.reward}" on Story Pros! Join me on the waitlist and climb the leaderboard!`;
 
     try {
       if (navigator.share) {
         await navigator.share({
-          title: "Story Builders Achievement",
+          title: "Story Pros Achievement",
           text: text,
         });
       } else {
