@@ -30,13 +30,13 @@ import {
 
 /* ─── Milestones ─── */
 const milestones = [
-  { invites: 0, label: "Just joined", reward: "Early behind-the-scenes access and first look at new features" },
-  { invites: 1, label: "Invite 1 storyteller", reward: "Early access to StoryBuilders before public launch" },
-  { invites: 3, label: "Invite 3 storytellers", reward: "Printable Story Pack (story retell template, visual supports, parent prompts)" },
-  { invites: 5, label: "Invite 5 storytellers", reward: "Exclusive Dan and Daria podcast episode, private access for Launch Team members only" },
-  { invites: 10, label: "Invite 10 storytellers", reward: "Founder pricing at $5.99/month for life. Available to the first 100 people who reach this milestone." },
-  { invites: -1, label: "Top 50 contributors", reward: "Recognized as a Founding Family or Founding Professional on our website (opt-in)" },
-  { invites: -2, label: "Top 10 contributors", reward: "Dan and Daria t-shirt and a book signed by the voices of Dan and Daria" },
+  { invites: 0, label: "Just joined (0 pts)", reward: "Behind-the-scenes updates on Story Pros development" },
+  { invites: 1, label: "Storyteller (40 pts)", reward: "Early access to Story Pros before public launch" },
+  { invites: 3, label: "Advocate (100 pts)", reward: "Story Pros Advocate badge + 75 Story Coins" },
+  { invites: 5, label: "Champion (175 pts)", reward: "Founder pricing locked in at $5.99/month for life" },
+  { invites: 10, label: "Hero (325 pts)", reward: "VIP Beta access + 200 Story Coins bonus" },
+  { invites: -1, label: "Legend (600 pts)", reward: "Story Pros Legend badge + named in Founder credits" },
+  { invites: -2, label: "Founding Elite (First 50)", reward: "Founding Elite badge + lifetime founder pricing + all rewards" },
 ];
 
 const COLLECTIVE_GOAL = 4000;
@@ -386,8 +386,8 @@ const StoryBuilders = () => {
   return (
     <div className="min-h-screen bg-background text-foreground font-sans antialiased">
       <SEOHead
-        title="StoryBuilders Launch Team — Join the Movement | Empowered DLD"
-        description="Join the StoryBuilders Launch Team and help build a storytelling app for children with Developmental Language Disorder. Invite others, unlock rewards, and be part of something meaningful."
+        title="Story Pros Launch Team — Join the Movement | Empowered DLD"
+        description="Join the Story Pros Launch Team and help build a storytelling app for children with Developmental Language Disorder. Earn points, unlock rewards, and be part of something meaningful."
         path="/storypros"
       />
       <Header />
@@ -533,7 +533,7 @@ const StoryBuilders = () => {
               We're Building Something Bigger Than an App
             </h3>
             <p className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-[700px] mx-auto">
-              StoryBuilders is being created for children who struggle to understand and express their ideas
+              Story Pros is being created for children who struggle to understand and express their ideas
               — and for the parents, educators, and therapists supporting them every day.
             </p>
             <p className="text-base md:text-lg text-foreground font-semibold leading-relaxed">
@@ -557,7 +557,7 @@ const StoryBuilders = () => {
               </h2>
             </div>
             <p className="text-muted-foreground text-[16px] leading-relaxed max-w-[400px] md:text-right">
-              StoryBuilders is being built for children who deserve to be heard. Your support helps make sure they are.
+              Story Pros is being built for children who deserve to be heard. Your support helps make sure they are.
             </p>
           </FadeSection>
 
@@ -597,7 +597,7 @@ const StoryBuilders = () => {
                     <div className="absolute bottom-0 left-0 p-6">
                     <p className="text-white font-semibold text-[16px] md:text-[18px] translate-y-8 group-hover:translate-y-0 transition-transform duration-300">Help more children feel understood</p>
                     <p className="text-white/80 text-sm max-w-[280px] mt-2 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
-                      When more families find StoryBuilders, more children get a tool built specifically for how they think and communicate.
+                      When more families find Story Pros, more children get a tool built specifically for how they think and communicate.
                     </p>
                   </div>
                 </div>
@@ -651,32 +651,32 @@ const StoryBuilders = () => {
             const progressSteps: ProgressStep[] = [
               {
                 task: "You joined the Launch Team",
-                impact: "Welcome to the Launch Team",
-                reward: { icon: <Sparkles size={20} />, title: "You're officially in", desc: "You're part of this from the very beginning" },
+                impact: "Welcome to the Launch Team — you earned 10 points just for signing up",
+                reward: { icon: <Sparkles size={20} />, title: "You're officially a Storyteller", desc: "Behind-the-scenes updates on Story Pros development" },
                 invites: 0,
               },
               {
-                task: "Invite 1 family",
-                impact: "Help another child feel more confident sharing their ideas",
-                reward: { icon: <Rocket size={20} />, title: "Be one of the first to explore StoryBuilders", desc: "Be among the first to explore the app before anyone else" },
+                task: "Reach 40 points",
+                impact: "Complete your profile, follow us on social media, and share with friends",
+                reward: { icon: <Rocket size={20} />, title: "Unlock Advocate status", desc: "Early access to Story Pros before public launch" },
                 invites: 1,
               },
               {
-                task: "Invite 3 families",
-                impact: "Help more children understand what happened and explain it clearly",
-                reward: { icon: <Gift size={20} />, title: "Unlock your Story Pack", desc: "Visual supports, retell tools, and parent prompts" },
+                task: "Reach 100 points",
+                impact: "Keep sharing, referring friends, and checking in daily for streak bonuses",
+                reward: { icon: <Gift size={20} />, title: "Champion tier + 75 Story Coins", desc: "Story Coins to spend on in-app rewards at launch" },
                 invites: 3,
               },
               {
-                task: "Invite 5 families",
-                impact: "Help build a community where children feel understood and confident",
-                reward: { icon: <Headphones size={20} />, title: "Listen to a private Dan & Daria episode", desc: "Exclusive content only for Launch Team members" },
+                task: "Reach 175 points",
+                impact: "Your referrals and engagement are making a real difference for families",
+                reward: { icon: <Headphones size={20} />, title: "Lock in founder pricing for life", desc: "$5.99/month forever instead of $7.99" },
                 invites: 5,
               },
               {
-                task: "Invite 10 families",
-                impact: "Help more children feel successful when expressing their ideas",
-                reward: { icon: <Crown size={20} />, title: "Lock in founder pricing for life", desc: "$5.99/month forever", subdesc: "Only for the first 100 families" },
+                task: "Reach 325 points",
+                impact: "You're in the top tier — helping more children get tools built for them",
+                reward: { icon: <Crown size={20} />, title: "Hero status + 200 Story Coins", desc: "VIP Beta access + bonus coin drop", subdesc: "First 50 to reach 600 pts become Founding Elite" },
                 invites: 10,
               },
             ];
@@ -835,7 +835,7 @@ const StoryBuilders = () => {
             </h2>
             <div className="bg-lavender rounded-xl border border-border p-6 text-left mb-5">
               <p className="text-[14px] md:text-[15px] text-foreground leading-[1.7] italic">
-                "I just came across an app called StoryBuilders and have been trying to spread the word about it. It's being built to help kids feel more confident understanding and explaining their ideas. Thought of you. You can join the waitlist here."
+                "I just came across an app called Story Pros and have been trying to spread the word about it. It's being built to help kids feel more confident understanding and explaining their ideas. Thought of you. You can join the waitlist here."
               </p>
             </div>
             {wl.joined && wl.referralLink ? (
