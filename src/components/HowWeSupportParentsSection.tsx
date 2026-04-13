@@ -33,7 +33,7 @@ const cards = [
   {
     title: "Educational App",
     description: "Help your child build language skills through interactive storytelling. Designed by a team of experts specifically for children with DLD. Coming soon!",
-    link: "Join the App Waitlist",
+    link: "Join Story Pros Waitlist",
     href: "/storybuilders",
   },
 ];

@@ -106,7 +106,7 @@ const AdminStoryBuilders = () => {
 
     const element = document.createElement("a");
     element.setAttribute("href", "data:text/csv;charset=utf-8," + encodeURIComponent(csv));
-    element.setAttribute("download", `storypros-waitlist-${Date.now()}.csv`);
+    element.setAttribute("download", `story-pros-waitlist-${Date.now()}.csv`);
     element.style.display = "none";
     document.body.appendChild(element);
     element.click();

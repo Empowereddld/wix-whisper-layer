@@ -151,7 +151,7 @@ function getEmailTemplate(
                   <li>Legend Tier (10 referrals)</li>
                   <li>Founding Elite (20 referrals)</li>
                 </ul>
-                <a href="https://storybuilders.app/dashboard" style="${buttonStyles}">View Your Progress</a>
+                <a href="https://storypros.app/dashboard" style="${buttonStyles}">View Your Progress</a>
                 <p style="${baseStyles}">
                   The Story Pros Team
                 </p>
@@ -189,7 +189,7 @@ function getEmailTemplate(
                   As a ${data.tier_name}, you now have access to exclusive benefits and early features.
                   We'll be reaching out soon with all the details about your special rewards.
                 </p>
-                <a href="https://storybuilders.app/dashboard" style="${buttonStyles}">View Your Rewards</a>
+                <a href="https://storypros.app/dashboard" style="${buttonStyles}">View Your Rewards</a>
                 <p style="${baseStyles}">
                   Thank you for being an amazing part of our community!
                 </p>
@@ -309,7 +309,7 @@ function getEmailTemplate(
                   Share your referral code with 1-2 more friends and you'll unlock amazing benefits.
                   Your friends get early access, and you get exclusive rewards. Win-win!
                 </p>
-                <a href="https://storybuilders.app/dashboard?action=share" style="${buttonStyles}">Share Your Code</a>
+                <a href="https://storypros.app/dashboard?action=share" style="${buttonStyles}">Share Your Code</a>
                 <p style="${baseStyles}">
                   The Story Pros Team
                 </p>
@@ -413,7 +413,7 @@ Deno.serve(async (req) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "Story Pros <noreply@storybuilders.app>",
+        from: "Story Pros <noreply@storypros.app>",
         to,
         subject,
         html,

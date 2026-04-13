@@ -24,7 +24,7 @@ async function sendWelcomeEmail(
   try {
     const emailFunctionUrl = `${supabaseUrl}/functions/v1/send-waitlist-email`;
     const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-    const appUrl = "https://storybuilders.app"; // Replace with your actual domain
+    const appUrl = "https://storypros.app"; // Replace with your actual domain
 
     const verificationLink = `${appUrl}/verify?token=${verificationToken}`;
 

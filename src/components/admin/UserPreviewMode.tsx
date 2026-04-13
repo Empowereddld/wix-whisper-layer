@@ -324,7 +324,7 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
                 </h3>
                 <div className="flex gap-2">
                   <div className="flex-1 bg-muted border border-border rounded-lg px-4 py-3 font-mono text-sm text-foreground">
-                    https://storypros.co/?ref=SARAH_M_2847
+                    https://storypros.app/?ref=SARAH_M_2847
                   </div>
                   <Button
                     className="bg-primary hover:bg-primary/90 text-primary-foreground"

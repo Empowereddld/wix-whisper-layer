@@ -51,7 +51,7 @@ const TIER_REWARDS: TierReward[] = [
     tier: 0,
     rewardId: "tier_0_updates",
     name: "Development Updates",
-    description: "Behind-the-scenes updates on Story Builders development",
+    description: "Behind-the-scenes updates on Story Pros development",
     icon: "📬",
     earnedVia: "Auto-claimed on join",
     claimType: "auto",

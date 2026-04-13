@@ -47,7 +47,7 @@ function getSuccessHTML(email: string): string {
           <p>Congratulations! Your email has been verified.</p>
           <div class="email-info">${email}</div>
           <p>You've secured your spot on our exclusive waitlist!</p>
-          <a href="https://wix-whisper-layer.lovable.app/storybuilders" class="button">Go to Dashboard</a>
+          <a href="https://storypros.app/dashboard" class="button">Go to Dashboard</a>
         </div>
         <div class="footer">
           <p>Thank you for joining Story Pros!</p>
@@ -96,7 +96,7 @@ function getErrorHTML(reason: string = "Invalid or expired token"): string {
         <div class="content">
           <p>We couldn't verify your email address.</p>
           <div class="reason"><strong>Reason:</strong> ${reason}</div>
-          <a href="https://wix-whisper-layer.lovable.app/storybuilders" class="button">Return to Story Pros</a>
+          <a href="https://storypros.app" class="button">Return to Story Pros</a>
         </div>
         <div class="footer">
           <p>Questions? Contact us at hello@empowereddld.com</p>
