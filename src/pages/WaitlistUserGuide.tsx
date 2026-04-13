@@ -221,7 +221,7 @@ const WaitlistUserGuide = () => {
                       </div>
                     )}
                   </div>
-                  <p className="text-[#5C4033] ml-16">{TIER_REWARDS[index]}</p>
+                  <p className="text-[#5C4033] ml-16">{TIER_REWARDS[index]?.name}: {TIER_REWARDS[index]?.description}</p>
                 </motion.div>
               ))}
             </div>
