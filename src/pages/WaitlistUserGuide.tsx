@@ -335,10 +335,6 @@ const WaitlistUserGuide = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {[
                 {
-                  title: "Position Card",
-                  description: "Your current rank and queue position — visible to everyone on the leaderboard!",
-                },
-                {
                   title: "Tier Progress Bar",
                   description: "Visual progress toward your next tier. See exactly how many points you need.",
                 },
@@ -347,24 +343,20 @@ const WaitlistUserGuide = () => {
                   description: "Count of people you've referred and verification status. See who's joined via you.",
                 },
                 {
-                  title: "Badges & Achievements",
-                  description: "Earn badges for completing milestones. Show them off to your community!",
+                  title: "Reward Journey",
+                  description: "See all 6 tiers and which rewards you've unlocked in a visual progress tracker.",
                 },
                 {
-                  title: "Community Milestones",
-                  description: "Track collective progress toward group rewards. Everyone benefits when we hit targets.",
+                  title: "Share & Follow",
+                  description: "Share your referral link and follow our social accounts to earn bonus points.",
                 },
                 {
-                  title: "Activity Feed",
-                  description: "Real-time updates of your actions and points earned. Stay motivated!",
+                  title: "Interactive Story Preview",
+                  description: "Tier 4+ members get an exclusive sneak peek at the Story Pros experience.",
                 },
                 {
-                  title: "Leaderboard",
-                  description: "See who's leading. Celebrate top supporters and get inspired to climb higher.",
-                },
-                {
-                  title: "Streak Counter",
-                  description: "Your daily visit streak. How many days can you keep it going?",
+                  title: "Your Impact",
+                  description: "See how many families discovered Story Pros because of your referrals.",
                 },
               ].map((item, idx) => (
                 <motion.div
