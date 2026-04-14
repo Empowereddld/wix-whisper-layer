@@ -14,12 +14,12 @@ interface Tier {
 }
 
 const TIERS: Tier[] = [
-  { name: "Storyteller", points: 0, icon: "📖", reward: "Starter Access" },
-  { name: "Advocate", points: 35, icon: "🗣️", reward: "Early Features" },
-  { name: "Champion", points: 85, icon: "🏆", reward: "Premium Badge" },
-  { name: "Hero", points: 135, icon: "🦸", reward: "Custom Profile" },
-  { name: "Legend", points: 260, icon: "👑", reward: "Exclusive Updates" },
-  { name: "Founding Elite", points: 510, icon: "💎", reward: "VIP Access" },
+  { name: "Tier 1", points: 0, icon: "📖", reward: "Starter Access" },
+  { name: "Tier 2", points: 35, icon: "🗣️", reward: "Early Features" },
+  { name: "Tier 3", points: 85, icon: "🏆", reward: "Premium Badge" },
+  { name: "Tier 4", points: 135, icon: "🦸", reward: "Custom Profile" },
+  { name: "Tier 5", points: 260, icon: "👑", reward: "Exclusive Updates" },
+  { name: "Tier 6", points: 510, icon: "💎", reward: "VIP Access" },
 ];
 
 const TierProgressBar = ({

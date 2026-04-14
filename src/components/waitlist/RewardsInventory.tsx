@@ -134,12 +134,12 @@ const COIN_PACKS: CoinPack[] = [
 ];
 
 const BADGES = [
-  { id: "storyteller", name: "Storyteller", tier: 0, icon: "📖" },
-  { id: "advocate", name: "Advocate", tier: 1, icon: "📢" },
-  { id: "champion", name: "Champion", tier: 2, icon: "🎯" },
-  { id: "hero", name: "Hero", tier: 3, icon: "⚡" },
-  { id: "legend", name: "Legend", tier: 4, icon: "👑" },
-  { id: "founding_elite", name: "Founding Elite", tier: 5, icon: "💫" },
+  { id: "storyteller", name: "Tier 1", tier: 0, icon: "📖" },
+  { id: "advocate", name: "Tier 2", tier: 1, icon: "📢" },
+  { id: "champion", name: "Tier 3", tier: 2, icon: "🎯" },
+  { id: "hero", name: "Tier 4", tier: 3, icon: "⚡" },
+  { id: "legend", name: "Tier 5", tier: 4, icon: "👑" },
+  { id: "founding_elite", name: "Tier 6", tier: 5, icon: "💫" },
   { id: "early_bird", name: "Early Bird", tier: 0, icon: "🐦" },
   { id: "social_butterfly", name: "Social Butterfly", tier: 1, icon: "🦋" },
 ];
@@ -253,7 +253,7 @@ export default function RewardsInventory({
                     status={status}
                     requirement={
                       isLocked
-                        ? `Reach Tier ${reward.tier + 1} (${reward.tier === 0 ? "Storyteller" : reward.tier === 1 ? "Advocate" : reward.tier === 2 ? "Champion" : reward.tier === 3 ? "Hero" : reward.tier === 4 ? "Legend" : "Founding Elite"})`
+                        ? `Reach Tier ${reward.tier + 1}`
                         : undefined
                     }
                     onClaim={() => handleClaimReward(reward.rewardId)}

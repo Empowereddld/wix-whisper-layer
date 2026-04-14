@@ -119,10 +119,10 @@ const BADGE_NAMES: Record<string, string> = {
   welcome: "Welcome",
   first_referral: "First Referral",
   social_butterfly: "Social Butterfly",
-  champion: "Champion",
+  champion: "Tier 3",
   streak_master: "Streak Master",
   super_referrer: "Super Referrer",
-  founding_elite: "Founding Elite",
+  founding_elite: "Tier 6",
 };
 
 const BADGE_COLORS: Record<string, string> = {
@@ -427,7 +427,7 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
                 <Card className="bg-background border border-border rounded-2xl shadow-sm p-6">
                   <div className="flex items-center justify-between mb-4">
                     <h3 className="font-sans font-bold text-foreground">Interactive Story Preview</h3>
-                    <Badge className="bg-[#8BA888]/20 text-[#8BA888]">Hero Exclusive</Badge>
+                    <Badge className="bg-[#8BA888]/20 text-[#8BA888]">Tier 4 Exclusive</Badge>
                   </div>
                   <p className="text-sm text-muted-foreground mb-4">
                     As a Hero tier member, you get an exclusive sneak peek at the Story Pros experience. Try an interactive story below!
@@ -452,7 +452,7 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
                   <div className="absolute inset-0 bg-white/80 backdrop-blur-sm z-10 flex flex-col items-center justify-center">
                     <Lock className="h-8 w-8 text-muted-foreground mb-2" />
                     <p className="font-semibold text-foreground">Interactive Preview</p>
-                    <p className="text-sm text-muted-foreground">Reach Hero tier (175 pts) to unlock</p>
+                    <p className="text-sm text-muted-foreground">Reach Tier 4 (175 pts) to unlock</p>
                   </div>
                   <div className="opacity-20">
                     <h3 className="font-sans font-bold text-foreground mb-4">Interactive Story Preview</h3>
@@ -590,8 +590,8 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
                     <div className="space-y-3">
                       <div className="bg-[#f3ebf8] rounded-lg p-3">
                         <div className="flex justify-between items-center mb-1">
-                          <span className="text-sm font-medium text-foreground">
-                            Reach Champion Tier (100 pts)
+                           <span className="text-sm font-medium text-foreground">
+                            Reach Tier 3 (100 pts)
                           </span>
                         </div>
                         <p className="text-sm font-bold text-[#8861d4]">
@@ -600,9 +600,9 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
                       </div>
                       <div className="bg-[#f3ebf8] rounded-lg p-3">
                         <div className="flex justify-between items-center mb-1">
-                          <span className="text-sm font-medium text-foreground">
-                            Reach Legend Tier (325 pts)
-                          </span>
+                           <span className="text-sm font-medium text-foreground">
+                             Reach Tier 5 (325 pts)
+                           </span>
                         </div>
                         <p className="text-sm font-bold text-[#8861d4]">
                           +{COIN_DROPS[4]} coins

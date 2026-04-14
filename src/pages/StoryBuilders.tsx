@@ -30,12 +30,12 @@ import {
 
 /* ─── Milestones ─── */
 const milestones = [
-  { invites: 0, label: "Storyteller (0 pts)", reward: "Behind-the-scenes updates on Story Pros development as it's being built" },
-  { invites: 1, label: "Advocate (40 pts)", reward: "Early access on launch day — get into Story Pros before the general public" },
-  { invites: 3, label: "Champion (100 pts)", reward: "75 Story Coins dropped into your account to spend on in-app extras at launch" },
-  { invites: 5, label: "Hero (175 pts)", reward: "Founder pricing at $5.99/month for life — 25% off the regular $7.99 price, permanently" },
-  { invites: 10, label: "Legend (325 pts)", reward: "VIP Beta access to test the app before launch + 200 bonus Story Coins + Legend badge" },
-  { invites: -1, label: "Founding Elite (600 pts)", reward: "Named in the Story Pros founder credits forever — limited to the first 50 members who reach this tier" },
+  { invites: 0, label: "Tier 1 (0 pts)", reward: "Behind-the-scenes updates on Story Pros development as it's being built" },
+  { invites: 1, label: "Tier 2 (40 pts)", reward: "Early access on launch day — get into Story Pros before the general public" },
+  { invites: 3, label: "Tier 3 (100 pts)", reward: "75 Story Coins dropped into your account to spend on in-app extras at launch" },
+  { invites: 5, label: "Tier 4 (175 pts)", reward: "Founder pricing at $5.99/month for life — 25% off the regular $7.99 price, permanently" },
+  { invites: 10, label: "Tier 5 (325 pts)", reward: "VIP Beta access to test the app before launch + 200 bonus Story Coins" },
+  { invites: -1, label: "Tier 6 (600 pts)", reward: "Named in the Story Pros founder credits forever — limited to the first 50 members who reach this tier" },
 ];
 
 const COLLECTIVE_GOAL = 4000;
@@ -649,33 +649,33 @@ const StoryBuilders = () => {
           {(() => {
             const progressSteps: ProgressStep[] = [
               {
-                task: "Storyteller — 0 points",
+                task: "Tier 1 — 0 points",
                 impact: "You earned 10 points just for signing up. Complete your profile (+10 pts), verify your email (+5 pts), and follow us on Instagram, Facebook, or YouTube (+8 pts each) to start climbing.",
                 reward: { icon: <Sparkles size={20} />, title: "You're officially on the Launch Team", desc: "Get behind-the-scenes updates on Story Pros development and be first to hear about new features" },
                 invites: 0,
               },
               {
-                task: "Advocate — 40 points",
+                task: "Tier 2 — 40 points",
                 impact: "Share your referral link with other families (+25 pts per signup), post on social media (+3 pts per share), and check in daily (+2 pts with streak bonuses up to +50). You can reach this tier without any referrals.",
-                reward: { icon: <Rocket size={20} />, title: "Early access when Story Pros launches", desc: "You'll get into the full app before the general public on launch day — plus your Advocate badge", subdesc: "Tip: Profile + email + 3 social follows = 49 pts — that's Advocate right there" },
+                reward: { icon: <Rocket size={20} />, title: "Early access when Story Pros launches", desc: "You'll get into the full app before the general public on launch day — plus your Tier 2 badge", subdesc: "Tip: Profile + email + 3 social follows = 49 pts — that's Tier 2 right there" },
                 invites: 1,
               },
               {
-                task: "Champion — 100 points",
+                task: "Tier 3 — 100 points",
                 impact: "Keep referring families, sharing your link, and building your daily check-in streak. A 7-day streak earns +10 bonus points, and a 14-day streak earns +20. Every referral is worth 25 points.",
-                reward: { icon: <Gift size={20} />, title: "75 Story Coins dropped into your account", desc: "Story Coins are in-app currency you can spend on upgrades and extras when the app launches — plus your Champion badge" },
+                reward: { icon: <Gift size={20} />, title: "75 Story Coins dropped into your account", desc: "Story Coins are in-app currency you can spend on upgrades and extras when the app launches — plus your Tier 3 badge" },
                 invites: 3,
               },
               {
-                task: "Hero — 175 points",
+                task: "Tier 4 — 175 points",
                 impact: "You're making a real difference for families navigating DLD, ADHD, and Dyslexia. Your referrals bring more children into a tool designed specifically for how they think and communicate.",
                 reward: { icon: <Headphones size={20} />, title: "Founder pricing locked in for life", desc: "$5.99/month forever instead of the regular $7.99 — a permanent 25% discount as long as your subscription stays active", subdesc: "This reward never expires. Once you earn it, it's yours" },
                 invites: 5,
               },
               {
-                task: "Legend — 325 points",
+                task: "Tier 5 — 325 points",
                 impact: "You're among our most dedicated supporters. At this level, you've likely referred several families, built a strong streak, and consistently engaged with the community.",
-                reward: { icon: <Crown size={20} />, title: "VIP Beta access + 200 Story Coins", desc: "Test Story Pros before it officially launches — give feedback that shapes the final product, plus a 200 coin bonus drop and your Legend badge", subdesc: "First 50 members to reach 600 pts earn Founding Elite status — named in the app credits forever" },
+                reward: { icon: <Crown size={20} />, title: "VIP Beta access + 200 Story Coins", desc: "Test Story Pros before it officially launches — give feedback that shapes the final product, plus a 200 coin bonus drop and your Tier 5 badge", subdesc: "First 50 members to reach 600 pts earn Tier 6 status — named in the app credits forever" },
                 invites: 10,
               },
             ];
@@ -796,13 +796,13 @@ const StoryBuilders = () => {
                     Our Collective Goal
                   </h2>
                   <p className="text-[15px] md:text-[16px] text-muted-foreground leading-[1.7] mb-8">
-                    If we reach 4,000 storytellers, we will create a brand new Dan and Daria
+                    If we reach 4,000 supporters, we will create a brand new Dan and Daria
                     story together. The community will help choose the theme, and this story
                     will become the fifth book in our Living Life with DLD book series.
                   </p>
                   <div className="bg-background/60 rounded-xl border border-border p-6">
                     <p className="text-[14px] font-semibold text-foreground mb-3">
-                      {displayCount.toLocaleString()} storyteller{displayCount !== 1 ? "s" : ""} and counting.{" "}
+                      {displayCount.toLocaleString()} supporter{displayCount !== 1 ? "s" : ""} and counting.{" "}
                       <span className="text-muted-foreground font-normal">
                         {remaining > 0 ? `${remaining.toLocaleString()} to go.` : "Goal reached! 🎉"}
                       </span>

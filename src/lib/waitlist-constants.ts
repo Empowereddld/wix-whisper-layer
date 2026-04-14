@@ -1,19 +1,19 @@
 export const TIER_NAMES = [
-  "Storyteller",
-  "Advocate",
-  "Champion",
-  "Hero",
-  "Legend",
-  "Founding Elite",
+  "Tier 1",
+  "Tier 2",
+  "Tier 3",
+  "Tier 4",
+  "Tier 5",
+  "Tier 6",
 ] as const;
 
 export const TIER_COLORS = [
-  "#8B7355",   // Storyteller - warm brown
-  "#D4920B",   // Advocate - amber
-  "#C67B5C",   // Champion - terracotta
-  "#8BA888",   // Hero - sage green
-  "#C4A0A0",   // Legend - dusty rose
-  "#3D2B1F",   // Founding Elite - dark chocolate
+  "#8B7355",   // Tier 1 - warm brown
+  "#D4920B",   // Tier 2 - amber
+  "#C67B5C",   // Tier 3 - terracotta
+  "#8BA888",   // Tier 4 - sage green
+  "#C4A0A0",   // Tier 5 - dusty rose
+  "#3D2B1F",   // Tier 6 - dark chocolate
 ] as const;
 
 export const TIER_THRESHOLDS = [0, 40, 100, 175, 325, 600] as const;
