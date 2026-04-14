@@ -18,6 +18,7 @@ import {
   Check,
   Zap,
   Lock,
+  Instagram,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -37,10 +38,11 @@ import {
   REPEATABLE_POINTS,
   DAILY_CAPS,
   COIN_DROPS,
-  COMMUNITY_MILESTONES,
   TIER_REWARDS,
+  SOCIAL_LINKS,
 } from "@/lib/waitlist-constants";
 import RewardsInventory from "@/components/waitlist/RewardsInventory";
+import storyPreviewBg from "@/assets/story-preview-bg.png";
 
 interface UserPreviewModeProps {
   onClose: () => void;
@@ -50,81 +52,29 @@ interface TierData {
   name: string;
   points: number;
   referrals: number;
-  badges: string[];
 }
 
 const TIER_PREVIEW_DATA: Record<number, TierData> = {
-  0: {
-    name: "Sarah M.",
-    points: 10,
-    referrals: 0,
-    badges: ["welcome"],
-  },
-  1: {
-    name: "Sarah M.",
-    points: 48,
-    referrals: 1,
-    badges: ["welcome", "first_referral"],
-  },
-  2: {
-    name: "Sarah M.",
-    points: 115,
-    referrals: 3,
-    badges: ["welcome", "first_referral", "social_butterfly"],
-  },
-  3: {
-    name: "Sarah M.",
-    points: 195,
-    referrals: 5,
-    badges: ["welcome", "first_referral", "social_butterfly", "champion"],
-  },
-  4: {
-    name: "Sarah M.",
-    points: 358,
-    referrals: 10,
-    badges: [
-      "welcome",
-      "first_referral",
-      "social_butterfly",
-      "champion",
-      "super_referrer",
-    ],
-  },
-  5: {
-    name: "Sarah M.",
-    points: 647,
-    referrals: 20,
-    badges: [
-      "welcome",
-      "first_referral",
-      "social_butterfly",
-      "champion",
-      "super_referrer",
-      "founding_elite",
-    ],
-  },
+  0: { name: "Sarah M.", points: 10, referrals: 0 },
+  1: { name: "Sarah M.", points: 48, referrals: 1 },
+  2: { name: "Sarah M.", points: 115, referrals: 3 },
+  3: { name: "Sarah M.", points: 195, referrals: 5 },
+  4: { name: "Sarah M.", points: 358, referrals: 10 },
+  5: { name: "Sarah M.", points: 647, referrals: 20 },
 };
 
-const BADGE_NAMES: Record<string, string> = {
-  welcome: "Welcome",
-  first_referral: "First Referral",
-  social_butterfly: "Social Butterfly",
-  champion: "Tier 3",
-  super_referrer: "Super Referrer",
-  founding_elite: "Tier 6",
-};
-
-const BADGE_COLORS: Record<string, string> = {
-  welcome: "bg-primary/20 text-primary",
-  first_referral: "bg-primary/80 text-primary-foreground",
-  social_butterfly: "bg-emerald-600 text-white",
-  champion: "bg-amber-500 text-white",
-  super_referrer: "bg-primary/60 text-white",
-  founding_elite: "bg-deep-purple text-white",
-};
+const TIER_REWARD_COLORS = [
+  { bg: "rgba(136, 97, 212, 0.08)", border: "rgba(136, 97, 212, 0.25)", accent: "#8861d4" },
+  { bg: "rgba(136, 97, 212, 0.12)", border: "rgba(136, 97, 212, 0.3)", accent: "#7b52c9" },
+  { bg: "rgba(99, 179, 141, 0.1)", border: "rgba(99, 179, 141, 0.3)", accent: "#63b38d" },
+  { bg: "rgba(212, 146, 11, 0.1)", border: "rgba(212, 146, 11, 0.3)", accent: "#d4920b" },
+  { bg: "rgba(59, 31, 89, 0.1)", border: "rgba(59, 31, 89, 0.3)", accent: "#3b1f59" },
+  { bg: "rgba(212, 175, 55, 0.12)", border: "rgba(212, 175, 55, 0.35)", accent: "#d4af37" },
+];
 
 const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
   const [selectedTier, setSelectedTier] = useState(0);
+  const [followedPlatforms, setFollowedPlatforms] = useState<Record<string, boolean>>({});
   const tierData = TIER_PREVIEW_DATA[selectedTier];
   const currentTierName = getTierName(selectedTier);
   const nextTierThreshold = TIER_THRESHOLDS[selectedTier + 1];
@@ -138,7 +88,10 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
       ? (pointsInTier / pointsNeeded) * 100
       : 100;
 
-  const allBadges = Object.keys(BADGE_NAMES);
+  const handleFollowClick = (platform: string, url: string) => {
+    window.open(url, "_blank");
+    setFollowedPlatforms((prev) => ({ ...prev, [platform]: true }));
+  };
 
   return (
     <AnimatePresence>
@@ -210,7 +163,6 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
             <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
-                  {/* Profile Icon */}
                   <div className="w-12 h-12 rounded-full bg-[#8861d4] flex items-center justify-center text-white font-bold text-lg">
                     {tierData.name.charAt(0)}
                   </div>
@@ -224,7 +176,6 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
                   </div>
                 </div>
                 <div className="flex items-center gap-4">
-                  {/* Coin Balance */}
                   <div className="flex items-center gap-2 bg-[#f3ebf8] px-4 py-2 rounded-full">
                     <span className="text-lg">🪙</span>
                     <span className="font-bold text-[#8861d4]">
@@ -232,7 +183,6 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
                     </span>
                     <span className="text-sm text-[#3b1f59]">coins</span>
                   </div>
-                  {/* Inventory Button */}
                   <Button
                     className="bg-[#8861d4] hover:bg-[#7551c4] text-white flex items-center gap-2"
                     onClick={() => {
@@ -243,7 +193,6 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
                     <Gift className="h-4 w-4" />
                     My Rewards
                   </Button>
-                  {/* Profile Icon Button */}
                   <div className="w-10 h-10 rounded-full border-2 border-[#dedede] bg-gray-100 flex items-center justify-center cursor-pointer hover:border-[#8861d4] transition-colors">
                     <User className="h-5 w-5 text-gray-500" />
                   </div>
@@ -338,6 +287,94 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
               </motion.div>
             </div>
 
+            {/* Tier Rewards Progress */}
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.35 }}
+            >
+              <Card className="bg-background border border-border rounded-2xl shadow-sm p-6 relative overflow-hidden">
+                {/* Low opacity background image */}
+                <div
+                  className="absolute inset-0 opacity-[0.04] bg-center bg-no-repeat bg-contain pointer-events-none"
+                  style={{ backgroundImage: `url(${storyPreviewBg})` }}
+                />
+                <div className="relative z-10">
+                  <h3 className="font-sans font-bold text-foreground mb-5">
+                    Your Reward Journey
+                  </h3>
+                  {/* Vertical progress line */}
+                  <div className="relative">
+                    <div className="absolute left-5 top-0 bottom-0 w-0.5 bg-border" />
+                    {/* Filled progress */}
+                    <div
+                      className="absolute left-5 top-0 w-0.5 bg-primary transition-all duration-700"
+                      style={{ height: `${((selectedTier + 1) / TIER_REWARDS.length) * 100}%` }}
+                    />
+
+                    <div className="space-y-1">
+                      {TIER_REWARDS.map((reward, idx) => {
+                        const isUnlocked = selectedTier >= idx;
+                        const isCurrent = selectedTier === idx;
+                        const colors = TIER_REWARD_COLORS[idx];
+
+                        return (
+                          <div
+                            key={idx}
+                            className="relative flex items-center gap-4 py-2.5 px-4 rounded-xl transition-all duration-300"
+                            style={{
+                              backgroundColor: isUnlocked ? colors.bg : "transparent",
+                              borderLeft: isCurrent ? `3px solid ${colors.accent}` : "3px solid transparent",
+                            }}
+                          >
+                            {/* Progress dot */}
+                            <div
+                              className="relative z-10 w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 transition-all duration-300"
+                              style={{
+                                backgroundColor: isUnlocked ? colors.accent : "#e5e5e5",
+                                border: isCurrent ? `2px solid ${colors.accent}` : "none",
+                                boxShadow: isCurrent ? `0 0 12px ${colors.accent}40` : "none",
+                              }}
+                            >
+                              {isUnlocked ? (
+                                <Check className="h-4 w-4 text-white" />
+                              ) : (
+                                <Lock className="h-3.5 w-3.5 text-gray-400" />
+                              )}
+                            </div>
+
+                            {/* Content */}
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center gap-2">
+                                <span className="text-xs font-semibold uppercase tracking-wide" style={{ color: isUnlocked ? colors.accent : "#9ca3af" }}>
+                                  {TIER_NAMES[idx]}
+                                </span>
+                                <span className="text-xs text-muted-foreground">
+                                  {TIER_THRESHOLDS[idx]} pts
+                                </span>
+                              </div>
+                              <p className={`text-sm font-medium ${isUnlocked ? "text-foreground" : "text-muted-foreground"}`}>
+                                {reward.name}
+                              </p>
+                              <p className="text-xs text-muted-foreground line-clamp-1">
+                                {reward.description}
+                              </p>
+                            </div>
+
+                            {/* Status */}
+                            {isUnlocked && (
+                              <Badge className="bg-emerald-500/15 text-emerald-600 text-xs flex-shrink-0">
+                                Unlocked
+                              </Badge>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+              </Card>
+            </motion.div>
 
             {/* Interactive Story Preview - Hero+ tier */}
             {selectedTier >= 3 && (
@@ -345,18 +382,18 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
                 <Card className="bg-background border border-border rounded-2xl shadow-sm p-6">
                   <div className="flex items-center justify-between mb-4">
                     <h3 className="font-sans font-bold text-foreground">Interactive Story Preview</h3>
-                    <Badge className="bg-[#8BA888]/20 text-[#8BA888]">Tier 4 Exclusive</Badge>
+                    <Badge className="bg-primary/20 text-primary">Tier 4 Exclusive</Badge>
                   </div>
                   <p className="text-sm text-muted-foreground mb-4">
                     As a Hero tier member, you get an exclusive sneak peek at the Story Pros experience. Try an interactive story below!
                   </p>
-                  <div className="rounded-xl overflow-hidden border border-border" style={{ aspectRatio: "16/9" }}>
+                  <div className="rounded-xl overflow-hidden border border-border">
                     <iframe
                       src="https://storyprospreview.lovable.app/preview/story/11111111-1111-1111-1111-111111111111"
-                      className="w-full h-full"
+                      className="w-full"
                       title="Story Pros Interactive Preview"
                       allow="fullscreen"
-                      style={{ minHeight: "500px" }}
+                      style={{ height: "700px" }}
                     />
                   </div>
                 </Card>
@@ -370,11 +407,13 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
                   <div className="absolute inset-0 bg-white/80 backdrop-blur-sm z-10 flex flex-col items-center justify-center">
                     <Lock className="h-8 w-8 text-muted-foreground mb-2" />
                     <p className="font-semibold text-foreground">Interactive Preview</p>
-                    <p className="text-sm text-muted-foreground">Reach Tier 4 (175 pts) to unlock</p>
+                    <p className="text-sm text-muted-foreground">Reach Tier 4 ({TIER_THRESHOLDS[3]} pts) to unlock</p>
                   </div>
                   <div className="opacity-20">
                     <h3 className="font-sans font-bold text-foreground mb-4">Interactive Story Preview</h3>
-                    <div className="rounded-xl bg-muted h-64" />
+                    <div className="rounded-xl overflow-hidden" style={{ height: "400px" }}>
+                      <img src={storyPreviewBg} alt="" className="w-full h-full object-cover" />
+                    </div>
                   </div>
                 </Card>
               </motion.div>
@@ -431,14 +470,59 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
                     <Share2 className="h-4 w-4" />
                     <span className="hidden sm:inline">WhatsApp</span>
                   </Button>
-                  <Button className="bg-[#0A8FDC] hover:bg-[#0971F2] text-white flex items-center gap-2">
-                    <LinkIcon className="h-4 w-4" />
-                    <span className="hidden sm:inline">LinkedIn</span>
+                  <Button className="bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 hover:opacity-90 text-white flex items-center gap-2">
+                    <Instagram className="h-4 w-4" />
+                    <span className="hidden sm:inline">Instagram</span>
                   </Button>
                   <Button className="bg-primary hover:bg-primary/90 text-primary-foreground flex items-center gap-2">
                     <Copy className="h-4 w-4" />
                     <span className="hidden sm:inline">Copy</span>
                   </Button>
+                </div>
+              </Card>
+            </motion.div>
+
+            {/* Follow Us Section */}
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.55 }}
+            >
+              <Card className="bg-background border border-border rounded-2xl shadow-sm p-6">
+                <h3 className="font-sans font-bold text-foreground mb-2">
+                  Follow Us & Earn Points
+                </h3>
+                <p className="text-sm text-muted-foreground mb-4">
+                  Follow us on social media to earn bonus points per platform!
+                </p>
+                <div className="grid grid-cols-3 gap-3">
+                  {[
+                    { id: "instagram", label: "Instagram", icon: Instagram, color: "bg-gradient-to-r from-purple-500 via-pink-500 to-red-500", url: SOCIAL_LINKS.INSTAGRAM, points: ONETIME_POINTS.FOLLOW_INSTAGRAM },
+                    { id: "facebook", label: "Facebook", icon: Facebook, color: "bg-[#1877F2]", url: SOCIAL_LINKS.FACEBOOK, points: ONETIME_POINTS.FOLLOW_FACEBOOK },
+                    { id: "youtube", label: "YouTube", icon: () => <span className="text-lg">▶️</span>, color: "bg-red-600", url: SOCIAL_LINKS.YOUTUBE, points: ONETIME_POINTS.SUBSCRIBE_YOUTUBE },
+                  ].map((social) => {
+                    const isFollowed = followedPlatforms[social.id];
+                    const Icon = social.icon;
+                    return (
+                      <Button
+                        key={social.id}
+                        onClick={() => handleFollowClick(social.id, social.url)}
+                        disabled={isFollowed}
+                        className={`h-12 rounded-xl flex items-center justify-center gap-2 text-white font-medium transition-all ${
+                          isFollowed ? "bg-emerald-500/20 border border-emerald-500/50 text-emerald-600" : `${social.color} hover:opacity-90`
+                        } disabled:opacity-100`}
+                      >
+                        {isFollowed ? (
+                          <Check className="h-5 w-5 text-emerald-500" />
+                        ) : (
+                          <Icon className="h-5 w-5" />
+                        )}
+                        <span className="hidden sm:inline text-sm">
+                          {isFollowed ? `+${social.points} pts ✓` : `${social.label} (+${social.points})`}
+                        </span>
+                      </Button>
+                    );
+                  })}
                 </div>
               </Card>
             </motion.div>
@@ -509,7 +593,7 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
                       <div className="bg-[#f3ebf8] rounded-lg p-3">
                         <div className="flex justify-between items-center mb-1">
                            <span className="text-sm font-medium text-foreground">
-                            Reach Tier 3 (100 pts)
+                            Reach Tier 3 ({TIER_THRESHOLDS[2]} pts)
                           </span>
                         </div>
                         <p className="text-sm font-bold text-[#8861d4]">
@@ -519,7 +603,7 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
                       <div className="bg-[#f3ebf8] rounded-lg p-3">
                         <div className="flex justify-between items-center mb-1">
                            <span className="text-sm font-medium text-foreground">
-                             Reach Tier 5 (325 pts)
+                             Reach Tier 5 ({TIER_THRESHOLDS[4]} pts)
                            </span>
                         </div>
                         <p className="text-sm font-bold text-[#8861d4]">
@@ -533,7 +617,6 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
                   <div>
                     <h4 className="font-semibold text-[#3b1f59] mb-4">Earn Points</h4>
                     <div className="space-y-2 text-sm">
-                      {/* Sign up */}
                       <div className="flex justify-between">
                         <span className={selectedTier >= 0 ? "text-emerald-600 flex items-center gap-1" : "text-foreground"}>
                           {selectedTier >= 0 && <Check className="h-3 w-3" />}
@@ -544,7 +627,6 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
                         </span>
                       </div>
 
-                      {/* Verify email */}
                       <div className="flex justify-between">
                         <span className={selectedTier >= 1 ? "text-emerald-600 flex items-center gap-1" : "text-foreground"}>
                           {selectedTier >= 1 && <Check className="h-3 w-3" />}
@@ -555,7 +637,6 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
                         </span>
                       </div>
 
-                      {/* Complete profile */}
                       <div className="flex justify-between">
                         <span className={selectedTier >= 1 ? "text-emerald-600 flex items-center gap-1" : "text-foreground"}>
                           {selectedTier >= 1 && <Check className="h-3 w-3" />}
@@ -566,7 +647,6 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
                         </span>
                       </div>
 
-                      {/* Follow Instagram */}
                       <div className="flex justify-between">
                         <span className={selectedTier >= 1 ? "text-emerald-600 flex items-center gap-1" : "text-foreground"}>
                           {selectedTier >= 1 && <Check className="h-3 w-3" />}
@@ -577,7 +657,6 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
                         </span>
                       </div>
 
-                      {/* Follow Facebook */}
                       <div className="flex justify-between">
                         <span className={selectedTier >= 1 ? "text-emerald-600 flex items-center gap-1" : "text-foreground"}>
                           {selectedTier >= 1 && <Check className="h-3 w-3" />}
@@ -588,7 +667,6 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
                         </span>
                       </div>
 
-                      {/* Subscribe YouTube */}
                       <div className="flex justify-between">
                         <span className={selectedTier >= 1 ? "text-emerald-600 flex items-center gap-1" : "text-foreground"}>
                           {selectedTier >= 1 && <Check className="h-3 w-3" />}
@@ -599,7 +677,6 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
                         </span>
                       </div>
 
-                      {/* First share */}
                       <div className="flex justify-between">
                         <span className={selectedTier >= 2 ? "text-emerald-600 flex items-center gap-1" : "text-foreground"}>
                           {selectedTier >= 2 && <Check className="h-3 w-3" />}
@@ -610,7 +687,6 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
                         </span>
                       </div>
 
-                      {/* First referral bonus */}
                       <div className="flex justify-between">
                         <span className={selectedTier >= 2 ? "text-emerald-600 flex items-center gap-1" : "text-foreground"}>
                           {selectedTier >= 2 && <Check className="h-3 w-3" />}
@@ -650,85 +726,6 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
               </Card>
             </motion.div>
 
-            {/* Theme Voting */}
-            <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
-              <Card className="bg-background border border-border rounded-2xl shadow-sm p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="font-sans font-bold text-foreground">Story Theme Voting</h3>
-                  {selectedTier >= 4 ? (
-                    <Badge className="bg-emerald-500/20 text-emerald-600">Unlocked</Badge>
-                  ) : (
-                    <Badge className="bg-gray-200 text-gray-500">Story Champion Pack Required</Badge>
-                  )}
-                </div>
-                <p className="text-sm text-muted-foreground mb-4">
-                  Help choose the next Story Pros adventure! Vote for your favorite theme.
-                </p>
-                <div className="space-y-3">
-                  {/* Show 5 theme options with vote counts */}
-                  {[
-                    { emoji: "🌲", title: "Adventure Quest", votes: 142, pct: 32 },
-                    { emoji: "🚀", title: "Space Explorers", votes: 98, pct: 22 },
-                    { emoji: "🌊", title: "Ocean Discovery", votes: 87, pct: 20 },
-                    { emoji: "🌻", title: "Secret Garden", votes: 73, pct: 16 },
-                    { emoji: "🎵", title: "Rhythm & Words", votes: 45, pct: 10 },
-                  ].map((theme, idx) => (
-                    <div key={idx} className={`flex items-center gap-3 p-3 rounded-lg border ${selectedTier >= 4 ? "border-border hover:border-[#8861d4] cursor-pointer" : "border-border opacity-60"}`}>
-                      <span className="text-2xl">{theme.emoji}</span>
-                      <div className="flex-1">
-                        <div className="flex justify-between">
-                          <span className="font-medium text-foreground">{theme.title}</span>
-                          <span className="text-sm text-muted-foreground">{theme.votes} votes</span>
-                        </div>
-                        <div className="h-1.5 bg-border rounded-full mt-1 overflow-hidden">
-                          <div className="h-full bg-[#8861d4] rounded-full" style={{ width: `${theme.pct}%` }} />
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </Card>
-            </motion.div>
-
-            {/* Badge Showcase */}
-            <motion.div
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.7 }}
-            >
-              <Card className="bg-background border border-border rounded-2xl shadow-sm p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="font-sans font-bold text-foreground">
-                    Achievements
-                  </h3>
-                  <span className="text-sm text-muted-foreground">
-                    {tierData.badges.length} of {allBadges.length}
-                  </span>
-                </div>
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-                  {allBadges.map((badge) => {
-                    const isEarned = tierData.badges.includes(badge);
-                    return (
-                      <motion.div
-                        key={badge}
-                        whileHover={isEarned ? { scale: 1.05 } : {}}
-                        className={`p-3 rounded-lg border-2 text-center transition-all ${
-                          isEarned
-                            ? `${BADGE_COLORS[badge]} border-primary/30`
-                            : "bg-muted border-border text-muted-foreground opacity-50"
-                        }`}
-                      >
-                        <Award className="h-5 w-5 mx-auto mb-2" />
-                        <p className="text-xs font-semibold">
-                          {BADGE_NAMES[badge]}
-                        </p>
-                      </motion.div>
-                    );
-                  })}
-                </div>
-              </Card>
-            </motion.div>
-
             {/* Impact Counter */}
             <motion.div
               initial={{ y: 20, opacity: 0 }}
@@ -750,41 +747,6 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
               </Card>
             </motion.div>
 
-            {/* Community Milestone Progress */}
-            <motion.div
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.9 }}
-            >
-              <Card className="bg-background border border-border rounded-2xl shadow-sm p-6">
-                <h3 className="font-sans font-bold text-foreground mb-4">
-                  Community Milestones
-                </h3>
-                <div className="space-y-4">
-                  {COMMUNITY_MILESTONES.map((milestone, idx) => (
-                    <div key={idx}>
-                      <div className="flex justify-between mb-2">
-                        <span className="text-sm text-foreground font-medium">
-                          {milestone.reward}
-                        </span>
-                        <span className="text-xs text-muted-foreground">
-                          847 / {milestone.target}
-                        </span>
-                      </div>
-                      <div className="h-2 bg-border rounded-full overflow-hidden">
-                        <motion.div
-                          initial={{ width: 0 }}
-                          animate={{ width: `${(847 / milestone.target) * 100}%` }}
-                          transition={{ duration: 0.8, ease: "easeOut" }}
-                          className="h-full bg-gradient-to-r from-emerald-500 to-emerald-400"
-                        />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </Card>
-            </motion.div>
-
             {/* Upcoming Rewards */}
             {selectedTier < 5 && (
               <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
@@ -795,7 +757,6 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
                   <p className="text-sm text-gray-600 mb-4">
                     You're {TIER_THRESHOLDS[selectedTier + 1] - tierData.points} points away from your next reward!
                   </p>
-                  {/* Show the next tier's reward from TIER_REWARDS */}
                   <div className="bg-white rounded-lg p-4 border border-[#dedede]">
                     <p className="font-semibold text-[#3b1f59]">{TIER_REWARDS[selectedTier + 1]?.name}</p>
                     <p className="text-sm text-gray-500 mt-1">{TIER_REWARDS[selectedTier + 1]?.description}</p>
@@ -803,60 +764,6 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
                 </Card>
               </motion.div>
             )}
-
-            {/* Leaderboard */}
-            <motion.div
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 1.0 }}
-            >
-              <Card className="bg-background border border-border rounded-2xl shadow-sm p-6">
-                <h3 className="font-sans font-bold text-foreground mb-4">
-                  Top Referrers
-                </h3>
-                <div className="space-y-2">
-                  {[
-                    { name: "Alex Chen", points: 847, tier: 5 },
-                    { name: "Maria Rodriguez", points: 756, tier: 4 },
-                    { name: "James Wilson", points: 623, tier: 4 },
-                    { name: "Sofia Patel", points: 512, tier: 4 },
-                    { name: "Marcus Johnson", points: 498, tier: 3 },
-                    { name: "Emma Thompson", points: 445, tier: 3 },
-                    { name: "David Kim", points: 389, tier: 3 },
-                    { name: "Lisa Anderson", points: 367, tier: 2 },
-                    { name: "Omar Hassan", points: 298, tier: 2 },
-                    { name: "Nina Volkov", points: 267, tier: 2 },
-                  ].map((user, idx) => (
-                    <motion.div
-                      key={idx}
-                      initial={{ x: -20, opacity: 0 }}
-                      animate={{ x: 0, opacity: 1 }}
-                      transition={{ delay: 1.0 + idx * 0.05 }}
-                      className="flex items-center gap-3 p-3 hover:bg-muted rounded-lg transition-colors"
-                    >
-                      <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-sm">
-                        {idx + 1}
-                      </div>
-                      <div className="flex-1">
-                        <p className="text-sm font-medium text-foreground">
-                          {user.name}
-                        </p>
-                        <p className="text-xs text-muted-foreground">{user.points} points</p>
-                      </div>
-                      <Badge
-                        style={{
-                          backgroundColor:
-                            getTierColor(user.tier) + "20",
-                          color: getTierColor(user.tier),
-                        }}
-                      >
-                        {getTierName(user.tier)}
-                      </Badge>
-                    </motion.div>
-                  ))}
-                </div>
-              </Card>
-            </motion.div>
 
             {/* Rewards Inventory Section */}
             <motion.div
@@ -884,7 +791,7 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
                             ? 275
                             : 275
                 }
-                badges={tierData.badges}
+                badges={[]}
                 inventory={{
                   tier_0_updates: { claimed: true },
                   tier_1_pdf: { claimed: selectedTier >= 1 },
