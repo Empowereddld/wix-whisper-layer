@@ -13,6 +13,8 @@ import {
   Heart,
   Zap,
   Users,
+  Check,
+  Lock,
 } from "lucide-react";
 import RewardCard from "./RewardCard";
 import CoinDropAnimation from "./CoinDropAnimation";
@@ -238,29 +240,104 @@ export default function RewardsInventory({
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
           >
-            <div className="space-y-6">
-              {TIER_REWARDS.map((reward) => {
-                const status = getRewardStatus(reward.rewardId, reward.tier);
-                const isLocked = status === "locked";
+            <div className="relative">
+              {/* Vertical progress line */}
+              <div className="absolute left-5 top-0 bottom-0 w-0.5 bg-[#dedede]" />
+              <div
+                className="absolute left-5 top-0 w-0.5 bg-[#8861d4] transition-all duration-700"
+                style={{ height: `${((currentTier + 1) / TIER_REWARDS.length) * 100}%` }}
+              />
 
-                return (
-                  <RewardCard
-                    key={reward.rewardId}
-                    title={reward.name}
-                    description={reward.description}
-                    icon={reward.icon}
-                    earnedVia={reward.earnedVia}
-                    status={status}
-                    requirement={
-                      isLocked
-                        ? `Reach Tier ${reward.tier + 1}`
-                        : undefined
-                    }
-                    onClaim={() => handleClaimReward(reward.rewardId)}
-                    claimedAt={inventory[reward.rewardId]?.claimedAt}
-                  />
-                );
-              })}
+              <div className="space-y-1">
+                {TIER_REWARDS.map((reward, idx) => {
+                  const status = getRewardStatus(reward.rewardId, reward.tier);
+                  const isLocked = status === "locked";
+                  const isUnlocked = !isLocked;
+                  const isCurrent = currentTier === idx;
+
+                  const REWARD_COLORS = [
+                    { bg: "rgba(136, 97, 212, 0.08)", accent: "#8861d4" },
+                    { bg: "rgba(136, 97, 212, 0.12)", accent: "#7b52c9" },
+                    { bg: "rgba(99, 179, 141, 0.1)", accent: "#63b38d" },
+                    { bg: "rgba(212, 146, 11, 0.1)", accent: "#d4920b" },
+                    { bg: "rgba(59, 31, 89, 0.1)", accent: "#3b1f59" },
+                    { bg: "rgba(212, 175, 55, 0.12)", accent: "#d4af37" },
+                  ];
+                  const colors = REWARD_COLORS[idx] || REWARD_COLORS[0];
+
+                  return (
+                    <div
+                      key={reward.rewardId}
+                      className="relative flex items-start gap-4 py-3 px-4 rounded-xl transition-all duration-300"
+                      style={{
+                        backgroundColor: isUnlocked ? colors.bg : "transparent",
+                        borderLeft: isCurrent ? `3px solid ${colors.accent}` : "3px solid transparent",
+                      }}
+                    >
+                      {/* Progress dot */}
+                      <div
+                        className="relative z-10 w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 transition-all duration-300"
+                        style={{
+                          backgroundColor: isUnlocked ? colors.accent : "#e5e5e5",
+                          boxShadow: isCurrent ? `0 0 12px ${colors.accent}40` : "none",
+                        }}
+                      >
+                        {isUnlocked ? (
+                          <Check className="h-4 w-4 text-white" />
+                        ) : (
+                          <Lock className="h-3.5 w-3.5 text-gray-400" />
+                        )}
+                      </div>
+
+                      {/* Content */}
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-0.5">
+                          <span className="text-lg">{reward.icon}</span>
+                          <span className="text-xs font-semibold uppercase tracking-wide" style={{ color: isUnlocked ? colors.accent : "#9ca3af" }}>
+                            Tier {reward.tier + 1}
+                          </span>
+                        </div>
+                        <p className={`text-sm font-bold ${isUnlocked ? "text-[#3b1f59]" : "text-gray-500"}`}>
+                          {reward.name}
+                        </p>
+                        <p className={`text-xs mt-0.5 ${isUnlocked ? "text-[#121212]" : "text-gray-400"}`}>
+                          {reward.description}
+                        </p>
+
+                        {/* Action buttons inline */}
+                        <div className="mt-2">
+                          {status === "claimable" && (
+                            <motion.button
+                              whileHover={{ scale: 1.02 }}
+                              whileTap={{ scale: 0.98 }}
+                              onClick={() => handleClaimReward(reward.rewardId)}
+                              className="text-xs font-semibold px-3 py-1.5 rounded-lg text-white transition-all"
+                              style={{ backgroundColor: colors.accent }}
+                            >
+                              Claim Reward
+                            </motion.button>
+                          )}
+                          {status === "claimed" && (
+                            <span className="inline-flex items-center gap-1 text-xs font-medium text-emerald-600">
+                              <Check className="w-3 h-3" /> Claimed
+                              {inventory[reward.rewardId]?.claimedAt && (
+                                <span className="text-gray-400 ml-1">
+                                  · {new Date(inventory[reward.rewardId].claimedAt!).toLocaleDateString()}
+                                </span>
+                              )}
+                            </span>
+                          )}
+                          {isLocked && (
+                            <span className="text-xs text-gray-400">
+                              Reach Tier {reward.tier + 1} to unlock
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </motion.div>
         )}

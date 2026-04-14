@@ -388,12 +388,12 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
                     As a Hero tier member, you get an exclusive sneak peek at the Story Pros experience. Try an interactive story below!
                   </p>
                   <div className="rounded-xl overflow-hidden border border-border">
-                    <iframe
+                     <iframe
                       src="https://storyprospreview.lovable.app/preview/story/11111111-1111-1111-1111-111111111111"
                       className="w-full"
                       title="Story Pros Interactive Preview"
                       allow="fullscreen"
-                      style={{ height: "700px" }}
+                      style={{ height: "900px" }}
                     />
                   </div>
                 </Card>
