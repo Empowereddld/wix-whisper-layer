@@ -5,43 +5,23 @@
       <stop offset="100%" style="stop-color:#3b1f59;stop-opacity:1" />
     </linearGradient>
   </defs>
-
-  <!-- Background -->
   <rect width="1080" height="1080" fill="url(#bg-gradient)"/>
-
-  <!-- Accent circle (top right) -->
   <circle cx="900" cy="200" r="150" fill="#D4920B" opacity="0.15"/>
-
-  <!-- Accent circle (bottom left) -->
   <circle cx="150" cy="950" r="120" fill="#D4920B" opacity="0.15"/>
-
-  <!-- Main border accent -->
   <rect x="80" y="80" width="920" height="920" fill="none" stroke="#D4920B" stroke-width="4" opacity="0.6" rx="20"/>
-
-  <!-- Inner accent line -->
   <rect x="120" y="120" width="840" height="840" fill="none" stroke="#D4920B" stroke-width="2" opacity="0.3" rx="16"/>
-
-  <!-- Tier name - top -->
   <text x="540" y="280" font-family="Arial, sans-serif" font-size="96" font-weight="bold" text-anchor="middle" fill="#D4920B" letter-spacing="2">
-    ADVOCATE
+    TIER 2
   </text>
-
-  <!-- Main message -->
   <text x="540" y="550" font-family="Arial, sans-serif" font-size="64" font-weight="600" text-anchor="middle" fill="white">
-    I'm an Advocate
+    I'm Tier 2
   </text>
-
-  <!-- Secondary text -->
   <text x="540" y="630" font-family="Arial, sans-serif" font-size="48" font-weight="400" text-anchor="middle" fill="rgba(255,255,255,0.95)">
     on the Story Pros Launch Team
   </text>
-
-  <!-- Story Pros branding -->
   <text x="540" y="800" font-family="Arial, sans-serif" font-size="52" font-weight="700" text-anchor="middle" fill="white">
     Story Pros
   </text>
-
-  <!-- Website URL -->
   <text x="540" y="920" font-family="Arial, sans-serif" font-size="40" font-weight="400" text-anchor="middle" fill="rgba(255,255,255,0.85)">
     empowereddld.com/storypros
   </text>

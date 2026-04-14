@@ -18,37 +18,37 @@ interface MilestoneModalProps {
 }
 
 const TIER_COLORS = {
-  storyteller: {
+  tier1: {
     bg: "from-amber-400 to-amber-600",
     glow: "bg-amber-400/50",
     text: "text-amber-600",
     accent: "text-amber-500",
   },
-  advocate: {
+  tier2: {
     bg: "from-blue-400 to-blue-600",
     glow: "bg-blue-400/50",
     text: "text-blue-600",
     accent: "text-blue-500",
   },
-  champion: {
+  tier3: {
     bg: "from-yellow-400 to-amber-600",
     glow: "bg-yellow-400/50",
     text: "text-amber-600",
     accent: "text-yellow-500",
   },
-  hero: {
+  tier4: {
     bg: "from-purple-600 to-purple-900",
     glow: "bg-purple-600/50",
     text: "text-purple-700",
     accent: "text-purple-500",
   },
-  legend: {
+  tier5: {
     bg: "from-emerald-400 to-emerald-600",
     glow: "bg-emerald-400/50",
     text: "text-emerald-600",
     accent: "text-emerald-500",
   },
-  foundingElite: {
+  tier6: {
     bg: "from-cyan-300 via-blue-400 to-purple-600",
     glow: "bg-cyan-300/50",
     text: "text-purple-700",
@@ -60,7 +60,7 @@ const getTierColor = (tierName: string) => {
   const normalizedName = tierName.toLowerCase().replace(/\s+/g, "");
   return (
     TIER_COLORS[normalizedName as keyof typeof TIER_COLORS] ||
-    TIER_COLORS.storyteller
+    TIER_COLORS.tier1
   );
 };
 
@@ -164,7 +164,7 @@ const MilestoneModal: React.FC<MilestoneModalProps> = ({
           />
 
           {/* Confetti */}
-          <Confetti tierColor={Object.keys(TIER_COLORS).find(k => k === tier.name.toLowerCase().replace(/\s+/g, "")) as keyof typeof TIER_COLORS || "storyteller"} />
+          <Confetti tierColor={Object.keys(TIER_COLORS).find(k => k === tier.name.toLowerCase().replace(/\s+/g, "")) as keyof typeof TIER_COLORS || "tier1"} />
 
           {/* Modal */}
           <motion.div
