@@ -7,9 +7,7 @@ import SEOHead from "@/components/SEOHead";
 import {
   TIER_NAMES,
   TIER_COLORS,
-  TIER_REFERRALS,
   TIER_REWARDS,
-  COMMUNITY_MILESTONES,
   POINTS,
 } from "@/lib/waitlist-constants";
 import { glass, gradients, animations, typography } from "@/lib/glassmorphism";
@@ -98,10 +96,6 @@ const WaitlistUserGuide = () => {
     },
     {
       q: "Can I share the same referral link multiple times?",
-      a: "Yes! Your referral link never expires. Share it as many times as you want on different platforms and to different people. Each person who signs up through your link counts toward your tier.",
-    },
-    {
-      q: "How is the leaderboard determined?",
       a: "The leaderboard ranks members by total points earned. It's not just about referrals — sharing, suggestions, and other activities all count toward your position!",
     },
     {
@@ -335,10 +329,6 @@ const WaitlistUserGuide = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {[
                 {
-                  title: "Position Card",
-                  description: "Your current rank and queue position — visible to everyone on the leaderboard!",
-                },
-                {
                   title: "Tier Progress Bar",
                   description: "Visual progress toward your next tier. See exactly how many points you need.",
                 },
@@ -347,24 +337,20 @@ const WaitlistUserGuide = () => {
                   description: "Count of people you've referred and verification status. See who's joined via you.",
                 },
                 {
-                  title: "Badges & Achievements",
-                  description: "Earn badges for completing milestones. Show them off to your community!",
+                  title: "Reward Journey",
+                  description: "See all 6 tiers and which rewards you've unlocked in a visual progress tracker.",
                 },
                 {
-                  title: "Community Milestones",
-                  description: "Track collective progress toward group rewards. Everyone benefits when we hit targets.",
+                  title: "Share & Follow",
+                  description: "Share your referral link and follow our social accounts to earn bonus points.",
                 },
                 {
-                  title: "Activity Feed",
-                  description: "Real-time updates of your actions and points earned. Stay motivated!",
+                  title: "Interactive Story Preview",
+                  description: "Tier 4+ members get an exclusive sneak peek at the Story Pros experience.",
                 },
                 {
-                  title: "Leaderboard",
-                  description: "See who's leading. Celebrate top supporters and get inspired to climb higher.",
-                },
-                {
-                  title: "Streak Counter",
-                  description: "Your daily visit streak. How many days can you keep it going?",
+                  title: "Your Impact",
+                  description: "See how many families discovered Story Pros because of your referrals.",
                 },
               ].map((item, idx) => (
                 <motion.div
@@ -382,61 +368,8 @@ const WaitlistUserGuide = () => {
             </div>
           </motion.section>
 
-          {/* Section 6: Badges & Achievements */}
-          <motion.section className="mb-16" {...animations.fadeInUp}>
-            <h2 className={`text-2xl font-bold font-sans font-bold mb-8 text-[#3b1f59]`}>Badges & Achievements</h2>
-            <p className={`text-base text-gray-600 mb-8`}>
-              Earn exclusive badges by hitting milestones. Each badge tells your story in the community.
-            </p>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {badges.map((badge, idx) => (
-                <motion.div
-                  key={idx}
-                  className={`p-6 rounded-xl bg-white border border-[#dedede] text-center cursor-pointer`}
-                  whileHover={{ scale: 1.05 }}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: idx * 0.05 }}
-                >
-                  <div className="text-4xl mb-3">{badge.icon}</div>
-                  <h4 className="font-bold text-sm mb-1 text-[#3b1f59]">{badge.name}</h4>
-                  <p className="text-xs text-gray-600">{badge.description}</p>
-                </motion.div>
-              ))}
-            </div>
-          </motion.section>
 
-          {/* Section 7: Community Milestones */}
-          <motion.section className="mb-16" {...animations.fadeInUp}>
-            <h2 className={`text-2xl font-bold font-sans font-bold mb-8 text-[#3b1f59]`}>Community Milestones</h2>
-            <p className={`text-base text-gray-600 mb-8`}>
-              We succeed together! As our community grows, we all unlock exclusive rewards.
-            </p>
-
-            <div className="space-y-4">
-              {COMMUNITY_MILESTONES.map((milestone, idx) => (
-                <motion.div
-                  key={idx}
-                  className={`p-6 rounded-xl bg-white border border-[#dedede]`}
-                  whileHover={{ x: 8 }}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: idx * 0.1 }}
-                >
-                  <div className="flex items-center gap-4">
-                    <div className="flex items-center justify-center w-16 h-16 rounded-full bg-[#8861d4]/20 flex-shrink-0">
-                      <Users className="w-8 h-8 text-[#8861d4]" />
-                    </div>
-                    <div className="flex-grow">
-                      <h4 className="text-2xl font-bold text-[#3b1f59] mb-1">{milestone.target.toLocaleString()} Members</h4>
-                      <p className="text-[#121212]">{milestone.reward}</p>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </motion.section>
 
           {/* Section 8: Pro Tips */}
           <motion.section className="mb-16" {...animations.fadeInUp}>
