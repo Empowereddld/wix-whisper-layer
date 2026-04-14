@@ -16,7 +16,7 @@ export const TIER_COLORS = [
   "#3D2B1F",   // Tier 6 - dark chocolate
 ] as const;
 
-export const TIER_THRESHOLDS = [0, 40, 100, 175, 325, 600] as const;
+export const TIER_THRESHOLDS = [0, 35, 75, 130, 250, 500] as const;
 
 export const TIER_REFERRALS = [0, 1, 3, 5, 10, 20] as const;
 

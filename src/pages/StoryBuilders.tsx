@@ -650,32 +650,32 @@ const StoryBuilders = () => {
             const progressSteps: ProgressStep[] = [
               {
                 task: "Tier 1 — 0 points",
-                impact: "You earned 10 points just for signing up. Complete your profile (+10 pts), verify your email (+5 pts), and follow us on Instagram, Facebook, or YouTube (+8 pts each) to start climbing.",
+                impact: "You earned 10 points just by signing up. Complete your profile, verify your email, and follow us on social media to start climbing.",
                 reward: { icon: <Sparkles size={20} />, title: "You're officially on the Launch Team", desc: "Get behind-the-scenes updates on Story Pros development and be first to hear about new features" },
                 invites: 0,
               },
               {
-                task: "Tier 2 — 40 points",
-                impact: "Share your referral link with other families, post on social media, and check in daily to climb. You can reach this tier without any referrals.",
-                reward: { icon: <Rocket size={20} />, title: "Early access when Story Pros launches", desc: "You'll get into the full app before the general public on launch day — plus your Tier 2 badge", subdesc: "Tip: Profile + email + 3 social follows = 49 pts — that's Tier 2 right there" },
+                task: "Tier 2 — 35 points",
+                impact: "Share your referral link with other families and post on social media to climb. You can reach this tier without any referrals.",
+                reward: { icon: <Rocket size={20} />, title: "Early access when Story Pros launches", desc: "You'll get into the full app before the general public on launch day — plus your Tier 2 badge", subdesc: "Tip: Profile + email + 3 social follows gets you past Tier 2 right away" },
                 invites: 1,
               },
               {
-                task: "Tier 3 — 100 points",
-                impact: "Keep referring families, sharing your link, and building your daily check-in streak. Consistency is rewarded — the longer your streak, the faster you climb.",
+                task: "Tier 3 — 75 points",
+                impact: "Keep referring families and sharing your link. Consistency is rewarded — the more you share, the faster you climb.",
                 reward: { icon: <Gift size={20} />, title: "75 Story Coins dropped into your account", desc: "Story Coins are in-app currency you can spend on upgrades and extras when the app launches — plus your Tier 3 badge" },
                 invites: 3,
               },
               {
-                task: "Tier 4 — 175 points",
+                task: "Tier 4 — 130 points",
                 impact: "You're making a real difference for families navigating DLD, ADHD, and Dyslexia. Your referrals bring more children into a tool designed specifically for how they think and communicate.",
                 reward: { icon: <Headphones size={20} />, title: "Founder pricing locked in for life", desc: "$5.99/month forever instead of the regular $7.99 — a permanent 25% discount as long as your subscription stays active", subdesc: "This reward never expires. Once you earn it, it's yours" },
                 invites: 5,
               },
               {
-                task: "Tier 5 — 325 points",
-                impact: "You're among our most dedicated supporters. At this level, you've likely referred several families, built a strong streak, and consistently engaged with the community.",
-                reward: { icon: <Crown size={20} />, title: "VIP Beta access + 200 Story Coins", desc: "Test Story Pros before it officially launches — give feedback that shapes the final product, plus a 200 coin bonus drop and your Tier 5 badge", subdesc: "First 50 members to reach 600 pts earn Tier 6 status — named in the app credits forever" },
+                task: "Tier 5 — 250 points",
+                impact: "You're among our most dedicated supporters. At this level, you've likely referred several families and consistently engaged with the community.",
+                reward: { icon: <Crown size={20} />, title: "VIP Beta access + 200 Story Coins", desc: "Test Story Pros before it officially launches — give feedback that shapes the final product, plus a 200 coin bonus drop and your Tier 5 badge", subdesc: "First 50 members to reach 500 pts earn Tier 6 status — named in the app credits forever" },
                 invites: 10,
               },
             ];
