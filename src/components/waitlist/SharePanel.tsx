@@ -87,15 +87,15 @@ const SharePanel = ({
       },
     },
     {
-      id: "linkedin",
-      label: "LinkedIn",
-      icon: Linkedin,
-      color: "bg-[#0A66C2]",
-      hoverColor: "hover:bg-[#084B94]",
+      id: "instagram",
+      label: "Instagram",
+      icon: Instagram,
+      color: "bg-gradient-to-r from-purple-500 via-pink-500 to-red-500",
+      hoverColor: "hover:opacity-90",
       action: async () => {
-        const text = encodeURIComponent(messages.linkedin);
-        const url = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(referralLink)}`;
-        window.open(url, "_blank");
+        // Instagram doesn't have a direct share URL, so copy link and prompt user
+        await navigator.clipboard.writeText(referralLink);
+        toast.success("Link copied! Paste it in your Instagram story or bio.");
       },
     },
     {
