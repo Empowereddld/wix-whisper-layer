@@ -77,7 +77,7 @@ const sections: Section[] = [
     id: "tier-rewards",
     title: "Tier Rewards Fulfillment",
     icon: Gift,
-    subsections: ["Tier 0 (Starter)", "Tier 1 (Language Activities)", "Tier 2 (Story Starter)", "Tier 3 (Founding Voice)", "Tier 4 (Champion)", "Tier 5 (VIP) - CAPPED AT 50", "Social Follow/Subscribe System", "Story Coins System", "Rewards Inventory Tab"],
+    subsections: ["Tier 1 (Starter)", "Tier 2 (Early Access)", "Tier 3 (Story Coins)", "Tier 4 (Founding Voice)", "Tier 5 (Founder Pricing)", "Tier 6 (Founding Elite) - CAPPED AT 50", "Social Follow/Subscribe System", "Story Coins System", "Rewards Inventory Tab"],
   },
   {
     id: "troubleshooting",
@@ -530,45 +530,45 @@ Reason: Bonus for social media share`} />
               <div className="space-y-3 text-sm">
                 <div className="p-4 bg-[#f3ebf8] rounded-lg border border-[#dedede]">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="font-semibold text-[#3b1f59]">Tier 0 (Starter)</span>
+                    <span className="font-semibold text-[#3b1f59]">Tier 1 (Starter)</span>
                     <span className="text-gray-500 font-bold">0 points</span>
                   </div>
-                  <p className="text-gray-500 text-xs">Just signed up</p>
+                  <p className="text-gray-500 text-xs">Just signed up — development updates</p>
                 </div>
                 <div className="p-4 bg-[#f3ebf8] rounded-lg border border-[#dedede]">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="font-semibold text-[#3b1f59]">Tier 1</span>
-                    <span className="text-gray-500 font-bold">40+ points</span>
+                    <span className="font-semibold text-[#3b1f59]">Tier 2 (Early Access)</span>
+                    <span className="text-gray-500 font-bold">35+ points</span>
                   </div>
-                  <p className="text-gray-500 text-xs">Verified + shared with friends</p>
+                  <p className="text-gray-500 text-xs">1+ referral — early access on launch day</p>
                 </div>
                 <div className="p-4 bg-[#f3ebf8] rounded-lg border border-[#dedede]">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="font-semibold text-[#3b1f59]">Tier 2</span>
-                    <span className="text-gray-500 font-bold">100+ points</span>
+                    <span className="font-semibold text-[#3b1f59]">Tier 3 (Story Coins)</span>
+                    <span className="text-gray-500 font-bold">75+ points</span>
                   </div>
-                  <p className="text-gray-500 text-xs">Growing referral network</p>
+                  <p className="text-gray-500 text-xs">3+ referrals — 75 bonus Story Coins</p>
                 </div>
                 <div className="p-4 bg-[#f3ebf8] rounded-lg border border-[#dedede]">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="font-semibold text-[#3b1f59]">Tier 3</span>
-                    <span className="text-gray-500 font-bold">175+ points</span>
+                    <span className="font-semibold text-[#3b1f59]">Tier 4 (Founder Pricing)</span>
+                    <span className="text-gray-500 font-bold">130+ points</span>
                   </div>
-                  <p className="text-gray-500 text-xs">Multiple successful referrals</p>
+                  <p className="text-gray-500 text-xs">5+ referrals — $5.99/mo for life</p>
                 </div>
                 <div className="p-4 bg-[#f3ebf8] rounded-lg border border-[#dedede]">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="font-semibold text-[#3b1f59]">Tier 4</span>
-                    <span className="text-gray-500 font-bold">325+ points</span>
+                    <span className="font-semibold text-[#3b1f59]">Tier 5 (VIP Beta)</span>
+                    <span className="text-gray-500 font-bold">250+ points</span>
                   </div>
-                  <p className="text-gray-500 text-xs">Strong viral advocate</p>
+                  <p className="text-gray-500 text-xs">10+ referrals — beta access + 200 coins</p>
                 </div>
                 <div className="p-4 bg-[#f3ebf8] rounded-lg border border-[#dedede]">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="font-semibold text-[#3b1f59]">Tier 5 (VIP)</span>
-                    <span className="text-gray-500 font-bold">600+ points</span>
+                    <span className="font-semibold text-[#3b1f59]">Tier 6 (Founding Elite)</span>
+                    <span className="text-gray-500 font-bold">500+ points</span>
                   </div>
-                  <p className="text-gray-500 text-xs">Top viral advocate - eligible for premium rewards</p>
+                  <p className="text-gray-500 text-xs">20+ referrals — named in founder credits forever (first 50 only)</p>
                 </div>
               </div>
             </CollapsibleSection>
@@ -883,48 +883,47 @@ Events to enable:
               </ul>
             </CollapsibleSection>
 
-            <CollapsibleSection title="Tier 3 (Founding Voice)">
+            <CollapsibleSection title="Tier 4 (Founder Pricing)">
               <p className="text-sm text-gray-500 mb-4">
-                <strong>Reward:</strong> Founding Voice badge + sneak peek video
+                <strong>Reward:</strong> Founder pricing ($5.99/mo for life) + sneak peek video
               </p>
               <ul className="space-y-2 text-sm list-disc list-inside text-[#121212]">
-                <li>Unlock "Founding Voice" badge on their profile</li>
+                <li>Lock in $5.99/month for life (regular $7.99)</li>
                 <li>Send exclusive sneak peek video via email</li>
                 <li>Include recognition message in next community email</li>
               </ul>
             </CollapsibleSection>
 
-            <CollapsibleSection title="Tier 4 (Champion)">
+            <CollapsibleSection title="Tier 5 (VIP Beta Access)">
               <p className="text-sm text-gray-500 mb-4">
-                <strong>Reward:</strong> Recognition + subscription discount + 200 Story Coins + Champion Pack
+                <strong>Reward:</strong> VIP Beta access + 200 Story Coins + Champion Pack
               </p>
               <ul className="space-y-2 text-sm list-disc list-inside mb-4 text-[#121212]">
-                <li>Public recognition in community email / social media</li>
-                <li>Monthly subscription discount: $5.99/mo (regularly $7.99)</li>
+                <li>Beta access to test Story Pros before launch</li>
                 <li>Award 200 Story Coins to account</li>
                 <li>Send Champion Pack via email</li>
               </ul>
               <p className="text-sm text-gray-500">
-                Create unique coupon code for discounted subscription. Coins can be combined with Tier 2 coins for Tier 5 pack.
+                Create unique coupon code for discounted subscription. Coins can be combined with Tier 3 coins for Tier 5 pack.
               </p>
             </CollapsibleSection>
 
-            <CollapsibleSection title="Tier 5 (VIP) - CAPPED AT 50">
+            <CollapsibleSection title="Tier 6 (Founding Elite) - CAPPED AT 50">
               <p className="text-sm text-gray-500 mb-4">
-                <strong>Reward:</strong> VIP everything - FIRST 50 users only
+                <strong>Reward:</strong> Founding Elite everything - FIRST 50 users only
               </p>
               <ul className="space-y-2 text-sm list-disc list-inside mb-4 text-[#121212]">
-                <li>All Tier 4 benefits (recognition, discount, 200 coins)</li>
+                <li>All Tier 5 benefits (beta access, 200 coins)</li>
+                <li>Named in Story Pros founder credits forever</li>
                 <li>VIP lifetime access to all future content and beta features</li>
-                <li>Exclusive VIP community access</li>
                 <li>Priority support + direct line to founder</li>
                 <li>Founding member merchandise package</li>
               </ul>
               <p className="text-sm text-gray-500 mb-4">
-                <strong>IMPORTANT:</strong> Tier 5 cap is FIRST 50 users. Once 50 users reach Tier 5, no additional users qualify for this tier. They stop at Tier 4.
+                <strong>IMPORTANT:</strong> Tier 6 cap is FIRST 50 users. Once 50 users reach Tier 6, no additional users qualify for this tier. They stop at Tier 5.
               </p>
               <p className="text-sm text-gray-500">
-                Tier 5 users must be fulfilled in queue order. Use the queue position from Users table to determine fulfillment sequence.
+                Tier 6 users must be fulfilled in queue order. Use the queue position from Users table to determine fulfillment sequence.
               </p>
             </CollapsibleSection>
 
@@ -948,16 +947,16 @@ Events to enable:
                 Story Coins are earned the same way as points and can be redeemed for rewards:
               </p>
               <ul className="space-y-2 text-sm list-disc list-inside mb-4 text-[#121212]">
-                <li>First coin drop at Tier 2: 75 coins</li>
-                <li>Second coin drop at Tier 4: 200 coins</li>
+                <li>First coin drop at Tier 3: 75 coins</li>
+                <li>Second coin drop at Tier 5: 200 coins</li>
                 <li>Users can accumulate and combine coins across tiers</li>
               </ul>
               <p className="text-sm text-gray-500 mb-4">
                 <strong>Redeemable Packs:</strong>
               </p>
               <ul className="space-y-2 text-sm list-disc list-inside text-[#121212]">
-                <li>50 coins: Story Starter Pack (Tier 2 level)</li>
-                <li>150 coins: Champion Pack (combines Tier 2 + Tier 4)</li>
+                <li>50 coins: Story Starter Pack (Tier 3 level)</li>
+                <li>150 coins: Champion Pack (combines Tier 3 + Tier 5)</li>
               </ul>
             </CollapsibleSection>
 
