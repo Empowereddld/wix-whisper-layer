@@ -1,31 +1,18 @@
 
 
-## Rename Tier Names to "Tier 1–5" (+ Founding Elite → Tier 6)
+## Remove Detailed Points Mechanics from Progress Steps
 
-I agree — "Tier 1, Tier 2..." is cleaner and more intuitive for users. Here's what needs to change:
+**Why**: The granular points breakdown ("+2 pts with streak bonuses up to +50", "7-day streak earns +10 bonus points") feels overwhelming for parents/educators. Keep messaging aspirational and action-oriented.
 
-### Files to update
+### Changes (single file: `src/pages/StoryBuilders.tsx`)
 
-1. **`src/lib/waitlist-constants.ts`** — Change `TIER_NAMES` array from `["Storyteller", "Advocate", "Champion", "Hero", "Legend", "Founding Elite"]` to `["Tier 1", "Tier 2", "Tier 3", "Tier 4", "Tier 5", "Tier 6"]`
+**Tier 2 impact text (line 659)**:
+- From: "Share your referral link with other families (+25 pts per signup), post on social media (+3 pts per share), and check in daily (+2 pts with streak bonuses up to +50). You can reach this tier without any referrals."
+- To: "Share your referral link with other families, post on social media, and check in daily to climb. You can reach this tier without any referrals."
 
-2. **`src/pages/StoryBuilders.tsx`** — Update the `milestones` array labels (e.g. `"Storyteller (0 pts)"` → `"Tier 1 (0 pts)"`) and the `progressSteps` task names (e.g. `"Storyteller — 0 points"` → `"Tier 1 — 0 points"`). Also update the community goal copy ("storytellers" → "supporters" or similar).
+**Tier 3 impact text (line 665)**:
+- From: "Keep referring families, sharing your link, and building your daily check-in streak. A 7-day streak earns +10 bonus points, and a 14-day streak earns +20. Every referral is worth 25 points."
+- To: "Keep referring families, sharing your link, and building your daily check-in streak. Consistency is rewarded — the longer your streak, the faster you climb."
 
-3. **`src/components/waitlist/TierProgressBar.tsx`** — Update the local `TIERS` array names from old names to Tier 1–6.
-
-4. **`src/components/waitlist/RewardsInventory.tsx`** — Update `BADGES` array names and the tier requirement display string.
-
-5. **`src/components/waitlist/PositionCard.tsx`** — Already reads from `TIER_NAMES`, so auto-updated.
-
-6. **`src/components/admin/UserPreviewMode.tsx`** — Badge label map entries; already reads `TIER_NAMES` for dropdowns so mostly auto-updated.
-
-7. **`src/pages/EarlySupportersWall.tsx`** / **`src/pages/WaitlistUserGuide.tsx`** — Both use `TIER_NAMES` from constants, auto-updated.
-
-8. **`src/components/waitlist/MilestoneModal.tsx`** — References tier names for confetti colors, will adapt.
-
-9. **SVG badge files** (`public/badges/share-*.svg`) — Update text from "HERO", "LEGEND", etc. to "TIER 4", "TIER 5", etc.
-
-### Approach
-- Most components already read from `TIER_NAMES` in `waitlist-constants.ts`, so changing that single source updates ~60% of references automatically.
-- The remaining hardcoded references in StoryBuilders.tsx, TierProgressBar.tsx, and RewardsInventory.tsx need manual updates.
-- SVG badges get updated text labels.
+The point values (+25, +3, etc.) in the Tier 1 text are fine since that's the onboarding step where users need to understand the basics. Tiers 4 and 5 already use aspirational language and don't need changes.
 
