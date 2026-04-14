@@ -145,13 +145,13 @@ function getEmailTemplate(
                   Keep sharing to unlock tier rewards:
                 </p>
                 <ul style="${baseStyles}">
-                  <li>Advocate Tier (1 referral)</li>
-                  <li>Champion Tier (3 referrals)</li>
-                  <li>Hero Tier (5 referrals)</li>
-                  <li>Legend Tier (10 referrals)</li>
-                  <li>Founding Elite (20 referrals)</li>
+                  <li>Tier 2 — 35 pts (1 referral)</li>
+                  <li>Tier 3 — 75 pts (3 referrals)</li>
+                  <li>Tier 4 — 130 pts (5 referrals)</li>
+                  <li>Tier 5 — 250 pts (10 referrals)</li>
+                  <li>Tier 6 — 500 pts (20 referrals)</li>
                 </ul>
-                <a href="https://empowereddld.com/storypros/dashboard" style="${buttonStyles}">View Your Progress</a>
+                <a href="https://empowereddld.com/storypros/dashboard" style="${buttonStyles}">View Your Journey</a>
                 <p style="${baseStyles}">
                   The Story Pros Team
                 </p>

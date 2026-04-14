@@ -77,7 +77,7 @@ const sections: Section[] = [
     id: "tier-rewards",
     title: "Tier Rewards Fulfillment",
     icon: Gift,
-    subsections: ["Tier 0 (Starter)", "Tier 1 (Language Activities)", "Tier 2 (Story Starter)", "Tier 3 (Founding Voice)", "Tier 4 (Champion)", "Tier 5 (VIP) - CAPPED AT 50", "Social Follow/Subscribe System", "Story Coins System", "Rewards Inventory Tab"],
+    subsections: ["Tier 1 (Starter)", "Tier 2 (Early Access)", "Tier 3 (Story Coins)", "Tier 4 (Founding Voice)", "Tier 5 (Founder Pricing)", "Tier 6 (Founding Elite) - CAPPED AT 50", "Social Follow/Subscribe System", "Story Coins System", "Rewards Inventory Tab"],
   },
   {
     id: "troubleshooting",
@@ -530,45 +530,45 @@ Reason: Bonus for social media share`} />
               <div className="space-y-3 text-sm">
                 <div className="p-4 bg-[#f3ebf8] rounded-lg border border-[#dedede]">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="font-semibold text-[#3b1f59]">Tier 0 (Starter)</span>
+                    <span className="font-semibold text-[#3b1f59]">Tier 1 (Starter)</span>
                     <span className="text-gray-500 font-bold">0 points</span>
                   </div>
-                  <p className="text-gray-500 text-xs">Just signed up</p>
+                  <p className="text-gray-500 text-xs">Just signed up — development updates</p>
                 </div>
                 <div className="p-4 bg-[#f3ebf8] rounded-lg border border-[#dedede]">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="font-semibold text-[#3b1f59]">Tier 1</span>
-                    <span className="text-gray-500 font-bold">40+ points</span>
+                    <span className="font-semibold text-[#3b1f59]">Tier 2 (Early Access)</span>
+                    <span className="text-gray-500 font-bold">35+ points</span>
                   </div>
-                  <p className="text-gray-500 text-xs">Verified + shared with friends</p>
+                  <p className="text-gray-500 text-xs">1+ referral — early access on launch day</p>
                 </div>
                 <div className="p-4 bg-[#f3ebf8] rounded-lg border border-[#dedede]">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="font-semibold text-[#3b1f59]">Tier 2</span>
-                    <span className="text-gray-500 font-bold">100+ points</span>
+                    <span className="font-semibold text-[#3b1f59]">Tier 3 (Story Coins)</span>
+                    <span className="text-gray-500 font-bold">75+ points</span>
                   </div>
-                  <p className="text-gray-500 text-xs">Growing referral network</p>
+                  <p className="text-gray-500 text-xs">3+ referrals — 75 bonus Story Coins</p>
                 </div>
                 <div className="p-4 bg-[#f3ebf8] rounded-lg border border-[#dedede]">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="font-semibold text-[#3b1f59]">Tier 3</span>
-                    <span className="text-gray-500 font-bold">175+ points</span>
+                    <span className="font-semibold text-[#3b1f59]">Tier 4 (Founder Pricing)</span>
+                    <span className="text-gray-500 font-bold">130+ points</span>
                   </div>
-                  <p className="text-gray-500 text-xs">Multiple successful referrals</p>
+                  <p className="text-gray-500 text-xs">5+ referrals — $5.99/mo for life</p>
                 </div>
                 <div className="p-4 bg-[#f3ebf8] rounded-lg border border-[#dedede]">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="font-semibold text-[#3b1f59]">Tier 4</span>
-                    <span className="text-gray-500 font-bold">325+ points</span>
+                    <span className="font-semibold text-[#3b1f59]">Tier 5 (VIP Beta)</span>
+                    <span className="text-gray-500 font-bold">250+ points</span>
                   </div>
-                  <p className="text-gray-500 text-xs">Strong viral advocate</p>
+                  <p className="text-gray-500 text-xs">10+ referrals — beta access + 200 coins</p>
                 </div>
                 <div className="p-4 bg-[#f3ebf8] rounded-lg border border-[#dedede]">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="font-semibold text-[#3b1f59]">Tier 5 (VIP)</span>
-                    <span className="text-gray-500 font-bold">600+ points</span>
+                    <span className="font-semibold text-[#3b1f59]">Tier 6 (Founding Elite)</span>
+                    <span className="text-gray-500 font-bold">500+ points</span>
                   </div>
-                  <p className="text-gray-500 text-xs">Top viral advocate - eligible for premium rewards</p>
+                  <p className="text-gray-500 text-xs">20+ referrals — named in founder credits forever (first 50 only)</p>
                 </div>
               </div>
             </CollapsibleSection>

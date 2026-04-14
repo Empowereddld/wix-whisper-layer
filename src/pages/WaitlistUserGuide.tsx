@@ -44,8 +44,8 @@ const WaitlistUserGuide = () => {
 
   const proTips = [
     {
-      title: "Complete Profile + Social Follow to Hit Tier 1",
-      description: "Complete your profile (10 pts) and follow us on Instagram (8 pts) + Facebook (8 pts) = 26 pts. With email verification (5 pts), you'll hit Tier 1 (40 pts) without any referrals!",
+      title: "Complete Profile + Social Follow to Hit Tier 2",
+      description: "Complete your profile (10 pts) and follow us on Instagram (8 pts) + Facebook (8 pts) = 26 pts. With email verification (5 pts) and signup (10 pts), you'll hit Tier 2 (35 pts) without any referrals!",
       icon: "📋",
     },
     {
