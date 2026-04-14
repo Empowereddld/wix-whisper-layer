@@ -374,61 +374,8 @@ const WaitlistUserGuide = () => {
             </div>
           </motion.section>
 
-          {/* Section 6: Badges & Achievements */}
-          <motion.section className="mb-16" {...animations.fadeInUp}>
-            <h2 className={`text-2xl font-bold font-sans font-bold mb-8 text-[#3b1f59]`}>Badges & Achievements</h2>
-            <p className={`text-base text-gray-600 mb-8`}>
-              Earn exclusive badges by hitting milestones. Each badge tells your story in the community.
-            </p>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {badges.map((badge, idx) => (
-                <motion.div
-                  key={idx}
-                  className={`p-6 rounded-xl bg-white border border-[#dedede] text-center cursor-pointer`}
-                  whileHover={{ scale: 1.05 }}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: idx * 0.05 }}
-                >
-                  <div className="text-4xl mb-3">{badge.icon}</div>
-                  <h4 className="font-bold text-sm mb-1 text-[#3b1f59]">{badge.name}</h4>
-                  <p className="text-xs text-gray-600">{badge.description}</p>
-                </motion.div>
-              ))}
-            </div>
-          </motion.section>
 
-          {/* Section 7: Community Milestones */}
-          <motion.section className="mb-16" {...animations.fadeInUp}>
-            <h2 className={`text-2xl font-bold font-sans font-bold mb-8 text-[#3b1f59]`}>Community Milestones</h2>
-            <p className={`text-base text-gray-600 mb-8`}>
-              We succeed together! As our community grows, we all unlock exclusive rewards.
-            </p>
-
-            <div className="space-y-4">
-              {COMMUNITY_MILESTONES.map((milestone, idx) => (
-                <motion.div
-                  key={idx}
-                  className={`p-6 rounded-xl bg-white border border-[#dedede]`}
-                  whileHover={{ x: 8 }}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: idx * 0.1 }}
-                >
-                  <div className="flex items-center gap-4">
-                    <div className="flex items-center justify-center w-16 h-16 rounded-full bg-[#8861d4]/20 flex-shrink-0">
-                      <Users className="w-8 h-8 text-[#8861d4]" />
-                    </div>
-                    <div className="flex-grow">
-                      <h4 className="text-2xl font-bold text-[#3b1f59] mb-1">{milestone.target.toLocaleString()} Members</h4>
-                      <p className="text-[#121212]">{milestone.reward}</p>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </motion.section>
 
           {/* Section 8: Pro Tips */}
           <motion.section className="mb-16" {...animations.fadeInUp}>
