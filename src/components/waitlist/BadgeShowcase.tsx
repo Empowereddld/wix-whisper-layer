@@ -91,19 +91,6 @@ const BADGES: BadgeDefinition[] = [
     },
   },
   {
-    id: "streak_master",
-    name: "Streak Master",
-    description: "7-day visit streak",
-    icon: Flame,
-    howToEarn: "Visit the app for 7 consecutive days",
-    colors: {
-      bg: "from-red-400 to-orange-600",
-      border: "border-red-500",
-      text: "text-red-700",
-      glow: "shadow-red-500/50",
-    },
-  },
-  {
     id: "verified",
     name: "Verified",
     description: "Verified email",

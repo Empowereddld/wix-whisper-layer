@@ -34,7 +34,7 @@ export interface WaitlistState {
   queuePosition: number | null;
   emailVerified: boolean;
   badges: string[];
-  streakDays: number;
+  
   shareCount: number;
   clickCount: number;
   loading: boolean;
@@ -66,7 +66,7 @@ export function useStorybuildersWaitlist() {
     queuePosition: null,
     emailVerified: false,
     badges: [],
-    streakDays: 0,
+    
     shareCount: 0,
     clickCount: 0,
     loading: false,
