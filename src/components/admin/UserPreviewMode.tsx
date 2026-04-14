@@ -277,234 +277,11 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
               </motion.div>
             </div>
 
-            {/* Rewards Inventory */}
-            <motion.div
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.35 }}
-            >
-              <Card className="bg-background border border-border rounded-2xl shadow-sm p-6 relative overflow-hidden">
-                {/* Low opacity background image */}
-                <div
-                  className="absolute inset-0 opacity-[0.04] bg-center bg-no-repeat bg-contain pointer-events-none"
-                  style={{ backgroundImage: `url(${storyPreviewBg})` }}
-                />
-                <div className="relative z-10">
-                  <RewardsInventory
-                    currentTier={selectedTier}
-                    coins={TIER_PREVIEW_DATA[selectedTier].points * 2}
-                    badges={[]}
-                    inventory={{}}
-                    onClaimReward={() => {}}
-                    onRedeemCoinPack={() => {}}
-                  />
-                </div>
-              </Card>
-            </motion.div>
-
-            {/* Interactive Story Preview - Hero+ tier */}
-            {selectedTier >= 3 && (
-              <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.75 }}>
-                <Card className="bg-background border border-border rounded-2xl shadow-sm p-6">
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="font-sans font-bold text-foreground">Interactive Story Preview</h3>
-                    <Badge className="bg-primary/20 text-primary">Tier 4 Exclusive</Badge>
-                  </div>
-                  <p className="text-sm text-muted-foreground mb-4">
-                    As a Hero tier member, you get an exclusive sneak peek at the Story Pros experience. Try an interactive story below!
-                  </p>
-                  <div className="rounded-xl overflow-hidden border border-border">
-                     <iframe
-                      src="https://storyprospreview.lovable.app/preview/story/11111111-1111-1111-1111-111111111111"
-                      className="w-full"
-                      title="Story Pros Interactive Preview"
-                      allow="fullscreen"
-                      style={{ height: "900px" }}
-                    />
-                  </div>
-                </Card>
-              </motion.div>
-            )}
-
-            {/* Interactive Story Preview - Locked teaser for lower tiers */}
-            {selectedTier < 3 && (
-              <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.75 }}>
-                <Card className="bg-background border border-border rounded-2xl shadow-sm p-6 relative overflow-hidden">
-                  <div className="absolute inset-0 bg-white/80 backdrop-blur-sm z-10 flex flex-col items-center justify-center">
-                    <Lock className="h-8 w-8 text-muted-foreground mb-2" />
-                    <p className="font-semibold text-foreground">Interactive Preview</p>
-                    <p className="text-sm text-muted-foreground">Reach Tier 4 ({TIER_THRESHOLDS[3]} pts) to unlock</p>
-                  </div>
-                  <div className="opacity-20">
-                    <h3 className="font-sans font-bold text-foreground mb-4">Interactive Story Preview</h3>
-                    <div className="rounded-xl overflow-hidden" style={{ height: "400px" }}>
-                      <img src={storyPreviewBg} alt="" className="w-full h-full object-cover" />
-                    </div>
-                  </div>
-                </Card>
-              </motion.div>
-            )}
-
-            {/* Referral Link Card */}
-            <motion.div
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.4 }}
-            >
-              <Card className="bg-background border border-border rounded-2xl shadow-sm p-6">
-                <h3 className="font-sans font-bold text-foreground mb-4">
-                  Your Referral Link
-                </h3>
-                <div className="flex gap-2">
-                  <div className="flex-1 bg-muted border border-border rounded-lg px-4 py-3 font-mono text-sm text-foreground">
-                    https://empowereddld.com/storypros?ref=SARAH_M_2847
-                  </div>
-                  <Button
-                    className="bg-primary hover:bg-primary/90 text-primary-foreground"
-                    size="sm"
-                  >
-                    <Copy className="h-4 w-4" />
-                  </Button>
-                </div>
-              </Card>
-            </motion.div>
-
-            {/* Share Panel */}
-            <motion.div
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.5 }}
-            >
-              <Card className="bg-background border border-border rounded-2xl shadow-sm p-6">
-                <h3 className="font-sans font-bold text-foreground mb-4">
-                  Share & Earn Referrals
-                </h3>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                  <Button className="bg-foreground hover:bg-foreground/90 text-background flex items-center gap-2">
-                    <Twitter className="h-4 w-4" />
-                    <span className="hidden sm:inline">Twitter</span>
-                  </Button>
-                  <Button className="bg-[#1877F2] hover:bg-[#0A66C2] text-white flex items-center gap-2">
-                    <Facebook className="h-4 w-4" />
-                    <span className="hidden sm:inline">Facebook</span>
-                  </Button>
-                  <Button className="bg-[#EA4335] hover:bg-[#C5221F] text-white flex items-center gap-2">
-                    <Mail className="h-4 w-4" />
-                    <span className="hidden sm:inline">Email</span>
-                  </Button>
-                  <Button className="bg-[#25D366] hover:bg-[#128C7E] text-white flex items-center gap-2">
-                    <Share2 className="h-4 w-4" />
-                    <span className="hidden sm:inline">WhatsApp</span>
-                  </Button>
-                  <Button className="bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 hover:opacity-90 text-white flex items-center gap-2">
-                    <Instagram className="h-4 w-4" />
-                    <span className="hidden sm:inline">Instagram</span>
-                  </Button>
-                  <Button className="bg-primary hover:bg-primary/90 text-primary-foreground flex items-center gap-2">
-                    <Copy className="h-4 w-4" />
-                    <span className="hidden sm:inline">Copy</span>
-                  </Button>
-                </div>
-              </Card>
-            </motion.div>
-
-            {/* Follow Us Section */}
-            <motion.div
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.55 }}
-            >
-              <Card className="bg-background border border-border rounded-2xl shadow-sm p-6">
-                <h3 className="font-sans font-bold text-foreground mb-2">
-                  Follow Us & Earn Points
-                </h3>
-                <p className="text-sm text-muted-foreground mb-4">
-                  Follow us on social media to earn bonus points per platform!
-                </p>
-                <div className="grid grid-cols-3 gap-3">
-                  {[
-                    { id: "instagram", label: "Instagram", icon: Instagram, color: "bg-gradient-to-r from-purple-500 via-pink-500 to-red-500", url: SOCIAL_LINKS.INSTAGRAM, points: ONETIME_POINTS.FOLLOW_INSTAGRAM },
-                    { id: "facebook", label: "Facebook", icon: Facebook, color: "bg-[#1877F2]", url: SOCIAL_LINKS.FACEBOOK, points: ONETIME_POINTS.FOLLOW_FACEBOOK },
-                    { id: "youtube", label: "YouTube", icon: () => <span className="text-lg">▶️</span>, color: "bg-red-600", url: SOCIAL_LINKS.YOUTUBE, points: ONETIME_POINTS.SUBSCRIBE_YOUTUBE },
-                  ].map((social) => {
-                    const isFollowed = followedPlatforms[social.id];
-                    const Icon = social.icon;
-                    return (
-                      <Button
-                        key={social.id}
-                        onClick={() => handleFollowClick(social.id, social.url)}
-                        disabled={isFollowed}
-                        className={`h-12 rounded-xl flex items-center justify-center gap-2 text-white font-medium transition-all ${
-                          isFollowed ? "bg-emerald-500/20 border border-emerald-500/50 text-emerald-600" : `${social.color} hover:opacity-90`
-                        } disabled:opacity-100`}
-                      >
-                        {isFollowed ? (
-                          <Check className="h-5 w-5 text-emerald-500" />
-                        ) : (
-                          <Icon className="h-5 w-5" />
-                        )}
-                        <span className="hidden sm:inline text-sm">
-                          {isFollowed ? `+${social.points} pts ✓` : `${social.label} (+${social.points})`}
-                        </span>
-                      </Button>
-                    );
-                  })}
-                </div>
-              </Card>
-            </motion.div>
-
-            {/* Referral Tracker */}
-            <motion.div
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.6 }}
-            >
-              <Card className="bg-background border border-border rounded-2xl shadow-sm p-6">
-                <h3 className="font-sans font-bold text-foreground mb-4">
-                  Your Referrals
-                </h3>
-                {tierData.referrals > 0 ? (
-                  <div className="space-y-3">
-                    {Array.from({ length: tierData.referrals }).map((_, idx) => (
-                      <div
-                        key={idx}
-                        className="flex items-center justify-between p-3 bg-muted border border-border rounded-lg"
-                      >
-                        <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-semibold text-sm">
-                            {idx + 1}
-                          </div>
-                          <div>
-                            <p className="text-sm font-medium text-foreground">
-                              Referral {idx + 1}
-                            </p>
-                            <p className="text-xs text-muted-foreground">
-                              25 points earned
-                            </p>
-                          </div>
-                        </div>
-                        <Badge className="bg-emerald-500 text-white">
-                          Verified
-                        </Badge>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <div className="text-center py-8">
-                    <Users className="h-8 w-8 text-border mx-auto mb-2" />
-                    <p className="text-sm text-muted-foreground">
-                      No referrals yet. Start sharing to earn points!
-                    </p>
-                  </div>
-                )}
-              </Card>
-            </motion.div>
-
             {/* How to Earn Section */}
             <motion.div
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.65 }}
+              transition={{ delay: 0.35 }}
             >
               <Card className="bg-background border border-border rounded-2xl shadow-sm p-6">
                 <h3 className="font-sans font-bold text-foreground mb-6">
@@ -652,11 +429,187 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
               </Card>
             </motion.div>
 
+            {/* Interactive Story Preview - Hero+ tier */}
+            {selectedTier >= 3 && (
+              <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.4 }}>
+                <Card className="bg-background border border-border rounded-2xl shadow-sm p-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="font-sans font-bold text-foreground">Interactive Story Preview</h3>
+                    <Badge className="bg-primary/20 text-primary">Tier 4 Exclusive</Badge>
+                  </div>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    As a Hero tier member, you get an exclusive sneak peek at the Story Pros experience. Try an interactive story below!
+                  </p>
+                  <div className="rounded-xl overflow-hidden border border-border">
+                     <iframe
+                      src="https://storyprospreview.lovable.app/preview/story/11111111-1111-1111-1111-111111111111"
+                      className="w-full"
+                      title="Story Pros Interactive Preview"
+                      allow="fullscreen"
+                      style={{ height: "900px" }}
+                    />
+                  </div>
+                </Card>
+              </motion.div>
+            )}
+
+            {/* Interactive Story Preview - Locked teaser for lower tiers */}
+            {selectedTier < 3 && (
+              <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.4 }}>
+                <Card className="bg-background border border-border rounded-2xl shadow-sm p-6 relative overflow-hidden">
+                  <div className="absolute inset-0 bg-white/80 backdrop-blur-sm z-10 flex flex-col items-center justify-center">
+                    <Lock className="h-8 w-8 text-muted-foreground mb-2" />
+                    <p className="font-semibold text-foreground">Interactive Preview</p>
+                    <p className="text-sm text-muted-foreground">Reach Tier 4 ({TIER_THRESHOLDS[3]} pts) to unlock</p>
+                  </div>
+                  <div className="opacity-20">
+                    <h3 className="font-sans font-bold text-foreground mb-4">Interactive Story Preview</h3>
+                    <div className="rounded-xl overflow-hidden" style={{ height: "400px" }}>
+                      <img src={storyPreviewBg} alt="" className="w-full h-full object-cover" />
+                    </div>
+                  </div>
+                </Card>
+              </motion.div>
+            )}
+
+            {/* Referral Link Card */}
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.45 }}
+            >
+              <Card className="bg-background border border-border rounded-2xl shadow-sm p-6">
+                <h3 className="font-sans font-bold text-foreground mb-4">
+                  Your Referral Link
+                </h3>
+                <div className="flex gap-2">
+                  <div className="flex-1 bg-muted border border-border rounded-lg px-4 py-3 font-mono text-sm text-foreground">
+                    https://empowereddld.com/storypros?ref=SARAH_M_2847
+                  </div>
+                  <Button
+                    className="bg-primary hover:bg-primary/90 text-primary-foreground"
+                    size="sm"
+                  >
+                    <Copy className="h-4 w-4" />
+                  </Button>
+                </div>
+              </Card>
+            </motion.div>
+
+            {/* Share Panel */}
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.5 }}
+            >
+              <Card className="bg-background border border-border rounded-2xl shadow-sm p-6">
+                <h3 className="font-sans font-bold text-foreground mb-4">
+                  Share & Earn Referrals
+                </h3>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                  <Button className="bg-foreground hover:bg-foreground/90 text-background flex items-center gap-2">
+                    <Twitter className="h-4 w-4" />
+                    <span className="hidden sm:inline">Twitter</span>
+                  </Button>
+                  <Button className="bg-[#1877F2] hover:bg-[#0A66C2] text-white flex items-center gap-2">
+                    <Facebook className="h-4 w-4" />
+                    <span className="hidden sm:inline">Facebook</span>
+                  </Button>
+                  <Button className="bg-[#EA4335] hover:bg-[#C5221F] text-white flex items-center gap-2">
+                    <Mail className="h-4 w-4" />
+                    <span className="hidden sm:inline">Email</span>
+                  </Button>
+                  <Button className="bg-[#25D366] hover:bg-[#128C7E] text-white flex items-center gap-2">
+                    <Share2 className="h-4 w-4" />
+                    <span className="hidden sm:inline">WhatsApp</span>
+                  </Button>
+                  <Button className="bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 hover:opacity-90 text-white flex items-center gap-2">
+                    <Instagram className="h-4 w-4" />
+                    <span className="hidden sm:inline">Instagram</span>
+                  </Button>
+                  <Button className="bg-primary hover:bg-primary/90 text-primary-foreground flex items-center gap-2">
+                    <Copy className="h-4 w-4" />
+                    <span className="hidden sm:inline">Copy</span>
+                  </Button>
+                </div>
+              </Card>
+            </motion.div>
+
+            {/* Follow Us Section */}
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.55 }}
+            >
+              <Card className="bg-background border border-border rounded-2xl shadow-sm p-6">
+                <h3 className="font-sans font-bold text-foreground mb-2">
+                  Follow Us & Earn Points
+                </h3>
+                <p className="text-sm text-muted-foreground mb-4">
+                  Follow us on social media to earn bonus points per platform!
+                </p>
+                <div className="grid grid-cols-3 gap-3">
+                  {[
+                    { id: "instagram", label: "Instagram", icon: Instagram, color: "bg-gradient-to-r from-purple-500 via-pink-500 to-red-500", url: SOCIAL_LINKS.INSTAGRAM, points: ONETIME_POINTS.FOLLOW_INSTAGRAM },
+                    { id: "facebook", label: "Facebook", icon: Facebook, color: "bg-[#1877F2]", url: SOCIAL_LINKS.FACEBOOK, points: ONETIME_POINTS.FOLLOW_FACEBOOK },
+                    { id: "youtube", label: "YouTube", icon: () => <span className="text-lg">▶️</span>, color: "bg-red-600", url: SOCIAL_LINKS.YOUTUBE, points: ONETIME_POINTS.SUBSCRIBE_YOUTUBE },
+                  ].map((social) => {
+                    const isFollowed = followedPlatforms[social.id];
+                    const Icon = social.icon;
+                    return (
+                      <Button
+                        key={social.id}
+                        onClick={() => handleFollowClick(social.id, social.url)}
+                        disabled={isFollowed}
+                        className={`h-12 rounded-xl flex items-center justify-center gap-2 text-white font-medium transition-all ${
+                          isFollowed ? "bg-emerald-500/20 border border-emerald-500/50 text-emerald-600" : `${social.color} hover:opacity-90`
+                        } disabled:opacity-100`}
+                      >
+                        {isFollowed ? (
+                          <Check className="h-5 w-5 text-emerald-500" />
+                        ) : (
+                          <Icon className="h-5 w-5" />
+                        )}
+                        <span className="hidden sm:inline text-sm">
+                          {isFollowed ? `+${social.points} pts ✓` : `${social.label} (+${social.points})`}
+                        </span>
+                      </Button>
+                    );
+                  })}
+                </div>
+              </Card>
+            </motion.div>
+
+            {/* Rewards Inventory (Tier Programs) */}
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.6 }}
+            >
+              <Card className="bg-background border border-border rounded-2xl shadow-sm p-6 relative overflow-hidden">
+                {/* Low opacity background image */}
+                <div
+                  className="absolute inset-0 opacity-[0.04] bg-center bg-no-repeat bg-contain pointer-events-none"
+                  style={{ backgroundImage: `url(${storyPreviewBg})` }}
+                />
+                <div className="relative z-10">
+                  <RewardsInventory
+                    currentTier={selectedTier}
+                    coins={TIER_PREVIEW_DATA[selectedTier].points * 2}
+                    badges={[]}
+                    inventory={{}}
+                    onClaimReward={() => {}}
+                    onRedeemCoinPack={() => {}}
+                  />
+                </div>
+              </Card>
+            </motion.div>
+
             {/* Impact Counter */}
             <motion.div
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.8 }}
+              transition={{ delay: 0.65 }}
             >
               <Card className="bg-gradient-to-br from-primary to-primary/80 text-primary-foreground rounded-2xl shadow-sm p-8">
                 <div className="text-center space-y-2">
@@ -690,6 +643,53 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
                 </Card>
               </motion.div>
             )}
+
+            {/* Referral Tracker - at the bottom */}
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.7 }}
+            >
+              <Card className="bg-background border border-border rounded-2xl shadow-sm p-6">
+                <h3 className="font-sans font-bold text-foreground mb-4">
+                  Your Referrals
+                </h3>
+                {tierData.referrals > 0 ? (
+                  <div className="space-y-3">
+                    {Array.from({ length: tierData.referrals }).map((_, idx) => (
+                      <div
+                        key={idx}
+                        className="flex items-center justify-between p-3 bg-muted border border-border rounded-lg"
+                      >
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-semibold text-sm">
+                            {idx + 1}
+                          </div>
+                          <div>
+                            <p className="text-sm font-medium text-foreground">
+                              Referral {idx + 1}
+                            </p>
+                            <p className="text-xs text-muted-foreground">
+                              25 points earned
+                            </p>
+                          </div>
+                        </div>
+                        <Badge className="bg-emerald-500 text-white">
+                          Verified
+                        </Badge>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="text-center py-8">
+                    <Users className="h-8 w-8 text-border mx-auto mb-2" />
+                    <p className="text-sm text-muted-foreground">
+                      No referrals yet. Start sharing to earn points!
+                    </p>
+                  </div>
+                )}
+              </Card>
+            </motion.div>
 
 
             {/* Bottom Spacing */}
