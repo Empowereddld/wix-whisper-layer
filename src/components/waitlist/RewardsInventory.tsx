@@ -180,16 +180,6 @@ export default function RewardsInventory({
         onComplete={() => setCoinDropTrigger(false)}
       />
 
-      {/* Header */}
-      <div className="mb-6">
-        <h2 className="font-sans text-2xl font-bold text-[#3b1f59] mb-1">
-          My Rewards
-        </h2>
-        <p className="text-sm text-[#121212]">
-          Track your progress, claim rewards, and redeem coins for exclusive perks.
-        </p>
-      </div>
-
       {/* Tab Navigation */}
       <div className="flex gap-2 mb-6 overflow-x-auto pb-2">
         {tabs.map((tab) => (
