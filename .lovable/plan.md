@@ -1,18 +1,43 @@
 
 
-## Remove Detailed Points Mechanics from Progress Steps
+## Simplify Copy & Lower Thresholds
 
-**Why**: The granular points breakdown ("+2 pts with streak bonuses up to +50", "7-day streak earns +10 bonus points") feels overwhelming for parents/educators. Keep messaging aspirational and action-oriented.
+### 1. Lower point thresholds (`src/lib/waitlist-constants.ts`)
 
-### Changes (single file: `src/pages/StoryBuilders.tsx`)
+Current: `[0, 40, 100, 175, 325, 600]`
+New: `[0, 35, 75, 130, 250, 500]`
 
-**Tier 2 impact text (line 659)**:
-- From: "Share your referral link with other families (+25 pts per signup), post on social media (+3 pts per share), and check in daily (+2 pts with streak bonuses up to +50). You can reach this tier without any referrals."
-- To: "Share your referral link with other families, post on social media, and check in daily to climb. You can reach this tier without any referrals."
+This makes every tier feel more reachable — especially Tiers 3–5 where the current gaps are steep for busy parents.
 
-**Tier 3 impact text (line 665)**:
-- From: "Keep referring families, sharing your link, and building your daily check-in streak. A 7-day streak earns +10 bonus points, and a 14-day streak earns +20. Every referral is worth 25 points."
-- To: "Keep referring families, sharing your link, and building your daily check-in streak. Consistency is rewarded — the longer your streak, the faster you climb."
+### 2. Simplify copy & remove "check in" references (`src/pages/StoryBuilders.tsx`)
 
-The point values (+25, +3, etc.) in the Tier 1 text are fine since that's the onboarding step where users need to understand the basics. Tiers 4 and 5 already use aspirational language and don't need changes.
+**Tier 1** (line 652–654):
+- Task: `"Tier 1 — 0 points"`
+- Impact → `"You earned 10 points just by signing up. Complete your profile, verify your email, and follow us on social media to start climbing."`
+- Removes all the raw `+10 pts`, `+5 pts`, `+8 pts` values.
+
+**Tier 2** (line 658–660):
+- Task: `"Tier 2 — 35 points"`
+- Impact → `"Share your referral link with other families and post on social media to climb. You can reach this tier without any referrals."`
+- Removes "check in daily".
+
+**Tier 3** (line 664–666):
+- Task: `"Tier 3 — 75 points"`
+- Impact → `"Keep referring families and sharing your link. Consistency is rewarded — the more you share, the faster you climb."`
+- Removes "daily check-in streak" reference.
+
+**Tier 4** (line 670): Task → `"Tier 4 — 130 points"` (impact text stays — it's already clean)
+
+**Tier 5** (line 676–678): Task → `"Tier 5 — 250 points"`, and update the subdesc from "600 pts" → "500 pts" for the Tier 6 teaser.
+
+### 3. Update Tier 2 tip text (line 660)
+
+Current subdesc: `"Tip: Profile + email + 3 social follows = 49 pts — that's Tier 2 right there"`
+New: `"Tip: Profile + email + 3 social follows gets you past Tier 2 right away"`
+
+Removes the raw math while keeping the helpful nudge.
+
+### Summary
+
+Three changes across two files — lower the thresholds, remove "check in" language, and strip point values from Tier 1 copy. Everything else stays as-is.
 
