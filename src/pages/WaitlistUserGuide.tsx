@@ -98,10 +98,6 @@ const WaitlistUserGuide = () => {
     },
     {
       q: "Can I share the same referral link multiple times?",
-      a: "Yes! Your referral link never expires. Share it as many times as you want on different platforms and to different people. Each person who signs up through your link counts toward your tier.",
-    },
-    {
-      q: "How is the leaderboard determined?",
       a: "The leaderboard ranks members by total points earned. It's not just about referrals — sharing, suggestions, and other activities all count toward your position!",
     },
     {
