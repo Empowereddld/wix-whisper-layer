@@ -35,7 +35,6 @@ import {
   TIER_THRESHOLDS,
   ONETIME_POINTS,
   REPEATABLE_POINTS,
-  STREAK_BONUSES,
   DAILY_CAPS,
   COIN_DROPS,
   COMMUNITY_MILESTONES,
@@ -52,7 +51,6 @@ interface TierData {
   points: number;
   referrals: number;
   badges: string[];
-  streakDays: number;
 }
 
 const TIER_PREVIEW_DATA: Record<number, TierData> = {
@@ -61,28 +59,24 @@ const TIER_PREVIEW_DATA: Record<number, TierData> = {
     points: 10,
     referrals: 0,
     badges: ["welcome"],
-    streakDays: 1,
   },
   1: {
     name: "Sarah M.",
     points: 48,
     referrals: 1,
     badges: ["welcome", "first_referral"],
-    streakDays: 5,
   },
   2: {
     name: "Sarah M.",
     points: 115,
     referrals: 3,
     badges: ["welcome", "first_referral", "social_butterfly"],
-    streakDays: 12,
   },
   3: {
     name: "Sarah M.",
     points: 195,
     referrals: 5,
     badges: ["welcome", "first_referral", "social_butterfly", "champion"],
-    streakDays: 20,
   },
   4: {
     name: "Sarah M.",
@@ -93,10 +87,8 @@ const TIER_PREVIEW_DATA: Record<number, TierData> = {
       "first_referral",
       "social_butterfly",
       "champion",
-      "streak_master",
       "super_referrer",
     ],
-    streakDays: 35,
   },
   5: {
     name: "Sarah M.",
@@ -107,11 +99,9 @@ const TIER_PREVIEW_DATA: Record<number, TierData> = {
       "first_referral",
       "social_butterfly",
       "champion",
-      "streak_master",
       "super_referrer",
       "founding_elite",
     ],
-    streakDays: 60,
   },
 };
 
@@ -120,7 +110,6 @@ const BADGE_NAMES: Record<string, string> = {
   first_referral: "First Referral",
   social_butterfly: "Social Butterfly",
   champion: "Tier 3",
-  streak_master: "Streak Master",
   super_referrer: "Super Referrer",
   founding_elite: "Tier 6",
 };
@@ -130,7 +119,6 @@ const BADGE_COLORS: Record<string, string> = {
   first_referral: "bg-primary/80 text-primary-foreground",
   social_butterfly: "bg-emerald-600 text-white",
   champion: "bg-amber-500 text-white",
-  streak_master: "bg-rose-400 text-white",
   super_referrer: "bg-primary/60 text-white",
   founding_elite: "bg-deep-purple text-white",
 };
@@ -346,80 +334,10 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
                       {tierData.referrals}
                     </p>
                   </div>
-                  <div className="border-t border-border pt-4">
-                    <div className="flex items-center gap-2 mb-2">
-                      <Flame className="h-4 w-4 text-primary/70" />
-                      <p className="text-xs text-muted-foreground uppercase tracking-wide font-semibold">
-                        Streak
-                      </p>
-                    </div>
-                    <p className="text-2xl font-bold text-primary/70">
-                      {tierData.streakDays}
-                    </p>
-                    <p className="text-xs text-muted-foreground">days</p>
-                  </div>
                 </Card>
               </motion.div>
             </div>
 
-            {/* Daily Streak Card */}
-            <motion.div
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.35 }}
-            >
-              <Card className="bg-gradient-to-br from-[#f3ebf8] to-white border border-[#8861d4]/30 rounded-2xl shadow-sm p-6">
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <h3 className="font-sans font-bold text-[#3b1f59]">
-                      Daily Streak
-                    </h3>
-                    <div className="flex items-center gap-2">
-                      <Flame className="h-5 w-5 text-orange-500" />
-                      <span className="text-2xl font-bold text-orange-500">
-                        {tierData.streakDays}
-                      </span>
-                    </div>
-                  </div>
-                  <p className="text-sm text-gray-700">
-                    Check in daily to earn{" "}
-                    <span className="font-semibold text-[#8861d4]">
-                      {REPEATABLE_POINTS.DAILY_CHECKIN} pts
-                    </span>
-                    . Bonus milestones:
-                  </p>
-                  <div className="bg-white rounded-lg p-3 space-y-2">
-                    <div className="flex items-center justify-between text-sm">
-                      <span className="text-gray-700">3-day streak</span>
-                      <span className="font-semibold text-[#8861d4]">
-                        +{STREAK_BONUSES.DAYS_3} pts
-                      </span>
-                    </div>
-                    <div className="flex items-center justify-between text-sm">
-                      <span className="text-gray-700">7-day streak</span>
-                      <span className="font-semibold text-[#8861d4]">
-                        +{STREAK_BONUSES.DAYS_7} pts
-                      </span>
-                    </div>
-                    <div className="flex items-center justify-between text-sm">
-                      <span className="text-gray-700">14-day streak</span>
-                      <span className="font-semibold text-[#8861d4]">
-                        +{STREAK_BONUSES.DAYS_14} pts
-                      </span>
-                    </div>
-                    <div className="flex items-center justify-between text-sm">
-                      <span className="text-gray-700">30-day streak</span>
-                      <span className="font-semibold text-[#8861d4]">
-                        +{STREAK_BONUSES.DAYS_30} pts
-                      </span>
-                    </div>
-                  </div>
-                  <Button className="w-full bg-[#8861d4] hover:bg-[#7551c4] text-white mt-2">
-                    Check In Today
-                  </Button>
-                </div>
-              </Card>
-            </motion.div>
 
             {/* Interactive Story Preview - Hero+ tier */}
             {selectedTier >= 3 && (
@@ -717,12 +635,6 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
                           <span className="font-bold text-[#8861d4]">
                             {REPEATABLE_POINTS.SHARE} pts (max{" "}
                             {DAILY_CAPS.MAX_SHARE_POINTS}/day)
-                          </span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-foreground">Daily check-in</span>
-                          <span className="font-bold text-[#8861d4]">
-                            {REPEATABLE_POINTS.DAILY_CHECKIN} pts/day
                           </span>
                         </div>
                         <div className="flex justify-between">

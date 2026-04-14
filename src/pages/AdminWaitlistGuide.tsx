@@ -511,41 +511,16 @@ Reason: Bonus for social media share`} />
                       <p className="font-semibold text-[#3b1f59]">Suggestion</p>
                       <p className="text-2xl font-bold text-[#8861d4]">+5</p>
                     </div>
-                    <div className="p-3 bg-[#f3ebf8] rounded-lg border-l-4 border-[#8861d4]">
-                      <p className="font-semibold text-[#3b1f59]">Daily Check-in</p>
-                      <p className="text-2xl font-bold text-[#8861d4]">+2</p>
-                    </div>
                   </div>
                 </div>
 
-                <div>
-                  <h4 className="font-semibold text-[#3b1f59] mb-3">Streak Bonuses</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
-                    <div className="p-3 bg-[#f3ebf8] rounded-lg border-l-4 border-[#8861d4]">
-                      <p className="font-semibold text-[#3b1f59]">3-Day Streak</p>
-                      <p className="text-2xl font-bold text-[#8861d4]">+3</p>
-                    </div>
-                    <div className="p-3 bg-[#f3ebf8] rounded-lg border-l-4 border-[#8861d4]">
-                      <p className="font-semibold text-[#3b1f59]">7-Day Streak</p>
-                      <p className="text-2xl font-bold text-[#8861d4]">+10</p>
-                    </div>
-                    <div className="p-3 bg-[#f3ebf8] rounded-lg border-l-4 border-[#8861d4]">
-                      <p className="font-semibold text-[#3b1f59]">14-Day Streak</p>
-                      <p className="text-2xl font-bold text-[#8861d4]">+20</p>
-                    </div>
-                    <div className="p-3 bg-[#f3ebf8] rounded-lg border-l-4 border-[#8861d4]">
-                      <p className="font-semibold text-[#3b1f59]">30-Day Streak</p>
-                      <p className="text-2xl font-bold text-[#8861d4]">+50</p>
-                    </div>
-                  </div>
-                </div>
 
                 <div>
                   <h4 className="font-semibold text-[#3b1f59] mb-3">Daily Caps</h4>
                   <ul className="space-y-2 text-sm list-disc list-inside text-[#121212]">
                     <li>Shares: 15 pts/day max</li>
                     <li>Clicks: 10 pts/day max</li>
-                    <li>Check-in: once per day</li>
+                    
                   </ul>
                 </div>
               </div>
