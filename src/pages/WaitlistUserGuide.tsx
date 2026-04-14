@@ -7,9 +7,7 @@ import SEOHead from "@/components/SEOHead";
 import {
   TIER_NAMES,
   TIER_COLORS,
-  TIER_REFERRALS,
   TIER_REWARDS,
-  COMMUNITY_MILESTONES,
   POINTS,
 } from "@/lib/waitlist-constants";
 import { glass, gradients, animations, typography } from "@/lib/glassmorphism";
