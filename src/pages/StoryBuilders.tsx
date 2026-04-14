@@ -656,13 +656,13 @@ const StoryBuilders = () => {
               },
               {
                 task: "Tier 2 — 40 points",
-                impact: "Share your referral link with other families (+25 pts per signup), post on social media (+3 pts per share), and check in daily (+2 pts with streak bonuses up to +50). You can reach this tier without any referrals.",
+                impact: "Share your referral link with other families, post on social media, and check in daily to climb. You can reach this tier without any referrals.",
                 reward: { icon: <Rocket size={20} />, title: "Early access when Story Pros launches", desc: "You'll get into the full app before the general public on launch day — plus your Tier 2 badge", subdesc: "Tip: Profile + email + 3 social follows = 49 pts — that's Tier 2 right there" },
                 invites: 1,
               },
               {
                 task: "Tier 3 — 100 points",
-                impact: "Keep referring families, sharing your link, and building your daily check-in streak. A 7-day streak earns +10 bonus points, and a 14-day streak earns +20. Every referral is worth 25 points.",
+                impact: "Keep referring families, sharing your link, and building your daily check-in streak. Consistency is rewarded — the longer your streak, the faster you climb.",
                 reward: { icon: <Gift size={20} />, title: "75 Story Coins dropped into your account", desc: "Story Coins are in-app currency you can spend on upgrades and extras when the app launches — plus your Tier 3 badge" },
                 invites: 3,
               },
