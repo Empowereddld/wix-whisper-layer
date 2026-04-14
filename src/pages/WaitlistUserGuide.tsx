@@ -90,11 +90,11 @@ const WaitlistUserGuide = () => {
     },
     {
       q: "Can I earn points without referring friends?",
-      a: "Absolutely! You can earn points by completing your profile (10 pts), verifying email (5 pts), following us on Instagram (8 pts), Facebook (8 pts), and YouTube (8 pts), sharing on social media (3 pts), clicking engagement links (1 pt), and suggesting stories (5 pts). Referrals give the most points, but you can reach Tier 1 just by completing your profile and following our social accounts!",
+      a: "Absolutely! You can earn points by completing your profile (10 pts), verifying email (5 pts), following us on Instagram (8 pts), Facebook (8 pts), and YouTube (8 pts), sharing on social media (3 pts), clicking engagement links (1 pt), and suggesting stories (5 pts). Referrals give the most points, but you can reach Tier 2 just by completing your profile and following our social accounts!",
     },
     {
       q: "What happens to my tier after launch?",
-      a: "Your tier status carries through to launch! Founding Elite members get lifetime founder pricing and recognition on our website. All other tier members get special launch bonuses and exclusive content.",
+      a: "Your tier status carries through to launch! Tier 6 (Founding Elite) members get lifetime founder pricing and recognition on our website. All other tier members get special launch bonuses and exclusive content.",
     },
     {
       q: "Can I share the same referral link multiple times?",
@@ -210,13 +210,13 @@ const WaitlistUserGuide = () => {
                     <div className="flex-grow">
                       <h3 className="text-2xl font-bold mb-1 text-[#3b1f59]">{tier}</h3>
                       <p className="text-sm text-gray-600">
-                        Reach {[0, 40, 100, 175, 325, 600][index]} points
+                        Reach {[0, 35, 75, 130, 250, 500][index]} points
                       </p>
                     </div>
                     {index > 0 && (
                       <div className="text-right">
                         <div className="text-3xl font-bold" style={{ color: TIER_COLORS[index] }}>
-                          {[0, 40, 100, 175, 325, 600][index]}
+                          {[0, 35, 75, 130, 250, 500][index]}
                         </div>
                       </div>
                     )}
