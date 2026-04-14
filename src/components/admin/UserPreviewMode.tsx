@@ -287,7 +287,7 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
               </motion.div>
             </div>
 
-            {/* Tier Rewards Progress */}
+            {/* Rewards Inventory */}
             <motion.div
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
@@ -300,78 +300,14 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
                   style={{ backgroundImage: `url(${storyPreviewBg})` }}
                 />
                 <div className="relative z-10">
-                  <h3 className="font-sans font-bold text-foreground mb-5">
-                    Your Reward Journey
-                  </h3>
-                  {/* Vertical progress line */}
-                  <div className="relative">
-                    <div className="absolute left-5 top-0 bottom-0 w-0.5 bg-border" />
-                    {/* Filled progress */}
-                    <div
-                      className="absolute left-5 top-0 w-0.5 bg-primary transition-all duration-700"
-                      style={{ height: `${((selectedTier + 1) / TIER_REWARDS.length) * 100}%` }}
-                    />
-
-                    <div className="space-y-1">
-                      {TIER_REWARDS.map((reward, idx) => {
-                        const isUnlocked = selectedTier >= idx;
-                        const isCurrent = selectedTier === idx;
-                        const colors = TIER_REWARD_COLORS[idx];
-
-                        return (
-                          <div
-                            key={idx}
-                            className="relative flex items-center gap-4 py-2.5 px-4 rounded-xl transition-all duration-300"
-                            style={{
-                              backgroundColor: isUnlocked ? colors.bg : "transparent",
-                              borderLeft: isCurrent ? `3px solid ${colors.accent}` : "3px solid transparent",
-                            }}
-                          >
-                            {/* Progress dot */}
-                            <div
-                              className="relative z-10 w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 transition-all duration-300"
-                              style={{
-                                backgroundColor: isUnlocked ? colors.accent : "#e5e5e5",
-                                border: isCurrent ? `2px solid ${colors.accent}` : "none",
-                                boxShadow: isCurrent ? `0 0 12px ${colors.accent}40` : "none",
-                              }}
-                            >
-                              {isUnlocked ? (
-                                <Check className="h-4 w-4 text-white" />
-                              ) : (
-                                <Lock className="h-3.5 w-3.5 text-gray-400" />
-                              )}
-                            </div>
-
-                            {/* Content */}
-                            <div className="flex-1 min-w-0">
-                              <div className="flex items-center gap-2">
-                                <span className="text-xs font-semibold uppercase tracking-wide" style={{ color: isUnlocked ? colors.accent : "#9ca3af" }}>
-                                  {TIER_NAMES[idx]}
-                                </span>
-                                <span className="text-xs text-muted-foreground">
-                                  {TIER_THRESHOLDS[idx]} pts
-                                </span>
-                              </div>
-                              <p className={`text-sm font-medium ${isUnlocked ? "text-foreground" : "text-muted-foreground"}`}>
-                                {reward.name}
-                              </p>
-                              <p className="text-xs text-muted-foreground line-clamp-1">
-                                {reward.description}
-                              </p>
-                            </div>
-
-                            {/* Status */}
-                            {isUnlocked && (
-                              <Badge className="bg-emerald-500/15 text-emerald-600 text-xs flex-shrink-0">
-                                Unlocked
-                              </Badge>
-                            )}
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
+                  <RewardsInventory
+                    currentTier={selectedTier}
+                    coins={TIER_PREVIEW_DATA[selectedTier].points * 2}
+                    badges={[]}
+                    inventory={{}}
+                    onClaimReward={() => {}}
+                    onRedeemCoinPack={() => {}}
+                  />
                 </div>
               </Card>
             </motion.div>
