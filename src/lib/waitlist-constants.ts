@@ -135,23 +135,12 @@ export const REPEATABLE_POINTS = {
   SHARE: 3,                // Share on social media (bumped from 2)
   CLICK: 1,                // Friend clicks your link
   SUGGESTION: 5,           // Submit a suggestion (Tier 3+)
-  DAILY_CHECKIN: 2,        // Visit your dashboard (max once/day)
 } as const;
-
-// --- STREAK BONUSES (escalating, stacks with daily check-in) ---
-export const STREAK_BONUSES = {
-  DAYS_3: 3,               // 3-day streak bonus
-  DAYS_7: 10,              // 7-day streak bonus
-  DAYS_14: 20,             // 14-day streak bonus
-  DAYS_30: 50,             // 30-day streak bonus
-} as const;
-// A 30-day daily visitor earns: (30×2) + 3 + 10 + 20 + 50 = 143 pts from engagement alone
 
 // --- DAILY CAPS (prevent farming) ---
 export const DAILY_CAPS = {
   MAX_SHARE_POINTS: 15,    // 5 shares per day max (5×3)
   MAX_CLICK_POINTS: 10,    // 10 clicks per day max
-  MAX_CHECKIN_POINTS: 2,   // 1 check-in per day
 } as const;
 
 // --- SOCIAL LINKS (for follow/subscribe buttons) ---
@@ -175,11 +164,6 @@ export const POINTS = {
   SHARE: REPEATABLE_POINTS.SHARE,
   CLICK: REPEATABLE_POINTS.CLICK,
   SUGGESTION: REPEATABLE_POINTS.SUGGESTION,
-  DAILY_CHECKIN: REPEATABLE_POINTS.DAILY_CHECKIN,
-  STREAK_3: STREAK_BONUSES.DAYS_3,
-  STREAK_7: STREAK_BONUSES.DAYS_7,
-  STREAK_14: STREAK_BONUSES.DAYS_14,
-  STREAK_30: STREAK_BONUSES.DAYS_30,
   MAX_CLICK_POINTS_PER_DAY: DAILY_CAPS.MAX_CLICK_POINTS,
   MAX_SHARE_POINTS_PER_DAY: DAILY_CAPS.MAX_SHARE_POINTS,
 } as const;

@@ -36,7 +36,7 @@ const WaitlistUserGuide = () => {
     { name: "Email Verified", description: "Confirmed your email address", icon: "✓" },
     { name: "Referral Master", description: "Referred 5+ people", icon: "🎯" },
     { name: "Social Butterfly", description: "Shared on multiple platforms", icon: "🦋" },
-    { name: "Streak Champion", description: "Earned a 7-day activity streak", icon: "🔥" },
+    
     { name: "Community Builder", description: "Helped reach a community milestone", icon: "🏗️" },
     { name: "Super Sharer", description: "30+ successful shares", icon: "📢" },
     { name: "Engaged Parent", description: "Made a story suggestion", icon: "💭" },
@@ -90,7 +90,7 @@ const WaitlistUserGuide = () => {
     },
     {
       q: "Can I earn points without referring friends?",
-      a: "Absolutely! You can earn points by completing your profile (10 pts), verifying email (5 pts), following us on Instagram (8 pts), Facebook (8 pts), and YouTube (8 pts), sharing on social media (3 pts), clicking engagement links (1 pt), suggesting stories (5 pts), and maintaining activity streaks (daily check-ins: 2 pts). Referrals give the most points, but you can reach Tier 1 just by completing your profile and following our social accounts!",
+      a: "Absolutely! You can earn points by completing your profile (10 pts), verifying email (5 pts), following us on Instagram (8 pts), Facebook (8 pts), and YouTube (8 pts), sharing on social media (3 pts), clicking engagement links (1 pt), and suggesting stories (5 pts). Referrals give the most points, but you can reach Tier 1 just by completing your profile and following our social accounts!",
     },
     {
       q: "What happens to my tier after launch?",
@@ -102,7 +102,7 @@ const WaitlistUserGuide = () => {
     },
     {
       q: "How is the leaderboard determined?",
-      a: "The leaderboard ranks members by total points earned. It's not just about referrals — sharing, streaks, and other activities all count toward your position!",
+      a: "The leaderboard ranks members by total points earned. It's not just about referrals — sharing, suggestions, and other activities all count toward your position!",
     },
     {
       q: "Will my referrals know I referred them?",
@@ -248,7 +248,7 @@ const WaitlistUserGuide = () => {
                 { label: "Share on Social", points: "3", emoji: "📢" },
                 { label: "Friend Clicks Link", points: "1", emoji: "🖱️" },
                 { label: "Submit Suggestion", points: "5", emoji: "💭" },
-                { label: "Daily Check-in", points: "2", emoji: "📅" },
+                
               ].map((item, idx) => (
                 <motion.div
                   key={idx}
@@ -264,12 +264,6 @@ const WaitlistUserGuide = () => {
               ))}
             </div>
 
-            <motion.div className={`mt-8 p-6 rounded-xl bg-[#f3ebf8] border border-[#dedede]`} whileHover={{ scale: 1.02 }}>
-              <Sparkles className="w-5 h-5 text-[#8861d4] inline mr-2" />
-              <span className="text-[#121212]">
-                <strong>Pro Tip:</strong> Maintain a daily streak by visiting even if you don't share. Check-in streaks: 3 days (+3 pts), 7 days (+10 pts), 14 days (+20 pts), 30 days (+50 pts)!
-              </span>
-            </motion.div>
 
             <motion.div className={`mt-4 p-6 rounded-xl bg-white border border-[#dedede]`} whileHover={{ scale: 1.02 }}>
               <strong className="text-[#121212]">Sharing Limits:</strong>
