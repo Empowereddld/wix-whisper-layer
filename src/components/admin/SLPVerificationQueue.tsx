@@ -39,13 +39,13 @@ const SLPVerificationQueue = () => {
   const loadRequests = async () => {
     try {
       setLoading(true);
-      const { data, error } = await supabase.rpc(
+      const { data, error } = await (supabase.rpc as any)(
         "get_pending_slp_verifications"
       );
 
       if (error) throw error;
 
-      setRequests(data || []);
+      setRequests((data as any) || []);
     } catch (error) {
       console.error("Error loading verification requests:", error);
       toast.error("Failed to load verification requests");
@@ -57,7 +57,7 @@ const SLPVerificationQueue = () => {
   const handleVerify = async (requestId: string) => {
     setVerifying(requestId);
     try {
-      const { data, error } = await supabase.rpc(
+      const { data, error } = await (supabase.rpc as any)(
         "verify_slp_referral",
         {
           p_request_id: requestId,
@@ -66,13 +66,13 @@ const SLPVerificationQueue = () => {
 
       if (error) throw error;
 
-      if (data?.success) {
+      if ((data as any)?.success) {
         toast.success(
           `SLP verified! Referrer awarded ${SLP_REFERRAL_BONUS} bonus points.`
         );
         loadRequests();
       } else {
-        toast.error(data?.error || "Failed to verify SLP");
+        toast.error((data as any)?.error || "Failed to verify SLP");
       }
     } catch (error) {
       console.error("Error verifying SLP:", error);
@@ -88,7 +88,7 @@ const SLPVerificationQueue = () => {
     }
 
     try {
-      const { data, error } = await supabase.rpc(
+      const { data, error } = await (supabase.rpc as any)(
         "reject_slp_verification",
         {
           p_request_id: requestId,
@@ -97,11 +97,11 @@ const SLPVerificationQueue = () => {
 
       if (error) throw error;
 
-      if (data?.success) {
+      if ((data as any)?.success) {
         toast.success("Verification request rejected");
         loadRequests();
       } else {
-        toast.error(data?.error || "Failed to reject request");
+        toast.error((data as any)?.error || "Failed to reject request");
       }
     } catch (error) {
       console.error("Error rejecting verification:", error);

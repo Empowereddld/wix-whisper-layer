@@ -107,7 +107,7 @@ const EarlySupportersWall = () => {
       y: 0,
       transition: {
         duration: 0.5,
-        ease: "easeOut",
+        ease: "easeOut" as const,
       },
     },
   };
@@ -117,7 +117,8 @@ const EarlySupportersWall = () => {
       <SEOHead
         title="Story Pros Early Supporters | Empowered DLD"
         description="Meet the families who are helping build something special for children who deserve to be heard."
-        image="https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&h=630&fit=crop"
+        path="/early-supporters"
+        ogImage="https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&h=630&fit=crop"
       />
 
       <Header />
