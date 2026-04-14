@@ -548,7 +548,7 @@ const StoryBuilders = () => {
           {/* Header row */}
           <FadeSection className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10 md:mb-14">
             <div className="max-w-[500px]">
-              <span className="text-primary text-[11px] tracking-[0.22em] uppercase font-semibold block mb-3">
+              <span className="text-primary text-[13px] md:text-[14px] tracking-[0.22em] uppercase font-semibold block mb-3">
                 WHY JOIN
               </span>
               <h2 className="text-[32px] md:text-[42px] lg:text-[46px] font-black tracking-tight text-foreground leading-[1.1]">
