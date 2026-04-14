@@ -636,7 +636,7 @@ const StoryBuilders = () => {
         <div className="container px-6 md:px-8">
           <FadeSection className="text-center mb-14 md:mb-20">
             <h2 className="text-[34px] md:text-[40px] tracking-tight leading-[1.2]" style={{ color: "#2F2F3A", fontWeight: 700, fontFamily: "Poppins, sans-serif" }}>
-              Your Progress
+              The Launch Team Journey
             </h2>
             <p className="text-[16px] md:text-[18px] mt-3 leading-[1.6]" style={{ color: "#6B6B6B", fontFamily: "Nunito, sans-serif" }}>
               Each step unlocks something new.
