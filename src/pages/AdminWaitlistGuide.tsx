@@ -297,9 +297,9 @@ const AdminWaitlistGuide = () => {
                 The dashboard displays a time-series line chart showing daily signups, verifications, and referrals over the past 30 days.
               </p>
               <ul className="space-y-2 text-sm list-disc list-inside text-[#121212]">
-                <li>Terracotta line = daily signups</li>
-                <li>Sage line = email verifications</li>
-                <li>Amber line = referral clicks</li>
+                <li>Purple line = daily signups</li>
+                <li>Light purple line = email verifications</li>
+                <li>Dark purple line = referral clicks</li>
                 <li>Hover over points for exact values</li>
               </ul>
             </CollapsibleSection>
