@@ -46,7 +46,7 @@ const ThemeVotingAdmin = () => {
   const loadThemes = async () => {
     try {
       setLoading(true);
-      const { data, error } = await supabase.rpc("get_theme_results");
+      const { data, error } = await (supabase.rpc as any)("get_theme_results");
 
       if (error) throw error;
 
@@ -70,7 +70,7 @@ const ThemeVotingAdmin = () => {
     }
 
     try {
-      const { error } = await supabase.from("story_themes").insert({
+      const { error } = await (supabase.from as any)("story_themes").insert({
         id: newId,
         title: form.title,
         description: form.description,
@@ -93,8 +93,7 @@ const ThemeVotingAdmin = () => {
 
   const handleToggleActive = async (themeId: string, currentActive: boolean) => {
     try {
-      const { error } = await supabase
-        .from("story_themes")
+      const { error } = await (supabase.from as any)("story_themes")
         .update({ active: !currentActive })
         .eq("id", themeId);
 
@@ -114,8 +113,7 @@ const ThemeVotingAdmin = () => {
     if (!confirm("Are you sure you want to delete this theme?")) return;
 
     try {
-      const { error } = await supabase
-        .from("story_themes")
+      const { error } = await (supabase.from as any)("story_themes")
         .delete()
         .eq("id", themeId);
 

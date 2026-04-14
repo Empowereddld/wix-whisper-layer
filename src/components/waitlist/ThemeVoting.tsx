@@ -20,7 +20,7 @@ interface Theme {
 }
 
 const ThemeVoting = ({ canVote, userEmail }: ThemeVotingProps) => {
-  const [themes, setThemes] = useState<Theme[]>(INITIAL_STORY_THEMES);
+  const [themes, setThemes] = useState<Theme[]>([...INITIAL_STORY_THEMES] as Theme[]);
   const [selectedTheme, setSelectedTheme] = useState<string | null>(null);
   const [hasVoted, setHasVoted] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -35,13 +35,13 @@ const ThemeVoting = ({ canVote, userEmail }: ThemeVotingProps) => {
       }
 
       try {
-        const { data } = await supabase.rpc("check_user_vote", {
+        const { data } = await (supabase.rpc as any)("check_user_vote", {
           p_email: userEmail,
         });
 
-        if (data && data.length > 0) {
+        if (data && (data as any).length > 0) {
           setHasVoted(true);
-          setSelectedTheme(data[0].theme_id);
+          setSelectedTheme((data as any)[0].theme_id);
         }
       } catch (error) {
         console.error("Error checking vote:", error);
@@ -57,11 +57,11 @@ const ThemeVoting = ({ canVote, userEmail }: ThemeVotingProps) => {
   useEffect(() => {
     const loadThemes = async () => {
       try {
-        const { data } = await supabase.rpc("get_theme_results");
+        const { data } = await (supabase.rpc as any)("get_theme_results");
 
         if (data) {
           const themesWithVotes = INITIAL_STORY_THEMES.map((theme) => {
-            const result = data.find((r: any) => r.theme_id === theme.id);
+            const result = (data as any[]).find((r: any) => r.theme_id === theme.id);
             return {
               ...theme,
               votes: result?.vote_count || 0,
@@ -82,22 +82,22 @@ const ThemeVoting = ({ canVote, userEmail }: ThemeVotingProps) => {
 
     setLoading(true);
     try {
-      const { data, error } = await supabase.rpc("cast_theme_vote", {
+      const { data, error } = await (supabase.rpc as any)("cast_theme_vote", {
         p_email: userEmail,
         p_theme_id: selectedTheme,
       });
 
       if (error) throw error;
 
-      if (data?.success) {
+      if ((data as any)?.success) {
         setHasVoted(true);
         toast.success("Your vote has been recorded!");
 
         // Reload theme results
-        const { data: results } = await supabase.rpc("get_theme_results");
+        const { data: results } = await (supabase.rpc as any)("get_theme_results");
         if (results) {
           const themesWithVotes = INITIAL_STORY_THEMES.map((theme) => {
-            const result = results.find((r: any) => r.theme_id === theme.id);
+            const result = (results as any[]).find((r: any) => r.theme_id === theme.id);
             return {
               ...theme,
               votes: result?.vote_count || 0,
@@ -106,7 +106,7 @@ const ThemeVoting = ({ canVote, userEmail }: ThemeVotingProps) => {
           setThemes(themesWithVotes);
         }
       } else {
-        toast.error(data?.error || "Failed to cast vote");
+        toast.error((data as any)?.error || "Failed to cast vote");
       }
     } catch (error) {
       console.error("Error casting vote:", error);
@@ -171,8 +171,8 @@ const ThemeVoting = ({ canVote, userEmail }: ThemeVotingProps) => {
                   : "hover:shadow-lg"
               } ${!canVote ? "opacity-60" : ""}`}
               style={{
-                ringColor: isSelected ? BRAND_COLORS.PRIMARY : undefined,
-              }}
+                borderColor: isSelected ? BRAND_COLORS.PRIMARY : undefined,
+              } as React.CSSProperties}
               onClick={() => canVote && !hasVoted && setSelectedTheme(theme.id)}
             >
               <CardContent className="p-4 space-y-3">
