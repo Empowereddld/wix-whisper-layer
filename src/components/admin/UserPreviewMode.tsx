@@ -183,16 +183,6 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
                     </span>
                     <span className="text-sm text-[#3b1f59]">coins</span>
                   </div>
-                  <Button
-                    className="bg-[#8861d4] hover:bg-[#7551c4] text-white flex items-center gap-2"
-                    onClick={() => {
-                      const el = document.getElementById("rewards-inventory-section");
-                      el?.scrollIntoView({ behavior: "smooth" });
-                    }}
-                  >
-                    <Gift className="h-4 w-4" />
-                    My Rewards
-                  </Button>
                   <div className="w-10 h-10 rounded-full border-2 border-[#dedede] bg-gray-100 flex items-center justify-center cursor-pointer hover:border-[#8861d4] transition-colors">
                     <User className="h-5 w-5 text-gray-500" />
                   </div>
@@ -701,45 +691,6 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
               </motion.div>
             )}
 
-            {/* Rewards Inventory Section */}
-            <motion.div
-              id="rewards-inventory-section"
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 1.1 }}
-              className="bg-background border border-border rounded-2xl shadow-sm p-6"
-            >
-              <h3 className="font-sans font-bold text-foreground mb-6">
-                Rewards Inventory
-              </h3>
-              <RewardsInventory
-                currentTier={selectedTier}
-                coins={
-                  selectedTier === 0
-                    ? 0
-                    : selectedTier === 1
-                      ? 0
-                      : selectedTier === 2
-                        ? 75
-                        : selectedTier === 3
-                          ? 75
-                          : selectedTier === 4
-                            ? 275
-                            : 275
-                }
-                badges={[]}
-                inventory={{
-                  tier_0_updates: { claimed: true },
-                  tier_1_pdf: { claimed: selectedTier >= 1 },
-                  tier_2_coins: { claimed: selectedTier >= 2 },
-                  tier_3_voice: { claimed: selectedTier >= 3 },
-                  tier_4_founder: { claimed: selectedTier >= 4 },
-                  tier_5_elite: { claimed: selectedTier >= 5 },
-                }}
-                onClaimReward={() => {}}
-                onRedeemCoinPack={() => {}}
-              />
-            </motion.div>
 
             {/* Bottom Spacing */}
             <div className="h-8" />
