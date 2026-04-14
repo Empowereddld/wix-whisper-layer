@@ -1,38 +1,31 @@
 
 
-## Plan: DLD Community Video Carousel
+## Rename Tier Names to "Tier 1–5" (+ Founding Elite → Tier 6)
 
-Add a vertical video carousel section below the "But this is not the whole story" section on the About DLD page. It will display YouTube Shorts from the playlist as vertical thumbnail cards in a horizontal scrollable carousel, with a lightbox for playback.
+I agree — "Tier 1, Tier 2..." is cleaner and more intuitive for users. Here's what needs to change:
 
-### Design
+### Files to update
 
-- **Width**: Same as the NotWholeStoryLamp card (`max-w-[720px]`)
-- **Background**: White (`bg-background`), same section padding as other sections
-- **Title**: "One thing I want the world to know about DLD..." in the standard section heading style (font-black, ~36-46px)
-- **Subheading**: "Hear from our community" in muted text below
-- **Cards**: Vertical (9:16 aspect ratio) rounded containers showing YouTube thumbnails with a centered play icon overlay
-- **Carousel**: Horizontal scroll showing ~3 cards on desktop, ~1.5 on mobile, with left/right arrow buttons
-- **Lightbox**: Clicking a card opens a dark overlay modal with the YouTube video embedded via iframe. Close on X button or clicking outside.
+1. **`src/lib/waitlist-constants.ts`** — Change `TIER_NAMES` array from `["Storyteller", "Advocate", "Champion", "Hero", "Legend", "Founding Elite"]` to `["Tier 1", "Tier 2", "Tier 3", "Tier 4", "Tier 5", "Tier 6"]`
 
-### Video IDs
+2. **`src/pages/StoryBuilders.tsx`** — Update the `milestones` array labels (e.g. `"Storyteller (0 pts)"` → `"Tier 1 (0 pts)"`) and the `progressSteps` task names (e.g. `"Storyteller — 0 points"` → `"Tier 1 — 0 points"`). Also update the community goal copy ("storytellers" → "supporters" or similar).
 
-Since the playlist page couldn't be fully scraped, I'll hardcode the 2 video IDs found (`h6GTa--EOgM`, `SjE9lRZIgQI`) and use the YouTube playlist embed for the remaining videos. **Alternatively**, I'll embed each video using the playlist parameter so that clicking any thumbnail opens that video within the full playlist context. I'll structure the data array so you can easily add more video IDs later.
+3. **`src/components/waitlist/TierProgressBar.tsx`** — Update the local `TIERS` array names from old names to Tier 1–6.
 
-### Files to create/modify
+4. **`src/components/waitlist/RewardsInventory.tsx`** — Update `BADGES` array names and the tier requirement display string.
 
-1. **New file: `src/components/DLDCommunityVideoCarousel.tsx`**
-   - Array of video objects with YouTube IDs and optional titles
-   - Horizontal carousel of vertical thumbnail cards (using YouTube thumbnail URLs)
-   - Play icon overlay on each card (Lucide `Play` icon in a semi-transparent circle)
-   - Lightbox modal (Dialog component) with YouTube iframe embed
-   - Left/right navigation arrows
+5. **`src/components/waitlist/PositionCard.tsx`** — Already reads from `TIER_NAMES`, so auto-updated.
 
-2. **Edit: `src/pages/AboutDLD.tsx`**
-   - Import and add `DLDCommunityVideoCarousel` after `NotWholeStoryLamp`
+6. **`src/components/admin/UserPreviewMode.tsx`** — Badge label map entries; already reads `TIER_NAMES` for dropdowns so mostly auto-updated.
 
-### Technical details
-- Thumbnails via `https://img.youtube.com/vi/{id}/0.jpg`
-- Lightbox uses the existing shadcn Dialog component
-- Carousel built with CSS scroll-snap or the existing Embla carousel
-- Video IDs stored as a simple array — easy to update when more are available
+7. **`src/pages/EarlySupportersWall.tsx`** / **`src/pages/WaitlistUserGuide.tsx`** — Both use `TIER_NAMES` from constants, auto-updated.
+
+8. **`src/components/waitlist/MilestoneModal.tsx`** — References tier names for confetti colors, will adapt.
+
+9. **SVG badge files** (`public/badges/share-*.svg`) — Update text from "HERO", "LEGEND", etc. to "TIER 4", "TIER 5", etc.
+
+### Approach
+- Most components already read from `TIER_NAMES` in `waitlist-constants.ts`, so changing that single source updates ~60% of references automatically.
+- The remaining hardcoded references in StoryBuilders.tsx, TierProgressBar.tsx, and RewardsInventory.tsx need manual updates.
+- SVG badges get updated text labels.
 
