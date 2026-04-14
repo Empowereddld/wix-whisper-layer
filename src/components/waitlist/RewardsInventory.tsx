@@ -3,20 +3,10 @@ import { motion, AnimatePresence } from "motion/react";
 import {
   Gift,
   Coins,
-  Award,
-  BookOpen,
-  Sparkles,
-  MessageSquare,
-  Trophy,
-  Crown,
-  Star,
-  Heart,
-  Zap,
-  Users,
+  Package,
   Check,
   Lock,
 } from "lucide-react";
-import RewardCard from "./RewardCard";
 import CoinDropAnimation from "./CoinDropAnimation";
 
 export interface RewardsInventoryProps {
@@ -33,7 +23,7 @@ interface TierReward {
   rewardId: string;
   name: string;
   description: string;
-  icon: React.ReactNode;
+  icon: string;
   earnedVia: string;
   claimType: "auto" | "download" | "activate" | "unlock" | "onboard";
 }
@@ -44,7 +34,7 @@ interface CoinPack {
   name: string;
   cost: number;
   description: string;
-  icon: React.ReactNode;
+  icon: string;
   rewards: string[];
 }
 
@@ -105,6 +95,15 @@ const TIER_REWARDS: TierReward[] = [
   },
 ];
 
+const REWARD_COLORS = [
+  { bg: "rgba(136, 97, 212, 0.08)", accent: "#8861d4" },
+  { bg: "rgba(136, 97, 212, 0.12)", accent: "#7b52c9" },
+  { bg: "rgba(99, 179, 141, 0.1)", accent: "#63b38d" },
+  { bg: "rgba(212, 146, 11, 0.1)", accent: "#d4920b" },
+  { bg: "rgba(59, 31, 89, 0.1)", accent: "#3b1f59" },
+  { bg: "rgba(212, 175, 55, 0.12)", accent: "#d4af37" },
+];
+
 const COIN_PACKS: CoinPack[] = [
   {
     level: 1,
@@ -135,30 +134,16 @@ const COIN_PACKS: CoinPack[] = [
   },
 ];
 
-const BADGES = [
-  { id: "storyteller", name: "Tier 1", tier: 0, icon: "📖" },
-  { id: "advocate", name: "Tier 2", tier: 1, icon: "📢" },
-  { id: "champion", name: "Tier 3", tier: 2, icon: "🎯" },
-  { id: "hero", name: "Tier 4", tier: 3, icon: "⚡" },
-  { id: "legend", name: "Tier 5", tier: 4, icon: "👑" },
-  { id: "founding_elite", name: "Tier 6", tier: 5, icon: "💫" },
-  { id: "early_bird", name: "Early Bird", tier: 0, icon: "🐦" },
-  { id: "social_butterfly", name: "Social Butterfly", tier: 1, icon: "🦋" },
-];
-
 export default function RewardsInventory({
   currentTier,
   coins,
-  badges: earnedBadges,
   inventory,
   onClaimReward,
   onRedeemCoinPack,
 }: RewardsInventoryProps) {
   const [coinDropTrigger, setCoinDropTrigger] = useState(false);
   const [coinDropAmount, setCoinDropAmount] = useState(0);
-  const [activeTab, setActiveTab] = useState<"tiers" | "coins" | "badges">(
-    "tiers"
-  );
+  const [activeTab, setActiveTab] = useState<"tiers" | "inventory" | "coins">("tiers");
 
   const handleClaimReward = (rewardId: string) => {
     const reward = TIER_REWARDS.find((r) => r.rewardId === rewardId);
@@ -172,10 +157,6 @@ export default function RewardsInventory({
     onClaimReward(rewardId);
   };
 
-  const handleRedeemPack = (packLevel: number) => {
-    onRedeemCoinPack(packLevel);
-  };
-
   const getRewardStatus = (
     rewardId: string,
     requiredTier: number
@@ -185,8 +166,14 @@ export default function RewardsInventory({
     return "claimable";
   };
 
+  const tabs = [
+    { id: "tiers" as const, label: "Tier Progress", icon: Gift },
+    { id: "inventory" as const, label: "Claim Rewards", icon: Package },
+    { id: "coins" as const, label: "Coin Packs", icon: Coins },
+  ];
+
   return (
-    <div className="bg-white min-h-screen">
+    <div>
       <CoinDropAnimation
         amount={coinDropAmount}
         trigger={coinDropTrigger}
@@ -194,30 +181,24 @@ export default function RewardsInventory({
       />
 
       {/* Header */}
-      <div className="mb-8">
-        <h1 className="font-sans text-4xl font-bold text-[#3b1f59] mb-2">
+      <div className="mb-6">
+        <h2 className="font-sans text-2xl font-bold text-[#3b1f59] mb-1">
           My Rewards
-        </h1>
-        <p className="text-[#121212]">
-          Discover and claim your earned rewards, unlock special badges, and
-          redeem coins for exclusive perks.
+        </h2>
+        <p className="text-sm text-[#121212]">
+          Track your progress, claim rewards, and redeem coins for exclusive perks.
         </p>
       </div>
 
       {/* Tab Navigation */}
-      <div className="flex gap-2 mb-8 overflow-x-auto pb-2">
-        {[
-          { id: "tiers", label: "Tier Rewards", icon: Gift },
-          { id: "coins", label: "Coin Packs", icon: Coins },
-          { id: "badges", label: "Badges", icon: Award },
-        ].map((tab) => (
+      <div className="flex gap-2 mb-6 overflow-x-auto pb-2">
+        {tabs.map((tab) => (
           <motion.button
             key={tab.id}
-            onClick={() => setActiveTab(tab.id as typeof activeTab)}
+            onClick={() => setActiveTab(tab.id)}
             role="tab"
             aria-selected={activeTab === tab.id}
-            aria-controls={`${tab.id}-panel`}
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl font-medium whitespace-nowrap transition-all duration-200 ${
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl font-medium whitespace-nowrap transition-all duration-200 text-sm ${
               activeTab === tab.id
                 ? "bg-[#8861d4] text-white shadow-md"
                 : "bg-white text-[#121212] border border-[#dedede] hover:border-[#8861d4]/30"
@@ -231,7 +212,7 @@ export default function RewardsInventory({
 
       {/* Content Sections */}
       <AnimatePresence mode="wait">
-        {/* Tier Rewards Tab */}
+        {/* Tier Progress Tab - read-only view */}
         {activeTab === "tiers" && (
           <motion.div
             key="tiers"
@@ -240,35 +221,25 @@ export default function RewardsInventory({
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
           >
-            <div className="relative">
-              {/* Vertical progress line */}
-              <div className="absolute left-5 top-0 bottom-0 w-0.5 bg-[#dedede]" />
+            <div className="relative pl-3">
+              {/* Vertical progress line - offset left of circles */}
+              <div className="absolute left-[22px] top-0 bottom-0 w-0.5 bg-[#dedede]" />
               <div
-                className="absolute left-5 top-0 w-0.5 bg-[#8861d4] transition-all duration-700"
+                className="absolute left-[22px] top-0 w-0.5 bg-[#8861d4] transition-all duration-700"
                 style={{ height: `${((currentTier + 1) / TIER_REWARDS.length) * 100}%` }}
               />
 
               <div className="space-y-1">
                 {TIER_REWARDS.map((reward, idx) => {
-                  const status = getRewardStatus(reward.rewardId, reward.tier);
-                  const isLocked = status === "locked";
+                  const isLocked = currentTier < idx;
                   const isUnlocked = !isLocked;
                   const isCurrent = currentTier === idx;
-
-                  const REWARD_COLORS = [
-                    { bg: "rgba(136, 97, 212, 0.08)", accent: "#8861d4" },
-                    { bg: "rgba(136, 97, 212, 0.12)", accent: "#7b52c9" },
-                    { bg: "rgba(99, 179, 141, 0.1)", accent: "#63b38d" },
-                    { bg: "rgba(212, 146, 11, 0.1)", accent: "#d4920b" },
-                    { bg: "rgba(59, 31, 89, 0.1)", accent: "#3b1f59" },
-                    { bg: "rgba(212, 175, 55, 0.12)", accent: "#d4af37" },
-                  ];
-                  const colors = REWARD_COLORS[idx] || REWARD_COLORS[0];
+                  const colors = REWARD_COLORS[idx];
 
                   return (
                     <div
                       key={reward.rewardId}
-                      className="relative flex items-start gap-4 py-3 px-4 rounded-xl transition-all duration-300"
+                      className="relative flex items-center gap-4 py-2.5 px-4 rounded-xl transition-all duration-300"
                       style={{
                         backgroundColor: isUnlocked ? colors.bg : "transparent",
                         borderLeft: isCurrent ? `3px solid ${colors.accent}` : "3px solid transparent",
@@ -276,7 +247,7 @@ export default function RewardsInventory({
                     >
                       {/* Progress dot */}
                       <div
-                        className="relative z-10 w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 transition-all duration-300"
+                        className="relative z-10 w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0 transition-all duration-300"
                         style={{
                           backgroundColor: isUnlocked ? colors.accent : "#e5e5e5",
                           boxShadow: isCurrent ? `0 0 12px ${colors.accent}40` : "none",
@@ -291,8 +262,8 @@ export default function RewardsInventory({
 
                       {/* Content */}
                       <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 mb-0.5">
-                          <span className="text-lg">{reward.icon}</span>
+                        <div className="flex items-center gap-2">
+                          <span className="text-base">{reward.icon}</span>
                           <span className="text-xs font-semibold uppercase tracking-wide" style={{ color: isUnlocked ? colors.accent : "#9ca3af" }}>
                             Tier {reward.tier + 1}
                           </span>
@@ -300,11 +271,64 @@ export default function RewardsInventory({
                         <p className={`text-sm font-bold ${isUnlocked ? "text-[#3b1f59]" : "text-gray-500"}`}>
                           {reward.name}
                         </p>
-                        <p className={`text-xs mt-0.5 ${isUnlocked ? "text-[#121212]" : "text-gray-400"}`}>
+                        <p className={`text-xs ${isUnlocked ? "text-[#121212]" : "text-gray-400"}`}>
+                          {reward.description}
+                        </p>
+                      </div>
+
+                      {/* Status indicator */}
+                      {isUnlocked && (
+                        <span className="text-xs font-medium text-emerald-600 flex-shrink-0">✓ Unlocked</span>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </motion.div>
+        )}
+
+        {/* Claim Rewards Tab - actionable inventory */}
+        {activeTab === "inventory" && (
+          <motion.div
+            key="inventory"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+          >
+            <div className="space-y-3">
+              {TIER_REWARDS.map((reward, idx) => {
+                const status = getRewardStatus(reward.rewardId, reward.tier);
+                const isLocked = status === "locked";
+                const colors = REWARD_COLORS[idx];
+
+                return (
+                  <div
+                    key={reward.rewardId}
+                    className={`rounded-xl p-4 transition-all duration-300 border ${
+                      isLocked ? "border-[#dedede] opacity-60" : "border-transparent"
+                    }`}
+                    style={{
+                      backgroundColor: !isLocked ? colors.bg : "rgba(245,245,245,0.5)",
+                    }}
+                  >
+                    <div className="flex items-start gap-3">
+                      <span className="text-2xl">{reward.icon}</span>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-0.5">
+                          <span className="text-xs font-semibold uppercase tracking-wide" style={{ color: !isLocked ? colors.accent : "#9ca3af" }}>
+                            Tier {reward.tier + 1}
+                          </span>
+                        </div>
+                        <p className={`text-sm font-bold ${!isLocked ? "text-[#3b1f59]" : "text-gray-500"}`}>
+                          {reward.name}
+                        </p>
+                        <p className={`text-xs mt-0.5 ${!isLocked ? "text-[#121212]" : "text-gray-400"}`}>
                           {reward.description}
                         </p>
 
-                        {/* Action buttons inline */}
+                        {/* Action */}
                         <div className="mt-2">
                           {status === "claimable" && (
                             <motion.button
@@ -328,16 +352,16 @@ export default function RewardsInventory({
                             </span>
                           )}
                           {isLocked && (
-                            <span className="text-xs text-gray-400">
-                              Reach Tier {reward.tier + 1} to unlock
+                            <span className="inline-flex items-center gap-1 text-xs text-gray-400">
+                              <Lock className="w-3 h-3" /> Reach Tier {reward.tier + 1} to unlock
                             </span>
                           )}
                         </div>
                       </div>
                     </div>
-                  );
-                })}
-              </div>
+                  </div>
+                );
+              })}
             </div>
           </motion.div>
         )}
@@ -359,12 +383,8 @@ export default function RewardsInventory({
             >
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-gray-500 text-sm font-medium mb-1">
-                    Current Balance
-                  </p>
-                  <p className="font-sans text-4xl font-bold text-[#8861d4]">
-                    {coins} coins
-                  </p>
+                  <p className="text-gray-500 text-sm font-medium mb-1">Current Balance</p>
+                  <p className="font-sans text-4xl font-bold text-[#8861d4]">{coins} coins</p>
                 </div>
                 <div className="text-6xl">💰</div>
               </div>
@@ -372,10 +392,7 @@ export default function RewardsInventory({
 
             {/* Coin Packs */}
             {COIN_PACKS.map((pack) => {
-              const isRedeemed =
-                pack.level === 1
-                  ? inventory["coin_pack_1"]?.claimed
-                  : inventory["coin_pack_2"]?.claimed;
+              const isRedeemed = inventory[pack.packId]?.claimed;
               const canRedeem = coins >= pack.cost && !isRedeemed;
 
               return (
@@ -387,29 +404,18 @@ export default function RewardsInventory({
                     <div className="flex items-start gap-4">
                       <div className="text-4xl">{pack.icon}</div>
                       <div>
-                        <h3 className="font-sans text-lg font-bold text-[#3b1f59] mb-1">
-                          {pack.name}
-                        </h3>
-                        <p className="text-[#121212] text-sm mb-2">
-                          {pack.description}
-                        </p>
-                        <p className="text-[#8861d4] font-bold">
-                          {pack.cost} coins
-                        </p>
+                        <h3 className="font-sans text-lg font-bold text-[#3b1f59] mb-1">{pack.name}</h3>
+                        <p className="text-[#121212] text-sm mb-2">{pack.description}</p>
+                        <p className="text-[#8861d4] font-bold">{pack.cost} coins</p>
                       </div>
                     </div>
                     {isRedeemed && (
-                      <div className="bg-emerald-50 text-emerald-600 px-3 py-1 rounded-full text-xs font-medium">
-                        Redeemed
-                      </div>
+                      <div className="bg-emerald-50 text-emerald-600 px-3 py-1 rounded-full text-xs font-medium">Redeemed</div>
                     )}
                   </div>
 
-                  {/* Rewards List */}
                   <div className="bg-[#f3ebf8] rounded-xl p-4 mb-4">
-                    <p className="text-xs font-semibold text-gray-500 mb-2">
-                      Includes:
-                    </p>
+                    <p className="text-xs font-semibold text-gray-500 mb-2">Includes:</p>
                     <ul className="space-y-1">
                       {pack.rewards.map((reward, idx) => (
                         <li key={idx} className="text-sm text-[#121212] flex gap-2">
@@ -420,14 +426,12 @@ export default function RewardsInventory({
                     </ul>
                   </div>
 
-                  {/* Action */}
                   {!isRedeemed ? (
                     <motion.button
                       whileHover={canRedeem ? { scale: 1.02 } : {}}
                       whileTap={canRedeem ? { scale: 0.98 } : {}}
-                      onClick={() => handleRedeemPack(pack.level)}
+                      onClick={() => onRedeemCoinPack(pack.level)}
                       disabled={!canRedeem}
-                      aria-label={`Redeem ${pack.name}`}
                       className={`w-full py-2 px-4 rounded-xl font-medium transition-all duration-200 ${
                         canRedeem
                           ? "bg-[#8861d4] hover:bg-[#7551c4] text-white shadow-sm hover:shadow-md"
@@ -437,67 +441,13 @@ export default function RewardsInventory({
                       {canRedeem ? "Redeem Now" : `Need ${pack.cost - coins} more coins`}
                     </motion.button>
                   ) : (
-                    <button
-                      disabled
-                      className="w-full bg-emerald-50 text-emerald-600 py-2 px-4 rounded-xl font-medium"
-                    >
+                    <button disabled className="w-full bg-emerald-50 text-emerald-600 py-2 px-4 rounded-xl font-medium">
                       ✓ Already Redeemed
                     </button>
                   )}
                 </motion.div>
               );
             })}
-          </motion.div>
-        )}
-
-        {/* Badges Tab */}
-        {activeTab === "badges" && (
-          <motion.div
-            key="badges"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-          >
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-              {BADGES.map((badge) => {
-                const isEarned = earnedBadges.includes(badge.id);
-                const isUnlocked = currentTier >= badge.tier;
-
-                return (
-                  <motion.div
-                    key={badge.id}
-                    whileHover={isEarned ? { scale: 1.05 } : {}}
-                    className={`relative rounded-2xl p-4 text-center transition-all duration-200 ${
-                      isEarned
-                        ? "bg-white border-2 border-[#8861d4] shadow-md"
-                        : "bg-[#f3ebf8] border border-[#dedede] opacity-60"
-                    }`}
-                  >
-                    {isEarned && (
-                      <motion.div
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        transition={{ type: "spring", stiffness: 300 }}
-                        className="absolute -top-2 -right-2 bg-[#8861d4] text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold"
-                      >
-                        ✓
-                      </motion.div>
-                    )}
-
-                    <div className="text-4xl mb-2">{badge.icon}</div>
-                    <h4 className="font-sans font-bold text-[#3b1f59] text-sm mb-1">
-                      {badge.name}
-                    </h4>
-                    <p className="text-xs text-gray-500">
-                      {isEarned
-                        ? "Earned"
-                        : `Unlock at Tier ${badge.tier + 1}`}
-                    </p>
-                  </motion.div>
-                );
-              })}
-            </div>
           </motion.div>
         )}
       </AnimatePresence>
