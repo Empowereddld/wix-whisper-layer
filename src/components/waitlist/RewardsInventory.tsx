@@ -13,6 +13,8 @@ import {
   Heart,
   Zap,
   Users,
+  Check,
+  Lock,
 } from "lucide-react";
 import RewardCard from "./RewardCard";
 import CoinDropAnimation from "./CoinDropAnimation";
