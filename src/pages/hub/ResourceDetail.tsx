@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   Download, ArrowLeft, FileText, Image, CheckSquare, BookOpen, Package, BarChart3,
-  Lock, Check,
+  Lock, Check, Sparkles,
 } from "lucide-react";
 import { toast } from "sonner";
 import { secureDownload } from "@/lib/secureDownload";
@@ -203,16 +203,28 @@ const ResourceDetail = () => {
               {resource.description || resource.long_description}
             </p>
 
-            {/* Action button pushed to bottom */}
-            <div className="mt-auto">
+            {/* Action buttons */}
+            <div className="mt-auto space-y-3">
               {isUnlocked ? (
-                <Button
-                  size="lg"
-                  className="bg-midnight text-midnight-foreground hover:bg-midnight/90 h-12 px-10 w-full sm:w-auto"
-                  onClick={() => handleDownload()}
-                >
-                  <Download className="h-5 w-5 mr-2" /> Download
-                </Button>
+                <>
+                  <Button
+                    size="lg"
+                    className="bg-midnight text-midnight-foreground hover:bg-midnight/90 h-12 px-10 w-full sm:w-auto"
+                    onClick={() => handleDownload()}
+                  >
+                    <Download className="h-5 w-5 mr-2" /> Download
+                  </Button>
+                  {resource.resource_type === "bundle" && (
+                    <Button
+                      size="lg"
+                      variant="outline"
+                      className="border-deep-purple text-deep-purple hover:bg-deep-purple/10 h-12 px-10 w-full sm:w-auto ml-0 sm:ml-3"
+                      onClick={() => navigate("/iep-goal-builder")}
+                    >
+                      <Sparkles className="h-5 w-5 mr-2" /> Open Interactive Goal Builder
+                    </Button>
+                  )}
+                </>
               ) : (
                 <Button
                   size="lg"
@@ -222,7 +234,6 @@ const ResourceDetail = () => {
                   <Lock className="h-5 w-5 mr-2" /> Unlock for {formatPrice(product!.price)}
                 </Button>
               )}
-
             </div>
           </div>
         </div>
