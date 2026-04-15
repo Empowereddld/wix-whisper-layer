@@ -36,10 +36,8 @@ interface ResourceCardProps {
   isNew?: boolean;
 }
 
-const formatPrice = (cents: number, currency: string = "CAD") => {
-  const amount = (cents / 100).toFixed(2);
-  const sym = currency === "CAD" ? "CA$" : "$";
-  return `${sym}${amount}`;
+const formatPrice = (cents: number) => {
+  return `$${(cents / 100).toFixed(2)}`;
 };
 
 const ResourceCard = ({
@@ -84,7 +82,7 @@ const ResourceCard = ({
             )}
             {isPaid && !isPurchased && (
               <span className="text-xs px-2 py-0.5 rounded-full bg-deep-purple/15 text-deep-purple font-semibold flex-shrink-0">
-                {formatPrice(price, currency)}
+                {formatPrice(price)}
               </span>
             )}
             {isPaid && isPurchased && (
@@ -146,7 +144,7 @@ const ResourceCard = ({
         {/* Price / Free badge */}
         {isPaid && !isPurchased ? (
           <span className="absolute top-3 right-3 text-xs px-2.5 py-1 rounded-full bg-deep-purple text-white font-semibold shadow-sm">
-            {formatPrice(price, currency)}
+            {formatPrice(price)}
           </span>
         ) : isPaid && isPurchased ? (
           <span className="absolute top-3 right-3 text-xs px-2.5 py-1 rounded-full bg-emerald-500 text-white font-medium">

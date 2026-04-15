@@ -49,6 +49,7 @@ const ResetPassword = lazy(() => import("./pages/hub/ResetPassword"));
 const HubPreview = lazy(() => import("./pages/hub/HubPreview"));
 const ResourceDetail = lazy(() => import("./pages/hub/ResourceDetail"));
 const PaymentSuccess = lazy(() => import("./pages/hub/PaymentSuccess"));
+const IEPGoalBuilder = lazy(() => import("./pages/hub/IEPGoalBuilder"));
 
 // Lazy-loaded: Admin
 const AdminDashboard = lazy(() => import("./pages/admin/AdminDashboard"));
@@ -133,6 +134,7 @@ const App = () => (
               <Route path="/hub" element={<ProtectedRoute><HubDashboard /></ProtectedRoute>} />
               <Route path="/hub/resource/:id" element={<ProtectedRoute><ResourceDetail /></ProtectedRoute>} />
               <Route path="/hub/settings" element={<ProtectedRoute><HubSettings /></ProtectedRoute>} />
+              <Route path="/iep-goal-builder" element={<ProtectedRoute><IEPGoalBuilder /></ProtectedRoute>} />
               {/* Admin routes */}
               <Route path="/admin" element={<AdminProtectedRoute><AdminDashboard /></AdminProtectedRoute>} />
               <Route path="/admin/resources" element={<AdminProtectedRoute><AdminResources /></AdminProtectedRoute>} />
