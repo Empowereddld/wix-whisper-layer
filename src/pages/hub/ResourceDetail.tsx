@@ -29,10 +29,7 @@ const audienceLabels: Record<string, string> = {
   parent: "Parents", slp: "Therapists", educator: "Educators", school_leader: "School Leaders",
 };
 
-const formatPrice = (cents: number, currency: string = "CAD") => {
-  const sym = currency === "CAD" ? "CA$" : "$";
-  return `${sym}${(cents / 100).toFixed(2)}`;
-};
+const formatPrice = (cents: number) => `$${(cents / 100).toFixed(2)}`;
 
 const ResourceDetail = () => {
   const { id } = useParams<{ id: string }>();

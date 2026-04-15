@@ -36,10 +36,8 @@ interface ResourceCardProps {
   isNew?: boolean;
 }
 
-const formatPrice = (cents: number, currency: string = "CAD") => {
-  const amount = (cents / 100).toFixed(2);
-  const sym = currency === "CAD" ? "CA$" : "$";
-  return `${sym}${amount}`;
+const formatPrice = (cents: number) => {
+  return `$${(cents / 100).toFixed(2)}`;
 };
 
 const ResourceCard = ({

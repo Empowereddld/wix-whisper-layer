@@ -22,11 +22,7 @@ interface PurchaseModalProps {
   userId?: string;
 }
 
-const formatPrice = (cents: number, currency: string) => {
-  const amount = (cents / 100).toFixed(2);
-  const sym = currency === "CAD" ? "CA$" : "$";
-  return `${sym}${amount}`;
-};
+const formatPrice = (cents: number) => `$${(cents / 100).toFixed(2)}`;
 
 const PurchaseModal = ({ resource, product, open, onClose, onPurchased, userId }: PurchaseModalProps) => {
   const [purchasing, setPurchasing] = useState(false);
