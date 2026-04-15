@@ -166,7 +166,7 @@ const ResourceDetail = () => {
             <div className="mb-4">
               {isPaid && !isUnlocked ? (
                 <span className="inline-block text-sm px-3 py-1 rounded-full bg-deep-purple text-white font-semibold">
-                  {formatPrice(product!.price, product!.currency)}
+                  {formatPrice(product!.price)}
                 </span>
               ) : isPaid && isUnlocked ? (
                 <span className="inline-block text-sm px-3 py-1 rounded-full bg-emerald-500 text-white font-medium">
@@ -219,7 +219,7 @@ const ResourceDetail = () => {
                   className="bg-deep-purple text-white hover:bg-deep-purple/90 h-12 px-10 w-full sm:w-auto"
                   onClick={() => setShowPurchase(true)}
                 >
-                  <Lock className="h-5 w-5 mr-2" /> Unlock for {formatPrice(product!.price, product!.currency)}
+                  <Lock className="h-5 w-5 mr-2" /> Unlock for {formatPrice(product!.price)}
                 </Button>
               )}
 

@@ -85,7 +85,7 @@ const PurchaseModal = ({ resource, product, open, onClose, onPurchased, userId }
           <div className="flex items-center justify-center gap-4 p-4 rounded-xl bg-midnight/5">
             <span className="text-sm font-medium text-midnight">Total</span>
             <span className="text-2xl font-bold text-midnight">
-              {formatPrice(product.price, product.currency)}
+              {formatPrice(product.price)}
             </span>
           </div>
 
@@ -95,7 +95,7 @@ const PurchaseModal = ({ resource, product, open, onClose, onPurchased, userId }
             onClick={handlePurchase}
             disabled={purchasing}
           >
-            {purchasing ? "Redirecting to checkout…" : `Purchase for ${formatPrice(product.price, product.currency)} →`}
+            {purchasing ? "Redirecting to checkout…" : `Purchase for ${formatPrice(product.price)} →`}
           </Button>
 
           <div className="flex items-center justify-center gap-2 text-xs text-stone-ui">
