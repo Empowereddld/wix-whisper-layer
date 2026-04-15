@@ -263,7 +263,7 @@ const IEPGoalBuilder = () => {
 
         {/* Header */}
         <div className="bg-deep-purple rounded-xl p-5 mb-4">
-          <h1 className="text-xl font-semibold text-white mb-1">IEP Goal Builder — DLD Edition</h1>
+          <h1 className="text-xl font-semibold text-white mb-1">Interactive IEP Goal Builder — DLD Edition</h1>
           <p className="text-sm text-thistle">Empowered DLD · 50 goals across 6 domains · Fill in the fields, copy your goal</p>
         </div>
 
