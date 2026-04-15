@@ -32,7 +32,8 @@ const DownloadablesLibraryIntro = () => {
             </h2>
             <p className="text-[15px] md:text-[17px] text-muted-foreground leading-[1.7] max-w-lg">
               Practical tools for parents, therapists, and educators. From
-              starter guides to classroom posters—everything you need is here.
+              starter guides to classroom posters, you will find everything you
+              need is here.
             </p>
 
             <Link
