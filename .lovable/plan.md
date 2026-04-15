@@ -1,23 +1,24 @@
 
 
-# Plan: Add PDF Page Previews to IEP Goal Builder Resource
+# Plan: Re-extract PDF Preview Pages at Higher Quality
 
-## What happens
-
-Convert pages 1, 2, and 3 of the IEP Goal Bank PDF into PNG images and add them as `sample_images` on the resource. The existing `SampleGallery` component already supports a thumbnail strip with multiple images — no component changes needed.
+## Problem
+The current page preview images in the gallery are blurry and text is hard to read. They need to be re-rendered at higher resolution with minimal compression.
 
 ## Steps
 
-### Step 1 — Generate preview images from the PDF
-- Use a script to extract pages 1–3 from `Empowered_DLD_IEP_Goal_Bank_2.pdf` as PNG files
-- Save them to `public/images/iep-preview-page-1.png`, `iep-preview-page-2.png`, `iep-preview-page-3.png`
+### Step 1 — Re-extract pages 1–3 from the uploaded PDF
+- Use `pdftoppm` at **300 DPI** (double the previous attempt)
+- Output as **PNG** (lossless) instead of WebP to avoid compression artifacts
+- Target width of **1800px** for crisp rendering on retina displays
 
-### Step 2 — Upload preview images to storage
-- Upload all 3 PNGs to the `thumbnails` bucket (public bucket, same as the thumbnail)
+### Step 2 — Upload replacements to the thumbnails bucket
+- Replace the existing `iep-preview-page-1.webp`, `iep-preview-page-2.webp`, `iep-preview-page-3.webp` with the new high-res PNGs
+- Update the `sample_images` array in the `resources` table to point to the new `.png` URLs
 
-### Step 3 — Update the database row
-- Update the `resources` row for this bundle to set `sample_images` to an array of the 3 public URLs from the thumbnails bucket
+### Step 3 — Update local public assets
+- Replace the webp files in `public/images/` with the new PNGs for fallback
 
-### Result
-The resource detail page will show the thumbnail as the main image, plus pages 1–3 as clickable previews in the thumbnail strip below — all using the existing `SampleGallery` component with no code changes.
+## Result
+Sharp, readable PDF page previews in the gallery thumbnail strip.
 
