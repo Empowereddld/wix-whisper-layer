@@ -49,6 +49,7 @@ const ResetPassword = lazy(() => import("./pages/hub/ResetPassword"));
 const HubPreview = lazy(() => import("./pages/hub/HubPreview"));
 const ResourceDetail = lazy(() => import("./pages/hub/ResourceDetail"));
 const PaymentSuccess = lazy(() => import("./pages/hub/PaymentSuccess"));
+const IEPGoalBuilder = lazy(() => import("./pages/hub/IEPGoalBuilder"));
 
 // Lazy-loaded: Admin
 const AdminDashboard = lazy(() => import("./pages/admin/AdminDashboard"));
