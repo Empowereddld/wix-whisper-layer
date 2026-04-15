@@ -15,7 +15,7 @@ const DownloadablesHero = () => {
               Everything You Need to Support a Child With DLD
             </h1>
             <p className="text-[13px] md:text-[14px] lg:text-[15px] text-muted-foreground leading-[1.7] mb-6 md:mb-8 max-w-[500px]">
-              Printable guides, checklists, posters, and activity sheets, ready to use today. Practical tools that work.
+              Printable guides, checklists, posters, and activity sheets, ready to use today. These are practical tools that work.
             </p>
             <Link
               to="/hub/preview"
