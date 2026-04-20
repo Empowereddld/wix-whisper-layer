@@ -42,6 +42,7 @@ const Unsubscribe = () => {
       <SEOHead
         title="Unsubscribe — Empowered DLD"
         description="Opt out of Empowered DLD email communications."
+        path="/unsubscribe"
       />
       <main className="min-h-screen bg-[#F8F5FC] flex items-center justify-center px-4 py-16">
         <div className="w-full max-w-md bg-white rounded-2xl shadow-sm border border-border p-8">
