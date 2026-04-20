@@ -40,7 +40,7 @@ const DownloadablesLibraryIntro = () => {
               to="/hub/preview"
               className="inline-flex items-center gap-2 text-primary font-semibold text-[15px] hover:underline w-fit"
             >
-              Sign Up for Free Access
+              Sign Up for Instant Access
               <ArrowRight className="h-4 w-4" />
             </Link>
 

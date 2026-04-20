@@ -124,7 +124,7 @@ const HubPreview = () => {
             </Button>
           </Link>
           <p className="text-[13px] text-foreground/35">
-            Create a free account to explore the Resource Hub.
+            Create an account to explore the Resource Hub.
           </p>
         </div>
       </section>
@@ -167,7 +167,7 @@ const HubPreview = () => {
               A Few of the Tools Inside the Resource Hub
             </h2>
             <p className="text-[14px] md:text-[16px] text-muted-foreground leading-[1.7] max-w-[620px] mx-auto">
-              Create your free account to access the full library of printable guides, checklists, and practical supports for children with Developmental Language Disorder.
+              Create your account to access the full library of printable guides, checklists, and practical supports for children with Developmental Language Disorder.
             </p>
           </div>
 
@@ -191,7 +191,7 @@ const HubPreview = () => {
                     <Lock className="h-8 w-8 text-white/80" />
                     <p className="text-white font-medium text-sm">Sign Up to Access</p>
                     <Link to="/hub/signup">
-                      <Button size="sm" className="bg-white text-deep-purple hover:bg-white/90 font-bold">Create Free Account</Button>
+                      <Button size="sm" className="bg-white text-deep-purple hover:bg-white/90 font-bold">Create Account</Button>
                     </Link>
                   </div>
                 </div>
@@ -236,7 +236,7 @@ const HubPreview = () => {
             Start exploring the DLD Resource Hub
           </h2>
           <p className="text-[14px] md:text-[16px] text-white/70 leading-[1.7] mb-8 max-w-[620px] mx-auto">
-            Create your free account and discover tools for supporting children with Developmental Language Disorder.
+            Create your account and discover tools for supporting children with Developmental Language Disorder.
           </p>
           <Link to="/hub/signup">
             <Button size="lg" className="bg-white text-deep-purple hover:bg-white/90 h-14 px-8 text-[15px] font-bold tracking-wide">

@@ -23,7 +23,7 @@ const DownloadablesSignupCTA = () => {
               Ready to Access Everything?
             </h2>
             <p className="text-background/70 text-[15px] leading-relaxed max-w-md">
-              Create a free account and get instant, lifetime access to our full
+              Create an account and get instant, lifetime access to our full
               resource library.
               <span className="block mt-1 text-background/50 text-sm">
                 Trusted by 4,000+ families and professionals.
@@ -38,7 +38,7 @@ const DownloadablesSignupCTA = () => {
               size="lg"
               className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full h-14 px-10 text-base font-semibold"
             >
-              <Link to="/hub/preview">Create Free Account</Link>
+              <Link to="/hub/preview">Create Account</Link>
             </Button>
           </div>
         </div>

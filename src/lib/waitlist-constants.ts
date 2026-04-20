@@ -87,7 +87,7 @@ export const TIER_REWARDS = [
   {
     tier: 3,
     name: "Founder Pricing Locked",
-    description: "$5.99/month for life instead of $7.99 — permanent 25% discount",
+    description: "$5.99/month for life instead of $7.99: permanent 25% discount",
     claimType: "auto",
   },
   {
@@ -99,7 +99,7 @@ export const TIER_REWARDS = [
   {
     tier: 5,
     name: "Founding Elite Package",
-    description: "Named in Story Pros founder credits forever — limited to first 50 members",
+    description: "Named in Story Pros founder credits forever: limited to first 50 members",
     claimType: "activate",
   },
 ] as const;
