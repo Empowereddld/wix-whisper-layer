@@ -26,3 +26,7 @@ verify_jwt = false
 
 [functions.resend-webhook]
 verify_jwt = false
+
+[functions.send-email]
+verify_jwt = false
+
