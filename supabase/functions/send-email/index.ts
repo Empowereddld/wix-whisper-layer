@@ -51,8 +51,10 @@ Deno.serve(async (req) => {
       });
     }
 
-    const apiKey = Deno.env.get("RESEND_API_KEY");
-    if (!apiKey) throw new Error("RESEND_API_KEY not configured");
+    const lovableKey = Deno.env.get("LOVABLE_API_KEY");
+    const resendKey = Deno.env.get("RESEND_API_KEY");
+    if (!lovableKey) throw new Error("LOVABLE_API_KEY not configured");
+    if (!resendKey) throw new Error("RESEND_API_KEY not configured");
 
     const finalHtml = html ?? defaultWrap(subject, `<p>${escapeHtml(text!)}</p>`);
     const recipients = Array.isArray(to) ? to : [to];
@@ -63,9 +65,13 @@ Deno.serve(async (req) => {
 
     const results: any[] = [];
     for (const chunk of chunks) {
-      const res = await fetch("https://api.resend.com/emails", {
+      const res = await fetch("https://connector-gateway.lovable.dev/resend/emails", {
         method: "POST",
-        headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
+        headers: {
+          Authorization: `Bearer ${lovableKey}`,
+          "X-Connection-Api-Key": resendKey,
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
           from: from ?? FROM,
           to: chunk,
