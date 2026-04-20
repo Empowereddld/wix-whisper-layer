@@ -102,6 +102,33 @@ Deno.serve(async (req) => {
       });
     }
 
+    // Send purchase receipt (fire-and-forget)
+    try {
+      const { data: resource } = await admin
+        .from("resources")
+        .select("title")
+        .eq("id", metadata.resource_id)
+        .maybeSingle();
+      const amountStr = `$${((parseInt(metadata.amount || "0") || 0) / 100).toFixed(2)} ${metadata.currency || "CAD"}`;
+      const customerEmail = session.customer_details?.email || user.email;
+      if (customerEmail) {
+        await admin.functions.invoke("send-email", {
+          body: {
+            to: customerEmail,
+            subject: `Your Empowered DLD purchase — ${resource?.title || "Resource"}`,
+            html: `<p>Hi there,</p>
+              <p>Thanks for your purchase! Your resource is now unlocked in your Resource Hub.</p>
+              <p><strong>Item:</strong> ${resource?.title || "Resource"}<br/>
+              <strong>Amount:</strong> ${amountStr}</p>
+              <p><a href="https://empowereddld.com/hub/resource/${metadata.resource_id}" style="display:inline-block;background:#5B2D8E;color:#fff;padding:12px 24px;text-decoration:none;border-radius:6px;font-weight:600;">Access Your Resource →</a></p>
+              <p>Need help? Just reply to this email.</p>`,
+          },
+        });
+      }
+    } catch (emailErr) {
+      console.warn("Receipt email failed:", emailErr);
+    }
+
     return new Response(JSON.stringify({ success: true, resource_id: metadata.resource_id }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
