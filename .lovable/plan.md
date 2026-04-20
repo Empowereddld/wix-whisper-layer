@@ -1,10 +1,35 @@
 
-The user wants me to walk through the launch checklist starting with #1 Content & Copy sweep. They want guided execution one item at a time. Let me plan #1 specifically since that's what they asked to start with.
+User approved Pass A + B. Plan: do the mechanical edits in one batch.
 
-For #1 Content & Copy sweep, the main known issues from memory:
-- Em dashes (—) need to be replaced (user has been doing this manually one resource at a time)
-- "free" language being phased out (monetization-readiness memory)
-- "people" vs "children" terminology for DLD (lifelong condition)
-- DLD terminology consistency
+**Pass A — Em dash replacements** (~25 user-facing spots)
+Files to edit (body copy / headlines only, skip SEO meta + admin placeholders):
+- `src/components/WhatIsDLDSection.tsx` — headline quote
+- `src/components/DownloadablesSignupCTA.tsx`
+- `src/components/AboutDLDHero.tsx`
+- `src/components/StatBand.tsx`
+- `src/components/DownloadablesLibraryIntro.tsx`
+- `src/pages/EducationalApp.tsx` — hero subhead, feature copy
+- `src/lib/waitlist-constants.ts` — tier descriptions, reward copy
+- `src/pages/hub/HubPreview.tsx`
+- Spot-check: `src/components/Footer.tsx`, hero/CTA sections found in scan
 
-I should do an actual scan of the codebase to find these issues, then present findings as a concrete plan. Let me search for em dashes, "free" usage, and "children with DLD" patterns.
+Replacement rules:
+- ` — ` (with spaces) → `, ` or `: ` based on grammar (clause = comma, list/explanation = colon)
+- `—` (no spaces) → `, `
+- Leave em dashes inside SEO `<title>` strings, OG tags, and admin form placeholders untouched
+
+**Pass B — "Free" softening** (~10 Hub entry points)
+- "Create Free Account" → "Create Account" (buttons in DownloadablesSignupCTA, HubPreview, hero CTAs)
+- "Free Account" labels → "Account"
+- "Sign Up for Free Access" → "Sign Up for Instant Access"
+- "Get Free Access" → "Get Instant Access"
+- Keep "free" where it accurately describes a specific free resource (e.g. DLD Starter Kit "It is free", FreeCourse page title) — those are factual, not marketing
+- Keep "free" in legal/privacy pages
+
+**Out of scope for this pass**
+- "children with DLD" wording (that's Pass C, table-based review)
+- Resource descriptions in the database (you've been editing those manually)
+- Blog post bodies (content-integrity rule)
+
+**After edits**
+I'll list every file changed with a one-line summary so you can spot-check, then we move to Step 2: Functional Smoke Tests.
