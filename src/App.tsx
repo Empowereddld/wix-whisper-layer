@@ -76,6 +76,7 @@ const EarlySupportersWall = lazy(() => import("./pages/EarlySupportersWall"));
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
 const TermsAndConditions = lazy(() => import("./pages/TermsAndConditions"));
 const Disclaimer = lazy(() => import("./pages/Disclaimer"));
+const Unsubscribe = lazy(() => import("./pages/Unsubscribe"));
 
 // Lazy-loaded: Protected route wrappers
 const ProtectedRoute = lazy(() => import("@/components/hub/ProtectedRoute"));
@@ -121,6 +122,7 @@ const App = () => (
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
               <Route path="/disclaimer" element={<Disclaimer />} />
+              <Route path="/unsubscribe" element={<Unsubscribe />} />
               <Route path="/signup/role" element={<SignupRole />} />
               <Route path="/login" element={<Login />} />
               <Route path="/forgot-password" element={<ForgotPassword />} />

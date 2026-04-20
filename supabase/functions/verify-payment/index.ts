@@ -116,11 +116,12 @@ Deno.serve(async (req) => {
           body: {
             to: customerEmail,
             subject: `Your Empowered DLD purchase — ${resource?.title || "Resource"}`,
+            bypass_suppression: true,
             html: `<p>Hi there,</p>
               <p>Thanks for your purchase! Your resource is now unlocked in your Resource Hub.</p>
               <p><strong>Item:</strong> ${resource?.title || "Resource"}<br/>
               <strong>Amount:</strong> ${amountStr}</p>
-              <p><a href="https://empowereddld.com/hub/resource/${metadata.resource_id}" style="display:inline-block;background:#5B2D8E;color:#fff;padding:12px 24px;text-decoration:none;border-radius:6px;font-weight:600;">Access Your Resource →</a></p>
+              <p><a href="https://www.empowereddld.com/hub/resource/${metadata.resource_id}" style="display:inline-block;background:#5B2D8E;color:#fff;padding:12px 24px;text-decoration:none;border-radius:6px;font-weight:600;">Access Your Resource →</a></p>
               <p>Need help? Just reply to this email.</p>`,
           },
         });
