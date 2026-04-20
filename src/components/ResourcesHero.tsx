@@ -1,3 +1,6 @@
+import { Link } from "react-router-dom";
+import { ArrowRight } from "lucide-react";
+
 const ResourcesHero = () => {
   return (
     <section className="bg-deep-purple py-20 md:py-28 lg:py-32">
@@ -11,7 +14,14 @@ const ResourcesHero = () => {
         <p className="text-[14px] md:text-[16px] text-white/80 leading-[1.7] max-w-[620px]">
           Podcasts, courses, and downloadables designed for parents, SLPs, and educators.
         </p>
-        <p className="text-[13px] md:text-[14px] text-white/50 mt-4">
+        <Link
+          to="/hub/preview"
+          className="inline-flex items-center gap-2 h-12 px-8 bg-white text-deep-purple text-[13px] font-semibold tracking-[0.04em] rounded-md hover:bg-white/90 transition-all duration-200 mt-2"
+        >
+          Explore the Resource Library
+          <ArrowRight className="w-4 h-4" />
+        </Link>
+        <p className="text-[13px] md:text-[14px] text-white/50 mt-2">
           Trusted by families and professionals
         </p>
       </div>
