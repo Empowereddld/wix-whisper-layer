@@ -88,7 +88,7 @@ const EducationalApp = () => {
                   An App That Builds Language Through Stories
                 </h1>
                 <p className="text-[14px] md:text-[16px] lg:text-[18px] leading-[1.7] text-primary-foreground/80 max-w-[540px] mx-auto lg:mx-0">
-                  Help your child build language skills through interactive storytelling. Designed by a team of speech-language pathologists, educators, and families — specifically for children with DLD.
+                  Help your child build language skills through interactive storytelling. Designed by a team of speech-language pathologists, educators, and families, specifically for children with DLD.
                 </p>
               </div>
 
@@ -159,7 +159,7 @@ const EducationalApp = () => {
         <ChoosePathCTA
           label="Want to support DLD in other ways?"
           heading="Explore Our Full Range of Resources"
-          subheading="From books to free downloads to professional development — find tools that make a difference."
+          subheading="From books to downloads to professional development: find tools that make a difference."
         />
       </main>
       <Footer />
