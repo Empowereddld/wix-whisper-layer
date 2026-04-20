@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
   SelectContent,
@@ -17,6 +18,7 @@ const OrganizationsLeadFormSection = () => {
   const [email, setEmail] = useState("");
   const [orgName, setOrgName] = useState("");
   const [role, setRole] = useState("");
+  const [interest, setInterest] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
@@ -30,7 +32,9 @@ const OrganizationsLeadFormSection = () => {
       email: email.trim(),
       organization_name: orgName.trim(),
       role,
-      source: "organizations_page",
+      source: interest.trim()
+        ? `organizations_page | interest: ${interest.trim()}`
+        : "organizations_page",
     } as any);
 
     setIsSubmitting(false);
@@ -38,23 +42,25 @@ const OrganizationsLeadFormSection = () => {
     if (error) {
       toast({ title: "Something went wrong", description: "Please try again later.", variant: "destructive" });
     } else {
-      // Fire-and-forget confirmation email with the guide
+      // Fire-and-forget acknowledgment email
       supabase.functions.invoke("send-email", {
         body: {
           to: email.trim(),
-          subject: "Your DLD Recognition Guide is here 📘",
+          subject: "Thanks for reaching out, Empowered DLD",
           html: `<p>Hi ${name.trim()},</p>
-                 <p>Thanks for requesting our <strong>DLD Recognition Guide</strong>! It's designed to help your team at <strong>${orgName.trim()}</strong> spot the early signs of Developmental Language Disorder in the children you serve.</p>
-                 <p><a href="https://empowereddld.com/resources" style="display:inline-block;background:#5B2D8E;color:#fff;padding:12px 24px;text-decoration:none;border-radius:6px;font-weight:600;">Access the Guide →</a></p>
-                 <p>Want to chat about how Empowered DLD can support your organization? Just reply to this email — we read every message.</p>`,
+                 <p>Thank you for getting in touch about how Empowered DLD can support <strong>${orgName.trim()}</strong>. We received your inquiry and a member of our team will personally respond within 1–2 business days.</p>
+                 <p>In the meantime, feel free to explore our <a href="https://empowereddld.com/hub/preview" style="color:#5B2D8E;font-weight:600;">Resource Hub</a> for guides, tools, and resources to support people with Developmental Language Disorder.</p>
+                 <p>Have questions in the meantime? Just reply to this email, we read every message.</p>
+                 <p>Talk soon,<br/>The Empowered DLD Team</p>`,
         },
       }).catch((e) => console.warn("Lead email failed:", e));
 
-      toast({ title: "Guide on its way!", description: "Check your inbox shortly." });
+      toast({ title: "Thanks for reaching out!", description: "We'll be in touch within 1–2 business days." });
       setName("");
       setEmail("");
       setOrgName("");
       setRole("");
+      setInterest("");
     }
   };
 
@@ -64,10 +70,10 @@ const OrganizationsLeadFormSection = () => {
         <div className="max-w-[600px] mx-auto">
           <div className="text-center mb-8 md:mb-10">
             <h2 className="text-[28px] md:text-[38px] lg:text-[46px] font-black text-foreground leading-[1.1] mb-3">
-              Get Our Free DLD Recognition Guide
+              Let's Talk About Your Organization
             </h2>
             <p className="text-[13px] md:text-[14px] lg:text-[16px] text-muted-foreground leading-[1.7]">
-              Not ready to book yet? Start here. Download our free guide to help your team recognize the early signs of DLD in the children you serve.
+              Not ready to book yet? Tell us a little about your team and what you're hoping to accomplish. We'll personally respond with ideas tailored to your needs.
             </p>
           </div>
 
@@ -110,12 +116,25 @@ const OrganizationsLeadFormSection = () => {
               </Select>
             </div>
 
+            <div>
+              <Label htmlFor="org-interest-field" className="text-[13px] font-semibold text-foreground mb-1.5 block">
+                What would you like to learn more about? <span className="text-muted-foreground font-normal">(optional)</span>
+              </Label>
+              <Textarea
+                id="org-interest-field"
+                value={interest}
+                onChange={(e) => setInterest(e.target.value)}
+                placeholder="e.g. staff training on DLD, family workshops, partnership opportunities, bulk book orders…"
+                rows={3}
+              />
+            </div>
+
             <Button type="submit" disabled={isSubmitting} className="w-full h-12 text-[12px] font-bold uppercase tracking-[0.12em]">
-              {isSubmitting ? "Submitting..." : "Download Free Guide"}
+              {isSubmitting ? "Sending..." : "Send My Inquiry"}
             </Button>
 
             <p className="text-[11px] md:text-[12px] text-muted-foreground text-center leading-[1.6]">
-              You'll also get helpful tips and updates from Empowered DLD. Unsubscribe anytime.
+              We'll respond personally within 1–2 business days. No spam, ever.
             </p>
           </form>
         </div>
