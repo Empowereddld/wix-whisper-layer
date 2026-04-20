@@ -38,6 +38,18 @@ const OrganizationsLeadFormSection = () => {
     if (error) {
       toast({ title: "Something went wrong", description: "Please try again later.", variant: "destructive" });
     } else {
+      // Fire-and-forget confirmation email with the guide
+      supabase.functions.invoke("send-email", {
+        body: {
+          to: email.trim(),
+          subject: "Your DLD Recognition Guide is here 📘",
+          html: `<p>Hi ${name.trim()},</p>
+                 <p>Thanks for requesting our <strong>DLD Recognition Guide</strong>! It's designed to help your team at <strong>${orgName.trim()}</strong> spot the early signs of Developmental Language Disorder in the children you serve.</p>
+                 <p><a href="https://empowereddld.com/resources" style="display:inline-block;background:#5B2D8E;color:#fff;padding:12px 24px;text-decoration:none;border-radius:6px;font-weight:600;">Access the Guide →</a></p>
+                 <p>Want to chat about how Empowered DLD can support your organization? Just reply to this email — we read every message.</p>`,
+        },
+      }).catch((e) => console.warn("Lead email failed:", e));
+
       toast({ title: "Guide on its way!", description: "Check your inbox shortly." });
       setName("");
       setEmail("");

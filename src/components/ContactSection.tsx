@@ -54,6 +54,34 @@ const ContactSection = () => {
         questions: data.questions,
       });
       if (error) throw error;
+
+      // Fire-and-forget confirmation email
+      supabase.functions.invoke("send-email", {
+        body: {
+          to: data.email,
+          subject: "We received your message — Empowered DLD",
+          html: `<p>Hi ${data.firstName},</p>
+                 <p>Thanks for reaching out to Empowered DLD! We've received your message and a member of our team will get back to you within <strong>48 hours</strong>.</p>
+                 <p><strong>What you sent us:</strong></p>
+                 <blockquote style="border-left:3px solid #5B2D8E;padding:8px 16px;color:#555;background:#F8F5FC;">${data.questions.replace(/</g, "&lt;")}</blockquote>
+                 <p>In the meantime, feel free to explore our <a href="https://empowereddld.com/resources" style="color:#5B2D8E;">Resource Hub</a>.</p>`,
+        },
+      }).catch((e) => console.warn("Confirmation email failed:", e));
+
+      // Internal notification
+      supabase.functions.invoke("send-email", {
+        body: {
+          to: "hello@empowereddld.com",
+          subject: `New contact form: ${data.firstName} ${data.lastName || ""} (${data.companyName})`,
+          reply_to: data.email,
+          html: `<p><strong>From:</strong> ${data.firstName} ${data.lastName || ""} &lt;${data.email}&gt;</p>
+                 <p><strong>Company:</strong> ${data.companyName}</p>
+                 <p><strong>Position:</strong> ${data.position || "—"}</p>
+                 <p><strong>Message:</strong></p>
+                 <p>${data.questions.replace(/</g, "&lt;").replace(/\n/g, "<br>")}</p>`,
+        },
+      }).catch((e) => console.warn("Internal notification failed:", e));
+
       toast({ title: "Thank you for reaching out! 🙌", description: "We'll review your message and get back to you within 48 hours." });
       form.reset();
     } catch {
