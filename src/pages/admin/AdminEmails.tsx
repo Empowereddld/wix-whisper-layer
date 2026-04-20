@@ -35,22 +35,52 @@ const AdminEmails = () => {
 
   const sendMutation = useMutation({
     mutationFn: async () => {
-      // For now, just record the campaign — email delivery integration comes later
+      let recipients: string[] = [];
+
+      if (audience === "all" || ["parent", "slp", "educator"].includes(audience)) {
+        const { data: waitlist } = await supabase
+          .from("waitlist")
+          .select("email, role")
+          .order("created_at", { ascending: false });
+        const filtered = (waitlist || []).filter((w) =>
+          audience === "all" ? true : w.role === audience
+        );
+        recipients = filtered.map((w) => w.email);
+
+        if (audience === "all") {
+          const { data: sp } = await supabase.from("storybuilders_waitlist").select("email");
+          recipients.push(...(sp || []).map((s) => s.email));
+        }
+      }
+
+      recipients = Array.from(new Set(recipients.filter(Boolean)));
+      if (recipients.length === 0) throw new Error("No recipients found for this audience.");
+
+      const html = body
+        .split(/\n\n+/)
+        .map((p) => `<p>${p.replace(/\n/g, "<br/>").replace(/</g, "&lt;")}</p>`)
+        .join("");
+
+      const { error: sendError } = await supabase.functions.invoke("send-email", {
+        body: { to: recipients, subject, html },
+      });
+      if (sendError) throw sendError;
+
       const { error } = await supabase.from("email_campaigns").insert({
-        subject,
-        body,
-        audience,
-        sent_at: new Date().toISOString(),
-        recipient_count: 0, // Will be computed when email service is connected
+        subject, body, audience, sent_at: new Date().toISOString(), recipient_count: recipients.length,
       });
       if (error) throw error;
+      return recipients.length;
     },
-    onSuccess: () => {
+    onSuccess: (count) => {
       queryClient.invalidateQueries({ queryKey: ["email-campaigns"] });
-      logAction.mutate(`Sent email campaign: ${subject}`);
+      logAction.mutate(`Sent email campaign: ${subject} (${count} recipients)`);
       setSubject("");
       setBody("");
-      toast({ title: "Campaign recorded", description: "Connect an email service to send actual emails." });
+      toast({ title: "Campaign sent! 🚀", description: `Delivered to ${count} recipient${count === 1 ? "" : "s"}.` });
+    },
+    onError: (err: any) => {
+      toast({ title: "Send failed", description: err?.message || "Please try again.", variant: "destructive" });
     },
   });
 
