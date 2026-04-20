@@ -1,24 +1,10 @@
 
+The user wants me to walk through the launch checklist starting with #1 Content & Copy sweep. They want guided execution one item at a time. Let me plan #1 specifically since that's what they asked to start with.
 
-# Plan: Re-extract PDF Preview Pages at Higher Quality
+For #1 Content & Copy sweep, the main known issues from memory:
+- Em dashes (—) need to be replaced (user has been doing this manually one resource at a time)
+- "free" language being phased out (monetization-readiness memory)
+- "people" vs "children" terminology for DLD (lifelong condition)
+- DLD terminology consistency
 
-## Problem
-The current page preview images in the gallery are blurry and text is hard to read. They need to be re-rendered at higher resolution with minimal compression.
-
-## Steps
-
-### Step 1 — Re-extract pages 1–3 from the uploaded PDF
-- Use `pdftoppm` at **300 DPI** (double the previous attempt)
-- Output as **PNG** (lossless) instead of WebP to avoid compression artifacts
-- Target width of **1800px** for crisp rendering on retina displays
-
-### Step 2 — Upload replacements to the thumbnails bucket
-- Replace the existing `iep-preview-page-1.webp`, `iep-preview-page-2.webp`, `iep-preview-page-3.webp` with the new high-res PNGs
-- Update the `sample_images` array in the `resources` table to point to the new `.png` URLs
-
-### Step 3 — Update local public assets
-- Replace the webp files in `public/images/` with the new PNGs for fallback
-
-## Result
-Sharp, readable PDF page previews in the gallery thumbnail strip.
-
+I should do an actual scan of the codebase to find these issues, then present findings as a concrete plan. Let me search for em dashes, "free" usage, and "children with DLD" patterns.
