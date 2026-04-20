@@ -63,7 +63,27 @@ const Footer = () => {
     if (error) {
       toast({ title: "Something went wrong", description: "Please try again later.", variant: "destructive" });
     } else {
-      toast({ title: "Welcome to the community! 🎉", description: "You'll be the first to hear about new resources, tips, and DLD updates." });
+      // Fire-and-forget welcome email
+      supabase.functions.invoke("send-email", {
+        body: {
+          to: email.trim(),
+          subject: "Welcome to the Empowered DLD community",
+          html: `<p>Hi ${name.trim()},</p>
+                 <p>Thanks for joining the Empowered DLD community! We're so glad you're here.</p>
+                 <p>Here's what you can expect from us:</p>
+                 <ul style="line-height:1.7;color:#444;">
+                   <li>New tools and resources to support people with Developmental Language Disorder</li>
+                   <li>Practical tips for parents, therapists, and educators</li>
+                   <li>Updates on our books, workshops, and upcoming projects</li>
+                 </ul>
+                 <p>Want to dive in right now? Explore our Resource Hub for guides, tools, and resources you can use today.</p>
+                 <p><a href="https://empowereddld.com/hub/preview" style="display:inline-block;background:#5B2D8E;color:#fff;padding:12px 24px;text-decoration:none;border-radius:6px;font-weight:600;">Explore the Resource Hub →</a></p>
+                 <p>Talk soon,<br/>The Empowered DLD Team</p>
+                 <p style="font-size:12px;color:#999;margin-top:24px;">You're receiving this because you signed up at empowereddld.com. You can unsubscribe anytime.</p>`,
+        },
+      }).catch((e) => console.warn("Welcome email failed:", e));
+
+      toast({ title: "Welcome to the community! 🎉", description: "Check your inbox for a welcome note from us." });
       setEmail("");
       setName("");
     }
