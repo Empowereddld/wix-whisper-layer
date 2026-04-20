@@ -59,12 +59,14 @@ const ContactSection = () => {
       supabase.functions.invoke("send-email", {
         body: {
           to: data.email,
-          subject: "We received your message — Empowered DLD",
+          subject: "We received your message, Empowered DLD",
           html: `<p>Hi ${data.firstName},</p>
                  <p>Thanks for reaching out to Empowered DLD! We've received your message and a member of our team will get back to you within <strong>48 hours</strong>.</p>
                  <p><strong>What you sent us:</strong></p>
                  <blockquote style="border-left:3px solid #5B2D8E;padding:8px 16px;color:#555;background:#F8F5FC;">${data.questions.replace(/</g, "&lt;")}</blockquote>
-                 <p>In the meantime, feel free to explore our <a href="https://empowereddld.com/resources" style="color:#5B2D8E;">Resource Hub</a>.</p>`,
+                 <p>In the meantime, feel free to explore our <a href="https://empowereddld.com/resources" style="color:#5B2D8E;">Resource Hub</a> for guides, tools, and resources to support children with Developmental Language Disorder.</p>
+                 <p>Have questions? Don't hesitate to reach out.</p>
+                 <p>— The Empowered DLD Team</p>`,
         },
       }).catch((e) => console.warn("Confirmation email failed:", e));
 
