@@ -14,7 +14,7 @@ const TermsAndConditions = () => {
       <main className="py-16 md:py-24">
         <div className="container px-6 md:px-8 max-w-[800px] mx-auto">
           <h1 className="text-[32px] md:text-[42px] font-black text-foreground leading-[1.1] mb-8">Terms & Conditions</h1>
-          <p className="text-[13px] text-muted-foreground mb-8">Last updated: March 17, 2026</p>
+          <p className="text-[13px] text-muted-foreground mb-8">Last updated: April 22, 2026</p>
 
           <div className="prose prose-sm max-w-none text-muted-foreground space-y-6 [&_h2]:text-foreground [&_h2]:text-[20px] [&_h2]:font-bold [&_h2]:mt-10 [&_h2]:mb-3 [&_p]:leading-[1.8] [&_ul]:space-y-1 [&_li]:leading-[1.8]">
             <h2>1. Acceptance of Terms</h2>
