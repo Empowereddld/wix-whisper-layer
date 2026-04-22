@@ -566,29 +566,41 @@ export type Database = {
         Row: {
           created_at: string
           email: string
+          email_verified: boolean
           id: string
           invite_count: number
           name: string
           referral_code: string
           referred_by_code: string | null
+          verification_sent_at: string | null
+          verification_token: string | null
+          verified_at: string | null
         }
         Insert: {
           created_at?: string
           email: string
+          email_verified?: boolean
           id?: string
           invite_count?: number
           name: string
           referral_code: string
           referred_by_code?: string | null
+          verification_sent_at?: string | null
+          verification_token?: string | null
+          verified_at?: string | null
         }
         Update: {
           created_at?: string
           email?: string
+          email_verified?: boolean
           id?: string
           invite_count?: number
           name?: string
           referral_code?: string
           referred_by_code?: string | null
+          verification_sent_at?: string | null
+          verification_token?: string | null
+          verified_at?: string | null
         }
         Relationships: []
       }
@@ -775,6 +787,14 @@ export type Database = {
       increment_waitlist_invites: {
         Args: { p_code: string }
         Returns: undefined
+      }
+      verify_waitlist_email: {
+        Args: { p_token: string }
+        Returns: {
+          already_verified: boolean
+          email: string
+          success: boolean
+        }[]
       }
     }
     Enums: {
