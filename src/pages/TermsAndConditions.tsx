@@ -32,14 +32,39 @@ const TermsAndConditions = () => {
             <h2>3. Intellectual Property</h2>
             <p>All content on this website — including text, images, illustrations, book content, downloadable resources, logos, and design — is the intellectual property of Empowered DLD unless otherwise noted. You may not reproduce, distribute, or create derivative works without our written permission.</p>
 
-            <h2>4. Digital Products & Purchases</h2>
-            <p>When you purchase digital resources from our website:</p>
+            <h2>4. Digital Products & Resource License</h2>
+            <p>When you purchase a digital resource (PDF, guide, activity, bundle, or other downloadable file) from Empowered DLD, you are granted a limited, non-exclusive, non-transferable, revocable license to use the resource under the terms below.</p>
+
+            <h2>4.1 Single-User License (Standard Purchase)</h2>
+            <p>Unless you have purchased a multi-user or organizational license, every standard purchase grants a <strong>single-user / single-classroom license</strong>. This means:</p>
             <ul className="list-disc pl-6">
-              <li>You receive a personal, non-transferable license to use the materials</li>
-              <li>Resources are for your individual or classroom use only</li>
-              <li>Redistribution, resale, or sharing of purchased files is prohibited</li>
-              <li>All sales of digital products are final unless otherwise stated</li>
+              <li><strong>You may</strong> use the resource personally, with your own family, with your own caseload, or with the students in your own single classroom.</li>
+              <li><strong>You may</strong> print copies of the resource for use within that single classroom or with your own clients.</li>
+              <li><strong>You may not</strong> share the file (or printed copies) with colleagues, co-workers, other classrooms, other clinicians, or any third party.</li>
+              <li><strong>You may not</strong> upload the file to any shared drive, learning management system, district platform, intranet, cloud folder, or website where others can access it.</li>
+              <li><strong>You may not</strong> resell, sublicense, redistribute, give away, or include the resource (in whole or in part) in any other product, course, or compilation.</li>
+              <li><strong>You may not</strong> modify, translate, create derivative works from, or remove copyright notices from the resource.</li>
+              <li><strong>You may not</strong> use the resource for any commercial purpose other than your own private practice or classroom instruction.</li>
             </ul>
+
+            <h2>4.2 Multi-User, School, and District Licenses</h2>
+            <p>If you intend to use a resource with more than one user, classroom, clinician, school, or district, you must purchase an appropriate multi-user license. Multi-user licensing is available for:</p>
+            <ul className="list-disc pl-6">
+              <li>Therapy practices and clinical teams</li>
+              <li>Schools and school districts</li>
+              <li>Hospitals, non-profits, and organizations</li>
+              <li>Universities and training programs</li>
+            </ul>
+            <p>To request a quote for multi-user, school, or district licensing, contact <a href="mailto:hello@empowereddld.com" className="text-primary hover:underline">hello@empowereddld.com</a>.</p>
+
+            <h2>4.3 Copyright</h2>
+            <p>All Empowered DLD digital resources are © Empowered DLD. All rights reserved. Copyright notices and watermarks must remain intact on all copies.</p>
+
+            <h2>4.4 License Enforcement</h2>
+            <p>We reserve the right to revoke any license, suspend or terminate accounts, and pursue legal remedies (including damages and injunctive relief) for violations of this license. Continued violations may also result in being permanently banned from purchasing future Empowered DLD resources.</p>
+
+            <h2>4.5 Refund Policy</h2>
+            <p>Because digital resources are delivered instantly and cannot be "returned," <strong>all sales of digital products are final</strong>. If you experience a technical issue (corrupted file, failed download, duplicate purchase, etc.), contact <a href="mailto:hello@empowereddld.com" className="text-primary hover:underline">hello@empowereddld.com</a> within 14 days of purchase and we will make it right.</p>
 
             <h2>5. User Accounts</h2>
             <p>When you create an account on our DLD Resource Hub, you are responsible for maintaining the confidentiality of your login credentials and for all activities under your account.</p>
