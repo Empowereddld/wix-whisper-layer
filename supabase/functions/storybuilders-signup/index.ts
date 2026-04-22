@@ -24,9 +24,10 @@ async function sendWelcomeEmail(
   try {
     const emailFunctionUrl = `${supabaseUrl}/functions/v1/send-waitlist-email`;
     const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-    const appUrl = Deno.env.get("APP_URL") || "https://empowereddld.com/storypros";
 
-    const verificationLink = `${appUrl}/verify?token=${verificationToken}`;
+    // Verification link points directly to the edge function, which renders a
+    // styled success/error page. No frontend route required.
+    const verificationLink = `${supabaseUrl}/functions/v1/verify-email-waitlist?token=${verificationToken}`;
 
     const response = await fetch(emailFunctionUrl, {
       method: "POST",
