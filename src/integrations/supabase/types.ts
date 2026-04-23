@@ -567,6 +567,7 @@ export type Database = {
           created_at: string
           email: string
           email_verified: boolean
+          email2_sent_at: string | null
           id: string
           invite_count: number
           name: string
@@ -580,6 +581,7 @@ export type Database = {
           created_at?: string
           email: string
           email_verified?: boolean
+          email2_sent_at?: string | null
           id?: string
           invite_count?: number
           name: string
@@ -593,6 +595,7 @@ export type Database = {
           created_at?: string
           email?: string
           email_verified?: boolean
+          email2_sent_at?: string | null
           id?: string
           invite_count?: number
           name?: string
