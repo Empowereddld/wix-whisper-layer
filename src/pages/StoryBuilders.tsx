@@ -885,30 +885,43 @@ const StoryBuilders = () => {
           </h2>
 
           {!wl.joined ? (
-            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 w-full max-w-[520px] mt-4">
-              <Input
-                placeholder="Name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-                className="h-12 bg-white/10 border-white/20 text-white placeholder:text-white/50 rounded-md"
-              />
-              <Input
-                type="email"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                className="h-12 bg-white/10 border-white/20 text-white placeholder:text-white/50 rounded-md"
-              />
-              <Button
-                type="submit"
-                disabled={wl.loading}
-                className="h-12 px-8 bg-primary text-primary-foreground font-bold rounded-md hover:bg-primary/90 transition-colors shadow-[var(--shadow-button)] whitespace-nowrap"
-              >
-                {wl.loading ? "Joining…" : "Join Now"}
-              </Button>
-            </form>
+            <div className="w-full max-w-[520px]">
+              <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 w-full mt-4">
+                <Input
+                  placeholder="Name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                  className="h-12 bg-white/10 border-white/20 text-white placeholder:text-white/50 rounded-md"
+                />
+                <Input
+                  type="email"
+                  placeholder="Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  className="h-12 bg-white/10 border-white/20 text-white placeholder:text-white/50 rounded-md"
+                />
+                <Button
+                  type="submit"
+                  disabled={wl.loading}
+                  className="h-12 px-8 bg-primary text-primary-foreground font-bold rounded-md hover:bg-primary/90 transition-colors shadow-[var(--shadow-button)] whitespace-nowrap"
+                >
+                  {wl.loading ? "Joining…" : "Join Now"}
+                </Button>
+              </form>
+              <label className="flex items-start gap-2.5 mt-3 cursor-pointer group text-left">
+                <input
+                  type="checkbox"
+                  checked={isSpeechPro}
+                  onChange={(e) => setIsSpeechPro(e.target.checked)}
+                  className="mt-1 h-4 w-4 rounded border-white/40 bg-white/10 accent-primary cursor-pointer"
+                />
+                <span className="text-[13px] text-white/80 leading-[1.5]">
+                  I'm a speech-language professional (SLP, SLT, Speech Therapist, Logopedist, Fonoaudióloga/o, etc.) — <span className="text-white/95 font-semibold">unlocks +50 bonus points after verification</span>
+                </span>
+              </label>
+            </div>
           ) : (
             <div className="mt-4 text-center">
               <p className="text-white/80 text-[15px] mb-3">
