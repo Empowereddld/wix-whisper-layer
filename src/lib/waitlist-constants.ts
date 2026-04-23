@@ -74,32 +74,38 @@ export const TIER_REWARDS = [
   },
   {
     tier: 1,
+    name: "Founding Member Status",
+    description: "Founding Member badge plus your name on the Early Supporters Wall",
+    claimType: "auto",
+  },
+  {
+    tier: 2,
     name: "Early Access Pass",
     description: "Early access to Story Pros on launch day, before the general public",
     claimType: "auto",
   },
   {
-    tier: 2,
+    tier: 3,
     name: "75 Bonus Story Coins",
     description: "A bonus coin drop to spend on in-app extras at launch",
     claimType: "auto",
   },
   {
-    tier: 3,
+    tier: 4,
+    name: "VIP Beta Access",
+    description: "Test Story Pros before launch and help shape the final product",
+    claimType: "unlock",
+  },
+  {
+    tier: 5,
     name: "Founder Pricing Locked",
     description: "$5.99/month for life instead of $7.99: permanent 25% discount",
     claimType: "auto",
   },
   {
-    tier: 4,
-    name: "VIP Beta Access + 200 Coins",
-    description: "Test Story Pros before launch and shape the final product, plus 200 bonus coins",
-    claimType: "unlock",
-  },
-  {
-    tier: 5,
+    tier: 6,
     name: "Founding Elite Package",
-    description: "Named in Story Pros founder credits forever: limited to first 50 members",
+    description: "Named in Story Pros founder credits forever, plus a signed Dan & Daria book and DLD-themed merch (limited to first 50 members)",
     claimType: "activate",
   },
 ] as const;
@@ -118,7 +124,7 @@ export const COMMUNITY_MILESTONES = [
 // --- ONE-TIME ACTIONS (do once, big early impact) ---
 export const ONETIME_POINTS = {
   SIGNUP: 10,              // Join the waitlist
-  VERIFY_EMAIL: 5,         // Confirm your email
+  VERIFY_EMAIL: 15,        // Confirm your email (matches Email 1 promise)
   COMPLETE_PROFILE: 10,    // Fill in name, role, age range
   FOLLOW_INSTAGRAM: 8,     // Follow on Instagram (honor system, opens profile)
   FOLLOW_FACEBOOK: 8,      // Follow on Facebook
