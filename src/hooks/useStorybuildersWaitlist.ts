@@ -487,6 +487,7 @@ export function useStorybuildersWaitlist() {
     refreshStats,
     trackShare,
     trackClick,
+    claimSocialFollow,
     resendVerification,
     submitSuggestion,
     voteSuggestion,
