@@ -14,7 +14,7 @@ import { Badge } from "@/components/ui/badge";
 import { Check, X } from "lucide-react";
 import { format } from "date-fns";
 import { toast } from "sonner";
-import { SLP_REFERRAL_BONUS } from "@/lib/waitlist-constants";
+import { SLP_REFERRAL_BONUS, SLP_REFERRAL_TOTAL } from "@/lib/waitlist-constants";
 
 interface PendingClaim {
   id: string;
@@ -65,7 +65,7 @@ const SLPVerificationQueue = () => {
       if (error) throw error;
       const row = Array.isArray(data) ? data[0] : data;
       if (row?.success) {
-        toast.success(`Verified — +${SLP_REFERRAL_BONUS} bonus awarded`);
+        toast.success(`Verified. Referrer now at flat +${SLP_REFERRAL_TOTAL} for this SLP referral.`);
         await load();
       } else {
         toast.error(row?.message || "Could not verify");
@@ -133,7 +133,7 @@ const SLPVerificationQueue = () => {
                       onClick={() => handleVerify(r.id)}
                       disabled={busy === r.id}
                     >
-                      <Check className="w-4 h-4 mr-1" /> Verify (+{SLP_REFERRAL_BONUS})
+                      <Check className="w-4 h-4 mr-1" /> Verify (flat +{SLP_REFERRAL_TOTAL})
                     </Button>
                     <Button
                       size="sm"

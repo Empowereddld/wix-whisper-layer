@@ -200,4 +200,8 @@ export const BRAND_COLORS = {
 // FEATURE 2: SLP Referral Bonus
 // ===========================================
 
-export const SLP_REFERRAL_BONUS = 50; // On top of normal 25 = 75 total
+// SLP referral is FLAT +50 total (mutually exclusive with the regular +25 referral).
+// The referrer first gets +25 on signup; when admin verifies the new signup is an SLP,
+// the verification action tops up by this delta amount so the total becomes exactly 50.
+export const SLP_REFERRAL_TOTAL = 50;
+export const SLP_REFERRAL_BONUS = 25; // delta added on verification (25 already awarded at signup -> 50 total)
