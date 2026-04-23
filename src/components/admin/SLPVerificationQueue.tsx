@@ -106,8 +106,8 @@ const SLPVerificationQueue = () => {
           <p className="text-muted-foreground text-sm py-6 text-center">Loading…</p>
         ) : requests.length === 0 ? (
           <p className="text-muted-foreground text-sm py-6 text-center">
-            No pending verifications. SLPs, SLTs, Speech Therapists, Logopedists,
-            and Fonoaudiólogos who self-identified at signup will appear here.
+            No pending verifications. SLPs, SLTs, and Speech Therapists
+            who self-identified at signup will appear here.
           </p>
         ) : (
           <Table>
