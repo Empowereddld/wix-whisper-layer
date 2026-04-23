@@ -155,23 +155,11 @@ const SharePanel = ({
     try {
       setIsSharing(true);
 
-      // Log share event to Supabase
-      await supabase.functions.invoke("log-waitlist-event", {
-        body: {
-          eventType: "share",
-          platform: config.id,
-        },
-      });
-
-      // Execute the share action
+      // Execute the share action (open share window / copy link)
       await config.action();
 
-      // Call the optional callback
+      // Award points via parent callback (wired to track-share edge function)
       onShare?.(config.id);
-
-      if (config.id !== "copy") {
-        toast.success(`Shared on ${config.label}!`);
-      }
     } catch (error) {
       console.error("Share error:", error);
       toast.error("Failed to share");
@@ -187,27 +175,14 @@ const SharePanel = ({
       // Open social link in new tab
       window.open(config.url, "_blank");
 
-      // Mark as followed
+      // Optimistically mark as followed in UI
       setFollowedPlatforms((prev) => ({
         ...prev,
         [config.id]: true,
       }));
 
-      // Log follow event to Supabase
-      await supabase.functions.invoke("log-waitlist-event", {
-        body: {
-          eventType: `follow_${config.id}`,
-          platform: config.id,
-          points: config.points,
-        },
-      });
-
-      // Call the optional callback
+      // Award points via parent callback (wired to claim-social-follow edge function)
       onFollowClick?.(config.id as "instagram" | "facebook" | "youtube");
-
-      toast.success(
-        `Great! You followed us on ${config.label}. ${config.points} points awarded!`
-      );
     } catch (error) {
       console.error("Follow error:", error);
       toast.error("Failed to open link");

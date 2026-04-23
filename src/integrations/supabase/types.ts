@@ -414,6 +414,30 @@ export type Database = {
           },
         ]
       }
+      referral_clicks: {
+        Row: {
+          click_date: string
+          created_at: string
+          id: string
+          ip_address: string
+          referral_code: string
+        }
+        Insert: {
+          click_date?: string
+          created_at?: string
+          id?: string
+          ip_address: string
+          referral_code: string
+        }
+        Update: {
+          click_date?: string
+          created_at?: string
+          id?: string
+          ip_address?: string
+          referral_code?: string
+        }
+        Relationships: []
+      }
       resource_requests: {
         Row: {
           audience: string
@@ -564,43 +588,79 @@ export type Database = {
       }
       storybuilders_waitlist: {
         Row: {
+          click_count: number
+          clicks_today: number
           created_at: string
           email: string
           email_verified: boolean
           email2_sent_at: string | null
+          first_referral_bonus_awarded: boolean
+          first_share_bonus_awarded: boolean
           id: string
           invite_count: number
+          is_speech_professional: boolean
+          last_click_date: string | null
+          last_share_date: string | null
           name: string
+          points: number
           referral_code: string
           referred_by_code: string | null
+          share_count: number
+          shares_today: number
+          social_claims: Json
+          speech_professional_verified: boolean
           verification_sent_at: string | null
           verification_token: string | null
           verified_at: string | null
         }
         Insert: {
+          click_count?: number
+          clicks_today?: number
           created_at?: string
           email: string
           email_verified?: boolean
           email2_sent_at?: string | null
+          first_referral_bonus_awarded?: boolean
+          first_share_bonus_awarded?: boolean
           id?: string
           invite_count?: number
+          is_speech_professional?: boolean
+          last_click_date?: string | null
+          last_share_date?: string | null
           name: string
+          points?: number
           referral_code: string
           referred_by_code?: string | null
+          share_count?: number
+          shares_today?: number
+          social_claims?: Json
+          speech_professional_verified?: boolean
           verification_sent_at?: string | null
           verification_token?: string | null
           verified_at?: string | null
         }
         Update: {
+          click_count?: number
+          clicks_today?: number
           created_at?: string
           email?: string
           email_verified?: boolean
           email2_sent_at?: string | null
+          first_referral_bonus_awarded?: boolean
+          first_share_bonus_awarded?: boolean
           id?: string
           invite_count?: number
+          is_speech_professional?: boolean
+          last_click_date?: string | null
+          last_share_date?: string | null
           name?: string
+          points?: number
           referral_code?: string
           referred_by_code?: string | null
+          share_count?: number
+          shares_today?: number
+          social_claims?: Json
+          speech_professional_verified?: boolean
           verification_sent_at?: string | null
           verification_token?: string | null
           verified_at?: string | null
@@ -763,6 +823,15 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      claim_social_follow: {
+        Args: { p_platform: string; p_points: number; p_referral_code: string }
+        Returns: {
+          already_claimed: boolean
+          message: string
+          new_points: number
+          success: boolean
+        }[]
+      }
       get_resource_price: { Args: { p_resource_id: string }; Returns: number }
       get_storybuilders_waitlist_count: { Args: never; Returns: number }
       get_waitlist_by_referral: {
@@ -790,6 +859,42 @@ export type Database = {
       increment_waitlist_invites: {
         Args: { p_code: string }
         Returns: undefined
+      }
+      record_referral_click: {
+        Args: {
+          p_daily_cap: number
+          p_ip_address: string
+          p_points: number
+          p_referral_code: string
+        }
+        Returns: {
+          awarded: boolean
+          reason: string
+          success: boolean
+        }[]
+      }
+      record_share: {
+        Args: {
+          p_daily_cap: number
+          p_first_share_bonus: number
+          p_platform: string
+          p_points_per_share: number
+          p_referral_code: string
+        }
+        Returns: {
+          capped: boolean
+          new_points: number
+          points_awarded: number
+          success: boolean
+        }[]
+      }
+      verify_speech_professional: {
+        Args: { p_bonus: number; p_waitlist_id: string }
+        Returns: {
+          message: string
+          new_points: number
+          success: boolean
+        }[]
       }
       verify_waitlist_email: {
         Args: { p_token: string }

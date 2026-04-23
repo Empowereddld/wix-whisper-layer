@@ -34,9 +34,12 @@ export interface WaitlistState {
   queuePosition: number | null;
   emailVerified: boolean;
   badges: string[];
-  
+
   shareCount: number;
   clickCount: number;
+  socialClaims: { instagram: boolean; facebook: boolean; youtube: boolean };
+  isSpeechProfessional: boolean;
+  speechProfessionalVerified: boolean;
   loading: boolean;
   error: string | null;
   notifications: Notification[];
@@ -66,9 +69,12 @@ export function useStorybuildersWaitlist() {
     queuePosition: null,
     emailVerified: false,
     badges: [],
-    
+
     shareCount: 0,
     clickCount: 0,
+    socialClaims: { instagram: false, facebook: false, youtube: false },
+    isSpeechProfessional: false,
+    speechProfessionalVerified: false,
     loading: false,
     error: null,
     notifications: [],
@@ -147,7 +153,6 @@ export function useStorybuildersWaitlist() {
   const refreshStatsInternal = useCallback(async (referralCode: string) => {
     setState((s) => ({ ...s, loading: true }));
     try {
-      // Fetch user data from storybuilders_waitlist using referral code
       const { data: userData, error } = await supabase
         .from("storybuilders_waitlist")
         .select("*")
@@ -158,21 +163,27 @@ export function useStorybuildersWaitlist() {
         throw new Error("User not found");
       }
 
-      // Count referrals
-      const { count: referralCount } = await supabase
-        .from("storybuilders_waitlist")
-        .select("id", { count: "exact", head: true })
-        .eq("referred_by_code", referralCode);
-
       const { data: totalData } = await supabase.rpc("get_storybuilders_waitlist_count");
 
-      const userPoints = (userData as any).points || 0;
+      const ud = userData as any;
+      const userPoints = ud.points || 0;
+      const claims = (ud.social_claims as Record<string, unknown>) || {};
       setState((s) => ({
         ...s,
-        inviteCount: userData.invite_count || 0,
+        inviteCount: ud.invite_count || 0,
         totalCount: totalData || s.totalCount,
         points: userPoints,
         currentTier: getTierForPoints(userPoints),
+        emailVerified: !!ud.email_verified,
+        shareCount: ud.share_count || 0,
+        clickCount: ud.click_count || 0,
+        socialClaims: {
+          instagram: !!claims.instagram,
+          facebook: !!claims.facebook,
+          youtube: !!claims.youtube,
+        },
+        isSpeechProfessional: !!ud.is_speech_professional,
+        speechProfessionalVerified: !!ud.speech_professional_verified,
         loading: false,
       }));
     } catch (err) {
@@ -188,12 +199,12 @@ export function useStorybuildersWaitlist() {
   }, [state.referralCode, refreshStatsInternal]);
 
   const joinWaitlist = useCallback(
-    async (name: string, email: string): Promise<JoinWaitlistResponse | null> => {
+    async (name: string, email: string, isSpeechProfessional = false): Promise<JoinWaitlistResponse | null> => {
       setState((s) => ({ ...s, loading: true, error: null }));
       try {
         const ref = getRefFromUrl();
         const { data, error } = await supabase.functions.invoke("storybuilders-signup", {
-          body: { name, email, ref },
+          body: { name, email, ref, is_speech_professional: isSpeechProfessional },
         });
 
         if (error) throw new Error(error.message || "Failed to join");
@@ -247,10 +258,25 @@ export function useStorybuildersWaitlist() {
         addNotification("error", "You must join the waitlist first");
         return false;
       }
-      addNotification("success", `Shared on ${platform}!`);
-      return true;
+      try {
+        const { data, error } = await supabase.functions.invoke("track-share", {
+          body: { referral_code: state.referralCode, platform },
+        });
+        if (error) throw error;
+
+        if (data?.capped) {
+          addNotification("info", "Daily share cap reached. Come back tomorrow!");
+        } else if (data?.points_awarded > 0) {
+          addNotification("success", `Shared on ${platform}! +${data.points_awarded} pts`);
+          await refreshStatsInternal(state.referralCode);
+        }
+        return true;
+      } catch (err) {
+        console.error("Failed to track share:", err);
+        return false;
+      }
     },
-    [state.referralCode]
+    [state.referralCode, refreshStatsInternal]
   );
 
   const trackClick = useCallback(async (): Promise<boolean> => {
@@ -265,6 +291,39 @@ export function useStorybuildersWaitlist() {
       return false;
     }
   }, [state.referralCode]);
+
+  const claimSocialFollow = useCallback(
+    async (platform: "instagram" | "facebook" | "youtube"): Promise<boolean> => {
+      if (!state.referralCode) {
+        addNotification("error", "You must join the waitlist first");
+        return false;
+      }
+      if (state.socialClaims[platform]) {
+        addNotification("info", `Already claimed ${platform}!`);
+        return false;
+      }
+      try {
+        const { data, error } = await supabase.functions.invoke("claim-social-follow", {
+          body: { referral_code: state.referralCode, platform },
+        });
+        if (error) throw error;
+        if (data?.success && !data?.already_claimed) {
+          addNotification("success", `+${data.points_awarded} pts for following on ${platform}!`);
+          await refreshStatsInternal(state.referralCode);
+          return true;
+        }
+        if (data?.already_claimed) {
+          addNotification("info", `Already claimed ${platform}!`);
+        }
+        return false;
+      } catch (err) {
+        console.error("Failed to claim follow:", err);
+        addNotification("error", "Could not claim points. Try again.");
+        return false;
+      }
+    },
+    [state.referralCode, state.socialClaims, refreshStatsInternal]
+  );
 
   const resendVerification = useCallback(async (): Promise<boolean> => {
     if (!state.referralCode) {
@@ -428,6 +487,7 @@ export function useStorybuildersWaitlist() {
     refreshStats,
     trackShare,
     trackClick,
+    claimSocialFollow,
     resendVerification,
     submitSuggestion,
     voteSuggestion,

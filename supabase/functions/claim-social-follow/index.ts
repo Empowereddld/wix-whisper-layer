@@ -5,9 +5,11 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-// Must mirror REPEATABLE_POINTS.CLICK and DAILY_CAPS.MAX_CLICK_POINTS
-const POINTS_PER_CLICK = 1;
-const DAILY_CAP_POINTS = 10;
+const PLATFORM_POINTS: Record<string, number> = {
+  instagram: 8,
+  facebook: 8,
+  youtube: 8,
+};
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -15,7 +17,7 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const { referral_code } = await req.json();
+    const { referral_code, platform } = await req.json();
 
     if (!referral_code || typeof referral_code !== "string") {
       return new Response(JSON.stringify({ error: "referral_code is required" }), {
@@ -24,26 +26,28 @@ Deno.serve(async (req) => {
       });
     }
 
+    const normalizedPlatform = String(platform || "").toLowerCase().trim();
+    if (!PLATFORM_POINTS[normalizedPlatform]) {
+      return new Response(
+        JSON.stringify({ error: "Invalid platform. Must be instagram, facebook, or youtube." }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
     const supabase = createClient(
       Deno.env.get("SUPABASE_URL")!,
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
     );
 
-    const ipAddress =
-      req.headers.get("x-forwarded-for")?.split(",")[0].trim() ||
-      req.headers.get("cf-connecting-ip") ||
-      "unknown";
-
-    const { data, error } = await supabase.rpc("record_referral_click", {
+    const { data, error } = await supabase.rpc("claim_social_follow", {
       p_referral_code: referral_code,
-      p_ip_address: ipAddress,
-      p_points: POINTS_PER_CLICK,
-      p_daily_cap: DAILY_CAP_POINTS,
+      p_platform: normalizedPlatform,
+      p_points: PLATFORM_POINTS[normalizedPlatform],
     });
 
     if (error) {
-      console.error("record_referral_click RPC error:", error);
-      return new Response(JSON.stringify({ error: "Failed to record click" }), {
+      console.error("claim_social_follow RPC error:", error);
+      return new Response(JSON.stringify({ error: "Failed to claim follow" }), {
         status: 500,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
@@ -53,8 +57,10 @@ Deno.serve(async (req) => {
     return new Response(
       JSON.stringify({
         success: row?.success ?? false,
-        awarded: row?.awarded ?? false,
-        reason: row?.reason ?? "",
+        already_claimed: row?.already_claimed ?? false,
+        new_points: row?.new_points ?? 0,
+        points_awarded: row?.already_claimed ? 0 : PLATFORM_POINTS[normalizedPlatform],
+        platform: normalizedPlatform,
       }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );

@@ -170,7 +170,7 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const { name, email, ref } = await req.json();
+    const { name, email, ref, is_speech_professional } = await req.json();
 
     if (!name || !email) {
       return new Response(JSON.stringify({ error: "Name and email are required" }), {
@@ -178,6 +178,7 @@ Deno.serve(async (req) => {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
+    const isSpeechPro = is_speech_professional === true;
 
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
     const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
@@ -262,6 +263,8 @@ Deno.serve(async (req) => {
         verification_token: verificationToken,
         verification_sent_at: new Date().toISOString(),
         email_verified: false,
+        is_speech_professional: isSpeechPro,
+        speech_professional_verified: false,
         fraud_flagged: fraudCheck.flagged,
         fraud_reason: fraudCheck.flagged ? fraudCheck.reasons.join("; ") : null,
         fraud_risk_score: fraudCheck.risk_score,

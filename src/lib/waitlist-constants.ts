@@ -150,10 +150,11 @@ export const DAILY_CAPS = {
 } as const;
 
 // --- SOCIAL LINKS (for follow/subscribe buttons) ---
+// NOTE: Story Pros Instagram is not yet created — placeholder for now.
 export const SOCIAL_LINKS = {
-  INSTAGRAM: "https://www.instagram.com/empowereddld",
-  FACEBOOK: "https://www.facebook.com/empowereddld",
-  YOUTUBE: "https://www.youtube.com/@empowereddld",
+  INSTAGRAM: "https://www.instagram.com/empowered.dld.parenting",
+  FACEBOOK: "https://www.facebook.com/share/g/1Gjtr63eT5/",
+  YOUTUBE: "https://www.youtube.com/@EmpoweredDLD",
 } as const;
 
 // --- BACKWARD COMPAT (combined flat export for existing code) ---
