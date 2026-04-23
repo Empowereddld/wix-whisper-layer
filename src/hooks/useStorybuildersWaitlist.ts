@@ -199,12 +199,12 @@ export function useStorybuildersWaitlist() {
   }, [state.referralCode, refreshStatsInternal]);
 
   const joinWaitlist = useCallback(
-    async (name: string, email: string): Promise<JoinWaitlistResponse | null> => {
+    async (name: string, email: string, isSpeechProfessional = false): Promise<JoinWaitlistResponse | null> => {
       setState((s) => ({ ...s, loading: true, error: null }));
       try {
         const ref = getRefFromUrl();
         const { data, error } = await supabase.functions.invoke("storybuilders-signup", {
-          body: { name, email, ref },
+          body: { name, email, ref, is_speech_professional: isSpeechProfessional },
         });
 
         if (error) throw new Error(error.message || "Failed to join");
