@@ -356,6 +356,7 @@ const StoryBuilders = () => {
   const formRef = useRef<HTMLDivElement>(null);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [isSpeechPro, setIsSpeechPro] = useState(false);
   const [copied, setCopied] = useState(false);
   const wl = useStorybuildersWaitlist();
 
@@ -364,9 +365,15 @@ const StoryBuilders = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim() || !email.trim()) return;
-    const result = await wl.joinWaitlist(name, email);
+    const result = await wl.joinWaitlist(name, email, isSpeechPro);
     if (result) {
-      toast.success(result.already_joined ? "Welcome back!" : "You're on the Launch Team!");
+      toast.success(
+        result.already_joined
+          ? "Welcome back!"
+          : isSpeechPro
+            ? "You're on the Launch Team! We'll verify your SLP/SLT/Speech Therapist status soon for your +50 bonus."
+            : "You're on the Launch Team!"
+      );
     }
   };
 
