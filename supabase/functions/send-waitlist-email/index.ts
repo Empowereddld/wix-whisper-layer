@@ -357,6 +357,81 @@ function getEmailTemplate(
       };
     }
 
+    case "email2_points_tiers": {
+      const referralLink = data.referral_link || `https://empowereddld.com/storypros?ref=${data.referral_code || ""}`;
+      return {
+        subject: "How to climb: your Story Pros points & tiers",
+        html: `
+          <div style="${containerStyles}">
+            <div style="${cardStyles}">
+              <div style="${headerStyles}">
+                <h1 style="margin: 0; font-size: 28px;">How Points & Tiers Work</h1>
+              </div>
+              <div style="padding: 20px 0;">
+                <p style="${baseStyles}">Hi ${data.name},</p>
+                <p style="${baseStyles}">
+                  Yesterday you joined Story Pros as a founding member. Today, here's exactly how to climb,
+                  unlock rewards, and help shape the app we're building for kids who need extra support
+                  with language and storytelling.
+                </p>
+
+                <p style="${baseStyles}">
+                  In case you missed it, here's our welcome video: <a href="https://empowereddld.com/storypros" style="color: ${brandColor};">Watch it here</a>.
+                  If it resonates, share it with one person who needs to see it.
+                </p>
+
+                <h2 style="${baseStyles}; color: ${brandColor}; font-size: 20px; margin-top: 28px;">Earn points</h2>
+                <ul style="${baseStyles}">
+                  <li><strong>+10</strong> for joining (already yours)</li>
+                  <li><strong>+15</strong> when you confirm your email</li>
+                  <li><strong>+10</strong> for completing your profile</li>
+                  <li><strong>+8</strong> each for following us on Instagram, Facebook, and YouTube</li>
+                  <li><strong>+25</strong> every time a friend joins through your link</li>
+                  <li><strong>+50 bonus</strong> if a Speech-Language Pathologist joins through you</li>
+                  <li><strong>+3</strong> per share, <strong>+1</strong> per click on your link</li>
+                </ul>
+
+                <h2 style="${baseStyles}; color: ${brandColor}; font-size: 20px; margin-top: 28px;">Unlock the 6 tiers</h2>
+                <ul style="${baseStyles}">
+                  <li><strong>Tier 1</strong> — Founding Member badge + name on the Early Supporters Wall</li>
+                  <li><strong>Tier 2</strong> — Early Access on launch day, before the public</li>
+                  <li><strong>Tier 3</strong> — 75 bonus Story Coins for in-app extras</li>
+                  <li><strong>Tier 4</strong> — VIP Beta Access (test the app and shape it before launch)</li>
+                  <li><strong>Tier 5</strong> — Founder Pricing locked at $5.99/mo for life (vs $7.99)</li>
+                  <li><strong>Tier 6</strong> — Founding Elite: named in founder credits forever, signed Dan & Daria book, and DLD-themed merch (first 50 only)</li>
+                </ul>
+
+                <p style="${baseStyles}">
+                  <strong>Your referral link:</strong><br/>
+                  <a href="${referralLink}" style="color: ${brandColor}; word-break: break-all;">${referralLink}</a>
+                </p>
+
+                <p style="${baseStyles}">
+                  The fastest way to climb is to share that welcome video with the link. People watch,
+                  they get it, and they join.
+                </p>
+
+                <a href="https://empowereddld.com/storypros/dashboard" style="${buttonStyles}">View Your Progress</a>
+
+                <p style="${baseStyles}">
+                  Thank you for being here. Every share helps another family find Story Pros at launch.
+                </p>
+                <p style="${baseStyles}">
+                  Warmly,<br/>
+                  Camesha & Jinean<br/>
+                  The Story Pros Team
+                </p>
+              </div>
+              <div style="${footerStyles}">
+                <p>You received this because you're a Story Pros founding member.</p>
+                <p><a href="https://empowereddld.com/unsubscribe" style="color: ${brandColor}; text-decoration: none;">Unsubscribe</a></p>
+              </div>
+            </div>
+          </div>
+        `,
+      };
+    }
+
     default: {
       return {
         subject: "Story Pros",

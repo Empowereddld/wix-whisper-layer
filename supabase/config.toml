@@ -30,6 +30,9 @@ verify_jwt = false
 [functions.send-email]
 verify_jwt = false
 
+[functions.send-waitlist-email2]
+verify_jwt = false
+
 [functions.email-unsubscribe]
 verify_jwt = false
 
