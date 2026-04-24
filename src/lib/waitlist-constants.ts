@@ -61,8 +61,8 @@ export const COIN_PACKS = [
 export const FOUNDING_ELITE_CAP = 50;
 
 // Pricing
-export const REGULAR_PRICE = 7.99;
-export const FOUNDER_PRICE = 5.99;
+export const REGULAR_PRICE = 9.99;
+export const FOUNDER_PRICE = 7.99;
 
 // Detailed tier rewards structure
 export const TIER_REWARDS = [
