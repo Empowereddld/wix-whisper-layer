@@ -99,7 +99,7 @@ export const TIER_REWARDS = [
   {
     tier: 5,
     name: "Founder Pricing Locked",
-    description: "$5.99/month for life instead of $7.99: permanent 25% discount",
+    description: "$7.99/month for life instead of $9.99: permanent 20% discount",
     claimType: "auto",
   },
   {
