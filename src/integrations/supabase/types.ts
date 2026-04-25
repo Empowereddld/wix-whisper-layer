@@ -600,6 +600,7 @@ export type Database = {
           invite_count: number
           is_speech_professional: boolean
           last_click_date: string | null
+          last_share_at: string | null
           last_share_date: string | null
           name: string
           points: number
@@ -626,6 +627,7 @@ export type Database = {
           invite_count?: number
           is_speech_professional?: boolean
           last_click_date?: string | null
+          last_share_at?: string | null
           last_share_date?: string | null
           name: string
           points?: number
@@ -652,6 +654,7 @@ export type Database = {
           invite_count?: number
           is_speech_professional?: boolean
           last_click_date?: string | null
+          last_share_at?: string | null
           last_share_date?: string | null
           name?: string
           points?: number
