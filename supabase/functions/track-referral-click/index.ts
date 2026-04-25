@@ -6,8 +6,8 @@ const corsHeaders = {
 };
 
 // Must mirror REPEATABLE_POINTS.CLICK and DAILY_CAPS.MAX_CLICK_POINTS
-const POINTS_PER_CLICK = 1;
-const DAILY_CAP_POINTS = 10;
+const POINTS_PER_CLICK = 3;
+const DAILY_CAP_POINTS = 15;
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
