@@ -138,15 +138,15 @@ export const ONETIME_POINTS = {
 // --- REPEATABLE ACTIONS (the engine) ---
 export const REPEATABLE_POINTS = {
   REFERRAL: 25,            // Friend joins via your link
-  SHARE: 3,                // Share on social media (bumped from 2)
-  CLICK: 1,                // Friend clicks your link
+  SHARE: 1,                // Share button click (low effort = low reward)
+  CLICK: 3,                // Friend clicks your link (real engagement)
   SUGGESTION: 5,           // Submit a suggestion (Tier 3+)
 } as const;
 
 // --- DAILY CAPS (prevent farming) ---
 export const DAILY_CAPS = {
-  MAX_SHARE_POINTS: 15,    // 5 shares per day max (5×3)
-  MAX_CLICK_POINTS: 10,    // 10 clicks per day max
+  MAX_SHARE_POINTS: 5,     // 5 shares per day max (5×1)
+  MAX_CLICK_POINTS: 15,    // 5 unique IPs per day max (5×3)
 } as const;
 
 // --- SOCIAL LINKS (for follow/subscribe buttons) ---
