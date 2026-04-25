@@ -6,8 +6,8 @@ const corsHeaders = {
 };
 
 // Must mirror REPEATABLE_POINTS.SHARE, DAILY_CAPS.MAX_SHARE_POINTS, ONETIME_POINTS.FIRST_SHARE
-const POINTS_PER_SHARE = 3;
-const DAILY_CAP_POINTS = 15;
+const POINTS_PER_SHARE = 1;
+const DAILY_CAP_POINTS = 5;
 const FIRST_SHARE_BONUS = 5;
 
 const VALID_PLATFORMS = new Set(["instagram", "facebook", "youtube", "x", "twitter", "copy", "email", "whatsapp", "other"]);
