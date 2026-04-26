@@ -594,8 +594,14 @@ export type Database = {
           email: string
           email_verified: boolean
           email2_sent_at: string | null
+          email3_sent_at: string | null
+          email4_sent_at: string | null
+          email5_sent_at: string | null
+          email6_sent_at: string | null
+          email7_sent_at: string | null
           first_referral_bonus_awarded: boolean
           first_share_bonus_awarded: boolean
+          founder_slot_number: number | null
           id: string
           invite_count: number
           is_speech_professional: boolean
@@ -621,8 +627,14 @@ export type Database = {
           email: string
           email_verified?: boolean
           email2_sent_at?: string | null
+          email3_sent_at?: string | null
+          email4_sent_at?: string | null
+          email5_sent_at?: string | null
+          email6_sent_at?: string | null
+          email7_sent_at?: string | null
           first_referral_bonus_awarded?: boolean
           first_share_bonus_awarded?: boolean
+          founder_slot_number?: number | null
           id?: string
           invite_count?: number
           is_speech_professional?: boolean
@@ -648,8 +660,14 @@ export type Database = {
           email?: string
           email_verified?: boolean
           email2_sent_at?: string | null
+          email3_sent_at?: string | null
+          email4_sent_at?: string | null
+          email5_sent_at?: string | null
+          email6_sent_at?: string | null
+          email7_sent_at?: string | null
           first_referral_bonus_awarded?: boolean
           first_share_bonus_awarded?: boolean
+          founder_slot_number?: number | null
           id?: string
           invite_count?: number
           is_speech_professional?: boolean
