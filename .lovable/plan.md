@@ -44,9 +44,10 @@ All new templates accept `{ name, referral_link, points_to_next, founder_slot_nu
 
 The 7 `mem://features/story-pros/email-*` files are marked "LOCKED" with the previous copy. Refresh each to mirror the new PDF copy so future agents stay aligned. Files: `email-1-welcome.md`, `email-2-points-tiers.md`, `email-3-tier2-reached.md`, `email-4-tier3-reached.md`, `email-5-tier4-reached.md`, `email-6-tier5-reached.md`, `email-7-tier6-reached.md` (covers both 7 and 7B).
 
-### Out of scope (not changing now)
+### Tier dispatcher (DONE)
 
-- Wiring tier-up triggers (3–7B) to call the new templates. Today they all route through `milestone_unlocked`. Flag this as follow-up: the tier-up dispatcher (referenced in `mem://tech/story-pros/email-automation`) needs to map tier → new template name. Want me to include that wiring in this same change? If yes, I'll also update the dispatcher to pick `email3_tier2` / `email4_tier3` / etc. based on the tier crossed and add `email3_sent_at`...`email7_sent_at` columns so each fires once.
+- Added columns `email3_sent_at`...`email7_sent_at` and `founder_slot_number` to `storybuilders_waitlist`.
+- New edge function `dispatch-tier-emails` runs every 5 min via pg_cron, scans verified users, and fires the right template based on points: 35→email3_tier2, 75→email4_tier3, 130→email5_tier4, 250→email6_tier5, 500→email7_tier6_founder (first 50 founder slots, unique-indexed) else email7b_tier6_legend. Multi-tier jumps collapse to the highest unsent tier so users don't get spammed.
 - The auxiliary templates (`referral_joined`, `weekly_digest`, `nudge`, `announcement`) — not in the PDF, leaving as is.
 - No new edge function, no DB migration (unless you confirm the dispatcher wiring above).
 
