@@ -11,7 +11,14 @@ interface EmailData {
   data?: {
     name?: string;
     referral_code?: string;
+    referral_link?: string;
     verification_link?: string;
+    video_link?: string;
+    points_to_next?: number;
+    founder_slot_number?: number;
+    referral_count?: number;
+    guide_download_url?: string;
+    dashboard_url?: string;
     tier_name?: string;
     tier_reward?: string;
     recent_signups?: number;
@@ -20,6 +27,12 @@ interface EmailData {
     [key: string]: any;
   };
 }
+
+const SIGN_OFF = "Camesha, Jinean and The Story Pros Team";
+const SITE_BASE = "https://empowereddld.com";
+const DEFAULT_DASHBOARD = `${SITE_BASE}/storypros/dashboard`;
+const DEFAULT_VIDEO = `${SITE_BASE}/storypros`;
+const DEFAULT_GUIDE = `${SITE_BASE}/hub/resource/d9836a63-003e-44bc-9da4-a27d6d478d1a`;
 
 function getEmailTemplate(
   template: string,
@@ -55,6 +68,31 @@ function getEmailTemplate(
     font-size: 16px;
   `;
 
+  const secondaryButtonStyles = `
+    display: inline-block;
+    background: #FFFFFF;
+    color: ${brandColor};
+    padding: 14px 32px;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 600;
+    margin: 8px 6px;
+    font-size: 15px;
+    border: 2px solid ${brandColor};
+  `;
+
+  const primaryInlineButtonStyles = `
+    display: inline-block;
+    background: ${brandColor};
+    color: white;
+    padding: 14px 28px;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 600;
+    margin: 8px 6px;
+    font-size: 15px;
+  `;
+
   const footerStyles = `
     text-align: center;
     color: #999;
@@ -78,50 +116,825 @@ function getEmailTemplate(
     box-shadow: 0 2px 8px rgba(91, 45, 142, 0.1);
   `;
 
+  const scriptBlock = `
+    background: ${lightBackground};
+    border-left: 3px solid ${brandColor};
+    padding: 14px 18px;
+    margin: 12px 0;
+    font-style: italic;
+    color: #444;
+    border-radius: 4px;
+  `;
+
+  const dividerStyles = `border: none; border-top: 1px solid #eee; margin: 28px 0;`;
+
+  const tierLine = (label: string, reward: string, isCurrent = false) =>
+    `<li style="margin-bottom: 6px;"><strong>${label}</strong> — ${reward}${isCurrent ? " <span style=\"color: " + brandColor + "; font-weight: 700;\">(you are here)</span>" : ""}</li>`;
+
+  const ctaPair = (referralLink: string, dashboard: string) => `
+    <div style="text-align: center; margin: 24px 0;">
+      <a href="${referralLink}" style="${primaryInlineButtonStyles}">Share your link</a>
+      <a href="${dashboard}" style="${secondaryButtonStyles}">See your dashboard</a>
+    </div>
+  `;
+
+  const footerBlock = `
+    <div style="${footerStyles}">
+      <p>You're receiving this as a Story Pros founding member.</p>
+      <p><a href="${SITE_BASE}/unsubscribe" style="color: ${brandColor}; text-decoration: none;">Unsubscribe</a></p>
+    </div>
+  `;
+
+  const name = data.name || "there";
+  const referralLink =
+    data.referral_link ||
+    (data.referral_code ? `${SITE_BASE}/storypros?ref=${data.referral_code}` : `${SITE_BASE}/storypros`);
+  const dashboard = data.dashboard_url || DEFAULT_DASHBOARD;
+  const videoLink = data.video_link || DEFAULT_VIDEO;
+  const pointsToNext = data.points_to_next ?? 0;
+  const guideUrl = data.guide_download_url || DEFAULT_GUIDE;
+
   switch (template) {
+    // ============================================================
+    // EMAIL 1 — Welcome (immediate on signup)
+    // ============================================================
     case "welcome": {
       return {
-        subject: `Welcome to Story Pros, ${data.name}!`,
+        subject: `Welcome to Story Pros, ${name}`,
         html: `
           <div style="${containerStyles}">
             <div style="${cardStyles}">
               <div style="${headerStyles}">
                 <h1 style="margin: 0; font-size: 28px;">Welcome to Story Pros</h1>
+                <p style="margin: 8px 0 0; opacity: 0.9; font-size: 14px;">You just joined something different.</p>
               </div>
+
               <div style="padding: 20px 0;">
-                <p style="${baseStyles}">Hi ${data.name},</p>
+                <p style="${baseStyles}">Hi ${name},</p>
+
+                <p style="${baseStyles}">You're in! Welcome to Story Pros as one of our founding members.</p>
+
                 <p style="${baseStyles}">
-                  You've officially joined our exclusive waitlist! We're thrilled to have you here.
-                  You're now part of an amazing community of creators building the next generation
-                  of storytelling tools.
+                  Story Pros is an interactive storytelling app designed for children ages 5 to 12 with
+                  Developmental Language Disorder and other communication challenges. It helps children
+                  understand stories, retell them in their own words, organize their thoughts, and build
+                  the language skills they need to express themselves clearly and confidently, step by
+                  step, with structured support.
                 </p>
-                <p style="${baseStyles}"><strong>Your Referral Code:</strong> <code style="background: ${lightBackground}; padding: 4px 8px; border-radius: 4px; font-weight: 600;">${data.referral_code}</code></p>
+
                 <p style="${baseStyles}">
-                  Share this code with friends and unlock exclusive tiers with amazing rewards.
-                  Every friend who joins moves you closer to the top of the waitlist!
+                  Check out our welcome video:
+                  <a href="${videoLink}" style="color: ${brandColor}; font-weight: 600;">Watch Now</a>
                 </p>
+
+                <h2 style="${baseStyles}; color: ${brandColor}; font-size: 20px; margin-top: 28px;">What you just joined</h2>
+
                 <p style="${baseStyles}">
-                  <strong>What's next?</strong> Keep an eye on your inbox for exclusive updates,
-                  behind-the-scenes content, and opportunities to climb the waitlist ladder.
+                  <strong>The app waitlist.</strong> A structured, playful tool your child can use at home
+                  to build storytelling and narrative language skills, step by step.
                 </p>
-                <a href="https://empowereddld.com/storypros" style="${buttonStyles}">Explore Story Pros</a>
+
                 <p style="${baseStyles}">
-                  Questions? Reply to this email and we'll get back to you soon.
+                  <strong>Monthly Live Community Circles.</strong> Once a month, we host a live Zoom gathering
+                  for Story Pros kids, facilitated by us (Camesha, an elementary school teacher, and Jinean,
+                  a speech-language pathologist). So many children who struggle with language also struggle
+                  with feeling like they're the only one. They're not. And this is where they get to see
+                  that for themselves.
                 </p>
+
                 <p style="${baseStyles}">
-                  The Story Pros Team
+                  Your Story Pros membership includes both. App access and live Zoom community. All for
+                  <strong>$9.99/month</strong>.
                 </p>
+
+                <hr style="${dividerStyles}" />
+
+                <p style="${baseStyles}"><strong>First, confirm your email</strong></p>
+                <p style="${baseStyles}">
+                  Tap the button below to verify your email. It takes two seconds, and we'll drop 15 points
+                  into your account as a thank you.
+                </p>
+                <div style="text-align: center;">
+                  <a href="${data.verification_link || dashboard}" style="${buttonStyles}">Confirm my email (+15 points)</a>
+                </div>
+
+                <hr style="${dividerStyles}" />
+
+                <p style="${baseStyles}"><strong>You're not just on a waitlist.</strong></p>
+                <p style="${baseStyles}">
+                  You're part of the group helping bring Story Pros to life. The more people who join through
+                  you, the more you unlock: early access at launch, bonus Coins, a signed Dan & Daria book,
+                  founder pricing, and DLD-themed merch.
+                </p>
+
+                <p style="${baseStyles}">
+                  <strong>Your referral link:</strong><br/>
+                  <a href="${referralLink}" style="color: ${brandColor}; word-break: break-all;">${referralLink}</a>
+                </p>
+
+                <p style="${baseStyles}">
+                  Every person who joins through your link moves you forward, unlocks rewards, and helps
+                  more families find Story Pros when we launch.
+                </p>
+
+                <p style="${baseStyles}"><strong>Not sure what to say? Try one of these:</strong></p>
+
+                <div style="${scriptBlock}">
+                  Hey, I'm on the early list for Story Pros. It's an app and monthly community for kids
+                  who need extra support with storytelling and language. Built by speech-language pathologists
+                  and teachers. Thought of you: ${referralLink}
+                </div>
+
+                <div style="${scriptBlock}">
+                  I found something I think you'll want to see. It's called Story Pros, a membership that
+                  gives kids structured storytelling practice plus a monthly live gathering with other
+                  families. I'm in and would love for you to join me: ${referralLink}
+                </div>
+
+                <p style="${baseStyles}">
+                  Tomorrow, we'll send you the full breakdown of how points and tiers work so you know
+                  exactly how to climb.
+                </p>
+
+                <p style="${baseStyles}">We're so glad you're here.</p>
+
+                <p style="${baseStyles}">Warmly,<br/>${SIGN_OFF}</p>
               </div>
-              <div style="${footerStyles}">
-                <p>You received this because you signed up for the Story Pros waitlist.</p>
-                <p><a href="#" style="color: ${brandColor}; text-decoration: none;">Unsubscribe</a></p>
-              </div>
+
+              ${footerBlock}
             </div>
           </div>
         `,
       };
     }
 
+    // ============================================================
+    // EMAIL 2 — How Points Work (24h after signup)
+    // ============================================================
+    case "email2_points_tiers": {
+      const verifyLink = data.verification_link || dashboard;
+      return {
+        subject: `Welcome back, ${name}. Here's how Story Pros points work.`,
+        html: `
+          <div style="${containerStyles}">
+            <div style="${cardStyles}">
+              <div style="${headerStyles}">
+                <h1 style="margin: 0; font-size: 26px;">How Points & Tiers Work</h1>
+                <p style="margin: 8px 0 0; opacity: 0.9; font-size: 14px;">A quick map of how to climb.</p>
+              </div>
+
+              <div style="padding: 20px 0;">
+                <p style="${baseStyles}">Hi ${name},</p>
+
+                <p style="${baseStyles}">Yesterday you joined the Story Pros community. Welcome back.</p>
+
+                <p style="${baseStyles}">
+                  Before we get into the points breakdown, a quick reminder of what your Story Pros
+                  membership includes: full app access for your child plus Monthly Live Community Circles
+                  on Zoom, where kids get to see they're not the only one, facilitated by us. The app
+                  builds the skills. The community builds the belonging. Both are included at <strong>$9.99/month</strong>.
+                </p>
+
+                <p style="${baseStyles}">
+                  Now, here's how the points and tiers work, and the easiest moves you can make right now.
+                </p>
+
+                <p style="${baseStyles}">
+                  You already have <strong>10 points</strong> for signing up. Verifying your email adds another
+                  <strong>15</strong> if you haven't yet:
+                </p>
+
+                <div style="text-align: center;">
+                  <a href="${verifyLink}" style="${buttonStyles}">Verify my email (+15 points)</a>
+                </div>
+
+                <hr style="${dividerStyles}" />
+
+                <h2 style="${baseStyles}; color: ${brandColor}; font-size: 20px;">How you earn points</h2>
+
+                <table style="width: 100%; border-collapse: collapse; font-family: 'Nunito', 'DM Sans', Arial, sans-serif; font-size: 14px; margin-top: 12px;">
+                  <thead>
+                    <tr style="background: ${lightBackground};">
+                      <th style="text-align: left; padding: 10px; border-bottom: 1px solid #eee;">Action</th>
+                      <th style="text-align: left; padding: 10px; border-bottom: 1px solid #eee;">Points</th>
+                      <th style="text-align: left; padding: 10px; border-bottom: 1px solid #eee;">Type</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td style="padding: 8px 10px; border-bottom: 1px solid #f0f0f0;">Sign up</td><td style="padding: 8px 10px; border-bottom: 1px solid #f0f0f0;">+10 (already yours)</td><td style="padding: 8px 10px; border-bottom: 1px solid #f0f0f0;">one-time</td></tr>
+                    <tr><td style="padding: 8px 10px; border-bottom: 1px solid #f0f0f0;">Verify your email</td><td style="padding: 8px 10px; border-bottom: 1px solid #f0f0f0;">+15</td><td style="padding: 8px 10px; border-bottom: 1px solid #f0f0f0;">one-time</td></tr>
+                    <tr><td style="padding: 8px 10px; border-bottom: 1px solid #f0f0f0;">Complete your profile</td><td style="padding: 8px 10px; border-bottom: 1px solid #f0f0f0;">+10</td><td style="padding: 8px 10px; border-bottom: 1px solid #f0f0f0;">one-time</td></tr>
+                    <tr><td style="padding: 8px 10px; border-bottom: 1px solid #f0f0f0;">Follow us on Instagram</td><td style="padding: 8px 10px; border-bottom: 1px solid #f0f0f0;">+8</td><td style="padding: 8px 10px; border-bottom: 1px solid #f0f0f0;">one-time</td></tr>
+                    <tr><td style="padding: 8px 10px; border-bottom: 1px solid #f0f0f0;">Follow us on Facebook</td><td style="padding: 8px 10px; border-bottom: 1px solid #f0f0f0;">+8</td><td style="padding: 8px 10px; border-bottom: 1px solid #f0f0f0;">one-time</td></tr>
+                    <tr><td style="padding: 8px 10px; border-bottom: 1px solid #f0f0f0;">Subscribe on YouTube</td><td style="padding: 8px 10px; border-bottom: 1px solid #f0f0f0;">+8</td><td style="padding: 8px 10px; border-bottom: 1px solid #f0f0f0;">one-time</td></tr>
+                    <tr><td style="padding: 8px 10px; border-bottom: 1px solid #f0f0f0;">First share bonus</td><td style="padding: 8px 10px; border-bottom: 1px solid #f0f0f0;">+5</td><td style="padding: 8px 10px; border-bottom: 1px solid #f0f0f0;">one-time</td></tr>
+                    <tr><td style="padding: 8px 10px; border-bottom: 1px solid #f0f0f0;">First referral bonus</td><td style="padding: 8px 10px; border-bottom: 1px solid #f0f0f0;">+10</td><td style="padding: 8px 10px; border-bottom: 1px solid #f0f0f0;">one-time</td></tr>
+                    <tr><td style="padding: 8px 10px; border-bottom: 1px solid #f0f0f0;">Refer a friend (they sign up)</td><td style="padding: 8px 10px; border-bottom: 1px solid #f0f0f0;">+25</td><td style="padding: 8px 10px; border-bottom: 1px solid #f0f0f0;">repeatable</td></tr>
+                    <tr><td style="padding: 8px 10px; border-bottom: 1px solid #f0f0f0;">Refer a Speech-Language Professional</td><td style="padding: 8px 10px; border-bottom: 1px solid #f0f0f0;">+50</td><td style="padding: 8px 10px; border-bottom: 1px solid #f0f0f0;">repeatable</td></tr>
+                    <tr><td style="padding: 8px 10px; border-bottom: 1px solid #f0f0f0;">Share your link</td><td style="padding: 8px 10px; border-bottom: 1px solid #f0f0f0;">+1 per share (max 5/day)</td><td style="padding: 8px 10px; border-bottom: 1px solid #f0f0f0;">repeatable</td></tr>
+                    <tr><td style="padding: 8px 10px;">Someone taps your link</td><td style="padding: 8px 10px;">+3 per tap (max 15/day)</td><td style="padding: 8px 10px;">repeatable</td></tr>
+                  </tbody>
+                </table>
+
+                <p style="${baseStyles}; margin-top: 16px;">
+                  The one-timers are your fastest early wins. The repeatables are how you climb to the top tiers.
+                </p>
+
+                <hr style="${dividerStyles}" />
+
+                <h2 style="${baseStyles}; color: ${brandColor}; font-size: 20px;">What you unlock</h2>
+                <ul style="${baseStyles}">
+                  ${tierLine("Tier 1 (0 pts)", "Development Updates plus your name on the Early Supporters Wall as a founding member")}
+                  ${tierLine("Tier 2 (35 pts)", "Our paid digital guide \"Executive Function Skills for Your Child\", free as a thank you")}
+                  ${tierLine("Tier 3 (75 pts)", "Bonus Story Coins to spend inside the app at launch")}
+                  ${tierLine("Tier 4 (130 pts)", "VIP Beta Access. Test Story Pros before launch and help shape the final product.")}
+                  ${tierLine("Tier 5 (250 pts)", "Founder Pricing locked in for life: $7.99/month instead of $9.99. Heads up, points double from here on to help you push toward Tier 6.")}
+                  ${tierLine("Tier 6 (500 pts)", "A signed Dan & Daria book plus DLD-themed merch. Limited to the first 50 members to reach Tier 6. After those 50 slots are claimed, Tier 6 still unlocks 100 Story Coins to spend at launch.")}
+                </ul>
+
+                <h2 style="${baseStyles}; color: ${brandColor}; font-size: 20px; margin-top: 28px;">Here are the quickest ways to move forward</h2>
+                <ul style="${baseStyles}">
+                  <li>Complete your profile (+10 pts, takes 30 seconds)</li>
+                  <li>Follow us on Instagram, Facebook, or YouTube (+8 pts each)</li>
+                  <li>Share your referral link (+25 pts every time someone joins, plus a +10 bonus on your first referral)</li>
+                </ul>
+
+                <p style="${baseStyles}">
+                  <strong>Your referral link:</strong><br/>
+                  <a href="${referralLink}" style="color: ${brandColor}; word-break: break-all;">${referralLink}</a>
+                </p>
+
+                ${ctaPair(referralLink, dashboard)}
+
+                <hr style="${dividerStyles}" />
+
+                <p style="${baseStyles}"><strong>Two scripts, if you'd like something to paste</strong></p>
+
+                <p style="${baseStyles}; margin-bottom: 4px;"><strong>For a friend or family member:</strong></p>
+                <div style="${scriptBlock}">
+                  Hey! Found a new app and community I think you'd want to know about. Story Pros helps
+                  kids retell stories, put their thoughts in order, and find the right words, plus there's
+                  a monthly live group for kids on Zoom. I just joined: ${referralLink}
+                </div>
+
+                <p style="${baseStyles}; margin-bottom: 4px;"><strong>For a teacher or therapist:</strong></p>
+                <div style="${scriptBlock}">
+                  I came across something called Story Pros. It's an app and monthly community built by
+                  speech-language pathologists and teachers that helps kids with storytelling and narrative
+                  language. Thought you'd want a look: ${referralLink}
+                </div>
+
+                <p style="${baseStyles}">Talk soon,<br/>${SIGN_OFF}</p>
+              </div>
+
+              ${footerBlock}
+            </div>
+          </div>
+        `,
+      };
+    }
+
+    // ============================================================
+    // EMAIL 3 — Tier 2 Reached (35 pts)
+    // ============================================================
+    case "email3_tier2": {
+      return {
+        subject: `Your free guide is ready, ${name}`,
+        html: `
+          <div style="${containerStyles}">
+            <div style="${cardStyles}">
+              <div style="${headerStyles}">
+                <h1 style="margin: 0; font-size: 26px;">Tier 2 Unlocked</h1>
+                <p style="margin: 8px 0 0; opacity: 0.9; font-size: 14px;">Your free guide is ready.</p>
+              </div>
+
+              <div style="padding: 20px 0;">
+                <p style="${baseStyles}">Hi ${name},</p>
+
+                <p style="${baseStyles}">
+                  You did it. You just crossed <strong>35 points</strong> and unlocked <strong>Tier 2</strong>.
+                </p>
+
+                <p style="${baseStyles}">
+                  As a thank you, the <strong>"Executive Function Skills for Your Child"</strong> guide is
+                  yours, on us. It's normally a paid product in our resource library, but at Tier 2 it's free.
+                </p>
+
+                <div style="text-align: center;">
+                  <a href="${guideUrl}" style="${buttonStyles}">Download your guide</a>
+                </div>
+
+                <p style="${baseStyles}">
+                  Inside you'll find practical strategies to help your child plan, focus, remember instructions,
+                  and manage big feelings, the kind of skills that support storytelling, schoolwork, and
+                  everyday life.
+                </p>
+
+                <hr style="${dividerStyles}" />
+
+                <p style="${baseStyles}"><strong>What's next: Tier 3 (75 pts), 50 Story Coins</strong></p>
+
+                <p style="${baseStyles}">
+                  Story Coins are yours to spend inside the Story Pros app at launch on themes, characters,
+                  and extras.
+                </p>
+
+                <p style="${baseStyles}">
+                  You're <strong>${pointsToNext} points away</strong>. The fastest way there is referrals.
+                  Every new person you bring in gets you 25 points.
+                </p>
+
+                <p style="${baseStyles}">
+                  <strong>Your referral link:</strong><br/>
+                  <a href="${referralLink}" style="color: ${brandColor}; word-break: break-all;">${referralLink}</a>
+                </p>
+
+                <p style="${baseStyles}"><strong>A few messages to copy and paste if you'd like:</strong></p>
+
+                <div style="${scriptBlock}">
+                  I'm on the early list for an app called Story Pros. It helps kids build the skills they
+                  need to tell stories and express what's on their mind, plus there's a monthly live community
+                  for families on Zoom. Worth a look: ${referralLink}
+                </div>
+
+                <div style="${scriptBlock}">
+                  Hey! Found a new app and community I think you'd want to know about. Story Pros helps
+                  kids retell stories, put their thoughts in order, and find the right words, plus there's
+                  a monthly live group for kids on Zoom. I just joined: ${referralLink}
+                </div>
+
+                <p style="${baseStyles}; margin-bottom: 4px;"><strong>For a teacher or therapist:</strong></p>
+                <div style="${scriptBlock}">
+                  I came across something called Story Pros. It's an app and monthly community built by
+                  speech-language pathologists and teachers that helps kids with storytelling and narrative
+                  language. Thought you'd want a look: ${referralLink}
+                </div>
+
+                ${ctaPair(referralLink, dashboard)}
+
+                <p style="${baseStyles}">Talk soon,<br/>${SIGN_OFF}</p>
+              </div>
+
+              ${footerBlock}
+            </div>
+          </div>
+        `,
+      };
+    }
+
+    // ============================================================
+    // EMAIL 4 — Tier 3 Reached (75 pts)
+    // ============================================================
+    case "email4_tier3": {
+      return {
+        subject: `You just earned 50 Story Coins, ${name}`,
+        html: `
+          <div style="${containerStyles}">
+            <div style="${cardStyles}">
+              <div style="${headerStyles}">
+                <h1 style="margin: 0; font-size: 26px;">Tier 3 Unlocked</h1>
+                <p style="margin: 8px 0 0; opacity: 0.9; font-size: 14px;">50 Story Coins are yours.</p>
+              </div>
+
+              <div style="padding: 20px 0;">
+                <p style="${baseStyles}">Hi ${name},</p>
+
+                <p style="${baseStyles}">
+                  You did it. You just hit <strong>75 points</strong> and crossed into <strong>Tier 3</strong>.
+                </p>
+
+                <p style="${baseStyles}">Here's what that means:</p>
+
+                <p style="${baseStyles}">
+                  <strong>50 Story Coins are yours.</strong> They'll land in your account the moment Story
+                  Pros launches, ready to spend on stories, characters, and extras inside the app.
+                </p>
+
+                <hr style="${dividerStyles}" />
+
+                <p style="${baseStyles}"><strong>What's next: Tier 4 (130 pts), VIP Beta Access + Suggestion Board</strong></p>
+
+                <p style="${baseStyles}">
+                  At Tier 4, you'll be one of the first families inside Story Pros before it launches.
+                  You'll test the app, use it with your child, and help shape the final product with real
+                  feedback. You'll also unlock the Suggestion Board, where you can weigh in on what we
+                  build next, both in the app and in our Monthly Live Community Circles.
+                </p>
+
+                <p style="${baseStyles}">You're <strong>${pointsToNext} points away</strong>.</p>
+
+                <p style="${baseStyles}">
+                  <strong>Your referral link:</strong><br/>
+                  <a href="${referralLink}" style="color: ${brandColor}; word-break: break-all;">${referralLink}</a>
+                </p>
+
+                <p style="${baseStyles}"><strong>A message to copy and paste if you'd like:</strong></p>
+
+                <div style="${scriptBlock}">
+                  Hey!! Wanted to send you this. Story Pros is a new app and community built by
+                  speech-language pathologists and teachers to help kids with storytelling and language
+                  skills. I've been sharing it with people I care about: ${referralLink}
+                </div>
+
+                ${ctaPair(referralLink, dashboard)}
+
+                <p style="${baseStyles}">Talk soon,<br/>${SIGN_OFF}</p>
+              </div>
+
+              ${footerBlock}
+            </div>
+          </div>
+        `,
+      };
+    }
+
+    // ============================================================
+    // EMAIL 5 — Tier 4 Reached (130 pts)
+    // ============================================================
+    case "email5_tier4": {
+      return {
+        subject: `You get to test Story Pros before it launches, ${name}`,
+        html: `
+          <div style="${containerStyles}">
+            <div style="${cardStyles}">
+              <div style="${headerStyles}">
+                <h1 style="margin: 0; font-size: 26px;">Tier 4 Unlocked</h1>
+                <p style="margin: 8px 0 0; opacity: 0.9; font-size: 14px;">VIP Beta Access is yours.</p>
+              </div>
+
+              <div style="padding: 20px 0;">
+                <p style="${baseStyles}">Hi ${name},</p>
+
+                <p style="${baseStyles}">This is a big one.</p>
+
+                <p style="${baseStyles}">
+                  You just crossed <strong>130 points</strong> and hit <strong>Tier 4</strong>, which means
+                  you'll be one of the first families to try Story Pros before it opens to the public.
+                </p>
+
+                <p style="${baseStyles}">
+                  You'll get to test the app, use it with your kids, and tell us what's working and what
+                  isn't so we can shape the final version around real feedback from people who actually get it.
+                </p>
+
+                <p style="${baseStyles}">
+                  <strong>You've also unlocked the Suggestion Board.</strong> This is where families who
+                  are testing the app weigh in on what we build next, both in the app and in our Monthly
+                  Live Community Circles. Your ideas help guide what we create, and your voice carries
+                  real weight here.
+                </p>
+
+                <hr style="${dividerStyles}" />
+
+                <p style="${baseStyles}"><strong>Here's everything you've unlocked so far:</strong></p>
+                <ul style="${baseStyles}">
+                  ${tierLine("Tier 1", "Development Updates + Early Supporters Wall")}
+                  ${tierLine("Tier 2", "Free Executive Function guide")}
+                  ${tierLine("Tier 3", "50 Bonus Story Coins")}
+                  ${tierLine("Tier 4", "Early testing access + Suggestion Board", true)}
+                </ul>
+
+                <hr style="${dividerStyles}" />
+
+                <p style="${baseStyles}"><strong>What's next: Tier 5 (250 pts), Founder Pricing</strong></p>
+
+                <p style="${baseStyles}">
+                  At 250 points, you lock in <strong>$7.99/month for life</strong> instead of the regular
+                  $9.99. That's the lowest price Story Pros will ever be offered at, and it's yours to
+                  keep as long as you stay subscribed. Heads up, points double from Tier 5 on to help
+                  you push toward Tier 6.
+                </p>
+
+                <p style="${baseStyles}">You're <strong>${pointsToNext} points away</strong>.</p>
+
+                <p style="${baseStyles}">
+                  <strong>Your referral link:</strong><br/>
+                  <a href="${referralLink}" style="color: ${brandColor}; word-break: break-all;">${referralLink}</a>
+                </p>
+
+                <p style="${baseStyles}"><strong>A message to copy and paste if you'd like:</strong></p>
+
+                <div style="${scriptBlock}">
+                  Hey, check this out. Story Pros is an app and monthly community that helps kids who
+                  need extra support with storytelling and putting their thoughts into words. Built by
+                  speech-language pathologists and teachers. You can get in early: ${referralLink}
+                </div>
+
+                ${ctaPair(referralLink, dashboard)}
+
+                <p style="${baseStyles}">Talk soon,<br/>${SIGN_OFF}</p>
+              </div>
+
+              ${footerBlock}
+            </div>
+          </div>
+        `,
+      };
+    }
+
+    // ============================================================
+    // EMAIL 6 — Tier 5 Reached (250 pts)
+    // ============================================================
+    case "email6_tier5": {
+      return {
+        subject: `You just hit Tier 5, ${name}.`,
+        html: `
+          <div style="${containerStyles}">
+            <div style="${cardStyles}">
+              <div style="${headerStyles}">
+                <h1 style="margin: 0; font-size: 26px;">Tier 5 Unlocked</h1>
+                <p style="margin: 8px 0 0; opacity: 0.9; font-size: 14px;">Founder Pricing is locked in. For life.</p>
+              </div>
+
+              <div style="padding: 20px 0;">
+                <p style="${baseStyles}">Hi ${name},</p>
+
+                <p style="${baseStyles}">
+                  You've done something most people don't. You didn't just sign up. You kept showing up,
+                  kept sharing, kept going. That means everything to us.
+                </p>
+
+                <p style="${baseStyles}">
+                  <strong>250 points.</strong> You're at <strong>Tier 5</strong>.
+                </p>
+
+                <p style="${baseStyles}">
+                  <strong>Founder Pricing, locked in for life.</strong> Your subscription will be
+                  <strong>$7.99/month forever</strong>, instead of the regular $9.99. That price stays
+                  no matter how much we add to the app, the Community Circles, or any other features
+                  down the road.
+                </p>
+
+                <p style="${baseStyles}">
+                  <strong>Your points now count double.</strong> Every share, every referral, every follow.
+                  Tier 6 is closer than it looks.
+                </p>
+
+                <hr style="${dividerStyles}" />
+
+                <p style="${baseStyles}"><strong>Here's everything you've unlocked so far:</strong></p>
+                <ul style="${baseStyles}">
+                  ${tierLine("Tier 1", "Development Updates + Early Supporters Wall")}
+                  ${tierLine("Tier 2", "Free Executive Function guide")}
+                  ${tierLine("Tier 3", "50 Bonus Story Coins")}
+                  ${tierLine("Tier 4", "Early testing access + Suggestion Board")}
+                  ${tierLine("Tier 5", "Founder Pricing, locked for life + double points", true)}
+                </ul>
+
+                <hr style="${dividerStyles}" />
+
+                <p style="${baseStyles}"><strong>One tier left: Tier 6 (500 pts)</strong></p>
+
+                <p style="${baseStyles}">
+                  A signed <strong>Dan & Daria book</strong> plus <strong>DLD-themed merch</strong>,
+                  limited to the first 50 members to reach Tier 6. After those 50 slots are claimed,
+                  Tier 6 still unlocks <strong>100 Story Coins</strong> to spend at launch.
+                </p>
+
+                <p style="${baseStyles}">
+                  You're <strong>${pointsToNext} points</strong> away. Everything counts double now.
+                </p>
+
+                <p style="${baseStyles}">
+                  <strong>Your referral link:</strong><br/>
+                  <a href="${referralLink}" style="color: ${brandColor}; word-break: break-all;">${referralLink}</a>
+                </p>
+
+                <p style="${baseStyles}"><strong>A few messages to copy and paste if you'd like:</strong></p>
+
+                <div style="${scriptBlock}">
+                  I'm on the early list for an app called Story Pros. It helps kids build the skills they
+                  need to tell stories and express what's on their mind, plus there's a monthly live community
+                  for families on Zoom. Worth a look: ${referralLink}
+                </div>
+
+                <div style="${scriptBlock}">
+                  Ok I have to share this with you. There's an app coming out that helps kids who have
+                  a hard time explaining things or getting their words out. Speech-language pathologists
+                  and teachers built it. Get in early with me: ${referralLink}
+                </div>
+
+                <div style="${scriptBlock}">
+                  Have you heard of Story Pros? It's an app and monthly community built by speech-language
+                  pathologists and teachers that helps kids with narrative language. They're giving early
+                  access right now: ${referralLink}
+                </div>
+
+                ${ctaPair(referralLink, dashboard)}
+
+                <p style="${baseStyles}">
+                  Thank you for helping more children not just communicate... but connect.
+                </p>
+
+                <p style="${baseStyles}">${SIGN_OFF}</p>
+              </div>
+
+              ${footerBlock}
+            </div>
+          </div>
+        `,
+      };
+    }
+
+    // ============================================================
+    // EMAIL 7 — Tier 6 Reached (Founder, first 50)
+    // ============================================================
+    case "email7_tier6_founder": {
+      const slot = data.founder_slot_number ?? 1;
+      const claimUrl = data.claim_url || `${SITE_BASE}/storypros/claim-founder`;
+      return {
+        subject: `You did it, ${name}. You're a Story Pros Founder.`,
+        html: `
+          <div style="${containerStyles}">
+            <div style="${cardStyles}">
+              <div style="${headerStyles}">
+                <h1 style="margin: 0; font-size: 26px;">Tier 6 Unlocked</h1>
+                <p style="margin: 8px 0 0; opacity: 0.9; font-size: 14px;">Signed book and Founder merch headed your way.</p>
+              </div>
+
+              <div style="padding: 20px 0;">
+                <p style="${baseStyles}">Hi ${name},</p>
+
+                <p style="${baseStyles}"><strong>500 points. Tier 6. The final one.</strong></p>
+
+                <p style="${baseStyles}">You're <strong>Founder #${slot} of 50</strong>.</p>
+
+                <p style="${baseStyles}">
+                  Every person you brought in is a family whose child will have access to something that
+                  helps them put their thoughts into words and share their world. That's what your 500
+                  points actually represent. Not numbers. Real kids. And you made that happen.
+                </p>
+
+                <p style="${baseStyles}"><strong>Here's what you've unlocked:</strong></p>
+
+                <p style="${baseStyles}">
+                  <strong>A signed Dan & Daria book.</strong> Personally signed, with a handwritten note
+                  from us. This is the book that started everything for the kids and families we built
+                  Story Pros for.
+                </p>
+
+                <p style="${baseStyles}">
+                  <strong>DLD-themed Founder merch.</strong> A limited bundle made for the people who
+                  helped us get this off the ground. You won't find it anywhere else.
+                </p>
+
+                <p style="${baseStyles}">
+                  <strong>Founder status, locked for life.</strong> Your $7.99/month pricing stays forever.
+                  Your name stays on the Early Supporters Wall. And you'll always be one of the first 50
+                  people who made Story Pros real.
+                </p>
+
+                <hr style="${dividerStyles}" />
+
+                <p style="${baseStyles}"><strong>Here's everything you've unlocked across your entire journey:</strong></p>
+                <ul style="${baseStyles}">
+                  ${tierLine("Tier 1", "Development Updates + Early Supporters Wall")}
+                  ${tierLine("Tier 2", "Free Executive Function guide")}
+                  ${tierLine("Tier 3", "50 Bonus Story Coins")}
+                  ${tierLine("Tier 4", "Early testing access + Suggestion Board")}
+                  ${tierLine("Tier 5", "Founder Pricing + double points")}
+                  ${tierLine("Tier 6", "Signed Dan & Daria book + DLD-themed Founder merch", true)}
+                </ul>
+
+                <hr style="${dividerStyles}" />
+
+                <div style="text-align: center;">
+                  <a href="${claimUrl}" style="${buttonStyles}">Claim my Founder package</a>
+                </div>
+
+                <p style="${baseStyles}">
+                  Tell us where to ship your signed book and merch, and how you'd like it inscribed. Takes
+                  about 60 seconds. Once all 50 Founder slots are claimed, we ship everything together.
+                </p>
+
+                <p style="${baseStyles}">
+                  Your link still works. And every person you bring in is still another child who gets
+                  closer to being part of a community where they're not the only one.
+                </p>
+
+                <div style="text-align: center;">
+                  <a href="${referralLink}" style="${primaryInlineButtonStyles}">Share Story Pros</a>
+                </div>
+
+                <p style="${baseStyles}">From the bottom of our hearts, thank you.</p>
+
+                <p style="${baseStyles}">${SIGN_OFF}</p>
+              </div>
+
+              ${footerBlock}
+            </div>
+          </div>
+        `,
+      };
+    }
+
+    // ============================================================
+    // EMAIL 7B — Tier 6 Reached (Legend, after 50 Founder slots claimed)
+    // ============================================================
+    case "email7b_tier6_legend": {
+      const referralCount = data.referral_count ?? 0;
+      return {
+        subject: `You went all the way, ${name}.`,
+        html: `
+          <div style="${containerStyles}">
+            <div style="${cardStyles}">
+              <div style="${headerStyles}">
+                <h1 style="margin: 0; font-size: 26px;">Tier 6 Unlocked</h1>
+                <p style="margin: 8px 0 0; opacity: 0.9; font-size: 14px;">500 points. Here's everything you've earned.</p>
+              </div>
+
+              <div style="padding: 20px 0;">
+                <p style="${baseStyles}">Hi ${name},</p>
+
+                <p style="${baseStyles}"><strong>500 points. Tier 6. The final one.</strong></p>
+
+                <p style="${baseStyles}">
+                  The 50 Founder slots are claimed, but reaching 500 points is its own achievement, and
+                  it comes with real rewards. You earned every one of these.
+                </p>
+
+                <p style="${baseStyles}">You're officially a <strong>Story Pros Legend</strong>.</p>
+
+                <hr style="${dividerStyles}" />
+
+                <p style="${baseStyles}"><strong>Here's everything that's yours:</strong></p>
+
+                <p style="${baseStyles}">
+                  <strong>150 Story Coins total.</strong> 50 from Tier 3 plus 100 as a Legend bonus, all
+                  ready to spend on premium content the moment the app launches.
+                </p>
+
+                <p style="${baseStyles}">
+                  <strong>Founder Pricing, locked for life.</strong> $7.99/month, forever. It never goes
+                  up, no matter how much we add to the app, the Community Circles, or any other features
+                  down the road.
+                </p>
+
+                <p style="${baseStyles}">
+                  <strong>Early testing access.</strong> You're in the app before the general public. No
+                  waitlist. No delay.
+                </p>
+
+                <p style="${baseStyles}">
+                  <strong>Legend badge, permanent.</strong> A distinct badge on your profile and the Early
+                  Supporters Wall. Anyone who visits will see you went all the way.
+                </p>
+
+                <p style="${baseStyles}">
+                  <strong>First in line for future merch drops.</strong> Whenever we release new Story
+                  Pros gear, Legends get access before anyone else.
+                </p>
+
+                <p style="${baseStyles}">
+                  <strong>A personal thank-you note.</strong> Signed by both of us, sent the week of launch.
+                </p>
+
+                <hr style="${dividerStyles}" />
+
+                <p style="${baseStyles}"><strong>Here's everything you've unlocked across your entire journey:</strong></p>
+                <ul style="${baseStyles}">
+                  ${tierLine("Tier 1", "Development Updates + Early Supporters Wall")}
+                  ${tierLine("Tier 2", "Free Executive Function guide")}
+                  ${tierLine("Tier 3", "50 Story Coins")}
+                  ${tierLine("Tier 4", "Early testing access + Suggestion Board")}
+                  ${tierLine("Tier 5", "Founder Pricing + double points")}
+                  ${tierLine("Tier 6", "Legend status + 100 bonus Story Coins + Legend badge", true)}
+                </ul>
+
+                <p style="${baseStyles}">
+                  You brought <strong>${referralCount} families</strong> into this. That's ${referralCount}
+                  children who will have access to a tool that helps them share more of their world, and
+                  a community where they get to see they're not the only one.
+                </p>
+
+                <div style="text-align: center;">
+                  <a href="${dashboard}" style="${buttonStyles}">See your dashboard</a>
+                </div>
+
+                <p style="${baseStyles}">
+                  Your link still works. And every share still means another child who gets the support
+                  they need to not just communicate... but connect.
+                </p>
+
+                <div style="text-align: center;">
+                  <a href="${referralLink}" style="${primaryInlineButtonStyles}">Share Story Pros</a>
+                </div>
+
+                <p style="${baseStyles}">Thank you for going all the way.</p>
+
+                <p style="${baseStyles}">${SIGN_OFF}</p>
+              </div>
+
+              ${footerBlock}
+            </div>
+          </div>
+        `,
+      };
+    }
+
+    // ============================================================
+    // AUXILIARY TEMPLATES (unchanged from previous version)
+    // ============================================================
     case "referral_joined": {
       return {
         subject: `Good news! ${data.name} joined through your referral!`,
@@ -139,27 +952,12 @@ function getEmailTemplate(
                 </p>
                 <p style="${baseStyles}">
                   <strong>Points Earned:</strong> +25<br/>
-                  <strong>Total Points:</strong> ${data.points || 'TBD'}
+                  <strong>Total Points:</strong> ${data.points || "TBD"}
                 </p>
-                <p style="${baseStyles}">
-                  Keep sharing to unlock tier rewards:
-                </p>
-                <ul style="${baseStyles}">
-                  <li>Tier 2 — 35 pts (1 referral)</li>
-                  <li>Tier 3 — 75 pts (3 referrals)</li>
-                  <li>Tier 4 — 130 pts (5 referrals)</li>
-                  <li>Tier 5 — 250 pts (10 referrals)</li>
-                  <li>Tier 6 — 500 pts (20 referrals)</li>
-                </ul>
-                <a href="https://empowereddld.com/storypros/dashboard" style="${buttonStyles}">View Your Journey</a>
-                <p style="${baseStyles}">
-                  The Story Pros Team
-                </p>
+                <a href="${dashboard}" style="${buttonStyles}">View Your Journey</a>
+                <p style="${baseStyles}">${SIGN_OFF}</p>
               </div>
-              <div style="${footerStyles}">
-                <p>You received this because someone used your referral code.</p>
-                <p><a href="#" style="color: ${brandColor}; text-decoration: none;">Unsubscribe</a></p>
-              </div>
+              ${footerBlock}
             </div>
           </div>
         `,
@@ -179,28 +977,14 @@ function getEmailTemplate(
                 <p style="${baseStyles}">Wow! You've reached a new milestone!</p>
                 <p style="${baseStyles}">
                   You've just unlocked the <strong>${data.tier_name}</strong> tier!
-                  Your dedication and support mean everything to us.
                 </p>
                 <p style="${baseStyles}">
-                  <strong>Your New Tier:</strong> ${data.tier_name}<br/>
-                  <strong>Exclusive Reward:</strong> ${data.tier_reward || 'Coming soon!'}
+                  <strong>Reward:</strong> ${data.tier_reward || "Coming soon!"}
                 </p>
-                <p style="${baseStyles}">
-                  As a ${data.tier_name}, you now have access to exclusive benefits and early features.
-                  We'll be reaching out soon with all the details about your special rewards.
-                </p>
-                <a href="https://empowereddld.com/storypros/dashboard" style="${buttonStyles}">View Your Rewards</a>
-                <p style="${baseStyles}">
-                  Thank you for being an amazing part of our community!
-                </p>
-                <p style="${baseStyles}">
-                  The Story Pros Team
-                </p>
+                <a href="${dashboard}" style="${buttonStyles}">View Your Rewards</a>
+                <p style="${baseStyles}">${SIGN_OFF}</p>
               </div>
-              <div style="${footerStyles}">
-                <p>You received this because you unlocked a new tier.</p>
-                <p><a href="#" style="color: ${brandColor}; text-decoration: none;">Unsubscribe</a></p>
-              </div>
+              ${footerBlock}
             </div>
           </div>
         `,
@@ -217,31 +1001,19 @@ function getEmailTemplate(
                 <h1 style="margin: 0; font-size: 28px;">Verify Your Email</h1>
               </div>
               <div style="padding: 20px 0;">
-                <p style="${baseStyles}">Hi ${data.name},</p>
+                <p style="${baseStyles}">Hi ${name},</p>
                 <p style="${baseStyles}">
-                  Thank you for signing up! Please verify your email address to activate your account
-                  and unlock all the benefits of Story Pros.
+                  Please verify your email to activate your Story Pros account and earn +15 points.
                 </p>
-                <p style="${baseStyles}">
+                <div style="text-align: center;">
                   <a href="${data.verification_link}" style="${buttonStyles}">Verify Email</a>
-                </p>
-                <p style="${baseStyles}">
-                  Or copy and paste this link in your browser:
-                </p>
-                <p style="${baseStyles}; word-break: break-all; font-size: 12px;">
-                  ${data.verification_link}
-                </p>
-                <p style="${baseStyles}">
-                  This link expires in 24 hours.
-                </p>
-                <p style="${baseStyles}">
-                  The Story Pros Team
-                </p>
+                </div>
+                <p style="${baseStyles}">Or copy and paste this link in your browser:</p>
+                <p style="${baseStyles}; word-break: break-all; font-size: 12px;">${data.verification_link}</p>
+                <p style="${baseStyles}">This link expires in 24 hours.</p>
+                <p style="${baseStyles}">${SIGN_OFF}</p>
               </div>
-              <div style="${footerStyles}">
-                <p>You received this because you signed up for Story Pros.</p>
-                <p><a href="#" style="color: ${brandColor}; text-decoration: none;">Unsubscribe</a></p>
-              </div>
+              ${footerBlock}
             </div>
           </div>
         `,
@@ -258,29 +1030,19 @@ function getEmailTemplate(
                 <h1 style="margin: 0; font-size: 28px;">Your Weekly Digest</h1>
               </div>
               <div style="padding: 20px 0;">
-                <p style="${baseStyles}">Hi ${data.name},</p>
+                <p style="${baseStyles}">Hi ${name},</p>
                 <p style="${baseStyles}">
-                  Here's what's been happening in the Story Pros community this week!
+                  <strong>${data.recent_signups || 0}</strong> new families joined this week.
+                  You're at position <strong>#${data.user_position || "TBD"}</strong> out of
+                  <strong>${data.total_users || "TBD"}</strong>.
                 </p>
-                <h3 style="${baseStyles}; color: ${brandColor};">Community Growth</h3>
                 <p style="${baseStyles}">
-                  <strong>${data.recent_signups || 0}</strong> new creators joined this week.
-                  You're now at position <strong>#${data.user_position || 'TBD'}</strong> out of <strong>${data.total_users || 'TBD'}</strong> waitlist members!
+                  You have <strong>${data.points || 0}</strong> points. Keep sharing to climb.
                 </p>
-                <h3 style="${baseStyles}; color: ${brandColor};">Your Progress</h3>
-                <p style="${baseStyles}">
-                  You have <strong>${data.points || 0}</strong> points. Keep sharing your referral code
-                  to climb higher and unlock exclusive tier rewards!
-                </p>
-                <a href="https://empowereddld.com/storypros/dashboard" style="${buttonStyles}">Check Your Dashboard</a>
-                <p style="${baseStyles}">
-                  The Story Pros Team
-                </p>
+                <a href="${dashboard}" style="${buttonStyles}">Check Your Dashboard</a>
+                <p style="${baseStyles}">${SIGN_OFF}</p>
               </div>
-              <div style="${footerStyles}">
-                <p>You received this as a subscriber to the Story Pros waitlist.</p>
-                <p><a href="#" style="color: ${brandColor}; text-decoration: none;">Unsubscribe</a></p>
-              </div>
+              ${footerBlock}
             </div>
           </div>
         `,
@@ -294,30 +1056,18 @@ function getEmailTemplate(
           <div style="${containerStyles}">
             <div style="${cardStyles}">
               <div style="${headerStyles}">
-                <h1 style="margin: 0; font-size: 28px;">Keep the Momentum Going!</h1>
+                <h1 style="margin: 0; font-size: 28px;">Keep the Momentum Going</h1>
               </div>
               <div style="padding: 20px 0;">
-                <p style="${baseStyles}">Hey ${data.name},</p>
+                <p style="${baseStyles}">Hey ${name},</p>
+                <p style="${baseStyles}">You're close to unlocking the next tier.</p>
                 <p style="${baseStyles}">
-                  You're incredibly close to unlocking the next tier! Just a few more referrals
-                  and you'll claim exclusive rewards and move up the waitlist.
+                  Share your referral link with one or two more friends to get there.
                 </p>
-                <p style="${baseStyles}">
-                  <strong>Your Progress:</strong> ${data.progress_percentage || '0'}% to the next tier
-                </p>
-                <p style="${baseStyles}">
-                  Share your referral code with 1-2 more friends and you'll unlock amazing benefits.
-                  Your friends get early access, and you get exclusive rewards. Win-win!
-                </p>
-                <a href="https://empowereddld.com/storypros/dashboard?action=share" style="${buttonStyles}">Share Your Code</a>
-                <p style="${baseStyles}">
-                  The Story Pros Team
-                </p>
+                <a href="${dashboard}" style="${buttonStyles}">Share Your Link</a>
+                <p style="${baseStyles}">${SIGN_OFF}</p>
               </div>
-              <div style="${footerStyles}">
-                <p>You received this to help you progress in the Story Pros waitlist.</p>
-                <p><a href="#" style="color: ${brandColor}; text-decoration: none;">Unsubscribe</a></p>
-              </div>
+              ${footerBlock}
             </div>
           </div>
         `,
@@ -326,106 +1076,24 @@ function getEmailTemplate(
 
     case "announcement": {
       return {
-        subject: data.subject || "Exciting News from Story Pros!",
+        subject: data.subject || "News from Story Pros",
         html: `
           <div style="${containerStyles}">
             <div style="${cardStyles}">
               <div style="${headerStyles}">
-                <h1 style="margin: 0; font-size: 28px;">${data.title || 'Exciting News!'}</h1>
+                <h1 style="margin: 0; font-size: 28px;">${data.title || "News from Story Pros"}</h1>
               </div>
               <div style="padding: 20px 0;">
-                <p style="${baseStyles}">Hi ${data.name},</p>
-                <div style="${baseStyles}">
-                  ${data.content || 'We have exciting news to share with you!'}
-                </div>
+                <p style="${baseStyles}">Hi ${name},</p>
+                <div style="${baseStyles}">${data.content || ""}</div>
                 ${
                   data.cta_text && data.cta_url
                     ? `<a href="${data.cta_url}" style="${buttonStyles}">${data.cta_text}</a>`
                     : ""
                 }
-                <p style="${baseStyles}">
-                  The Story Pros Team
-                </p>
+                <p style="${baseStyles}">${SIGN_OFF}</p>
               </div>
-              <div style="${footerStyles}">
-                <p>You received this announcement as a Story Pros waitlist member.</p>
-                <p><a href="#" style="color: ${brandColor}; text-decoration: none;">Unsubscribe</a></p>
-              </div>
-            </div>
-          </div>
-        `,
-      };
-    }
-
-    case "email2_points_tiers": {
-      const referralLink = data.referral_link || `https://empowereddld.com/storypros?ref=${data.referral_code || ""}`;
-      return {
-        subject: "How to climb: your Story Pros points & tiers",
-        html: `
-          <div style="${containerStyles}">
-            <div style="${cardStyles}">
-              <div style="${headerStyles}">
-                <h1 style="margin: 0; font-size: 28px;">How Points & Tiers Work</h1>
-              </div>
-              <div style="padding: 20px 0;">
-                <p style="${baseStyles}">Hi ${data.name},</p>
-                <p style="${baseStyles}">
-                  Yesterday you joined Story Pros as a founding member. Today, here's exactly how to climb,
-                  unlock rewards, and help shape the app we're building for kids who need extra support
-                  with language and storytelling.
-                </p>
-
-                <p style="${baseStyles}">
-                  In case you missed it, here's our welcome video: <a href="https://empowereddld.com/storypros" style="color: ${brandColor};">Watch it here</a>.
-                  If it resonates, share it with one person who needs to see it.
-                </p>
-
-                <h2 style="${baseStyles}; color: ${brandColor}; font-size: 20px; margin-top: 28px;">Earn points</h2>
-                <ul style="${baseStyles}">
-                  <li><strong>+10</strong> for joining (already yours)</li>
-                  <li><strong>+15</strong> when you confirm your email</li>
-                  <li><strong>+10</strong> for completing your profile</li>
-                  <li><strong>+8</strong> each for following us on Instagram, Facebook, and YouTube</li>
-                  <li><strong>+25</strong> every time a friend joins through your link</li>
-                  <li><strong>+50 bonus</strong> if a Speech-Language Pathologist joins through you</li>
-                  <li><strong>+3</strong> per share, <strong>+1</strong> per click on your link</li>
-                </ul>
-
-                <h2 style="${baseStyles}; color: ${brandColor}; font-size: 20px; margin-top: 28px;">Unlock the 6 tiers</h2>
-                <ul style="${baseStyles}">
-                  <li><strong>Tier 1</strong> — Founding Member badge + name on the Early Supporters Wall</li>
-                  <li><strong>Tier 2</strong> — Early Access on launch day, before the public</li>
-                  <li><strong>Tier 3</strong> — 75 bonus Story Coins for in-app extras</li>
-                  <li><strong>Tier 4</strong> — VIP Beta Access (test the app and shape it before launch)</li>
-                  <li><strong>Tier 5</strong> — Founder Pricing locked at $5.99/mo for life (vs $7.99)</li>
-                  <li><strong>Tier 6</strong> — Founding Elite: named in founder credits forever, signed Dan & Daria book, and DLD-themed merch (first 50 only)</li>
-                </ul>
-
-                <p style="${baseStyles}">
-                  <strong>Your referral link:</strong><br/>
-                  <a href="${referralLink}" style="color: ${brandColor}; word-break: break-all;">${referralLink}</a>
-                </p>
-
-                <p style="${baseStyles}">
-                  The fastest way to climb is to share that welcome video with the link. People watch,
-                  they get it, and they join.
-                </p>
-
-                <a href="https://empowereddld.com/storypros/dashboard" style="${buttonStyles}">View Your Progress</a>
-
-                <p style="${baseStyles}">
-                  Thank you for being here. Every share helps another family find Story Pros at launch.
-                </p>
-                <p style="${baseStyles}">
-                  Warmly,<br/>
-                  Camesha & Jinean<br/>
-                  The Story Pros Team
-                </p>
-              </div>
-              <div style="${footerStyles}">
-                <p>You received this because you're a Story Pros founding member.</p>
-                <p><a href="https://empowereddld.com/unsubscribe" style="color: ${brandColor}; text-decoration: none;">Unsubscribe</a></p>
-              </div>
+              ${footerBlock}
             </div>
           </div>
         `,
@@ -438,8 +1106,9 @@ function getEmailTemplate(
         html: `
           <div style="${containerStyles}">
             <div style="${cardStyles}">
-              <p style="${baseStyles}">Hello ${data.name || 'there'},</p>
+              <p style="${baseStyles}">Hello ${name},</p>
               <p style="${baseStyles}">Thank you for being part of Story Pros!</p>
+              ${footerBlock}
             </div>
           </div>
         `,
@@ -467,15 +1136,12 @@ Deno.serve(async (req) => {
       );
     }
 
-    // Get email content
     const { subject, html } = getEmailTemplate(template, data);
 
-    // Initialize Supabase client
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
     const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const supabase = createClient(supabaseUrl, serviceKey);
 
-    // Send email via Resend
     const resendApiKey = Deno.env.get("RESEND_API_KEY");
     if (!resendApiKey) {
       throw new Error("RESEND_API_KEY not configured");
@@ -505,7 +1171,6 @@ Deno.serve(async (req) => {
     const resendData: any = await resendResponse.json();
     const resendId = resendData.id;
 
-    // Log email to database
     const { error: logError } = await supabase.from("waitlist_emails").insert({
       recipient_email: to,
       template,
