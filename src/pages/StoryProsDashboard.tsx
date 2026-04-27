@@ -522,10 +522,9 @@ const StoryProsDashboard = () => {
               <div className="rounded-xl overflow-hidden border border-border">
                 <iframe
                   src="https://storyprospreview.lovable.app/preview/story/11111111-1111-1111-1111-111111111111"
-                  className="w-full"
+                  className="w-full h-[600px] sm:h-[900px]"
                   title="Story Pros Interactive Preview"
                   allow="fullscreen"
-                  className="sm:!h-[900px]" style={{ height: "600px" }}
                 />
               </div>
             </Card>
