@@ -448,6 +448,7 @@ const AdminStoryBuilders = () => {
                         <TableHead className="text-right text-foreground">Referrals</TableHead>
                         <TableHead className="text-foreground">Tier</TableHead>
                         <TableHead className="text-foreground">Joined</TableHead>
+                        <TableHead className="text-right text-foreground w-[80px]">Actions</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -480,11 +481,22 @@ const AdminStoryBuilders = () => {
                             <TableCell className="text-sm text-muted-foreground">
                               {format(new Date(user.created_at), "MMM dd, yyyy")}
                             </TableCell>
+                            <TableCell className="text-right">
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                                onClick={() => setUserToDelete(user)}
+                                aria-label={`Delete ${user.name}`}
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </Button>
+                            </TableCell>
                           </TableRow>
                         ))
                       ) : (
                         <TableRow>
-                          <TableCell colSpan={6} className="text-center py-12">
+                          <TableCell colSpan={7} className="text-center py-12">
                             <p className="text-muted-foreground">
                               {users.length === 0 ? "No users in the waitlist yet" : "No results matching your search"}
                             </p>
