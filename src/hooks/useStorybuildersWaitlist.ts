@@ -293,6 +293,7 @@ export function useStorybuildersWaitlist() {
         );
 
         addNotification("success", "Successfully joined the waitlist!");
+        try { localStorage.removeItem(REF_STORAGE_KEY); } catch {}
         return result;
       } catch (err) {
         const errorMessage = err instanceof Error ? err.message : "Something went wrong";
