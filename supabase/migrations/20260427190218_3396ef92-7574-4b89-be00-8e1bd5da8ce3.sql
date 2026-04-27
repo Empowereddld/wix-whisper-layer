@@ -1,0 +1,1 @@
+DELETE FROM public.storybuilders_waitlist WHERE email = 'camesha.russell03@gmail.com';
