@@ -189,7 +189,7 @@ Deno.serve(async (req) => {
     // Check if email already exists
     const { data: existing } = await supabase
       .from("storybuilders_waitlist")
-      .select("referral_code, invite_count, points, current_tier")
+      .select("referral_code, invite_count, points")
       .eq("email", normalizedEmail)
       .maybeSingle();
 
@@ -202,7 +202,6 @@ Deno.serve(async (req) => {
           referral_code: existing.referral_code,
           invite_count: existing.invite_count,
           points: existing.points,
-          current_tier: existing.current_tier,
           total_count: totalCount ?? 0,
         }),
         { headers: { ...corsHeaders, "Content-Type": "application/json" } }
@@ -249,7 +248,7 @@ Deno.serve(async (req) => {
     // Generate verification token
     const verificationToken = crypto.randomUUID();
 
-    // Insert new entry with initial points, queue position, and fraud flag
+    // Insert new entry
     const { data: newEntry, error: insertError } = await supabase
       .from("storybuilders_waitlist")
       .insert({
@@ -257,19 +256,14 @@ Deno.serve(async (req) => {
         email: normalizedEmail,
         referral_code: referralCode,
         referred_by_code: ref || null,
-        ip_address: ipAddress,
         points: 10, // Initial signup bonus
-        current_tier: 0,
         verification_token: verificationToken,
         verification_sent_at: new Date().toISOString(),
         email_verified: false,
         is_speech_professional: isSpeechPro,
         speech_professional_verified: false,
-        fraud_flagged: fraudCheck.flagged,
-        fraud_reason: fraudCheck.flagged ? fraudCheck.reasons.join("; ") : null,
-        fraud_risk_score: fraudCheck.risk_score,
       })
-      .select("referral_code, invite_count, points, current_tier, id")
+      .select("referral_code, invite_count, points, id")
       .single();
 
     if (insertError) {
@@ -280,59 +274,40 @@ Deno.serve(async (req) => {
       });
     }
 
-    // Log signup event
-    await supabase
-      .from("waitlist_events")
-      .insert({
-        user_email: normalizedEmail,
-        event_type: "signup",
-        points_awarded: 10,
-        metadata: { referral_code: referralCode, ip_address: ipAddress },
-      });
-
-    // Calculate queue position for this user
-    await supabase.rpc("recalculate_waitlist_positions");
-
-    // Get updated position
-    const { data: userPosition } = await supabase
-      .from("storybuilders_waitlist")
-      .select("queue_position")
-      .eq("email", normalizedEmail)
-      .single();
+    // Note: fraud check result is informational only (no DB columns yet)
+    if (fraudCheck.flagged) {
+      console.log("Fraud flagged:", normalizedEmail, fraudCheck.reasons.join("; "), "score:", fraudCheck.risk_score);
+    }
 
     // Send welcome email with verification token
     await sendWelcomeEmail(supabaseUrl, name, normalizedEmail, referralCode, verificationToken);
 
     // Handle referral
     if (ref) {
-      // Find the referrer
       const { data: referrer } = await supabase
         .from("storybuilders_waitlist")
-        .select("email, name, points, current_tier")
+        .select("email, name, points, referral_code")
         .eq("referral_code", ref)
         .single();
 
       if (referrer) {
-        // Award 25 points to referrer
-        const pointsResult = await supabase.rpc("award_waitlist_points", {
-          p_email: referrer.email,
-          p_points: 25,
-          p_event_type: "referral_convert",
-          p_metadata: { referred_user_email: normalizedEmail, referred_user_name: name },
-        });
-
-        // Send referral notification email to referrer
-        await notifyReferrer(supabaseUrl, referrer.email, referrer.name, name, pointsResult?.data?.new_points || 0);
-
-        // Log referral event for the new user
+        // Award 25 points to referrer (direct update, no RPC)
+        const newReferrerPoints = (referrer.points ?? 0) + 25;
         await supabase
-          .from("waitlist_events")
-          .insert({
-            user_email: normalizedEmail,
-            event_type: "referred_signup",
-            points_awarded: 0,
-            metadata: { referred_by: referrer.email },
-          });
+          .from("storybuilders_waitlist")
+          .update({
+            points: newReferrerPoints,
+            invite_count: (referrer as any).invite_count != null
+              ? (referrer as any).invite_count + 1
+              : undefined,
+          })
+          .eq("referral_code", ref);
+
+        // Bump invite_count via dedicated RPC (safer)
+        await supabase.rpc("increment_waitlist_invites", { p_code: ref });
+
+        // Send referral notification email
+        await notifyReferrer(supabaseUrl, referrer.email, referrer.name, name, newReferrerPoints);
       }
     }
 
@@ -344,8 +319,6 @@ Deno.serve(async (req) => {
         referral_code: newEntry.referral_code,
         invite_count: newEntry.invite_count ?? 0,
         points: newEntry.points,
-        current_tier: newEntry.current_tier,
-        queue_position: userPosition?.queue_position,
         total_count: totalCount ?? 0,
       }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } }
