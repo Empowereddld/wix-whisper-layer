@@ -1083,7 +1083,7 @@ Deno.serve(async (req) => {
       );
     }
 
-    const { subject, html } = getEmailTemplate(template, data);
+    const { subject, html } = getEmailTemplate(template, data, to);
 
     // Generate a plain-text alternative from the HTML. Including a text/plain
     // part alongside text/html significantly improves deliverability and makes
