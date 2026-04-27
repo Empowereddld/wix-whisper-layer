@@ -531,7 +531,7 @@ const StoryProsDashboard = () => {
           </motion.div>
         ) : (
           <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.25 }}>
-            <Card className="bg-background border border-border rounded-2xl shadow-sm p-6 relative overflow-hidden">
+            <Card className="bg-background border border-border rounded-2xl shadow-sm p-4 sm:p-6 relative overflow-hidden">
               <div className="absolute inset-0 bg-white/80 backdrop-blur-sm z-10 flex flex-col items-center justify-center">
                 <Lock className="h-8 w-8 text-muted-foreground mb-2" />
                 <p className="font-semibold text-foreground">Interactive Preview</p>
@@ -671,7 +671,7 @@ const StoryProsDashboard = () => {
 
         {/* Tier rewards / Claim / Coin Packs */}
         <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.45 }}>
-          <Card className="bg-background border border-border rounded-2xl shadow-sm p-6 relative overflow-hidden">
+          <Card className="bg-background border border-border rounded-2xl shadow-sm p-4 sm:p-6 relative overflow-hidden">
             <div
               className="absolute inset-0 opacity-[0.04] bg-center bg-no-repeat bg-contain pointer-events-none"
               style={{ backgroundImage: `url(${storyPreviewBg})` }}
