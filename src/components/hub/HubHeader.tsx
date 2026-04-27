@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useAdminCheck } from "@/hooks/useAdminCheck";
 import { useNavigate } from "react-router-dom";
@@ -8,6 +9,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { supabase } from "@/integrations/supabase/client";
 import empoweredLogoWhite from "@/assets/empowered-logo-white.webp";
 
 const AUDIENCE_TABS = [
@@ -26,6 +28,28 @@ const HubHeader = ({ activeAudience = "", onAudienceChange }: HubHeaderProps) =>
   const { user, profile, signOut } = useAuth();
   const { isAdmin } = useAdminCheck(user?.id);
   const navigate = useNavigate();
+  const [hasJoinedStoryPros, setHasJoinedStoryPros] = useState(false);
+
+  // Check whether this user is already on the Story Pros waitlist (by email)
+  useEffect(() => {
+    let cancelled = false;
+    const check = async () => {
+      if (!user?.email) {
+        setHasJoinedStoryPros(false);
+        return;
+      }
+      const { data } = await supabase
+        .from("storybuilders_waitlist")
+        .select("id")
+        .eq("email", user.email.toLowerCase())
+        .maybeSingle();
+      if (!cancelled) setHasJoinedStoryPros(!!data);
+    };
+    check();
+    return () => {
+      cancelled = true;
+    };
+  }, [user?.email]);
 
   const handleSignOut = async () => {
     await signOut();
@@ -35,6 +59,12 @@ const HubHeader = ({ activeAudience = "", onAudienceChange }: HubHeaderProps) =>
   const initials = profile?.first_name
     ? profile.first_name.charAt(0).toUpperCase()
     : "?";
+
+  const handleStoryProsClick = () => {
+    // If they've joined the waitlist, take them to their dashboard.
+    // Otherwise send them to the marketing/signup page so they can join first.
+    navigate(hasJoinedStoryPros ? "/storypros/dashboard" : "/storypros");
+  };
 
   return (
     <header className="bg-midnight text-midnight-foreground sticky top-0 z-50">
@@ -53,12 +83,16 @@ const HubHeader = ({ activeAudience = "", onAudienceChange }: HubHeaderProps) =>
 
           {/* Story Pros Link */}
           <button
-            onClick={() => navigate("/storypros")}
-            className="flex items-center gap-1 px-3 py-1 rounded-full bg-purple-600/20 hover:bg-purple-600/30 border border-purple-500/30 text-purple-300 hover:text-purple-200 text-sm font-medium transition-all mr-4 flex-shrink-0"
+            onClick={handleStoryProsClick}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-purple-600/20 hover:bg-purple-600/30 border border-purple-500/30 text-purple-300 hover:text-purple-200 text-sm font-medium transition-all mr-4 flex-shrink-0"
+            aria-label={hasJoinedStoryPros ? "Open Story Pros Dashboard" : "Join Story Pros"}
           >
             <Rocket className="h-4 w-4" />
-            <span className="hidden sm:inline">Launch Team</span>
+            <span className="hidden sm:inline">
+              {hasJoinedStoryPros ? "Story Pros Dashboard" : "Join Story Pros"}
+            </span>
           </button>
+
 
           {/* User menu */}
           <DropdownMenu>
