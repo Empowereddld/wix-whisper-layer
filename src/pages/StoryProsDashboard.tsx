@@ -257,37 +257,78 @@ const StoryProsDashboard = () => {
         className="bg-white border-b border-[#dedede] py-6"
       >
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between flex-wrap gap-4">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-full bg-[#8861d4] flex items-center justify-center text-white font-bold text-lg">
+          <div className="flex items-center justify-between flex-wrap gap-3 sm:gap-4">
+            <div className="flex items-center gap-3 sm:gap-4 min-w-0">
+              <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#8861d4] flex items-center justify-center text-white font-bold text-base sm:text-lg shrink-0">
                 {initial}
               </div>
-              <div>
-                <h1 className="text-xl font-bold text-[#121212]">
+              <div className="min-w-0">
+                <h1 className="text-lg sm:text-xl font-bold text-[#121212] truncate">
                   Welcome back, {firstName}!
                 </h1>
-                <p className="text-sm text-gray-500">
+                <p className="text-xs sm:text-sm text-gray-500 truncate">
                   {currentTierName} · {wl.points} points
+                  {wl.queuePosition ? (
+                    <>
+                      {" · "}
+                      <span className="font-semibold text-[#8861d4]">
+                        #{wl.queuePosition.toLocaleString()}
+                      </span>
+                    </>
+                  ) : null}
                 </p>
               </div>
             </div>
-            <div className="flex items-center gap-3">
-              <div className="flex items-center gap-2 bg-[#f3ebf8] px-4 py-2 rounded-full">
-                <span className="text-lg">🪙</span>
-                <span className="font-bold text-[#8861d4]">{coinBalance}</span>
-                <span className="text-sm text-[#3b1f59]">coins</span>
+            <div className="flex items-center gap-2 sm:gap-3">
+              <div className="flex items-center gap-1.5 sm:gap-2 bg-[#f3ebf8] px-3 sm:px-4 py-1.5 sm:py-2 rounded-full">
+                <span className="text-base sm:text-lg">🪙</span>
+                <span className="font-bold text-[#8861d4] text-sm sm:text-base">{coinBalance}</span>
+                <span className="text-xs sm:text-sm text-[#3b1f59] hidden sm:inline">coins</span>
               </div>
               <Link
                 to="/storypros"
-                className="w-10 h-10 rounded-full border-2 border-[#dedede] bg-gray-100 flex items-center justify-center hover:border-[#8861d4] transition-colors"
+                className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border-2 border-[#dedede] bg-gray-100 flex items-center justify-center hover:border-[#8861d4] transition-colors shrink-0"
                 aria-label="Profile settings"
               >
-                <UserIcon className="h-5 w-5 text-gray-500" />
+                <UserIcon className="h-4 w-4 sm:h-5 sm:w-5 text-gray-500" />
               </Link>
             </div>
           </div>
         </div>
       </motion.div>
+
+      {/* Waitlist position spotlight: high-impact motivator (Robinhood / Superhuman style) */}
+      {wl.queuePosition && (
+        <motion.div
+          initial={{ y: -10, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          className="bg-gradient-to-r from-[#8861d4] to-[#6a47b8] text-white"
+        >
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div className="flex items-center justify-between flex-wrap gap-3">
+              <div className="flex items-center gap-3 min-w-0">
+                <Sparkles className="h-5 w-5 shrink-0 opacity-90" />
+                <div className="min-w-0">
+                  <p className="text-xs uppercase tracking-wider opacity-80 font-semibold">
+                    Your spot on the waitlist
+                  </p>
+                  <p className="text-xl sm:text-2xl font-bold leading-tight">
+                    #{wl.queuePosition.toLocaleString()}
+                    {wl.totalCount ? (
+                      <span className="text-sm sm:text-base font-medium opacity-80 ml-2">
+                        of {wl.totalCount.toLocaleString()}
+                      </span>
+                    ) : null}
+                  </p>
+                </div>
+              </div>
+              <p className="text-xs sm:text-sm opacity-90 max-w-xs sm:max-w-sm leading-snug">
+                Refer friends to climb the list and unlock founder rewards faster.
+              </p>
+            </div>
+          </div>
+        </motion.div>
+      )}
 
       {/* Verify-email nudge banner */}
       {!wl.emailVerified && (
