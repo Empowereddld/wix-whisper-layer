@@ -30,7 +30,7 @@ interface EmailData {
 
 const SIGN_OFF = "Camesha, Jinean and The Story Pros Team";
 const SITE_BASE = "https://empowereddld.com";
-const DEFAULT_DASHBOARD = `${SITE_BASE}/storypros`;
+const DEFAULT_DASHBOARD = `${SITE_BASE}/storypros/dashboard`;
 const DEFAULT_VIDEO = `${SITE_BASE}/storypros`;
 const DEFAULT_GUIDE = `${SITE_BASE}/hub/resource/d9836a63-003e-44bc-9da4-a27d6d478d1a`;
 
