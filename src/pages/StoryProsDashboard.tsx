@@ -14,6 +14,8 @@ import {
   Lock,
   Settings,
   ArrowLeft,
+  AlertCircle,
+  Sparkles,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -40,6 +42,13 @@ import storypros from "@/assets/storybuilders-hero.png";
 const StoryProsDashboard = () => {
   const wl = useStorybuildersWaitlist();
   const [copied, setCopied] = useState(false);
+  const [resending, setResending] = useState(false);
+
+  const handleResendVerification = async () => {
+    setResending(true);
+    await wl.resendVerification();
+    setResending(false);
+  };
 
   // Run a small celebration when ?verified=1 is in the URL (post email verify redirect)
   useEffect(() => {
@@ -123,12 +132,18 @@ const StoryProsDashboard = () => {
   const handleShare = (platform: string) => {
     if (!wl.referralLink) return;
     const url = encodeURIComponent(wl.referralLink);
-    const text = encodeURIComponent("I'm on the Story Pros waitlist! Join me:");
+    const shortText = encodeURIComponent(
+      "Found a new app and community for kids with DLD. Built by an SLP and a teacher. Joining the founding waitlist:"
+    );
+    const emailSubject = encodeURIComponent("Thought you'd want to see this — Story Pros");
+    const emailBody = encodeURIComponent(
+      `Hey,\n\nI'm on the founding waitlist for Story Pros, a new storytelling app and monthly live community for kids who need extra support with language and storytelling. It's built by a speech-language pathologist and an elementary school teacher.\n\nThought of you. Here's my link if you want to join me:\n${wl.referralLink}\n`
+    );
     const map: Record<string, string> = {
-      twitter: `https://twitter.com/intent/tweet?text=${text}&url=${url}`,
+      twitter: `https://twitter.com/intent/tweet?text=${shortText}&url=${url}`,
       facebook: `https://www.facebook.com/sharer/sharer.php?u=${url}`,
-      email: `mailto:?subject=${text}&body=${url}`,
-      whatsapp: `https://wa.me/?text=${text}%20${url}`,
+      email: `mailto:?subject=${emailSubject}&body=${emailBody}`,
+      whatsapp: `https://wa.me/?text=${shortText}%20${url}`,
     };
     if (map[platform]) window.open(map[platform], "_blank");
     wl.trackShare(platform);
@@ -211,6 +226,35 @@ const StoryProsDashboard = () => {
         </div>
       </motion.div>
 
+      {/* Verify-email nudge banner */}
+      {!wl.emailVerified && (
+        <motion.div
+          initial={{ y: -10, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          className="bg-amber-50 border-b border-amber-200"
+        >
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+            <div className="flex items-start sm:items-center justify-between gap-3 flex-wrap">
+              <div className="flex items-start gap-3 flex-1 min-w-0">
+                <AlertCircle className="h-5 w-5 text-amber-600 shrink-0 mt-0.5" />
+                <div className="text-sm text-amber-900 leading-snug">
+                  <strong>Verify your email to unlock +15 points</strong> and start earning referrals.
+                  Check your inbox (and your <em>Promotions</em> or <em>Spam</em> folder, just in case).
+                </div>
+              </div>
+              <Button
+                onClick={handleResendVerification}
+                disabled={resending}
+                size="sm"
+                className="bg-amber-600 hover:bg-amber-700 text-white"
+              >
+                {resending ? "Sending…" : "Resend email"}
+              </Button>
+            </div>
+          </div>
+        </motion.div>
+      )}
+
       {/* Main content */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
         {/* Tier Progress + Referrals */}
@@ -266,6 +310,11 @@ const StoryProsDashboard = () => {
                 Referrals
               </p>
               <p className="text-3xl font-bold text-primary mt-1">{wl.inviteCount}</p>
+              {wl.inviteCount === 0 && (
+                <p className="text-xs text-muted-foreground mt-2 leading-snug">
+                  No referrals yet. Be the first to invite a friend and earn +25 pts (plus a +10 first-referral bonus).
+                </p>
+              )}
             </Card>
           </motion.div>
         </div>
@@ -397,7 +446,7 @@ const StoryProsDashboard = () => {
           </motion.div>
         )}
 
-        {/* Referral Link */}
+        {/* Referral Link + Share Preview */}
         <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.3 }}>
           <Card className="bg-background border border-border rounded-2xl shadow-sm p-6">
             <h3 className="font-sans font-bold text-foreground mb-4">Your Referral Link</h3>
@@ -411,6 +460,39 @@ const StoryProsDashboard = () => {
               >
                 {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
               </Button>
+            </div>
+
+            {/* Share preview — what your friends will see */}
+            <div className="mt-5">
+              <div className="flex items-center gap-2 mb-2">
+                <Sparkles className="h-3.5 w-3.5 text-primary" />
+                <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                  Preview when shared
+                </p>
+              </div>
+              <div className="rounded-xl border border-border overflow-hidden bg-white max-w-md">
+                <div className="aspect-[1.91/1] w-full overflow-hidden bg-muted">
+                  <img
+                    src={storypros}
+                    alt="Story Pros share preview"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="p-3 border-t border-border">
+                  <p className="text-[11px] uppercase tracking-wide text-muted-foreground">
+                    empowereddld.com
+                  </p>
+                  <p className="text-sm font-semibold text-foreground leading-snug mt-1">
+                    Story Pros — the storytelling app for kids with DLD
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-1 leading-snug">
+                    Built by an SLP and an elementary school teacher. Join the founding waitlist.
+                  </p>
+                </div>
+              </div>
+              <p className="text-xs text-muted-foreground mt-2 leading-snug">
+                This is how your link appears in iMessage, WhatsApp, Facebook, and X when someone receives it.
+              </p>
             </div>
           </Card>
         </motion.div>
@@ -509,10 +591,23 @@ const StoryProsDashboard = () => {
           <Card className="bg-gradient-to-br from-primary to-primary/80 text-primary-foreground rounded-2xl shadow-sm p-8">
             <div className="text-center space-y-2">
               <p className="text-sm font-semibold uppercase tracking-wide opacity-90">Your Impact</p>
-              <h3 className="font-sans font-bold text-4xl">
-                {Math.max(wl.inviteCount, 0)} {wl.inviteCount === 1 ? "Family" : "Families"}
-              </h3>
-              <p className="text-sm opacity-90">discovered Story Pros because of you</p>
+              {wl.inviteCount === 0 ? (
+                <>
+                  <h3 className="font-sans font-bold text-2xl">
+                    Be the first to bring a family in 💜
+                  </h3>
+                  <p className="text-sm opacity-90 max-w-md mx-auto">
+                    Every family who joins through your link helps more kids with DLD find Story Pros at launch. Share your link above to get started.
+                  </p>
+                </>
+              ) : (
+                <>
+                  <h3 className="font-sans font-bold text-4xl">
+                    {wl.inviteCount} {wl.inviteCount === 1 ? "Family" : "Families"}
+                  </h3>
+                  <p className="text-sm opacity-90">discovered Story Pros because of you</p>
+                </>
+              )}
             </div>
           </Card>
         </motion.div>

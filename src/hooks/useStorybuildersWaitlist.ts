@@ -60,6 +60,8 @@ interface JoinWaitlistResponse {
 
 const STORAGE_KEY = "sb_waitlist_state";
 const REF_PARAM = "ref";
+const REF_STORAGE_KEY = "sp_pending_ref";
+const REF_TTL_DAYS = 30;
 
 export function useStorybuildersWaitlist() {
   const [state, setState] = useState<WaitlistState>({
@@ -140,8 +142,45 @@ export function useStorybuildersWaitlist() {
 
   const getRefFromUrl = useCallback((): string | undefined => {
     if (typeof window === "undefined") return undefined;
+    // 1. Prefer URL param if present (and persist it for later sessions)
     const params = new URLSearchParams(window.location.search);
-    return params.get(REF_PARAM) || undefined;
+    const fromUrl = params.get(REF_PARAM);
+    if (fromUrl) {
+      try {
+        localStorage.setItem(
+          REF_STORAGE_KEY,
+          JSON.stringify({ code: fromUrl, ts: Date.now() })
+        );
+      } catch {}
+      return fromUrl;
+    }
+    // 2. Fall back to persisted ref (cross-session / cross-device-after-login attribution)
+    try {
+      const saved = localStorage.getItem(REF_STORAGE_KEY);
+      if (saved) {
+        const { code, ts } = JSON.parse(saved) as { code: string; ts: number };
+        const ageDays = (Date.now() - ts) / (1000 * 60 * 60 * 24);
+        if (code && ageDays < REF_TTL_DAYS) return code;
+        // expired
+        localStorage.removeItem(REF_STORAGE_KEY);
+      }
+    } catch {}
+    return undefined;
+  }, []);
+
+  // Capture ?ref= into localStorage on first load even if user doesn't sign up yet
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    const fromUrl = params.get(REF_PARAM);
+    if (fromUrl) {
+      try {
+        localStorage.setItem(
+          REF_STORAGE_KEY,
+          JSON.stringify({ code: fromUrl, ts: Date.now() })
+        );
+      } catch {}
+    }
   }, []);
 
   const fetchTotalCount = useCallback(async () => {
@@ -254,6 +293,7 @@ export function useStorybuildersWaitlist() {
         );
 
         addNotification("success", "Successfully joined the waitlist!");
+        try { localStorage.removeItem(REF_STORAGE_KEY); } catch {}
         return result;
       } catch (err) {
         const errorMessage = err instanceof Error ? err.message : "Something went wrong";

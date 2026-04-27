@@ -630,9 +630,10 @@ const StoryBuilders = () => {
   return (
     <div className="min-h-screen bg-background text-foreground font-sans antialiased">
       <SEOHead
-        title="Story Pros Launch Team — Join the Movement | Empowered DLD"
-        description="Join the Story Pros Launch Team and help build a storytelling app for children with Developmental Language Disorder. Earn points, unlock rewards, and be part of something meaningful."
+        title="Story Pros — The Storytelling App for Kids with DLD | Empowered DLD"
+        description="Built by an SLP and an elementary school teacher. Join the Story Pros founding waitlist and help bring an interactive storytelling app to children with Developmental Language Disorder."
         path="/storypros"
+        ogImage="https://www.empowereddld.com/og-storypros.png"
       />
       <Header />
 
