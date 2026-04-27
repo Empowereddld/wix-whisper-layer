@@ -229,7 +229,7 @@ const AdminStoryBuilders = () => {
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-5 mb-8 bg-background border border-border">
+          <TabsList className="grid w-full grid-cols-6 mb-8 bg-background border border-border">
             <TabsTrigger
               value="overview"
               className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-muted-foreground"
@@ -250,6 +250,13 @@ const AdminStoryBuilders = () => {
             >
               <TrendingUp className="h-4 w-4" />
               <span className="hidden sm:inline">Referrals</span>
+            </TabsTrigger>
+            <TabsTrigger
+              value="suggestions"
+              className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-muted-foreground"
+            >
+              <Lightbulb className="h-4 w-4" />
+              <span className="hidden sm:inline">Suggestions</span>
             </TabsTrigger>
             <TabsTrigger
               value="emails"
