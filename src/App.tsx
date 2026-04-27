@@ -71,6 +71,7 @@ const AdminWaitlistGuide = lazy(() => import("./pages/AdminWaitlistGuide"));
 
 // Lazy-loaded: Legal & misc
 const StoryBuilders = lazy(() => import("./pages/StoryBuilders"));
+const StoryProsDashboard = lazy(() => import("./pages/StoryProsDashboard"));
 const WaitlistUserGuide = lazy(() => import("./pages/WaitlistUserGuide"));
 const EarlySupportersWall = lazy(() => import("./pages/EarlySupportersWall"));
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
@@ -115,7 +116,9 @@ const App = () => (
               <Route path="/contact" element={<ContactUs />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/storypros" element={<StoryBuilders />} />
+              <Route path="/storypros/dashboard" element={<StoryProsDashboard />} />
               <Route path="/storybuilders" element={<Navigate to="/storypros" replace />} />
+              <Route path="/storybuilders/dashboard" element={<Navigate to="/storypros/dashboard" replace />} />
               <Route path="/storypros/guide" element={<WaitlistUserGuide />} />
               <Route path="/storypros/supporters" element={<EarlySupportersWall />} />
               <Route path="/storybuilders/guide" element={<Navigate to="/storypros/guide" replace />} />

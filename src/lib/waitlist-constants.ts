@@ -29,8 +29,9 @@ export const TIER_REWARDS_OLD = [
   "VIP Founding Elite: Virtual meet & greet + Signed Dan & Daria book",
 ] as const;
 
-// Coin drop amounts when tier-up
-export const COIN_DROPS: Record<number, number> = { 2: 75, 4: 200 };
+// Coin drop amounts when tier-up (key = tier index, value = coins awarded)
+// Locked: Tier 3 (75 pts) = 50 bonus Story Coins. No other tier-up coin drops.
+export const COIN_DROPS: Record<number, number> = { 2: 50 };
 
 // Coin packs for purchase
 export const COIN_PACKS = [
@@ -64,48 +65,49 @@ export const FOUNDING_ELITE_CAP = 50;
 export const REGULAR_PRICE = 9.99;
 export const FOUNDER_PRICE = 7.99;
 
-// Detailed tier rewards structure
+// Detailed tier rewards structure (LOCKED — see mem://features/story-pros/reward-journey)
+// tier index is 0-based: 0 = Tier 1, 1 = Tier 2, ... 5 = Tier 6
 export const TIER_REWARDS = [
   {
     tier: 0,
-    name: "Development Updates",
-    description: "Behind-the-scenes updates on Story Pros development",
+    name: "Founding Member Status",
+    description: "Behind-the-scenes development updates, Founding Member badge, and your name on the Early Supporters Wall",
+    icon: "📖",
     claimType: "auto",
   },
   {
     tier: 1,
-    name: "Founding Member Status",
-    description: "Founding Member badge plus your name on the Early Supporters Wall",
-    claimType: "auto",
+    name: "Executive Function Skills Guide",
+    description: "FREE digital product: Executive Function Skills for Your Child (normally paid in the Resource Hub)",
+    icon: "🎁",
+    claimType: "download",
   },
   {
     tier: 2,
-    name: "Early Access Pass",
-    description: "Early access to Story Pros on launch day, before the general public",
+    name: "50 Bonus Story Coins",
+    description: "A bonus coin drop to spend on in-app extras at launch",
+    icon: "🪙",
     claimType: "auto",
   },
   {
     tier: 3,
-    name: "75 Bonus Story Coins",
-    description: "A bonus coin drop to spend on in-app extras at launch",
-    claimType: "auto",
-  },
-  {
-    tier: 4,
     name: "VIP Beta Access",
     description: "Test Story Pros before launch and help shape the final product",
+    icon: "🚀",
     claimType: "unlock",
   },
   {
-    tier: 5,
+    tier: 4,
     name: "Founder Pricing Locked",
-    description: "$7.99/month for life instead of $9.99: permanent 20% discount",
+    description: "$7.99/month for life instead of $9.99: permanent 20% discount. Points double from this tier on.",
+    icon: "💎",
     claimType: "auto",
   },
   {
-    tier: 6,
+    tier: 5,
     name: "Founding Elite Package",
-    description: "Named in Story Pros founder credits forever, plus a signed Dan & Daria book and DLD-themed merch (limited to first 50 members)",
+    description: "Signed Dan & Daria book plus DLD-themed merch (limited to the first 50 members to reach Tier 6 by June 1)",
+    icon: "👑",
     claimType: "activate",
   },
 ] as const;

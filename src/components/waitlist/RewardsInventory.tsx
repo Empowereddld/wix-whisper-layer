@@ -38,57 +38,59 @@ interface CoinPack {
   rewards: string[];
 }
 
+// LOCKED — see mem://features/story-pros/reward-journey
+// tier index is 0-based: 0 = Tier 1, 1 = Tier 2, ... 5 = Tier 6
 const TIER_REWARDS: TierReward[] = [
   {
     tier: 0,
-    rewardId: "tier_0_updates",
-    name: "Development Updates",
-    description: "Behind-the-scenes updates on Story Pros development",
-    icon: "📬",
+    rewardId: "tier_1_founding",
+    name: "Founding Member Status",
+    description: "Behind-the-scenes updates, Founding Member badge, and your name on the Early Supporters Wall",
+    icon: "📖",
     earnedVia: "Auto-claimed on join",
     claimType: "auto",
   },
   {
     tier: 1,
-    rewardId: "tier_1_pdf",
-    name: "5 Language Activities PDF",
-    description: "One-page guide with language activities to try tonight",
-    icon: "📄",
-    earnedVia: "Download PDF guide",
+    rewardId: "tier_2_ef_guide",
+    name: "Executive Function Skills Guide",
+    description: "FREE digital product (normally paid in the Resource Hub)",
+    icon: "🎁",
+    earnedVia: "Download digital guide",
     claimType: "download",
   },
   {
     tier: 2,
-    rewardId: "tier_2_coins",
-    name: "75 Bonus Coins + Story Starter Pack",
-    description: "A treasure chest of coins and your first reward pack",
-    icon: "💎",
-    earnedVia: "Receive 75 coins + pack access",
-    claimType: "activate",
+    rewardId: "tier_3_coins",
+    name: "50 Bonus Story Coins",
+    description: "A bonus coin drop to spend on in-app extras at launch",
+    icon: "🪙",
+    earnedVia: "Auto-deposited to your balance",
+    claimType: "auto",
   },
   {
     tier: 3,
-    rewardId: "tier_3_voice",
-    name: "Founding Voice + Sneak Peek",
-    description: "Shape the app with your suggestions + preview video",
-    icon: "🎬",
-    earnedVia: "Unlock suggestion form + video link",
+    rewardId: "tier_4_beta",
+    name: "VIP Beta Access",
+    description: "Test Story Pros before launch and help shape the final product",
+    icon: "🚀",
+    earnedVia: "Unlock beta invite",
     claimType: "unlock",
   },
   {
     tier: 4,
-    rewardId: "tier_4_founder",
-    name: "Founder Recognition + $5.99 Pricing + 200 Coins",
-    description: "Your name on our wall, $5.99/mo forever, and 200 bonus coins",
-    icon: "🏆",
-    earnedVia: "Activate lifetime pricing + 200 coins",
+    rewardId: "tier_5_founder_price",
+    name: "Founder Pricing Locked",
+    description: "$7.99/month for life instead of $9.99. Points double from this tier on.",
+    icon: "💎",
+    earnedVia: "Activate lifetime pricing",
     claimType: "activate",
   },
   {
     tier: 5,
-    rewardId: "tier_5_elite",
-    name: "VIP Founding Elite Package",
-    description: "Meet & greet, signed book, app credits — the full experience",
+    rewardId: "tier_6_elite",
+    name: "Founding Elite Package",
+    description: "Signed Dan & Daria book + DLD-themed merch (first 50 to reach Tier 6 by June 1)",
     icon: "👑",
     earnedVia: "Start onboarding for exclusive benefits",
     claimType: "onboard",
@@ -147,11 +149,9 @@ export default function RewardsInventory({
 
   const handleClaimReward = (rewardId: string) => {
     const reward = TIER_REWARDS.find((r) => r.rewardId === rewardId);
+    // Tier 3 (index 2) drops 50 bonus Story Coins
     if (reward && reward.tier === 2) {
-      setCoinDropAmount(75);
-      setCoinDropTrigger(true);
-    } else if (reward && reward.tier === 4) {
-      setCoinDropAmount(200);
+      setCoinDropAmount(50);
       setCoinDropTrigger(true);
     }
     onClaimReward(rewardId);

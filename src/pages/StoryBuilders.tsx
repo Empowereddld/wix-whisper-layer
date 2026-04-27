@@ -411,6 +411,12 @@ const DashboardCard = ({ wl }: { wl: WlHook }) => {
           <p className="text-white/80 text-[13px] leading-[1.6] mt-2">
             Check your inbox. We just sent you an email with everything you need, including your personal referral link.
           </p>
+          <a
+            href="/storypros/dashboard"
+            className="inline-flex items-center gap-2 mt-3 px-4 py-2 bg-white text-deep-purple font-semibold rounded-md text-[13px] hover:bg-white/90 transition-colors"
+          >
+            Open your dashboard →
+          </a>
         </div>
       </div>
 

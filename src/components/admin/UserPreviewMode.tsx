@@ -179,7 +179,7 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
                   <div className="flex items-center gap-2 bg-[#f3ebf8] px-4 py-2 rounded-full">
                     <span className="text-lg">🪙</span>
                     <span className="font-bold text-[#8861d4]">
-                      {selectedTier >= 4 ? 275 : selectedTier >= 2 ? 75 : 0}
+                      {selectedTier >= 2 ? 50 : 0}
                     </span>
                     <span className="text-sm text-[#3b1f59]">coins</span>
                   </div>
@@ -310,7 +310,7 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
                            </span>
                         </div>
                         <p className="text-sm font-bold text-[#8861d4]">
-                          +{COIN_DROPS[4]} coins
+                          Founder Pricing $7.99/mo (points 2x)
                         </p>
                       </div>
                     </div>
