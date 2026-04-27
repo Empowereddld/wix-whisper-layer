@@ -310,7 +310,7 @@ const UserPreviewMode = ({ onClose }: UserPreviewModeProps) => {
                            </span>
                         </div>
                         <p className="text-sm font-bold text-[#8861d4]">
-                          +{COIN_DROPS[4]} coins
+                          Founder Pricing $7.99/mo (points 2x)
                         </p>
                       </div>
                     </div>
