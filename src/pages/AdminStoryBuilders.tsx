@@ -36,7 +36,19 @@ import {
   Search,
   Eye,
   Lightbulb,
+  Trash2,
 } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { toast } from "sonner";
 import UserPreviewMode from "@/components/admin/UserPreviewMode";
 import SuggestionBoard from "@/components/admin/SuggestionBoard";
 import StatsCard from "@/components/admin/StatsCard";
