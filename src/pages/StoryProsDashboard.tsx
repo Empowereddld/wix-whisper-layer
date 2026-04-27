@@ -585,10 +585,23 @@ const StoryProsDashboard = () => {
           <Card className="bg-gradient-to-br from-primary to-primary/80 text-primary-foreground rounded-2xl shadow-sm p-8">
             <div className="text-center space-y-2">
               <p className="text-sm font-semibold uppercase tracking-wide opacity-90">Your Impact</p>
-              <h3 className="font-sans font-bold text-4xl">
-                {Math.max(wl.inviteCount, 0)} {wl.inviteCount === 1 ? "Family" : "Families"}
-              </h3>
-              <p className="text-sm opacity-90">discovered Story Pros because of you</p>
+              {wl.inviteCount === 0 ? (
+                <>
+                  <h3 className="font-sans font-bold text-2xl">
+                    Be the first to bring a family in 💜
+                  </h3>
+                  <p className="text-sm opacity-90 max-w-md mx-auto">
+                    Every family who joins through your link helps more kids with DLD find Story Pros at launch. Share your link above to get started.
+                  </p>
+                </>
+              ) : (
+                <>
+                  <h3 className="font-sans font-bold text-4xl">
+                    {wl.inviteCount} {wl.inviteCount === 1 ? "Family" : "Families"}
+                  </h3>
+                  <p className="text-sm opacity-90">discovered Story Pros because of you</p>
+                </>
+              )}
             </div>
           </Card>
         </motion.div>
