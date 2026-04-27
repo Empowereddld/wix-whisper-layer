@@ -1,0 +1,545 @@
+import { useEffect, useState } from "react";
+import { Navigate, Link } from "react-router-dom";
+import { motion } from "motion/react";
+import {
+  Copy,
+  Check,
+  Twitter,
+  Facebook,
+  Mail,
+  Share2,
+  Instagram,
+  User as UserIcon,
+  Users,
+  Lock,
+  Settings,
+  ArrowLeft,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
+import { toast } from "sonner";
+import confetti from "canvas-confetti";
+import SEOHead from "@/components/SEOHead";
+import RewardsInventory from "@/components/waitlist/RewardsInventory";
+import { useStorybuildersWaitlist } from "@/hooks/useStorybuildersWaitlist";
+import {
+  TIER_NAMES,
+  TIER_THRESHOLDS,
+  ONETIME_POINTS,
+  REPEATABLE_POINTS,
+  DAILY_CAPS,
+  COIN_DROPS,
+  TIER_REWARDS,
+  SOCIAL_LINKS,
+} from "@/lib/waitlist-constants";
+import { getTierName } from "@/lib/waitlist-utils";
+import storyPreviewBg from "@/assets/story-preview-bg.png";
+import storypros from "@/assets/storybuilders-hero.png";
+
+const StoryProsDashboard = () => {
+  const wl = useStorybuildersWaitlist();
+  const [copied, setCopied] = useState(false);
+
+  // Run a small celebration when ?verified=1 is in the URL (post email verify redirect)
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    const v = params.get("verified");
+    if (!v) return;
+    if (v === "1") {
+      toast.success("Email verified! Bonus points added.");
+      try {
+        confetti({ particleCount: 120, spread: 80, origin: { y: 0.3 } });
+      } catch {}
+      setTimeout(() => wl.refreshStats(), 400);
+    } else if (v === "already") {
+      toast.success("Your email is already verified.");
+    }
+    params.delete("verified");
+    const newSearch = params.toString();
+    window.history.replaceState(
+      {},
+      "",
+      window.location.pathname + (newSearch ? `?${newSearch}` : "")
+    );
+  }, [wl]);
+
+  // While the hook is hydrating from localStorage on first paint, briefly wait
+  // before deciding the user isn't joined.
+  const [hydrated, setHydrated] = useState(false);
+  useEffect(() => {
+    const t = setTimeout(() => setHydrated(true), 600);
+    return () => clearTimeout(t);
+  }, []);
+
+  // If they're truly not on the waitlist, send them back to /storypros to join
+  if (hydrated && !wl.joined && !wl.loading) {
+    return <Navigate to="/storypros" replace />;
+  }
+
+  if (!wl.joined) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <div className="text-muted-foreground">Loading your dashboard…</div>
+      </div>
+    );
+  }
+
+  const currentTier = wl.currentTier;
+  const currentTierName = getTierName(currentTier);
+  const nextThreshold = TIER_THRESHOLDS[currentTier + 1];
+  const currentThreshold = TIER_THRESHOLDS[currentTier] ?? 0;
+  const pointsInTier = wl.points - currentThreshold;
+  const pointsNeeded = nextThreshold ? nextThreshold - currentThreshold : 0;
+  const progressPercent =
+    nextThreshold && pointsNeeded > 0
+      ? Math.min(100, (pointsInTier / pointsNeeded) * 100)
+      : 100;
+
+  const firstName = (wl.name || "Friend").split(" ")[0];
+  const initial = firstName.charAt(0).toUpperCase();
+
+  // Earn-points checklist: each row reflects the user's real claim state
+  const earnRows = [
+    { label: "Sign up", done: wl.joined, pts: ONETIME_POINTS.SIGNUP },
+    { label: "Verify email", done: wl.emailVerified, pts: ONETIME_POINTS.VERIFY_EMAIL },
+    { label: "Complete profile", done: !!wl.name && !wl.name.includes("@"), pts: ONETIME_POINTS.COMPLETE_PROFILE },
+    { label: "Follow Instagram", done: wl.socialClaims.instagram, pts: ONETIME_POINTS.FOLLOW_INSTAGRAM },
+    { label: "Follow Facebook", done: wl.socialClaims.facebook, pts: ONETIME_POINTS.FOLLOW_FACEBOOK },
+    { label: "Subscribe YouTube", done: wl.socialClaims.youtube, pts: ONETIME_POINTS.SUBSCRIBE_YOUTUBE },
+    { label: "First share", done: wl.shareCount > 0, pts: ONETIME_POINTS.FIRST_SHARE },
+    { label: "First referral bonus", done: wl.inviteCount > 0, pts: ONETIME_POINTS.FIRST_REFERRAL_BONUS },
+  ];
+
+  const handleCopy = async () => {
+    if (!wl.referralLink) return;
+    await navigator.clipboard.writeText(wl.referralLink);
+    setCopied(true);
+    toast.success("Referral link copied!");
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handleShare = (platform: string) => {
+    if (!wl.referralLink) return;
+    const url = encodeURIComponent(wl.referralLink);
+    const text = encodeURIComponent("I'm on the Story Pros waitlist! Join me:");
+    const map: Record<string, string> = {
+      twitter: `https://twitter.com/intent/tweet?text=${text}&url=${url}`,
+      facebook: `https://www.facebook.com/sharer/sharer.php?u=${url}`,
+      email: `mailto:?subject=${text}&body=${url}`,
+      whatsapp: `https://wa.me/?text=${text}%20${url}`,
+    };
+    if (map[platform]) window.open(map[platform], "_blank");
+    wl.trackShare(platform);
+  };
+
+  const handleFollowClick = (platform: "instagram" | "facebook" | "youtube", url: string) => {
+    window.open(url, "_blank");
+    wl.claimSocialFollow(platform);
+  };
+
+  // Coin balance: derived from tier-up coin drops only (Tier 3 = 50 currently)
+  const coinBalance = currentTier >= 2 ? COIN_DROPS[2] || 0 : 0;
+
+  return (
+    <div className="min-h-screen bg-white">
+      <SEOHead
+        title="Your Story Pros Dashboard | Empowered DLD"
+        description="Track your Story Pros waitlist tier, points, referrals, and rewards."
+        path="/storypros/dashboard"
+      />
+
+      {/* Top bar */}
+      <div className="sticky top-0 z-40 bg-deep-purple text-white shadow-sm">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
+          <Link
+            to="/storypros"
+            className="flex items-center gap-2 text-sm text-white/90 hover:text-white"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Back to Story Pros
+          </Link>
+          <button
+            onClick={() => {
+              wl.signOut();
+              toast.success("Signed out.");
+            }}
+            className="text-xs text-white/80 hover:text-white underline underline-offset-2"
+          >
+            Sign out
+          </button>
+        </div>
+      </div>
+
+      {/* User Header */}
+      <motion.div
+        initial={{ y: 20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        className="bg-white border-b border-[#dedede] py-6"
+      >
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between flex-wrap gap-4">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-full bg-[#8861d4] flex items-center justify-center text-white font-bold text-lg">
+                {initial}
+              </div>
+              <div>
+                <h1 className="text-xl font-bold text-[#121212]">
+                  Welcome back, {firstName}!
+                </h1>
+                <p className="text-sm text-gray-500">
+                  {currentTierName} · {wl.points} points
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2 bg-[#f3ebf8] px-4 py-2 rounded-full">
+                <span className="text-lg">🪙</span>
+                <span className="font-bold text-[#8861d4]">{coinBalance}</span>
+                <span className="text-sm text-[#3b1f59]">coins</span>
+              </div>
+              <Link
+                to="/storypros"
+                className="w-10 h-10 rounded-full border-2 border-[#dedede] bg-gray-100 flex items-center justify-center hover:border-[#8861d4] transition-colors"
+                aria-label="Profile settings"
+              >
+                <UserIcon className="h-5 w-5 text-gray-500" />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Main content */}
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+        {/* Tier Progress + Referrals */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <motion.div
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.1 }}
+            className="md:col-span-2"
+          >
+            <Card className="bg-background border border-border rounded-2xl shadow-sm p-6">
+              <div className="space-y-4">
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <h3 className="font-sans font-bold text-foreground">Tier Progress</h3>
+                    <Badge className="bg-primary/10 text-primary">{currentTierName}</Badge>
+                  </div>
+                  <p className="text-sm text-muted-foreground">
+                    {wl.points} / {nextThreshold || wl.points} points
+                  </p>
+                </div>
+                <div className="relative h-3 bg-border rounded-full overflow-hidden">
+                  <motion.div
+                    initial={{ width: 0 }}
+                    animate={{ width: `${progressPercent}%` }}
+                    transition={{ duration: 0.8, ease: "easeOut" }}
+                    className="h-full bg-gradient-to-r from-primary to-primary/70"
+                  />
+                </div>
+                {nextThreshold ? (
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="text-muted-foreground">Current Tier</span>
+                    <span className="font-semibold text-primary">
+                      {nextThreshold - wl.points} points to next tier
+                    </span>
+                  </div>
+                ) : (
+                  <p className="text-xs text-emerald-600 font-semibold">
+                    Top tier reached. Thank you, founder!
+                  </p>
+                )}
+              </div>
+            </Card>
+          </motion.div>
+
+          <motion.div
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.15 }}
+          >
+            <Card className="bg-background border border-border rounded-2xl shadow-sm p-6">
+              <p className="text-xs text-muted-foreground uppercase tracking-wide font-semibold">
+                Referrals
+              </p>
+              <p className="text-3xl font-bold text-primary mt-1">{wl.inviteCount}</p>
+            </Card>
+          </motion.div>
+        </div>
+
+        {/* How to Earn */}
+        <motion.div
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.2 }}
+        >
+          <Card className="bg-background border border-border rounded-2xl shadow-sm p-6">
+            <h3 className="font-sans font-bold text-foreground mb-6">
+              How to Earn Points & Coins
+            </h3>
+            <div className="grid md:grid-cols-2 gap-6">
+              <div>
+                <h4 className="font-semibold text-[#3b1f59] mb-4">Story Coins</h4>
+                <div className="space-y-3">
+                  <div className="bg-[#f3ebf8] rounded-lg p-3">
+                    <span className="text-sm font-medium text-foreground block mb-1">
+                      Reach Tier 3 ({TIER_THRESHOLDS[2]} pts)
+                    </span>
+                    <p className="text-sm font-bold text-[#8861d4]">
+                      +{COIN_DROPS[2]} bonus Story Coins
+                    </p>
+                  </div>
+                  <div className="bg-[#f3ebf8] rounded-lg p-3">
+                    <span className="text-sm font-medium text-foreground block mb-1">
+                      Reach Tier 5 ({TIER_THRESHOLDS[4]} pts)
+                    </span>
+                    <p className="text-sm font-bold text-[#8861d4]">
+                      Founder Pricing $7.99/mo (points 2x)
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <h4 className="font-semibold text-[#3b1f59] mb-4">Earn Points</h4>
+                <div className="space-y-2 text-sm">
+                  {earnRows.map((row) => (
+                    <div key={row.label} className="flex justify-between">
+                      <span
+                        className={
+                          row.done
+                            ? "text-emerald-600 flex items-center gap-1"
+                            : "text-foreground"
+                        }
+                      >
+                        {row.done && <Check className="h-3 w-3" />}
+                        {row.label}
+                      </span>
+                      <span
+                        className={
+                          row.done
+                            ? "font-bold text-emerald-500"
+                            : "font-bold text-[#8861d4]"
+                        }
+                      >
+                        {row.done ? "✓ Done" : `${row.pts} pts (once)`}
+                      </span>
+                    </div>
+                  ))}
+                  <div className="border-t border-border pt-2 mt-2">
+                    <div className="flex justify-between">
+                      <span className="text-foreground">Refer a friend</span>
+                      <span className="font-bold text-[#8861d4]">
+                        {REPEATABLE_POINTS.REFERRAL} pts
+                      </span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-foreground">Share link</span>
+                      <span className="font-bold text-[#8861d4]">
+                        {REPEATABLE_POINTS.SHARE} pts (max {DAILY_CAPS.MAX_SHARE_POINTS}/day)
+                      </span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-foreground">Feature suggestion</span>
+                      <span className="font-bold text-[#8861d4]">
+                        {REPEATABLE_POINTS.SUGGESTION} pts
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Card>
+        </motion.div>
+
+        {/* Interactive preview gating */}
+        {currentTier >= 3 ? (
+          <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.25 }}>
+            <Card className="bg-background border border-border rounded-2xl shadow-sm p-6">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="font-sans font-bold text-foreground">Interactive Story Preview</h3>
+                <Badge className="bg-primary/20 text-primary">Tier 4 Exclusive</Badge>
+              </div>
+              <p className="text-sm text-muted-foreground mb-4">
+                As a Tier 4 member, you have early access to the Story Pros experience. Try an interactive story below.
+              </p>
+              <div className="rounded-xl overflow-hidden border border-border">
+                <iframe
+                  src="https://storyprospreview.lovable.app/preview/story/11111111-1111-1111-1111-111111111111"
+                  className="w-full"
+                  title="Story Pros Interactive Preview"
+                  allow="fullscreen"
+                  style={{ height: "900px" }}
+                />
+              </div>
+            </Card>
+          </motion.div>
+        ) : (
+          <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.25 }}>
+            <Card className="bg-background border border-border rounded-2xl shadow-sm p-6 relative overflow-hidden">
+              <div className="absolute inset-0 bg-white/80 backdrop-blur-sm z-10 flex flex-col items-center justify-center">
+                <Lock className="h-8 w-8 text-muted-foreground mb-2" />
+                <p className="font-semibold text-foreground">Interactive Preview</p>
+                <p className="text-sm text-muted-foreground">
+                  Reach Tier 4 ({TIER_THRESHOLDS[3]} pts) to unlock
+                </p>
+              </div>
+              <div className="opacity-20">
+                <h3 className="font-sans font-bold text-foreground mb-4">Interactive Story Preview</h3>
+                <div className="rounded-xl overflow-hidden" style={{ height: "400px" }}>
+                  <img src={storyPreviewBg} alt="" className="w-full h-full object-cover" />
+                </div>
+              </div>
+            </Card>
+          </motion.div>
+        )}
+
+        {/* Referral Link */}
+        <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.3 }}>
+          <Card className="bg-background border border-border rounded-2xl shadow-sm p-6">
+            <h3 className="font-sans font-bold text-foreground mb-4">Your Referral Link</h3>
+            <div className="flex gap-2">
+              <div className="flex-1 bg-muted border border-border rounded-lg px-4 py-3 font-mono text-sm text-foreground truncate">
+                {wl.referralLink || "—"}
+              </div>
+              <Button
+                onClick={handleCopy}
+                className="bg-primary hover:bg-primary/90 text-primary-foreground"
+              >
+                {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+              </Button>
+            </div>
+          </Card>
+        </motion.div>
+
+        {/* Share */}
+        <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.35 }}>
+          <Card className="bg-background border border-border rounded-2xl shadow-sm p-6">
+            <h3 className="font-sans font-bold text-foreground mb-4">Share & Earn Referrals</h3>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              <Button onClick={() => handleShare("twitter")} className="bg-foreground hover:bg-foreground/90 text-background flex items-center gap-2">
+                <Twitter className="h-4 w-4" />
+                <span className="hidden sm:inline">Twitter</span>
+              </Button>
+              <Button onClick={() => handleShare("facebook")} className="bg-[#1877F2] hover:bg-[#0A66C2] text-white flex items-center gap-2">
+                <Facebook className="h-4 w-4" />
+                <span className="hidden sm:inline">Facebook</span>
+              </Button>
+              <Button onClick={() => handleShare("email")} className="bg-[#EA4335] hover:bg-[#C5221F] text-white flex items-center gap-2">
+                <Mail className="h-4 w-4" />
+                <span className="hidden sm:inline">Email</span>
+              </Button>
+              <Button onClick={() => handleShare("whatsapp")} className="bg-[#25D366] hover:bg-[#128C7E] text-white flex items-center gap-2">
+                <Share2 className="h-4 w-4" />
+                <span className="hidden sm:inline">WhatsApp</span>
+              </Button>
+              <Button onClick={() => handleShare("instagram")} className="bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 hover:opacity-90 text-white flex items-center gap-2">
+                <Instagram className="h-4 w-4" />
+                <span className="hidden sm:inline">Instagram</span>
+              </Button>
+              <Button onClick={handleCopy} className="bg-primary hover:bg-primary/90 text-primary-foreground flex items-center gap-2">
+                <Copy className="h-4 w-4" />
+                <span className="hidden sm:inline">Copy</span>
+              </Button>
+            </div>
+          </Card>
+        </motion.div>
+
+        {/* Follow */}
+        <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.4 }}>
+          <Card className="bg-background border border-border rounded-2xl shadow-sm p-6">
+            <h3 className="font-sans font-bold text-foreground mb-2">Follow Us & Earn Points</h3>
+            <p className="text-sm text-muted-foreground mb-4">
+              Follow us on social media to earn bonus points per platform.
+            </p>
+            <div className="grid grid-cols-3 gap-3">
+              {([
+                { id: "instagram" as const, label: "Instagram", color: "bg-gradient-to-r from-purple-500 via-pink-500 to-red-500", url: SOCIAL_LINKS.INSTAGRAM, points: ONETIME_POINTS.FOLLOW_INSTAGRAM, Icon: Instagram },
+                { id: "facebook" as const, label: "Facebook", color: "bg-[#1877F2]", url: SOCIAL_LINKS.FACEBOOK, points: ONETIME_POINTS.FOLLOW_FACEBOOK, Icon: Facebook },
+                { id: "youtube" as const, label: "YouTube", color: "bg-red-600", url: SOCIAL_LINKS.YOUTUBE, points: ONETIME_POINTS.SUBSCRIBE_YOUTUBE, Icon: () => <span className="text-lg">▶️</span> },
+              ]).map(({ id, label, color, url, points, Icon }) => {
+                const followed = wl.socialClaims[id];
+                return (
+                  <Button
+                    key={id}
+                    onClick={() => handleFollowClick(id, url)}
+                    disabled={followed}
+                    className={`h-12 rounded-xl flex items-center justify-center gap-2 text-white font-medium transition-all ${
+                      followed
+                        ? "bg-emerald-500/20 border border-emerald-500/50 text-emerald-600"
+                        : `${color} hover:opacity-90`
+                    } disabled:opacity-100`}
+                  >
+                    {followed ? <Check className="h-5 w-5 text-emerald-500" /> : <Icon className="h-5 w-5" />}
+                    <span className="hidden sm:inline text-sm">
+                      {followed ? `+${points} pts ✓` : `${label} (+${points})`}
+                    </span>
+                  </Button>
+                );
+              })}
+            </div>
+          </Card>
+        </motion.div>
+
+        {/* Tier rewards / Claim / Coin Packs */}
+        <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.45 }}>
+          <Card className="bg-background border border-border rounded-2xl shadow-sm p-6 relative overflow-hidden">
+            <div
+              className="absolute inset-0 opacity-[0.04] bg-center bg-no-repeat bg-contain pointer-events-none"
+              style={{ backgroundImage: `url(${storyPreviewBg})` }}
+            />
+            <div className="relative z-10">
+              <RewardsInventory
+                currentTier={currentTier}
+                coins={coinBalance}
+                badges={wl.badges}
+                inventory={{}}
+                onClaimReward={() => toast.info("Reward claim flow coming soon.")}
+                onRedeemCoinPack={() => toast.info("Coin pack redemption coming soon.")}
+              />
+            </div>
+          </Card>
+        </motion.div>
+
+        {/* Impact */}
+        <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.5 }}>
+          <Card className="bg-gradient-to-br from-primary to-primary/80 text-primary-foreground rounded-2xl shadow-sm p-8">
+            <div className="text-center space-y-2">
+              <p className="text-sm font-semibold uppercase tracking-wide opacity-90">Your Impact</p>
+              <h3 className="font-sans font-bold text-4xl">
+                {Math.max(wl.inviteCount, 0)} {wl.inviteCount === 1 ? "Family" : "Families"}
+              </h3>
+              <p className="text-sm opacity-90">discovered Story Pros because of you</p>
+            </div>
+          </Card>
+        </motion.div>
+
+        {/* Coming up */}
+        {nextThreshold && TIER_REWARDS[currentTier + 1] && (
+          <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.55 }}>
+            <Card className="bg-gradient-to-br from-[#f3ebf8] to-white border border-[#8861d4]/20 rounded-2xl shadow-sm p-6">
+              <h3 className="font-sans font-bold text-[#3b1f59] mb-2">
+                Coming at {TIER_NAMES[currentTier + 1]} ({nextThreshold} pts)
+              </h3>
+              <p className="text-sm text-gray-600 mb-4">
+                You're {nextThreshold - wl.points} points away from your next reward.
+              </p>
+              <div className="bg-white rounded-lg p-4 border border-[#dedede]">
+                <p className="font-semibold text-[#3b1f59]">{TIER_REWARDS[currentTier + 1]?.name}</p>
+                <p className="text-sm text-gray-500 mt-1">{TIER_REWARDS[currentTier + 1]?.description}</p>
+              </div>
+            </Card>
+          </motion.div>
+        )}
+
+        {/* Bottom spacing */}
+        <div className="h-8" />
+      </div>
+    </div>
+  );
+};
+
+export default StoryProsDashboard;
