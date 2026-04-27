@@ -839,11 +839,101 @@ export type Database = {
         }
         Relationships: []
       }
+      waitlist_suggestion_votes: {
+        Row: {
+          created_at: string
+          id: string
+          suggestion_id: string
+          waitlist_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          suggestion_id: string
+          waitlist_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          suggestion_id?: string
+          waitlist_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "waitlist_suggestion_votes_suggestion_id_fkey"
+            columns: ["suggestion_id"]
+            isOneToOne: false
+            referencedRelation: "waitlist_suggestions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "waitlist_suggestion_votes_waitlist_id_fkey"
+            columns: ["waitlist_id"]
+            isOneToOne: false
+            referencedRelation: "storybuilders_waitlist"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      waitlist_suggestions: {
+        Row: {
+          category: string
+          created_at: string
+          description: string
+          id: string
+          status: string
+          title: string
+          vote_count: number
+          waitlist_id: string
+        }
+        Insert: {
+          category?: string
+          created_at?: string
+          description: string
+          id?: string
+          status?: string
+          title: string
+          vote_count?: number
+          waitlist_id: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          description?: string
+          id?: string
+          status?: string
+          title?: string
+          vote_count?: number
+          waitlist_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "waitlist_suggestions_waitlist_id_fkey"
+            columns: ["waitlist_id"]
+            isOneToOne: false
+            referencedRelation: "storybuilders_waitlist"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
+      award_referral: {
+        Args: {
+          p_first_bonus: number
+          p_referral_points: number
+          p_referrer_code: string
+        }
+        Returns: {
+          first_bonus_awarded: boolean
+          new_invite_count: number
+          new_points: number
+          success: boolean
+        }[]
+      }
       claim_social_follow: {
         Args: { p_platform: string; p_points: number; p_referral_code: string }
         Returns: {
@@ -909,6 +999,21 @@ export type Database = {
           success: boolean
         }[]
       }
+      submit_waitlist_suggestion: {
+        Args: {
+          p_category: string
+          p_description: string
+          p_points: number
+          p_referral_code: string
+          p_title: string
+        }
+        Returns: {
+          message: string
+          new_points: number
+          success: boolean
+          suggestion_id: string
+        }[]
+      }
       verify_speech_professional: {
         Args: { p_bonus: number; p_waitlist_id: string }
         Returns: {
@@ -922,6 +1027,13 @@ export type Database = {
         Returns: {
           already_verified: boolean
           email: string
+          success: boolean
+        }[]
+      }
+      vote_waitlist_suggestion: {
+        Args: { p_referral_code: string; p_suggestion_id: string }
+        Returns: {
+          message: string
           success: boolean
         }[]
       }
