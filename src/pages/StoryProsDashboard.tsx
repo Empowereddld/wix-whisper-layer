@@ -360,9 +360,9 @@ const StoryProsDashboard = () => {
       )}
 
       {/* Main content */}
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-4 sm:space-y-6">
         {/* Tier Progress + Referrals */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
           <motion.div
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
@@ -433,7 +433,7 @@ const StoryProsDashboard = () => {
             <h3 className="font-sans font-bold text-foreground mb-6">
               How to Earn Points & Coins
             </h3>
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
               <div>
                 <h4 className="font-semibold text-[#3b1f59] mb-4">Story Coins</h4>
                 <div className="space-y-3">
@@ -525,7 +525,7 @@ const StoryProsDashboard = () => {
                   className="w-full"
                   title="Story Pros Interactive Preview"
                   allow="fullscreen"
-                  style={{ height: "900px" }}
+                  className="sm:!h-[900px]" style={{ height: "600px" }}
                 />
               </div>
             </Card>
