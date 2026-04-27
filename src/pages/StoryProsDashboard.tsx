@@ -74,6 +74,35 @@ const StoryProsDashboard = () => {
     );
   }, [wl]);
 
+  // Celebrate when a referral converts (broadcast from the hook on invite_count++)
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const detail = (e as CustomEvent).detail as { count?: number } | undefined;
+      const count = detail?.count || 1;
+      toast.success(
+        count === 1
+          ? "🎉 Someone just joined using your link! +25 pts"
+          : `🎉 ${count} people just joined using your link! +${count * 25} pts`,
+        { duration: 6000 }
+      );
+      try {
+        confetti({ particleCount: 80, spread: 70, origin: { y: 0.4 } });
+      } catch {}
+    };
+    window.addEventListener("sp:referral-converted", handler);
+    return () => window.removeEventListener("sp:referral-converted", handler);
+  }, []);
+
+  // Poll for fresh stats every 30s while the dashboard is open so referral
+  // conversions surface in near-real-time without needing a hard refresh.
+  useEffect(() => {
+    if (!wl.joined) return;
+    const id = setInterval(() => {
+      wl.refreshStats();
+    }, 30000);
+    return () => clearInterval(id);
+  }, [wl.joined, wl.refreshStats]);
+
   // While the hook is hydrating from localStorage on first paint, briefly wait
   // before deciding the user isn't joined.
   const [hydrated, setHydrated] = useState(false);
