@@ -357,7 +357,6 @@ const StoryBuilders = () => {
   const formRef = useRef<HTMLDivElement>(null);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [isSpeechPro, setIsSpeechPro] = useState(false);
   const [copied, setCopied] = useState(false);
   const wl = useStorybuildersWaitlist();
 
@@ -366,15 +365,13 @@ const StoryBuilders = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim() || !email.trim()) return;
-    const result = await wl.joinWaitlist(name, email, isSpeechPro);
+    if (name.trim().includes("@")) {
+      toast.error("Please enter your name, not your email.");
+      return;
+    }
+    const result = await wl.joinWaitlist(name, email);
     if (result) {
-      toast.success(
-        result.already_joined
-          ? "Welcome back!"
-          : isSpeechPro
-            ? "You're on the Launch Team! We'll verify your SLP/SLT/Speech Therapist status soon for your +50 bonus."
-            : "You're on the Launch Team!"
-      );
+      toast.success(result.already_joined ? "Welcome back!" : "You're on the Launch Team!");
     }
   };
 
@@ -384,6 +381,38 @@ const StoryBuilders = () => {
     toast.success("Copied to clipboard!");
     setTimeout(() => setCopied(false), 2000);
   };
+
+  // Handle ?verified= query param when users return from email verification
+  const verifiedHandledRef = useRef(false);
+  useEffect(() => {
+    if (verifiedHandledRef.current) return;
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    const v = params.get("verified");
+    if (!v) return;
+    verifiedHandledRef.current = true;
+
+    if (v === "1") {
+      toast.success("Email verified! +5 bonus points added.");
+      try {
+        confetti({
+          particleCount: 120,
+          spread: 80,
+          origin: { y: 0.3 },
+        });
+      } catch {}
+      // Refresh stats so the new points/verified badge appear immediately
+      setTimeout(() => wl.refreshStats(), 400);
+    } else if (v === "already") {
+      toast.success("Your email is already verified.");
+    }
+
+    // Clean the URL so refreshes don't re-fire the toast
+    params.delete("verified");
+    const newSearch = params.toString();
+    const newUrl = window.location.pathname + (newSearch ? `?${newSearch}` : "") + window.location.hash;
+    window.history.replaceState({}, "", newUrl);
+  }, [wl]);
 
   const nextMilestone = milestones.find((m) => m.invites > 0 && m.invites > wl.inviteCount);
   const invitesNeeded = nextMilestone ? nextMilestone.invites - wl.inviteCount : 0;
