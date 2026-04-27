@@ -26,6 +26,8 @@ export interface TierInfo {
 
 export interface WaitlistState {
   joined: boolean;
+  name: string;
+  email: string;
   referralCode: string;
   inviteCount: number;
   totalCount: number;
