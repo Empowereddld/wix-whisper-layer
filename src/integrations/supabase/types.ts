@@ -591,6 +591,9 @@ export type Database = {
           click_count: number
           clicks_today: number
           created_at: string
+          deleted_at: string | null
+          deleted_by: string | null
+          deleted_reason: string | null
           email: string
           email_verified: boolean
           email2_sent_at: string | null
@@ -624,6 +627,9 @@ export type Database = {
           click_count?: number
           clicks_today?: number
           created_at?: string
+          deleted_at?: string | null
+          deleted_by?: string | null
+          deleted_reason?: string | null
           email: string
           email_verified?: boolean
           email2_sent_at?: string | null
@@ -657,6 +663,9 @@ export type Database = {
           click_count?: number
           clicks_today?: number
           created_at?: string
+          deleted_at?: string | null
+          deleted_by?: string | null
+          deleted_reason?: string | null
           email?: string
           email_verified?: boolean
           email2_sent_at?: string | null
@@ -921,6 +930,20 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      admin_restore_waitlist_entry: {
+        Args: { p_id: string }
+        Returns: {
+          message: string
+          success: boolean
+        }[]
+      }
+      admin_soft_delete_waitlist_entry: {
+        Args: { p_id: string; p_reason?: string }
+        Returns: {
+          message: string
+          success: boolean
+        }[]
+      }
       award_referral: {
         Args: {
           p_first_bonus: number
