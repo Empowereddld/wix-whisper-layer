@@ -440,7 +440,7 @@ const StoryProsDashboard = () => {
           </motion.div>
         )}
 
-        {/* Referral Link */}
+        {/* Referral Link + Share Preview */}
         <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.3 }}>
           <Card className="bg-background border border-border rounded-2xl shadow-sm p-6">
             <h3 className="font-sans font-bold text-foreground mb-4">Your Referral Link</h3>
@@ -454,6 +454,39 @@ const StoryProsDashboard = () => {
               >
                 {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
               </Button>
+            </div>
+
+            {/* Share preview — what your friends will see */}
+            <div className="mt-5">
+              <div className="flex items-center gap-2 mb-2">
+                <Sparkles className="h-3.5 w-3.5 text-primary" />
+                <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                  Preview when shared
+                </p>
+              </div>
+              <div className="rounded-xl border border-border overflow-hidden bg-white max-w-md">
+                <div className="aspect-[1.91/1] w-full overflow-hidden bg-muted">
+                  <img
+                    src={storypros}
+                    alt="Story Pros share preview"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="p-3 border-t border-border">
+                  <p className="text-[11px] uppercase tracking-wide text-muted-foreground">
+                    empowereddld.com
+                  </p>
+                  <p className="text-sm font-semibold text-foreground leading-snug mt-1">
+                    Story Pros — the storytelling app for kids with DLD
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-1 leading-snug">
+                    Built by an SLP and an elementary school teacher. Join the founding waitlist.
+                  </p>
+                </div>
+              </div>
+              <p className="text-xs text-muted-foreground mt-2 leading-snug">
+                This is how your link appears in iMessage, WhatsApp, Facebook, and X when someone receives it.
+              </p>
             </div>
           </Card>
         </motion.div>
