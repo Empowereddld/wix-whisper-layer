@@ -77,6 +77,34 @@ const AdminStoryBuilders = () => {
   const [sortBy, setSortBy] = useState<"invites" | "name" | "date">("invites");
   const [showBulkEmailComposer, setShowBulkEmailComposer] = useState(false);
   const [showUserPreview, setShowUserPreview] = useState(false);
+  const [userToDelete, setUserToDelete] = useState<WaitlistUser | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const handleDeleteUser = useCallback(async () => {
+    if (!userToDelete) return;
+    setIsDeleting(true);
+    try {
+      const { data, error } = await supabase.rpc(
+        "admin_soft_delete_waitlist_entry" as never,
+        { p_id: userToDelete.id, p_reason: "Removed by admin" } as never,
+      );
+      if (error) throw error;
+      const result = Array.isArray(data) ? data[0] : data;
+      if (result && result.success === false) {
+        toast.error(result.message || "Could not delete");
+      } else {
+        toast.success(`Removed ${userToDelete.name} from the waitlist`);
+        setUsers((prev) => prev.filter((u) => u.id !== userToDelete.id));
+        setTotalSignups((n) => Math.max(0, n - 1));
+      }
+    } catch (e) {
+      const message = e instanceof Error ? e.message : "Unknown error";
+      toast.error(`Delete failed: ${message}`);
+    } finally {
+      setIsDeleting(false);
+      setUserToDelete(null);
+    }
+  }, [userToDelete]);
 
   const fetchUsers = useCallback(async () => {
     try {
