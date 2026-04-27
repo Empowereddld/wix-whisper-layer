@@ -404,7 +404,7 @@ const DashboardCard = ({ wl }: { wl: WlHook }) => {
         <div className="shrink-0 mt-0.5 h-8 w-8 rounded-full bg-white/15 border border-white/20 flex items-center justify-center">
           <Mail className="w-4 h-4 text-white" />
         </div>
-        <div>
+        <div className="flex-1 min-w-0">
           <p className="text-white font-bold text-[16px] leading-snug">
             Thank you for joining the Story Pros waitlist!
           </p>
@@ -508,6 +508,26 @@ const DashboardCard = ({ wl }: { wl: WlHook }) => {
           )}
         </div>
       </div>
+
+      {/* Switch user — for shared computers */}
+      <div className="border-t border-white/15 pt-4 text-left">
+        <p className="text-white/70 text-[12.5px] leading-[1.5]">
+          Not {wl.name?.split(" ")[0] || "you"}?{" "}
+          <button
+            type="button"
+            onClick={() => {
+              wl.signOut();
+              toast.success("Signed out. Someone else can join now.");
+            }}
+            className="text-amber-200 hover:text-amber-100 underline underline-offset-2 font-semibold"
+          >
+            Sign up another person
+          </button>
+        </p>
+        <p className="text-white/50 text-[11.5px] leading-[1.5] mt-1">
+          Use this on shared computers so a family member can join with their own email.
+        </p>
+      </div>
     </div>
   );
 };
@@ -531,7 +551,11 @@ const StoryBuilders = () => {
     }
     const result = await wl.joinWaitlist(name, email);
     if (result) {
-      toast.success(result.already_joined ? "Welcome back!" : "You're on the Launch Team!");
+      if (result.already_joined) {
+        toast.success("You're already on the list! Welcome back.");
+      } else {
+        toast.success("You're on the Launch Team!");
+      }
     }
   };
 
