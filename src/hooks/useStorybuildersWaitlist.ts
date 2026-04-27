@@ -174,6 +174,10 @@ export function useStorybuildersWaitlist() {
       const claims = (ud.social_claims as Record<string, unknown>) || {};
       setState((s) => ({
         ...s,
+        name: ud.name || s.name,
+        email: ud.email || s.email,
+        joined: true,
+        referralCode: ud.referral_code || s.referralCode,
         inviteCount: ud.invite_count || 0,
         totalCount: totalData || s.totalCount,
         points: userPoints,
