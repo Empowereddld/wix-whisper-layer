@@ -36,7 +36,8 @@ const DEFAULT_GUIDE = `${SITE_BASE}/hub/resource/d9836a63-003e-44bc-9da4-a27d6d4
 
 function getEmailTemplate(
   template: string,
-  data: EmailData["data"] = {}
+  data: EmailData["data"] = {},
+  recipientEmail: string = ""
 ): { subject: string; html: string } {
   const brandColor = "#5B2D8E";
   const lightBackground = "#F8F5FC";
