@@ -220,6 +220,35 @@ const StoryProsDashboard = () => {
         </div>
       </motion.div>
 
+      {/* Verify-email nudge banner */}
+      {!wl.emailVerified && (
+        <motion.div
+          initial={{ y: -10, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          className="bg-amber-50 border-b border-amber-200"
+        >
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+            <div className="flex items-start sm:items-center justify-between gap-3 flex-wrap">
+              <div className="flex items-start gap-3 flex-1 min-w-0">
+                <AlertCircle className="h-5 w-5 text-amber-600 shrink-0 mt-0.5" />
+                <div className="text-sm text-amber-900 leading-snug">
+                  <strong>Verify your email to unlock +15 points</strong> and start earning referrals.
+                  Check your inbox (and your <em>Promotions</em> or <em>Spam</em> folder, just in case).
+                </div>
+              </div>
+              <Button
+                onClick={handleResendVerification}
+                disabled={resending}
+                size="sm"
+                className="bg-amber-600 hover:bg-amber-700 text-white"
+              >
+                {resending ? "Sending…" : "Resend email"}
+              </Button>
+            </div>
+          </div>
+        </motion.div>
+      )}
+
       {/* Main content */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
         {/* Tier Progress + Referrals */}
