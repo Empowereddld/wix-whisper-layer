@@ -475,17 +475,6 @@ const StoryBuilders = () => {
                       {wl.loading ? "Joining…" : "Join Now"}
                     </Button>
                   </form>
-                  <label className="flex items-start gap-2.5 mt-3 max-w-[520px] cursor-pointer group">
-                    <input
-                      type="checkbox"
-                      checked={isSpeechPro}
-                      onChange={(e) => setIsSpeechPro(e.target.checked)}
-                      className="mt-1 h-4 w-4 rounded border-white/40 bg-white/10 accent-primary cursor-pointer"
-                    />
-                    <span className="text-[13px] text-white/80 leading-[1.5] text-left">
-                      I'm a speech-language professional (SLP, SLT, Speech Therapist, etc.) — <span className="text-white/95 font-semibold">unlocks +50 bonus points after verification</span>
-                    </span>
-                  </label>
                   <p className="text-[13px] text-white/60 mt-6 leading-[1.6]">
                     <span className="font-semibold text-white/80">Not just stories</span> — A guided way to build language step by step
                   </p>
