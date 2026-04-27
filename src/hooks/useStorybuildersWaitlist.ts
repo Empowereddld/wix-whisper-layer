@@ -436,7 +436,7 @@ export function useStorybuildersWaitlist() {
         return { success: false, message: row?.message || "Failed" };
       }
       addNotification("success", `Suggestion submitted! +${REPEATABLE_POINTS.SUGGESTION} pts`);
-      await refreshStatsInternal();
+      if (state.referralCode) await refreshStatsInternal(state.referralCode);
       return { success: true, message: "Submitted" };
     },
     [state.referralCode, refreshStatsInternal]
