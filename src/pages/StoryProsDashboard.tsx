@@ -82,8 +82,19 @@ const StoryProsDashboard = () => {
     return () => clearTimeout(t);
   }, []);
 
-  // If they're truly not on the waitlist, send them back to /storypros to join
+  // If they're truly not on the waitlist, send them back to /storypros to join.
+  // Show a toast so it doesn't feel like a silent logout — common on shared
+  // computers where someone else cleared the local session.
   if (hydrated && !wl.joined && !wl.loading) {
+    if (typeof window !== "undefined") {
+      const flagKey = "sp_dashboard_redirect_notified";
+      if (!sessionStorage.getItem(flagKey)) {
+        sessionStorage.setItem(flagKey, "1");
+        toast.info("Sign in or join the Story Pros waitlist to see your dashboard.", {
+          duration: 6000,
+        });
+      }
+    }
     return <Navigate to="/storypros" replace />;
   }
 
