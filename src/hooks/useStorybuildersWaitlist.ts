@@ -561,5 +561,6 @@ export function useStorybuildersWaitlist() {
     tierInfo,
     autoJoinFromAuth,
     linkAuthAccount,
+    updateProfile,
   };
 }
