@@ -620,6 +620,35 @@ const AdminStoryBuilders = () => {
       {showUserPreview && (
         <UserPreviewMode onClose={() => setShowUserPreview(false)} />
       )}
+
+      <AlertDialog
+        open={!!userToDelete}
+        onOpenChange={(open) => !open && !isDeleting && setUserToDelete(null)}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Remove from waitlist?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This will soft-delete <strong>{userToDelete?.name}</strong> ({userToDelete?.email}).
+              They will no longer appear in the waitlist or receive emails. The record is kept
+              for analytics, and the email is freed so they can rejoin if they want.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={isDeleting}>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={(e) => {
+                e.preventDefault();
+                handleDeleteUser();
+              }}
+              disabled={isDeleting}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
+              {isDeleting ? "Removing..." : "Remove user"}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </AdminLayout>
   );
 };
