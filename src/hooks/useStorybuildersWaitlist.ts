@@ -8,6 +8,7 @@ import {
   getProgressToNextTier,
   generateReferralLink,
 } from "@/lib/waitlist-utils";
+import { REPEATABLE_POINTS } from "@/lib/waitlist-constants";
 
 export interface Notification {
   id: string;
