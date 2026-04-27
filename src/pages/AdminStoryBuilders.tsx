@@ -89,9 +89,9 @@ const AdminStoryBuilders = () => {
         { p_id: userToDelete.id, p_reason: "Removed by admin" } as never,
       );
       if (error) throw error;
-      const result = Array.isArray(data) ? data[0] : data;
+      const result: any = Array.isArray(data) ? (data as any[])[0] : data;
       if (result && result.success === false) {
-        toast.error(result.message || "Could not delete");
+        toast.error((result.message as string) || "Could not delete");
       } else {
         toast.success(`Removed ${userToDelete.name} from the waitlist`);
         setUsers((prev) => prev.filter((u) => u.id !== userToDelete.id));
