@@ -523,6 +523,20 @@ const AdminStoryBuilders = () => {
             </Card>
           </TabsContent>
 
+          {/* Suggestions Tab */}
+          <TabsContent value="suggestions" className="space-y-4">
+            <Card className="bg-background border border-border rounded-2xl shadow-sm">
+              <CardHeader>
+                <CardTitle className="font-serif italic text-foreground">
+                  Community Suggestions
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <SuggestionBoard />
+              </CardContent>
+            </Card>
+          </TabsContent>
+
           {/* Settings Tab */}
           <TabsContent value="settings" className="space-y-4">
             <Card className="bg-background border border-border rounded-2xl shadow-sm">
