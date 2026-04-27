@@ -36,7 +36,19 @@ import {
   Search,
   Eye,
   Lightbulb,
+  Trash2,
 } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { toast } from "sonner";
 import UserPreviewMode from "@/components/admin/UserPreviewMode";
 import SuggestionBoard from "@/components/admin/SuggestionBoard";
 import StatsCard from "@/components/admin/StatsCard";
@@ -65,6 +77,34 @@ const AdminStoryBuilders = () => {
   const [sortBy, setSortBy] = useState<"invites" | "name" | "date">("invites");
   const [showBulkEmailComposer, setShowBulkEmailComposer] = useState(false);
   const [showUserPreview, setShowUserPreview] = useState(false);
+  const [userToDelete, setUserToDelete] = useState<WaitlistUser | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const handleDeleteUser = useCallback(async () => {
+    if (!userToDelete) return;
+    setIsDeleting(true);
+    try {
+      const { data, error } = await supabase.rpc(
+        "admin_soft_delete_waitlist_entry" as never,
+        { p_id: userToDelete.id, p_reason: "Removed by admin" } as never,
+      );
+      if (error) throw error;
+      const result: any = Array.isArray(data) ? (data as any[])[0] : data;
+      if (result && result.success === false) {
+        toast.error((result.message as string) || "Could not delete");
+      } else {
+        toast.success(`Removed ${userToDelete.name} from the waitlist`);
+        setUsers((prev) => prev.filter((u) => u.id !== userToDelete.id));
+        setTotalSignups((n) => Math.max(0, n - 1));
+      }
+    } catch (e) {
+      const message = e instanceof Error ? e.message : "Unknown error";
+      toast.error(`Delete failed: ${message}`);
+    } finally {
+      setIsDeleting(false);
+      setUserToDelete(null);
+    }
+  }, [userToDelete]);
 
   const fetchUsers = useCallback(async () => {
     try {
@@ -72,6 +112,7 @@ const AdminStoryBuilders = () => {
       const { data, error: fetchError } = await supabase
         .from("storybuilders_waitlist")
         .select("id, name, email, referral_code, invite_count, created_at")
+        .is("deleted_at", null)
         .order("created_at", { ascending: false });
 
       if (fetchError) {
@@ -407,6 +448,7 @@ const AdminStoryBuilders = () => {
                         <TableHead className="text-right text-foreground">Referrals</TableHead>
                         <TableHead className="text-foreground">Tier</TableHead>
                         <TableHead className="text-foreground">Joined</TableHead>
+                        <TableHead className="text-right text-foreground w-[80px]">Actions</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -439,11 +481,22 @@ const AdminStoryBuilders = () => {
                             <TableCell className="text-sm text-muted-foreground">
                               {format(new Date(user.created_at), "MMM dd, yyyy")}
                             </TableCell>
+                            <TableCell className="text-right">
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                                onClick={() => setUserToDelete(user)}
+                                aria-label={`Delete ${user.name}`}
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </Button>
+                            </TableCell>
                           </TableRow>
                         ))
                       ) : (
                         <TableRow>
-                          <TableCell colSpan={6} className="text-center py-12">
+                          <TableCell colSpan={7} className="text-center py-12">
                             <p className="text-muted-foreground">
                               {users.length === 0 ? "No users in the waitlist yet" : "No results matching your search"}
                             </p>
@@ -567,6 +620,35 @@ const AdminStoryBuilders = () => {
       {showUserPreview && (
         <UserPreviewMode onClose={() => setShowUserPreview(false)} />
       )}
+
+      <AlertDialog
+        open={!!userToDelete}
+        onOpenChange={(open) => !open && !isDeleting && setUserToDelete(null)}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Remove from waitlist?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This will soft-delete <strong>{userToDelete?.name}</strong> ({userToDelete?.email}).
+              They will no longer appear in the waitlist or receive emails. The record is kept
+              for analytics, and the email is freed so they can rejoin if they want.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={isDeleting}>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={(e) => {
+                e.preventDefault();
+                handleDeleteUser();
+              }}
+              disabled={isDeleting}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
+              {isDeleting ? "Removing..." : "Remove user"}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </AdminLayout>
   );
 };
