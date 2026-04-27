@@ -177,7 +177,7 @@ Deno.serve(async (req) => {
       }
     }
 
-    // Mark email verified and award +5 bonus points
+    // Mark email verified and award +15 bonus points (matches Email 1 promise)
     const { data: current } = await supabase
       .from("storybuilders_waitlist")
       .select("points")
@@ -190,7 +190,7 @@ Deno.serve(async (req) => {
       .update({
         email_verified: true,
         verified_at: new Date().toISOString(),
-        points: currentPoints + 5,
+        points: currentPoints + 15,
       })
       .eq("id", user.id);
 

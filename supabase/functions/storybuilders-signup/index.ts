@@ -291,23 +291,17 @@ Deno.serve(async (req) => {
         .single();
 
       if (referrer) {
-        // Award 25 points to referrer (direct update, no RPC)
-        const newReferrerPoints = (referrer.points ?? 0) + 25;
-        await supabase
-          .from("storybuilders_waitlist")
-          .update({
-            points: newReferrerPoints,
-            invite_count: (referrer as any).invite_count != null
-              ? (referrer as any).invite_count + 1
-              : undefined,
-          })
-          .eq("referral_code", ref);
+        // Atomic award: 25 pts + 10 first-referral bonus + invite increment (single RPC)
+        const { data: awardResult } = await supabase.rpc("award_referral", {
+          p_referrer_code: ref,
+          p_referral_points: 25,
+          p_first_bonus: 10,
+        });
 
-        // Bump invite_count via dedicated RPC (safer)
-        await supabase.rpc("increment_waitlist_invites", { p_code: ref });
+        const awardedPoints = (awardResult as any)?.[0]?.new_points ?? (referrer.points ?? 0) + 25;
 
         // Send referral notification email
-        await notifyReferrer(supabaseUrl, referrer.email, referrer.name, name, newReferrerPoints);
+        await notifyReferrer(supabaseUrl, referrer.email, referrer.name, name, awardedPoints);
       }
     }
 
