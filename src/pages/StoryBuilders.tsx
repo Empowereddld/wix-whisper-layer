@@ -352,6 +352,166 @@ const WhatIsStoryBuildersSection = () => {
   );
 };
 
+/* ─── Post-signup dashboard card (name, verification, SLP self-ID) ─── */
+type WlHook = ReturnType<typeof useStorybuildersWaitlist>;
+
+const DashboardCard = ({ wl }: { wl: WlHook }) => {
+  const initialName = wl.name || "";
+  const [editName, setEditName] = useState(initialName);
+  const [savingName, setSavingName] = useState(false);
+  const [savingSlp, setSavingSlp] = useState(false);
+  const [resending, setResending] = useState(false);
+
+  // Sync local edit field when name loads from refresh
+  useEffect(() => {
+    setEditName(wl.name || "");
+  }, [wl.name]);
+
+  const looksLikeEmail = (initialName.includes("@") || editName.includes("@"));
+  const trimmed = editName.trim();
+  const nameChanged = trimmed !== initialName.trim();
+  const canSaveName = trimmed.length > 0 && !trimmed.includes("@") && nameChanged;
+
+  const handleSaveName = async () => {
+    if (!canSaveName) return;
+    setSavingName(true);
+    const res = await wl.updateProfile({ name: trimmed });
+    setSavingName(false);
+    if (res.success) {
+      toast.success("Name updated.");
+    }
+  };
+
+  const handleClaimSlp = async () => {
+    setSavingSlp(true);
+    const res = await wl.updateProfile({ isSpeechProfessional: true });
+    setSavingSlp(false);
+    if (res.success) {
+      toast.success("Thanks! We'll verify and add your +50 bonus soon.");
+    }
+  };
+
+  const handleResend = async () => {
+    setResending(true);
+    await wl.resendVerification();
+    setResending(false);
+  };
+
+  return (
+    <div className="mt-5 w-full max-w-[520px] bg-white/10 border border-white/20 rounded-md p-5 backdrop-blur-sm space-y-5">
+      {/* Greeting + thank you */}
+      <div className="flex items-start gap-3">
+        <div className="shrink-0 mt-0.5 h-8 w-8 rounded-full bg-white/15 border border-white/20 flex items-center justify-center">
+          <Mail className="w-4 h-4 text-white" />
+        </div>
+        <div>
+          <p className="text-white font-bold text-[16px] leading-snug">
+            Thank you for joining the Story Pros waitlist!
+          </p>
+          <p className="text-white/80 text-[13px] leading-[1.6] mt-2">
+            Check your inbox. We just sent you an email with everything you need, including your personal referral link.
+          </p>
+        </div>
+      </div>
+
+      {/* Your details */}
+      <div className="border-t border-white/15 pt-4 space-y-4 text-left">
+        <p className="text-white text-[13px] font-semibold uppercase tracking-wide opacity-80">
+          Your details
+        </p>
+
+        {/* Name */}
+        <div className="space-y-1.5">
+          <label className="block text-white/80 text-[12px]">Name</label>
+          <div className="flex gap-2">
+            <Input
+              value={editName}
+              onChange={(e) => setEditName(e.target.value)}
+              placeholder="Your first name"
+              className="h-10 bg-white/10 border-white/20 text-white placeholder:text-white/50 rounded-md flex-1"
+            />
+            <Button
+              type="button"
+              onClick={handleSaveName}
+              disabled={!canSaveName || savingName}
+              className="h-10 px-4 bg-primary text-primary-foreground font-semibold rounded-md hover:bg-primary/90 transition-colors whitespace-nowrap"
+            >
+              {savingName ? "Saving…" : "Save"}
+            </Button>
+          </div>
+          {looksLikeEmail && (
+            <p className="text-amber-200 text-[12px] leading-[1.5]">
+              Looks like an email address. Please enter your first name so our emails can greet you properly.
+            </p>
+          )}
+        </div>
+
+        {/* Email + verification */}
+        <div className="space-y-1.5">
+          <label className="block text-white/80 text-[12px]">Email</label>
+          <div className="flex items-center justify-between gap-3 bg-white/5 border border-white/15 rounded-md px-3 py-2">
+            <span className="text-white text-[13px] truncate">{wl.email || "—"}</span>
+            {wl.emailVerified ? (
+              <span className="inline-flex items-center gap-1 text-[12px] font-semibold text-emerald-300 shrink-0">
+                <Check className="w-3.5 h-3.5" />
+                Verified
+              </span>
+            ) : (
+              <button
+                type="button"
+                onClick={handleResend}
+                disabled={resending}
+                className="text-[12px] font-semibold text-amber-200 hover:text-amber-100 underline underline-offset-2 shrink-0"
+              >
+                {resending ? "Sending…" : "Resend verification"}
+              </button>
+            )}
+          </div>
+          {!wl.emailVerified && (
+            <p className="text-white/60 text-[12px] leading-[1.5]">
+              Verify your email to earn +5 bonus points and secure your spot.
+            </p>
+          )}
+        </div>
+
+        {/* SLP self-ID */}
+        <div className="space-y-1.5">
+          {wl.speechProfessionalVerified ? (
+            <div className="flex items-start gap-2 bg-emerald-500/10 border border-emerald-300/30 rounded-md px-3 py-2.5">
+              <Check className="w-4 h-4 text-emerald-300 mt-0.5 shrink-0" />
+              <p className="text-emerald-100 text-[12.5px] leading-[1.5]">
+                Speech-language professional verified. +50 bonus points added.
+              </p>
+            </div>
+          ) : wl.isSpeechProfessional ? (
+            <div className="flex items-start gap-2 bg-white/5 border border-white/15 rounded-md px-3 py-2.5">
+              <Sparkles className="w-4 h-4 text-white/70 mt-0.5 shrink-0" />
+              <p className="text-white/80 text-[12.5px] leading-[1.5]">
+                Pending verification. Once we confirm, +50 bonus points will be added to your account.
+              </p>
+            </div>
+          ) : (
+            <label className="flex items-start gap-2.5 cursor-pointer group">
+              <input
+                type="checkbox"
+                disabled={savingSlp}
+                onChange={(e) => {
+                  if (e.target.checked) handleClaimSlp();
+                }}
+                className="mt-1 h-4 w-4 rounded border-white/40 bg-white/10 accent-primary cursor-pointer shrink-0"
+              />
+              <span className="text-[12.5px] text-white/85 leading-[1.5]">
+                I'm a speech-language professional (SLP, SLT, Speech Therapist, etc.).{" "}
+                <span className="text-white font-semibold">Unlocks +50 bonus points after verification.</span>
+              </span>
+            </label>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 
 const StoryBuilders = () => {
   const formRef = useRef<HTMLDivElement>(null);
