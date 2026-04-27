@@ -197,7 +197,7 @@ function getEmailTemplate(
 
             <p style="${plainP}">Your Story Pros membership includes both. App access and live Zoom community. All for $9.99/month.</p>
 
-            <p style="${plainP"><strong>First, confirm your email</strong></p>
+            <p style="${plainP}"><strong>First, confirm your email</strong></p>
 
             <p style="${plainP}">Tap the link below to verify your email. It takes two seconds, and we'll drop 15 points into your account as a thank you.</p>
 
