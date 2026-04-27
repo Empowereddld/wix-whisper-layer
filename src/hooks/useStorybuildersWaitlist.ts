@@ -544,6 +544,34 @@ export function useStorybuildersWaitlist() {
     []
   );
 
+  // Clear the local session so a different person on the same browser can sign up
+  const signOut = useCallback(() => {
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+    } catch {}
+    setState({
+      joined: false,
+      name: "",
+      email: "",
+      referralCode: "",
+      inviteCount: 0,
+      totalCount: state.totalCount,
+      points: 0,
+      currentTier: 0,
+      queuePosition: null,
+      emailVerified: false,
+      badges: [],
+      shareCount: 0,
+      clickCount: 0,
+      socialClaims: { instagram: false, facebook: false, youtube: false },
+      isSpeechProfessional: false,
+      speechProfessionalVerified: false,
+      loading: false,
+      error: null,
+      notifications: [],
+    });
+  }, [state.totalCount]);
+
   return {
     ...state,
     joinWaitlist,
@@ -562,5 +590,6 @@ export function useStorybuildersWaitlist() {
     autoJoinFromAuth,
     linkAuthAccount,
     updateProfile,
+    signOut,
   };
 }
