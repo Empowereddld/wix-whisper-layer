@@ -31,12 +31,12 @@ import {
 
 /* ─── Milestones ─── */
 const milestones = [
-  { invites: 0, label: "Tier 1 (0 pts)", reward: "Behind-the-scenes updates on Story Pros development as it's being built" },
-  { invites: 1, label: "Tier 2 (40 pts)", reward: "Early access on launch day — get into Story Pros before the general public" },
-  { invites: 3, label: "Tier 3 (100 pts)", reward: "75 Story Coins dropped into your account to spend on in-app extras at launch" },
-  { invites: 5, label: "Tier 4 (175 pts)", reward: "Founder pricing at $5.99/month for life — 25% off the regular $7.99 price, permanently" },
-  { invites: 10, label: "Tier 5 (325 pts)", reward: "VIP Beta access to test the app before launch + 200 bonus Story Coins" },
-  { invites: -1, label: "Tier 6 (600 pts)", reward: "Named in the Story Pros founder credits forever — limited to the first 50 members who reach this tier" },
+  { invites: 0, label: "Tier 1 (0 pts)", reward: "Behind-the-scenes updates on Story Pros development, Founding Member status, and your name on the Early Supporters Wall" },
+ { invites: 1, label: "Tier 2 (35 pts)", reward: "FREE digital product: Executive Function Skills for Your Child (normally paid in the Resource Hub)" },
+ { invites: 3, label: "Tier 3 (75 pts)", reward: "50 Story Coins dropped into your account to spend on in-app extras at launch" },
+ { invites: 5, label: "Tier 4 (130 pts)", reward: "VIP Beta access to test Story Pros before launch and help shape the final product" },
+ { invites: 10, label: "Tier 5 (250 pts)", reward: "Founder Pricing locked for life: $7.99/month forever instead of $9.99 (points double from this tier on)" },
+ { invites: -1, label: "Tier 6 (500 pts)", reward: "Signed Dan & Daria book plus DLD-themed merch, limited to the first 50 members to reach Tier 6 by June 1" },
 ];
 
 const COLLECTIVE_GOAL = 4000;
@@ -673,32 +673,38 @@ const StoryBuilders = () => {
               {
                 task: "Tier 1 — 0 points",
                 impact: "You earned 10 points just by signing up. Complete your profile, verify your email, and follow us on social media to start climbing.",
-                reward: { icon: <Sparkles size={20} />, title: "You're officially on the Launch Team", desc: "Get behind-the-scenes updates on Story Pros development and be first to hear about new features" },
+                reward: { icon: <Sparkles size={20} />, title: "You're officially a Story Pros founding member", desc: "Get behind-the-scenes development updates, Founding Member status, and your name on the Early Supporters Wall" },
                 invites: 0,
               },
               {
                 task: "Tier 2 — 35 points",
                 impact: "Share your referral link with other families and post on social media to climb. You can reach this tier without any referrals.",
-                reward: { icon: <Rocket size={20} />, title: "Early access when Story Pros launches", desc: "You'll get into the full app before the general public on launch day — plus your Tier 2 badge", subdesc: "Tip: Profile + email + 3 social follows gets you past Tier 2 right away" },
+                reward: { icon: <Gift size={20} />, title: "FREE: Executive Function Skills for Your Child", desc: "A digital product normally paid in the Resource Hub, yours free the moment you hit Tier 2, plus your Tier 2 badge", subdesc: "Tip: Profile + email + 3 social follows gets you past Tier 2 right away" },
                 invites: 1,
               },
               {
                 task: "Tier 3 — 75 points",
-                impact: "Keep referring families and sharing your link. Consistency is rewarded — the more you share, the faster you climb.",
-                reward: { icon: <Gift size={20} />, title: "75 Story Coins dropped into your account", desc: "Story Coins are in-app currency you can spend on upgrades and extras when the app launches — plus your Tier 3 badge" },
+                impact: "Keep referring families and sharing your link. Consistency is rewarded, the more you share, the faster you climb.",
+                reward: { icon: <Gift size={20} />, title: "50 Story Coins dropped into your account", desc: "Story Coins are in-app currency you can spend on upgrades and extras when the app launches, plus your Tier 3 badge" },
                 invites: 3,
               },
               {
                 task: "Tier 4 — 130 points",
                 impact: "You're making a real difference for families navigating DLD, ADHD, and Dyslexia. Your referrals bring more children into a tool designed specifically for how they think and communicate.",
-                reward: { icon: <Headphones size={20} />, title: "Founder pricing locked in for life", desc: "$5.99/month forever instead of the regular $7.99 — a permanent 25% discount as long as your subscription stays active", subdesc: "This reward never expires. Once you earn it, it's yours" },
+                reward: { icon: <Crown size={20} />, title: "VIP Beta Access + Suggestion Board", desc: "Be one of the first families inside Story Pros before launch. Test the app, shape the final product, and unlock the Suggestion Board to weigh in on what we build next, plus your Tier 4 badge" },
                 invites: 5,
               },
               {
                 task: "Tier 5 — 250 points",
-                impact: "You're among our most dedicated supporters. At this level, you've likely referred several families and consistently engaged with the community.",
-                reward: { icon: <Crown size={20} />, title: "VIP Beta access + 200 Story Coins", desc: "Test Story Pros before it officially launches — give feedback that shapes the final product, plus a 200 coin bonus drop and your Tier 5 badge", subdesc: "First 50 members to reach 500 pts earn Tier 6 status — named in the app credits forever" },
+                impact: "You're among our most dedicated supporters. Heads up: points double from Tier 5 onward to push you toward Tier 6.",
+                reward: { icon: <Headphones size={20} />, title: "Founder Pricing locked in for life", desc: "$7.99/month forever instead of the regular $9.99, a permanent 20% discount as long as your subscription stays active, plus your Tier 5 badge", subdesc: "This reward never expires. Once you earn it, it's yours" },
                 invites: 10,
+              },
+              {
+                task: "Tier 6 — 500 points",
+                impact: "You're a true Story Pros founder. Limited to the first 50 members to reach Tier 6 by June 1.",
+                reward: { icon: <Crown size={20} />, title: "Signed Dan & Daria book + DLD-themed merch", desc: "A signed copy of the Dan & Daria book and exclusive DLD-themed merch shipped to you, plus your Tier 6 Founder badge", subdesc: "After the first 50 Founder slots are claimed, additional Tier 6 members earn 100 bonus Story Coins as Legends" },
+                invites: 25,
               },
             ];
 
