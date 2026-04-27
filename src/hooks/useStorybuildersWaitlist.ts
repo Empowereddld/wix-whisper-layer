@@ -8,6 +8,7 @@ import {
   getProgressToNextTier,
   generateReferralLink,
 } from "@/lib/waitlist-utils";
+import { REPEATABLE_POINTS } from "@/lib/waitlist-constants";
 
 export interface Notification {
   id: string;
@@ -393,28 +394,76 @@ export function useStorybuildersWaitlist() {
       addNotification("error", "You must join the waitlist first");
       return false;
     }
-    addNotification("success", "Verification email sent!");
-    return true;
+    try {
+      const { data, error } = await supabase.functions.invoke("resend-verification-waitlist", {
+        body: { referral_code: state.referralCode },
+      });
+      if (error) throw error;
+      if ((data as any)?.already_verified) {
+        addNotification("info", "Your email is already verified");
+        return true;
+      }
+      addNotification("success", "Verification email sent! Check your inbox.");
+      return true;
+    } catch (err: any) {
+      const msg = err?.message?.includes("429") || err?.context?.status === 429
+        ? "Please wait a moment before requesting another email"
+        : "Could not send verification email. Try again shortly.";
+      addNotification("error", msg);
+      return false;
+    }
   }, [state.referralCode]);
 
   const submitSuggestion = useCallback(
     async (title: string, description: string, category: string): Promise<{ success: boolean; message: string }> => {
-      // TODO: Wire up to suggestions database table when schema is ready
-      console.warn("submitSuggestion not yet implemented - suggestions feature coming soon");
-      addNotification("info", "Coming soon - suggestions feature is under development");
-      return { success: false, message: "Coming soon" };
+      if (!state.referralCode) {
+        return { success: false, message: "Join the waitlist first" };
+      }
+      const { data, error } = await supabase.rpc("submit_waitlist_suggestion", {
+        p_referral_code: state.referralCode,
+        p_title: title,
+        p_description: description,
+        p_category: category,
+        p_points: REPEATABLE_POINTS.SUGGESTION,
+      });
+      if (error) {
+        addNotification("error", "Could not submit suggestion");
+        return { success: false, message: error.message };
+      }
+      const row = (data as any)?.[0];
+      if (!row?.success) {
+        addNotification("error", row?.message || "Could not submit");
+        return { success: false, message: row?.message || "Failed" };
+      }
+      addNotification("success", `Suggestion submitted! +${REPEATABLE_POINTS.SUGGESTION} pts`);
+      if (state.referralCode) await refreshStatsInternal(state.referralCode);
+      return { success: true, message: "Submitted" };
     },
-    []
+    [state.referralCode, refreshStatsInternal]
   );
 
   const voteSuggestion = useCallback(
     async (suggestionId: string): Promise<{ success: boolean; message: string }> => {
-      // TODO: Wire up to voting system in database when schema is ready
-      console.warn("voteSuggestion not yet implemented - voting feature coming soon");
-      addNotification("info", "Coming soon - voting feature is under development");
-      return { success: false, message: "Coming soon" };
+      if (!state.referralCode) {
+        return { success: false, message: "Join the waitlist first" };
+      }
+      const { data, error } = await supabase.rpc("vote_waitlist_suggestion", {
+        p_referral_code: state.referralCode,
+        p_suggestion_id: suggestionId,
+      });
+      if (error) {
+        addNotification("error", "Could not register vote");
+        return { success: false, message: error.message };
+      }
+      const row = (data as any)?.[0];
+      if (!row?.success) {
+        addNotification("info", row?.message || "Already voted");
+        return { success: false, message: row?.message || "Failed" };
+      }
+      addNotification("success", "Vote recorded");
+      return { success: true, message: "Voted" };
     },
-    []
+    [state.referralCode]
   );
 
   const fetchLeaderboard = useCallback(async (limit = 10) => {
