@@ -1104,6 +1104,26 @@ Deno.serve(async (req) => {
 
     const { subject, html } = getEmailTemplate(template, data);
 
+    // Generate a plain-text alternative from the HTML. Including a text/plain
+    // part alongside text/html significantly improves deliverability and makes
+    // Gmail less likely to bucket the message into Promotions.
+    const text = html
+      .replace(/<style[\s\S]*?<\/style>/gi, "")
+      .replace(/<\/(p|div|h[1-6]|li|tr|br)>/gi, "\n")
+      .replace(/<br\s*\/?>/gi, "\n")
+      .replace(/<li[^>]*>/gi, "- ")
+      .replace(/<a [^>]*href="([^"]+)"[^>]*>([\s\S]*?)<\/a>/gi, "$2 ($1)")
+      .replace(/<[^>]+>/g, "")
+      .replace(/&nbsp;/g, " ")
+      .replace(/&amp;/g, "&")
+      .replace(/&lt;/g, "<")
+      .replace(/&gt;/g, ">")
+      .replace(/&#39;/g, "'")
+      .replace(/&quot;/g, '"')
+      .replace(/\n{3,}/g, "\n\n")
+      .replace(/[ \t]+/g, " ")
+      .trim();
+
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
     const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const supabase = createClient(supabaseUrl, serviceKey);
@@ -1126,11 +1146,12 @@ Deno.serve(async (req) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "Story Pros <hello@mail.empowereddld.com>",
+        from: "Camesha at Story Pros <hello@mail.empowereddld.com>",
         reply_to: "hello@empowereddld.com",
         to,
         subject,
         html,
+        text,
       }),
     });
 
