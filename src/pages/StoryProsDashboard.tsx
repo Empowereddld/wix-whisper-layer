@@ -132,12 +132,18 @@ const StoryProsDashboard = () => {
   const handleShare = (platform: string) => {
     if (!wl.referralLink) return;
     const url = encodeURIComponent(wl.referralLink);
-    const text = encodeURIComponent("I'm on the Story Pros waitlist! Join me:");
+    const shortText = encodeURIComponent(
+      "Found a new app and community for kids with DLD. Built by an SLP and a teacher. Joining the founding waitlist:"
+    );
+    const emailSubject = encodeURIComponent("Thought you'd want to see this — Story Pros");
+    const emailBody = encodeURIComponent(
+      `Hey,\n\nI'm on the founding waitlist for Story Pros, a new storytelling app and monthly live community for kids who need extra support with language and storytelling. It's built by a speech-language pathologist and an elementary school teacher.\n\nThought of you. Here's my link if you want to join me:\n${wl.referralLink}\n`
+    );
     const map: Record<string, string> = {
-      twitter: `https://twitter.com/intent/tweet?text=${text}&url=${url}`,
+      twitter: `https://twitter.com/intent/tweet?text=${shortText}&url=${url}`,
       facebook: `https://www.facebook.com/sharer/sharer.php?u=${url}`,
-      email: `mailto:?subject=${text}&body=${url}`,
-      whatsapp: `https://wa.me/?text=${text}%20${url}`,
+      email: `mailto:?subject=${emailSubject}&body=${emailBody}`,
+      whatsapp: `https://wa.me/?text=${shortText}%20${url}`,
     };
     if (map[platform]) window.open(map[platform], "_blank");
     wl.trackShare(platform);
