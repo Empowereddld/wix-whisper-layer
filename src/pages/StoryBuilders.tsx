@@ -574,7 +574,7 @@ const StoryBuilders = () => {
                 WHY JOIN
               </span>
               <h2 className="text-[32px] md:text-[42px] lg:text-[46px] font-black tracking-tight text-foreground leading-[1.1]">
-                Every child deserves to understand and share their ideas clearly.
+                Every child deserves to share their ideas clearly.
               </h2>
             </div>
             <p className="text-muted-foreground text-[16px] leading-relaxed max-w-[400px] md:text-right">
