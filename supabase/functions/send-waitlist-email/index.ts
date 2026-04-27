@@ -1177,17 +1177,19 @@ Deno.serve(async (req) => {
     const resendData: any = await resendResponse.json();
     const resendId = resendData.id;
 
-    const { error: logError } = await supabase.from("waitlist_emails").insert({
-      recipient_email: to,
-      template,
-      subject,
-      resend_id: resendId,
-      status: "sent",
-    });
-
-    if (logError) {
-      console.error("Failed to log email:", logError);
-    }
+    // Best-effort logging — table may not exist; ignore failures so they don't block delivery
+    try {
+      const { error: logError } = await supabase.from("waitlist_emails").insert({
+        recipient_email: to,
+        template,
+        subject,
+        resend_id: resendId,
+        status: "sent",
+      });
+      if (logError && logError.code !== "PGRST205") {
+        console.error("Failed to log email:", logError);
+      }
+    } catch (_) { /* ignore */ }
 
     return new Response(
       JSON.stringify({
