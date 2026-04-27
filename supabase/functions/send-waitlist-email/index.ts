@@ -166,7 +166,7 @@ function getEmailTemplate(
             <div style="${cardStyles}">
               <div style="${headerStyles}">
                 <h1 style="margin: 0; font-size: 28px;">Welcome to Story Pros</h1>
-                <p style="margin: 8px 0 0; opacity: 0.9; font-size: 14px;">You just joined something different.</p>
+                <p style="margin: 8px 0 0; opacity: 0.9; font-size: 14px;">You just joined something special.</p>
               </div>
 
               <div style="padding: 20px 0;">
