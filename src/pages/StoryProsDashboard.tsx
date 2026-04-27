@@ -369,7 +369,7 @@ const StoryProsDashboard = () => {
             transition={{ delay: 0.1 }}
             className="md:col-span-2"
           >
-            <Card className="bg-background border border-border rounded-2xl shadow-sm p-6">
+            <Card className="bg-background border border-border rounded-2xl shadow-sm p-4 sm:p-6">
               <div className="space-y-4">
                 <div>
                   <div className="flex items-center justify-between mb-2">
@@ -409,7 +409,7 @@ const StoryProsDashboard = () => {
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.15 }}
           >
-            <Card className="bg-background border border-border rounded-2xl shadow-sm p-6">
+            <Card className="bg-background border border-border rounded-2xl shadow-sm p-4 sm:p-6">
               <p className="text-xs text-muted-foreground uppercase tracking-wide font-semibold">
                 Referrals
               </p>
@@ -429,7 +429,7 @@ const StoryProsDashboard = () => {
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.2 }}
         >
-          <Card className="bg-background border border-border rounded-2xl shadow-sm p-6">
+          <Card className="bg-background border border-border rounded-2xl shadow-sm p-4 sm:p-6">
             <h3 className="font-sans font-bold text-foreground mb-6">
               How to Earn Points & Coins
             </h3>
@@ -511,7 +511,7 @@ const StoryProsDashboard = () => {
         {/* Interactive preview gating */}
         {currentTier >= 3 ? (
           <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.25 }}>
-            <Card className="bg-background border border-border rounded-2xl shadow-sm p-6">
+            <Card className="bg-background border border-border rounded-2xl shadow-sm p-4 sm:p-6">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="font-sans font-bold text-foreground">Interactive Story Preview</h3>
                 <Badge className="bg-primary/20 text-primary">Tier 4 Exclusive</Badge>
@@ -552,7 +552,7 @@ const StoryProsDashboard = () => {
 
         {/* Referral Link + Share Preview */}
         <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.3 }}>
-          <Card className="bg-background border border-border rounded-2xl shadow-sm p-6">
+          <Card className="bg-background border border-border rounded-2xl shadow-sm p-4 sm:p-6">
             <h3 className="font-sans font-bold text-foreground mb-4">Your Referral Link</h3>
             <div className="flex gap-2">
               <div className="flex-1 bg-muted border border-border rounded-lg px-4 py-3 font-mono text-sm text-foreground truncate">
@@ -603,7 +603,7 @@ const StoryProsDashboard = () => {
 
         {/* Share */}
         <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.35 }}>
-          <Card className="bg-background border border-border rounded-2xl shadow-sm p-6">
+          <Card className="bg-background border border-border rounded-2xl shadow-sm p-4 sm:p-6">
             <h3 className="font-sans font-bold text-foreground mb-4">Share & Earn Referrals</h3>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
               <Button onClick={() => handleShare("twitter")} className="bg-foreground hover:bg-foreground/90 text-background flex items-center gap-2">
@@ -636,7 +636,7 @@ const StoryProsDashboard = () => {
 
         {/* Follow */}
         <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.4 }}>
-          <Card className="bg-background border border-border rounded-2xl shadow-sm p-6">
+          <Card className="bg-background border border-border rounded-2xl shadow-sm p-4 sm:p-6">
             <h3 className="font-sans font-bold text-foreground mb-2">Follow Us & Earn Points</h3>
             <p className="text-sm text-muted-foreground mb-4">
               Follow us on social media to earn bonus points per platform.
@@ -692,7 +692,7 @@ const StoryProsDashboard = () => {
 
         {/* Impact */}
         <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.5 }}>
-          <Card className="bg-gradient-to-br from-primary to-primary/80 text-primary-foreground rounded-2xl shadow-sm p-8">
+          <Card className="bg-gradient-to-br from-primary to-primary/80 text-primary-foreground rounded-2xl shadow-sm p-6 sm:p-8">
             <div className="text-center space-y-2">
               <p className="text-sm font-semibold uppercase tracking-wide opacity-90">Your Impact</p>
               {wl.inviteCount === 0 ? (
@@ -719,7 +719,7 @@ const StoryProsDashboard = () => {
         {/* Coming up */}
         {nextThreshold && TIER_REWARDS[currentTier + 1] && (
           <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.55 }}>
-            <Card className="bg-gradient-to-br from-[#f3ebf8] to-white border border-[#8861d4]/20 rounded-2xl shadow-sm p-6">
+            <Card className="bg-gradient-to-br from-[#f3ebf8] to-white border border-[#8861d4]/20 rounded-2xl shadow-sm p-4 sm:p-6">
               <h3 className="font-sans font-bold text-[#3b1f59] mb-2">
                 Coming at {TIER_NAMES[currentTier + 1]} ({nextThreshold} pts)
               </h3>
