@@ -160,109 +160,74 @@ function getEmailTemplate(
     // EMAIL 1 — Welcome (immediate on signup)
     // ============================================================
     case "welcome": {
+      // Plain-text-feeling layout: no banner, no card, no styled buttons,
+      // no script boxes. Just simple paragraphs and inline links so Gmail
+      // is more likely to deliver this to Primary instead of Promotions.
+      const plainContainer = `
+        max-width: 580px;
+        margin: 0 auto;
+        padding: 24px 20px;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+        font-size: 15px;
+        line-height: 1.55;
+        color: #222;
+        background: #ffffff;
+      `;
+      const plainP = `margin: 0 0 14px;`;
+      const plainLink = `color: ${brandColor}; text-decoration: underline;`;
+      const plainFooter = `margin-top: 28px; font-size: 12px; color: #888;`;
+
       return {
-        subject: `Welcome to Story Pros, ${name}`,
+        subject: `You're in, ${name}`,
         html: `
-          <div style="${containerStyles}">
-            <div style="${cardStyles}">
-              <div style="${headerStyles}">
-                <h1 style="margin: 0; font-size: 28px;">Welcome to Story Pros</h1>
-                <p style="margin: 8px 0 0; opacity: 0.9; font-size: 14px;">You just joined something special.</p>
-              </div>
+          <div style="${plainContainer}">
+            <p style="${plainP}">Hi ${name},</p>
 
-              <div style="padding: 20px 0;">
-                <p style="${baseStyles}">Hi ${name},</p>
+            <p style="${plainP}">You're in. Welcome to Story Pros as one of our founding members.</p>
 
-                <p style="${baseStyles}">You're in! Welcome to Story Pros as one of our founding members.</p>
+            <p style="${plainP}">Story Pros is an interactive storytelling app designed for children ages 5 to 12 with Developmental Language Disorder and other communication challenges. It helps children understand stories, retell them in their own words, organize their thoughts, and build the language skills they need to express themselves clearly and confidently, step by step, with structured support.</p>
 
-                <p style="${baseStyles}">
-                  Story Pros is an interactive storytelling app designed for children ages 5 to 12 with
-                  Developmental Language Disorder and other communication challenges. It helps children
-                  understand stories, retell them in their own words, organize their thoughts, and build
-                  the language skills they need to express themselves clearly and confidently, step by
-                  step, with structured support.
-                </p>
+            <p style="${plainP}">If you'd like a quick intro, here's our welcome video: <a href="${videoLink}" style="${plainLink}">${videoLink}</a></p>
 
-                <p style="${baseStyles}">
-                  Check out our welcome video:
-                  <a href="${videoLink}" style="color: ${brandColor}; font-weight: 600;">Watch Now</a>
-                </p>
+            <p style="${plainP}"><strong>What you just joined</strong></p>
 
-                <h2 style="${baseStyles}; color: ${brandColor}; font-size: 20px; margin-top: 28px;">What you just joined</h2>
+            <p style="${plainP}">The app waitlist. A structured, playful tool your child can use at home to build storytelling and narrative language skills, step by step.</p>
 
-                <p style="${baseStyles}">
-                  <strong>The app waitlist.</strong> A structured, playful tool your child can use at home
-                  to build storytelling and narrative language skills, step by step.
-                </p>
+            <p style="${plainP}">Monthly Live Community Circles. Once a month, we host a live Zoom gathering for Story Pros kids, facilitated by us (Camesha, an elementary school teacher, and Jinean, a speech-language pathologist). So many children who struggle with language also struggle with feeling like they're the only one. They're not. And this is where they get to see that for themselves.</p>
 
-                <p style="${baseStyles}">
-                  <strong>Monthly Live Community Circles.</strong> Once a month, we host a live Zoom gathering
-                  for Story Pros kids, facilitated by us (Camesha, an elementary school teacher, and Jinean,
-                  a speech-language pathologist). So many children who struggle with language also struggle
-                  with feeling like they're the only one. They're not. And this is where they get to see
-                  that for themselves.
-                </p>
+            <p style="${plainP}">Your Story Pros membership includes both. App access and live Zoom community. All for $9.99/month.</p>
 
-                <p style="${baseStyles}">
-                  Your Story Pros membership includes both. App access and live Zoom community. All for
-                  <strong>$9.99/month</strong>.
-                </p>
+            <p style="${plainP"><strong>First, confirm your email</strong></p>
 
-                <hr style="${dividerStyles}" />
+            <p style="${plainP}">Tap the link below to verify your email. It takes two seconds, and we'll drop 15 points into your account as a thank you.</p>
 
-                <p style="${baseStyles}"><strong>First, confirm your email</strong></p>
-                <p style="${baseStyles}">
-                  Tap the button below to verify your email. It takes two seconds, and we'll drop 15 points
-                  into your account as a thank you.
-                </p>
-                <div style="text-align: center;">
-                  <a href="${data.verification_link || dashboard}" style="${buttonStyles}">Confirm my email (+15 points)</a>
-                </div>
+            <p style="${plainP}"><a href="${data.verification_link || dashboard}" style="${plainLink}">Confirm my email (+15 points)</a></p>
 
-                <hr style="${dividerStyles}" />
+            <p style="${plainP}"><strong>You're not just on a waitlist.</strong></p>
 
-                <p style="${baseStyles}"><strong>You're not just on a waitlist.</strong></p>
-                <p style="${baseStyles}">
-                  You're part of the group helping bring Story Pros to life. The more people who join through
-                  you, the more you unlock: early access at launch, bonus Coins, a signed Dan & Daria book,
-                  founder pricing, and DLD-themed merch.
-                </p>
+            <p style="${plainP}">You're part of the group helping bring Story Pros to life. The more people who join through you, the more you unlock: early access at launch, bonus Coins, a signed Dan & Daria book, founder pricing, and DLD-themed merch.</p>
 
-                <p style="${baseStyles}">
-                  <strong>Your referral link:</strong><br/>
-                  <a href="${referralLink}" style="color: ${brandColor}; word-break: break-all;">${referralLink}</a>
-                </p>
+            <p style="${plainP}">Your referral link:<br/><a href="${referralLink}" style="${plainLink}; word-break: break-all;">${referralLink}</a></p>
 
-                <p style="${baseStyles}">
-                  Every person who joins through your link moves you forward, unlocks rewards, and helps
-                  more families find Story Pros when we launch.
-                </p>
+            <p style="${plainP}">Every person who joins through your link moves you forward, unlocks rewards, and helps more families find Story Pros when we launch.</p>
 
-                <p style="${baseStyles}"><strong>Not sure what to say? Try one of these:</strong></p>
+            <p style="${plainP}"><strong>Not sure what to say? Try one of these:</strong></p>
 
-                <div style="${scriptBlock}">
-                  Hey, I'm on the early list for Story Pros. It's an app and monthly community for kids
-                  who need extra support with storytelling and language. Built by speech-language pathologists
-                  and teachers. Thought of you: ${referralLink}
-                </div>
+            <p style="${plainP}">"Hey, I'm on the early list for Story Pros. It's an app and monthly community for kids who need extra support with storytelling and language. Built by speech-language pathologists and teachers. Thought of you: ${referralLink}"</p>
 
-                <div style="${scriptBlock}">
-                  I found something I think you'll want to see. It's called Story Pros, a membership that
-                  gives kids structured storytelling practice plus a monthly live gathering with other
-                  families. I'm in and would love for you to join me: ${referralLink}
-                </div>
+            <p style="${plainP}">"I found something I think you'll want to see. It's called Story Pros, a membership that gives kids structured storytelling practice plus a monthly live gathering with other families. I'm in and would love for you to join me: ${referralLink}"</p>
 
-                <p style="${baseStyles}">
-                  Tomorrow, we'll send you the full breakdown of how points and tiers work so you know
-                  exactly how to climb.
-                </p>
+            <p style="${plainP}">Tomorrow, we'll send you the full breakdown of how points and tiers work so you know exactly how to climb.</p>
 
-                <p style="${baseStyles}">We're so glad you're here.</p>
+            <p style="${plainP}">We're so glad you're here.</p>
 
-                <p style="${baseStyles}">Warmly,<br/>${SIGN_OFF}</p>
-              </div>
+            <p style="${plainP}">Warmly,<br/>${SIGN_OFF}</p>
 
-              ${footerBlock}
+            <p style="${plainP}; margin-top: 28px;"><em>P.S. If this email landed in your Promotions or Updates tab, drag it over to your Primary inbox so you don't miss the next one. It really helps.</em></p>
+
+            <div style="${plainFooter}">
+              <p style="margin: 0 0 6px;">You're receiving this because you joined the Story Pros waitlist.</p>
+              <p style="margin: 0;"><a href="${SITE_BASE}/unsubscribe" style="color: #888; text-decoration: underline;">Unsubscribe</a></p>
             </div>
           </div>
         `,
