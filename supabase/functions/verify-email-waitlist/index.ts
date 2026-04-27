@@ -5,10 +5,19 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-function getSuccessHTML(email: string): string {
+function getSuccessHTML(email: string, alreadyVerified = false): string {
   const brandColor = "#5B2D8E";
   const lightBackground = "#F8F5FC";
   const successColor = "#10B981";
+
+  const heading = alreadyVerified ? "Already Verified" : "Email Verified!";
+  const subhead = alreadyVerified ? "You're already on the list" : "You're all set";
+  const message = alreadyVerified
+    ? "Good news — this email has already been confirmed. Your spot on the Story Pros waitlist is secure and your +15 points were already added."
+    : "Congratulations! Your email has been verified.";
+  const secondary = alreadyVerified
+    ? "Head back to Story Pros to keep climbing the tiers."
+    : "You've secured your spot on our exclusive waitlist!";
 
   return `
     <!DOCTYPE html>
@@ -16,7 +25,7 @@ function getSuccessHTML(email: string): string {
     <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Email Verified - Story Pros</title>
+      <title>${heading} - Story Pros</title>
       <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -27,7 +36,7 @@ function getSuccessHTML(email: string): string {
         .container { max-width: 500px; width: 100%; background: white; border-radius: 16px; box-shadow: 0 20px 60px rgba(91,45,142,0.3); overflow: hidden; }
         .header { background: linear-gradient(135deg, ${brandColor} 0%, #7C3FB8 100%); color: white; padding: 40px 20px; text-align: center; }
         .header h1 { font-size: 32px; margin-bottom: 10px; font-weight: 700; }
-        .checkmark { width: 60px; height: 60px; margin: 0 auto 20px; background: ${successColor}; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 32px; }
+        .checkmark { width: 60px; height: 60px; margin: 0 auto 20px; background: ${successColor}; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 32px; color: white; }
         .content { padding: 40px; text-align: center; line-height: 1.6; color: #333; }
         .content p { margin-bottom: 16px; font-size: 16px; }
         .email-info { background: ${lightBackground}; border-radius: 8px; padding: 12px; margin: 20px 0; font-size: 14px; word-break: break-all; color: #666; }
@@ -40,14 +49,14 @@ function getSuccessHTML(email: string): string {
       <div class="container">
         <div class="header">
           <div class="checkmark">✓</div>
-          <h1>Email Verified!</h1>
-          <p>You're all set</p>
+          <h1>${heading}</h1>
+          <p>${subhead}</p>
         </div>
         <div class="content">
-          <p>Congratulations! Your email has been verified.</p>
+          <p>${message}</p>
           <div class="email-info">${email}</div>
-          <p>You've secured your spot on our exclusive waitlist!</p>
-          <a href="https://empowereddld.com/storypros/dashboard" class="button">Go to Dashboard</a>
+          <p>${secondary}</p>
+          <a href="https://empowereddld.com/storypros" class="button">Back to Story Pros</a>
         </div>
         <div class="footer">
           <p>Thank you for joining Story Pros!</p>
