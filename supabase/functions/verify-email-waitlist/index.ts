@@ -119,7 +119,7 @@ Deno.serve(async (req) => {
     if (!token) {
       return new Response(getErrorHTML("No verification token provided"), {
         status: 400,
-        headers: { ...corsHeaders, "Content-Type": "text/html" },
+        headers: { "Access-Control-Allow-Origin": "*", "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store" },
       });
     }
 
@@ -138,7 +138,7 @@ Deno.serve(async (req) => {
       console.error("Token lookup error:", findError);
       return new Response(getErrorHTML("Invalid or expired verification token"), {
         status: 404,
-        headers: { ...corsHeaders, "Content-Type": "text/html" },
+        headers: { "Access-Control-Allow-Origin": "*", "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store" },
       });
     }
 
@@ -151,7 +151,7 @@ Deno.serve(async (req) => {
       if (hoursDiff > 24) {
         return new Response(getErrorHTML("This verification link has expired. Please request a new one."), {
           status: 410,
-          headers: { ...corsHeaders, "Content-Type": "text/html" },
+          headers: { "Access-Control-Allow-Origin": "*", "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store" },
         });
       }
     }
@@ -166,19 +166,23 @@ Deno.serve(async (req) => {
       console.error("Update error:", updateError);
       return new Response(getErrorHTML("Failed to verify email. Please try again."), {
         status: 500,
-        headers: { ...corsHeaders, "Content-Type": "text/html" },
+        headers: { "Access-Control-Allow-Origin": "*", "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store" },
       });
     }
 
     return new Response(getSuccessHTML(user.email), {
       status: 200,
-      headers: { ...corsHeaders, "Content-Type": "text/html" },
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "text/html; charset=utf-8",
+        "Cache-Control": "no-store",
+      },
     });
   } catch (err) {
     console.error("Unexpected error:", err);
     return new Response(getErrorHTML("An unexpected error occurred"), {
       status: 500,
-      headers: { ...corsHeaders, "Content-Type": "text/html" },
+      headers: { "Access-Control-Allow-Origin": "*", "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store" },
     });
   }
 });
