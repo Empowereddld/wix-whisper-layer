@@ -63,6 +63,8 @@ const REF_PARAM = "ref";
 export function useStorybuildersWaitlist() {
   const [state, setState] = useState<WaitlistState>({
     joined: false,
+    name: "",
+    email: "",
     referralCode: "",
     inviteCount: 0,
     totalCount: 0,
