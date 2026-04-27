@@ -231,7 +231,7 @@ function getEmailTemplate(
 
             <div style="${plainFooter}">
               <p style="margin: 0 0 6px;">You're receiving this because you joined the Story Pros waitlist.</p>
-              <p style="margin: 0;"><a href="${SITE_BASE}/unsubscribe" style="color: #888; text-decoration: underline;">Unsubscribe</a></p>
+              <p style="margin: 0;"><a href="${unsubscribeUrl}" style="color: #888; text-decoration: underline;">Unsubscribe</a></p>
             </div>
           </div>
         `,
@@ -334,7 +334,7 @@ function getEmailTemplate(
 
             <div style="${plainFooter}">
               <p style="margin: 0 0 6px;">You're receiving this as a Story Pros founding member.</p>
-              <p style="margin: 0;"><a href="${SITE_BASE}/unsubscribe" style="color: #888; text-decoration: underline;">Unsubscribe</a></p>
+              <p style="margin: 0;"><a href="${unsubscribeUrl}" style="color: #888; text-decoration: underline;">Unsubscribe</a></p>
             </div>
           </div>
         `,
