@@ -567,11 +567,17 @@ const StoryBuilders = () => {
       toast.success("Your email is already verified.");
     }
 
-    // Clean the URL so refreshes don't re-fire the toast
+    // Clean the URL so refreshes don't re-fire the toast, but keep #dashboard hash
     params.delete("verified");
     const newSearch = params.toString();
-    const newUrl = window.location.pathname + (newSearch ? `?${newSearch}` : "") + window.location.hash;
+    const newUrl = window.location.pathname + (newSearch ? `?${newSearch}` : "") + "#dashboard";
     window.history.replaceState({}, "", newUrl);
+
+    // Scroll the user to their dashboard once it has rendered
+    setTimeout(() => {
+      const el = document.getElementById("dashboard");
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 600);
   }, [wl]);
 
   const nextMilestone = milestones.find((m) => m.invites > 0 && m.invites > wl.inviteCount);
@@ -640,7 +646,9 @@ const StoryBuilders = () => {
                   </p>
                 </>
               ) : (
-                <DashboardCard wl={wl} />
+                <div id="dashboard" className="scroll-mt-24">
+                  <DashboardCard wl={wl} />
+                </div>
               )}
               {wl.error && <p className="text-white/70 text-[13px]">{wl.error}</p>}
           </div>

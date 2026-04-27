@@ -157,7 +157,7 @@ Deno.serve(async (req) => {
         status: 302,
         headers: {
           "Access-Control-Allow-Origin": "*",
-          "Location": "https://empowereddld.com/storypros?verified=already",
+          "Location": "https://empowereddld.com/storypros?verified=already#dashboard",
           "Cache-Control": "no-store",
         },
       });
@@ -206,7 +206,7 @@ Deno.serve(async (req) => {
       status: 302,
       headers: {
         "Access-Control-Allow-Origin": "*",
-        "Location": "https://empowereddld.com/storypros?verified=1",
+        "Location": "https://empowereddld.com/storypros?verified=1#dashboard",
         "Cache-Control": "no-store",
       },
     });
