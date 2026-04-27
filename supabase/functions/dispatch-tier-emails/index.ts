@@ -18,7 +18,8 @@ const FOUNDER_SLOT_CAP = 50;
 const BASE_URL = "https://empowereddld.com";
 
 // EF guide download link surfaced in Email 3 (Tier 2 reward).
-const EF_GUIDE_URL = `${BASE_URL}/storypros/ef-guide`;
+const EF_GUIDE_URL =
+  "https://haafpznzuazanylcelse.supabase.co/storage/v1/object/public/resources/storypros/executive-function-skills-guide.pdf";
 
 type Tier = {
   threshold: number;
