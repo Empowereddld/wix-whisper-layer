@@ -74,6 +74,35 @@ const StoryProsDashboard = () => {
     );
   }, [wl]);
 
+  // Celebrate when a referral converts (broadcast from the hook on invite_count++)
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const detail = (e as CustomEvent).detail as { count?: number } | undefined;
+      const count = detail?.count || 1;
+      toast.success(
+        count === 1
+          ? "🎉 Someone just joined using your link! +25 pts"
+          : `🎉 ${count} people just joined using your link! +${count * 25} pts`,
+        { duration: 6000 }
+      );
+      try {
+        confetti({ particleCount: 80, spread: 70, origin: { y: 0.4 } });
+      } catch {}
+    };
+    window.addEventListener("sp:referral-converted", handler);
+    return () => window.removeEventListener("sp:referral-converted", handler);
+  }, []);
+
+  // Poll for fresh stats every 30s while the dashboard is open so referral
+  // conversions surface in near-real-time without needing a hard refresh.
+  useEffect(() => {
+    if (!wl.joined) return;
+    const id = setInterval(() => {
+      wl.refreshStats();
+    }, 30000);
+    return () => clearInterval(id);
+  }, [wl.joined, wl.refreshStats]);
+
   // While the hook is hydrating from localStorage on first paint, briefly wait
   // before deciding the user isn't joined.
   const [hydrated, setHydrated] = useState(false);
@@ -143,19 +172,42 @@ const StoryProsDashboard = () => {
   const handleShare = (platform: string) => {
     if (!wl.referralLink) return;
     const url = encodeURIComponent(wl.referralLink);
-    const shortText = encodeURIComponent(
-      "Found a new app and community for kids with DLD. Built by an SLP and a teacher. Joining the founding waitlist:"
+
+    // Platform-specific pre-filled copy. Each one is tuned for the format of
+    // the destination (tweet length, WhatsApp casual, Facebook prompt, etc.)
+    // so users can post in one tap without writing anything.
+    const twitterText = encodeURIComponent(
+      `I just joined the founding waitlist for Story Pros, a new storytelling app for kids with DLD, built by an SLP and a teacher. If you know a family who'd love this, take a look 💜`
     );
-    const emailSubject = encodeURIComponent("Thought you'd want to see this — Story Pros");
+    const whatsappText = encodeURIComponent(
+      `Hey! I just joined the founding waitlist for Story Pros, a storytelling app for kids with DLD (developmental language disorder), built by an SLP and a teacher. Thought you'd want to see it. Here's my link:`
+    );
+    const facebookQuote = encodeURIComponent(
+      `Just joined the founding waitlist for Story Pros, a new storytelling app for kids with developmental language disorder (DLD). It's built by a speech-language pathologist and an elementary school teacher. If you know a family who'd benefit, here it is.`
+    );
+    const instagramText = encodeURIComponent(
+      `Just joined the Story Pros founding waitlist, a storytelling app for kids with DLD. Link in my story 💜`
+    );
+    const emailSubject = encodeURIComponent("Thought you'd want to see this: Story Pros");
     const emailBody = encodeURIComponent(
-      `Hey,\n\nI'm on the founding waitlist for Story Pros, a new storytelling app and monthly live community for kids who need extra support with language and storytelling. It's built by a speech-language pathologist and an elementary school teacher.\n\nThought of you. Here's my link if you want to join me:\n${wl.referralLink}\n`
+      `Hey,\n\nI just joined the founding waitlist for Story Pros, a new storytelling app and monthly live community for kids who need extra support with language and storytelling. It's built by a speech-language pathologist and an elementary school teacher.\n\nThought of you. Here's my link if you want to join me:\n${wl.referralLink}\n\nNo pressure either way, just wanted to put it on your radar.`
     );
+
     const map: Record<string, string> = {
-      twitter: `https://twitter.com/intent/tweet?text=${shortText}&url=${url}`,
-      facebook: `https://www.facebook.com/sharer/sharer.php?u=${url}`,
+      twitter: `https://twitter.com/intent/tweet?text=${twitterText}&url=${url}`,
+      facebook: `https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${facebookQuote}`,
       email: `mailto:?subject=${emailSubject}&body=${emailBody}`,
-      whatsapp: `https://wa.me/?text=${shortText}%20${url}`,
+      whatsapp: `https://wa.me/?text=${whatsappText}%20${url}`,
+      // Instagram doesn't support URL share intents — copy a ready-to-paste caption
+      // and link, then open instagram.com so the user can paste into a story/DM.
+      instagram: `https://www.instagram.com/`,
     };
+    if (platform === "instagram") {
+      navigator.clipboard
+        .writeText(decodeURIComponent(instagramText) + "\n" + wl.referralLink)
+        .then(() => toast.success("Caption + link copied! Paste it in your IG story or DM."))
+        .catch(() => {});
+    }
     if (map[platform]) window.open(map[platform], "_blank");
     wl.trackShare(platform);
   };
@@ -205,37 +257,78 @@ const StoryProsDashboard = () => {
         className="bg-white border-b border-[#dedede] py-6"
       >
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between flex-wrap gap-4">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-full bg-[#8861d4] flex items-center justify-center text-white font-bold text-lg">
+          <div className="flex items-center justify-between flex-wrap gap-3 sm:gap-4">
+            <div className="flex items-center gap-3 sm:gap-4 min-w-0">
+              <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#8861d4] flex items-center justify-center text-white font-bold text-base sm:text-lg shrink-0">
                 {initial}
               </div>
-              <div>
-                <h1 className="text-xl font-bold text-[#121212]">
+              <div className="min-w-0">
+                <h1 className="text-lg sm:text-xl font-bold text-[#121212] truncate">
                   Welcome back, {firstName}!
                 </h1>
-                <p className="text-sm text-gray-500">
+                <p className="text-xs sm:text-sm text-gray-500 truncate">
                   {currentTierName} · {wl.points} points
+                  {wl.queuePosition ? (
+                    <>
+                      {" · "}
+                      <span className="font-semibold text-[#8861d4]">
+                        #{wl.queuePosition.toLocaleString()}
+                      </span>
+                    </>
+                  ) : null}
                 </p>
               </div>
             </div>
-            <div className="flex items-center gap-3">
-              <div className="flex items-center gap-2 bg-[#f3ebf8] px-4 py-2 rounded-full">
-                <span className="text-lg">🪙</span>
-                <span className="font-bold text-[#8861d4]">{coinBalance}</span>
-                <span className="text-sm text-[#3b1f59]">coins</span>
+            <div className="flex items-center gap-2 sm:gap-3">
+              <div className="flex items-center gap-1.5 sm:gap-2 bg-[#f3ebf8] px-3 sm:px-4 py-1.5 sm:py-2 rounded-full">
+                <span className="text-base sm:text-lg">🪙</span>
+                <span className="font-bold text-[#8861d4] text-sm sm:text-base">{coinBalance}</span>
+                <span className="text-xs sm:text-sm text-[#3b1f59] hidden sm:inline">coins</span>
               </div>
               <Link
                 to="/storypros"
-                className="w-10 h-10 rounded-full border-2 border-[#dedede] bg-gray-100 flex items-center justify-center hover:border-[#8861d4] transition-colors"
+                className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border-2 border-[#dedede] bg-gray-100 flex items-center justify-center hover:border-[#8861d4] transition-colors shrink-0"
                 aria-label="Profile settings"
               >
-                <UserIcon className="h-5 w-5 text-gray-500" />
+                <UserIcon className="h-4 w-4 sm:h-5 sm:w-5 text-gray-500" />
               </Link>
             </div>
           </div>
         </div>
       </motion.div>
+
+      {/* Waitlist position spotlight: high-impact motivator (Robinhood / Superhuman style) */}
+      {wl.queuePosition && (
+        <motion.div
+          initial={{ y: -10, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          className="bg-gradient-to-r from-[#8861d4] to-[#6a47b8] text-white"
+        >
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div className="flex items-center justify-between flex-wrap gap-3">
+              <div className="flex items-center gap-3 min-w-0">
+                <Sparkles className="h-5 w-5 shrink-0 opacity-90" />
+                <div className="min-w-0">
+                  <p className="text-xs uppercase tracking-wider opacity-80 font-semibold">
+                    Your spot on the waitlist
+                  </p>
+                  <p className="text-xl sm:text-2xl font-bold leading-tight">
+                    #{wl.queuePosition.toLocaleString()}
+                    {wl.totalCount ? (
+                      <span className="text-sm sm:text-base font-medium opacity-80 ml-2">
+                        of {wl.totalCount.toLocaleString()}
+                      </span>
+                    ) : null}
+                  </p>
+                </div>
+              </div>
+              <p className="text-xs sm:text-sm opacity-90 max-w-xs sm:max-w-sm leading-snug">
+                Refer friends to climb the list and unlock founder rewards faster.
+              </p>
+            </div>
+          </div>
+        </motion.div>
+      )}
 
       {/* Verify-email nudge banner */}
       {!wl.emailVerified && (
@@ -267,16 +360,16 @@ const StoryProsDashboard = () => {
       )}
 
       {/* Main content */}
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-4 sm:space-y-6">
         {/* Tier Progress + Referrals */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
           <motion.div
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.1 }}
             className="md:col-span-2"
           >
-            <Card className="bg-background border border-border rounded-2xl shadow-sm p-6">
+            <Card className="bg-background border border-border rounded-2xl shadow-sm p-4 sm:p-6">
               <div className="space-y-4">
                 <div>
                   <div className="flex items-center justify-between mb-2">
@@ -316,7 +409,7 @@ const StoryProsDashboard = () => {
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.15 }}
           >
-            <Card className="bg-background border border-border rounded-2xl shadow-sm p-6">
+            <Card className="bg-background border border-border rounded-2xl shadow-sm p-4 sm:p-6">
               <p className="text-xs text-muted-foreground uppercase tracking-wide font-semibold">
                 Referrals
               </p>
@@ -336,11 +429,11 @@ const StoryProsDashboard = () => {
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.2 }}
         >
-          <Card className="bg-background border border-border rounded-2xl shadow-sm p-6">
+          <Card className="bg-background border border-border rounded-2xl shadow-sm p-4 sm:p-6">
             <h3 className="font-sans font-bold text-foreground mb-6">
               How to Earn Points & Coins
             </h3>
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
               <div>
                 <h4 className="font-semibold text-[#3b1f59] mb-4">Story Coins</h4>
                 <div className="space-y-3">
@@ -418,7 +511,7 @@ const StoryProsDashboard = () => {
         {/* Interactive preview gating */}
         {currentTier >= 3 ? (
           <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.25 }}>
-            <Card className="bg-background border border-border rounded-2xl shadow-sm p-6">
+            <Card className="bg-background border border-border rounded-2xl shadow-sm p-4 sm:p-6">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="font-sans font-bold text-foreground">Interactive Story Preview</h3>
                 <Badge className="bg-primary/20 text-primary">Tier 4 Exclusive</Badge>
@@ -429,17 +522,16 @@ const StoryProsDashboard = () => {
               <div className="rounded-xl overflow-hidden border border-border">
                 <iframe
                   src="https://storyprospreview.lovable.app/preview/story/11111111-1111-1111-1111-111111111111"
-                  className="w-full"
+                  className="w-full h-[600px] sm:h-[900px]"
                   title="Story Pros Interactive Preview"
                   allow="fullscreen"
-                  style={{ height: "900px" }}
                 />
               </div>
             </Card>
           </motion.div>
         ) : (
           <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.25 }}>
-            <Card className="bg-background border border-border rounded-2xl shadow-sm p-6 relative overflow-hidden">
+            <Card className="bg-background border border-border rounded-2xl shadow-sm p-4 sm:p-6 relative overflow-hidden">
               <div className="absolute inset-0 bg-white/80 backdrop-blur-sm z-10 flex flex-col items-center justify-center">
                 <Lock className="h-8 w-8 text-muted-foreground mb-2" />
                 <p className="font-semibold text-foreground">Interactive Preview</p>
@@ -459,7 +551,7 @@ const StoryProsDashboard = () => {
 
         {/* Referral Link + Share Preview */}
         <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.3 }}>
-          <Card className="bg-background border border-border rounded-2xl shadow-sm p-6">
+          <Card className="bg-background border border-border rounded-2xl shadow-sm p-4 sm:p-6">
             <h3 className="font-sans font-bold text-foreground mb-4">Your Referral Link</h3>
             <div className="flex gap-2">
               <div className="flex-1 bg-muted border border-border rounded-lg px-4 py-3 font-mono text-sm text-foreground truncate">
@@ -510,7 +602,7 @@ const StoryProsDashboard = () => {
 
         {/* Share */}
         <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.35 }}>
-          <Card className="bg-background border border-border rounded-2xl shadow-sm p-6">
+          <Card className="bg-background border border-border rounded-2xl shadow-sm p-4 sm:p-6">
             <h3 className="font-sans font-bold text-foreground mb-4">Share & Earn Referrals</h3>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
               <Button onClick={() => handleShare("twitter")} className="bg-foreground hover:bg-foreground/90 text-background flex items-center gap-2">
@@ -543,7 +635,7 @@ const StoryProsDashboard = () => {
 
         {/* Follow */}
         <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.4 }}>
-          <Card className="bg-background border border-border rounded-2xl shadow-sm p-6">
+          <Card className="bg-background border border-border rounded-2xl shadow-sm p-4 sm:p-6">
             <h3 className="font-sans font-bold text-foreground mb-2">Follow Us & Earn Points</h3>
             <p className="text-sm text-muted-foreground mb-4">
               Follow us on social media to earn bonus points per platform.
@@ -579,7 +671,7 @@ const StoryProsDashboard = () => {
 
         {/* Tier rewards / Claim / Coin Packs */}
         <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.45 }}>
-          <Card className="bg-background border border-border rounded-2xl shadow-sm p-6 relative overflow-hidden">
+          <Card className="bg-background border border-border rounded-2xl shadow-sm p-4 sm:p-6 relative overflow-hidden">
             <div
               className="absolute inset-0 opacity-[0.04] bg-center bg-no-repeat bg-contain pointer-events-none"
               style={{ backgroundImage: `url(${storyPreviewBg})` }}
@@ -599,7 +691,7 @@ const StoryProsDashboard = () => {
 
         {/* Impact */}
         <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.5 }}>
-          <Card className="bg-gradient-to-br from-primary to-primary/80 text-primary-foreground rounded-2xl shadow-sm p-8">
+          <Card className="bg-gradient-to-br from-primary to-primary/80 text-primary-foreground rounded-2xl shadow-sm p-6 sm:p-8">
             <div className="text-center space-y-2">
               <p className="text-sm font-semibold uppercase tracking-wide opacity-90">Your Impact</p>
               {wl.inviteCount === 0 ? (
@@ -626,7 +718,7 @@ const StoryProsDashboard = () => {
         {/* Coming up */}
         {nextThreshold && TIER_REWARDS[currentTier + 1] && (
           <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.55 }}>
-            <Card className="bg-gradient-to-br from-[#f3ebf8] to-white border border-[#8861d4]/20 rounded-2xl shadow-sm p-6">
+            <Card className="bg-gradient-to-br from-[#f3ebf8] to-white border border-[#8861d4]/20 rounded-2xl shadow-sm p-4 sm:p-6">
               <h3 className="font-sans font-bold text-[#3b1f59] mb-2">
                 Coming at {TIER_NAMES[currentTier + 1]} ({nextThreshold} pts)
               </h3>

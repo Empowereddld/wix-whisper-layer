@@ -213,15 +213,33 @@ export function useStorybuildersWaitlist() {
       const userPoints = ud.points || 0;
       const claims = (ud.social_claims as Record<string, unknown>) || {};
 
+      // Compute waitlist position: 1 + number of people who joined before this user.
+      // Order by created_at ascending = "joined order". Cheap count(*) head query.
+      let queuePosition: number | null = null;
+      if (ud.created_at) {
+        const { count } = await supabase
+          .from("storybuilders_waitlist")
+          .select("id", { count: "exact", head: true })
+          .lt("created_at", ud.created_at);
+        if (typeof count === "number") queuePosition = count + 1;
+      }
+
       // Detect a tier crossing vs the previous client state and trigger
       // the dispatcher inline so the unlock email feels instant instead of
       // waiting for the next cron tick. The Edge Function is idempotent
       // (guards on emailN_sent_at), so duplicate calls are safe.
       let crossedTier = false;
+      // Detect a referral conversion (invite_count went up since last refresh)
+      // so we can show a celebratory toast in the dashboard.
+      let newReferrals = 0;
       setState((s) => {
         const newTier = getTierForPoints(userPoints);
         if (newTier > (s.currentTier || 0) && newTier >= 2 && ud.email_verified) {
           crossedTier = true;
+        }
+        const incomingInvites = ud.invite_count || 0;
+        if (s.joined && incomingInvites > (s.inviteCount || 0)) {
+          newReferrals = incomingInvites - (s.inviteCount || 0);
         }
         return {
           ...s,
@@ -229,8 +247,9 @@ export function useStorybuildersWaitlist() {
           email: ud.email || s.email,
           joined: true,
           referralCode: ud.referral_code || s.referralCode,
-          inviteCount: ud.invite_count || 0,
+          inviteCount: incomingInvites,
           totalCount: totalData || s.totalCount,
+          queuePosition: queuePosition ?? s.queuePosition,
           points: userPoints,
           currentTier: newTier,
           emailVerified: !!ud.email_verified,
@@ -252,6 +271,23 @@ export function useStorybuildersWaitlist() {
         supabase.functions
           .invoke("dispatch-tier-emails", { body: { referral_code: referralCode } })
           .catch((e) => console.warn("Instant tier dispatch failed (will retry on cron):", e));
+      }
+
+      // Surface a celebration when someone uses your link. Dashboard listens
+      // to `state.notifications`, but we also broadcast a window event so the
+      // page can fire confetti without prop-drilling.
+      if (newReferrals > 0) {
+        addNotification(
+          "success",
+          newReferrals === 1
+            ? `Someone just joined using your link! +25 pts`
+            : `${newReferrals} people just joined using your link! +${newReferrals * 25} pts`
+        );
+        if (typeof window !== "undefined") {
+          window.dispatchEvent(
+            new CustomEvent("sp:referral-converted", { detail: { count: newReferrals } })
+          );
+        }
       }
     } catch (err) {
       console.error("Failed to refresh stats:", err);
