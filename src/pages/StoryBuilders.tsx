@@ -597,11 +597,23 @@ const StoryBuilders = () => {
     const newUrl = window.location.pathname + (newSearch ? `?${newSearch}` : "") + "#dashboard";
     window.history.replaceState({}, "", newUrl);
 
-    // Scroll the user to their dashboard once it has rendered
-    setTimeout(() => {
+    // Scroll to the dashboard once it renders. The DashboardCard depends on
+    // async user state from useStorybuildersWaitlist, so poll for the element
+    // for up to ~5s before giving up.
+    let attempts = 0;
+    const maxAttempts = 50; // 50 * 100ms = 5s
+    const tryScroll = () => {
       const el = document.getElementById("dashboard");
-      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 600);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+        return;
+      }
+      attempts += 1;
+      if (attempts < maxAttempts) {
+        setTimeout(tryScroll, 100);
+      }
+    };
+    setTimeout(tryScroll, 200);
   }, [wl]);
 
   const nextMilestone = milestones.find((m) => m.invites > 0 && m.invites > wl.inviteCount);
