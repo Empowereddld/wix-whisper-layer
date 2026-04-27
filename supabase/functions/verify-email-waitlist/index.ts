@@ -139,7 +139,7 @@ Deno.serve(async (req) => {
     // Look up the waitlist entry by verification_token
     const { data: user, error: findError } = await supabase
       .from("storybuilders_waitlist")
-      .select("id, email, verification_token, verification_sent_at")
+      .select("id, email, verification_token, verification_sent_at, email_verified")
       .eq("verification_token", token)
       .maybeSingle();
 
@@ -147,6 +147,14 @@ Deno.serve(async (req) => {
       console.error("Token lookup error:", findError);
       return new Response(getErrorHTML("Invalid or expired verification token"), {
         status: 404,
+        headers: { "Access-Control-Allow-Origin": "*", "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store" },
+      });
+    }
+
+    // Already verified — show friendly "already confirmed" page
+    if (user.email_verified) {
+      return new Response(getSuccessHTML(user.email, true), {
+        status: 200,
         headers: { "Access-Control-Allow-Origin": "*", "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store" },
       });
     }
@@ -179,7 +187,7 @@ Deno.serve(async (req) => {
       });
     }
 
-    return new Response(getSuccessHTML(user.email), {
+    return new Response(getSuccessHTML(user.email, false), {
       status: 200,
       headers: {
         "Access-Control-Allow-Origin": "*",
