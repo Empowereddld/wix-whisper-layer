@@ -36,7 +36,8 @@ const DEFAULT_GUIDE = `${SITE_BASE}/hub/resource/d9836a63-003e-44bc-9da4-a27d6d4
 
 function getEmailTemplate(
   template: string,
-  data: EmailData["data"] = {}
+  data: EmailData["data"] = {},
+  recipientEmail: string = ""
 ): { subject: string; html: string } {
   const brandColor = "#5B2D8E";
   const lightBackground = "#F8F5FC";
@@ -138,11 +139,14 @@ function getEmailTemplate(
     </div>
   `;
 
+  const unsubscribeUrl = recipientEmail
+    ? `${SITE_BASE}/unsubscribe?email=${encodeURIComponent(recipientEmail)}`
+    : `${SITE_BASE}/unsubscribe`;
   const footerBlock = `
     <div style="${footerStyles}">
       <p style="margin: 0 0 10px;"><em>P.S. If this email landed in your Promotions or Updates tab, drag it over to your Primary inbox so you don't miss the next one. It really helps.</em></p>
       <p style="margin: 16px 0 6px;">You're receiving this as a Story Pros founding member.</p>
-      <p style="margin: 0;"><a href="${SITE_BASE}/unsubscribe" style="color: ${brandColor}; text-decoration: none;">Unsubscribe</a></p>
+      <p style="margin: 0;"><a href="${unsubscribeUrl}" style="color: ${brandColor}; text-decoration: none;">Unsubscribe</a></p>
     </div>
   `;
 
@@ -227,7 +231,7 @@ function getEmailTemplate(
 
             <div style="${plainFooter}">
               <p style="margin: 0 0 6px;">You're receiving this because you joined the Story Pros waitlist.</p>
-              <p style="margin: 0;"><a href="${SITE_BASE}/unsubscribe" style="color: #888; text-decoration: underline;">Unsubscribe</a></p>
+              <p style="margin: 0;"><a href="${unsubscribeUrl}" style="color: #888; text-decoration: underline;">Unsubscribe</a></p>
             </div>
           </div>
         `,
@@ -330,7 +334,7 @@ function getEmailTemplate(
 
             <div style="${plainFooter}">
               <p style="margin: 0 0 6px;">You're receiving this as a Story Pros founding member.</p>
-              <p style="margin: 0;"><a href="${SITE_BASE}/unsubscribe" style="color: #888; text-decoration: underline;">Unsubscribe</a></p>
+              <p style="margin: 0;"><a href="${unsubscribeUrl}" style="color: #888; text-decoration: underline;">Unsubscribe</a></p>
             </div>
           </div>
         `,
@@ -1079,7 +1083,7 @@ Deno.serve(async (req) => {
       );
     }
 
-    const { subject, html } = getEmailTemplate(template, data);
+    const { subject, html } = getEmailTemplate(template, data, to);
 
     // Generate a plain-text alternative from the HTML. Including a text/plain
     // part alongside text/html significantly improves deliverability and makes

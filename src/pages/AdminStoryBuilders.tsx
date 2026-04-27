@@ -35,8 +35,10 @@ import {
   Send,
   Search,
   Eye,
+  Lightbulb,
 } from "lucide-react";
 import UserPreviewMode from "@/components/admin/UserPreviewMode";
+import SuggestionBoard from "@/components/admin/SuggestionBoard";
 import StatsCard from "@/components/admin/StatsCard";
 import WaitlistAnalyticsChart from "@/components/admin/WaitlistAnalyticsChart";
 import BulkEmailComposer from "@/components/admin/BulkEmailComposer";
@@ -227,7 +229,7 @@ const AdminStoryBuilders = () => {
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-5 mb-8 bg-background border border-border">
+          <TabsList className="grid w-full grid-cols-6 mb-8 bg-background border border-border">
             <TabsTrigger
               value="overview"
               className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-muted-foreground"
@@ -248,6 +250,13 @@ const AdminStoryBuilders = () => {
             >
               <TrendingUp className="h-4 w-4" />
               <span className="hidden sm:inline">Referrals</span>
+            </TabsTrigger>
+            <TabsTrigger
+              value="suggestions"
+              className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-muted-foreground"
+            >
+              <Lightbulb className="h-4 w-4" />
+              <span className="hidden sm:inline">Suggestions</span>
             </TabsTrigger>
             <TabsTrigger
               value="emails"
@@ -510,6 +519,20 @@ const AdminStoryBuilders = () => {
                     Use the Compose Email button to send bulk emails to your waitlist members. Email history will appear here once campaigns are sent.
                   </p>
                 </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Suggestions Tab */}
+          <TabsContent value="suggestions" className="space-y-4">
+            <Card className="bg-background border border-border rounded-2xl shadow-sm">
+              <CardHeader>
+                <CardTitle className="font-serif italic text-foreground">
+                  Community Suggestions
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <SuggestionBoard />
               </CardContent>
             </Card>
           </TabsContent>
