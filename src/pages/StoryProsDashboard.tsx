@@ -148,20 +148,20 @@ const StoryProsDashboard = () => {
     // the destination (tweet length, WhatsApp casual, Facebook prompt, etc.)
     // so users can post in one tap without writing anything.
     const twitterText = encodeURIComponent(
-      `I just joined the founding waitlist for Story Pros — a new storytelling app for kids with DLD, built by an SLP and a teacher. If you know a family who'd love this, take a look 💜`
+      `I just joined the founding waitlist for Story Pros, a new storytelling app for kids with DLD, built by an SLP and a teacher. If you know a family who'd love this, take a look 💜`
     );
     const whatsappText = encodeURIComponent(
-      `Hey! I just joined the founding waitlist for Story Pros — a storytelling app for kids with DLD (developmental language disorder), built by an SLP and a teacher. Thought you'd want to see it. Here's my link:`
+      `Hey! I just joined the founding waitlist for Story Pros, a storytelling app for kids with DLD (developmental language disorder), built by an SLP and a teacher. Thought you'd want to see it. Here's my link:`
     );
     const facebookQuote = encodeURIComponent(
       `Just joined the founding waitlist for Story Pros, a new storytelling app for kids with developmental language disorder (DLD). It's built by a speech-language pathologist and an elementary school teacher. If you know a family who'd benefit, here it is.`
     );
     const instagramText = encodeURIComponent(
-      `Just joined the Story Pros founding waitlist — a storytelling app for kids with DLD. Link in my story 💜`
+      `Just joined the Story Pros founding waitlist, a storytelling app for kids with DLD. Link in my story 💜`
     );
-    const emailSubject = encodeURIComponent("Thought you'd want to see this — Story Pros");
+    const emailSubject = encodeURIComponent("Thought you'd want to see this: Story Pros");
     const emailBody = encodeURIComponent(
-      `Hey,\n\nI just joined the founding waitlist for Story Pros, a new storytelling app and monthly live community for kids who need extra support with language and storytelling. It's built by a speech-language pathologist and an elementary school teacher.\n\nThought of you. Here's my link if you want to join me:\n${wl.referralLink}\n\nNo pressure either way — just wanted to put it on your radar.`
+      `Hey,\n\nI just joined the founding waitlist for Story Pros, a new storytelling app and monthly live community for kids who need extra support with language and storytelling. It's built by a speech-language pathologist and an elementary school teacher.\n\nThought of you. Here's my link if you want to join me:\n${wl.referralLink}\n\nNo pressure either way, just wanted to put it on your radar.`
     );
 
     const map: Record<string, string> = {
