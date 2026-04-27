@@ -139,11 +139,14 @@ function getEmailTemplate(
     </div>
   `;
 
+  const unsubscribeUrl = recipientEmail
+    ? `${SITE_BASE}/unsubscribe?email=${encodeURIComponent(recipientEmail)}`
+    : `${SITE_BASE}/unsubscribe`;
   const footerBlock = `
     <div style="${footerStyles}">
       <p style="margin: 0 0 10px;"><em>P.S. If this email landed in your Promotions or Updates tab, drag it over to your Primary inbox so you don't miss the next one. It really helps.</em></p>
       <p style="margin: 16px 0 6px;">You're receiving this as a Story Pros founding member.</p>
-      <p style="margin: 0;"><a href="${SITE_BASE}/unsubscribe" style="color: ${brandColor}; text-decoration: none;">Unsubscribe</a></p>
+      <p style="margin: 0;"><a href="${unsubscribeUrl}" style="color: ${brandColor}; text-decoration: none;">Unsubscribe</a></p>
     </div>
   `;
 
