@@ -1143,14 +1143,20 @@ Deno.serve(async (req) => {
     const supabase = createClient(supabaseUrl, serviceKey);
 
     const resendApiKey = Deno.env.get("RESEND_API_KEY");
+    const lovableApiKey = Deno.env.get("LOVABLE_API_KEY");
     if (!resendApiKey) {
       throw new Error("RESEND_API_KEY not configured");
     }
+    if (!lovableApiKey) {
+      throw new Error("LOVABLE_API_KEY not configured");
+    }
 
-    const resendResponse = await fetch("https://api.resend.com/emails", {
+    // Route through Lovable connector gateway (Resend is configured as a connector)
+    const resendResponse = await fetch("https://connector-gateway.lovable.dev/resend/emails", {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${resendApiKey}`,
+        "Authorization": `Bearer ${lovableApiKey}`,
+        "X-Connection-Api-Key": resendApiKey,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -1171,17 +1177,19 @@ Deno.serve(async (req) => {
     const resendData: any = await resendResponse.json();
     const resendId = resendData.id;
 
-    const { error: logError } = await supabase.from("waitlist_emails").insert({
-      recipient_email: to,
-      template,
-      subject,
-      resend_id: resendId,
-      status: "sent",
-    });
-
-    if (logError) {
-      console.error("Failed to log email:", logError);
-    }
+    // Best-effort logging — table may not exist; ignore failures so they don't block delivery
+    try {
+      const { error: logError } = await supabase.from("waitlist_emails").insert({
+        recipient_email: to,
+        template,
+        subject,
+        resend_id: resendId,
+        status: "sent",
+      });
+      if (logError && logError.code !== "PGRST205") {
+        console.error("Failed to log email:", logError);
+      }
+    } catch (_) { /* ignore */ }
 
     return new Response(
       JSON.stringify({
