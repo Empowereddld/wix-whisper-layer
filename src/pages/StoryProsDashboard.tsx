@@ -304,6 +304,11 @@ const StoryProsDashboard = () => {
                 Referrals
               </p>
               <p className="text-3xl font-bold text-primary mt-1">{wl.inviteCount}</p>
+              {wl.inviteCount === 0 && (
+                <p className="text-xs text-muted-foreground mt-2 leading-snug">
+                  No referrals yet. Be the first to invite a friend and earn +25 pts (plus a +10 first-referral bonus).
+                </p>
+              )}
             </Card>
           </motion.div>
         </div>
