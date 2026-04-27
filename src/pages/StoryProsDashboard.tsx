@@ -42,6 +42,13 @@ import storypros from "@/assets/storybuilders-hero.png";
 const StoryProsDashboard = () => {
   const wl = useStorybuildersWaitlist();
   const [copied, setCopied] = useState(false);
+  const [resending, setResending] = useState(false);
+
+  const handleResendVerification = async () => {
+    setResending(true);
+    await wl.resendVerification();
+    setResending(false);
+  };
 
   // Run a small celebration when ?verified=1 is in the URL (post email verify redirect)
   useEffect(() => {
