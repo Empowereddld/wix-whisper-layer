@@ -461,17 +461,20 @@ const StoryBuilders = () => {
                   </p>
                 </>
               ) : (
-                <div className="flex items-center gap-2 mt-5">
-                  <code className="bg-white/10 border border-white/20 rounded-md px-4 py-2.5 text-white text-[13px] max-w-[320px] truncate">
-                    {wl.referralLink}
-                  </code>
-                  <Button
-                    onClick={() => handleCopy(wl.referralLink)}
-                    variant="outline"
-                    className="h-10 px-4 border-white/30 text-white bg-transparent hover:bg-white/10 rounded-md"
-                  >
-                    {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-                  </Button>
+                <div className="mt-5 max-w-[520px] bg-white/10 border border-white/20 rounded-md p-5 backdrop-blur-sm">
+                  <div className="flex items-start gap-3">
+                    <div className="shrink-0 mt-0.5 h-8 w-8 rounded-full bg-white/15 border border-white/20 flex items-center justify-center">
+                      <Mail className="w-4 h-4 text-white" />
+                    </div>
+                    <div>
+                      <p className="text-white font-bold text-[16px] leading-snug">
+                        Thank you for joining the Story Pros waitlist!
+                      </p>
+                      <p className="text-white/80 text-[13px] leading-[1.6] mt-2">
+                        Check your inbox. We just sent you an email with everything you need, including your personal referral link.
+                      </p>
+                    </div>
+                  </div>
                 </div>
               )}
               {wl.error && <p className="text-white/70 text-[13px]">{wl.error}</p>}
