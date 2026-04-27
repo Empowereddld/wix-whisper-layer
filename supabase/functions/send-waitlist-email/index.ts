@@ -883,29 +883,28 @@ function getEmailTemplate(
     // AUXILIARY TEMPLATES (unchanged from previous version)
     // ============================================================
     case "referral_joined": {
+      // Plain-text-first to land in Primary, not Promotions.
+      const plainP = `margin: 0 0 14px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 16px; line-height: 1.55; color: #222;`;
+      const plainLink = `color: #6a47b8; text-decoration: underline;`;
       return {
-        subject: `Good news! ${data.name} joined through your referral!`,
+        subject: `🎉 ${data.name} just joined using your link`,
         html: `
-          <div style="${containerStyles}">
-            <div style="${cardStyles}">
-              <div style="${headerStyles}">
-                <h1 style="margin: 0; font-size: 28px;">You've Got a Referral!</h1>
-              </div>
-              <div style="padding: 20px 0;">
-                <p style="${baseStyles}">Great news!</p>
-                <p style="${baseStyles}">
-                  <strong>${data.name}</strong> just joined Story Pros using your referral code!
-                  You've earned 25 points and are now closer to unlocking exclusive rewards.
-                </p>
-                <p style="${baseStyles}">
-                  <strong>Points Earned:</strong> +25<br/>
-                  <strong>Total Points:</strong> ${data.points || "TBD"}
-                </p>
-                <a href="${dashboard}" style="${buttonStyles}">View Your Journey</a>
-                <p style="${baseStyles}">${SIGN_OFF}</p>
-              </div>
-              ${footerBlock}
-            </div>
+          <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 560px; margin: 0 auto; padding: 24px 20px; color: #222;">
+            <p style="${plainP}">Hey ${name || "there"},</p>
+            <p style="${plainP}">
+              Quick celebration: <strong>${data.name}</strong> just joined the Story Pros founding waitlist using your link.
+            </p>
+            <p style="${plainP}">
+              You earned <strong>+25 points</strong>${data.points ? ` (you're now at <strong>${data.points}</strong> total)` : ""}. Every referral moves you closer to founder pricing and the bigger rewards.
+            </p>
+            <p style="${plainP}">
+              See your updated dashboard: <a href="${dashboard}" style="${plainLink}">${dashboard}</a>
+            </p>
+            <p style="${plainP}">${SIGN_OFF}</p>
+            <p style="${plainP}; font-size: 13px; color: #666;">
+              P.S. If this email landed in Promotions or Spam, drag it to Primary so you don't miss the next tier-up.
+            </p>
+            ${footerBlock}
           </div>
         `,
       };
