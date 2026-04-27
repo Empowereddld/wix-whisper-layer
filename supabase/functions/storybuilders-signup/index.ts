@@ -189,7 +189,7 @@ Deno.serve(async (req) => {
     // Check if email already exists
     const { data: existing } = await supabase
       .from("storybuilders_waitlist")
-      .select("referral_code, invite_count, points, current_tier")
+      .select("referral_code, invite_count, points")
       .eq("email", normalizedEmail)
       .maybeSingle();
 
@@ -202,7 +202,6 @@ Deno.serve(async (req) => {
           referral_code: existing.referral_code,
           invite_count: existing.invite_count,
           points: existing.points,
-          current_tier: existing.current_tier,
           total_count: totalCount ?? 0,
         }),
         { headers: { ...corsHeaders, "Content-Type": "application/json" } }
