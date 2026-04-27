@@ -212,28 +212,47 @@ export function useStorybuildersWaitlist() {
       const ud = userData as any;
       const userPoints = ud.points || 0;
       const claims = (ud.social_claims as Record<string, unknown>) || {};
-      setState((s) => ({
-        ...s,
-        name: ud.name || s.name,
-        email: ud.email || s.email,
-        joined: true,
-        referralCode: ud.referral_code || s.referralCode,
-        inviteCount: ud.invite_count || 0,
-        totalCount: totalData || s.totalCount,
-        points: userPoints,
-        currentTier: getTierForPoints(userPoints),
-        emailVerified: !!ud.email_verified,
-        shareCount: ud.share_count || 0,
-        clickCount: ud.click_count || 0,
-        socialClaims: {
-          instagram: !!claims.instagram,
-          facebook: !!claims.facebook,
-          youtube: !!claims.youtube,
-        },
-        isSpeechProfessional: !!ud.is_speech_professional,
-        speechProfessionalVerified: !!ud.speech_professional_verified,
-        loading: false,
-      }));
+
+      // Detect a tier crossing vs the previous client state and trigger
+      // the dispatcher inline so the unlock email feels instant instead of
+      // waiting for the next cron tick. The Edge Function is idempotent
+      // (guards on emailN_sent_at), so duplicate calls are safe.
+      let crossedTier = false;
+      setState((s) => {
+        const newTier = getTierForPoints(userPoints);
+        if (newTier > (s.currentTier || 0) && newTier >= 2 && ud.email_verified) {
+          crossedTier = true;
+        }
+        return {
+          ...s,
+          name: ud.name || s.name,
+          email: ud.email || s.email,
+          joined: true,
+          referralCode: ud.referral_code || s.referralCode,
+          inviteCount: ud.invite_count || 0,
+          totalCount: totalData || s.totalCount,
+          points: userPoints,
+          currentTier: newTier,
+          emailVerified: !!ud.email_verified,
+          shareCount: ud.share_count || 0,
+          clickCount: ud.click_count || 0,
+          socialClaims: {
+            instagram: !!claims.instagram,
+            facebook: !!claims.facebook,
+            youtube: !!claims.youtube,
+          },
+          isSpeechProfessional: !!ud.is_speech_professional,
+          speechProfessionalVerified: !!ud.speech_professional_verified,
+          loading: false,
+        };
+      });
+
+      if (crossedTier) {
+        // Fire-and-forget; don't block the UI on email delivery.
+        supabase.functions
+          .invoke("dispatch-tier-emails", { body: { referral_code: referralCode } })
+          .catch((e) => console.warn("Instant tier dispatch failed (will retry on cron):", e));
+      }
     } catch (err) {
       console.error("Failed to refresh stats:", err);
       setState((s) => ({ ...s, loading: false }));
