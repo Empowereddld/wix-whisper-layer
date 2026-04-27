@@ -26,6 +26,8 @@ export interface TierInfo {
 
 export interface WaitlistState {
   joined: boolean;
+  name: string;
+  email: string;
   referralCode: string;
   inviteCount: number;
   totalCount: number;
@@ -61,6 +63,8 @@ const REF_PARAM = "ref";
 export function useStorybuildersWaitlist() {
   const [state, setState] = useState<WaitlistState>({
     joined: false,
+    name: "",
+    email: "",
     referralCode: "",
     inviteCount: 0,
     totalCount: 0,
@@ -170,6 +174,10 @@ export function useStorybuildersWaitlist() {
       const claims = (ud.social_claims as Record<string, unknown>) || {};
       setState((s) => ({
         ...s,
+        name: ud.name || s.name,
+        email: ud.email || s.email,
+        joined: true,
+        referralCode: ud.referral_code || s.referralCode,
         inviteCount: ud.invite_count || 0,
         totalCount: totalData || s.totalCount,
         points: userPoints,
@@ -199,12 +207,12 @@ export function useStorybuildersWaitlist() {
   }, [state.referralCode, refreshStatsInternal]);
 
   const joinWaitlist = useCallback(
-    async (name: string, email: string, isSpeechProfessional = false): Promise<JoinWaitlistResponse | null> => {
+    async (name: string, email: string): Promise<JoinWaitlistResponse | null> => {
       setState((s) => ({ ...s, loading: true, error: null }));
       try {
         const ref = getRefFromUrl();
         const { data, error } = await supabase.functions.invoke("storybuilders-signup", {
-          body: { name, email, ref, is_speech_professional: isSpeechProfessional },
+          body: { name, email, ref },
         });
 
         if (error) throw new Error(error.message || "Failed to join");
@@ -213,6 +221,8 @@ export function useStorybuildersWaitlist() {
 
         const newState: Partial<WaitlistState> = {
           joined: true,
+          name,
+          email,
           referralCode: result.referral_code,
           inviteCount: result.invite_count,
           points: result.points || 0,
@@ -232,6 +242,8 @@ export function useStorybuildersWaitlist() {
           STORAGE_KEY,
           JSON.stringify({
             joined: true,
+            name,
+            email,
             referralCode: result.referral_code,
             inviteCount: result.invite_count,
             points: newState.points,
@@ -250,6 +262,57 @@ export function useStorybuildersWaitlist() {
       }
     },
     [getRefFromUrl]
+  );
+
+  const updateProfile = useCallback(
+    async (updates: { name?: string; isSpeechProfessional?: boolean }): Promise<{ success: boolean; error?: string }> => {
+      if (!state.referralCode) {
+        return { success: false, error: "Not on the waitlist yet." };
+      }
+      try {
+        const { data, error } = await supabase.functions.invoke("update-waitlist-profile", {
+          body: {
+            referral_code: state.referralCode,
+            name: updates.name,
+            is_speech_professional: updates.isSpeechProfessional,
+          },
+        });
+        if (error) {
+          const msg = error.message || "Could not update your details.";
+          addNotification("error", msg);
+          return { success: false, error: msg };
+        }
+        const errMsg = (data as any)?.error;
+        if (errMsg) {
+          addNotification("error", errMsg);
+          return { success: false, error: errMsg };
+        }
+        const profile = (data as any)?.profile;
+        if (profile) {
+          setState((s) => ({
+            ...s,
+            name: profile.name ?? s.name,
+            isSpeechProfessional: !!profile.is_speech_professional,
+            speechProfessionalVerified: !!profile.speech_professional_verified,
+          }));
+          // Keep localStorage in sync if the name changed
+          const saved = localStorage.getItem(STORAGE_KEY);
+          if (saved) {
+            try {
+              const parsed = JSON.parse(saved);
+              localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...parsed, name: profile.name }));
+            } catch {}
+          }
+        }
+        addNotification("success", "Saved!");
+        return { success: true };
+      } catch (err) {
+        const msg = err instanceof Error ? err.message : "Could not update your details.";
+        addNotification("error", msg);
+        return { success: false, error: msg };
+      }
+    },
+    [state.referralCode]
   );
 
   const trackShare = useCallback(
@@ -498,5 +561,6 @@ export function useStorybuildersWaitlist() {
     tierInfo,
     autoJoinFromAuth,
     linkAuthAccount,
+    updateProfile,
   };
 }

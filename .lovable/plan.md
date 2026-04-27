@@ -1,61 +1,53 @@
 ## Goal
 
-Update every Story Pros launch-team email (1, 2, 3, 4, 5, 6, 7, 7B) so the HTML sent by `send-waitlist-email` matches the final locked copy in `Final_Copy-_Pros_App_Email_Sequence_1.pdf` exactly — same subjects, preview text, body, scripts, tier rewards, and CTAs. No emojis, no em dashes (per project rule), keep purple brand styling.
-
-## What's currently in the codebase
-
-`supabase/functions/send-waitlist-email/index.ts` has 8 template branches:
-- `welcome` — Email 1 (outdated copy, doesn't match PDF)
-- `verification` — used by signup link
-- `email2_points_tiers` — Email 2 (old pricing $5.99/$7.99, wrong tier rewards, missing scripts)
-- `milestone_unlocked` — generic placeholder currently used for ALL tier-ups (Emails 3–7B)
-- `referral_joined`, `weekly_digest`, `nudge`, `announcement` — auxiliary, not in PDF, leave alone
-
-Email 2 is dispatched 24h post-signup by `send-waitlist-email2` cron. Tier-up emails (3–7B) are not yet wired to dedicated templates — they all hit the generic `milestone_unlocked`.
+1. Clean up the signup form on `/storypros` — name, email, Join. Nothing else.
+2. Make the email verification page send people back to `/storypros` (their dashboard) instead of a Supabase-hosted "Email Verified" page.
+3. Add a "Your details" card to the post-signup dashboard view on `/storypros` where the user can:
+   - Confirm/correct their **name** (in case they typed an email or made a typo)
+   - Tick **"I'm a speech-language professional"** to claim the +50 bonus after admin verification
+   - See whether their email is verified, and resend if not
 
 ## Changes
 
-### 1. Rewrite existing templates in `supabase/functions/send-waitlist-email/index.ts`
+### 1. Signup form cleanup (`src/pages/StoryBuilders.tsx`)
 
-- **`welcome`** → Email 1 final copy. Subject `Welcome to Story Pros, {name}`, preview line, "Confirm my email (+15 points)" CTA pointing at `verification_link`, referral link block, both copy-paste scripts, signed by Camesha, Jinean and The Story Pros Team. Include welcome-video link to `/storypros`.
-- **`email2_points_tiers`** → Email 2 final copy. New subject `Welcome back, {name}. Here's how Story Pros points work.`, full points table (Sign up +10, Verify +15, Profile +10, IG/FB/YT +8, First share +5, First referral +10, Refer friend +25, Refer SLP +50, Share +1/max 5/day, Tap +3/max 15/day), 6-tier list with correct rewards ($7.99/$9.99 founder pricing, Tier 6 first-50 rule + 100 Story Coins fallback), three "quickest moves", both scripts, dual CTAs (Share link / Dashboard).
+- Remove the SLP checkbox + label in **both** signup forms (hero around line 449 and the second form around line 931).
+- Remove `isSpeechPro` state and stop passing it into `joinWaitlist(...)`.
+- Form keeps Name + Email + Join button only.
 
-### 2. Add 6 new template branches in the same file
+### 2. Verification redirect (`supabase/functions/verify-email-waitlist/index.ts`)
 
-- **`email3_tier2`** — "Your free guide is ready, {name}". EF guide download CTA + Tier 3 push (50 Story Coins).
-- **`email4_tier3`** — "You just earned 50 Story Coins, {name}". Tier 4 push (VIP Beta + Suggestion Board).
-- **`email5_tier4`** — "You get to test Story Pros before it launches, {name}". Cumulative tier list, Tier 5 push ($7.99 founder pricing, double points).
-- **`email6_tier5`** — "You just hit Tier 5, {name}.". Founder Pricing locked, double points, cumulative tiers, three scripts, Tier 6 push (signed book + merch first 50, else 100 Story Coins).
-- **`email7_tier6_founder`** — "You did it, {name}. You're a Story Pros Founder." Uses `{founder_slot_number}`. Signed book + Founder merch + lifetime $7.99 + "Claim my Founder package" CTA.
-- **`email7b_tier6_legend`** — "You went all the way, {name}." 150 Story Coins total, lifetime $7.99, early access, Legend badge, future merch priority, thank-you note, full cumulative tier list, dashboard CTA, share CTA.
+- On successful verification, redirect (HTTP 302) to `https://empowereddld.com/storypros?verified=1` instead of returning the standalone HTML success page.
+- Keep the existing error HTML page for failures (invalid token, expired, etc.) so users still get a clear message.
+- "Already verified" case also redirects to `/storypros?verified=already`.
 
-All new templates accept `{ name, referral_link, points_to_next, founder_slot_number?, referral_count?, guide_download_url? }` data and use the existing brand styling (purple #5B2D8E, container/card/button/footer constants).
+### 3. New dashboard "Your details" card on `/storypros`
 
-### 3. Style + content rules applied to every template
+When `wl.joined === true`, render a new card directly under the existing "Thank you" / referral area with:
 
-- No emojis anywhere.
-- No em dashes in body copy (only as bullet "Tier X — reward" separators, which the project rule allows).
-- Replace any "—" inside scripts with commas/periods.
-- Sign-off: "Camesha, Jinean and The Story Pros Team".
-- Keep system-managed "Unsubscribe" link in footer pointing at `/unsubscribe`.
-- Pricing standard: $7.99/mo Founder, $9.99/mo regular.
+- **Name field**: pre-filled with current name. If the stored name contains `@` (i.e. they accidentally typed their email), we show it highlighted with a small "Looks like an email — please enter your first name" hint and the Save button is the primary action. Saves via a new `update-waitlist-profile` edge function (service-role, looks user up by `id` from the waitlist record already in context).
+- **Email verification status**: green "Email verified" badge if `email_verified`; otherwise the existing amber `VerificationBanner` style with a Resend button.
+- **SLP self-ID checkbox**: "I'm a speech-language professional (SLP, SLT, Speech Therapist, etc.) — unlocks +50 bonus points after verification". Saving sets `is_speech_professional = true` on the waitlist row (the existing admin SLP verification queue then awards the +50 via `verify_speech_professional`). Once submitted, the checkbox locks and shows "Pending admin verification" or "Verified +50 pts" based on `speech_professional_verified`.
 
-### 4. Update locked memory files
+If `?verified=1` is present in the URL on mount, fire a confetti burst and show a success toast: "Email verified! +5 bonus points added." If `?verified=already`, just toast "Your email is already verified."
 
-The 7 `mem://features/story-pros/email-*` files are marked "LOCKED" with the previous copy. Refresh each to mirror the new PDF copy so future agents stay aligned. Files: `email-1-welcome.md`, `email-2-points-tiers.md`, `email-3-tier2-reached.md`, `email-4-tier3-reached.md`, `email-5-tier4-reached.md`, `email-6-tier5-reached.md`, `email-7-tier6-reached.md` (covers both 7 and 7B).
+### 4. New edge function: `update-waitlist-profile`
 
-### Tier dispatcher (DONE)
+Inputs: `{ id, name?, is_speech_professional? }` where `id` is the waitlist row id (already known to the client because `joinWaitlist` returns the new row). Service role updates allowed fields only. Validates `name` is non-empty and does not contain `@`. Never lets the client flip `speech_professional_verified` directly.
 
-- Added columns `email3_sent_at`...`email7_sent_at` and `founder_slot_number` to `storybuilders_waitlist`.
-- New edge function `dispatch-tier-emails` runs every 5 min via pg_cron, scans verified users, and fires the right template based on points: 35→email3_tier2, 75→email4_tier3, 130→email5_tier4, 250→email6_tier5, 500→email7_tier6_founder (first 50 founder slots, unique-indexed) else email7b_tier6_legend. Multi-tier jumps collapse to the highest unsent tier so users don't get spammed.
-- The auxiliary templates (`referral_joined`, `weekly_digest`, `nudge`, `announcement`) — not in the PDF, leaving as is.
-- No new edge function, no DB migration (unless you confirm the dispatcher wiring above).
+### 5. Hook updates (`src/hooks/useStorybuildersWaitlist.ts`)
 
-## Files touched
+- Drop the `isSpeechProfessional` argument from `joinWaitlist`.
+- Add `updateProfile({ name?, isSpeechProfessional? })` that calls the new edge function and refreshes local user state.
 
-- `supabase/functions/send-waitlist-email/index.ts` (rewrite welcome + email2, add 6 new branches)
-- `mem://features/story-pros/email-1-welcome.md` through `email-7-tier6-reached.md` (refresh locked copy)
+## What we are NOT doing
 
-## Question before I implement
+- Not removing the existing admin SLP verification queue — admins still confirm professionals before +50 is awarded.
+- Not changing the welcome email copy (already locked).
+- Not touching auth.users / Supabase Auth — this is the waitlist record only.
 
-Do you also want me to wire the tier-up dispatcher so Emails 3, 4, 5, 6, 7/7B actually fire from the new templates instead of the generic `milestone_unlocked`? It needs a small migration (`email3_sent_at`...`email7_sent_at` columns) plus dispatcher logic. If yes, I'll fold it into the same change.
+## Why this works
+
+- Signup conversion stays maximally simple (name, email, join).
+- The dashboard becomes the natural place to fix bad data (Jinean-style "name is my email" mistakes) and to self-identify as an SLP, exactly as you described.
+- Verification feels like a real product moment: click the link, land in your dashboard, see confetti and your bonus points.
