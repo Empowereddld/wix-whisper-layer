@@ -143,19 +143,42 @@ const StoryProsDashboard = () => {
   const handleShare = (platform: string) => {
     if (!wl.referralLink) return;
     const url = encodeURIComponent(wl.referralLink);
-    const shortText = encodeURIComponent(
-      "Found a new app and community for kids with DLD. Built by an SLP and a teacher. Joining the founding waitlist:"
+
+    // Platform-specific pre-filled copy. Each one is tuned for the format of
+    // the destination (tweet length, WhatsApp casual, Facebook prompt, etc.)
+    // so users can post in one tap without writing anything.
+    const twitterText = encodeURIComponent(
+      `I just joined the founding waitlist for Story Pros — a new storytelling app for kids with DLD, built by an SLP and a teacher. If you know a family who'd love this, take a look 💜`
+    );
+    const whatsappText = encodeURIComponent(
+      `Hey! I just joined the founding waitlist for Story Pros — a storytelling app for kids with DLD (developmental language disorder), built by an SLP and a teacher. Thought you'd want to see it. Here's my link:`
+    );
+    const facebookQuote = encodeURIComponent(
+      `Just joined the founding waitlist for Story Pros, a new storytelling app for kids with developmental language disorder (DLD). It's built by a speech-language pathologist and an elementary school teacher. If you know a family who'd benefit, here it is.`
+    );
+    const instagramText = encodeURIComponent(
+      `Just joined the Story Pros founding waitlist — a storytelling app for kids with DLD. Link in my story 💜`
     );
     const emailSubject = encodeURIComponent("Thought you'd want to see this — Story Pros");
     const emailBody = encodeURIComponent(
-      `Hey,\n\nI'm on the founding waitlist for Story Pros, a new storytelling app and monthly live community for kids who need extra support with language and storytelling. It's built by a speech-language pathologist and an elementary school teacher.\n\nThought of you. Here's my link if you want to join me:\n${wl.referralLink}\n`
+      `Hey,\n\nI just joined the founding waitlist for Story Pros, a new storytelling app and monthly live community for kids who need extra support with language and storytelling. It's built by a speech-language pathologist and an elementary school teacher.\n\nThought of you. Here's my link if you want to join me:\n${wl.referralLink}\n\nNo pressure either way — just wanted to put it on your radar.`
     );
+
     const map: Record<string, string> = {
-      twitter: `https://twitter.com/intent/tweet?text=${shortText}&url=${url}`,
-      facebook: `https://www.facebook.com/sharer/sharer.php?u=${url}`,
+      twitter: `https://twitter.com/intent/tweet?text=${twitterText}&url=${url}`,
+      facebook: `https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${facebookQuote}`,
       email: `mailto:?subject=${emailSubject}&body=${emailBody}`,
-      whatsapp: `https://wa.me/?text=${shortText}%20${url}`,
+      whatsapp: `https://wa.me/?text=${whatsappText}%20${url}`,
+      // Instagram doesn't support URL share intents — copy a ready-to-paste caption
+      // and link, then open instagram.com so the user can paste into a story/DM.
+      instagram: `https://www.instagram.com/`,
     };
+    if (platform === "instagram") {
+      navigator.clipboard
+        .writeText(decodeURIComponent(instagramText) + "\n" + wl.referralLink)
+        .then(() => toast.success("Caption + link copied! Paste it in your IG story or DM."))
+        .catch(() => {});
+    }
     if (map[platform]) window.open(map[platform], "_blank");
     wl.trackShare(platform);
   };
