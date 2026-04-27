@@ -177,10 +177,21 @@ Deno.serve(async (req) => {
       }
     }
 
-    // Update the database to mark email as verified
+    // Mark email verified and award +5 bonus points
+    const { data: current } = await supabase
+      .from("storybuilders_waitlist")
+      .select("points")
+      .eq("id", user.id)
+      .maybeSingle();
+    const currentPoints = (current?.points as number | undefined) ?? 0;
+
     const { error: updateError } = await supabase
       .from("storybuilders_waitlist")
-      .update({ email_verified: true, verified_at: new Date().toISOString() })
+      .update({
+        email_verified: true,
+        verified_at: new Date().toISOString(),
+        points: currentPoints + 5,
+      })
       .eq("id", user.id);
 
     if (updateError) {
@@ -191,11 +202,11 @@ Deno.serve(async (req) => {
       });
     }
 
-    return new Response(getSuccessHTML(user.email, false), {
-      status: 200,
+    return new Response(null, {
+      status: 302,
       headers: {
         "Access-Control-Allow-Origin": "*",
-        "Content-Type": "text/html; charset=utf-8",
+        "Location": "https://empowereddld.com/storypros?verified=1",
         "Cache-Control": "no-store",
       },
     });
