@@ -35,8 +35,10 @@ import {
   Send,
   Search,
   Eye,
+  Lightbulb,
 } from "lucide-react";
 import UserPreviewMode from "@/components/admin/UserPreviewMode";
+import SuggestionBoard from "@/components/admin/SuggestionBoard";
 import StatsCard from "@/components/admin/StatsCard";
 import WaitlistAnalyticsChart from "@/components/admin/WaitlistAnalyticsChart";
 import BulkEmailComposer from "@/components/admin/BulkEmailComposer";
