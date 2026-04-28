@@ -679,7 +679,7 @@ const StoryProsDashboard = () => {
                   <div className="flex justify-between">
                     <span className="text-foreground">Share link</span>
                     <span className="font-bold text-[#8861d4]">
-                      {REPEATABLE_POINTS.SHARE} pts (max {DAILY_CAPS.MAX_SHARE_POINTS}/day)
+                      {REPEATABLE_POINTS.SHARE} {REPEATABLE_POINTS.SHARE === 1 ? "pt" : "pts"} (max {DAILY_CAPS.MAX_SHARE_POINTS}/day)
                     </span>
                   </div>
                   <div className="flex justify-between">
