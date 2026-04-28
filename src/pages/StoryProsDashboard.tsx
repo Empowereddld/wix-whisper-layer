@@ -102,8 +102,11 @@ const StoryProsDashboard = () => {
           referralCode: data.referral_code,
         })
       );
-      await wl.refreshStats();
-      setAuthHydrating(false);
+      // Hard reload so the hook re-initializes from localStorage. Calling
+      // wl.refreshStats() here is a no-op because the hook's internal
+      // state.referralCode is still empty at this point.
+      window.location.replace(window.location.pathname);
+      return;
     };
     handleRecoveryRef();
     return () => {
