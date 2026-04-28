@@ -277,8 +277,9 @@ Deno.serve(async (req) => {
       console.log("Fraud flagged:", normalizedEmail, fraudCheck.reasons.join("; "), "score:", fraudCheck.risk_score);
     }
 
-    // Send welcome email with verification token
-    await sendWelcomeEmail(supabaseUrl, name, normalizedEmail, referralCode, verificationToken);
+    // Double opt-in: send ONLY the verification email on signup.
+    // The Welcome email is sent by verify-email-waitlist after the user clicks the link.
+    await sendVerificationEmail(supabaseUrl, name, normalizedEmail, verificationToken);
 
     // Handle referral
     if (ref) {
