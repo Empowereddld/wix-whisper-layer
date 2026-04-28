@@ -859,9 +859,29 @@ const StoryProsDashboard = () => {
           </Card>
         </motion.div>
 
+        {/* Tier rewards / Claim / Coin Packs */}
+        <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.42 }}>
+          <Card className="bg-background border border-border rounded-2xl shadow-sm p-4 sm:p-6 relative overflow-hidden">
+            <div
+              className="absolute inset-0 opacity-[0.04] bg-center bg-no-repeat bg-contain pointer-events-none"
+              style={{ backgroundImage: `url(${storyPreviewBg})` }}
+            />
+            <div className="relative z-10">
+              <RewardsInventory
+                currentTier={currentTier}
+                coins={coinBalance}
+                badges={wl.badges}
+                inventory={{}}
+                onClaimReward={() => toast.info("Reward claim flow coming soon.")}
+                onRedeemCoinPack={() => toast.info("Coin pack redemption coming soon.")}
+              />
+            </div>
+          </Card>
+        </motion.div>
+
         {/* Interactive preview gating */}
         {currentTier >= 3 ? (
-          <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.42 }}>
+          <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.45 }}>
             <Card className="bg-background border border-border rounded-2xl shadow-sm p-4 sm:p-6">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="font-sans font-bold text-foreground">Interactive Story Preview</h3>
@@ -881,7 +901,7 @@ const StoryProsDashboard = () => {
             </Card>
           </motion.div>
         ) : (
-          <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.42 }}>
+          <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.45 }}>
             <Card className="bg-background border border-border rounded-2xl shadow-sm p-4 sm:p-6 relative overflow-hidden">
               <div className="absolute inset-0 bg-white/80 backdrop-blur-sm z-10 flex flex-col items-center justify-center">
                 <Lock className="h-8 w-8 text-muted-foreground mb-2" />
@@ -899,26 +919,6 @@ const StoryProsDashboard = () => {
             </Card>
           </motion.div>
         )}
-
-        {/* Tier rewards / Claim / Coin Packs */}
-        <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.45 }}>
-          <Card className="bg-background border border-border rounded-2xl shadow-sm p-4 sm:p-6 relative overflow-hidden">
-            <div
-              className="absolute inset-0 opacity-[0.04] bg-center bg-no-repeat bg-contain pointer-events-none"
-              style={{ backgroundImage: `url(${storyPreviewBg})` }}
-            />
-            <div className="relative z-10">
-              <RewardsInventory
-                currentTier={currentTier}
-                coins={coinBalance}
-                badges={wl.badges}
-                inventory={{}}
-                onClaimReward={() => toast.info("Reward claim flow coming soon.")}
-                onRedeemCoinPack={() => toast.info("Coin pack redemption coming soon.")}
-              />
-            </div>
-          </Card>
-        </motion.div>
 
         {/* Impact */}
         <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.5 }}>
