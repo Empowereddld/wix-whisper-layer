@@ -106,7 +106,11 @@ const HubDashboard = () => {
     toggleSave(resource.id);
   }, [toggleSave]);
 
-  const firstName = profile?.first_name || "there";
+  // Treat email-looking first names (e.g. "camesha.russell03") as missing —
+  // these come from auto-provisioned profiles where we never captured a real name.
+  const rawFirstName = profile?.first_name?.trim() || "";
+  const looksLikeEmailHandle = /[@.]/.test(rawFirstName);
+  const firstName = rawFirstName && !looksLikeEmailHandle ? rawFirstName : "there";
   const welcomeHeading = isReturning
     ? `Welcome back, ${firstName}!`
     : `Welcome, ${firstName}, to the DLD Resource Hub`;

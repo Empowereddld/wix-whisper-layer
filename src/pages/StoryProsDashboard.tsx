@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { Navigate, Link } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
+import { supabase } from "@/integrations/supabase/client";
 import { motion } from "motion/react";
 import {
   Copy,
@@ -42,8 +44,49 @@ import storypros from "@/assets/storybuilders-hero.png";
 
 const StoryProsDashboard = () => {
   const wl = useStorybuildersWaitlist();
+  const { user } = useAuth();
   const [copied, setCopied] = useState(false);
   const [resending, setResending] = useState(false);
+  const [authHydrating, setAuthHydrating] = useState(false);
+
+  // If localStorage is empty but the visitor is logged in via Supabase Auth
+  // (e.g. they joined the waitlist on another device, or cleared their browser),
+  // look up their waitlist row by email and seed the hook's localStorage so
+  // the dashboard can hydrate normally instead of redirecting back to /storypros.
+  useEffect(() => {
+    let cancelled = false;
+    const seedFromAuth = async () => {
+      if (wl.joined || wl.loading) return;
+      if (!user?.email) return;
+      const saved = localStorage.getItem("sb_waitlist_state");
+      if (saved) return; // hook will hydrate from localStorage
+      setAuthHydrating(true);
+      const { data } = await supabase
+        .from("storybuilders_waitlist")
+        .select("referral_code, name, email")
+        .eq("email", user.email.toLowerCase())
+        .maybeSingle();
+      if (cancelled) return;
+      if (data?.referral_code) {
+        localStorage.setItem(
+          "sb_waitlist_state",
+          JSON.stringify({
+            joined: true,
+            name: data.name,
+            email: data.email,
+            referralCode: data.referral_code,
+          })
+        );
+        await wl.refreshStats();
+      }
+      setAuthHydrating(false);
+    };
+    seedFromAuth();
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user?.email, wl.joined, wl.loading]);
 
   const handleResendVerification = async () => {
     setResending(true);
@@ -115,7 +158,7 @@ const StoryProsDashboard = () => {
   // If they're truly not on the waitlist, send them back to /storypros to join.
   // Show a toast so it doesn't feel like a silent logout — common on shared
   // computers where someone else cleared the local session.
-  if (hydrated && !wl.joined && !wl.loading) {
+  if (hydrated && !wl.joined && !wl.loading && !authHydrating) {
     if (typeof window !== "undefined") {
       const flagKey = "sp_dashboard_redirect_notified";
       if (!sessionStorage.getItem(flagKey)) {
