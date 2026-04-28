@@ -159,7 +159,7 @@ const ScriptCarousel = ({ referralLink }: ScriptCarouselProps) => {
                 {current.audience}
               </Badge>
               <p className="text-foreground leading-relaxed whitespace-pre-wrap text-sm sm:text-base flex-1">
-                {fillLink(current.body)}
+                {stripLink(current.body)}
               </p>
             </motion.div>
           </AnimatePresence>
