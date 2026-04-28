@@ -338,6 +338,12 @@ export function useStorybuildersWaitlist() {
     }
   }, []);
 
+  // Keep the ref pointing at the latest refreshStatsInternal so the
+  // realtime/visibility effect (declared earlier) can call it without TDZ.
+  useEffect(() => {
+    refreshStatsInternalRef.current = refreshStatsInternal;
+  }, [refreshStatsInternal]);
+
   const refreshStats = useCallback(async () => {
     if (state.referralCode) {
       await refreshStatsInternal(state.referralCode);
