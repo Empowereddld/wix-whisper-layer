@@ -1139,6 +1139,9 @@ const StoryBuilders = () => {
                   {wl.loading ? "Joining…" : "Join Now"}
                 </Button>
               </form>
+              <div className="mt-3 text-center sm:text-left">
+                <FindMyDashboardLink />
+              </div>
             </div>
           ) : (
             <div className="mt-4 text-center">
