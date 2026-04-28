@@ -215,6 +215,24 @@ const StoryProsDashboard = () => {
     return () => clearInterval(id);
   }, [wl.joined, wl.refreshStats]);
 
+  // Refresh stats whenever the tab regains focus or becomes visible. This
+  // catches the common case where the user clicks the verify-email link in
+  // another tab/window — when they switch back, we re-fetch and the
+  // "verify your email" banner disappears immediately.
+  useEffect(() => {
+    if (!wl.joined) return;
+    const onFocus = () => wl.refreshStats();
+    const onVisible = () => {
+      if (document.visibilityState === "visible") wl.refreshStats();
+    };
+    window.addEventListener("focus", onFocus);
+    document.addEventListener("visibilitychange", onVisible);
+    return () => {
+      window.removeEventListener("focus", onFocus);
+      document.removeEventListener("visibilitychange", onVisible);
+    };
+  }, [wl.joined, wl.refreshStats]);
+
   // While the hook is hydrating from localStorage on first paint, briefly wait
   // before deciding the user isn't joined.
   const [hydrated, setHydrated] = useState(false);
