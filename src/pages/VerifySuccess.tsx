@@ -41,6 +41,8 @@ const VerifySuccess = () => {
   }, [searchParams]);
 
   const firstName = name ? name.split(" ")[0] : "there";
+  const ref = searchParams.get("ref");
+  const dashboardHref = ref ? `/storypros/dashboard?ref=${encodeURIComponent(ref)}` : "/storypros/dashboard";
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#f3ebf8] to-white flex items-center justify-center p-4">
@@ -132,7 +134,7 @@ const VerifySuccess = () => {
                   asChild
                   className="flex-1 bg-gradient-to-r from-primary to-[#6a47b8] hover:opacity-90 text-white font-semibold h-12 rounded-xl"
                 >
-                  <Link to="/storypros/dashboard">
+                  <Link to={dashboardHref}>
                     <Sparkles className="h-4 w-4 mr-2" />
                     Go to Dashboard
                   </Link>
