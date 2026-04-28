@@ -815,7 +815,7 @@ const StoryProsDashboard = () => {
                     Download image
                   </Button>
                   <p className="text-xs text-muted-foreground mt-3 leading-snug">
-                    We trust you — points are awarded when you tap a share button. Real referrals also award bonus points when someone joins through your link.
+                    Points are awarded when you tap a share button. Real referrals also award bonus points when someone joins through your link.
                   </p>
                 </div>
               </div>
