@@ -158,7 +158,7 @@ const StoryProsDashboard = () => {
   // If they're truly not on the waitlist, send them back to /storypros to join.
   // Show a toast so it doesn't feel like a silent logout — common on shared
   // computers where someone else cleared the local session.
-  if (hydrated && !wl.joined && !wl.loading && !authHydrating && !user) {
+  if (hydrated && !wl.joined && !wl.loading && !authHydrating) {
     if (typeof window !== "undefined") {
       const flagKey = "sp_dashboard_redirect_notified";
       if (!sessionStorage.getItem(flagKey)) {
