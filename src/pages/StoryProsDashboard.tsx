@@ -143,7 +143,9 @@ const StoryProsDashboard = () => {
             referralCode: data.referral_code,
           })
         );
-        await wl.refreshStats();
+        // Hard reload so the hook re-initializes from localStorage.
+        window.location.reload();
+        return;
       }
       setAuthHydrating(false);
     };
