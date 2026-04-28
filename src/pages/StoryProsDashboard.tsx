@@ -50,6 +50,7 @@ import {
 import { getTierName } from "@/lib/waitlist-utils";
 import storyPreviewBg from "@/assets/story-preview-bg.png";
 import storypros from "@/assets/storybuilders-hero.png";
+import shareCardImage from "@/assets/storypros-share-card.jpg";
 
 const StoryProsDashboard = () => {
   const wl = useStorybuildersWaitlist();
