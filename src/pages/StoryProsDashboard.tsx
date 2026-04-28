@@ -656,7 +656,7 @@ const StoryProsDashboard = () => {
                             : "font-bold text-[#8861d4]"
                         }
                       >
-                        {row.done ? "✓ Done" : `${row.pts} pts (once)`}
+                        {row.done ? `+${row.pts} pts ✓` : `${row.pts} pts (once)`}
                       </span>
                     </div>
                   ))}
