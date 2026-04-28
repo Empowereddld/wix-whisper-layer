@@ -239,7 +239,7 @@ Deno.serve(async (req) => {
       status: 302,
       headers: {
         "Access-Control-Allow-Origin": "*",
-        "Location": "https://empowereddld.com/storypros/dashboard?verified=1",
+        "Location": `https://empowereddld.com/storypros/verified?name=${encodeURIComponent((current?.name as string | undefined) || "")}&points=15`,
         "Cache-Control": "no-store",
       },
     });
