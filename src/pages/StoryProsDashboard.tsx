@@ -318,7 +318,7 @@ const StoryProsDashboard = () => {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const handleShare = (platform: string) => {
+  const handleShare = async (platform: string) => {
     if (!wl.referralLink) return;
     const url = encodeURIComponent(wl.referralLink);
 
@@ -354,23 +354,28 @@ const StoryProsDashboard = () => {
     // caption (Instagram has no share intent; Facebook's `quote` param is often
     // ignored on mobile), copy a ready-to-paste caption so users can just hit paste.
     if (platform === "instagram" || platform === "facebook") {
-      navigator.clipboard
-        .writeText(
+      try {
+        await navigator.clipboard.writeText(
           platform === "instagram"
             ? instagramText
             : `${decodeURIComponent(facebookQuote)}\n${wl.referralLink}`
-        )
-        .then(() =>
-          toast.success(
-            platform === "instagram"
-              ? "Caption + link copied! Paste it in your IG story or DM."
-              : "Caption copied! Paste it into your Facebook post if it's blank."
-          )
-        )
-        .catch(() => {});
+        );
+        toast.success(
+          platform === "instagram"
+            ? "Caption + link copied! Paste it in your IG story or DM."
+            : "Caption copied! Paste it into your Facebook post if it's blank."
+        );
+      } catch {}
     }
+
+    // CRITICAL: Track the share BEFORE opening the external app/tab.
+    // On mobile, window.open backgrounds/suspends the page, which would
+    // cancel the in-flight track-share request and prevent the dashboard
+    // from refreshing locally. Awaiting it here ensures points are awarded
+    // and the UI updates before the user leaves.
+    await wl.trackShare(platform);
+
     if (map[platform]) window.open(map[platform], "_blank");
-    wl.trackShare(platform);
   };
 
   const handleDownloadShareImage = async () => {

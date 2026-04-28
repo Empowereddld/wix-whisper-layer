@@ -309,6 +309,29 @@ export function useStorybuildersWaitlist() {
         };
       });
 
+      // Keep localStorage in sync with the latest server snapshot so a fresh
+      // page load (or returning from a backgrounded tab on mobile) shows the
+      // current points/tier/invites immediately, before the network refresh
+      // completes.
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        const prev = saved ? JSON.parse(saved) : {};
+        localStorage.setItem(
+          STORAGE_KEY,
+          JSON.stringify({
+            ...prev,
+            joined: true,
+            name: ud.name || prev.name,
+            email: ud.email || prev.email,
+            referralCode: ud.referral_code || prev.referralCode,
+            inviteCount: ud.invite_count || 0,
+            points: userPoints,
+            currentTier: getTierForPoints(userPoints),
+            queuePosition: queuePosition ?? prev.queuePosition,
+          })
+        );
+      } catch {}
+
       if (crossedTier) {
         // Fire-and-forget; don't block the UI on email delivery.
         supabase.functions
