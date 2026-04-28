@@ -787,8 +787,11 @@ const StoryProsDashboard = () => {
                 <ImageIcon className="h-4 w-4 text-primary" />
                 <p className="text-sm font-semibold text-foreground">Ready-to-post image</p>
               </div>
-              <p className="text-xs text-muted-foreground mb-4 leading-snug">
-                Download this graphic and post it with one of your scripts below. Works perfectly for Instagram, Facebook, or anywhere you share.
+              <p className="text-xs text-muted-foreground mb-2 leading-snug">
+                Download this graphic and post it anywhere you share — Instagram, Facebook, or stories. The scripts below are best for more personal messages; this image works as a general post.
+              </p>
+              <p className="text-xs text-foreground mb-4 leading-snug italic">
+                Suggested caption: "Just joined this early. Feels like something special." (Feel free to add your own words.)
               </p>
               <div className="flex flex-col sm:flex-row items-start gap-4">
                 <div className="rounded-xl border border-border overflow-hidden bg-white w-32 h-32 sm:w-40 sm:h-40 shrink-0">
