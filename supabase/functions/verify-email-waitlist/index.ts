@@ -177,10 +177,10 @@ Deno.serve(async (req) => {
       }
     }
 
-    // Mark email verified and award +15 bonus points (matches Email 1 promise)
+    // Mark email verified and award +15 bonus points (matches verification email promise)
     const { data: current } = await supabase
       .from("storybuilders_waitlist")
-      .select("points")
+      .select("points, name, referral_code, welcome_sent_at")
       .eq("id", user.id)
       .maybeSingle();
     const currentPoints = (current?.points as number | undefined) ?? 0;
@@ -200,6 +200,39 @@ Deno.serve(async (req) => {
         status: 500,
         headers: { "Access-Control-Allow-Origin": "*", "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store" },
       });
+    }
+
+    // Now that the user is verified, send the full Welcome email (only once).
+    if (!current?.welcome_sent_at) {
+      try {
+        const firstName = (current?.name as string | undefined)?.split(" ")[0] || "friend";
+        const referralCode = (current?.referral_code as string | undefined) || "";
+
+        await fetch(`${supabaseUrl}/functions/v1/send-waitlist-email`, {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${serviceKey}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            template: "welcome",
+            to: user.email,
+            data: {
+              name: firstName,
+              referral_code: referralCode,
+            },
+          }),
+        });
+
+        await supabase
+          .from("storybuilders_waitlist")
+          .update({ welcome_sent_at: new Date().toISOString() })
+          .eq("id", user.id);
+      } catch (welcomeErr) {
+        // Don't block verification on welcome email failure; the cron-driven Email 2
+        // dispatcher will still reach this user 24h later now that they're verified.
+        console.error("Welcome email dispatch failed:", welcomeErr);
+      }
     }
 
     return new Response(null, {
