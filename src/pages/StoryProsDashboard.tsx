@@ -426,18 +426,50 @@ const StoryProsDashboard = () => {
               </div>
             </div>
             <div className="flex items-center gap-2 sm:gap-3">
-              <div className="flex items-center gap-1.5 sm:gap-2 bg-[#f3ebf8] px-3 sm:px-4 py-1.5 sm:py-2 rounded-full">
-                <span className="text-base sm:text-lg">🪙</span>
-                <span className="font-bold text-[#8861d4] text-sm sm:text-base">{coinBalance}</span>
-                <span className="text-xs sm:text-sm text-[#3b1f59] hidden sm:inline">coins</span>
+              <div className="flex items-center gap-1.5 sm:gap-2 bg-amber-50 border border-amber-200 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full">
+                <Coins className="h-4 w-4 sm:h-5 sm:w-5 text-amber-500 fill-amber-400" />
+                <span className="font-bold text-amber-700 text-sm sm:text-base">{coinBalance}</span>
+                <span className="text-xs sm:text-sm text-amber-700/80 hidden sm:inline">coins</span>
               </div>
-              <Link
-                to="/storypros"
-                className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border-2 border-[#dedede] bg-gray-100 flex items-center justify-center hover:border-[#8861d4] transition-colors shrink-0"
-                aria-label="Profile settings"
-              >
-                <UserIcon className="h-4 w-4 sm:h-5 sm:w-5 text-gray-500" />
-              </Link>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button
+                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border-2 border-[#dedede] bg-gray-100 flex items-center justify-center hover:border-[#8861d4] transition-colors shrink-0"
+                    aria-label="Profile menu"
+                  >
+                    <UserIcon className="h-4 w-4 sm:h-5 sm:w-5 text-gray-500" />
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-64">
+                  <DropdownMenuLabel className="font-normal">
+                    <div className="flex flex-col gap-1">
+                      <p className="text-sm font-semibold text-foreground truncate">
+                        {wl.name || "Story Pros member"}
+                      </p>
+                      <p className="text-xs text-muted-foreground truncate">
+                        {wl.email || "—"}
+                      </p>
+                      <p className="text-xs text-[#8861d4] font-medium mt-1">
+                        {wl.isSpeechProfessional
+                          ? wl.speechProfessionalVerified
+                            ? "Speech Professional ✓"
+                            : "Speech Professional (pending)"
+                          : "Family / Supporter"}
+                      </p>
+                    </div>
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem
+                    onClick={() => {
+                      wl.signOut();
+                      toast.success("Signed out.");
+                    }}
+                    className="cursor-pointer"
+                  >
+                    Sign out
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </div>
         </div>
