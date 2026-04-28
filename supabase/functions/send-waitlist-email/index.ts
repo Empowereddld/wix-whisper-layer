@@ -1006,9 +1006,8 @@ function getEmailTemplate(
         `,
       };
     }
-
+    case "weekly_digest": {
       return {
-        subject: "Your Story Pros Weekly Digest",
         html: `
           <div style="${containerStyles}">
             <div style="${cardStyles}">
