@@ -24,6 +24,7 @@ import { toast } from "sonner";
 import confetti from "canvas-confetti";
 import SEOHead from "@/components/SEOHead";
 import RewardsInventory from "@/components/waitlist/RewardsInventory";
+import ScriptCarousel from "@/components/waitlist/ScriptCarousel";
 import { useStorybuildersWaitlist } from "@/hooks/useStorybuildersWaitlist";
 import {
   TIER_NAMES,
@@ -631,6 +632,11 @@ const StoryProsDashboard = () => {
               </Button>
             </div>
           </Card>
+        </motion.div>
+
+        {/* Scripts to share */}
+        <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.37 }}>
+          <ScriptCarousel referralLink={wl.referralLink || ""} />
         </motion.div>
 
         {/* Follow */}
