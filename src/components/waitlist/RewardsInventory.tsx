@@ -169,7 +169,6 @@ export default function RewardsInventory({
   const tabs = [
     { id: "tiers" as const, label: "Tier Progress", icon: Gift },
     { id: "inventory" as const, label: "Claim Rewards", icon: Package },
-    { id: "coins" as const, label: "Coin Packs", icon: Coins },
   ];
 
   return (
