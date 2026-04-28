@@ -64,6 +64,8 @@ interface WaitlistUser {
   email: string;
   referral_code: string;
   invite_count: number;
+  points: number;
+  email_verified: boolean;
   created_at: string;
 }
 
@@ -111,7 +113,7 @@ const AdminStoryBuilders = () => {
       setError(null);
       const { data, error: fetchError } = await supabase
         .from("storybuilders_waitlist")
-        .select("id, name, email, referral_code, invite_count, created_at")
+        .select("id, name, email, referral_code, invite_count, points, email_verified, created_at")
         .is("deleted_at", null)
         .order("created_at", { ascending: false });
 
@@ -380,7 +382,7 @@ const AdminStoryBuilders = () => {
                           variant="outline"
                           className="text-xs mt-1 bg-primary/10 text-primary border-primary/30"
                         >
-                          {getTierName(getTierForPoints(user.invite_count * 10))}
+                          {getTierName(getTierForPoints(user.points || 0))}
                         </Badge>
                       </div>
                     </div>
@@ -475,7 +477,7 @@ const AdminStoryBuilders = () => {
                                 variant="outline"
                                 className="bg-primary/10 text-primary border-primary/30"
                               >
-                                {getTierName(getTierForPoints(user.invite_count * 10))}
+                                {getTierName(getTierForPoints(user.points || 0))}
                               </Badge>
                             </TableCell>
                             <TableCell className="text-sm text-muted-foreground">
