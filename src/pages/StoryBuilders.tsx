@@ -28,6 +28,7 @@ import {
   Sparkles,
   Mail,
 } from "lucide-react";
+import FindMyDashboardLink from "@/components/waitlist/FindMyDashboardLink";
 
 /* ─── Milestones ─── */
 const milestones = [
@@ -687,6 +688,9 @@ const StoryBuilders = () => {
                   <p className="text-[13px] text-white/60 mt-6 leading-[1.6]">
                     <span className="font-semibold text-white/80">Not just stories</span> — A guided way to build language step by step
                   </p>
+                  <div className="mt-3">
+                    <FindMyDashboardLink />
+                  </div>
                 </>
               ) : (
                 <div id="dashboard" className="scroll-mt-24">
