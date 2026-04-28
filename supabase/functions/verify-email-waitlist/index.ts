@@ -151,13 +151,13 @@ Deno.serve(async (req) => {
       });
     }
 
-    // Already verified — redirect straight to the dashboard
+    // Already verified — redirect straight to the success page
     if (user.email_verified) {
       return new Response(null, {
         status: 302,
         headers: {
           "Access-Control-Allow-Origin": "*",
-          "Location": "https://empowereddld.com/storypros/dashboard?verified=already",
+          "Location": "https://empowereddld.com/storypros/verified?already=1",
           "Cache-Control": "no-store",
         },
       });
