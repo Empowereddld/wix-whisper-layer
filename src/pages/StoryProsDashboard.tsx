@@ -18,10 +18,19 @@ import {
   ArrowLeft,
   AlertCircle,
   Sparkles,
+  Coins,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { toast } from "sonner";
 import confetti from "canvas-confetti";
 import SEOHead from "@/components/SEOHead";
