@@ -117,6 +117,7 @@ const App = () => (
               <Route path="/signup" element={<Signup />} />
               <Route path="/storypros" element={<StoryBuilders />} />
               <Route path="/storypros/dashboard" element={<StoryProsDashboard />} />
+              <Route path="/storypros/verified" element={<VerifySuccess />} />
               <Route path="/storybuilders" element={<Navigate to="/storypros" replace />} />
               <Route path="/storybuilders/dashboard" element={<Navigate to="/storypros/dashboard" replace />} />
               <Route path="/storypros/guide" element={<WaitlistUserGuide />} />
