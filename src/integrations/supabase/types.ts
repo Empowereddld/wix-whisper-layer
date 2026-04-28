@@ -619,9 +619,12 @@ export type Database = {
           shares_today: number
           social_claims: Json
           speech_professional_verified: boolean
+          verification_reminder_1_sent_at: string | null
+          verification_reminder_2_sent_at: string | null
           verification_sent_at: string | null
           verification_token: string | null
           verified_at: string | null
+          welcome_sent_at: string | null
         }
         Insert: {
           click_count?: number
@@ -655,9 +658,12 @@ export type Database = {
           shares_today?: number
           social_claims?: Json
           speech_professional_verified?: boolean
+          verification_reminder_1_sent_at?: string | null
+          verification_reminder_2_sent_at?: string | null
           verification_sent_at?: string | null
           verification_token?: string | null
           verified_at?: string | null
+          welcome_sent_at?: string | null
         }
         Update: {
           click_count?: number
@@ -691,9 +697,12 @@ export type Database = {
           shares_today?: number
           social_claims?: Json
           speech_professional_verified?: boolean
+          verification_reminder_1_sent_at?: string | null
+          verification_reminder_2_sent_at?: string | null
           verification_sent_at?: string | null
           verification_token?: string | null
           verified_at?: string | null
+          welcome_sent_at?: string | null
         }
         Relationships: []
       }
