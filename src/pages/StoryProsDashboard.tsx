@@ -694,46 +694,7 @@ const StoryProsDashboard = () => {
           </Card>
         </motion.div>
 
-        {/* Interactive preview gating */}
-        {currentTier >= 3 ? (
-          <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.25 }}>
-            <Card className="bg-background border border-border rounded-2xl shadow-sm p-4 sm:p-6">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="font-sans font-bold text-foreground">Interactive Story Preview</h3>
-                <Badge className="bg-primary/20 text-primary">Tier 4 Exclusive</Badge>
-              </div>
-              <p className="text-sm text-muted-foreground mb-4">
-                As a Tier 4 member, you have early access to the Story Pros experience. Try an interactive story below.
-              </p>
-              <div className="rounded-xl overflow-hidden border border-border">
-                <iframe
-                  src="https://storyprospreview.lovable.app/preview/story/11111111-1111-1111-1111-111111111111"
-                  className="w-full h-[600px] sm:h-[900px]"
-                  title="Story Pros Interactive Preview"
-                  allow="fullscreen"
-                />
-              </div>
-            </Card>
-          </motion.div>
-        ) : (
-          <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.25 }}>
-            <Card className="bg-background border border-border rounded-2xl shadow-sm p-4 sm:p-6 relative overflow-hidden">
-              <div className="absolute inset-0 bg-white/80 backdrop-blur-sm z-10 flex flex-col items-center justify-center">
-                <Lock className="h-8 w-8 text-muted-foreground mb-2" />
-                <p className="font-semibold text-foreground">Interactive Preview</p>
-                <p className="text-sm text-muted-foreground">
-                  Reach Tier 4 ({TIER_THRESHOLDS[3]} pts) to unlock
-                </p>
-              </div>
-              <div className="opacity-20">
-                <h3 className="font-sans font-bold text-foreground mb-4">Interactive Story Preview</h3>
-                <div className="rounded-xl overflow-hidden" style={{ height: "400px" }}>
-                  <img src={storyPreviewBg} alt="" className="w-full h-full object-cover" />
-                </div>
-              </div>
-            </Card>
-          </motion.div>
-        )}
+        {/* Interactive preview moved below Follow section */}
 
         {/* Referral Link + Share Preview */}
         <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.3 }}>
