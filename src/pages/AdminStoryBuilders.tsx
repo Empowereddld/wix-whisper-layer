@@ -140,6 +140,28 @@ const AdminStoryBuilders = () => {
       setIsLoading(false);
     };
     loadData();
+
+    // Live-sync the admin table with user activity (points, referrals,
+    // verifications, signups). Without this the admin only sees the snapshot
+    // from page load and tiers/points appear frozen.
+    const channel = supabase
+      .channel("admin_storybuilders_waitlist_changes")
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "storybuilders_waitlist",
+        },
+        () => {
+          fetchUsers();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, [fetchUsers]);
 
   const handleExportCSV = useCallback(() => {
