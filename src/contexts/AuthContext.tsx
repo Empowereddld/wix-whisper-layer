@@ -90,6 +90,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setSession(null);
     setUser(null);
     setProfile(null);
+    // Also clear the Story Pros waitlist local session so a different person
+    // sharing this browser can't open the prior user's dashboard after logout.
+    try {
+      localStorage.removeItem("sb_waitlist_state");
+    } catch {}
   };
 
   return (

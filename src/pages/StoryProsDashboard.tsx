@@ -48,6 +48,60 @@ const StoryProsDashboard = () => {
   const [copied, setCopied] = useState(false);
   const [resending, setResending] = useState(false);
   const [authHydrating, setAuthHydrating] = useState(false);
+  const [recoveryInvalid, setRecoveryInvalid] = useState(false);
+
+  // Handle ?ref=CODE recovery links emailed via the "Find my dashboard" flow.
+  // If the code matches a row, seed localStorage so the dashboard hydrates.
+  // If it doesn't match, flag it so we redirect to /storypros with a message.
+  useEffect(() => {
+    let cancelled = false;
+    const handleRecoveryRef = async () => {
+      if (typeof window === "undefined") return;
+      const params = new URLSearchParams(window.location.search);
+      const ref = params.get("ref");
+      if (!ref) return;
+
+      // Strip ?ref=… from the URL so refreshes don't re-trigger this.
+      params.delete("ref");
+      const newSearch = params.toString();
+      window.history.replaceState(
+        {},
+        "",
+        window.location.pathname + (newSearch ? `?${newSearch}` : "")
+      );
+
+      setAuthHydrating(true);
+      const { data } = await supabase
+        .from("storybuilders_waitlist")
+        .select("referral_code, name, email, deleted_at")
+        .eq("referral_code", ref)
+        .maybeSingle();
+      if (cancelled) return;
+
+      if (!data || data.deleted_at) {
+        setRecoveryInvalid(true);
+        setAuthHydrating(false);
+        return;
+      }
+
+      localStorage.setItem(
+        "sb_waitlist_state",
+        JSON.stringify({
+          joined: true,
+          name: data.name,
+          email: data.email,
+          referralCode: data.referral_code,
+        })
+      );
+      await wl.refreshStats();
+      setAuthHydrating(false);
+    };
+    handleRecoveryRef();
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // If localStorage is empty but the visitor is logged in via Supabase Auth
   // (e.g. they joined the waitlist on another device, or cleared their browser),
@@ -154,6 +208,22 @@ const StoryProsDashboard = () => {
     const t = setTimeout(() => setHydrated(true), 600);
     return () => clearTimeout(t);
   }, []);
+
+  // Recovery link with an invalid/expired ref code: send them back to
+  // /storypros with a clear explanation instead of the generic redirect.
+  if (recoveryInvalid) {
+    if (typeof window !== "undefined") {
+      const flagKey = "sp_recovery_invalid_notified";
+      if (!sessionStorage.getItem(flagKey)) {
+        sessionStorage.setItem(flagKey, "1");
+        toast.error(
+          "This link is no longer valid. Try finding your dashboard again or sign up.",
+          { duration: 7000 }
+        );
+      }
+    }
+    return <Navigate to="/storypros" replace />;
+  }
 
   // If they're truly not on the waitlist, send them back to /storypros to join.
   // Show a toast so it doesn't feel like a silent logout — common on shared

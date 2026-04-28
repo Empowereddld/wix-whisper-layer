@@ -992,6 +992,27 @@ function getEmailTemplate(
         `,
       };
     }
+    // Dashboard recovery — sent when someone uses the
+    // "Already signed up? Find my dashboard" flow on /storypros.
+    case "dashboard_recovery": {
+      const plainContainer = `max-width: 580px; margin: 0 auto; padding: 24px 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 15px; line-height: 1.55; color: #222; background: #ffffff;`;
+      const plainP = `margin: 0 0 14px;`;
+      const plainLink = `color: ${brandColor}; text-decoration: underline;`;
+      return {
+        subject: `Here's your Story Pros dashboard, ${name}`,
+        html: `
+          <div style="${plainContainer}">
+            <div style="display:none;max-height:0;overflow:hidden;opacity:0;color:transparent;">One tap to get back into your dashboard.</div>
+            <p style="${plainP}">Hi ${name},</p>
+            <p style="${plainP}">You asked us to help you find your Story Pros dashboard. Tap the link below to open it:</p>
+            <p style="${plainP}"><a href="${data.dashboard_link}" style="${plainLink}">Open my dashboard</a></p>
+            <p style="${plainP}">If you didn't request this, you can safely ignore this email.</p>
+            <p style="${plainP}">Camesha, Jinean and The Story Pros Team</p>
+          </div>
+        `,
+      };
+    }
+
     case "weekly_digest": {
       return {
         html: `
