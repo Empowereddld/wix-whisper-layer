@@ -752,7 +752,7 @@ const StoryProsDashboard = () => {
           <Card className="bg-background border border-border rounded-2xl shadow-sm p-4 sm:p-6">
             <h3 className="font-sans font-bold text-foreground mb-2">Share & Earn Referrals</h3>
             <p className="text-sm text-muted-foreground mb-4 leading-snug">
-              Tap a platform to open it with a caption ready to paste. For Instagram, we copy the caption + your link and open the app so you can paste into a story or post.
+              Tap a platform to open it with a ready-to-paste caption or copy one of the other captions below.
             </p>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
               <Button onClick={() => handleShare("twitter")} className="bg-foreground hover:bg-foreground/90 text-background flex items-center gap-2">
@@ -781,6 +781,11 @@ const StoryProsDashboard = () => {
               </Button>
             </div>
 
+            {/* Scripts to share */}
+            <div className="mt-6 pt-6 border-t border-border">
+              <ScriptCarousel referralLink={wl.referralLink || ""} />
+            </div>
+
             {/* Downloadable graphic */}
             <div className="mt-6 pt-6 border-t border-border">
               <div className="flex items-center gap-2 mb-3">
@@ -788,7 +793,7 @@ const StoryProsDashboard = () => {
                 <p className="text-sm font-semibold text-foreground">Ready-to-post image</p>
               </div>
               <p className="text-xs text-muted-foreground mb-2 leading-snug">
-                Download this graphic and post it anywhere you share — Instagram, Facebook, or stories. The scripts below are best for more personal messages; this image works as a general post.
+                Download this graphic and post it anywhere you share — Instagram, Facebook, or stories. The scripts above are best for more personal messages; this image works as a general post.
               </p>
               <p className="text-xs text-foreground mb-4 leading-snug italic">
                 Suggested caption: "Just joined this early. Feels like something special." (Feel free to add your own words.)
@@ -813,17 +818,12 @@ const StoryProsDashboard = () => {
                     Download image
                   </Button>
                   <p className="text-xs text-muted-foreground mt-3 leading-snug">
-                    Tip: pair it with a copied script below for a one-tap post. We trust you — points are awarded when you tap a share button. Real referrals also award bonus points when someone joins through your link.
+                    Tip: pair it with a copied script above for a one-tap post. We trust you — points are awarded when you tap a share button. Real referrals also award bonus points when someone joins through your link.
                   </p>
                 </div>
               </div>
             </div>
           </Card>
-        </motion.div>
-
-        {/* Scripts to share */}
-        <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.37 }}>
-          <ScriptCarousel referralLink={wl.referralLink || ""} />
         </motion.div>
 
         {/* Follow */}
