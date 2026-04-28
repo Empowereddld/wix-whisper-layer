@@ -23,6 +23,7 @@ Deno.serve(async (req) => {
     const { data: pending, error } = await supabase
       .from("storybuilders_waitlist")
       .select("id, name, email, referral_code")
+      .eq("email_verified", true)
       .is("email2_sent_at", null)
       .lte("created_at", cutoff)
       .limit(100);

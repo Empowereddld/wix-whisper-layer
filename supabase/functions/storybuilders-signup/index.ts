@@ -14,19 +14,18 @@ function generateCode(): string {
   return code;
 }
 
-async function sendWelcomeEmail(
+// Double opt-in: on signup we send ONLY the verification email.
+// The full Welcome email (and all tier emails) are gated until the user clicks verify.
+async function sendVerificationEmail(
   supabaseUrl: string,
   name: string,
   email: string,
-  referralCode: string,
   verificationToken: string
 ) {
   try {
     const emailFunctionUrl = `${supabaseUrl}/functions/v1/send-waitlist-email`;
     const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 
-    // Verification link points directly to the edge function, which renders a
-    // styled success/error page. No frontend route required.
     const verificationLink = `${supabaseUrl}/functions/v1/verify-email-waitlist?token=${verificationToken}`;
 
     const response = await fetch(emailFunctionUrl, {
@@ -36,11 +35,10 @@ async function sendWelcomeEmail(
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        template: "welcome",
+        template: "verification",
         to: email,
         data: {
           name: name.split(" ")[0],
-          referral_code: referralCode,
           verification_link: verificationLink,
         },
       }),
@@ -48,7 +46,7 @@ async function sendWelcomeEmail(
 
     if (!response.ok) {
       const error = await response.text();
-      console.error("Failed to send welcome email:", error);
+      console.error("Failed to send verification email:", error);
     }
   } catch (error) {
     console.error("Error calling send-waitlist-email:", error);
@@ -279,8 +277,9 @@ Deno.serve(async (req) => {
       console.log("Fraud flagged:", normalizedEmail, fraudCheck.reasons.join("; "), "score:", fraudCheck.risk_score);
     }
 
-    // Send welcome email with verification token
-    await sendWelcomeEmail(supabaseUrl, name, normalizedEmail, referralCode, verificationToken);
+    // Double opt-in: send ONLY the verification email on signup.
+    // The Welcome email is sent by verify-email-waitlist after the user clicks the link.
+    await sendVerificationEmail(supabaseUrl, name, normalizedEmail, verificationToken);
 
     // Handle referral
     if (ref) {

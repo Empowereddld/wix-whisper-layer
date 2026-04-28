@@ -966,9 +966,48 @@ function getEmailTemplate(
       };
     }
 
+    // Friendly 24h nudge — keeps it short and personal so it lands in Primary.
+    case "verification_reminder_1": {
+      const plainContainer = `max-width: 580px; margin: 0 auto; padding: 24px 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 15px; line-height: 1.55; color: #222; background: #ffffff;`;
+      const plainP = `margin: 0 0 14px;`;
+      const plainLink = `color: ${brandColor}; text-decoration: underline;`;
+      return {
+        subject: `${name}, just one click to confirm your spot`,
+        html: `
+          <div style="${plainContainer}">
+            <p style="${plainP}">Hi ${name},</p>
+            <p style="${plainP}">Quick reminder: you joined the Story Pros waitlist yesterday but haven't confirmed your email yet.</p>
+            <p style="${plainP}">One click locks in your spot, your referral link, and your starter points (plus a +15 verification bonus):</p>
+            <p style="${plainP}"><a href="${data.verification_link}" style="${plainLink}">Confirm my email</a></p>
+            <p style="${plainP}">If the link doesn't work, paste this into your browser:</p>
+            <p style="${plainP}; word-break: break-all; font-size: 12px;">${data.verification_link}</p>
+            <p style="${plainP}">Talk soon,<br>Camesha & Jinean</p>
+          </div>
+        `,
+      };
+    }
+
+    // Final nudge at 72h. After this, we don't email again unless they verify.
+    case "verification_reminder_2": {
+      const plainContainer = `max-width: 580px; margin: 0 auto; padding: 24px 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 15px; line-height: 1.55; color: #222; background: #ffffff;`;
+      const plainP = `margin: 0 0 14px;`;
+      const plainLink = `color: ${brandColor}; text-decoration: underline;`;
+      return {
+        subject: `Last reminder, ${name}`,
+        html: `
+          <div style="${plainContainer}">
+            <p style="${plainP}">Hi ${name},</p>
+            <p style="${plainP}">This is the last email I'll send unless you confirm your spot on the Story Pros waitlist. I want to keep your inbox clean.</p>
+            <p style="${plainP}">If you still want in, here's your link (it only takes a second):</p>
+            <p style="${plainP}"><a href="${data.verification_link}" style="${plainLink}">Confirm my email</a></p>
+            <p style="${plainP}">If you've changed your mind, no worries at all. You don't need to do anything.</p>
+            <p style="${plainP}">Talk soon,<br>Camesha & Jinean</p>
+          </div>
+        `,
+      };
+    }
     case "weekly_digest": {
       return {
-        subject: "Your Story Pros Weekly Digest",
         html: `
           <div style="${containerStyles}">
             <div style="${cardStyles}">
