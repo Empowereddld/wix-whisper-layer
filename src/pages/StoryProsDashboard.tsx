@@ -18,10 +18,19 @@ import {
   ArrowLeft,
   AlertCircle,
   Sparkles,
+  Coins,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { toast } from "sonner";
 import confetti from "canvas-confetti";
 import SEOHead from "@/components/SEOHead";
@@ -93,8 +102,11 @@ const StoryProsDashboard = () => {
           referralCode: data.referral_code,
         })
       );
-      await wl.refreshStats();
-      setAuthHydrating(false);
+      // Hard reload so the hook re-initializes from localStorage. Calling
+      // wl.refreshStats() here is a no-op because the hook's internal
+      // state.referralCode is still empty at this point.
+      window.location.replace(window.location.pathname);
+      return;
     };
     handleRecoveryRef();
     return () => {
@@ -131,7 +143,9 @@ const StoryProsDashboard = () => {
             referralCode: data.referral_code,
           })
         );
-        await wl.refreshStats();
+        // Hard reload so the hook re-initializes from localStorage.
+        window.location.reload();
+        return;
       }
       setAuthHydrating(false);
     };
@@ -199,6 +213,24 @@ const StoryProsDashboard = () => {
       wl.refreshStats();
     }, 30000);
     return () => clearInterval(id);
+  }, [wl.joined, wl.refreshStats]);
+
+  // Refresh stats whenever the tab regains focus or becomes visible. This
+  // catches the common case where the user clicks the verify-email link in
+  // another tab/window — when they switch back, we re-fetch and the
+  // "verify your email" banner disappears immediately.
+  useEffect(() => {
+    if (!wl.joined) return;
+    const onFocus = () => wl.refreshStats();
+    const onVisible = () => {
+      if (document.visibilityState === "visible") wl.refreshStats();
+    };
+    window.addEventListener("focus", onFocus);
+    document.addEventListener("visibilitychange", onVisible);
+    return () => {
+      window.removeEventListener("focus", onFocus);
+      document.removeEventListener("visibilitychange", onVisible);
+    };
   }, [wl.joined, wl.refreshStats]);
 
   // While the hook is hydrating from localStorage on first paint, briefly wait
@@ -394,18 +426,50 @@ const StoryProsDashboard = () => {
               </div>
             </div>
             <div className="flex items-center gap-2 sm:gap-3">
-              <div className="flex items-center gap-1.5 sm:gap-2 bg-[#f3ebf8] px-3 sm:px-4 py-1.5 sm:py-2 rounded-full">
-                <span className="text-base sm:text-lg">🪙</span>
-                <span className="font-bold text-[#8861d4] text-sm sm:text-base">{coinBalance}</span>
-                <span className="text-xs sm:text-sm text-[#3b1f59] hidden sm:inline">coins</span>
+              <div className="flex items-center gap-1.5 sm:gap-2 bg-amber-50 border border-amber-200 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full">
+                <Coins className="h-4 w-4 sm:h-5 sm:w-5 text-amber-500 fill-amber-400" />
+                <span className="font-bold text-amber-700 text-sm sm:text-base">{coinBalance}</span>
+                <span className="text-xs sm:text-sm text-amber-700/80 hidden sm:inline">coins</span>
               </div>
-              <Link
-                to="/storypros"
-                className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border-2 border-[#dedede] bg-gray-100 flex items-center justify-center hover:border-[#8861d4] transition-colors shrink-0"
-                aria-label="Profile settings"
-              >
-                <UserIcon className="h-4 w-4 sm:h-5 sm:w-5 text-gray-500" />
-              </Link>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button
+                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border-2 border-[#dedede] bg-gray-100 flex items-center justify-center hover:border-[#8861d4] transition-colors shrink-0"
+                    aria-label="Profile menu"
+                  >
+                    <UserIcon className="h-4 w-4 sm:h-5 sm:w-5 text-gray-500" />
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-64">
+                  <DropdownMenuLabel className="font-normal">
+                    <div className="flex flex-col gap-1">
+                      <p className="text-sm font-semibold text-foreground truncate">
+                        {wl.name || "Story Pros member"}
+                      </p>
+                      <p className="text-xs text-muted-foreground truncate">
+                        {wl.email || "—"}
+                      </p>
+                      <p className="text-xs text-[#8861d4] font-medium mt-1">
+                        {wl.isSpeechProfessional
+                          ? wl.speechProfessionalVerified
+                            ? "Speech Professional ✓"
+                            : "Speech Professional (pending)"
+                          : "Family / Supporter"}
+                      </p>
+                    </div>
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem
+                    onClick={() => {
+                      wl.signOut();
+                      toast.success("Signed out.");
+                    }}
+                    className="cursor-pointer"
+                  >
+                    Sign out
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </div>
         </div>
@@ -592,7 +656,7 @@ const StoryProsDashboard = () => {
                             : "font-bold text-[#8861d4]"
                         }
                       >
-                        {row.done ? "✓ Done" : `${row.pts} pts (once)`}
+                        {row.done ? `+${row.pts} pts ✓` : `${row.pts} pts (once)`}
                       </span>
                     </div>
                   ))}
