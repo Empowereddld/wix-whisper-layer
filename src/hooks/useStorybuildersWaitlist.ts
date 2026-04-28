@@ -140,6 +140,47 @@ export function useStorybuildersWaitlist() {
     };
   }, []);
 
+  // Per-user realtime + tab-focus sync.
+  // If this user verifies their email (or earns points) on another device,
+  // we want THIS device to update without a manual reload. We subscribe to
+  // postgres_changes filtered by their referral_code, and also refetch
+  // whenever the tab regains focus (safety net for dropped sockets / mobile
+  // tab suspension).
+  useEffect(() => {
+    const code = state.referralCode;
+    if (!code) return;
+
+    const userChannel = supabase
+      .channel(`storybuilders_waitlist_user_${code}`)
+      .on(
+        "postgres_changes",
+        {
+          event: "UPDATE",
+          schema: "public",
+          table: "storybuilders_waitlist",
+          filter: `referral_code=eq.${code}`,
+        },
+        () => {
+          refreshStatsInternal(code);
+        }
+      )
+      .subscribe();
+
+    const handleVisible = () => {
+      if (document.visibilityState === "visible") {
+        refreshStatsInternal(code);
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisible);
+    window.addEventListener("focus", handleVisible);
+
+    return () => {
+      supabase.removeChannel(userChannel);
+      document.removeEventListener("visibilitychange", handleVisible);
+      window.removeEventListener("focus", handleVisible);
+    };
+  }, [state.referralCode, refreshStatsInternal]);
+
   const getRefFromUrl = useCallback((): string | undefined => {
     if (typeof window === "undefined") return undefined;
     // 1. Prefer URL param if present (and persist it for later sessions)
