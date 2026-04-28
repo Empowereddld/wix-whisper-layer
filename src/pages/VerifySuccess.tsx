@@ -41,6 +41,8 @@ const VerifySuccess = () => {
   }, [searchParams]);
 
   const firstName = name ? name.split(" ")[0] : "there";
+  const ref = searchParams.get("ref");
+  const dashboardHref = ref ? `/storypros/dashboard?ref=${encodeURIComponent(ref)}` : "/storypros/dashboard";
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#f3ebf8] to-white flex items-center justify-center p-4">
