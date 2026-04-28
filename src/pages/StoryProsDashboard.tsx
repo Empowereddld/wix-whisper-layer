@@ -334,9 +334,7 @@ const StoryProsDashboard = () => {
     const facebookQuote = encodeURIComponent(
       `Just joined the founding waitlist for Story Pros, a new storytelling app for kids with developmental language disorder (DLD). It's built by a speech-language pathologist and an elementary school teacher. If you know a family who'd benefit, here it is.`
     );
-    const instagramText = encodeURIComponent(
-      `Just joined the Story Pros founding waitlist, a storytelling app for kids with DLD. Link in my story 💜`
-    );
+    const instagramText = `Just joined the Story Pros founding waitlist, a storytelling app for kids with DLD. Link in my story 💜\n${wl.referralLink}`;
     const emailSubject = encodeURIComponent("Thought you'd want to see this: Story Pros");
     const emailBody = encodeURIComponent(
       `Hey,\n\nI just joined the founding waitlist for Story Pros, a new storytelling app and monthly live community for kids who need extra support with language and storytelling. It's built by a speech-language pathologist and an elementary school teacher.\n\nThought of you. Here's my link if you want to join me:\n${wl.referralLink}\n\nNo pressure either way, just wanted to put it on your radar.`
@@ -351,14 +349,46 @@ const StoryProsDashboard = () => {
       // and link, then open instagram.com so the user can paste into a story/DM.
       instagram: `https://www.instagram.com/`,
     };
-    if (platform === "instagram") {
+
+    // For platforms where the post composer doesn't reliably accept our prefilled
+    // caption (Instagram has no share intent; Facebook's `quote` param is often
+    // ignored on mobile), copy a ready-to-paste caption so users can just hit paste.
+    if (platform === "instagram" || platform === "facebook") {
       navigator.clipboard
-        .writeText(decodeURIComponent(instagramText) + "\n" + wl.referralLink)
-        .then(() => toast.success("Caption + link copied! Paste it in your IG story or DM."))
+        .writeText(
+          platform === "instagram"
+            ? instagramText
+            : `${decodeURIComponent(facebookQuote)}\n${wl.referralLink}`
+        )
+        .then(() =>
+          toast.success(
+            platform === "instagram"
+              ? "Caption + link copied! Paste it in your IG story or DM."
+              : "Caption copied! Paste it into your Facebook post if it's blank."
+          )
+        )
         .catch(() => {});
     }
     if (map[platform]) window.open(map[platform], "_blank");
     wl.trackShare(platform);
+  };
+
+  const handleDownloadShareImage = async () => {
+    try {
+      const res = await fetch(shareCardImage);
+      const blob = await res.blob();
+      const blobUrl = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = blobUrl;
+      a.download = "story-pros-share.jpg";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(blobUrl);
+      toast.success("Image downloaded! Post it with your script.");
+    } catch {
+      toast.error("Couldn't download. Long-press the preview to save instead.");
+    }
   };
 
   const handleFollowClick = (platform: "instagram" | "facebook" | "youtube", url: string) => {
