@@ -443,7 +443,7 @@ const StoryProsDashboard = () => {
               </div>
               <div className="min-w-0">
                 <h1 className="text-lg sm:text-xl font-bold text-[#121212] truncate">
-                  Welcome back, {firstName}!
+                  Welcome, {firstName}!
                 </h1>
                 <p className="text-xs sm:text-sm text-gray-500 truncate">
                   {currentTierName} · {wl.points} points
