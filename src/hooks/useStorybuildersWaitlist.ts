@@ -140,6 +140,49 @@ export function useStorybuildersWaitlist() {
     };
   }, []);
 
+  // Per-user realtime + tab-focus sync.
+  // If this user verifies their email (or earns points) on another device,
+  // we want THIS device to update without a manual reload. We subscribe to
+  // postgres_changes filtered by their referral_code, and also refetch
+  // whenever the tab regains focus (safety net for dropped sockets / mobile
+  // tab suspension). Uses a ref to refreshStatsInternal so we can declare
+  // this effect before the function (avoids TDZ issues).
+  const refreshStatsInternalRef = useRef<((code: string) => Promise<void>) | null>(null);
+  useEffect(() => {
+    const code = state.referralCode;
+    if (!code) return;
+
+    const run = (c: string) => {
+      refreshStatsInternalRef.current?.(c);
+    };
+
+    const userChannel = supabase
+      .channel(`storybuilders_waitlist_user_${code}`)
+      .on(
+        "postgres_changes",
+        {
+          event: "UPDATE",
+          schema: "public",
+          table: "storybuilders_waitlist",
+          filter: `referral_code=eq.${code}`,
+        },
+        () => run(code)
+      )
+      .subscribe();
+
+    const handleVisible = () => {
+      if (document.visibilityState === "visible") run(code);
+    };
+    document.addEventListener("visibilitychange", handleVisible);
+    window.addEventListener("focus", handleVisible);
+
+    return () => {
+      supabase.removeChannel(userChannel);
+      document.removeEventListener("visibilitychange", handleVisible);
+      window.removeEventListener("focus", handleVisible);
+    };
+  }, [state.referralCode]);
+
   const getRefFromUrl = useCallback((): string | undefined => {
     if (typeof window === "undefined") return undefined;
     // 1. Prefer URL param if present (and persist it for later sessions)
@@ -294,6 +337,12 @@ export function useStorybuildersWaitlist() {
       setState((s) => ({ ...s, loading: false }));
     }
   }, []);
+
+  // Keep the ref pointing at the latest refreshStatsInternal so the
+  // realtime/visibility effect (declared earlier) can call it without TDZ.
+  useEffect(() => {
+    refreshStatsInternalRef.current = refreshStatsInternal;
+  }, [refreshStatsInternal]);
 
   const refreshStats = useCallback(async () => {
     if (state.referralCode) {
