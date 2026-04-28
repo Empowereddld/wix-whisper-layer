@@ -694,7 +694,7 @@ const StoryProsDashboard = () => {
           </Card>
         </motion.div>
 
-        {/* Interactive preview moved below Follow section */}
+        
 
         {/* Referral Link + Share Preview */}
         <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.3 }}>
