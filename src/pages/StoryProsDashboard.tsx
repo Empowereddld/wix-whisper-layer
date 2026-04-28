@@ -209,6 +209,22 @@ const StoryProsDashboard = () => {
     return () => clearTimeout(t);
   }, []);
 
+  // Recovery link with an invalid/expired ref code: send them back to
+  // /storypros with a clear explanation instead of the generic redirect.
+  if (recoveryInvalid) {
+    if (typeof window !== "undefined") {
+      const flagKey = "sp_recovery_invalid_notified";
+      if (!sessionStorage.getItem(flagKey)) {
+        sessionStorage.setItem(flagKey, "1");
+        toast.error(
+          "This link is no longer valid. Try finding your dashboard again or sign up.",
+          { duration: 7000 }
+        );
+      }
+    }
+    return <Navigate to="/storypros" replace />;
+  }
+
   // If they're truly not on the waitlist, send them back to /storypros to join.
   // Show a toast so it doesn't feel like a silent logout — common on shared
   // computers where someone else cleared the local session.
