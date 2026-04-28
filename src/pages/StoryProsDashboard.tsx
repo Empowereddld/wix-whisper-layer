@@ -634,84 +634,59 @@ const StoryProsDashboard = () => {
           </motion.div>
         </div>
 
-        {/* How to Earn */}
+        {/* How to Earn Points */}
         <motion.div
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.2 }}
         >
           <Card className="bg-background border border-border rounded-2xl shadow-sm p-4 sm:p-6">
-            <h3 className="font-sans font-bold text-foreground mb-6">
-              How to Earn Points & Coins
+            <h3 className="font-sans font-bold text-foreground mb-6 text-center">
+              How to Earn Points
             </h3>
-            <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
-              <div>
-                <h4 className="font-semibold text-[#3b1f59] mb-4">Story Coins</h4>
-                <div className="space-y-3">
-                  <div className="bg-[#f3ebf8] rounded-lg p-3">
-                    <span className="text-sm font-medium text-foreground block mb-1">
-                      Reach Tier 3 ({TIER_THRESHOLDS[2]} pts)
+            <div className="max-w-md mx-auto">
+              <div className="space-y-2 text-sm">
+                {earnRows.map((row) => (
+                  <div key={row.label} className="flex justify-between">
+                    <span
+                      className={
+                        row.done
+                          ? "text-emerald-600 flex items-center gap-1"
+                          : "text-foreground"
+                      }
+                    >
+                      {row.done && <Check className="h-3 w-3" />}
+                      {row.label}
                     </span>
-                    <p className="text-sm font-bold text-[#8861d4]">
-                      +{COIN_DROPS[2]} bonus Story Coins
-                    </p>
-                  </div>
-                  <div className="bg-[#f3ebf8] rounded-lg p-3">
-                    <span className="text-sm font-medium text-foreground block mb-1">
-                      Reach Tier 5 ({TIER_THRESHOLDS[4]} pts)
+                    <span
+                      className={
+                        row.done
+                          ? "font-bold text-emerald-500"
+                          : "font-bold text-[#8861d4]"
+                      }
+                    >
+                      {row.done ? `+${row.pts} pts ✓` : `${row.pts} pts (once)`}
                     </span>
-                    <p className="text-sm font-bold text-[#8861d4]">
-                      Founder Pricing $7.99/mo (points 2x)
-                    </p>
                   </div>
-                </div>
-              </div>
-
-              <div>
-                <h4 className="font-semibold text-[#3b1f59] mb-4">Earn Points</h4>
-                <div className="space-y-2 text-sm">
-                  {earnRows.map((row) => (
-                    <div key={row.label} className="flex justify-between">
-                      <span
-                        className={
-                          row.done
-                            ? "text-emerald-600 flex items-center gap-1"
-                            : "text-foreground"
-                        }
-                      >
-                        {row.done && <Check className="h-3 w-3" />}
-                        {row.label}
-                      </span>
-                      <span
-                        className={
-                          row.done
-                            ? "font-bold text-emerald-500"
-                            : "font-bold text-[#8861d4]"
-                        }
-                      >
-                        {row.done ? `+${row.pts} pts ✓` : `${row.pts} pts (once)`}
-                      </span>
-                    </div>
-                  ))}
-                  <div className="border-t border-border pt-2 mt-2">
-                    <div className="flex justify-between">
-                      <span className="text-foreground">Refer a friend</span>
-                      <span className="font-bold text-[#8861d4]">
-                        {REPEATABLE_POINTS.REFERRAL} pts
-                      </span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-foreground">Share link</span>
-                      <span className="font-bold text-[#8861d4]">
-                        {REPEATABLE_POINTS.SHARE} pts (max {DAILY_CAPS.MAX_SHARE_POINTS}/day)
-                      </span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-foreground">Feature suggestion</span>
-                      <span className="font-bold text-[#8861d4]">
-                        {REPEATABLE_POINTS.SUGGESTION} pts
-                      </span>
-                    </div>
+                ))}
+                <div className="border-t border-border pt-2 mt-2">
+                  <div className="flex justify-between">
+                    <span className="text-foreground">Refer a friend</span>
+                    <span className="font-bold text-[#8861d4]">
+                      {REPEATABLE_POINTS.REFERRAL} pts
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-foreground">Share link</span>
+                    <span className="font-bold text-[#8861d4]">
+                      {REPEATABLE_POINTS.SHARE} pts (max {DAILY_CAPS.MAX_SHARE_POINTS}/day)
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-foreground">Feature suggestion</span>
+                    <span className="font-bold text-[#8861d4]">
+                      {REPEATABLE_POINTS.SUGGESTION} pts
+                    </span>
                   </div>
                 </div>
               </div>
