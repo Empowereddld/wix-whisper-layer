@@ -19,6 +19,8 @@ import {
   AlertCircle,
   Sparkles,
   Coins,
+  Download,
+  ImageIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
