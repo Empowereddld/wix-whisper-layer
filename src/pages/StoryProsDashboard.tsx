@@ -750,7 +750,10 @@ const StoryProsDashboard = () => {
         {/* Share */}
         <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.35 }}>
           <Card className="bg-background border border-border rounded-2xl shadow-sm p-4 sm:p-6">
-            <h3 className="font-sans font-bold text-foreground mb-4">Share & Earn Referrals</h3>
+            <h3 className="font-sans font-bold text-foreground mb-2">Share & Earn Referrals</h3>
+            <p className="text-sm text-muted-foreground mb-4 leading-snug">
+              Tap a platform to open it with a caption ready to paste. For Instagram, we copy the caption + your link and open the app so you can paste into a story or post.
+            </p>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
               <Button onClick={() => handleShare("twitter")} className="bg-foreground hover:bg-foreground/90 text-background flex items-center gap-2">
                 <Twitter className="h-4 w-4" />
@@ -776,6 +779,41 @@ const StoryProsDashboard = () => {
                 <Copy className="h-4 w-4" />
                 <span className="hidden sm:inline">Copy</span>
               </Button>
+            </div>
+
+            {/* Downloadable graphic */}
+            <div className="mt-6 pt-6 border-t border-border">
+              <div className="flex items-center gap-2 mb-3">
+                <ImageIcon className="h-4 w-4 text-primary" />
+                <p className="text-sm font-semibold text-foreground">Ready-to-post image</p>
+              </div>
+              <p className="text-xs text-muted-foreground mb-4 leading-snug">
+                Download this graphic and post it with one of your scripts below. Works perfectly for Instagram, Facebook, or anywhere you share.
+              </p>
+              <div className="flex flex-col sm:flex-row items-start gap-4">
+                <div className="rounded-xl border border-border overflow-hidden bg-white w-32 h-32 sm:w-40 sm:h-40 shrink-0">
+                  <img
+                    src={shareCardImage}
+                    alt="Story Pros downloadable share graphic"
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                    width={1024}
+                    height={1024}
+                  />
+                </div>
+                <div className="flex-1">
+                  <Button
+                    onClick={handleDownloadShareImage}
+                    className="bg-primary hover:bg-primary/90 text-primary-foreground flex items-center gap-2"
+                  >
+                    <Download className="h-4 w-4" />
+                    Download image
+                  </Button>
+                  <p className="text-xs text-muted-foreground mt-3 leading-snug">
+                    Tip: pair it with a copied script below for a one-tap post. We trust you — points are awarded when you tap a share button. Real referrals also award bonus points when someone joins through your link.
+                  </p>
+                </div>
+              </div>
             </div>
           </Card>
         </motion.div>
