@@ -72,6 +72,10 @@ const ScriptCarousel = ({ referralLink }: ScriptCarouselProps) => {
   const total = SCRIPTS.length;
 
   const current = SCRIPTS[index];
+  // Visible preview: strip the {{referral_link}} placeholder (and any trailing whitespace/colon before it).
+  const stripLink = (text: string) =>
+    text.replace(/[\s:]*\{\{referral_link\}\}/g, "").trim();
+  // Copy payload: replace placeholder with the real referral link so it's appended on copy.
   const fillLink = (text: string) =>
     text.replace(/\{\{referral_link\}\}/g, referralLink || "https://empowereddld.com/storypros");
 
@@ -155,7 +159,7 @@ const ScriptCarousel = ({ referralLink }: ScriptCarouselProps) => {
                 {current.audience}
               </Badge>
               <p className="text-foreground leading-relaxed whitespace-pre-wrap text-sm sm:text-base flex-1">
-                {fillLink(current.body)}
+                {stripLink(current.body)}
               </p>
             </motion.div>
           </AnimatePresence>
