@@ -19,6 +19,8 @@ import {
   AlertCircle,
   Sparkles,
   Coins,
+  Download,
+  ImageIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -50,6 +52,7 @@ import {
 import { getTierName } from "@/lib/waitlist-utils";
 import storyPreviewBg from "@/assets/story-preview-bg.png";
 import storypros from "@/assets/storybuilders-hero.png";
+import shareCardImage from "@/assets/storypros-share-card.jpg";
 
 const StoryProsDashboard = () => {
   const wl = useStorybuildersWaitlist();
@@ -331,9 +334,7 @@ const StoryProsDashboard = () => {
     const facebookQuote = encodeURIComponent(
       `Just joined the founding waitlist for Story Pros, a new storytelling app for kids with developmental language disorder (DLD). It's built by a speech-language pathologist and an elementary school teacher. If you know a family who'd benefit, here it is.`
     );
-    const instagramText = encodeURIComponent(
-      `Just joined the Story Pros founding waitlist, a storytelling app for kids with DLD. Link in my story 💜`
-    );
+    const instagramText = `Just joined the Story Pros founding waitlist, a storytelling app for kids with DLD. Link in my story 💜\n${wl.referralLink}`;
     const emailSubject = encodeURIComponent("Thought you'd want to see this: Story Pros");
     const emailBody = encodeURIComponent(
       `Hey,\n\nI just joined the founding waitlist for Story Pros, a new storytelling app and monthly live community for kids who need extra support with language and storytelling. It's built by a speech-language pathologist and an elementary school teacher.\n\nThought of you. Here's my link if you want to join me:\n${wl.referralLink}\n\nNo pressure either way, just wanted to put it on your radar.`
@@ -348,14 +349,46 @@ const StoryProsDashboard = () => {
       // and link, then open instagram.com so the user can paste into a story/DM.
       instagram: `https://www.instagram.com/`,
     };
-    if (platform === "instagram") {
+
+    // For platforms where the post composer doesn't reliably accept our prefilled
+    // caption (Instagram has no share intent; Facebook's `quote` param is often
+    // ignored on mobile), copy a ready-to-paste caption so users can just hit paste.
+    if (platform === "instagram" || platform === "facebook") {
       navigator.clipboard
-        .writeText(decodeURIComponent(instagramText) + "\n" + wl.referralLink)
-        .then(() => toast.success("Caption + link copied! Paste it in your IG story or DM."))
+        .writeText(
+          platform === "instagram"
+            ? instagramText
+            : `${decodeURIComponent(facebookQuote)}\n${wl.referralLink}`
+        )
+        .then(() =>
+          toast.success(
+            platform === "instagram"
+              ? "Caption + link copied! Paste it in your IG story or DM."
+              : "Caption copied! Paste it into your Facebook post if it's blank."
+          )
+        )
         .catch(() => {});
     }
     if (map[platform]) window.open(map[platform], "_blank");
     wl.trackShare(platform);
+  };
+
+  const handleDownloadShareImage = async () => {
+    try {
+      const res = await fetch(shareCardImage);
+      const blob = await res.blob();
+      const blobUrl = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = blobUrl;
+      a.download = "story-pros-share.jpg";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(blobUrl);
+      toast.success("Image downloaded! Post it with your script.");
+    } catch {
+      toast.error("Couldn't download. Long-press the preview to save instead.");
+    }
   };
 
   const handleFollowClick = (platform: "instagram" | "facebook" | "youtube", url: string) => {
@@ -601,84 +634,59 @@ const StoryProsDashboard = () => {
           </motion.div>
         </div>
 
-        {/* How to Earn */}
+        {/* How to Earn Points */}
         <motion.div
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.2 }}
         >
           <Card className="bg-background border border-border rounded-2xl shadow-sm p-4 sm:p-6">
-            <h3 className="font-sans font-bold text-foreground mb-6">
-              How to Earn Points & Coins
+            <h3 className="font-sans font-bold text-foreground mb-6 text-center">
+              How to Earn Points
             </h3>
-            <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
-              <div>
-                <h4 className="font-semibold text-[#3b1f59] mb-4">Story Coins</h4>
-                <div className="space-y-3">
-                  <div className="bg-[#f3ebf8] rounded-lg p-3">
-                    <span className="text-sm font-medium text-foreground block mb-1">
-                      Reach Tier 3 ({TIER_THRESHOLDS[2]} pts)
+            <div className="max-w-md mx-auto">
+              <div className="space-y-2 text-sm">
+                {earnRows.map((row) => (
+                  <div key={row.label} className="flex justify-between">
+                    <span
+                      className={
+                        row.done
+                          ? "text-emerald-600 flex items-center gap-1"
+                          : "text-foreground"
+                      }
+                    >
+                      {row.done && <Check className="h-3 w-3" />}
+                      {row.label}
                     </span>
-                    <p className="text-sm font-bold text-[#8861d4]">
-                      +{COIN_DROPS[2]} bonus Story Coins
-                    </p>
-                  </div>
-                  <div className="bg-[#f3ebf8] rounded-lg p-3">
-                    <span className="text-sm font-medium text-foreground block mb-1">
-                      Reach Tier 5 ({TIER_THRESHOLDS[4]} pts)
+                    <span
+                      className={
+                        row.done
+                          ? "font-bold text-emerald-500"
+                          : "font-bold text-[#8861d4]"
+                      }
+                    >
+                      {row.done ? `+${row.pts} pts ✓` : `${row.pts} pts (once)`}
                     </span>
-                    <p className="text-sm font-bold text-[#8861d4]">
-                      Founder Pricing $7.99/mo (points 2x)
-                    </p>
                   </div>
-                </div>
-              </div>
-
-              <div>
-                <h4 className="font-semibold text-[#3b1f59] mb-4">Earn Points</h4>
-                <div className="space-y-2 text-sm">
-                  {earnRows.map((row) => (
-                    <div key={row.label} className="flex justify-between">
-                      <span
-                        className={
-                          row.done
-                            ? "text-emerald-600 flex items-center gap-1"
-                            : "text-foreground"
-                        }
-                      >
-                        {row.done && <Check className="h-3 w-3" />}
-                        {row.label}
-                      </span>
-                      <span
-                        className={
-                          row.done
-                            ? "font-bold text-emerald-500"
-                            : "font-bold text-[#8861d4]"
-                        }
-                      >
-                        {row.done ? `+${row.pts} pts ✓` : `${row.pts} pts (once)`}
-                      </span>
-                    </div>
-                  ))}
-                  <div className="border-t border-border pt-2 mt-2">
-                    <div className="flex justify-between">
-                      <span className="text-foreground">Refer a friend</span>
-                      <span className="font-bold text-[#8861d4]">
-                        {REPEATABLE_POINTS.REFERRAL} pts
-                      </span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-foreground">Share link</span>
-                      <span className="font-bold text-[#8861d4]">
-                        {REPEATABLE_POINTS.SHARE} pts (max {DAILY_CAPS.MAX_SHARE_POINTS}/day)
-                      </span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-foreground">Feature suggestion</span>
-                      <span className="font-bold text-[#8861d4]">
-                        {REPEATABLE_POINTS.SUGGESTION} pts
-                      </span>
-                    </div>
+                ))}
+                <div className="border-t border-border pt-2 mt-2">
+                  <div className="flex justify-between">
+                    <span className="text-foreground">Refer a friend</span>
+                    <span className="font-bold text-[#8861d4]">
+                      {REPEATABLE_POINTS.REFERRAL} pts
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-foreground">Share link</span>
+                    <span className="font-bold text-[#8861d4]">
+                      {REPEATABLE_POINTS.SHARE} pts (max {DAILY_CAPS.MAX_SHARE_POINTS}/day)
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-foreground">Feature suggestion</span>
+                    <span className="font-bold text-[#8861d4]">
+                      {REPEATABLE_POINTS.SUGGESTION} pts
+                    </span>
                   </div>
                 </div>
               </div>
@@ -686,46 +694,7 @@ const StoryProsDashboard = () => {
           </Card>
         </motion.div>
 
-        {/* Interactive preview gating */}
-        {currentTier >= 3 ? (
-          <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.25 }}>
-            <Card className="bg-background border border-border rounded-2xl shadow-sm p-4 sm:p-6">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="font-sans font-bold text-foreground">Interactive Story Preview</h3>
-                <Badge className="bg-primary/20 text-primary">Tier 4 Exclusive</Badge>
-              </div>
-              <p className="text-sm text-muted-foreground mb-4">
-                As a Tier 4 member, you have early access to the Story Pros experience. Try an interactive story below.
-              </p>
-              <div className="rounded-xl overflow-hidden border border-border">
-                <iframe
-                  src="https://storyprospreview.lovable.app/preview/story/11111111-1111-1111-1111-111111111111"
-                  className="w-full h-[600px] sm:h-[900px]"
-                  title="Story Pros Interactive Preview"
-                  allow="fullscreen"
-                />
-              </div>
-            </Card>
-          </motion.div>
-        ) : (
-          <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.25 }}>
-            <Card className="bg-background border border-border rounded-2xl shadow-sm p-4 sm:p-6 relative overflow-hidden">
-              <div className="absolute inset-0 bg-white/80 backdrop-blur-sm z-10 flex flex-col items-center justify-center">
-                <Lock className="h-8 w-8 text-muted-foreground mb-2" />
-                <p className="font-semibold text-foreground">Interactive Preview</p>
-                <p className="text-sm text-muted-foreground">
-                  Reach Tier 4 ({TIER_THRESHOLDS[3]} pts) to unlock
-                </p>
-              </div>
-              <div className="opacity-20">
-                <h3 className="font-sans font-bold text-foreground mb-4">Interactive Story Preview</h3>
-                <div className="rounded-xl overflow-hidden" style={{ height: "400px" }}>
-                  <img src={storyPreviewBg} alt="" className="w-full h-full object-cover" />
-                </div>
-              </div>
-            </Card>
-          </motion.div>
-        )}
+        
 
         {/* Referral Link + Share Preview */}
         <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.3 }}>
@@ -781,7 +750,10 @@ const StoryProsDashboard = () => {
         {/* Share */}
         <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.35 }}>
           <Card className="bg-background border border-border rounded-2xl shadow-sm p-4 sm:p-6">
-            <h3 className="font-sans font-bold text-foreground mb-4">Share & Earn Referrals</h3>
+            <h3 className="font-sans font-bold text-foreground mb-2">Share & Earn Referrals</h3>
+            <p className="text-sm text-muted-foreground mb-4 leading-snug">
+              Tap a platform to open it with a caption ready to paste. For Instagram, we copy the caption + your link and open the app so you can paste into a story or post.
+            </p>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
               <Button onClick={() => handleShare("twitter")} className="bg-foreground hover:bg-foreground/90 text-background flex items-center gap-2">
                 <Twitter className="h-4 w-4" />
@@ -807,6 +779,41 @@ const StoryProsDashboard = () => {
                 <Copy className="h-4 w-4" />
                 <span className="hidden sm:inline">Copy</span>
               </Button>
+            </div>
+
+            {/* Downloadable graphic */}
+            <div className="mt-6 pt-6 border-t border-border">
+              <div className="flex items-center gap-2 mb-3">
+                <ImageIcon className="h-4 w-4 text-primary" />
+                <p className="text-sm font-semibold text-foreground">Ready-to-post image</p>
+              </div>
+              <p className="text-xs text-muted-foreground mb-4 leading-snug">
+                Download this graphic and post it with one of your scripts below. Works perfectly for Instagram, Facebook, or anywhere you share.
+              </p>
+              <div className="flex flex-col sm:flex-row items-start gap-4">
+                <div className="rounded-xl border border-border overflow-hidden bg-white w-32 h-32 sm:w-40 sm:h-40 shrink-0">
+                  <img
+                    src={shareCardImage}
+                    alt="Story Pros downloadable share graphic"
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                    width={1024}
+                    height={1024}
+                  />
+                </div>
+                <div className="flex-1">
+                  <Button
+                    onClick={handleDownloadShareImage}
+                    className="bg-primary hover:bg-primary/90 text-primary-foreground flex items-center gap-2"
+                  >
+                    <Download className="h-4 w-4" />
+                    Download image
+                  </Button>
+                  <p className="text-xs text-muted-foreground mt-3 leading-snug">
+                    Tip: pair it with a copied script below for a one-tap post. We trust you — points are awarded when you tap a share button. Real referrals also award bonus points when someone joins through your link.
+                  </p>
+                </div>
+              </div>
             </div>
           </Card>
         </motion.div>
@@ -851,6 +858,47 @@ const StoryProsDashboard = () => {
             </div>
           </Card>
         </motion.div>
+
+        {/* Interactive preview gating */}
+        {currentTier >= 3 ? (
+          <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.42 }}>
+            <Card className="bg-background border border-border rounded-2xl shadow-sm p-4 sm:p-6">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="font-sans font-bold text-foreground">Interactive Story Preview</h3>
+                <Badge className="bg-primary/20 text-primary">Tier 4 Exclusive</Badge>
+              </div>
+              <p className="text-sm text-muted-foreground mb-4">
+                As a Tier 4 member, you have early access to the Story Pros experience. Try an interactive story below.
+              </p>
+              <div className="rounded-xl overflow-hidden border border-border">
+                <iframe
+                  src="https://storyprospreview.lovable.app/preview/story/11111111-1111-1111-1111-111111111111"
+                  className="w-full h-[600px] sm:h-[900px]"
+                  title="Story Pros Interactive Preview"
+                  allow="fullscreen"
+                />
+              </div>
+            </Card>
+          </motion.div>
+        ) : (
+          <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.42 }}>
+            <Card className="bg-background border border-border rounded-2xl shadow-sm p-4 sm:p-6 relative overflow-hidden">
+              <div className="absolute inset-0 bg-white/80 backdrop-blur-sm z-10 flex flex-col items-center justify-center">
+                <Lock className="h-8 w-8 text-muted-foreground mb-2" />
+                <p className="font-semibold text-foreground">Interactive Preview</p>
+                <p className="text-sm text-muted-foreground">
+                  Reach Tier 4 ({TIER_THRESHOLDS[3]} pts) to unlock
+                </p>
+              </div>
+              <div className="opacity-20">
+                <h3 className="font-sans font-bold text-foreground mb-4">Interactive Story Preview</h3>
+                <div className="rounded-xl overflow-hidden" style={{ height: "400px" }}>
+                  <img src={storyPreviewBg} alt="" className="w-full h-full object-cover" />
+                </div>
+              </div>
+            </Card>
+          </motion.div>
+        )}
 
         {/* Tier rewards / Claim / Coin Packs */}
         <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.45 }}>
