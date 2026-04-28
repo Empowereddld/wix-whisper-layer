@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -22,11 +22,29 @@ interface FindMyDashboardLinkProps {
  * "Already signed up? Find my dashboard" recovery flow.
  * Opens a dialog where the user enters their email; if it matches a
  * waitlist row we email them a one-tap link back to /storypros/dashboard.
+ *
+ * Auto-opens when the URL contains ?find=1 (used as a fallback target
+ * from VerifySuccess when no referral code is available).
  */
 const FindMyDashboardLink = ({ className }: FindMyDashboardLinkProps) => {
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [submitting, setSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("find") === "1") {
+      setOpen(true);
+      params.delete("find");
+      const newSearch = params.toString();
+      window.history.replaceState(
+        {},
+        "",
+        window.location.pathname + (newSearch ? `?${newSearch}` : "") + window.location.hash
+      );
+    }
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
