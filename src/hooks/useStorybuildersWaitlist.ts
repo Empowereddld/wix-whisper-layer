@@ -145,10 +145,16 @@ export function useStorybuildersWaitlist() {
   // we want THIS device to update without a manual reload. We subscribe to
   // postgres_changes filtered by their referral_code, and also refetch
   // whenever the tab regains focus (safety net for dropped sockets / mobile
-  // tab suspension).
+  // tab suspension). Uses a ref to refreshStatsInternal so we can declare
+  // this effect before the function (avoids TDZ issues).
+  const refreshStatsInternalRef = useRef<((code: string) => Promise<void>) | null>(null);
   useEffect(() => {
     const code = state.referralCode;
     if (!code) return;
+
+    const run = (c: string) => {
+      refreshStatsInternalRef.current?.(c);
+    };
 
     const userChannel = supabase
       .channel(`storybuilders_waitlist_user_${code}`)
@@ -160,16 +166,12 @@ export function useStorybuildersWaitlist() {
           table: "storybuilders_waitlist",
           filter: `referral_code=eq.${code}`,
         },
-        () => {
-          refreshStatsInternal(code);
-        }
+        () => run(code)
       )
       .subscribe();
 
     const handleVisible = () => {
-      if (document.visibilityState === "visible") {
-        refreshStatsInternal(code);
-      }
+      if (document.visibilityState === "visible") run(code);
     };
     document.addEventListener("visibilitychange", handleVisible);
     window.addEventListener("focus", handleVisible);
@@ -179,7 +181,7 @@ export function useStorybuildersWaitlist() {
       document.removeEventListener("visibilitychange", handleVisible);
       window.removeEventListener("focus", handleVisible);
     };
-  }, [state.referralCode, refreshStatsInternal]);
+  }, [state.referralCode]);
 
   const getRefFromUrl = useCallback((): string | undefined => {
     if (typeof window === "undefined") return undefined;
