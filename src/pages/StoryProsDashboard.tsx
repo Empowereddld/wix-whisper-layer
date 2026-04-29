@@ -876,7 +876,7 @@ const StoryProsDashboard = () => {
             </div>
 
             {/* Scripts to share */}
-            <div className="mt-6 pt-6 border-t border-border">
+            <div className="mt-5 pt-5 border-t border-border">
               <ScriptCarousel referralLink={wl.referralLink || ""} />
             </div>
 
