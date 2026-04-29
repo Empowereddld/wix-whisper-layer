@@ -371,10 +371,10 @@ const SharePostFlow = ({ referralLink, onShareTracked }: SharePostFlowProps) => 
         Sharing helps more families discover this support 💛
       </p>
 
-      {/* Optional preview — sized like a phone-feed tile */}
+      {/* Optional preview — sized smaller than the featured image */}
       {previewOpen && (
         <div className="mt-4 flex justify-center">
-          <div className="bg-background rounded-xl border border-border overflow-hidden w-full max-w-[320px] shadow-sm">
+          <div className="bg-background rounded-xl border border-border overflow-hidden w-full max-w-[220px] sm:max-w-[240px] shadow-sm">
             <div className="px-3 py-1.5 bg-muted/40 border-b border-border">
               <p className="text-[10px] uppercase tracking-wide text-muted-foreground font-semibold">
                 Preview
@@ -383,7 +383,7 @@ const SharePostFlow = ({ referralLink, onShareTracked }: SharePostFlowProps) => 
             <div className="aspect-[4/5] w-full overflow-hidden bg-muted/40">
               <img src={active.image} alt={active.alt} className="w-full h-full object-cover" />
             </div>
-            <div className="p-3 text-[13px] leading-snug whitespace-pre-wrap text-foreground">
+            <div className="p-2.5 text-[12px] leading-snug whitespace-pre-wrap text-foreground">
               {captionWithLink}
             </div>
           </div>
