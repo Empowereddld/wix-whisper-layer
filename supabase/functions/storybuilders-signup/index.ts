@@ -168,7 +168,7 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const { name, email, ref, is_speech_professional } = await req.json();
+    const { name, email, ref, is_speech_professional, role, role_other } = await req.json();
 
     if (!name || !email) {
       return new Response(JSON.stringify({ error: "Name and email are required" }), {
@@ -176,7 +176,35 @@ Deno.serve(async (req) => {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
-    const isSpeechPro = is_speech_professional === true;
+
+    // Role is optional for backwards-compat with any older callers, but if
+    // supplied it must be one of the known codes. "other" requires role_other.
+    const ALLOWED_ROLES = ["parent", "speech_pro", "other"];
+    let normalizedRole: string | null = null;
+    let normalizedRoleOther: string | null = null;
+    if (typeof role === "string" && role.length > 0) {
+      if (!ALLOWED_ROLES.includes(role)) {
+        return new Response(JSON.stringify({ error: "Invalid role" }), {
+          status: 400,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      normalizedRole = role;
+      if (role === "other") {
+        const detail = typeof role_other === "string" ? role_other.trim() : "";
+        if (!detail) {
+          return new Response(JSON.stringify({ error: "Tell us a bit more about your role." }), {
+            status: 400,
+            headers: { ...corsHeaders, "Content-Type": "application/json" },
+          });
+        }
+        normalizedRoleOther = detail.slice(0, 60);
+      }
+    }
+
+    // Selecting Speech Professional as your role implicitly self-IDs as one
+    // (admins still verify before the +50 bonus is awarded).
+    const isSpeechPro = is_speech_professional === true || normalizedRole === "speech_pro";
 
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
     const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
