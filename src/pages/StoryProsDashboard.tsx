@@ -38,6 +38,7 @@ import confetti from "canvas-confetti";
 import SEOHead from "@/components/SEOHead";
 import RewardsInventory from "@/components/waitlist/RewardsInventory";
 import ScriptCarousel from "@/components/waitlist/ScriptCarousel";
+import SharePostFlow from "@/components/waitlist/SharePostFlow";
 import { useStorybuildersWaitlist } from "@/hooks/useStorybuildersWaitlist";
 import {
   TIER_NAMES,
