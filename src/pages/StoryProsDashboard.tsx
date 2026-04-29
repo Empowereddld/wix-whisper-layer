@@ -50,6 +50,11 @@ import {
   SOCIAL_LINKS,
 } from "@/lib/waitlist-constants";
 import { getTierName } from "@/lib/waitlist-utils";
+import { ROLE_OPTIONS, ROLE_OTHER_MAX_LENGTH, formatRole, isValidRoleSelection } from "@/lib/storypros-roles";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import storyPreviewBg from "@/assets/story-preview-bg.png";
 import storypros from "@/assets/storybuilders-hero.png";
 import shareCardImage from "@/assets/storypros-share-card.jpg";
@@ -61,6 +66,29 @@ const StoryProsDashboard = () => {
   const [resending, setResending] = useState(false);
   const [authHydrating, setAuthHydrating] = useState(false);
   const [recoveryInvalid, setRecoveryInvalid] = useState(false);
+  const [roleEditOpen, setRoleEditOpen] = useState(false);
+  const [roleDraft, setRoleDraft] = useState<string>("");
+  const [roleOtherDraft, setRoleOtherDraft] = useState<string>("");
+  const [savingRole, setSavingRole] = useState(false);
+
+  const handleSaveRole = async () => {
+    if (!isValidRoleSelection(roleDraft, roleOtherDraft)) {
+      toast.error(roleDraft === "other"
+        ? "Please tell us a bit more about your role."
+        : "Please pick a role.");
+      return;
+    }
+    setSavingRole(true);
+    const detail = roleDraft === "other" ? roleOtherDraft.trim().slice(0, ROLE_OTHER_MAX_LENGTH) : null;
+    const res = await wl.updateRole(roleDraft, detail);
+    setSavingRole(false);
+    if (res.success) {
+      toast.success("Role updated.");
+      setRoleEditOpen(false);
+    } else {
+      toast.error(res.error || "Could not save your role.");
+    }
+  };
 
   // Handle ?ref=CODE recovery links emailed via the "Find my dashboard" flow.
   // If the code matches a row, seed localStorage so the dashboard hydrates.
