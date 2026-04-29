@@ -452,7 +452,12 @@ export function useStorybuildersWaitlist() {
   );
 
   const updateProfile = useCallback(
-    async (updates: { name?: string; isSpeechProfessional?: boolean }): Promise<{ success: boolean; error?: string }> => {
+    async (updates: {
+      name?: string;
+      isSpeechProfessional?: boolean;
+      role?: string;
+      roleOther?: string | null;
+    }): Promise<{ success: boolean; error?: string }> => {
       if (!state.referralCode) {
         return { success: false, error: "Not on the waitlist yet." };
       }
@@ -462,6 +467,8 @@ export function useStorybuildersWaitlist() {
             referral_code: state.referralCode,
             name: updates.name,
             is_speech_professional: updates.isSpeechProfessional,
+            role: updates.role,
+            role_other: updates.roleOther,
           },
         });
         if (error) {
@@ -481,13 +488,23 @@ export function useStorybuildersWaitlist() {
             name: profile.name ?? s.name,
             isSpeechProfessional: !!profile.is_speech_professional,
             speechProfessionalVerified: !!profile.speech_professional_verified,
+            role: (profile.role as string | null) ?? s.role,
+            roleOther: (profile.role_other as string | null) ?? null,
           }));
-          // Keep localStorage in sync if the name changed
+          // Keep localStorage in sync
           const saved = localStorage.getItem(STORAGE_KEY);
           if (saved) {
             try {
               const parsed = JSON.parse(saved);
-              localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...parsed, name: profile.name }));
+              localStorage.setItem(
+                STORAGE_KEY,
+                JSON.stringify({
+                  ...parsed,
+                  name: profile.name ?? parsed.name,
+                  role: profile.role ?? parsed.role ?? null,
+                  roleOther: profile.role_other ?? null,
+                })
+              );
             } catch {}
           }
         }
@@ -500,6 +517,13 @@ export function useStorybuildersWaitlist() {
       }
     },
     [state.referralCode]
+  );
+
+  const updateRole = useCallback(
+    async (role: string, roleOther: string | null): Promise<{ success: boolean; error?: string }> => {
+      return updateProfile({ role, roleOther });
+    },
+    [updateProfile]
   );
 
   const trackShare = useCallback(
