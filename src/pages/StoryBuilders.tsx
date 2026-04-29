@@ -544,6 +544,8 @@ const StoryBuilders = () => {
   const formRef = useRef<HTMLDivElement>(null);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [role, setRole] = useState<string>("");
+  const [roleOther, setRoleOther] = useState("");
   const [copied, setCopied] = useState(false);
   const wl = useStorybuildersWaitlist();
 
@@ -556,7 +558,19 @@ const StoryBuilders = () => {
       toast.error("Please enter your name, not your email.");
       return;
     }
-    const result = await wl.joinWaitlist(name, email);
+    if (!role) {
+      toast.error("Please tell us who you are.");
+      return;
+    }
+    const trimmedOther = roleOther.trim();
+    if (role === "other" && !trimmedOther) {
+      toast.error("Please tell us a bit more about your role.");
+      return;
+    }
+    const result = await wl.joinWaitlist(name, email, {
+      role,
+      roleOther: role === "other" ? trimmedOther.slice(0, 60) : null,
+    });
     if (result) {
       if (result.already_joined) {
         toast.success("You're already on the list! Welcome back.");
