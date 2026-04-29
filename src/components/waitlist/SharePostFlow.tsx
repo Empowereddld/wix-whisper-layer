@@ -290,64 +290,111 @@ const SharePostFlow = ({ referralLink, onShareTracked }: SharePostFlowProps) => 
         Pick a vibe, tweak the caption, and share. Sharing helps more families discover this support 💛
       </p>
 
-      {/* STEP 1: Featured image — capped so vertical posters don't dominate */}
-      <div className="mb-5">
-        <p className="text-xs uppercase tracking-wide text-muted-foreground mb-2 font-semibold">
-          Start here
-        </p>
-        <div className="w-full mx-auto rounded-xl border border-border overflow-hidden bg-muted/40 flex items-center justify-center max-w-[260px] sm:max-w-[300px]">
-          <img
-            src={active.image}
-            alt={active.alt}
-            className="w-full h-auto max-h-[260px] sm:max-h-[300px] object-contain"
-            loading="lazy"
-          />
+      {/* Two-column layout on desktop: image carousel on the left, caption editor on the right */}
+      <div className="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-5 lg:gap-6 items-start">
+        {/* LEFT: Manual carousel */}
+        <div>
+          <p className="text-xs uppercase tracking-wide text-muted-foreground mb-2 font-semibold">
+            Start here
+          </p>
+          <div className="relative w-full mx-auto max-w-[260px] sm:max-w-[300px] lg:max-w-none">
+            <div className="rounded-xl border border-border overflow-hidden bg-muted/40 flex items-center justify-center">
+              <img
+                src={active.image}
+                alt={active.alt}
+                className="w-full h-auto max-h-[260px] sm:max-h-[300px] lg:max-h-[340px] object-contain"
+                loading="lazy"
+              />
+            </div>
+            {/* Prev / Next */}
+            <button
+              type="button"
+              onClick={goPrev}
+              aria-label="Previous post"
+              className="absolute top-1/2 -translate-y-1/2 left-1 sm:-left-3 h-9 w-9 rounded-full bg-background border border-border shadow-sm flex items-center justify-center text-foreground hover:bg-muted transition-colors"
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </button>
+            <button
+              type="button"
+              onClick={goNext}
+              aria-label="Next post"
+              className="absolute top-1/2 -translate-y-1/2 right-1 sm:-right-3 h-9 w-9 rounded-full bg-background border border-border shadow-sm flex items-center justify-center text-foreground hover:bg-muted transition-colors"
+            >
+              <ChevronRight className="h-5 w-5" />
+            </button>
+          </div>
+          {/* Dots */}
+          <div className="mt-3 flex items-center justify-center gap-1.5">
+            {POSTS.map((p, i) => {
+              const selected = i === activeIndex;
+              return (
+                <button
+                  key={p.id}
+                  type="button"
+                  onClick={() => goTo(i)}
+                  aria-label={`Go to post ${i + 1}`}
+                  aria-current={selected}
+                  className={cn(
+                    "h-2 rounded-full transition-all",
+                    selected ? "w-5 bg-primary" : "w-2 bg-border hover:bg-primary/40"
+                  )}
+                />
+              );
+            })}
+          </div>
+          <p className="mt-1.5 text-center text-[11px] text-muted-foreground">
+            {activeIndex + 1} of {POSTS.length}
+          </p>
+        </div>
+
+        {/* RIGHT: Caption style + editor */}
+        <div>
+          {/* Caption style selector — smaller pills */}
+          <div className="mb-4">
+            <p className="text-xs uppercase tracking-wide text-muted-foreground mb-2 font-semibold">
+              Choose a caption style
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {([
+                { id: "broad" as const, label: "General" },
+                { id: "dld_aware" as const, label: "Educational" },
+              ]).map((opt) => {
+                const selected = style === opt.id;
+                return (
+                  <button
+                    key={opt.id}
+                    type="button"
+                    onClick={() => setStyle(opt.id)}
+                    className={cn(
+                      "rounded-full border px-3 py-1 text-xs font-medium transition-all",
+                      selected
+                        ? "border-primary bg-primary/5 text-foreground ring-1 ring-primary/30"
+                        : "border-border bg-background text-muted-foreground hover:border-primary/40 hover:text-foreground"
+                    )}
+                    aria-pressed={selected}
+                  >
+                    {opt.label}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Editable caption */}
+          <div>
+            <Textarea
+              value={caption}
+              onChange={(e) => handleCaptionChange(e.target.value)}
+              rows={8}
+              className="resize-y min-h-[180px] lg:min-h-[240px] text-sm leading-relaxed w-full"
+            />
+            <p className="text-xs text-muted-foreground mt-1.5">Make it your own if you'd like</p>
+          </div>
         </div>
       </div>
 
-      {/* STEP 2: Caption style selector */}
-      <div className="mb-4">
-        <p className="text-xs uppercase tracking-wide text-muted-foreground mb-2 font-semibold">
-          Choose a caption style
-        </p>
-        <div className="grid grid-cols-2 gap-2">
-          {([
-            { id: "broad" as const, label: "Broad / viral-friendly" },
-            { id: "dld_aware" as const, label: "DLD-aware / educational" },
-          ]).map((opt) => {
-            const selected = style === opt.id;
-            return (
-              <button
-                key={opt.id}
-                type="button"
-                onClick={() => setStyle(opt.id)}
-                className={cn(
-                  "rounded-lg border px-3 py-2 text-sm text-left transition-all",
-                  selected
-                    ? "border-primary bg-primary/5 text-foreground ring-1 ring-primary/30"
-                    : "border-border bg-background text-muted-foreground hover:border-primary/40 hover:text-foreground"
-                )}
-                aria-pressed={selected}
-              >
-                {opt.label}
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* STEP 3: Editable caption */}
-      <div className="mb-5">
-        <Textarea
-          value={caption}
-          onChange={(e) => handleCaptionChange(e.target.value)}
-          rows={6}
-          className="resize-y min-h-[160px] sm:min-h-[140px] text-sm leading-relaxed w-full"
-        />
-        <p className="text-xs text-muted-foreground mt-1.5">Make it your own if you'd like</p>
-      </div>
-
-      {/* STEP 4: Primary actions — primary stands alone, secondaries cluster */}
+      {/* Primary actions */}
       <div className="mt-5 pt-4 border-t border-border flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <Button
           onClick={handleCopyBoth}
@@ -380,7 +427,7 @@ const SharePostFlow = ({ referralLink, onShareTracked }: SharePostFlowProps) => 
         Sharing helps more families discover this support 💛
       </p>
 
-      {/* Optional preview — sized smaller than the featured image */}
+      {/* Optional preview */}
       {previewOpen && (
         <div className="mt-4 flex justify-center">
           <div className="bg-background rounded-xl border border-border overflow-hidden w-full max-w-[220px] sm:max-w-[240px] shadow-sm">
@@ -398,42 +445,6 @@ const SharePostFlow = ({ referralLink, onShareTracked }: SharePostFlowProps) => 
           </div>
         </div>
       )}
-
-      {/* STEP 5: See more post styles */}
-      <div className="mt-6 pt-5 border-t border-border">
-        <button
-          type="button"
-          onClick={() => setShowMore((v) => !v)}
-          className="flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-primary/80 transition-colors"
-        >
-          {showMore ? "Hide post styles" : "See more post styles"}
-          {showMore ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
-        </button>
-
-        {showMore && (
-          <div className="mt-4 flex gap-3 overflow-x-auto pb-2 sm:grid sm:grid-cols-3 sm:overflow-visible">
-            {POSTS.map((p) => {
-              const selected = p.id === activeId;
-              return (
-                <button
-                  key={p.id}
-                  type="button"
-                  onClick={() => handleSelectPost(p.id)}
-                  className={cn(
-                    "flex-shrink-0 w-32 sm:w-auto aspect-square rounded-lg border-2 overflow-hidden transition-all bg-muted",
-                    selected
-                      ? "border-primary ring-2 ring-primary/30"
-                      : "border-border hover:border-primary/40"
-                  )}
-                  aria-pressed={selected}
-                >
-                  <img src={p.image} alt={p.alt} className="w-full h-full object-cover" />
-                </button>
-              );
-            })}
-          </div>
-        )}
-      </div>
     </Card>
   );
 };
