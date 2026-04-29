@@ -633,7 +633,7 @@ const StoryProsDashboard = () => {
       )}
 
       {/* Main content */}
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-4 sm:space-y-6">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-5 sm:space-y-7">
         {/* Tier Progress + Referrals */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
           <motion.div
@@ -682,14 +682,18 @@ const StoryProsDashboard = () => {
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.15 }}
           >
-            <Card className="bg-background border border-border rounded-2xl shadow-sm p-4 sm:p-6">
+            <Card className="bg-background border border-border rounded-2xl shadow-sm p-4 sm:p-6 h-full">
               <p className="text-xs text-muted-foreground uppercase tracking-wide font-semibold">
                 Referrals
               </p>
               <p className="text-3xl font-bold text-primary mt-1">{wl.inviteCount}</p>
-              {wl.inviteCount === 0 && (
+              {wl.inviteCount === 0 ? (
                 <p className="text-xs text-muted-foreground mt-2 leading-snug">
                   No referrals yet. Invite your first friend and earn +25 pts (plus a +10 first-referral bonus).
+                </p>
+              ) : (
+                <p className="text-xs text-emerald-600 mt-2 leading-snug font-medium">
+                  +{wl.inviteCount * REPEATABLE_POINTS.REFERRAL} pts earned from referrals
                 </p>
               )}
             </Card>
