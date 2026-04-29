@@ -375,7 +375,7 @@ const SharePostFlow = ({ referralLink, onShareTracked }: SharePostFlowProps) => 
           className="bg-primary hover:bg-primary/90 text-primary-foreground w-full sm:w-auto sm:min-w-[220px] flex items-center gap-2"
         >
           <Copy className="h-4 w-4" />
-          Copy Caption & Image
+          Copy Caption
         </Button>
         <div className="flex flex-wrap items-center gap-2 sm:gap-3 sm:justify-end">
           <Button onClick={handleShare} variant="outline" size="sm" className="flex items-center gap-2">
