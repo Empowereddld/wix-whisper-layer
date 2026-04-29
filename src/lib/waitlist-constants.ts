@@ -152,9 +152,9 @@ export const DAILY_CAPS = {
 } as const;
 
 // --- SOCIAL LINKS (for follow/subscribe buttons) ---
-// NOTE: Story Pros Instagram is not yet created — placeholder for now.
+// Using the shared Empowered DLD Instagram (no separate Story Pros account).
 export const SOCIAL_LINKS = {
-  INSTAGRAM: "https://www.instagram.com/storypros.app/",
+  INSTAGRAM: "https://www.instagram.com/empowered.dld/",
   FACEBOOK: "https://www.facebook.com/share/g/1Gjtr63eT5/",
   YOUTUBE: "https://www.youtube.com/@EmpoweredDLD",
 } as const;

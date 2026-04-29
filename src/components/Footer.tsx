@@ -40,7 +40,7 @@ const usefulLinks = [
 const socialLinks = [
   { Icon: FacebookFilled, label: "Facebook", href: "https://www.facebook.com/share/g/1GCdxhWtfB/" },
   { Icon: YouTubeFilled, label: "YouTube", href: "https://www.youtube.com/@EmpoweredDLDParenting" },
-  { Icon: InstagramFilled, label: "Instagram", href: "https://www.instagram.com/empowered.dld.parenting" },
+  { Icon: InstagramFilled, label: "Instagram", href: "https://www.instagram.com/empowered.dld/" },
 ];
 
 const Footer = () => {
