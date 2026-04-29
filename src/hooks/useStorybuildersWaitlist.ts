@@ -851,6 +851,7 @@ export function useStorybuildersWaitlist() {
     autoJoinFromAuth,
     linkAuthAccount,
     updateProfile,
+    updateRole,
     signOut,
   };
 }
