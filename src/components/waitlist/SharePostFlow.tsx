@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Copy, Download, Share2, Eye, ChevronDown, ChevronUp } from "lucide-react";
+import { Copy, Download, Share2, Eye, ChevronLeft, ChevronRight } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import joinedEarlyImg from "@/assets/storypros-posts/joined_early_vertical.png";
