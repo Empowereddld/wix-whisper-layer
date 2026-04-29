@@ -50,6 +50,11 @@ import {
   SOCIAL_LINKS,
 } from "@/lib/waitlist-constants";
 import { getTierName } from "@/lib/waitlist-utils";
+import { ROLE_OPTIONS, ROLE_OTHER_MAX_LENGTH, formatRole, isValidRoleSelection } from "@/lib/storypros-roles";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import storyPreviewBg from "@/assets/story-preview-bg.png";
 import storypros from "@/assets/storybuilders-hero.png";
 import shareCardImage from "@/assets/storypros-share-card.jpg";
@@ -61,6 +66,29 @@ const StoryProsDashboard = () => {
   const [resending, setResending] = useState(false);
   const [authHydrating, setAuthHydrating] = useState(false);
   const [recoveryInvalid, setRecoveryInvalid] = useState(false);
+  const [roleEditOpen, setRoleEditOpen] = useState(false);
+  const [roleDraft, setRoleDraft] = useState<string>("");
+  const [roleOtherDraft, setRoleOtherDraft] = useState<string>("");
+  const [savingRole, setSavingRole] = useState(false);
+
+  const handleSaveRole = async () => {
+    if (!isValidRoleSelection(roleDraft, roleOtherDraft)) {
+      toast.error(roleDraft === "other"
+        ? "Please tell us a bit more about your role."
+        : "Please pick a role.");
+      return;
+    }
+    setSavingRole(true);
+    const detail = roleDraft === "other" ? roleOtherDraft.trim().slice(0, ROLE_OTHER_MAX_LENGTH) : null;
+    const res = await wl.updateRole(roleDraft, detail);
+    setSavingRole(false);
+    if (res.success) {
+      toast.success("Role updated.");
+      setRoleEditOpen(false);
+    } else {
+      toast.error(res.error || "Could not save your role.");
+    }
+  };
 
   // Handle ?ref=CODE recovery links emailed via the "Find my dashboard" flow.
   // If the code matches a row, seed localStorage so the dashboard hydrates.
@@ -472,28 +500,56 @@ const StoryProsDashboard = () => {
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <button
-                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border-2 border-[#dedede] bg-gray-100 flex items-center justify-center hover:border-[#8861d4] transition-colors shrink-0"
+                    className="flex flex-col items-center gap-0.5 group shrink-0"
                     aria-label="Profile menu"
                   >
-                    <UserIcon className="h-4 w-4 sm:h-5 sm:w-5 text-gray-500" />
+                    <span className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border-2 border-[#dedede] bg-gray-100 flex items-center justify-center group-hover:border-[#8861d4] transition-colors">
+                      <UserIcon className="h-4 w-4 sm:h-5 sm:w-5 text-gray-500" />
+                    </span>
+                    <span className="text-[10px] font-semibold text-gray-500 group-hover:text-[#8861d4] transition-colors leading-none">
+                      Profile
+                    </span>
                   </button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-64">
+                <DropdownMenuContent align="end" className="w-72">
                   <DropdownMenuLabel className="font-normal">
-                    <div className="flex flex-col gap-1">
+                    <div className="flex flex-col gap-1.5">
                       <p className="text-sm font-semibold text-foreground truncate">
                         {wl.name || "Story Pros member"}
                       </p>
                       <p className="text-xs text-muted-foreground truncate">
                         {wl.email || "—"}
                       </p>
-                      <p className="text-xs text-[#8861d4] font-medium mt-1">
-                        {wl.isSpeechProfessional
-                          ? wl.speechProfessionalVerified
-                            ? "Speech Professional ✓"
-                            : "Speech Professional (pending)"
-                          : "Family / Supporter"}
-                      </p>
+                      <div className="flex items-center justify-between gap-2 mt-1">
+                        {wl.role ? (
+                          <p className="text-xs text-[#8861d4] font-medium truncate">
+                            {formatRole(wl.role, wl.roleOther)}
+                          </p>
+                        ) : (
+                          <p className="text-xs text-muted-foreground italic">
+                            Add your role
+                          </p>
+                        )}
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setRoleDraft(wl.role || "");
+                            setRoleOtherDraft(wl.roleOther || "");
+                            setRoleEditOpen(true);
+                          }}
+                          className="text-[11px] font-semibold text-[#8861d4] hover:underline shrink-0"
+                        >
+                          {wl.role ? "Edit" : "Set"}
+                        </button>
+                      </div>
+                      {wl.role === "speech_pro" && (
+                        <p className="text-[11px] text-muted-foreground mt-0.5">
+                          {wl.speechProfessionalVerified
+                            ? "Verified ✓ (+50 pts awarded)"
+                            : "Pending verification"}
+                        </p>
+                      )}
                     </div>
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />

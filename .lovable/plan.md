@@ -1,53 +1,71 @@
-## Goal
+## Add Role to Story Pros Signup + Editable Profile Dropdown
 
-1. Clean up the signup form on `/storypros` — name, email, Join. Nothing else.
-2. Make the email verification page send people back to `/storypros` (their dashboard) instead of a Supabase-hosted "Email Verified" page.
-3. Add a "Your details" card to the post-signup dashboard view on `/storypros` where the user can:
-   - Confirm/correct their **name** (in case they typed an email or made a typo)
-   - Tick **"I'm a speech-language professional"** to claim the +50 bonus after admin verification
-   - See whether their email is verified, and resend if not
+### What changes for users
 
-## Changes
+**At signup (`/storypros`):**
+A required "I am a..." dropdown appears under name + email with 3 options:
+- Parent / Caregiver
+- Speech Professional
+- Other
 
-### 1. Signup form cleanup (`src/pages/StoryBuilders.tsx`)
+If "Other" is selected, a second text input appears: **"Tell us a bit more"** (required, max 60 chars).
 
-- Remove the SLP checkbox + label in **both** signup forms (hero around line 449 and the second form around line 931).
-- Remove `isSpeechPro` state and stop passing it into `joinWaitlist(...)`.
-- Form keeps Name + Email + Join button only.
+**On the dashboard profile button (top-right):**
+- Add a small **"Profile"** label under the user icon so it's discoverable.
 
-### 2. Verification redirect (`supabase/functions/verify-email-waitlist/index.ts`)
+**Inside the profile dropdown (after verification):**
+- Display Name → Email → **Role** (with the friendly label, e.g. "Other: Grandparent").
+- A small "Edit" pencil opens a modal where the user can change role + the "Other" detail. Saves immediately and refreshes the dashboard.
+- Existing rows with no role on file show "Add your role" prompting them to set it.
+- Speech Professional verification pill (✓ / pending) only renders when role is `speech_pro`, so it doesn't duplicate.
 
-- On successful verification, redirect (HTTP 302) to `https://empowereddld.com/storypros?verified=1` instead of returning the standalone HTML success page.
-- Keep the existing error HTML page for failures (invalid token, expired, etc.) so users still get a clear message.
-- "Already verified" case also redirects to `/storypros?verified=already`.
+### Database
 
-### 3. New dashboard "Your details" card on `/storypros`
+Add two nullable columns to `storybuilders_waitlist`:
+- `role` text — values: `parent` | `speech_pro` | `other`
+- `role_other` text — only populated when `role = 'other'`, max 60 chars (validated app-side)
 
-When `wl.joined === true`, render a new card directly under the existing "Thank you" / referral area with:
+Both nullable so the 800+ existing rows are unaffected.
 
-- **Name field**: pre-filled with current name. If the stored name contains `@` (i.e. they accidentally typed their email), we show it highlighted with a small "Looks like an email — please enter your first name" hint and the Save button is the primary action. Saves via a new `update-waitlist-profile` edge function (service-role, looks user up by `id` from the waitlist record already in context).
-- **Email verification status**: green "Email verified" badge if `email_verified`; otherwise the existing amber `VerificationBanner` style with a Resend button.
-- **SLP self-ID checkbox**: "I'm a speech-language professional (SLP, SLT, Speech Therapist, etc.) — unlocks +50 bonus points after verification". Saving sets `is_speech_professional = true` on the waitlist row (the existing admin SLP verification queue then awards the +50 via `verify_speech_professional`). Once submitted, the checkbox locks and shows "Pending admin verification" or "Verified +50 pts" based on `speech_professional_verified`.
+### Frontend changes
 
-If `?verified=1` is present in the URL on mount, fire a confetti burst and show a success toast: "Email verified! +5 bonus points added." If `?verified=already`, just toast "Your email is already verified."
+**`src/lib/storypros-roles.ts`** (new):
+- Role codes, labels, and a `formatRole(role, roleOther)` helper that returns "Parent / Caregiver", "Speech Professional", or "Other: {detail}".
 
-### 4. New edge function: `update-waitlist-profile`
+**`src/pages/StoryBuilders.tsx`** (signup form):
+- Add `role` and `roleOther` state, render `<Select>` under email.
+- Conditionally render "Tell us a bit more" `<Input>` when role is `other`.
+- Block submit until role is chosen (and `roleOther` is non-empty when role is `other`).
+- Pass `{ role, roleOther }` into `wl.joinWaitlist()`.
 
-Inputs: `{ id, name?, is_speech_professional? }` where `id` is the waitlist row id (already known to the client because `joinWaitlist` returns the new row). Service role updates allowed fields only. Validates `name` is non-empty and does not contain `@`. Never lets the client flip `speech_professional_verified` directly.
+**`src/hooks/useStorybuildersWaitlist.ts`:**
+- Add `role` and `roleOther` to `WaitlistState` and the localStorage snapshot.
+- Update `joinWaitlist(name, email, { role, roleOther })` to insert role + role_other and set `is_speech_professional = role === 'speech_pro'`.
+- Add `updateRole({ role, roleOther })` that updates the row, keeps `is_speech_professional` flag in sync, refreshes stats. Never clears `speech_professional_verified` or claws back the +50 bonus.
+- Include `role` and `role_other` in the `refreshStats()` SELECT.
 
-### 5. Hook updates (`src/hooks/useStorybuildersWaitlist.ts`)
+**`src/pages/StoryProsDashboard.tsx`:**
+- Wrap profile avatar in a vertical flex with "Profile" label below.
+- In `DropdownMenuLabel`, replace the current Speech Professional pill with a Role line; show Speech Professional pill only when role is `speech_pro`.
+- Add edit Dialog: `<Select>` for role + conditional `<Input>` for "Other" detail, Save button calls `wl.updateRole()` and toasts success.
 
-- Drop the `isSpeechProfessional` argument from `joinWaitlist`.
-- Add `updateProfile({ name?, isSpeechProfessional? })` that calls the new edge function and refreshes local user state.
+**`src/pages/AdminStoryBuilders.tsx`:**
+- Add a "Role" column to the admin table using `formatRole(...)` so "Other" entries show their custom detail inline.
 
-## What we are NOT doing
+### Validation & safety
 
-- Not removing the existing admin SLP verification queue — admins still confirm professionals before +50 is awarded.
-- Not changing the welcome email copy (already locked).
-- Not touching auth.users / Supabase Auth — this is the waitlist record only.
+- Client-side: role required, `roleOther` required when role = other, trimmed, max 60 chars.
+- Edge: rely on existing `update-waitlist-profile` edge function pattern (extend it to accept `role` + `role_other`) so the client never writes directly. Service-role validates the same rules and rejects unknown role codes.
+- Switching away from Other clears `role_other`. Switching to Other pre-fills with previous answer if any.
 
-## Why this works
+### Files touched
 
-- Signup conversion stays maximally simple (name, email, join).
-- The dashboard becomes the natural place to fix bad data (Jinean-style "name is my email" mistakes) and to self-identify as an SLP, exactly as you described.
-- Verification feels like a real product moment: click the link, land in your dashboard, see confetti and your bonus points.
+```text
+supabase migration                           (add role, role_other columns)
+supabase/functions/update-waitlist-profile   (extend to accept role fields)
+src/lib/storypros-roles.ts                   (new — codes, labels, formatter)
+src/pages/StoryBuilders.tsx                  (signup form + state)
+src/hooks/useStorybuildersWaitlist.ts        (state + joinWaitlist + updateRole)
+src/pages/StoryProsDashboard.tsx             (Profile label, role row, edit modal)
+src/pages/AdminStoryBuilders.tsx             (Role column)
+```

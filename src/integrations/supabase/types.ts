@@ -615,6 +615,8 @@ export type Database = {
           points: number
           referral_code: string
           referred_by_code: string | null
+          role: string | null
+          role_other: string | null
           share_count: number
           shares_today: number
           social_claims: Json
@@ -654,6 +656,8 @@ export type Database = {
           points?: number
           referral_code: string
           referred_by_code?: string | null
+          role?: string | null
+          role_other?: string | null
           share_count?: number
           shares_today?: number
           social_claims?: Json
@@ -693,6 +697,8 @@ export type Database = {
           points?: number
           referral_code?: string
           referred_by_code?: string | null
+          role?: string | null
+          role_other?: string | null
           share_count?: number
           shares_today?: number
           social_claims?: Json

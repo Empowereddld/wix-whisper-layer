@@ -43,6 +43,8 @@ export interface WaitlistState {
   socialClaims: { instagram: boolean; facebook: boolean; youtube: boolean };
   isSpeechProfessional: boolean;
   speechProfessionalVerified: boolean;
+  role: string | null;
+  roleOther: string | null;
   loading: boolean;
   error: string | null;
   notifications: Notification[];
@@ -82,6 +84,8 @@ export function useStorybuildersWaitlist() {
     socialClaims: { instagram: false, facebook: false, youtube: false },
     isSpeechProfessional: false,
     speechProfessionalVerified: false,
+    role: null,
+    roleOther: null,
     loading: false,
     error: null,
     notifications: [],
@@ -305,6 +309,8 @@ export function useStorybuildersWaitlist() {
           },
           isSpeechProfessional: !!ud.is_speech_professional,
           speechProfessionalVerified: !!ud.speech_professional_verified,
+          role: (ud.role as string | null) ?? null,
+          roleOther: (ud.role_other as string | null) ?? null,
           loading: false,
         };
       });
@@ -328,6 +334,8 @@ export function useStorybuildersWaitlist() {
             points: userPoints,
             currentTier: getTierForPoints(userPoints),
             queuePosition: queuePosition ?? prev.queuePosition,
+            role: (ud.role as string | null) ?? prev.role ?? null,
+            roleOther: (ud.role_other as string | null) ?? prev.roleOther ?? null,
           })
         );
       } catch {}
@@ -374,12 +382,18 @@ export function useStorybuildersWaitlist() {
   }, [state.referralCode, refreshStatsInternal]);
 
   const joinWaitlist = useCallback(
-    async (name: string, email: string): Promise<JoinWaitlistResponse | null> => {
+    async (
+      name: string,
+      email: string,
+      opts?: { role?: string | null; roleOther?: string | null }
+    ): Promise<JoinWaitlistResponse | null> => {
       setState((s) => ({ ...s, loading: true, error: null }));
       try {
         const ref = getRefFromUrl();
+        const role = opts?.role ?? null;
+        const roleOther = opts?.roleOther ?? null;
         const { data, error } = await supabase.functions.invoke("storybuilders-signup", {
-          body: { name, email, ref },
+          body: { name, email, ref, role, role_other: roleOther },
         });
 
         if (error) throw new Error(error.message || "Failed to join");
@@ -396,6 +410,9 @@ export function useStorybuildersWaitlist() {
           currentTier: result.current_tier || getTierForPoints(result.points || 0),
           queuePosition: result.queue_position || null,
           totalCount: result.total_count,
+          role: role,
+          roleOther: roleOther,
+          isSpeechProfessional: role === "speech_pro",
           loading: false,
         };
 
@@ -416,6 +433,8 @@ export function useStorybuildersWaitlist() {
             points: newState.points,
             currentTier: newState.currentTier,
             queuePosition: newState.queuePosition,
+            role,
+            roleOther,
           })
         );
 
@@ -433,7 +452,12 @@ export function useStorybuildersWaitlist() {
   );
 
   const updateProfile = useCallback(
-    async (updates: { name?: string; isSpeechProfessional?: boolean }): Promise<{ success: boolean; error?: string }> => {
+    async (updates: {
+      name?: string;
+      isSpeechProfessional?: boolean;
+      role?: string;
+      roleOther?: string | null;
+    }): Promise<{ success: boolean; error?: string }> => {
       if (!state.referralCode) {
         return { success: false, error: "Not on the waitlist yet." };
       }
@@ -443,6 +467,8 @@ export function useStorybuildersWaitlist() {
             referral_code: state.referralCode,
             name: updates.name,
             is_speech_professional: updates.isSpeechProfessional,
+            role: updates.role,
+            role_other: updates.roleOther,
           },
         });
         if (error) {
@@ -462,13 +488,23 @@ export function useStorybuildersWaitlist() {
             name: profile.name ?? s.name,
             isSpeechProfessional: !!profile.is_speech_professional,
             speechProfessionalVerified: !!profile.speech_professional_verified,
+            role: (profile.role as string | null) ?? s.role,
+            roleOther: (profile.role_other as string | null) ?? null,
           }));
-          // Keep localStorage in sync if the name changed
+          // Keep localStorage in sync
           const saved = localStorage.getItem(STORAGE_KEY);
           if (saved) {
             try {
               const parsed = JSON.parse(saved);
-              localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...parsed, name: profile.name }));
+              localStorage.setItem(
+                STORAGE_KEY,
+                JSON.stringify({
+                  ...parsed,
+                  name: profile.name ?? parsed.name,
+                  role: profile.role ?? parsed.role ?? null,
+                  roleOther: profile.role_other ?? null,
+                })
+              );
             } catch {}
           }
         }
@@ -481,6 +517,13 @@ export function useStorybuildersWaitlist() {
       }
     },
     [state.referralCode]
+  );
+
+  const updateRole = useCallback(
+    async (role: string, roleOther: string | null): Promise<{ success: boolean; error?: string }> => {
+      return updateProfile({ role, roleOther });
+    },
+    [updateProfile]
   );
 
   const trackShare = useCallback(
@@ -782,6 +825,8 @@ export function useStorybuildersWaitlist() {
       socialClaims: { instagram: false, facebook: false, youtube: false },
       isSpeechProfessional: false,
       speechProfessionalVerified: false,
+      role: null,
+      roleOther: null,
       loading: false,
       error: null,
       notifications: [],
@@ -806,6 +851,7 @@ export function useStorybuildersWaitlist() {
     autoJoinFromAuth,
     linkAuthAccount,
     updateProfile,
+    updateRole,
     signOut,
   };
 }
