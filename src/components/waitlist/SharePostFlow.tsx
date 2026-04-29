@@ -243,7 +243,7 @@ const SharePostFlow = ({ referralLink, onShareTracked }: SharePostFlowProps) => 
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `story-pros-${active.id}.jpg`;
+      a.download = active.fileName;
       document.body.appendChild(a);
       a.click();
       a.remove();
