@@ -288,6 +288,8 @@ Deno.serve(async (req) => {
         email_verified: false,
         is_speech_professional: isSpeechPro,
         speech_professional_verified: false,
+        role: normalizedRole,
+        role_other: normalizedRoleOther,
       })
       .select("referral_code, invite_count, points, id")
       .single();
