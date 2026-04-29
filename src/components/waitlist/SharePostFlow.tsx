@@ -59,7 +59,7 @@ const POSTS: PostOption[] = [
 
 interface SharePostFlowProps {
   referralLink: string | null;
-  onShareTracked?: (platform: string) => void | Promise<void>;
+  onShareTracked?: (platform: string) => unknown | Promise<unknown>;
 }
 
 const SharePostFlow = ({ referralLink, onShareTracked }: SharePostFlowProps) => {
