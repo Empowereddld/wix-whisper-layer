@@ -1027,7 +1027,7 @@ const StoryProsDashboard = () => {
         {nextThreshold && TIER_REWARDS[currentTier + 1] && (
           <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.55 }}>
             <Card className="bg-gradient-to-br from-[#f3ebf8] to-white border border-[#8861d4]/20 rounded-2xl shadow-sm p-4 sm:p-6">
-              <h3 className="font-sans font-bold text-[#3b1f59] mb-2">
+              <h3 className="font-sans font-bold text-[#3b1f59] text-lg sm:text-xl mb-2">
                 Coming at {TIER_NAMES[currentTier + 1]} ({nextThreshold} pts)
               </h3>
               <p className="text-sm text-gray-600 mb-4">
