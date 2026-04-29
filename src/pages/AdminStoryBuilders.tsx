@@ -55,6 +55,7 @@ import StatsCard from "@/components/admin/StatsCard";
 import WaitlistAnalyticsChart from "@/components/admin/WaitlistAnalyticsChart";
 import BulkEmailComposer from "@/components/admin/BulkEmailComposer";
 import { getTierName, getTierForPoints } from "@/lib/waitlist-utils";
+import { formatRole } from "@/lib/storypros-roles";
 import { format } from "date-fns";
 
 // Aligned with actual storybuilders_waitlist table columns
