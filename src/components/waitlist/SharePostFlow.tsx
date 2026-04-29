@@ -332,8 +332,8 @@ const SharePostFlow = ({ referralLink, onShareTracked }: SharePostFlowProps) => 
         <Textarea
           value={caption}
           onChange={(e) => handleCaptionChange(e.target.value)}
-          rows={5}
-          className="resize-y min-h-[120px] text-sm leading-relaxed"
+          rows={6}
+          className="resize-y min-h-[160px] sm:min-h-[140px] text-sm leading-relaxed w-full"
         />
         <p className="text-xs text-muted-foreground mt-1.5">Make it your own if you'd like</p>
       </div>
