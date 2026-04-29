@@ -45,6 +45,7 @@ export interface WaitlistState {
   speechProfessionalVerified: boolean;
   role: string | null;
   roleOther: string | null;
+  rewardsClaimed: Record<string, { claimed_at: string }>;
   loading: boolean;
   error: string | null;
   notifications: Notification[];
@@ -86,6 +87,7 @@ export function useStorybuildersWaitlist() {
     speechProfessionalVerified: false,
     role: null,
     roleOther: null,
+    rewardsClaimed: {},
     loading: false,
     error: null,
     notifications: [],
@@ -311,6 +313,7 @@ export function useStorybuildersWaitlist() {
           speechProfessionalVerified: !!ud.speech_professional_verified,
           role: (ud.role as string | null) ?? null,
           roleOther: (ud.role_other as string | null) ?? null,
+          rewardsClaimed: (ud.rewards_claimed as Record<string, { claimed_at: string }>) || {},
           loading: false,
         };
       });
@@ -599,6 +602,64 @@ export function useStorybuildersWaitlist() {
     [state.referralCode, state.socialClaims, refreshStatsInternal]
   );
 
+  // Tier reward URLs / side-effects when claimed.
+  // EF Skills Guide PDF lives in the public 'resources' bucket.
+  const REWARD_URLS: Record<string, string> = {
+    tier_2_ef_guide:
+      "https://haafpznzuazanylcelse.supabase.co/storage/v1/object/public/resources/storypros/executive-function-skills-guide.pdf",
+  };
+
+  const claimReward = useCallback(
+    async (rewardId: string): Promise<boolean> => {
+      if (!state.referralCode) {
+        addNotification("error", "Join the waitlist first");
+        return false;
+      }
+      if (!state.emailVerified) {
+        addNotification("error", "Verify your email before claiming rewards");
+        return false;
+      }
+      if (state.rewardsClaimed[rewardId]) {
+        // Re-trigger the side effect (e.g. re-download) without DB write
+        const url = REWARD_URLS[rewardId];
+        if (url) window.open(url, "_blank", "noopener,noreferrer");
+        addNotification("info", "Already claimed");
+        return true;
+      }
+      try {
+        const { data, error } = await supabase.rpc("claim_waitlist_reward", {
+          p_referral_code: state.referralCode,
+          p_reward_id: rewardId,
+        });
+        if (error) throw error;
+        const row = (data as any)?.[0];
+        if (!row?.success) {
+          addNotification("error", row?.message || "Could not claim reward");
+          return false;
+        }
+        // Optimistic local update
+        setState((s) => ({
+          ...s,
+          rewardsClaimed: {
+            ...s.rewardsClaimed,
+            [rewardId]: { claimed_at: row.claimed_at || new Date().toISOString() },
+          },
+        }));
+        // Trigger side effect (download)
+        const url = REWARD_URLS[rewardId];
+        if (url) window.open(url, "_blank", "noopener,noreferrer");
+        addNotification("success", "Reward claimed!");
+        await refreshStatsInternal(state.referralCode);
+        return true;
+      } catch (err) {
+        console.error("Failed to claim reward:", err);
+        addNotification("error", "Could not claim reward");
+        return false;
+      }
+    },
+    [state.referralCode, state.emailVerified, state.rewardsClaimed, refreshStatsInternal]
+  );
+
   const resendVerification = useCallback(async (): Promise<boolean> => {
     if (!state.referralCode) {
       addNotification("error", "You must join the waitlist first");
@@ -827,6 +888,7 @@ export function useStorybuildersWaitlist() {
       speechProfessionalVerified: false,
       role: null,
       roleOther: null,
+      rewardsClaimed: {},
       loading: false,
       error: null,
       notifications: [],
@@ -840,6 +902,7 @@ export function useStorybuildersWaitlist() {
     trackShare,
     trackClick,
     claimSocialFollow,
+    claimReward,
     resendVerification,
     submitSuggestion,
     voteSuggestion,

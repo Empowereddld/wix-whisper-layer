@@ -615,6 +615,7 @@ export type Database = {
           points: number
           referral_code: string
           referred_by_code: string | null
+          rewards_claimed: Json
           role: string | null
           role_other: string | null
           share_count: number
@@ -656,6 +657,7 @@ export type Database = {
           points?: number
           referral_code: string
           referred_by_code?: string | null
+          rewards_claimed?: Json
           role?: string | null
           role_other?: string | null
           share_count?: number
@@ -697,6 +699,7 @@ export type Database = {
           points?: number
           referral_code?: string
           referred_by_code?: string | null
+          rewards_claimed?: Json
           role?: string | null
           role_other?: string | null
           share_count?: number
@@ -978,6 +981,15 @@ export type Database = {
           already_claimed: boolean
           message: string
           new_points: number
+          success: boolean
+        }[]
+      }
+      claim_waitlist_reward: {
+        Args: { p_referral_code: string; p_reward_id: string }
+        Returns: {
+          already_claimed: boolean
+          claimed_at: string
+          message: string
           success: boolean
         }[]
       }
