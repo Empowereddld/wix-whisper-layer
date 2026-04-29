@@ -848,41 +848,12 @@ const StoryProsDashboard = () => {
               <ScriptCarousel referralLink={wl.referralLink || ""} />
             </div>
 
-            {/* Downloadable graphic */}
-            <div className="mt-6 pt-6 border-t border-border">
-              <div className="flex items-center gap-2 mb-2">
-                <ImageIcon className="h-5 w-5 text-primary" />
-                <h3 className="font-sans font-bold text-foreground">Ready-to-Post Images</h3>
-              </div>
-              <p className="text-xs text-muted-foreground mb-4 leading-snug">
-                Download this graphic and post it anywhere you share — Instagram, Facebook, or stories. The scripts above are best for more personal messages; these images work as general post options.
-              </p>
-              <div className="flex flex-col sm:flex-row items-start gap-4">
-                <div className="rounded-xl border border-border overflow-hidden bg-white w-32 h-32 sm:w-40 sm:h-40 shrink-0">
-                  <img
-                    src={shareCardImage}
-                    alt="Story Pros downloadable share graphic"
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                    width={1024}
-                    height={1024}
-                  />
-                </div>
-                <div className="flex-1">
-                  <Button
-                    onClick={handleDownloadShareImage}
-                    className="bg-primary hover:bg-primary/90 text-primary-foreground flex items-center gap-2"
-                  >
-                    <Download className="h-4 w-4" />
-                    Download image
-                  </Button>
-                  <p className="text-xs text-muted-foreground mt-3 leading-snug">
-                    Points are awarded when you tap a share button. Real referrals also award bonus points when someone joins through your link.
-                  </p>
-                </div>
-              </div>
-            </div>
           </Card>
+        </motion.div>
+
+        {/* Share a Post (Make It Yours) — guided share-first flow */}
+        <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.37 }}>
+          <SharePostFlow referralLink={wl.referralLink} onShareTracked={wl.trackShare} />
         </motion.div>
 
         {/* Follow */}
