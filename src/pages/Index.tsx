@@ -21,7 +21,7 @@ const organizationJsonLd = {
   description: "Evidence-based resources, books, and community for families and professionals supporting children with Developmental Language Disorder (DLD).",
   sameAs: [
     "https://www.facebook.com/share/g/1GCdxhWtfB/",
-    "https://www.instagram.com/empowered.dld.parenting",
+    "https://www.instagram.com/empowered.dld/",
     "https://www.youtube.com/@EmpoweredDLDParenting"
   ]
 };
