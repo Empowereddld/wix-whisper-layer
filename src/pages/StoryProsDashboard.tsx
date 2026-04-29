@@ -956,13 +956,23 @@ const StoryProsDashboard = () => {
                 <h3 className="font-sans font-bold text-foreground">Interactive Story Preview</h3>
                 <Badge className="bg-primary/20 text-primary">Tier 4 Exclusive</Badge>
               </div>
-              <p className="text-sm text-muted-foreground mb-4">
-                As a Tier 4 member, you have early access to the Story Pros experience. Try an interactive story below.
-              </p>
+              <div className="flex items-center justify-between gap-3 mb-3 flex-wrap">
+                <p className="text-sm text-muted-foreground leading-snug flex-1 min-w-[200px]">
+                  As a Tier 4 member, you have early access to the Story Pros experience. Try an interactive story below.
+                </p>
+                <a
+                  href="https://storyprospreview.lovable.app/preview/story/11111111-1111-1111-1111-111111111111"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs font-semibold text-primary hover:text-primary/80 underline underline-offset-2"
+                >
+                  Open in full screen ↗
+                </a>
+              </div>
               <div className="rounded-xl overflow-hidden border border-border">
                 <iframe
                   src="https://storyprospreview.lovable.app/preview/story/11111111-1111-1111-1111-111111111111"
-                  className="w-full h-[600px] sm:h-[900px]"
+                  className="w-full h-[520px] sm:h-[900px]"
                   title="Story Pros Interactive Preview"
                   allow="fullscreen"
                 />
