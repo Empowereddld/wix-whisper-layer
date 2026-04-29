@@ -375,12 +375,9 @@ function getEmailTemplate(
         html: `
           <div style="${containerStyles}">
             <div style="${cardStyles}">
-              <div style="${headerStyles}">
-                <h1 style="margin: 0; font-size: 26px;">Tier 2 Unlocked</h1>
-                <p style="margin: 8px 0 0; opacity: 0.9; font-size: 14px;">Your free guide is ready.</p>
-              </div>
+              ${tierHero("Tier 2 Unlocked", "Your free guide is ready.")}
 
-              <div style="padding: 20px 0;">
+              <div style="${bodyPad}">
                 <p style="${baseStyles}">Hi ${name},</p>
 
                 <p style="${baseStyles}">
@@ -463,12 +460,9 @@ function getEmailTemplate(
         html: `
           <div style="${containerStyles}">
             <div style="${cardStyles}">
-              <div style="${headerStyles}">
-                <h1 style="margin: 0; font-size: 26px;">Tier 3 Unlocked</h1>
-                <p style="margin: 8px 0 0; opacity: 0.9; font-size: 14px;">50 Story Coins are yours.</p>
-              </div>
+              ${tierHero("Tier 3 Unlocked", "50 Story Coins are yours.")}
 
-              <div style="padding: 20px 0;">
+              <div style="${bodyPad}">
                 <p style="${baseStyles}">Hi ${name},</p>
 
                 <p style="${baseStyles}">
@@ -529,12 +523,9 @@ function getEmailTemplate(
         html: `
           <div style="${containerStyles}">
             <div style="${cardStyles}">
-              <div style="${headerStyles}">
-                <h1 style="margin: 0; font-size: 26px;">Tier 4 Unlocked</h1>
-                <p style="margin: 8px 0 0; opacity: 0.9; font-size: 14px;">VIP Beta Access is yours.</p>
-              </div>
+              ${tierHero("Tier 4 Unlocked", "VIP Beta Access is yours.")}
 
-              <div style="padding: 20px 0;">
+              <div style="${bodyPad}">
                 <p style="${baseStyles}">Hi ${name},</p>
 
                 <p style="${baseStyles}">This is a big one.</p>
@@ -613,12 +604,9 @@ function getEmailTemplate(
         html: `
           <div style="${containerStyles}">
             <div style="${cardStyles}">
-              <div style="${headerStyles}">
-                <h1 style="margin: 0; font-size: 26px;">Tier 5 Unlocked</h1>
-                <p style="margin: 8px 0 0; opacity: 0.9; font-size: 14px;">Founder Pricing is locked in. For life.</p>
-              </div>
+              ${tierHero("Tier 5 Unlocked", "Founder Pricing is locked in. For life.")}
 
-              <div style="padding: 20px 0;">
+              <div style="${bodyPad}">
                 <p style="${baseStyles}">Hi ${name},</p>
 
                 <p style="${baseStyles}">
@@ -719,12 +707,9 @@ function getEmailTemplate(
         html: `
           <div style="${containerStyles}">
             <div style="${cardStyles}">
-              <div style="${headerStyles}">
-                <h1 style="margin: 0; font-size: 26px;">Tier 6 Unlocked</h1>
-                <p style="margin: 8px 0 0; opacity: 0.9; font-size: 14px;">Signed book and Founder merch headed your way.</p>
-              </div>
+              ${tierHero("Tier 6 Unlocked", "Signed book and Founder merch headed your way.")}
 
-              <div style="padding: 20px 0;">
+              <div style="${bodyPad}">
                 <p style="${baseStyles}">Hi ${name},</p>
 
                 <p style="${baseStyles}"><strong>500 points. Tier 6. The final one.</strong></p>
@@ -810,12 +795,9 @@ function getEmailTemplate(
         html: `
           <div style="${containerStyles}">
             <div style="${cardStyles}">
-              <div style="${headerStyles}">
-                <h1 style="margin: 0; font-size: 26px;">Tier 6 Unlocked</h1>
-                <p style="margin: 8px 0 0; opacity: 0.9; font-size: 14px;">500 points. Here's everything you've earned.</p>
-              </div>
+              ${tierHero("Tier 6 Unlocked", "500 points. Here's everything you've earned.")}
 
-              <div style="padding: 20px 0;">
+              <div style="${bodyPad}">
                 <p style="${baseStyles}">Hi ${name},</p>
 
                 <p style="${baseStyles}"><strong>500 points. Tier 6. The final one.</strong></p>
