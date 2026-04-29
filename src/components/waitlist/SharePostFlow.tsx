@@ -281,16 +281,16 @@ const SharePostFlow = ({ referralLink, onShareTracked }: SharePostFlowProps) => 
         Pick a vibe, tweak the caption, and share. Sharing helps more families discover this support 💛
       </p>
 
-      {/* STEP 1: Featured image */}
+      {/* STEP 1: Featured image — capped so vertical posters don't dominate */}
       <div className="mb-5">
         <p className="text-xs uppercase tracking-wide text-muted-foreground mb-2 font-semibold">
           Start here
         </p>
-        <div className="w-full rounded-xl border border-border overflow-hidden bg-muted flex items-center justify-center aspect-square sm:aspect-[4/3] max-h-[420px]">
+        <div className="w-full mx-auto rounded-xl border border-border overflow-hidden bg-muted/40 flex items-center justify-center max-w-[360px] sm:max-w-[420px]">
           <img
             src={active.image}
             alt={active.alt}
-            className="max-w-full max-h-full object-contain"
+            className="w-full h-auto max-h-[300px] sm:max-h-[340px] object-contain"
             loading="lazy"
           />
         </div>
