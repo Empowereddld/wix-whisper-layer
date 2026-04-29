@@ -89,10 +89,10 @@ const TIER_REWARDS: TierReward[] = [
   {
     tier: 5,
     rewardId: "tier_6_elite",
-    name: "Founding Elite Package",
-    description: "Signed Dan & Daria book + DLD-themed merch (first 50 to reach Tier 6 by June 1)",
+    name: "Founder or Legend Reward",
+    description: "First 50 to Tier 6: signed Dan & Daria book + DLD-themed merch (Founder). After slots fill: 100 bonus Story Coins + Legend badge.",
     icon: "👑",
-    earnedVia: "Start onboarding for exclusive benefits",
+    earnedVia: "Auto-awarded based on Tier 6 slot",
     claimType: "onboard",
   },
 ];
