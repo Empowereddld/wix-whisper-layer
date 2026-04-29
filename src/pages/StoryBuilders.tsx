@@ -15,6 +15,8 @@ import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { ROLE_OPTIONS, ROLE_OTHER_MAX_LENGTH } from "@/lib/storypros-roles";
 import { useScrollFadeIn } from "@/hooks/useScrollFadeIn";
 import { useStorybuildersWaitlist } from "@/hooks/useStorybuildersWaitlist";
 import { toast } from "sonner";
