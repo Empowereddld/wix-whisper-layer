@@ -798,6 +798,29 @@ const StoryBuilders = () => {
                   />
                 </div>
               </div>
+
+              {/* Video embed */}
+              <div className="mt-14 md:mt-20 max-w-[900px] mx-auto text-center flex flex-col gap-4">
+                <span className="text-primary text-[12px] md:text-[13px] tracking-[0.22em] uppercase font-semibold">
+                  SEE IT IN ACTION
+                </span>
+                <h3 className="text-[24px] md:text-[32px] lg:text-[36px] font-bold tracking-tight text-foreground leading-[1.15]">
+                  Watch how Story Pros brings stories to life
+                </h3>
+                <p className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-[640px] mx-auto">
+                  Take a 2-minute look inside the app and see how children listen, think, and retell stories with confidence.
+                </p>
+                <div className="relative w-full mt-4 rounded-2xl overflow-hidden shadow-lg" style={{ paddingBottom: "56.25%" }}>
+                  <iframe
+                    className="absolute inset-0 w-full h-full"
+                    src="https://www.youtube.com/embed/S4ke41x89s0"
+                    title="What is Story Pros?"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                  />
+                </div>
+              </div>
           </FadeSection>
         </div>
       </section>
