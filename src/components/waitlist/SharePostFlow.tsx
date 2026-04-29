@@ -159,31 +159,6 @@ Join the waitlist 👇
 Save + share to spread awareness.`,
     },
   },
-  {
-    id: "POST_06_SHARING_ON_PURPOSE",
-    image: sharingOnPurposeImg,
-    alt: "I'm sharing this on purpose",
-    fileName: "sharing_on_purpose_vertical.png",
-    captions: {
-      broad: `I'm sharing this on purpose 💛
-
-Because more people need to know about this.
-
-Join the waitlist 👇
-[referral link]
-
-Save + share to help this reach the right people.`,
-      dld_aware: `I'm sharing this on purpose 💛
-
-Too many families don't know what DLD is
-or where to find support.
-
-Join the waitlist 👇
-[referral link]
-
-Save + share to raise awareness.`,
-    },
-  },
 ];
 
 const DEFAULT_POST = POSTS.find((p) => p.isDefault) ?? POSTS[0];
