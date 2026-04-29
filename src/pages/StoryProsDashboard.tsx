@@ -1044,7 +1044,7 @@ const StoryProsDashboard = () => {
         )}
 
         {/* Bottom spacing */}
-        <div className="h-8" />
+        <div className="h-12 sm:h-16" />
     </div>
 
     {/* Edit role modal — opened from the Profile dropdown */}
