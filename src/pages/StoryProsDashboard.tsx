@@ -467,7 +467,7 @@ const StoryProsDashboard = () => {
       <motion.div
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        className="bg-white border-b border-[#dedede] py-6"
+        className="bg-white border-b border-[#dedede] py-4 sm:py-5"
       >
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between flex-wrap gap-3 sm:gap-4">
@@ -585,7 +585,7 @@ const StoryProsDashboard = () => {
                   <p className="text-xs uppercase tracking-wider opacity-80 font-semibold">
                     Your spot on the waitlist
                   </p>
-                  <p className="text-xl sm:text-2xl font-bold leading-tight">
+                  <p className="text-lg sm:text-2xl font-bold leading-tight">
                     #{wl.queuePosition.toLocaleString()}
                     {wl.totalCount ? (
                       <span className="text-sm sm:text-base font-medium opacity-80 ml-2">
@@ -610,10 +610,10 @@ const StoryProsDashboard = () => {
           animate={{ y: 0, opacity: 1 }}
           className="bg-amber-50 border-b border-amber-200"
         >
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
-            <div className="flex items-start sm:items-center justify-between gap-3 flex-wrap">
-              <div className="flex items-start gap-3 flex-1 min-w-0">
-                <AlertCircle className="h-5 w-5 text-amber-600 shrink-0 mt-0.5" />
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5">
+            <div className="flex items-start sm:items-center justify-between gap-3 flex-col sm:flex-row">
+              <div className="flex items-start gap-2.5 flex-1 min-w-0">
+                <AlertCircle className="h-4 w-4 sm:h-5 sm:w-5 text-amber-600 shrink-0 mt-0.5" />
                 <div className="text-sm text-amber-900 leading-snug">
                   <strong>Verify your email to unlock +15 points</strong> and start earning referrals.
                   Check your inbox (and your <em>Promotions</em> or <em>Spam</em> folder, just in case).
