@@ -303,8 +303,8 @@ const SharePostFlow = ({ referralLink, onShareTracked }: SharePostFlowProps) => 
         </p>
         <div className="grid grid-cols-2 gap-2">
           {([
-            { id: "simple" as const, label: "Simple & relatable" },
-            { id: "educational" as const, label: "DLD-aware & educational" },
+            { id: "broad" as const, label: "Broad / viral-friendly" },
+            { id: "dld_aware" as const, label: "DLD-aware / educational" },
           ]).map((opt) => {
             const selected = style === opt.id;
             return (
