@@ -159,10 +159,15 @@ export default function RewardsInventory({
 
   const getRewardStatus = (
     rewardId: string,
-    requiredTier: number
-  ): "locked" | "claimable" | "claimed" => {
+    requiredTier: number,
+    claimType: TierReward["claimType"]
+  ): "locked" | "claimable" | "claimed" | "awarded" => {
     if (currentTier < requiredTier) return "locked";
-    if (inventory[rewardId]?.claimed) return "claimed";
+    // Passive rewards (auto-granted when tier reached) display as "awarded"
+    // unless the user has explicitly claimed them via the button (download types only).
+    const isActionable = claimType === "download" || claimType === "unlock";
+    if (inventory[rewardId]) return "claimed";
+    if (!isActionable) return "awarded";
     return "claimable";
   };
 
