@@ -13,7 +13,7 @@ export interface RewardsInventoryProps {
   currentTier: number;
   coins: number;
   badges: string[];
-  inventory: Record<string, { claimed: boolean; claimedAt?: string }>;
+  inventory: Record<string, { claimed_at: string }>;
   onClaimReward: (rewardId: string) => void;
   onRedeemCoinPack: (packLevel: number) => void;
 }
