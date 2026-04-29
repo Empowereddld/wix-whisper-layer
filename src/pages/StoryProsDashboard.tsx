@@ -810,7 +810,7 @@ const StoryProsDashboard = () => {
               </button>
               {sharePreviewOpen && (
                 <div className="mt-3">
-                  <div className="rounded-xl border border-border overflow-hidden bg-white max-w-sm">
+                  <div className="rounded-xl border border-border overflow-hidden bg-white w-full max-w-sm">
                     <div className="aspect-[2/1] w-full overflow-hidden bg-muted">
                       <img
                         src={storypros}
