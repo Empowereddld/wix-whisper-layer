@@ -907,15 +907,19 @@ const StoryProsDashboard = () => {
                     key={id}
                     onClick={() => handleFollowClick(id, url)}
                     disabled={followed}
-                    className={`h-12 rounded-xl flex items-center justify-center gap-2 text-white font-medium transition-all ${
+                    className={`h-14 rounded-xl flex items-center justify-center gap-2 text-white font-medium transition-all ${
                       followed
                         ? "bg-emerald-500/20 border border-emerald-500/50 text-emerald-600"
                         : `${color} hover:opacity-90`
                     } disabled:opacity-100`}
+                    aria-label={followed ? `${label} followed, +${points} points awarded` : `Follow ${label} for ${points} points`}
                   >
                     {followed ? <Check className="h-5 w-5 text-emerald-500" /> : <Icon className="h-5 w-5" />}
-                    <span className="hidden sm:inline text-sm">
-                      {followed ? `+${points} pts ✓` : `${label} (+${points})`}
+                    <span className="text-sm font-semibold">
+                      {followed ? `+${points} ✓` : `+${points}`}
+                    </span>
+                    <span className="hidden sm:inline text-sm font-normal opacity-90">
+                      {label}
                     </span>
                   </Button>
                 );
