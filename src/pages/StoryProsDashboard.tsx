@@ -794,37 +794,49 @@ const StoryProsDashboard = () => {
               </Button>
             </div>
 
-            {/* Share preview — what your friends will see */}
+            {/* Share preview — what your friends will see (collapsed by default on mobile) */}
             <div className="mt-5">
-              <div className="flex items-center gap-2 mb-2">
+              <button
+                type="button"
+                onClick={() => setSharePreviewOpen((v) => !v)}
+                className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground hover:text-foreground transition-colors"
+                aria-expanded={sharePreviewOpen}
+              >
                 <Sparkles className="h-3.5 w-3.5 text-primary" />
-                <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                  Preview when shared
-                </p>
-              </div>
-              <div className="rounded-xl border border-border overflow-hidden bg-white max-w-md">
-                <div className="aspect-[1.91/1] w-full overflow-hidden bg-muted">
-                  <img
-                    src={storypros}
-                    alt="Story Pros share preview"
-                    className="w-full h-full object-cover"
-                  />
+                Preview when shared
+                {sharePreviewOpen ? (
+                  <span aria-hidden className="text-muted-foreground/70">−</span>
+                ) : (
+                  <span aria-hidden className="text-muted-foreground/70">+</span>
+                )}
+              </button>
+              {sharePreviewOpen && (
+                <div className="mt-3">
+                  <div className="rounded-xl border border-border overflow-hidden bg-white max-w-sm">
+                    <div className="aspect-[2/1] w-full overflow-hidden bg-muted">
+                      <img
+                        src={storypros}
+                        alt="Story Pros share preview"
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div className="p-3 border-t border-border">
+                      <p className="text-[11px] uppercase tracking-wide text-muted-foreground">
+                        empowereddld.com
+                      </p>
+                      <p className="text-sm font-semibold text-foreground leading-snug mt-1">
+                        Story Pros — the storytelling app for kids with DLD
+                      </p>
+                      <p className="text-xs text-muted-foreground mt-1 leading-snug">
+                        Built by an SLP and an elementary school teacher. Join the founding waitlist.
+                      </p>
+                    </div>
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-2 leading-snug">
+                    This is how your link appears in iMessage, WhatsApp, Facebook, and X when someone receives it.
+                  </p>
                 </div>
-                <div className="p-3 border-t border-border">
-                  <p className="text-[11px] uppercase tracking-wide text-muted-foreground">
-                    empowereddld.com
-                  </p>
-                  <p className="text-sm font-semibold text-foreground leading-snug mt-1">
-                    Story Pros — the storytelling app for kids with DLD
-                  </p>
-                  <p className="text-xs text-muted-foreground mt-1 leading-snug">
-                    Built by an SLP and an elementary school teacher. Join the founding waitlist.
-                  </p>
-                </div>
-              </div>
-              <p className="text-xs text-muted-foreground mt-2 leading-snug">
-                This is how your link appears in iMessage, WhatsApp, Facebook, and X when someone receives it.
-              </p>
+              )}
             </div>
           </Card>
         </motion.div>
