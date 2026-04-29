@@ -902,6 +902,7 @@ export function useStorybuildersWaitlist() {
     trackShare,
     trackClick,
     claimSocialFollow,
+    claimReward,
     resendVerification,
     submitSuggestion,
     voteSuggestion,
