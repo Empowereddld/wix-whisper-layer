@@ -40,6 +40,7 @@ import RewardsInventory from "@/components/waitlist/RewardsInventory";
 import ScriptCarousel from "@/components/waitlist/ScriptCarousel";
 import SharePostFlow from "@/components/waitlist/SharePostFlow";
 import { useStorybuildersWaitlist } from "@/hooks/useStorybuildersWaitlist";
+import { useIsMobile } from "@/hooks/use-mobile";
 import {
   TIER_NAMES,
   TIER_THRESHOLDS,
@@ -71,6 +72,12 @@ const StoryProsDashboard = () => {
   const [roleDraft, setRoleDraft] = useState<string>("");
   const [roleOtherDraft, setRoleOtherDraft] = useState<string>("");
   const [savingRole, setSavingRole] = useState(false);
+  const isMobile = useIsMobile();
+  const [sharePreviewOpen, setSharePreviewOpen] = useState(false);
+  // Open the link-preview by default on desktop only; mobile keeps it tucked.
+  useEffect(() => {
+    setSharePreviewOpen(!isMobile);
+  }, [isMobile]);
 
   const handleSaveRole = async () => {
     if (!isValidRoleSelection(roleDraft, roleOtherDraft)) {
