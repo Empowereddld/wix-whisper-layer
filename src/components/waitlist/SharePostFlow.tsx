@@ -219,9 +219,16 @@ const SharePostFlow = ({ referralLink, onShareTracked }: SharePostFlowProps) => 
   const captionWithLink = caption;
 
 
-  const handleSelectPost = (id: string) => {
-    setActiveId(id);
-    // Reset preview so user sees the new selection
+  const goPrev = () => {
+    setActiveIndex((i) => (i - 1 + POSTS.length) % POSTS.length);
+    setPreviewOpen(false);
+  };
+  const goNext = () => {
+    setActiveIndex((i) => (i + 1) % POSTS.length);
+    setPreviewOpen(false);
+  };
+  const goTo = (i: number) => {
+    setActiveIndex(i);
     setPreviewOpen(false);
   };
 
