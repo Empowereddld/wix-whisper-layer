@@ -12,10 +12,12 @@ Deno.serve(async (req) => {
 
   try {
     const body = await req.json().catch(() => ({}));
-    const { referral_code, name, is_speech_professional } = body as {
+    const { referral_code, name, is_speech_professional, role, role_other } = body as {
       referral_code?: string;
       name?: string;
       is_speech_professional?: boolean;
+      role?: string;
+      role_other?: string | null;
     };
 
     if (!referral_code || typeof referral_code !== "string") {
@@ -58,6 +60,41 @@ Deno.serve(async (req) => {
       }
     }
 
+    // Role updates: validated against known codes. Picking Speech Professional
+    // also flips is_speech_professional = true (admin still verifies the +50).
+    // Switching away from Other clears role_other; switching to Other requires it.
+    const ALLOWED_ROLES = ["parent", "speech_pro", "other"];
+    if (typeof role === "string") {
+      if (!ALLOWED_ROLES.includes(role)) {
+        return new Response(
+          JSON.stringify({ error: "Invalid role" }),
+          { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+      updates.role = role;
+      if (role === "other") {
+        const detail = typeof role_other === "string" ? role_other.trim() : "";
+        if (!detail) {
+          return new Response(
+            JSON.stringify({ error: "Tell us a bit more about your role." }),
+            { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+          );
+        }
+        if (detail.length > 60) {
+          return new Response(
+            JSON.stringify({ error: "Please keep it under 60 characters." }),
+            { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+          );
+        }
+        updates.role_other = detail;
+      } else {
+        updates.role_other = null;
+        if (role === "speech_pro") {
+          updates.is_speech_professional = true;
+        }
+      }
+    }
+
     if (Object.keys(updates).length === 0) {
       return new Response(
         JSON.stringify({ error: "No valid fields to update" }),
@@ -73,7 +110,7 @@ Deno.serve(async (req) => {
       .from("storybuilders_waitlist")
       .update(updates)
       .eq("referral_code", referral_code)
-      .select("id, name, is_speech_professional, speech_professional_verified")
+      .select("id, name, is_speech_professional, speech_professional_verified, role, role_other")
       .maybeSingle();
 
     if (error || !data) {
