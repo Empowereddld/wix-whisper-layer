@@ -802,13 +802,13 @@ const StoryBuilders = () => {
               {/* Video embed */}
               <div className="mt-14 md:mt-20 max-w-[900px] mx-auto text-center flex flex-col gap-4">
                 <span className="text-primary text-[12px] md:text-[13px] tracking-[0.22em] uppercase font-semibold">
-                  SEE IT IN ACTION
+                  FROM OUR FOUNDERS
                 </span>
                 <h3 className="text-[24px] md:text-[32px] lg:text-[36px] font-bold tracking-tight text-foreground leading-[1.15]">
-                  Watch how Story Pros brings stories to life
+                  Why we built Story Pros
                 </h3>
                 <p className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-[640px] mx-auto">
-                  Take a 2-minute look inside the app and see how children listen, think, and retell stories with confidence.
+                  Camesha and Jinean share what this app is, who it's for, and why it matters.
                 </p>
                 <div className="relative w-full mt-4 rounded-2xl overflow-hidden shadow-lg" style={{ paddingBottom: "56.25%" }}>
                   <iframe
