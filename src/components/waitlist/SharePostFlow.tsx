@@ -276,7 +276,7 @@ const SharePostFlow = ({ referralLink, onShareTracked }: SharePostFlowProps) => 
 
   return (
     <Card className="bg-background border border-border rounded-2xl shadow-sm p-4 sm:p-6">
-      <h3 className="font-sans font-bold text-foreground mb-1">Share a Post (Make It Yours)</h3>
+      <h3 className="font-sans font-bold text-foreground text-lg sm:text-xl mb-1">Share a Post (Make It Yours)</h3>
       <p className="text-sm text-muted-foreground mb-5 leading-snug">
         Pick a vibe, tweak the caption, and share. Sharing helps more families discover this support 💛
       </p>
@@ -286,11 +286,11 @@ const SharePostFlow = ({ referralLink, onShareTracked }: SharePostFlowProps) => 
         <p className="text-xs uppercase tracking-wide text-muted-foreground mb-2 font-semibold">
           Start here
         </p>
-        <div className="w-full mx-auto rounded-xl border border-border overflow-hidden bg-muted/40 flex items-center justify-center max-w-[360px] sm:max-w-[420px]">
+        <div className="w-full mx-auto rounded-xl border border-border overflow-hidden bg-muted/40 flex items-center justify-center max-w-[260px] sm:max-w-[300px]">
           <img
             src={active.image}
             alt={active.alt}
-            className="w-full h-auto max-h-[300px] sm:max-h-[340px] object-contain"
+            className="w-full h-auto max-h-[260px] sm:max-h-[300px] object-contain"
             loading="lazy"
           />
         </div>
@@ -332,8 +332,8 @@ const SharePostFlow = ({ referralLink, onShareTracked }: SharePostFlowProps) => 
         <Textarea
           value={caption}
           onChange={(e) => handleCaptionChange(e.target.value)}
-          rows={5}
-          className="resize-y min-h-[120px] text-sm leading-relaxed"
+          rows={6}
+          className="resize-y min-h-[160px] sm:min-h-[140px] text-sm leading-relaxed w-full"
         />
         <p className="text-xs text-muted-foreground mt-1.5">Make it your own if you'd like</p>
       </div>
@@ -371,10 +371,10 @@ const SharePostFlow = ({ referralLink, onShareTracked }: SharePostFlowProps) => 
         Sharing helps more families discover this support 💛
       </p>
 
-      {/* Optional preview — sized like a phone-feed tile */}
+      {/* Optional preview — sized smaller than the featured image */}
       {previewOpen && (
         <div className="mt-4 flex justify-center">
-          <div className="bg-background rounded-xl border border-border overflow-hidden w-full max-w-[320px] shadow-sm">
+          <div className="bg-background rounded-xl border border-border overflow-hidden w-full max-w-[220px] sm:max-w-[240px] shadow-sm">
             <div className="px-3 py-1.5 bg-muted/40 border-b border-border">
               <p className="text-[10px] uppercase tracking-wide text-muted-foreground font-semibold">
                 Preview
@@ -383,7 +383,7 @@ const SharePostFlow = ({ referralLink, onShareTracked }: SharePostFlowProps) => 
             <div className="aspect-[4/5] w-full overflow-hidden bg-muted/40">
               <img src={active.image} alt={active.alt} className="w-full h-full object-cover" />
             </div>
-            <div className="p-3 text-[13px] leading-snug whitespace-pre-wrap text-foreground">
+            <div className="p-2.5 text-[12px] leading-snug whitespace-pre-wrap text-foreground">
               {captionWithLink}
             </div>
           </div>
