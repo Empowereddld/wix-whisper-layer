@@ -281,16 +281,16 @@ const SharePostFlow = ({ referralLink, onShareTracked }: SharePostFlowProps) => 
         Pick a vibe, tweak the caption, and share. Sharing helps more families discover this support 💛
       </p>
 
-      {/* STEP 1: Featured image */}
+      {/* STEP 1: Featured image — capped so vertical posters don't dominate */}
       <div className="mb-5">
         <p className="text-xs uppercase tracking-wide text-muted-foreground mb-2 font-semibold">
           Start here
         </p>
-        <div className="w-full rounded-xl border border-border overflow-hidden bg-muted flex items-center justify-center aspect-square sm:aspect-[4/3] max-h-[420px]">
+        <div className="w-full mx-auto rounded-xl border border-border overflow-hidden bg-muted/40 flex items-center justify-center max-w-[360px] sm:max-w-[420px]">
           <img
             src={active.image}
             alt={active.alt}
-            className="max-w-full max-h-full object-contain"
+            className="w-full h-auto max-h-[300px] sm:max-h-[340px] object-contain"
             loading="lazy"
           />
         </div>
@@ -338,45 +338,54 @@ const SharePostFlow = ({ referralLink, onShareTracked }: SharePostFlowProps) => 
         <p className="text-xs text-muted-foreground mt-1.5">Make it your own if you'd like</p>
       </div>
 
-      {/* STEP 4: Primary actions */}
-      <div className="flex flex-col sm:flex-row gap-2 mb-3">
+      {/* STEP 4: Primary actions — primary stands alone, secondaries cluster */}
+      <div className="mt-5 pt-4 border-t border-border flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <Button
           onClick={handleCopyBoth}
-          className="bg-primary hover:bg-primary/90 text-primary-foreground flex-1 sm:flex-none sm:min-w-[220px] flex items-center gap-2"
+          className="bg-primary hover:bg-primary/90 text-primary-foreground w-full sm:w-auto sm:min-w-[220px] flex items-center gap-2"
         >
           <Copy className="h-4 w-4" />
           Copy Caption & Image
         </Button>
-        <Button onClick={handleShare} variant="outline" className="flex items-center gap-2">
-          <Share2 className="h-4 w-4" />
-          Share
-        </Button>
-        <Button onClick={handleDownload} variant="outline" className="flex items-center gap-2">
-          <Download className="h-4 w-4" />
-          Download Image
-        </Button>
-        <Button
-          onClick={() => setPreviewOpen((v) => !v)}
-          variant="ghost"
-          className="flex items-center gap-2"
-        >
-          <Eye className="h-4 w-4" />
-          {previewOpen ? "Hide preview" : "Preview Post"}
-        </Button>
+        <div className="flex flex-wrap items-center gap-2 sm:gap-3 sm:justify-end">
+          <Button onClick={handleShare} variant="outline" size="sm" className="flex items-center gap-2">
+            <Share2 className="h-4 w-4" />
+            Share
+          </Button>
+          <Button onClick={handleDownload} variant="outline" size="sm" className="flex items-center gap-2">
+            <Download className="h-4 w-4" />
+            Download Image
+          </Button>
+          <Button
+            onClick={() => setPreviewOpen((v) => !v)}
+            variant="ghost"
+            size="sm"
+            className="flex items-center gap-2"
+          >
+            <Eye className="h-4 w-4" />
+            {previewOpen ? "Hide preview" : "Preview Post"}
+          </Button>
+        </div>
       </div>
-      <p className="text-xs text-muted-foreground">
+      <p className="text-xs text-muted-foreground mt-2">
         Sharing helps more families discover this support 💛
       </p>
 
-      {/* Optional preview */}
+      {/* Optional preview — sized like a phone-feed tile */}
       {previewOpen && (
-        <div className="mt-4 rounded-xl border border-border bg-muted/40 p-4">
-          <p className="text-xs uppercase tracking-wide text-muted-foreground mb-3 font-semibold">
-            Preview
-          </p>
-          <div className="bg-background rounded-lg border border-border overflow-hidden max-w-md mx-auto">
-            <img src={active.image} alt={active.alt} className="w-full object-cover" />
-            <div className="p-3 text-sm whitespace-pre-wrap leading-relaxed">{captionWithLink}</div>
+        <div className="mt-4 flex justify-center">
+          <div className="bg-background rounded-xl border border-border overflow-hidden w-full max-w-[320px] shadow-sm">
+            <div className="px-3 py-1.5 bg-muted/40 border-b border-border">
+              <p className="text-[10px] uppercase tracking-wide text-muted-foreground font-semibold">
+                Preview
+              </p>
+            </div>
+            <div className="aspect-[4/5] w-full overflow-hidden bg-muted/40">
+              <img src={active.image} alt={active.alt} className="w-full h-full object-cover" />
+            </div>
+            <div className="p-3 text-[13px] leading-snug whitespace-pre-wrap text-foreground">
+              {captionWithLink}
+            </div>
           </div>
         </div>
       )}

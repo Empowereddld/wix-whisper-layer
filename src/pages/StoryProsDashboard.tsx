@@ -40,6 +40,7 @@ import RewardsInventory from "@/components/waitlist/RewardsInventory";
 import ScriptCarousel from "@/components/waitlist/ScriptCarousel";
 import SharePostFlow from "@/components/waitlist/SharePostFlow";
 import { useStorybuildersWaitlist } from "@/hooks/useStorybuildersWaitlist";
+import { useIsMobile } from "@/hooks/use-mobile";
 import {
   TIER_NAMES,
   TIER_THRESHOLDS,
@@ -71,6 +72,12 @@ const StoryProsDashboard = () => {
   const [roleDraft, setRoleDraft] = useState<string>("");
   const [roleOtherDraft, setRoleOtherDraft] = useState<string>("");
   const [savingRole, setSavingRole] = useState(false);
+  const isMobile = useIsMobile();
+  const [sharePreviewOpen, setSharePreviewOpen] = useState(false);
+  // Open the link-preview by default on desktop only; mobile keeps it tucked.
+  useEffect(() => {
+    setSharePreviewOpen(!isMobile);
+  }, [isMobile]);
 
   const handleSaveRole = async () => {
     if (!isValidRoleSelection(roleDraft, roleOtherDraft)) {
@@ -467,7 +474,7 @@ const StoryProsDashboard = () => {
       <motion.div
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        className="bg-white border-b border-[#dedede] py-6"
+        className="bg-white border-b border-[#dedede] py-4 sm:py-5"
       >
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between flex-wrap gap-3 sm:gap-4">
@@ -585,7 +592,7 @@ const StoryProsDashboard = () => {
                   <p className="text-xs uppercase tracking-wider opacity-80 font-semibold">
                     Your spot on the waitlist
                   </p>
-                  <p className="text-xl sm:text-2xl font-bold leading-tight">
+                  <p className="text-lg sm:text-2xl font-bold leading-tight">
                     #{wl.queuePosition.toLocaleString()}
                     {wl.totalCount ? (
                       <span className="text-sm sm:text-base font-medium opacity-80 ml-2">
@@ -610,10 +617,10 @@ const StoryProsDashboard = () => {
           animate={{ y: 0, opacity: 1 }}
           className="bg-amber-50 border-b border-amber-200"
         >
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
-            <div className="flex items-start sm:items-center justify-between gap-3 flex-wrap">
-              <div className="flex items-start gap-3 flex-1 min-w-0">
-                <AlertCircle className="h-5 w-5 text-amber-600 shrink-0 mt-0.5" />
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5">
+            <div className="flex items-start sm:items-center justify-between gap-3 flex-col sm:flex-row">
+              <div className="flex items-start gap-2.5 flex-1 min-w-0">
+                <AlertCircle className="h-4 w-4 sm:h-5 sm:w-5 text-amber-600 shrink-0 mt-0.5" />
                 <div className="text-sm text-amber-900 leading-snug">
                   <strong>Verify your email to unlock +15 points</strong> and start earning referrals.
                   Check your inbox (and your <em>Promotions</em> or <em>Spam</em> folder, just in case).
@@ -633,7 +640,7 @@ const StoryProsDashboard = () => {
       )}
 
       {/* Main content */}
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-4 sm:space-y-6">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-5 sm:space-y-7">
         {/* Tier Progress + Referrals */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
           <motion.div
@@ -682,14 +689,18 @@ const StoryProsDashboard = () => {
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.15 }}
           >
-            <Card className="bg-background border border-border rounded-2xl shadow-sm p-4 sm:p-6">
+            <Card className="bg-background border border-border rounded-2xl shadow-sm p-4 sm:p-6 h-full">
               <p className="text-xs text-muted-foreground uppercase tracking-wide font-semibold">
                 Referrals
               </p>
               <p className="text-3xl font-bold text-primary mt-1">{wl.inviteCount}</p>
-              {wl.inviteCount === 0 && (
+              {wl.inviteCount === 0 ? (
                 <p className="text-xs text-muted-foreground mt-2 leading-snug">
                   No referrals yet. Invite your first friend and earn +25 pts (plus a +10 first-referral bonus).
+                </p>
+              ) : (
+                <p className="text-xs text-emerald-600 mt-2 leading-snug font-medium">
+                  +{wl.inviteCount * REPEATABLE_POINTS.REFERRAL} pts earned from referrals
                 </p>
               )}
             </Card>
@@ -703,11 +714,15 @@ const StoryProsDashboard = () => {
           transition={{ delay: 0.2 }}
         >
           <Card className="bg-background border border-border rounded-2xl shadow-sm p-4 sm:p-6">
-            <h3 className="font-sans font-bold text-foreground mb-6 text-center">
+            <h3 className="font-sans font-bold text-foreground mb-5 text-center">
               How to Earn Points
             </h3>
-            <div className="max-w-md mx-auto">
-              <div className="space-y-2 text-sm">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2 max-w-3xl mx-auto text-sm">
+              {/* One-time earns */}
+              <div className="space-y-2">
+                <p className="text-[11px] uppercase tracking-wide text-muted-foreground font-semibold mb-1">
+                  One-time
+                </p>
                 {earnRows.map((row) => (
                   <div key={row.label} className="flex justify-between">
                     <span
@@ -727,29 +742,34 @@ const StoryProsDashboard = () => {
                           : "font-bold text-[#8861d4]"
                       }
                     >
-                      {row.done ? `+${row.pts} pts ✓` : `${row.pts} pts (once)`}
+                      {row.done ? `+${row.pts} pts ✓` : `${row.pts} pts`}
                     </span>
                   </div>
                 ))}
-                <div className="border-t border-border pt-2 mt-2">
-                  <div className="flex justify-between">
-                    <span className="text-foreground">Refer a friend</span>
-                    <span className="font-bold text-[#8861d4]">
-                      {REPEATABLE_POINTS.REFERRAL} pts
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-foreground">Share link</span>
-                    <span className="font-bold text-[#8861d4]">
-                      {REPEATABLE_POINTS.SHARE} {REPEATABLE_POINTS.SHARE === 1 ? "pt" : "pts"} (max {DAILY_CAPS.MAX_SHARE_POINTS}/day)
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-foreground">Feature suggestion</span>
-                    <span className="font-bold text-[#8861d4]">
-                      {REPEATABLE_POINTS.SUGGESTION} pts
-                    </span>
-                  </div>
+              </div>
+
+              {/* Repeatable earns */}
+              <div className="space-y-2 mt-4 md:mt-0 pt-3 md:pt-0 border-t md:border-t-0 md:border-l md:pl-8 border-border">
+                <p className="text-[11px] uppercase tracking-wide text-muted-foreground font-semibold mb-1">
+                  Repeatable
+                </p>
+                <div className="flex justify-between">
+                  <span className="text-foreground">Refer a friend</span>
+                  <span className="font-bold text-[#8861d4]">
+                    {REPEATABLE_POINTS.REFERRAL} pts
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-foreground">Share link</span>
+                  <span className="font-bold text-[#8861d4]">
+                    {REPEATABLE_POINTS.SHARE} {REPEATABLE_POINTS.SHARE === 1 ? "pt" : "pts"} (max {DAILY_CAPS.MAX_SHARE_POINTS}/day)
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-foreground">Feature suggestion</span>
+                  <span className="font-bold text-[#8861d4]">
+                    {REPEATABLE_POINTS.SUGGESTION} pts
+                  </span>
                 </div>
               </div>
             </div>
@@ -774,37 +794,49 @@ const StoryProsDashboard = () => {
               </Button>
             </div>
 
-            {/* Share preview — what your friends will see */}
+            {/* Share preview — what your friends will see (collapsed by default on mobile) */}
             <div className="mt-5">
-              <div className="flex items-center gap-2 mb-2">
+              <button
+                type="button"
+                onClick={() => setSharePreviewOpen((v) => !v)}
+                className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground hover:text-foreground transition-colors"
+                aria-expanded={sharePreviewOpen}
+              >
                 <Sparkles className="h-3.5 w-3.5 text-primary" />
-                <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                  Preview when shared
-                </p>
-              </div>
-              <div className="rounded-xl border border-border overflow-hidden bg-white max-w-md">
-                <div className="aspect-[1.91/1] w-full overflow-hidden bg-muted">
-                  <img
-                    src={storypros}
-                    alt="Story Pros share preview"
-                    className="w-full h-full object-cover"
-                  />
+                Preview when shared
+                {sharePreviewOpen ? (
+                  <span aria-hidden className="text-muted-foreground/70">−</span>
+                ) : (
+                  <span aria-hidden className="text-muted-foreground/70">+</span>
+                )}
+              </button>
+              {sharePreviewOpen && (
+                <div className="mt-3">
+                  <div className="rounded-xl border border-border overflow-hidden bg-white max-w-sm">
+                    <div className="aspect-[2/1] w-full overflow-hidden bg-muted">
+                      <img
+                        src={storypros}
+                        alt="Story Pros share preview"
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div className="p-3 border-t border-border">
+                      <p className="text-[11px] uppercase tracking-wide text-muted-foreground">
+                        empowereddld.com
+                      </p>
+                      <p className="text-sm font-semibold text-foreground leading-snug mt-1">
+                        Story Pros — the storytelling app for kids with DLD
+                      </p>
+                      <p className="text-xs text-muted-foreground mt-1 leading-snug">
+                        Built by an SLP and an elementary school teacher. Join the founding waitlist.
+                      </p>
+                    </div>
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-2 leading-snug">
+                    This is how your link appears in iMessage, WhatsApp, Facebook, and X when someone receives it.
+                  </p>
                 </div>
-                <div className="p-3 border-t border-border">
-                  <p className="text-[11px] uppercase tracking-wide text-muted-foreground">
-                    empowereddld.com
-                  </p>
-                  <p className="text-sm font-semibold text-foreground leading-snug mt-1">
-                    Story Pros — the storytelling app for kids with DLD
-                  </p>
-                  <p className="text-xs text-muted-foreground mt-1 leading-snug">
-                    Built by an SLP and an elementary school teacher. Join the founding waitlist.
-                  </p>
-                </div>
-              </div>
-              <p className="text-xs text-muted-foreground mt-2 leading-snug">
-                This is how your link appears in iMessage, WhatsApp, Facebook, and X when someone receives it.
-              </p>
+              )}
             </div>
           </Card>
         </motion.div>
@@ -814,7 +846,7 @@ const StoryProsDashboard = () => {
           <Card className="bg-background border border-border rounded-2xl shadow-sm p-4 sm:p-6">
             <h3 className="font-sans font-bold text-foreground mb-2">Share & Earn Referrals</h3>
             <p className="text-sm text-muted-foreground mb-4 leading-snug">
-              Tap a platform to open it with a ready-to-paste caption or copy one of the other captions below.
+              Tap a platform for a quick text share with a ready-made caption. Want a richer post with an image? Use <strong>Share a Post</strong> below.
             </p>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
               <Button onClick={() => handleShare("twitter")} className="bg-foreground hover:bg-foreground/90 text-background flex items-center gap-2">
@@ -844,7 +876,7 @@ const StoryProsDashboard = () => {
             </div>
 
             {/* Scripts to share */}
-            <div className="mt-6 pt-6 border-t border-border">
+            <div className="mt-5 pt-5 border-t border-border">
               <ScriptCarousel referralLink={wl.referralLink || ""} />
             </div>
 
@@ -875,15 +907,19 @@ const StoryProsDashboard = () => {
                     key={id}
                     onClick={() => handleFollowClick(id, url)}
                     disabled={followed}
-                    className={`h-12 rounded-xl flex items-center justify-center gap-2 text-white font-medium transition-all ${
+                    className={`h-14 rounded-xl flex items-center justify-center gap-2 text-white font-medium transition-all ${
                       followed
                         ? "bg-emerald-500/20 border border-emerald-500/50 text-emerald-600"
                         : `${color} hover:opacity-90`
                     } disabled:opacity-100`}
+                    aria-label={followed ? `${label} followed, +${points} points awarded` : `Follow ${label} for ${points} points`}
                   >
                     {followed ? <Check className="h-5 w-5 text-emerald-500" /> : <Icon className="h-5 w-5" />}
-                    <span className="hidden sm:inline text-sm">
-                      {followed ? `+${points} pts ✓` : `${label} (+${points})`}
+                    <span className="text-sm font-semibold">
+                      {followed ? `+${points} ✓` : `+${points}`}
+                    </span>
+                    <span className="hidden sm:inline text-sm font-normal opacity-90">
+                      {label}
                     </span>
                   </Button>
                 );
@@ -920,13 +956,23 @@ const StoryProsDashboard = () => {
                 <h3 className="font-sans font-bold text-foreground">Interactive Story Preview</h3>
                 <Badge className="bg-primary/20 text-primary">Tier 4 Exclusive</Badge>
               </div>
-              <p className="text-sm text-muted-foreground mb-4">
-                As a Tier 4 member, you have early access to the Story Pros experience. Try an interactive story below.
-              </p>
+              <div className="flex items-center justify-between gap-3 mb-3 flex-wrap">
+                <p className="text-sm text-muted-foreground leading-snug flex-1 min-w-[200px]">
+                  As a Tier 4 member, you have early access to the Story Pros experience. Try an interactive story below.
+                </p>
+                <a
+                  href="https://storyprospreview.lovable.app/preview/story/11111111-1111-1111-1111-111111111111"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs font-semibold text-primary hover:text-primary/80 underline underline-offset-2"
+                >
+                  Open in full screen ↗
+                </a>
+              </div>
               <div className="rounded-xl overflow-hidden border border-border">
                 <iframe
                   src="https://storyprospreview.lovable.app/preview/story/11111111-1111-1111-1111-111111111111"
-                  className="w-full h-[600px] sm:h-[900px]"
+                  className="w-full h-[520px] sm:h-[900px]"
                   title="Story Pros Interactive Preview"
                   allow="fullscreen"
                 />
@@ -998,7 +1044,7 @@ const StoryProsDashboard = () => {
         )}
 
         {/* Bottom spacing */}
-        <div className="h-8" />
+        <div className="h-12 sm:h-16" />
     </div>
 
     {/* Edit role modal — opened from the Profile dropdown */}
