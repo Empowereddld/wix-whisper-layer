@@ -849,9 +849,9 @@ const StoryProsDashboard = () => {
 
             {/* Downloadable graphic */}
             <div className="mt-6 pt-6 border-t border-border">
-              <div className="flex items-center gap-2 mb-3">
-                <ImageIcon className="h-4 w-4 text-primary" />
-                <p className="text-sm font-semibold text-foreground">Ready-to-post image</p>
+              <div className="flex items-center gap-2 mb-2">
+                <ImageIcon className="h-5 w-5 text-primary" />
+                <h3 className="font-sans font-bold text-foreground">Ready-to-Post Images</h3>
               </div>
               <p className="text-xs text-muted-foreground mb-4 leading-snug">
                 Download this graphic and post it anywhere you share — Instagram, Facebook, or stories. The scripts above are best for more personal messages; these images work as general post options.
