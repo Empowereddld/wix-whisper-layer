@@ -43,6 +43,8 @@ export interface WaitlistState {
   socialClaims: { instagram: boolean; facebook: boolean; youtube: boolean };
   isSpeechProfessional: boolean;
   speechProfessionalVerified: boolean;
+  role: string | null;
+  roleOther: string | null;
   loading: boolean;
   error: string | null;
   notifications: Notification[];
