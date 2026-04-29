@@ -196,11 +196,13 @@ interface SharePostFlowProps {
 }
 
 const SharePostFlow = ({ referralLink, onShareTracked }: SharePostFlowProps) => {
-  const [activeId, setActiveId] = useState<string>(DEFAULT_POST.id);
+  const defaultIndex = Math.max(0, POSTS.findIndex((p) => p.id === DEFAULT_POST.id));
+  const [activeIndex, setActiveIndex] = useState<number>(defaultIndex);
   const [style, setStyle] = useState<CaptionStyle>("broad");
-  const [showMore, setShowMore] = useState(false);
   const [previewOpen, setPreviewOpen] = useState(false);
   const [editedCaptions, setEditedCaptions] = useState<Record<string, string>>({});
+
+  const activeId = POSTS[activeIndex].id;
 
   const active = useMemo(
     () => POSTS.find((p) => p.id === activeId) ?? DEFAULT_POST,
