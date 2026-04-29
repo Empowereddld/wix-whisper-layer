@@ -5,57 +5,190 @@ import { Textarea } from "@/components/ui/textarea";
 import { Copy, Download, Share2, Eye, ChevronDown, ChevronUp } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
-import shareCardImage from "@/assets/storypros-share-card.jpg";
-import storyprosHero from "@/assets/storybuilders-hero.png";
-import storyPreviewBg from "@/assets/story-preview-bg.png";
+import joinedEarlyImg from "@/assets/storypros-posts/joined_early_vertical.png";
+import somethingBigImg from "@/assets/storypros-posts/something_big_vertical.png";
+import thisOneMattersImg from "@/assets/storypros-posts/this_one_matters_vertical.png";
+import howWasYourDayImg from "@/assets/storypros-posts/how_was_your_day_vertical.png";
+import helpingKidsImg from "@/assets/storypros-posts/helping_kids_vertical.png";
+import sharingOnPurposeImg from "@/assets/storypros-posts/sharing_on_purpose_vertical.png";
 
-type CaptionStyle = "simple" | "educational";
+type CaptionStyle = "broad" | "dld_aware";
 
 interface PostOption {
   id: string;
   image: string;
   alt: string;
+  fileName: string;
+  isDefault?: boolean;
   captions: Record<CaptionStyle, string>;
 }
 
-// Phase 1: placeholder content. Captions/images will be swapped in Phase 2.
-// Structure is intentionally generic so we can drop final assets in without
-// any component changes.
+// Final Phase 2 content. Captions use the literal token "[referral link]"
+// which is substituted with the user's real referral URL at render time.
+// Image + caption stay coupled by post id, and changing image OR style
+// regenerates the caption automatically (unless the user has edited it).
 const POSTS: PostOption[] = [
   {
-    id: "post-1",
-    image: shareCardImage,
-    alt: "Story Pros share graphic — placeholder",
+    id: "POST_01_JOINED_EARLY",
+    image: joinedEarlyImg,
+    alt: "I joined Story Pros early",
+    fileName: "joined_early_vertical.png",
+    isDefault: true,
     captions: {
-      simple:
-        "I just joined the founding waitlist for Story Pros 💜 A new storytelling app for kids who need a little extra support with language. If you know a family who'd love this, take a peek!",
-      educational:
-        "1 in 14 kids has Developmental Language Disorder (DLD) — and most have never heard the name. Story Pros is a new storytelling app built by an SLP and a teacher to give these kids a place to thrive. Joining the founding waitlist 💜",
+      broad: `I just joined Story Pros early 💛
+
+This looks like something really special for kids.
+
+Helping kids feel more confident sharing their thoughts and stories.
+
+Join the waitlist 👇
+[referral link]
+
+Save this for later + share with someone who would love this.`,
+      dld_aware: `I just joined Story Pros early 💛
+
+Built for kids with Developmental Language Disorder (DLD)
+who have more to say than they can express.
+
+This is the kind of support families have been waiting for.
+
+Join the waitlist 👇
+[referral link]
+
+Save + share to help more families find this.`,
     },
   },
   {
-    id: "post-2",
-    image: storyprosHero,
-    alt: "Story Pros hero — placeholder",
+    id: "POST_02_SOMETHING_BIG",
+    image: somethingBigImg,
+    alt: "Something big is coming",
+    fileName: "something_big_vertical.png",
     captions: {
-      simple:
-        "Story time, but make it magical ✨ I'm on the founding waitlist for Story Pros and I think a lot of families are going to love this one.",
-      educational:
-        "Kids with DLD often struggle with storytelling, sequencing, and vocabulary — skills that shape every part of school. Story Pros is being built to support exactly that. Proud to be on the founding waitlist.",
+      broad: `Something big is coming… ✈️
+
+A new way to help kids build confidence through storytelling.
+
+Join the waitlist 👇
+[referral link]
+
+Save + share if this resonates.`,
+      dld_aware: `Something big is coming… ✈️
+
+Story sessions that build vocabulary, comprehension,
+and confidence for children with DLD.
+
+Join the waitlist 👇
+[referral link]
+
+Save + share to spread the word.`,
     },
   },
   {
-    id: "post-3",
-    image: storyPreviewBg,
-    alt: "Story preview — placeholder",
+    id: "POST_03_THIS_ONE_MATTERS",
+    image: thisOneMattersImg,
+    alt: "This one matters",
+    fileName: "this_one_matters_vertical.png",
     captions: {
-      simple:
-        "Saving this for the parents and teachers in my life 💛 Story Pros is launching soon and it looks beautiful.",
-      educational:
-        "Developmental Language Disorder is more common than autism, but it gets a fraction of the awareness. Tools like Story Pros are part of changing that.",
+      broad: `This one matters 💛
+
+Some kids just need the right support to be heard.
+
+Join the waitlist 👇
+[referral link]
+
+Save + share with someone who needs this.`,
+      dld_aware: `This one matters 💛
+
+Built for kids with Developmental Language Disorder (DLD)
+who struggle to express what they're thinking.
+
+Join the waitlist 👇
+[referral link]
+
+Save + share to raise awareness.`,
+    },
+  },
+  {
+    id: "POST_04_HOW_WAS_YOUR_DAY",
+    image: howWasYourDayImg,
+    alt: "How was your day? I don't know.",
+    fileName: "how_was_your_day_vertical.png",
+    captions: {
+      broad: `"How was your day?"
+"I don't know."
+
+There's more there. Always.
+
+Join the waitlist 👇
+[referral link]
+
+Save + share if this feels familiar.`,
+      dld_aware: `"How was your day?"
+"I don't know."
+
+For many kids with DLD, the story is there
+but the words are hard to find.
+
+Join the waitlist 👇
+[referral link]
+
+Save + share to help more families understand.`,
+    },
+  },
+  {
+    id: "POST_05_HELPING_KIDS",
+    image: helpingKidsImg,
+    alt: "Helping kids tell their stories",
+    fileName: "helping_kids_vertical.png",
+    captions: {
+      broad: `Helping kids tell their stories 💛
+
+Because every child deserves to be understood.
+
+Join the waitlist 👇
+[referral link]
+
+Save + share to support this mission.`,
+      dld_aware: `Helping kids with DLD tell their stories 💛
+
+Building language, confidence, and connection
+through structured storytelling.
+
+Join the waitlist 👇
+[referral link]
+
+Save + share to spread awareness.`,
+    },
+  },
+  {
+    id: "POST_06_SHARING_ON_PURPOSE",
+    image: sharingOnPurposeImg,
+    alt: "I'm sharing this on purpose",
+    fileName: "sharing_on_purpose_vertical.png",
+    captions: {
+      broad: `I'm sharing this on purpose 💛
+
+Because more people need to know about this.
+
+Join the waitlist 👇
+[referral link]
+
+Save + share to help this reach the right people.`,
+      dld_aware: `I'm sharing this on purpose 💛
+
+Too many families don't know what DLD is
+or where to find support.
+
+Join the waitlist 👇
+[referral link]
+
+Save + share to raise awareness.`,
     },
   },
 ];
+
+const DEFAULT_POST = POSTS.find((p) => p.isDefault) ?? POSTS[0];
+
 
 interface SharePostFlowProps {
   referralLink: string | null;
