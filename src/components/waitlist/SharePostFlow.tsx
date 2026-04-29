@@ -286,11 +286,11 @@ const SharePostFlow = ({ referralLink, onShareTracked }: SharePostFlowProps) => 
         <p className="text-xs uppercase tracking-wide text-muted-foreground mb-2 font-semibold">
           Start here
         </p>
-        <div className="w-full mx-auto rounded-xl border border-border overflow-hidden bg-muted/40 flex items-center justify-center max-w-[360px] sm:max-w-[420px]">
+        <div className="w-full mx-auto rounded-xl border border-border overflow-hidden bg-muted/40 flex items-center justify-center max-w-[260px] sm:max-w-[300px]">
           <img
             src={active.image}
             alt={active.alt}
-            className="w-full h-auto max-h-[300px] sm:max-h-[340px] object-contain"
+            className="w-full h-auto max-h-[260px] sm:max-h-[300px] object-contain"
             loading="lazy"
           />
         </div>
