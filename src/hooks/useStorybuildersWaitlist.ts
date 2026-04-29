@@ -334,6 +334,8 @@ export function useStorybuildersWaitlist() {
             points: userPoints,
             currentTier: getTierForPoints(userPoints),
             queuePosition: queuePosition ?? prev.queuePosition,
+            role: (ud.role as string | null) ?? prev.role ?? null,
+            roleOther: (ud.role_other as string | null) ?? prev.roleOther ?? null,
           })
         );
       } catch {}
