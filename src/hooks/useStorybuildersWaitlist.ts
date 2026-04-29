@@ -309,6 +309,8 @@ export function useStorybuildersWaitlist() {
           },
           isSpeechProfessional: !!ud.is_speech_professional,
           speechProfessionalVerified: !!ud.speech_professional_verified,
+          role: (ud.role as string | null) ?? null,
+          roleOther: (ud.role_other as string | null) ?? null,
           loading: false,
         };
       });
