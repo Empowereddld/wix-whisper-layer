@@ -653,7 +653,7 @@ const StoryProsDashboard = () => {
               <div className="space-y-4">
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <h3 className="font-sans font-bold text-foreground">Tier Progress</h3>
+                    <h3 className="font-sans font-bold text-foreground text-lg sm:text-xl">Tier Progress</h3>
                     <Badge className="bg-primary/10 text-primary">{currentTierName}</Badge>
                   </div>
                   <p className="text-sm text-muted-foreground">
@@ -714,7 +714,7 @@ const StoryProsDashboard = () => {
           transition={{ delay: 0.2 }}
         >
           <Card className="bg-background border border-border rounded-2xl shadow-sm p-4 sm:p-6">
-            <h3 className="font-sans font-bold text-foreground mb-5 text-center">
+            <h3 className="font-sans font-bold text-foreground text-lg sm:text-xl mb-5 text-center">
               How to Earn Points
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2 max-w-3xl mx-auto text-sm">
@@ -781,7 +781,7 @@ const StoryProsDashboard = () => {
         {/* Referral Link + Share Preview */}
         <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.3 }}>
           <Card className="bg-background border border-border rounded-2xl shadow-sm p-4 sm:p-6">
-            <h3 className="font-sans font-bold text-foreground mb-4">Your Referral Link</h3>
+            <h3 className="font-sans font-bold text-foreground text-lg sm:text-xl mb-4">Your Referral Link</h3>
             <div className="flex gap-2">
               <div className="flex-1 bg-muted border border-border rounded-lg px-4 py-3 font-mono text-sm text-foreground truncate">
                 {wl.referralLink || "—"}
@@ -844,7 +844,7 @@ const StoryProsDashboard = () => {
         {/* Share */}
         <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.35 }}>
           <Card className="bg-background border border-border rounded-2xl shadow-sm p-4 sm:p-6">
-            <h3 className="font-sans font-bold text-foreground mb-2">Share & Earn Referrals</h3>
+            <h3 className="font-sans font-bold text-foreground text-lg sm:text-xl mb-2">Share & Earn Referrals</h3>
             <p className="text-sm text-muted-foreground mb-4 leading-snug">
               Tap a platform for a quick text share with a ready-made caption. Want a richer post with an image? Use <strong>Share a Post</strong> below.
             </p>
@@ -891,7 +891,7 @@ const StoryProsDashboard = () => {
         {/* Follow */}
         <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.4 }}>
           <Card className="bg-background border border-border rounded-2xl shadow-sm p-4 sm:p-6">
-            <h3 className="font-sans font-bold text-foreground mb-2">Follow Us & Earn Points</h3>
+            <h3 className="font-sans font-bold text-foreground text-lg sm:text-xl mb-2">Follow Us & Earn Points</h3>
             <p className="text-sm text-muted-foreground mb-4">
               Follow us on social media to earn bonus points per platform.
             </p>
@@ -953,7 +953,7 @@ const StoryProsDashboard = () => {
           <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.45 }}>
             <Card className="bg-background border border-border rounded-2xl shadow-sm p-4 sm:p-6">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="font-sans font-bold text-foreground">Interactive Story Preview</h3>
+                <h3 className="font-sans font-bold text-foreground text-lg sm:text-xl">Interactive Story Preview</h3>
                 <Badge className="bg-primary/20 text-primary">Tier 4 Exclusive</Badge>
               </div>
               <div className="flex items-center justify-between gap-3 mb-3 flex-wrap">
@@ -990,7 +990,7 @@ const StoryProsDashboard = () => {
                 </p>
               </div>
               <div className="opacity-20">
-                <h3 className="font-sans font-bold text-foreground mb-4">Interactive Story Preview</h3>
+                <h3 className="font-sans font-bold text-foreground text-lg sm:text-xl mb-4">Interactive Story Preview</h3>
                 <div className="rounded-xl overflow-hidden" style={{ height: "400px" }}>
                   <img src={storyPreviewBg} alt="" className="w-full h-full object-cover" />
                 </div>
