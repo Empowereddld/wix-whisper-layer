@@ -10,7 +10,6 @@ import somethingBigImg from "@/assets/storypros-posts/something_big_vertical.png
 import thisOneMattersImg from "@/assets/storypros-posts/this_one_matters_vertical.png";
 import howWasYourDayImg from "@/assets/storypros-posts/how_was_your_day_vertical.png";
 import helpingKidsImg from "@/assets/storypros-posts/helping_kids_vertical.png";
-import sharingOnPurposeImg from "@/assets/storypros-posts/sharing_on_purpose_vertical.png";
 
 type CaptionStyle = "broad" | "dld_aware";
 
