@@ -786,6 +786,8 @@ export function useStorybuildersWaitlist() {
       socialClaims: { instagram: false, facebook: false, youtube: false },
       isSpeechProfessional: false,
       speechProfessionalVerified: false,
+      role: null,
+      roleOther: null,
       loading: false,
       error: null,
       notifications: [],
