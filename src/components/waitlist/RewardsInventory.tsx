@@ -293,7 +293,7 @@ export default function RewardsInventory({
           >
             <div className="space-y-3">
               {TIER_REWARDS.map((reward, idx) => {
-                const status = getRewardStatus(reward.rewardId, reward.tier);
+                const status = getRewardStatus(reward.rewardId, reward.tier, reward.claimType);
                 const isLocked = status === "locked";
                 const colors = REWARD_COLORS[idx];
 
@@ -332,17 +332,30 @@ export default function RewardsInventory({
                               className="text-xs font-semibold px-3 py-1.5 rounded-lg text-white transition-all"
                               style={{ backgroundColor: colors.accent }}
                             >
-                              Claim Reward
+                              {reward.claimType === "download" ? "Download Now" : "Activate"}
                             </motion.button>
                           )}
                           {status === "claimed" && (
                             <span className="inline-flex items-center gap-1 text-xs font-medium text-emerald-600">
                               <Check className="w-3 h-3" /> Claimed
-                              {inventory[reward.rewardId]?.claimedAt && (
+                              {inventory[reward.rewardId]?.claimed_at && (
                                 <span className="text-gray-400 ml-1">
-                                  · {new Date(inventory[reward.rewardId].claimedAt!).toLocaleDateString()}
+                                  · {new Date(inventory[reward.rewardId].claimed_at).toLocaleDateString()}
                                 </span>
                               )}
+                              {reward.claimType === "download" && (
+                                <button
+                                  onClick={() => handleClaimReward(reward.rewardId)}
+                                  className="ml-2 underline text-[#8861d4] hover:text-[#7551c4]"
+                                >
+                                  Re-download
+                                </button>
+                              )}
+                            </span>
+                          )}
+                          {status === "awarded" && (
+                            <span className="inline-flex items-center gap-1 text-xs font-medium text-emerald-600">
+                              <Check className="w-3 h-3" /> Awarded automatically
                             </span>
                           )}
                           {isLocked && (
@@ -386,7 +399,7 @@ export default function RewardsInventory({
 
             {/* Coin Packs */}
             {COIN_PACKS.map((pack) => {
-              const isRedeemed = inventory[pack.packId]?.claimed;
+              const isRedeemed = !!inventory[pack.packId];
               const canRedeem = coins >= pack.cost && !isRedeemed;
 
               return (
