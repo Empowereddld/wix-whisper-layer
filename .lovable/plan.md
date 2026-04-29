@@ -1,71 +1,52 @@
-## Add Role to Story Pros Signup + Editable Profile Dropdown
+## Goal
 
-### What changes for users
+Give Tier-celebration Emails **3, 4, 5, 6, 7, and 7B** a nicer, on-brand visual treatment — with the Story Pros logo at the top and a consistent purple hero across all six. Email 1 (Welcome) and Email 2 (Points & Tiers) stay plain-text by design (Gmail Primary deliverability — see memory).
 
-**At signup (`/storypros`):**
-A required "I am a..." dropdown appears under name + email with 3 options:
-- Parent / Caregiver
-- Speech Professional
-- Other
+## What changes (visual only — body copy stays locked)
 
-If "Other" is selected, a second text input appears: **"Tell us a bit more"** (required, max 60 chars).
+All six tier emails get the **same** upgraded shell:
 
-**On the dashboard profile button (top-right):**
-- Add a small **"Profile"** label under the user icon so it's discoverable.
+1. **Story Pros logo** at the top of the hero (the attached "social/small size" lockup — purple wordmark + paper plane book mark on white).
+2. **Same purple hero band** for all 6 — `linear-gradient(135deg, #5B2D8E → #7C3FB8)` (the existing brand gradient already used in the file). No per-tier color variation, just the tier name + one-line subhead.
+3. **Refined card styling**: rounded 16px corners, soft purple-tinted shadow, generous 36px interior padding, white card on a `#F8F5FC` page background.
+4. **Cleaner typography**: 28px hero title, 15px body, 1.65 line-height, slightly warmer text color (#2A2438), Nunito → DM Sans → system fallback.
+5. **Better section dividers**: subtle horizontal rule with a small purple dot in the middle (instead of plain `border-top`).
+6. **Upgraded buttons**: the existing primary/secondary CTA pair gets a subtle hover-ready treatment — primary gets a slight shadow, secondary gets a 2px border + white fill.
+7. **Script blocks** (the "copy & paste this" boxes): swap the left-bar treatment for a soft purple-tinted background card with a small "Copy this" label tag in the top-right corner (visual only — still plain text inside).
+8. **Footer**: keeps the same content (P.S. about Promotions tab + unsubscribe link) but with refined spacing and a small Story Pros logo mark.
 
-**Inside the profile dropdown (after verification):**
-- Display Name → Email → **Role** (with the friendly label, e.g. "Other: Grandparent").
-- A small "Edit" pencil opens a modal where the user can change role + the "Other" detail. Saves immediately and refreshes the dashboard.
-- Existing rows with no role on file show "Add your role" prompting them to set it.
-- Speech Professional verification pill (✓ / pending) only renders when role is `speech_pro`, so it doesn't duplicate.
+## Important constraints (from memory)
 
-### Database
+- **DO NOT change any body copy.** Emails 3, 4, 5, 6, 7, 7B are all locked in memory. I will only swap the surrounding HTML shell, hero block, divider/button/script-block styles, and add the logo. Subject lines also stay locked.
+- **DO NOT touch Emails 1, 2, verification, reminders, dashboard recovery, referral_joined, milestone_unlocked, weekly_digest, nudge, announcement.** Plain-text Welcome/Points stay plain-text on purpose.
+- **No em dashes** in any new chrome copy I add (memory rule).
 
-Add two nullable columns to `storybuilders_waitlist`:
-- `role` text — values: `parent` | `speech_pro` | `other`
-- `role_other` text — only populated when `role = 'other'`, max 60 chars (validated app-side)
+## Asset work
 
-Both nullable so the 800+ existing rows are unaffected.
+- Copy the uploaded logo image into `src/assets/logo-storypros.png` and `public/email-assets/logo-storypros.png`.
+- Use the **public** copy in the email HTML (emails need an absolute, publicly-fetchable URL — `https://empowereddld.com/email-assets/logo-storypros.png`). The `src/assets` copy is for in-app use later.
+- Use the "social / small size" lockup variant (purple "Story" + yellow "Pros" + book/plane mark) at ~140px wide, centered, with 24px padding above/below, on a white strip ABOVE the purple hero band. This avoids the white-on-purple readability issue and keeps the logo crisp.
 
-### Frontend changes
+## Implementation
 
-**`src/lib/storypros-roles.ts`** (new):
-- Role codes, labels, and a `formatRole(role, roleOther)` helper that returns "Parent / Caregiver", "Speech Professional", or "Other: {detail}".
+Single file edit: `supabase/functions/send-waitlist-email/index.ts`
 
-**`src/pages/StoryBuilders.tsx`** (signup form):
-- Add `role` and `roleOther` state, render `<Select>` under email.
-- Conditionally render "Tell us a bit more" `<Input>` when role is `other`.
-- Block submit until role is chosen (and `roleOther` is non-empty when role is `other`).
-- Pass `{ role, roleOther }` into `wl.joinWaitlist()`.
+1. Add a `LOGO_URL` constant near the top (`https://empowereddld.com/email-assets/logo-storypros.png`).
+2. Add a new `tierHero(tierLabel, subhead)` helper that returns the white-logo-strip + purple hero band as one block.
+3. Add a new `tierCard` style block (rounded 16px, refined shadow, 36px padding).
+4. Add a refined `dividerWithDot` helper.
+5. Add a refined `scriptBlockV2` style.
+6. Refresh `buttonStyles` / `secondaryButtonStyles` / `primaryInlineButtonStyles` (slight shadow + border tweaks) — these are only used by Emails 3–7B and the existing `ctaPair` helper, so the change is scoped.
+7. Replace the inner shell of cases `email3_tier2`, `email4_tier3`, `email5_tier4`, `email6_tier5`, `email7_tier6_founder`, `email7b_tier6_legend` to use the new `tierHero` + `tierCard`. **Body paragraphs, scripts, and CTAs stay byte-identical.**
+8. Leave Emails 1, 2, and all transactional/utility templates untouched.
 
-**`src/hooks/useStorybuildersWaitlist.ts`:**
-- Add `role` and `roleOther` to `WaitlistState` and the localStorage snapshot.
-- Update `joinWaitlist(name, email, { role, roleOther })` to insert role + role_other and set `is_speech_professional = role === 'speech_pro'`.
-- Add `updateRole({ role, roleOther })` that updates the row, keeps `is_speech_professional` flag in sync, refreshes stats. Never clears `speech_professional_verified` or claws back the +50 bonus.
-- Include `role` and `role_other` in the `refreshStats()` SELECT.
+## QA
 
-**`src/pages/StoryProsDashboard.tsx`:**
-- Wrap profile avatar in a vertical flex with "Profile" label below.
-- In `DropdownMenuLabel`, replace the current Speech Professional pill with a Role line; show Speech Professional pill only when role is `speech_pro`.
-- Add edit Dialog: `<Select>` for role + conditional `<Input>` for "Other" detail, Save button calls `wl.updateRole()` and toasts success.
+After the change I will:
+- Send a test of Email 3 to your admin inbox using the existing **Test Send** flow in `AdminEmails` (or via the `dispatch-tier-emails` test path) so you can eyeball it in Gmail.
+- Confirm the logo loads (it has to be reachable at the public URL — I'll verify with a quick `curl -I` once published).
+- Spot-check 2 more emails (Email 5 and Email 7) so we cover early/middle/late tiers.
 
-**`src/pages/AdminStoryBuilders.tsx`:**
-- Add a "Role" column to the admin table using `formatRole(...)` so "Other" entries show their custom detail inline.
+## What you'll see when it's done
 
-### Validation & safety
-
-- Client-side: role required, `roleOther` required when role = other, trimmed, max 60 chars.
-- Edge: rely on existing `update-waitlist-profile` edge function pattern (extend it to accept `role` + `role_other`) so the client never writes directly. Service-role validates the same rules and rejects unknown role codes.
-- Switching away from Other clears `role_other`. Switching to Other pre-fills with previous answer if any.
-
-### Files touched
-
-```text
-supabase migration                           (add role, role_other columns)
-supabase/functions/update-waitlist-profile   (extend to accept role fields)
-src/lib/storypros-roles.ts                   (new — codes, labels, formatter)
-src/pages/StoryBuilders.tsx                  (signup form + state)
-src/hooks/useStorybuildersWaitlist.ts        (state + joinWaitlist + updateRole)
-src/pages/StoryProsDashboard.tsx             (Profile label, role row, edit modal)
-src/pages/AdminStoryBuilders.tsx             (Role column)
-```
+A consistent, branded look across all six tier-up emails: white logo strip on top → purple hero with the tier name → clean white card with your locked copy → refined CTA buttons → consistent footer. Same content, much nicer container.

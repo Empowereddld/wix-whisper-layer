@@ -33,6 +33,7 @@ const SITE_BASE = "https://empowereddld.com";
 const DEFAULT_DASHBOARD = `${SITE_BASE}/storypros/dashboard`;
 const DEFAULT_VIDEO = `${SITE_BASE}/storypros`;
 const DEFAULT_GUIDE = `${SITE_BASE}/hub/resource/d9836a63-003e-44bc-9da4-a27d6d478d1a`;
+const LOGO_URL = `${SITE_BASE}/email-assets/logo-storypros.png`;
 
 function getEmailTemplate(
   template: string,
@@ -40,102 +41,131 @@ function getEmailTemplate(
   recipientEmail: string = ""
 ): { subject: string; html: string } {
   const brandColor = "#5B2D8E";
-  const lightBackground = "#F8F5FC";
+  const brandColorDeep = "#3F1B6B";
+  const brandAccent = "#FBBF24";
+  const lightBackground = "#F4EEFB";
   const cardBackground = "#FFFFFF";
+  const textColor = "#2A2438";
+  const mutedText = "#6B6478";
 
   const baseStyles = `
-    font-family: 'Nunito', 'DM Sans', Arial, sans-serif;
-    line-height: 1.6;
-    color: #333;
+    font-family: 'Nunito', 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    line-height: 1.65;
+    color: ${textColor};
+    font-size: 15px;
+    margin: 0 0 16px;
   `;
 
+  // Legacy header (kept in case any non-tier template still references it)
   const headerStyles = `
     background: linear-gradient(135deg, ${brandColor} 0%, #7C3FB8 100%);
     color: white;
-    padding: 40px 20px;
+    padding: 36px 24px;
     text-align: center;
-    border-radius: 12px 12px 0 0;
   `;
 
   const buttonStyles = `
     display: inline-block;
     background: ${brandColor};
-    color: white;
-    padding: 14px 32px;
+    color: #ffffff !important;
+    padding: 15px 34px;
     text-decoration: none;
-    border-radius: 6px;
-    font-weight: 600;
-    margin: 20px 0;
-    font-size: 16px;
+    border-radius: 999px;
+    font-weight: 700;
+    margin: 22px 0;
+    font-size: 15px;
+    letter-spacing: 0.2px;
+    box-shadow: 0 6px 14px rgba(91, 45, 142, 0.28);
   `;
 
   const secondaryButtonStyles = `
     display: inline-block;
     background: #FFFFFF;
-    color: ${brandColor};
-    padding: 14px 32px;
+    color: ${brandColor} !important;
+    padding: 13px 28px;
     text-decoration: none;
-    border-radius: 6px;
-    font-weight: 600;
+    border-radius: 999px;
+    font-weight: 700;
     margin: 8px 6px;
     font-size: 15px;
+    letter-spacing: 0.2px;
     border: 2px solid ${brandColor};
   `;
 
   const primaryInlineButtonStyles = `
     display: inline-block;
     background: ${brandColor};
-    color: white;
-    padding: 14px 28px;
+    color: #ffffff !important;
+    padding: 13px 28px;
     text-decoration: none;
-    border-radius: 6px;
-    font-weight: 600;
+    border-radius: 999px;
+    font-weight: 700;
     margin: 8px 6px;
     font-size: 15px;
+    letter-spacing: 0.2px;
+    box-shadow: 0 6px 14px rgba(91, 45, 142, 0.28);
   `;
 
   const footerStyles = `
     text-align: center;
-    color: #999;
+    color: ${mutedText};
     font-size: 12px;
-    margin-top: 40px;
-    border-top: 1px solid #eee;
-    padding-top: 20px;
+    margin-top: 8px;
+    padding: 24px 28px 32px;
+    background: #FAF7FE;
+    border-top: 1px solid #EFE6FA;
   `;
 
   const containerStyles = `
-    max-width: 600px;
+    max-width: 620px;
     margin: 0 auto;
     background: ${lightBackground};
-    padding: 20px;
+    padding: 28px 16px;
   `;
 
+  // White card now wraps logo strip + hero + body + footer with no inner padding.
   const cardStyles = `
     background: ${cardBackground};
-    border-radius: 12px;
-    padding: 40px;
-    box-shadow: 0 2px 8px rgba(91, 45, 142, 0.1);
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 12px 32px rgba(91, 45, 142, 0.14);
   `;
+
+  // Padding for the body content area (between hero and footer)
+  const bodyPad = `padding: 32px 36px 8px;`;
 
   const scriptBlock = `
-    background: ${lightBackground};
-    border-left: 3px solid ${brandColor};
-    padding: 14px 18px;
-    margin: 12px 0;
-    font-style: italic;
-    color: #444;
-    border-radius: 4px;
+    background: #F8F3FE;
+    border: 1px solid #ECE0FA;
+    padding: 16px 20px;
+    margin: 14px 0;
+    color: #3F1B6B;
+    border-radius: 10px;
+    font-size: 14.5px;
+    line-height: 1.6;
   `;
 
-  const dividerStyles = `border: none; border-top: 1px solid #eee; margin: 28px 0;`;
+  const dividerStyles = `border: none; border-top: 1px solid #EFE6FA; margin: 30px 0;`;
 
   const tierLine = (label: string, reward: string, isCurrent = false) =>
-    `<li style="margin-bottom: 6px;"><strong>${label}</strong> — ${reward}${isCurrent ? " <span style=\"color: " + brandColor + "; font-weight: 700;\">(you are here)</span>" : ""}</li>`;
+    `<li style="margin-bottom: 8px;"><strong>${label}</strong> — ${reward}${isCurrent ? " <span style=\"color: " + brandColor + "; font-weight: 700;\">(you are here)</span>" : ""}</li>`;
 
   const ctaPair = (referralLink: string, dashboard: string) => `
-    <div style="text-align: center; margin: 24px 0;">
+    <div style="text-align: center; margin: 28px 0 8px;">
       <a href="${referralLink}" style="${primaryInlineButtonStyles}">Share your link</a>
       <a href="${dashboard}" style="${secondaryButtonStyles}">See your dashboard</a>
+    </div>
+  `;
+
+  // Logo strip + purple hero band. Used by all 6 tier-celebration emails.
+  const tierHero = (tierLabel: string, subhead: string) => `
+    <div style="background: #FFFFFF; padding: 22px 24px 18px; text-align: center; border-bottom: 1px solid #F1E8FB;">
+      <img src="${LOGO_URL}" alt="Story Pros" width="160" style="display: inline-block; max-width: 160px; height: auto; border: 0;" />
+    </div>
+    <div style="background: linear-gradient(135deg, ${brandColorDeep} 0%, ${brandColor} 55%, #7C3FB8 100%); color: #ffffff; padding: 38px 28px; text-align: center;">
+      <div style="display: inline-block; background: rgba(251, 191, 36, 0.18); color: ${brandAccent}; font-size: 12px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; padding: 6px 14px; border-radius: 999px; margin-bottom: 14px;">You unlocked a new tier</div>
+      <h1 style="margin: 0; font-size: 30px; font-weight: 800; line-height: 1.2; color: #ffffff;">${tierLabel}</h1>
+      <p style="margin: 10px 0 0; font-size: 15px; line-height: 1.5; color: #F4EEFB; opacity: 0.95;">${subhead}</p>
     </div>
   `;
 
@@ -144,8 +174,9 @@ function getEmailTemplate(
     : `${SITE_BASE}/unsubscribe`;
   const footerBlock = `
     <div style="${footerStyles}">
-      <p style="margin: 0 0 10px;"><em>P.S. If this email landed in your Promotions or Updates tab, drag it over to your Primary inbox so you don't miss the next one. It really helps.</em></p>
-      <p style="margin: 16px 0 6px;">You're receiving this as a Story Pros founding member.</p>
+      <img src="${LOGO_URL}" alt="Story Pros" width="96" style="display: inline-block; max-width: 96px; height: auto; opacity: 0.9; margin-bottom: 12px; border: 0;" />
+      <p style="margin: 0 0 10px; color: ${mutedText};"><em>P.S. If this email landed in your Promotions or Updates tab, drag it over to your Primary inbox so you don't miss the next one. It really helps.</em></p>
+      <p style="margin: 12px 0 6px;">You're receiving this as a Story Pros founding member.</p>
       <p style="margin: 0;"><a href="${unsubscribeUrl}" style="color: ${brandColor}; text-decoration: none;">Unsubscribe</a></p>
     </div>
   `;
@@ -344,12 +375,9 @@ function getEmailTemplate(
         html: `
           <div style="${containerStyles}">
             <div style="${cardStyles}">
-              <div style="${headerStyles}">
-                <h1 style="margin: 0; font-size: 26px;">Tier 2 Unlocked</h1>
-                <p style="margin: 8px 0 0; opacity: 0.9; font-size: 14px;">Your free guide is ready.</p>
-              </div>
+              ${tierHero("Tier 2 Unlocked", "Your free guide is ready.")}
 
-              <div style="padding: 20px 0;">
+              <div style="${bodyPad}">
                 <p style="${baseStyles}">Hi ${name},</p>
 
                 <p style="${baseStyles}">
@@ -432,12 +460,9 @@ function getEmailTemplate(
         html: `
           <div style="${containerStyles}">
             <div style="${cardStyles}">
-              <div style="${headerStyles}">
-                <h1 style="margin: 0; font-size: 26px;">Tier 3 Unlocked</h1>
-                <p style="margin: 8px 0 0; opacity: 0.9; font-size: 14px;">50 Story Coins are yours.</p>
-              </div>
+              ${tierHero("Tier 3 Unlocked", "50 Story Coins are yours.")}
 
-              <div style="padding: 20px 0;">
+              <div style="${bodyPad}">
                 <p style="${baseStyles}">Hi ${name},</p>
 
                 <p style="${baseStyles}">
@@ -498,12 +523,9 @@ function getEmailTemplate(
         html: `
           <div style="${containerStyles}">
             <div style="${cardStyles}">
-              <div style="${headerStyles}">
-                <h1 style="margin: 0; font-size: 26px;">Tier 4 Unlocked</h1>
-                <p style="margin: 8px 0 0; opacity: 0.9; font-size: 14px;">VIP Beta Access is yours.</p>
-              </div>
+              ${tierHero("Tier 4 Unlocked", "VIP Beta Access is yours.")}
 
-              <div style="padding: 20px 0;">
+              <div style="${bodyPad}">
                 <p style="${baseStyles}">Hi ${name},</p>
 
                 <p style="${baseStyles}">This is a big one.</p>
@@ -582,12 +604,9 @@ function getEmailTemplate(
         html: `
           <div style="${containerStyles}">
             <div style="${cardStyles}">
-              <div style="${headerStyles}">
-                <h1 style="margin: 0; font-size: 26px;">Tier 5 Unlocked</h1>
-                <p style="margin: 8px 0 0; opacity: 0.9; font-size: 14px;">Founder Pricing is locked in. For life.</p>
-              </div>
+              ${tierHero("Tier 5 Unlocked", "Founder Pricing is locked in. For life.")}
 
-              <div style="padding: 20px 0;">
+              <div style="${bodyPad}">
                 <p style="${baseStyles}">Hi ${name},</p>
 
                 <p style="${baseStyles}">
@@ -688,12 +707,9 @@ function getEmailTemplate(
         html: `
           <div style="${containerStyles}">
             <div style="${cardStyles}">
-              <div style="${headerStyles}">
-                <h1 style="margin: 0; font-size: 26px;">Tier 6 Unlocked</h1>
-                <p style="margin: 8px 0 0; opacity: 0.9; font-size: 14px;">Signed book and Founder merch headed your way.</p>
-              </div>
+              ${tierHero("Tier 6 Unlocked", "Signed book and Founder merch headed your way.")}
 
-              <div style="padding: 20px 0;">
+              <div style="${bodyPad}">
                 <p style="${baseStyles}">Hi ${name},</p>
 
                 <p style="${baseStyles}"><strong>500 points. Tier 6. The final one.</strong></p>
@@ -779,12 +795,9 @@ function getEmailTemplate(
         html: `
           <div style="${containerStyles}">
             <div style="${cardStyles}">
-              <div style="${headerStyles}">
-                <h1 style="margin: 0; font-size: 26px;">Tier 6 Unlocked</h1>
-                <p style="margin: 8px 0 0; opacity: 0.9; font-size: 14px;">500 points. Here's everything you've earned.</p>
-              </div>
+              ${tierHero("Tier 6 Unlocked", "500 points. Here's everything you've earned.")}
 
-              <div style="padding: 20px 0;">
+              <div style="${bodyPad}">
                 <p style="${baseStyles}">Hi ${name},</p>
 
                 <p style="${baseStyles}"><strong>500 points. Tier 6. The final one.</strong></p>
