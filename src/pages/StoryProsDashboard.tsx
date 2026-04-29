@@ -1027,7 +1027,75 @@ const StoryProsDashboard = () => {
 
         {/* Bottom spacing */}
         <div className="h-8" />
-      </div>
+    </div>
+
+    {/* Edit role modal — opened from the Profile dropdown */}
+    <Dialog open={roleEditOpen} onOpenChange={setRoleEditOpen}>
+      <DialogContent className="sm:max-w-md">
+        <DialogHeader>
+          <DialogTitle>Update your role</DialogTitle>
+        </DialogHeader>
+        <div className="space-y-4 py-2">
+          <div className="space-y-2">
+            <Label htmlFor="role-select">I am a...</Label>
+            <Select
+              value={roleDraft}
+              onValueChange={(v) => {
+                setRoleDraft(v);
+                if (v !== "other") setRoleOtherDraft("");
+              }}
+            >
+              <SelectTrigger id="role-select">
+                <SelectValue placeholder="Choose one" />
+              </SelectTrigger>
+              <SelectContent>
+                {ROLE_OPTIONS.map((opt) => (
+                  <SelectItem key={opt.value} value={opt.value}>
+                    {opt.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          {roleDraft === "other" && (
+            <div className="space-y-2">
+              <Label htmlFor="role-other">Tell us a bit more</Label>
+              <Input
+                id="role-other"
+                value={roleOtherDraft}
+                onChange={(e) => setRoleOtherDraft(e.target.value.slice(0, ROLE_OTHER_MAX_LENGTH))}
+                placeholder="e.g. Grandparent, Educator, Researcher"
+                maxLength={ROLE_OTHER_MAX_LENGTH}
+              />
+              <p className="text-[11px] text-muted-foreground text-right">
+                {roleOtherDraft.length}/{ROLE_OTHER_MAX_LENGTH}
+              </p>
+            </div>
+          )}
+          {roleDraft === "speech_pro" && !wl.speechProfessionalVerified && (
+            <p className="text-xs text-muted-foreground">
+              We'll review your details before awarding the +50 Speech Professional bonus.
+            </p>
+          )}
+        </div>
+        <DialogFooter>
+          <Button
+            variant="outline"
+            onClick={() => setRoleEditOpen(false)}
+            disabled={savingRole}
+          >
+            Cancel
+          </Button>
+          <Button
+            onClick={handleSaveRole}
+            disabled={savingRole || !isValidRoleSelection(roleDraft, roleOtherDraft)}
+            className="bg-[#8861d4] hover:bg-[#6a47b8] text-white"
+          >
+            {savingRole ? "Saving..." : "Save"}
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
     </div>
   );
 };

@@ -55,6 +55,7 @@ import StatsCard from "@/components/admin/StatsCard";
 import WaitlistAnalyticsChart from "@/components/admin/WaitlistAnalyticsChart";
 import BulkEmailComposer from "@/components/admin/BulkEmailComposer";
 import { getTierName, getTierForPoints } from "@/lib/waitlist-utils";
+import { formatRole } from "@/lib/storypros-roles";
 import { format } from "date-fns";
 
 // Aligned with actual storybuilders_waitlist table columns
@@ -67,6 +68,8 @@ interface WaitlistUser {
   points: number;
   email_verified: boolean;
   created_at: string;
+  role: string | null;
+  role_other: string | null;
 }
 
 const AdminStoryBuilders = () => {
@@ -113,7 +116,7 @@ const AdminStoryBuilders = () => {
       setError(null);
       const { data, error: fetchError } = await supabase
         .from("storybuilders_waitlist")
-        .select("id, name, email, referral_code, invite_count, points, email_verified, created_at")
+        .select("id, name, email, referral_code, invite_count, points, email_verified, created_at, role, role_other")
         .is("deleted_at", null)
         .order("created_at", { ascending: false });
 
@@ -468,6 +471,7 @@ const AdminStoryBuilders = () => {
                       <TableRow className="border-b border-border">
                         <TableHead className="text-foreground">Name</TableHead>
                         <TableHead className="text-foreground">Email</TableHead>
+                        <TableHead className="text-foreground">Role</TableHead>
                         <TableHead className="text-foreground">Referral Code</TableHead>
                         <TableHead className="text-right text-foreground">Referrals</TableHead>
                         <TableHead className="text-foreground">Tier</TableHead>
@@ -487,6 +491,11 @@ const AdminStoryBuilders = () => {
                             </TableCell>
                             <TableCell className="text-sm text-muted-foreground">
                               {user.email}
+                            </TableCell>
+                            <TableCell className="text-sm text-muted-foreground">
+                              {user.role
+                                ? formatRole(user.role, user.role_other)
+                                : <span className="italic text-muted-foreground/60">—</span>}
                             </TableCell>
                             <TableCell className="font-mono text-xs text-muted-foreground">
                               {user.referral_code}
@@ -520,7 +529,7 @@ const AdminStoryBuilders = () => {
                         ))
                       ) : (
                         <TableRow>
-                          <TableCell colSpan={7} className="text-center py-12">
+                          <TableCell colSpan={8} className="text-center py-12">
                             <p className="text-muted-foreground">
                               {users.length === 0 ? "No users in the waitlist yet" : "No results matching your search"}
                             </p>
