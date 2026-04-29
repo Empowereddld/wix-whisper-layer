@@ -707,11 +707,15 @@ const StoryProsDashboard = () => {
           transition={{ delay: 0.2 }}
         >
           <Card className="bg-background border border-border rounded-2xl shadow-sm p-4 sm:p-6">
-            <h3 className="font-sans font-bold text-foreground mb-6 text-center">
+            <h3 className="font-sans font-bold text-foreground mb-5 text-center">
               How to Earn Points
             </h3>
-            <div className="max-w-md mx-auto">
-              <div className="space-y-2 text-sm">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2 max-w-3xl mx-auto text-sm">
+              {/* One-time earns */}
+              <div className="space-y-2">
+                <p className="text-[11px] uppercase tracking-wide text-muted-foreground font-semibold mb-1">
+                  One-time
+                </p>
                 {earnRows.map((row) => (
                   <div key={row.label} className="flex justify-between">
                     <span
@@ -731,29 +735,34 @@ const StoryProsDashboard = () => {
                           : "font-bold text-[#8861d4]"
                       }
                     >
-                      {row.done ? `+${row.pts} pts ✓` : `${row.pts} pts (once)`}
+                      {row.done ? `+${row.pts} pts ✓` : `${row.pts} pts`}
                     </span>
                   </div>
                 ))}
-                <div className="border-t border-border pt-2 mt-2">
-                  <div className="flex justify-between">
-                    <span className="text-foreground">Refer a friend</span>
-                    <span className="font-bold text-[#8861d4]">
-                      {REPEATABLE_POINTS.REFERRAL} pts
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-foreground">Share link</span>
-                    <span className="font-bold text-[#8861d4]">
-                      {REPEATABLE_POINTS.SHARE} {REPEATABLE_POINTS.SHARE === 1 ? "pt" : "pts"} (max {DAILY_CAPS.MAX_SHARE_POINTS}/day)
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-foreground">Feature suggestion</span>
-                    <span className="font-bold text-[#8861d4]">
-                      {REPEATABLE_POINTS.SUGGESTION} pts
-                    </span>
-                  </div>
+              </div>
+
+              {/* Repeatable earns */}
+              <div className="space-y-2 mt-4 md:mt-0 pt-3 md:pt-0 border-t md:border-t-0 md:border-l md:pl-8 border-border">
+                <p className="text-[11px] uppercase tracking-wide text-muted-foreground font-semibold mb-1">
+                  Repeatable
+                </p>
+                <div className="flex justify-between">
+                  <span className="text-foreground">Refer a friend</span>
+                  <span className="font-bold text-[#8861d4]">
+                    {REPEATABLE_POINTS.REFERRAL} pts
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-foreground">Share link</span>
+                  <span className="font-bold text-[#8861d4]">
+                    {REPEATABLE_POINTS.SHARE} {REPEATABLE_POINTS.SHARE === 1 ? "pt" : "pts"} (max {DAILY_CAPS.MAX_SHARE_POINTS}/day)
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-foreground">Feature suggestion</span>
+                  <span className="font-bold text-[#8861d4]">
+                    {REPEATABLE_POINTS.SUGGESTION} pts
+                  </span>
                 </div>
               </div>
             </div>
