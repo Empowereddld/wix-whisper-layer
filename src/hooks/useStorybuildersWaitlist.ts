@@ -382,12 +382,18 @@ export function useStorybuildersWaitlist() {
   }, [state.referralCode, refreshStatsInternal]);
 
   const joinWaitlist = useCallback(
-    async (name: string, email: string): Promise<JoinWaitlistResponse | null> => {
+    async (
+      name: string,
+      email: string,
+      opts?: { role?: string | null; roleOther?: string | null }
+    ): Promise<JoinWaitlistResponse | null> => {
       setState((s) => ({ ...s, loading: true, error: null }));
       try {
         const ref = getRefFromUrl();
+        const role = opts?.role ?? null;
+        const roleOther = opts?.roleOther ?? null;
         const { data, error } = await supabase.functions.invoke("storybuilders-signup", {
-          body: { name, email, ref },
+          body: { name, email, ref, role, role_other: roleOther },
         });
 
         if (error) throw new Error(error.message || "Failed to join");
@@ -404,6 +410,9 @@ export function useStorybuildersWaitlist() {
           currentTier: result.current_tier || getTierForPoints(result.points || 0),
           queuePosition: result.queue_position || null,
           totalCount: result.total_count,
+          role: role,
+          roleOther: roleOther,
+          isSpeechProfessional: role === "speech_pro",
           loading: false,
         };
 
@@ -424,6 +433,8 @@ export function useStorybuildersWaitlist() {
             points: newState.points,
             currentTier: newState.currentTier,
             queuePosition: newState.queuePosition,
+            role,
+            roleOther,
           })
         );
 
