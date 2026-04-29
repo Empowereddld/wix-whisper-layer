@@ -196,21 +196,26 @@ interface SharePostFlowProps {
 }
 
 const SharePostFlow = ({ referralLink, onShareTracked }: SharePostFlowProps) => {
-  const [activeId, setActiveId] = useState<string>(POSTS[0].id);
-  const [style, setStyle] = useState<CaptionStyle>("simple");
+  const [activeId, setActiveId] = useState<string>(DEFAULT_POST.id);
+  const [style, setStyle] = useState<CaptionStyle>("broad");
   const [showMore, setShowMore] = useState(false);
   const [previewOpen, setPreviewOpen] = useState(false);
   const [editedCaptions, setEditedCaptions] = useState<Record<string, string>>({});
 
   const active = useMemo(
-    () => POSTS.find((p) => p.id === activeId) ?? POSTS[0],
+    () => POSTS.find((p) => p.id === activeId) ?? DEFAULT_POST,
     [activeId]
   );
 
   const captionKey = `${active.id}:${style}`;
-  const baseCaption = active.captions[style];
+  // Substitute the [referral link] token with the user's real link (or a
+  // friendly fallback if the link hasn't loaded yet). User edits override
+  // the generated caption entirely.
+  const linkValue = referralLink || "(your referral link will appear here)";
+  const baseCaption = active.captions[style].replace(/\[referral link\]/g, linkValue);
   const caption = editedCaptions[captionKey] ?? baseCaption;
-  const captionWithLink = referralLink ? `${caption}\n\n${referralLink}` : caption;
+  const captionWithLink = caption;
+
 
   const handleSelectPost = (id: string) => {
     setActiveId(id);
