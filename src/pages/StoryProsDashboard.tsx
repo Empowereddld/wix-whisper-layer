@@ -846,7 +846,7 @@ const StoryProsDashboard = () => {
           <Card className="bg-background border border-border rounded-2xl shadow-sm p-4 sm:p-6">
             <h3 className="font-sans font-bold text-foreground mb-2">Share & Earn Referrals</h3>
             <p className="text-sm text-muted-foreground mb-4 leading-snug">
-              Tap a platform to open it with a ready-to-paste caption or copy one of the other captions below.
+              Tap a platform for a quick text share with a ready-made caption. Want a richer post with an image? Use <strong>Share a Post</strong> below.
             </p>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
               <Button onClick={() => handleShare("twitter")} className="bg-foreground hover:bg-foreground/90 text-background flex items-center gap-2">
