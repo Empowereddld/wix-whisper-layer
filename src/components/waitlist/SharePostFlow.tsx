@@ -10,7 +10,6 @@ import somethingBigImg from "@/assets/storypros-posts/something_big_vertical.png
 import thisOneMattersImg from "@/assets/storypros-posts/this_one_matters_vertical.png";
 import howWasYourDayImg from "@/assets/storypros-posts/how_was_your_day_vertical.png";
 import helpingKidsImg from "@/assets/storypros-posts/helping_kids_vertical.png";
-import sharingOnPurposeImg from "@/assets/storypros-posts/sharing_on_purpose_vertical.png";
 
 type CaptionStyle = "broad" | "dld_aware";
 
@@ -158,31 +157,6 @@ Join the waitlist 👇
 [referral link]
 
 Save + share to spread awareness.`,
-    },
-  },
-  {
-    id: "POST_06_SHARING_ON_PURPOSE",
-    image: sharingOnPurposeImg,
-    alt: "I'm sharing this on purpose",
-    fileName: "sharing_on_purpose_vertical.png",
-    captions: {
-      broad: `I'm sharing this on purpose 💛
-
-Because more people need to know about this.
-
-Join the waitlist 👇
-[referral link]
-
-Save + share to help this reach the right people.`,
-      dld_aware: `I'm sharing this on purpose 💛
-
-Too many families don't know what DLD is
-or where to find support.
-
-Join the waitlist 👇
-[referral link]
-
-Save + share to raise awareness.`,
     },
   },
 ];
