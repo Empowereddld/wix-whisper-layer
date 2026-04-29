@@ -1153,26 +1153,48 @@ const StoryBuilders = () => {
 
           {!wl.joined ? (
             <div className="w-full max-w-[520px]">
-              <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 w-full mt-4">
-                <Input
-                  placeholder="Name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  required
-                  className="h-12 bg-white/10 border-white/20 text-white placeholder:text-white/50 rounded-md"
-                />
-                <Input
-                  type="email"
-                  placeholder="Email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  className="h-12 bg-white/10 border-white/20 text-white placeholder:text-white/50 rounded-md"
-                />
+              <form onSubmit={handleSubmit} className="flex flex-col gap-3 w-full mt-4">
+                <div className="flex flex-col sm:flex-row gap-3 w-full">
+                  <Input
+                    placeholder="Name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    required
+                    className="h-12 bg-white/10 border-white/20 text-white placeholder:text-white/50 rounded-md flex-1"
+                  />
+                  <Input
+                    type="email"
+                    placeholder="Email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    className="h-12 bg-white/10 border-white/20 text-white placeholder:text-white/50 rounded-md flex-1"
+                  />
+                </div>
+                <Select value={role} onValueChange={setRole}>
+                  <SelectTrigger className="h-12 bg-white/10 border-white/20 text-white rounded-md focus:ring-primary data-[placeholder]:text-white/50">
+                    <SelectValue placeholder="I am a..." />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {ROLE_OPTIONS.map((opt) => (
+                      <SelectItem key={opt.value} value={opt.value}>{opt.label}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                {role === "other" && (
+                  <Input
+                    placeholder="Tell us a bit more (e.g. grandparent, researcher)"
+                    value={roleOther}
+                    onChange={(e) => setRoleOther(e.target.value.slice(0, ROLE_OTHER_MAX_LENGTH))}
+                    maxLength={ROLE_OTHER_MAX_LENGTH}
+                    required
+                    className="h-12 bg-white/10 border-white/20 text-white placeholder:text-white/50 rounded-md"
+                  />
+                )}
                 <Button
                   type="submit"
                   disabled={wl.loading}
-                  className="h-12 px-8 bg-primary text-primary-foreground font-bold rounded-md hover:bg-primary/90 transition-colors shadow-[var(--shadow-button)] whitespace-nowrap"
+                  className="h-12 px-8 bg-primary text-primary-foreground font-bold rounded-md hover:bg-primary/90 transition-colors shadow-[var(--shadow-button)] whitespace-nowrap sm:self-start"
                 >
                   {wl.loading ? "Joining…" : "Join Now"}
                 </Button>
