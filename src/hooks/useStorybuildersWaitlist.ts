@@ -87,6 +87,7 @@ export function useStorybuildersWaitlist() {
     speechProfessionalVerified: false,
     role: null,
     roleOther: null,
+    rewardsClaimed: {},
     loading: false,
     error: null,
     notifications: [],
@@ -312,6 +313,7 @@ export function useStorybuildersWaitlist() {
           speechProfessionalVerified: !!ud.speech_professional_verified,
           role: (ud.role as string | null) ?? null,
           roleOther: (ud.role_other as string | null) ?? null,
+          rewardsClaimed: (ud.rewards_claimed as Record<string, { claimed_at: string }>) || {},
           loading: false,
         };
       });
@@ -828,6 +830,7 @@ export function useStorybuildersWaitlist() {
       speechProfessionalVerified: false,
       role: null,
       roleOther: null,
+      rewardsClaimed: {},
       loading: false,
       error: null,
       notifications: [],
