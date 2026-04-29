@@ -21,6 +21,8 @@ import {
   Coins,
   Download,
   ImageIcon,
+  Repeat,
+  Gift,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -714,62 +716,115 @@ const StoryProsDashboard = () => {
           transition={{ delay: 0.2 }}
         >
           <Card className="bg-background border border-border rounded-2xl shadow-sm p-4 sm:p-6">
-            <h3 className="font-sans font-bold text-foreground text-lg sm:text-xl mb-5 text-center">
-              How to Earn Points
-            </h3>
+            <div className="flex items-center justify-center gap-2 mb-5">
+              <Sparkles className="h-5 w-5 text-[#8861d4]" aria-hidden />
+              <h3 className="font-sans font-bold text-foreground text-lg sm:text-xl text-center">
+                How to Earn Points
+              </h3>
+            </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2 max-w-3xl mx-auto text-sm">
               {/* One-time earns */}
-              <div className="space-y-2">
-                <p className="text-[11px] uppercase tracking-wide text-muted-foreground font-semibold mb-1">
-                  One-time
-                </p>
-                {earnRows.map((row) => (
-                  <div key={row.label} className="flex justify-between">
-                    <span
-                      className={
-                        row.done
-                          ? "text-emerald-600 flex items-center gap-1"
-                          : "text-foreground"
-                      }
+              <div>
+                <div className="flex items-center gap-2 mb-3 pb-2 border-b border-border/60">
+                  <span className="inline-block h-2 w-2 rounded-full bg-emerald-500" aria-hidden />
+                  <p className="text-sm uppercase tracking-wider text-foreground font-bold">
+                    One-time
+                  </p>
+                </div>
+                <div className="space-y-1">
+                  {earnRows.slice(0, -1).map((row) => (
+                    <div
+                      key={row.label}
+                      className="flex justify-between items-center rounded-md px-2 py-1.5 -mx-2 transition-colors hover:bg-muted/50"
                     >
-                      {row.done && <Check className="h-3 w-3" />}
-                      {row.label}
-                    </span>
-                    <span
-                      className={
-                        row.done
-                          ? "font-bold text-emerald-500"
-                          : "font-bold text-[#8861d4]"
-                      }
-                    >
-                      {row.done ? `+${row.pts} pts ✓` : `${row.pts} pts`}
-                    </span>
-                  </div>
-                ))}
+                      <span
+                        className={
+                          row.done
+                            ? "text-emerald-600 flex items-center gap-1.5"
+                            : "text-foreground flex items-center gap-1.5"
+                        }
+                      >
+                        <span className="inline-flex h-3 w-3 items-center justify-center">
+                          {row.done && <Check className="h-3 w-3" />}
+                        </span>
+                        {row.label}
+                      </span>
+                      <span
+                        className={`tabular-nums font-bold ${
+                          row.done ? "text-emerald-500" : "text-[#8861d4]"
+                        }`}
+                      >
+                        {row.done ? `+${row.pts} pts ✓` : `${row.pts} pts`}
+                      </span>
+                    </div>
+                  ))}
+
+                  {/* Bonus row, visually separated */}
+                  {(() => {
+                    const bonus = earnRows[earnRows.length - 1];
+                    return (
+                      <div className="mt-2 pt-2 border-t border-dashed border-border/70">
+                        <div className="flex justify-between items-center rounded-md px-2 py-1.5 -mx-2 transition-colors hover:bg-muted/50">
+                          <span
+                            className={
+                              bonus.done
+                                ? "text-emerald-600 flex items-center gap-1.5"
+                                : "text-foreground flex items-center gap-1.5"
+                            }
+                          >
+                            <span className="inline-flex h-3 w-3 items-center justify-center">
+                              {bonus.done ? (
+                                <Check className="h-3 w-3" />
+                              ) : (
+                                <Gift className="h-3 w-3 text-[#8861d4]" />
+                              )}
+                            </span>
+                            {bonus.label}
+                            <span className="ml-1 text-[10px] uppercase tracking-wide font-bold text-[#8861d4] bg-[#8861d4]/10 rounded px-1.5 py-0.5">
+                              Bonus
+                            </span>
+                          </span>
+                          <span
+                            className={`tabular-nums font-bold ${
+                              bonus.done ? "text-emerald-500" : "text-[#8861d4]"
+                            }`}
+                          >
+                            {bonus.done ? `+${bonus.pts} pts ✓` : `${bonus.pts} pts`}
+                          </span>
+                        </div>
+                      </div>
+                    );
+                  })()}
+                </div>
               </div>
 
               {/* Repeatable earns */}
-              <div className="space-y-2 mt-4 md:mt-0 pt-3 md:pt-0 border-t md:border-t-0 md:border-l md:pl-8 border-border">
-                <p className="text-[11px] uppercase tracking-wide text-muted-foreground font-semibold mb-1">
-                  Repeatable
-                </p>
-                <div className="flex justify-between">
-                  <span className="text-foreground">Refer a friend</span>
-                  <span className="font-bold text-[#8861d4]">
-                    {REPEATABLE_POINTS.REFERRAL} pts
-                  </span>
+              <div className="mt-4 md:mt-0 pt-4 md:pt-0 border-t md:border-t-0 md:border-l md:pl-8 border-border">
+                <div className="flex items-center gap-2 mb-3 pb-2 border-b border-border/60">
+                  <span className="inline-block h-2 w-2 rounded-full bg-[#8861d4]" aria-hidden />
+                  <p className="text-sm uppercase tracking-wider text-foreground font-bold">
+                    Repeatable
+                  </p>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-foreground">Share link</span>
-                  <span className="font-bold text-[#8861d4]">
-                    {REPEATABLE_POINTS.SHARE} {REPEATABLE_POINTS.SHARE === 1 ? "pt" : "pts"} (max {DAILY_CAPS.MAX_SHARE_POINTS}/day)
-                  </span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-foreground">Feature suggestion</span>
-                  <span className="font-bold text-[#8861d4]">
-                    {REPEATABLE_POINTS.SUGGESTION} pts
-                  </span>
+                <div className="space-y-1">
+                  <div className="flex justify-between items-center rounded-md px-2 py-1.5 -mx-2 transition-colors hover:bg-muted/50">
+                    <span className="text-foreground">Refer a friend</span>
+                    <span className="tabular-nums font-bold text-[#8861d4]">
+                      {REPEATABLE_POINTS.REFERRAL} pts
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center rounded-md px-2 py-1.5 -mx-2 transition-colors hover:bg-muted/50">
+                    <span className="text-foreground">Share link</span>
+                    <span className="tabular-nums font-bold text-[#8861d4]">
+                      {REPEATABLE_POINTS.SHARE} {REPEATABLE_POINTS.SHARE === 1 ? "pt" : "pts"} (max {DAILY_CAPS.MAX_SHARE_POINTS}/day)
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center rounded-md px-2 py-1.5 -mx-2 transition-colors hover:bg-muted/50">
+                    <span className="text-foreground">Feature suggestion</span>
+                    <span className="tabular-nums font-bold text-[#8861d4]">
+                      {REPEATABLE_POINTS.SUGGESTION} pts
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
