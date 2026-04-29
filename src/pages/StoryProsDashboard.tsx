@@ -993,8 +993,8 @@ const StoryProsDashboard = () => {
                 currentTier={currentTier}
                 coins={coinBalance}
                 badges={wl.badges}
-                inventory={{}}
-                onClaimReward={() => toast.info("Reward claim flow coming soon.")}
+                inventory={wl.rewardsClaimed}
+                onClaimReward={(rewardId) => wl.claimReward(rewardId)}
                 onRedeemCoinPack={() => toast.info("Coin pack redemption coming soon.")}
               />
             </div>
