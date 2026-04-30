@@ -88,6 +88,15 @@ const StoryProsDashboard = () => {
         : "Please pick a role.");
       return;
     }
+    // One-time SLP bonus lock: if the user is already a verified speech
+    // professional and re-picks "Speech Professional", do nothing rather than
+    // hitting the backend (which guards against double-awards anyway). Prevents
+    // any perception of "tap repeatedly to stack +50".
+    if (roleDraft === "speech_pro" && wl.speechProfessionalVerified) {
+      toast.info("You've already claimed your +50 Speech Professional bonus.");
+      setRoleEditOpen(false);
+      return;
+    }
     setSavingRole(true);
     const detail = roleDraft === "other" ? roleOtherDraft.trim().slice(0, ROLE_OTHER_MAX_LENGTH) : null;
     const res = await wl.updateRole(roleDraft, detail);
@@ -1120,11 +1129,16 @@ const StoryProsDashboard = () => {
                 <SelectValue placeholder="Choose one" />
               </SelectTrigger>
               <SelectContent>
-                {ROLE_OPTIONS.map((opt) => (
-                  <SelectItem key={opt.value} value={opt.value}>
-                    {opt.label}
-                  </SelectItem>
-                ))}
+                {ROLE_OPTIONS.map((opt) => {
+                  const isLockedSlp =
+                    opt.value === "speech_pro" && wl.speechProfessionalVerified;
+                  return (
+                    <SelectItem key={opt.value} value={opt.value}>
+                      {opt.label}
+                      {isLockedSlp ? " — Verified ✓ (+50 awarded)" : ""}
+                    </SelectItem>
+                  );
+                })}
               </SelectContent>
             </Select>
           </div>
@@ -1146,6 +1160,11 @@ const StoryProsDashboard = () => {
           {roleDraft === "speech_pro" && !wl.speechProfessionalVerified && (
             <p className="text-xs text-muted-foreground">
               Saving will instantly add the +50 Speech Professional bonus to your account.
+            </p>
+          )}
+          {roleDraft === "speech_pro" && wl.speechProfessionalVerified && (
+            <p className="text-xs text-emerald-600 font-medium">
+              ✓ Your +50 Speech Professional bonus has already been awarded. The bonus is one-time only.
             </p>
           )}
         </div>

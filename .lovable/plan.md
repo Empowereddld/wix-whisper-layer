@@ -1,126 +1,121 @@
-# Story Pros Dashboard — Design, Spacing & UX Audit
+# Pre-Launch Fixes: Email Timing, SLP Lock, Tier Sequencing, Verify-State Sync
 
-## Goal
-
-1. Make the inline "Preview Post" feel compact (your main complaint).
-2. Audit the entire dashboard top-to-bottom and fix the friction points that show up at desktop **and** mobile widths.
-
-The page reads well in content, but several sections fight for attention or take more vertical space than they need. The pass below is style-only — no copy or feature changes unless flagged.
+Five targeted changes. No schema changes — all logic lives in edge functions and one data backfill.
 
 ---
 
-## 1. Shrink the inline Preview (your specific ask)
+## 1. Email 2 sends 2 hours after verification (not 24h after signup)
 
-In `SharePostFlow.tsx` the preview card currently:
+**File:** `supabase/functions/send-waitlist-email2/index.ts`
 
-- Uses `max-w-md` (448px), which is wider than most social posts feel.
-- Renders the full image at native ratio with no height cap, so for tall vertical posters (POST_01, POST_02, POST_06) it explodes to ~600–800px tall.
-- Uses default `p-3` text padding that feels loose under a tall image.
+Today the dispatcher selects users where `created_at <= now() - 24h`. Change to:
+- Cutoff based on `verified_at` (clock starts at verify, not signup).
+- Window of **2 hours** instead of 24.
 
-Changes:
+```ts
+const cutoff = new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString();
+// select adds: .not("verified_at", "is", null).lte("verified_at", cutoff)
+```
 
-- Cap the preview card to a phone-feed feel: `max-w-[320px]`, image clipped to `max-h-[360px]` with `object-cover` + `aspect-[4/5]` so all 6 vertical posters look consistent.
-- Reduce caption padding to `p-3` with `text-[13px] leading-snug`.
-- Add a small "Preview" pill header inside the card instead of the separate label above, so the whole block is tighter.
-- Keep the `Hide preview` toggle as is.
+Cron already runs every 15 min, so worst case Email 2 lands ~2h 15m after verify — well before most users hit Tier 2.
 
-Result: the preview shrinks to roughly the size of an Instagram post tile in your feed — small enough to feel like a sanity check, not a second hero.
+---
 
-## 2. Featured image (Step 1) is also too tall
+## 2. Lock SLP +50 to one-time only
 
-Same root cause: vertical 2:3 posters in a `sm:aspect-[4/3]` container with `max-h-[420px]` end up ~420px on desktop, dominating the section.
+`+50` is awarded inside `update-waitlist-profile` when `speech_professional_verified` flips false → true. The data layer already guards against double-awarding, but the dashboard UI still shows the SLP toggle as actionable, which is the exploit surface.
 
-- Tighten to `max-h-[340px]` desktop / `max-h-[300px]` mobile.
-- Switch the container to `aspect-[4/5]` so vertical art fits without huge letterboxed gray bars.
-- Center the image with a soft `bg-muted/40` instead of solid `bg-muted` so the letterboxing is less obvious.
+**Frontend lock** (`src/pages/StoryProsDashboard.tsx`, role edit dialog):
+- When `wl.profile.speech_professional_verified === true`, the "Speech Professional" option in the role `<Select>` shows a "Verified ✓ +50 awarded" badge and the Save button is disabled if they re-pick it.
+- Switching FROM speech_pro to another role is allowed (we don't un-award).
+- Re-picking speech_pro on a verified row triggers a toast: "You've already claimed your +50 SLP bonus."
 
-## 3. Action button row is too wide on desktop
+**Backend hardening** (`supabase/functions/update-waitlist-profile/index.ts`):
+- Confirm/strengthen the existing `if (!existing.speech_professional_verified)` guard so the +50 add never runs twice — even if `role` is changed back to `speech_pro` later. Existing logic already does this; lock it down with a clearer comment + explicit early skip.
 
-Currently 4 buttons stretch full width (`Copy Caption & Image` is forced to `min-w-[220px]`, then 3 more outline/ghost buttons next to it). On a 1024–1280px card this row sprawls.
+No schema change needed: `speech_professional_verified` is the one-time flag.
 
-- Group as: primary (Copy Caption & Image) on its own row at full width on mobile, auto width on desktop.
-- Secondary cluster (Share, Download Image, Preview Post) right-aligned next to it on desktop, wrapping under the primary on mobile.
-- Reduce gap from `gap-2` to `gap-2 sm:gap-3` and add a subtle `border-t pt-4` above the row so it reads as "actions" not "more content".
+---
 
-## 4. Share & Earn section feels redundant next to Share a Post
+## 3. Sequence tier emails 5 minutes apart
 
-The "Share & Earn Referrals" card has 6 platform buttons + a script carousel. Right under it sits "Share a Post" which has Copy/Share/Download. They're doing different jobs but visually they look like two share blocks back-to-back.
+**File:** `supabase/functions/dispatch-tier-emails/index.ts`
 
-Lightweight fix (no restructure):
+Today the function picks the **highest unsent tier** per user and marks all lower tiers as sent in one shot — so a 0 → 200 jump skips Email 3 and 4. The user wants the opposite: Email 3 first, then Email 4 five min later, then Email 5.
 
-- Rename "Share & Earn Referrals" subtitle to make it clear it's for **quick text shares** ("Tap a platform to fire off a quick text share with a ready-made caption").
-- Add a small `text-xs` hint at the top of "Share a Post" — "Want a richer post with an image? Use this." — so users know which one to pick.
-- Tighten internal spacing: `mt-6 pt-6` → `mt-5 pt-5` between the platform grid and the ScriptCarousel.
+Change the per-user loop to:
+1. Find the **lowest unsent tier** the user qualifies for.
+2. Send only that one email per cron tick.
+3. Mark only that one tier's `sent_at`.
+4. Next cron run (5 min later, since cron is `*/5`) picks up the next unsent tier.
 
-## 5. Top of the page has 4 stacked status bars
+This produces a natural 5-minute cadence with no sleeps or queues. Remove the "backfill all lower tiers" logic.
 
-Top bar (sign out) → User Header → Waitlist Position spotlight → Verify-email banner. On mobile that's ~280px before any real content.
+For Tier 6 (email7), keep gating behind `email6_sent_at IS NOT NULL` so Tier 5 always lands first.
 
-- Keep all 4 (each is doing a distinct job) but trim:
-  - User Header `py-6` → `py-4 sm:py-5`
-  - Waitlist spotlight `py-4` stays, but reduce the title font on mobile from `text-xl` to `text-lg` so the bar is shorter.
-  - Verify-email banner: tighten to `py-2.5` and put the strong sentence + button on one line at `sm:` breakpoint; stack only on mobile.
+---
 
-## 6. Tier Progress + Referrals row balance
+## 4. Verify-email reliably reflects on /storypros immediately
 
-On desktop the Referrals card is mostly empty (single big number, one helper line). On mobile it stacks fine.
+This is the new fifth item. Today's flow: user taps verify link → edge function flips `email_verified = true` and 302-redirects to `/storypros/verified?already=...` or back to `/storypros`. The dashboard hook (`useStorybuildersWaitlist`) reads from `localStorage` plus a one-time fetch, so even after a successful verify the page can still show "pending" until a manual refetch.
 
-- Add a tiny "Recent referrals" sparkline-style row under the number (just text: "Last 7 days: +N") when count > 0. This isn't new data — it uses what `wl.inviteCount` already gives, gracefully shows nothing extra when 0.
-- If you'd rather not add anything, alternative: drop the Referrals card to `md:col-span-1` of a 4-col grid and let Tier Progress take 3. (I'll do the small text addition unless you say otherwise.)
+**Fixes:**
 
-## 7. How to Earn Points card
+a. **Dashboard hook** (`src/hooks/useStorybuildersWaitlist.ts`)
+   - On mount of `/storypros` and `/storypros/dashboard`, if `email_verified` is `false` in cached/fetched state, refetch the row from Supabase by `referral_code`. Already partially done — confirm it runs.
+   - Add a `?verified=1` query-param check: when present (set by the verify edge function on redirect), force a fresh fetch and clear the param from the URL.
 
-Centered narrow column inside a wide card leaves big empty side gutters on desktop.
+b. **Verify edge function** (`supabase/functions/verify-email-waitlist/index.ts`)
+   - Change the post-verify redirect from `/storypros` to `/storypros?verified=1` so the dashboard knows to refetch immediately.
+   - Already-verified branch redirects to `/storypros/verified?already=1` — leave as-is.
 
-- Switch inner container from `max-w-md mx-auto` to a 2-column grid at `md:` (one-time earns left, repeatables right) with a divider. Mobile stays single-column.
-- Drops the section height by ~40% on desktop.
+c. **Realtime fallback (optional, low risk):** subscribe the dashboard to `postgres_changes` on its own waitlist row so any server-side flag flip (verify, SLP bonus, tier emails) reflects within a second without page refresh. Skipping unless the fetch-on-mount + `?verified=1` combo proves insufficient.
 
-## 8. Referral Link card
+d. **Reliability check** of the verify edge function itself:
+   - Confirm `verify_token` lookup, `email_verified` update, `+15` points add, and welcome email send all complete before the redirect. Wrap the welcome-email send in a try/catch (already done) so a Resend hiccup never blocks the verify state from flipping.
+   - Add a single `console.log` of `{ id, verified_at, points_after }` after the update so failures are easy to find in edge logs.
 
-The mock "Preview when shared" social-card mock here is good, but on mobile the `aspect-[1.91/1]` image + 3 lines of text + 2 helper paragraphs make the section taller than the actual referral link box that's the point of the card.
+---
 
-- Move the share-preview mock behind a `Show preview` collapsible (closed by default on mobile, open on desktop).
-- Or: shrink it to `max-w-sm` and reduce the image aspect from `1.91/1` to `2/1` so it's flatter.
+## 5. Backfill admin accounts
 
-## 9. Follow Us & Earn Points
+Mark all `email{2..7}_sent_at`, `welcome_sent_at`, and verification reminder timestamps as `now()` for the two admin emails so cron skips them going forward.
 
-Three buttons in a `grid-cols-3` with hidden labels under `sm:` — on a 360px phone the buttons become tiny icon-only circles, which makes "+pts" reward language invisible.
+```sql
+UPDATE storybuilders_waitlist
+SET email2_sent_at = COALESCE(email2_sent_at, now()),
+    email3_sent_at = COALESCE(email3_sent_at, now()),
+    email4_sent_at = COALESCE(email4_sent_at, now()),
+    email5_sent_at = COALESCE(email5_sent_at, now()),
+    email6_sent_at = COALESCE(email6_sent_at, now()),
+    email7_sent_at = COALESCE(email7_sent_at, now()),
+    welcome_sent_at = COALESCE(welcome_sent_at, now()),
+    verification_reminder_1_sent_at = COALESCE(verification_reminder_1_sent_at, now()),
+    verification_reminder_2_sent_at = COALESCE(verification_reminder_2_sent_at, now())
+WHERE LOWER(email) IN ('camesha.russell03@gmail.com', 'jinean.whitleycheng@gmail.com');
+```
 
-- Show points always (icon + `+25` even on mobile), drop the label only.
-- Increase `h-12` → `h-14` for proper touch targets (per your 44px memory rule we're already at 48; this nudges to 56 for thumb comfort).
+---
 
-## 10. Interactive Story Preview iframe
+## Test plan after deploy
 
-`h-[600px] sm:h-[900px]` is intentionally large but on a 360×800 phone it eats the entire viewport.
-
-- Cap mobile to `h-[520px]` and add a small "Open in full screen ↗" button above the iframe that opens the same URL in a new tab. (Just a link, no new feature work.)
-
-## 11. Impact + Coming Up cards at bottom
-
-These two cards both use rounded purple gradients and stack — feels like a soft outro but the gap between them is `space-y-4` (mobile) which is too tight for two visually heavy cards.
-
-- Bump bottom-section spacing: wrap the last 3 cards (`Impact`, `Coming up`) in `space-y-6 sm:space-y-8`.
-- Add `mb-2` to the bottom `<div className="h-8" />` so there's clean breathing room before the page ends.
-
-## 12. Global spacing rhythm
-
-Page content currently uses `space-y-4 sm:space-y-6` between every card. After the changes above, sections vary in weight; bumping that to `space-y-5 sm:space-y-7` makes the rhythm feel intentional without ballooning the page.
+1. Fresh test signup → verification email arrives, no Welcome yet.
+2. Click verify link → land on `/storypros?verified=1`. Dashboard immediately shows "Verified ✓" and points include +15. No reload required.
+3. Wait ~2h 15m → Email 2 arrives. Confirm only one copy.
+4. From dashboard, pick SLP role → +50 awarded. Re-open role dialog → SLP option shows "Verified ✓ +50 awarded" and re-saving does not add points.
+5. Manually push test user from 0 → 250 pts → confirm Email 3 sends, then 5 min later Email 4, then 5 min later Email 5 (not all at once).
+6. Camesha + Jinean receive zero catch-up emails after backfill.
 
 ---
 
 ## Files touched
 
-- `src/components/waitlist/SharePostFlow.tsx` — items 1, 2, 3
-- `src/pages/StoryProsDashboard.tsx` — items 4, 5, 6, 7, 8, 9, 10, 11, 12
+- `supabase/functions/send-waitlist-email2/index.ts` — cutoff source + window
+- `supabase/functions/dispatch-tier-emails/index.ts` — lowest-unsent-tier, one per tick
+- `supabase/functions/verify-email-waitlist/index.ts` — redirect to `?verified=1`, log post-update state
+- `supabase/functions/update-waitlist-profile/index.ts` — strengthen one-time SLP guard
+- `src/hooks/useStorybuildersWaitlist.ts` — refetch on `?verified=1`
+- `src/pages/StoryProsDashboard.tsx` — disable SLP option once verified
+- Data update via insert tool: backfill admin email timestamps
 
-## What I will NOT change without asking
-
-- Any copy/wording (other than the small subtitle nudge in item 4).
-- Section ordering on the page.
-- Tier logic, point values, RewardsInventory internals, ScriptCarousel internals.
-- Backend, hooks, or Supabase calls.
-
-## Out of scope (flag only)
-
-- The `coinBalance` calc still uses only `COIN_DROPS[2]` — looks like a stub. Not touching unless you want it fixed.
-- The Profile dropdown's "Verified ✓ (+50 pts awarded)" line could become a proper badge — not touching this round.
+No schema migrations. No new secrets. No new cron jobs.
