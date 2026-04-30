@@ -70,29 +70,25 @@ Deno.serve(async (req) => {
         const referralLink = `${BASE_URL}/storypros?ref=${u.referral_code}`;
 
         // --- Tier 6 (500 pts) -----------------------------------------------
-        if (u.points >= 500 && !u.email7_sent_at) {
+        // Gated behind Tier 5 having been sent so the user always sees Tier 5
+        // before the Founder/Legend Tier 6 email.
+        if (u.points >= 500 && !u.email7_sent_at && u.email6_sent_at) {
           let template: string;
           let founderSlot: number | null = u.founder_slot_number;
 
-          // Claim a founder slot if user doesn't have one yet.
           if (!founderSlot) {
-            // Count how many slots are already claimed.
             const { count } = await supabase
               .from("storybuilders_waitlist")
               .select("id", { count: "exact", head: true })
               .not("founder_slot_number", "is", null);
-
             const nextSlot = (count ?? 0) + 1;
             if (nextSlot <= FOUNDER_SLOT_CAP) {
-              // Try to claim the slot. Unique index will reject duplicates safely.
               const { error: claimErr } = await supabase
                 .from("storybuilders_waitlist")
                 .update({ founder_slot_number: nextSlot })
                 .eq("id", u.id)
                 .is("founder_slot_number", null);
-              if (!claimErr) {
-                founderSlot = nextSlot;
-              }
+              if (!claimErr) founderSlot = nextSlot;
             }
           }
 
@@ -124,11 +120,13 @@ Deno.serve(async (req) => {
           continue;
         }
 
-        // --- Tiers 2-5 (process highest unsent tier the user has reached) ---
-        // Walk from highest threshold downward so a user who jumps multiple tiers
-        // gets the most relevant single email (avoids spamming 4 emails at once).
+        // --- Tiers 2-5: send the LOWEST unsent tier the user qualifies for --
+        // Send only ONE tier email per cron tick. Cron runs every 5 minutes,
+        // so a user who jumped 0 → 250 pts will receive Email 3, then 5 min
+        // later Email 4, then 5 min later Email 5. This prevents inbox
+        // flooding and keeps each unlock email in proper context.
         let dispatched = false;
-        for (let i = TIERS.length - 1; i >= 0; i--) {
+        for (let i = 0; i < TIERS.length; i++) {
           const t = TIERS[i];
           if (u.points >= t.threshold && !u[t.sentColumn]) {
             const { error: sendError } = await supabase.functions.invoke("send-waitlist-email", {
@@ -145,15 +143,12 @@ Deno.serve(async (req) => {
             });
             if (sendError) throw sendError;
 
-            // Mark THIS tier email and all lower-tier emails as sent so we don't
-            // backfill old ones for users who jumped multiple tiers in one go.
-            const update: Record<string, string> = {};
-            for (let j = 0; j <= i; j++) {
-              if (!u[TIERS[j].sentColumn]) {
-                update[TIERS[j].sentColumn] = new Date().toISOString();
-              }
-            }
-            await supabase.from("storybuilders_waitlist").update(update).eq("id", u.id);
+            // Mark ONLY this tier as sent. Next cron tick (5 min later) will
+            // pick up the next unsent tier the user qualifies for.
+            await supabase
+              .from("storybuilders_waitlist")
+              .update({ [t.sentColumn]: new Date().toISOString() })
+              .eq("id", u.id);
             sent++;
             dispatched = true;
             break;
