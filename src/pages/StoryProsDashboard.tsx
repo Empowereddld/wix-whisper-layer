@@ -88,6 +88,15 @@ const StoryProsDashboard = () => {
         : "Please pick a role.");
       return;
     }
+    // One-time SLP bonus lock: if the user is already a verified speech
+    // professional and re-picks "Speech Professional", do nothing rather than
+    // hitting the backend (which guards against double-awards anyway). Prevents
+    // any perception of "tap repeatedly to stack +50".
+    if (roleDraft === "speech_pro" && wl.speechProfessionalVerified) {
+      toast.info("You've already claimed your +50 Speech Professional bonus.");
+      setRoleEditOpen(false);
+      return;
+    }
     setSavingRole(true);
     const detail = roleDraft === "other" ? roleOtherDraft.trim().slice(0, ROLE_OTHER_MAX_LENGTH) : null;
     const res = await wl.updateRole(roleDraft, detail);
