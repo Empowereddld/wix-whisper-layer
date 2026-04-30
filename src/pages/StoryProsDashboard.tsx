@@ -1129,11 +1129,16 @@ const StoryProsDashboard = () => {
                 <SelectValue placeholder="Choose one" />
               </SelectTrigger>
               <SelectContent>
-                {ROLE_OPTIONS.map((opt) => (
-                  <SelectItem key={opt.value} value={opt.value}>
-                    {opt.label}
-                  </SelectItem>
-                ))}
+                {ROLE_OPTIONS.map((opt) => {
+                  const isLockedSlp =
+                    opt.value === "speech_pro" && wl.speechProfessionalVerified;
+                  return (
+                    <SelectItem key={opt.value} value={opt.value}>
+                      {opt.label}
+                      {isLockedSlp ? " — Verified ✓ (+50 awarded)" : ""}
+                    </SelectItem>
+                  );
+                })}
               </SelectContent>
             </Select>
           </div>
@@ -1155,6 +1160,11 @@ const StoryProsDashboard = () => {
           {roleDraft === "speech_pro" && !wl.speechProfessionalVerified && (
             <p className="text-xs text-muted-foreground">
               Saving will instantly add the +50 Speech Professional bonus to your account.
+            </p>
+          )}
+          {roleDraft === "speech_pro" && wl.speechProfessionalVerified && (
+            <p className="text-xs text-emerald-600 font-medium">
+              ✓ Your +50 Speech Professional bonus has already been awarded. The bonus is one-time only.
             </p>
           )}
         </div>
