@@ -202,6 +202,13 @@ Deno.serve(async (req) => {
       });
     }
 
+    console.log("verify-email-waitlist: verified", {
+      id: user.id,
+      email: user.email,
+      points_after: currentPoints + 15,
+      verified_at: new Date().toISOString(),
+    });
+
     // Now that the user is verified, send the full Welcome email (only once).
     if (!current?.welcome_sent_at) {
       try {
