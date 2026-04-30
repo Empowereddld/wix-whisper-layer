@@ -556,8 +556,8 @@ const StoryProsDashboard = () => {
                       {wl.role === "speech_pro" && (
                         <p className="text-[11px] text-muted-foreground mt-0.5">
                           {wl.speechProfessionalVerified
-                            ? "Verified ✓ (+50 pts awarded)"
-                            : "Pending verification"}
+                            ? "Confirmed ✓ (+50 pts awarded)"
+                            : "+50 pts awarded on confirm"}
                         </p>
                       )}
                     </div>
@@ -1145,7 +1145,7 @@ const StoryProsDashboard = () => {
           )}
           {roleDraft === "speech_pro" && !wl.speechProfessionalVerified && (
             <p className="text-xs text-muted-foreground">
-              We'll review your details before awarding the +50 Speech Professional bonus.
+              Saving will instantly add the +50 Speech Professional bonus to your account.
             </p>
           )}
         </div>
