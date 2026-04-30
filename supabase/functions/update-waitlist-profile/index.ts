@@ -108,6 +108,20 @@ Deno.serve(async (req) => {
     const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const supabase = createClient(supabaseUrl, serviceKey);
 
+    // Option A: if this update will newly mark them as a verified SLP, award +50 once.
+    // Read the current row first so we don't double-award people who already got the bonus.
+    if (updates.speech_professional_verified === true) {
+      const { data: existing } = await supabase
+        .from("storybuilders_waitlist")
+        .select("points, speech_professional_verified")
+        .eq("referral_code", referral_code)
+        .maybeSingle();
+
+      if (existing && !existing.speech_professional_verified) {
+        (updates as Record<string, unknown>).points = (existing.points || 0) + 50;
+      }
+    }
+
     const { data, error } = await supabase
       .from("storybuilders_waitlist")
       .update(updates)
