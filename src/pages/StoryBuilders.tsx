@@ -390,7 +390,7 @@ const DashboardCard = ({ wl }: { wl: WlHook }) => {
     const res = await wl.updateProfile({ isSpeechProfessional: true });
     setSavingSlp(false);
     if (res.success) {
-      toast.success("Thanks! We'll verify and add your +50 bonus soon.");
+      toast.success("Welcome! +50 Speech Professional bonus added to your account.");
     }
   };
 
@@ -489,14 +489,7 @@ const DashboardCard = ({ wl }: { wl: WlHook }) => {
             <div className="flex items-start gap-2 bg-emerald-500/10 border border-emerald-300/30 rounded-md px-3 py-2.5">
               <Check className="w-4 h-4 text-emerald-300 mt-0.5 shrink-0" />
               <p className="text-emerald-100 text-[12.5px] leading-[1.5]">
-                Speech-language professional verified. +50 bonus points added.
-              </p>
-            </div>
-          ) : wl.isSpeechProfessional ? (
-            <div className="flex items-start gap-2 bg-white/5 border border-white/15 rounded-md px-3 py-2.5">
-              <Sparkles className="w-4 h-4 text-white/70 mt-0.5 shrink-0" />
-              <p className="text-white/80 text-[12.5px] leading-[1.5]">
-                Pending verification. Once we confirm, +50 bonus points will be added to your account.
+                Speech-language professional confirmed. +50 bonus points added.
               </p>
             </div>
           ) : (
@@ -511,7 +504,7 @@ const DashboardCard = ({ wl }: { wl: WlHook }) => {
               />
               <span className="text-[12.5px] text-white/85 leading-[1.5]">
                 I'm a speech-language professional (SLP, SLT, Speech Therapist, etc.).{" "}
-                <span className="text-white font-semibold">Unlocks +50 bonus points after verification.</span>
+                <span className="text-white font-semibold">+50 bonus points added instantly.</span>
               </span>
             </label>
           )}

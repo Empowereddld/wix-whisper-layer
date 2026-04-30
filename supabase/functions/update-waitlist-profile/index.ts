@@ -54,14 +54,15 @@ Deno.serve(async (req) => {
 
     if (typeof is_speech_professional === "boolean") {
       // Only allow setting to true via the dashboard (client cannot un-claim).
-      // Admin verification still required to award the +50 bonus.
+      // Option A: auto-verify and award the +50 bonus immediately.
       if (is_speech_professional === true) {
         updates.is_speech_professional = true;
+        updates.speech_professional_verified = true;
       }
     }
 
     // Role updates: validated against known codes. Picking Speech Professional
-    // also flips is_speech_professional = true (admin still verifies the +50).
+    // also flips is_speech_professional = true and auto-awards the +50 bonus.
     // Switching away from Other clears role_other; switching to Other requires it.
     const ALLOWED_ROLES = ["parent", "speech_pro", "other"];
     if (typeof role === "string") {
@@ -91,6 +92,7 @@ Deno.serve(async (req) => {
         updates.role_other = null;
         if (role === "speech_pro") {
           updates.is_speech_professional = true;
+          updates.speech_professional_verified = true;
         }
       }
     }
@@ -105,6 +107,20 @@ Deno.serve(async (req) => {
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
     const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const supabase = createClient(supabaseUrl, serviceKey);
+
+    // Option A: if this update will newly mark them as a verified SLP, award +50 once.
+    // Read the current row first so we don't double-award people who already got the bonus.
+    if (updates.speech_professional_verified === true) {
+      const { data: existing } = await supabase
+        .from("storybuilders_waitlist")
+        .select("points, speech_professional_verified")
+        .eq("referral_code", referral_code)
+        .maybeSingle();
+
+      if (existing && !existing.speech_professional_verified) {
+        (updates as Record<string, unknown>).points = (existing.points || 0) + 50;
+      }
+    }
 
     const { data, error } = await supabase
       .from("storybuilders_waitlist")

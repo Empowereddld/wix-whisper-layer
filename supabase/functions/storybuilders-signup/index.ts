@@ -274,6 +274,11 @@ Deno.serve(async (req) => {
     // Generate verification token
     const verificationToken = crypto.randomUUID();
 
+    // Speech professionals get an automatic +50 bonus at signup (no manual approval).
+    // We trust self-identification at launch; verification can be re-introduced later if needed.
+    const SLP_AUTO_BONUS = 50;
+    const initialPoints = 10 + (isSpeechPro ? SLP_AUTO_BONUS : 0);
+
     // Insert new entry
     const { data: newEntry, error: insertError } = await supabase
       .from("storybuilders_waitlist")
@@ -282,12 +287,12 @@ Deno.serve(async (req) => {
         email: normalizedEmail,
         referral_code: referralCode,
         referred_by_code: ref || null,
-        points: 10, // Initial signup bonus
+        points: initialPoints,
         verification_token: verificationToken,
         verification_sent_at: new Date().toISOString(),
         email_verified: false,
         is_speech_professional: isSpeechPro,
-        speech_professional_verified: false,
+        speech_professional_verified: isSpeechPro, // auto-verified at signup (Option A)
         role: normalizedRole,
         role_other: normalizedRoleOther,
       })
