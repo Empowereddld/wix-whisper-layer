@@ -17,15 +17,19 @@ Deno.serve(async (req) => {
     const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const supabase = createClient(supabaseUrl, serviceKey);
 
-    // Find verified waitlist members who joined 24+ hours ago and haven't received Email 2
-    const cutoff = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+    // Find verified waitlist members whose verification was 2+ hours ago and
+    // haven't received Email 2 yet. Window is intentionally short so the
+    // points/tiers explainer reaches them BEFORE they start crossing tier
+    // thresholds (which can happen within ~10 min of engaged signup).
+    const cutoff = new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString();
 
     const { data: pending, error } = await supabase
       .from("storybuilders_waitlist")
-      .select("id, name, email, referral_code")
+      .select("id, name, email, referral_code, verified_at")
       .eq("email_verified", true)
       .is("email2_sent_at", null)
-      .lte("created_at", cutoff)
+      .not("verified_at", "is", null)
+      .lte("verified_at", cutoff)
       .limit(100);
 
     if (error) throw error;
