@@ -108,8 +108,11 @@ Deno.serve(async (req) => {
     const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const supabase = createClient(supabaseUrl, serviceKey);
 
-    // Option A: if this update will newly mark them as a verified SLP, award +50 once.
-    // Read the current row first so we don't double-award people who already got the bonus.
+    // One-time SLP +50 bonus.
+    // Read current row first. The +50 is only ever added when
+    // speech_professional_verified transitions false → true on this update.
+    // If the row is already verified, we strip any verified/SLP flags from the
+    // updates payload so re-saving "Speech Professional" can NEVER stack points.
     if (updates.speech_professional_verified === true) {
       const { data: existing } = await supabase
         .from("storybuilders_waitlist")
@@ -117,7 +120,11 @@ Deno.serve(async (req) => {
         .eq("referral_code", referral_code)
         .maybeSingle();
 
-      if (existing && !existing.speech_professional_verified) {
+      if (existing?.speech_professional_verified) {
+        // Already claimed — do not award again, do not re-touch the flags.
+        delete (updates as Record<string, unknown>).speech_professional_verified;
+        delete (updates as Record<string, unknown>).is_speech_professional;
+      } else if (existing) {
         (updates as Record<string, unknown>).points = (existing.points || 0) + 50;
       }
     }
