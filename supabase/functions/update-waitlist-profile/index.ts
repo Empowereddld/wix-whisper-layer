@@ -54,14 +54,15 @@ Deno.serve(async (req) => {
 
     if (typeof is_speech_professional === "boolean") {
       // Only allow setting to true via the dashboard (client cannot un-claim).
-      // Admin verification still required to award the +50 bonus.
+      // Option A: auto-verify and award the +50 bonus immediately.
       if (is_speech_professional === true) {
         updates.is_speech_professional = true;
+        updates.speech_professional_verified = true;
       }
     }
 
     // Role updates: validated against known codes. Picking Speech Professional
-    // also flips is_speech_professional = true (admin still verifies the +50).
+    // also flips is_speech_professional = true and auto-awards the +50 bonus.
     // Switching away from Other clears role_other; switching to Other requires it.
     const ALLOWED_ROLES = ["parent", "speech_pro", "other"];
     if (typeof role === "string") {
@@ -91,6 +92,7 @@ Deno.serve(async (req) => {
         updates.role_other = null;
         if (role === "speech_pro") {
           updates.is_speech_professional = true;
+          updates.speech_professional_verified = true;
         }
       }
     }
