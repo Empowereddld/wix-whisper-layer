@@ -130,13 +130,13 @@ const StoryProsDashboard = () => {
       );
 
       setAuthHydrating(true);
-      const { data } = await supabase
-        .from("storybuilders_waitlist")
-        .select("referral_code, name, email, deleted_at")
-        .eq("referral_code", ref)
-        .maybeSingle();
+      const { data: lookup } = await supabase.functions.invoke(
+        "lookup-storypros-by-ref",
+        { body: { ref } }
+      );
       if (cancelled) return;
 
+      const data = lookup?.found ? lookup.user : null;
       if (!data || data.deleted_at) {
         setRecoveryInvalid(true);
         setAuthHydrating(false);
@@ -180,11 +180,11 @@ const StoryProsDashboard = () => {
       const saved = localStorage.getItem("sb_waitlist_state");
       if (saved) return; // hook will hydrate from localStorage
       setAuthHydrating(true);
-      const { data } = await supabase
-        .from("storybuilders_waitlist")
-        .select("referral_code, name, email")
-        .eq("email", user.email.toLowerCase())
-        .maybeSingle();
+      const { data: lookup } = await supabase.functions.invoke(
+        "lookup-storypros-by-ref",
+        { body: { email: user.email.toLowerCase() } }
+      );
+      const data = lookup?.found ? lookup.user : null;
       if (cancelled) return;
       if (data?.referral_code) {
         localStorage.setItem(

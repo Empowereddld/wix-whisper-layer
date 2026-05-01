@@ -36,3 +36,9 @@ verify_jwt = false
 [functions.email-unsubscribe]
 verify_jwt = false
 
+[functions.lookup-storypros-by-ref]
+verify_jwt = false
+
+[functions.find-storypros-dashboard]
+verify_jwt = false
+
