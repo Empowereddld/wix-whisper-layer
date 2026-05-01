@@ -331,6 +331,16 @@ const StoryProsDashboard = () => {
     );
   }
 
+  // Gate the full dashboard until email is verified. Show a focused
+  // "verify first" view with the tier roadmap so users can see what they're
+  // working toward, but no referral link, share buttons, or other interactive
+  // earning surfaces. Realtime + visibility-change refetch in the hook will
+  // flip emailVerified once they click the verify link, and the full
+  // dashboard will render automatically.
+  if (!wl.emailVerified) {
+    return <UnverifiedDashboardView wl={wl} resending={resending} onResend={handleResendVerification} />;
+  }
+
   const currentTier = wl.currentTier;
   const currentTierName = getTierName(currentTier);
   const nextThreshold = TIER_THRESHOLDS[currentTier + 1];
