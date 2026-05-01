@@ -246,32 +246,25 @@ export function useStorybuildersWaitlist() {
   const refreshStatsInternal = useCallback(async (referralCode: string) => {
     setState((s) => ({ ...s, loading: true }));
     try {
-      const { data: userData, error } = await supabase
-        .from("storybuilders_waitlist")
-        .select("*")
-        .eq("referral_code", referralCode)
-        .single();
+      // Use the public lookup edge function so this works for both
+      // authenticated and unauthenticated visitors (RLS on the table only
+      // allows admins to SELECT directly).
+      const { data: lookup, error } = await supabase.functions.invoke(
+        "lookup-storypros-by-ref",
+        { body: { ref: referralCode } }
+      );
 
-      if (error || !userData) {
+      if (error || !lookup?.found || !lookup?.user) {
         throw new Error("User not found");
       }
 
-      const { data: totalData } = await supabase.rpc("get_storybuilders_waitlist_count");
+      const userData = lookup.user;
+      const totalData = lookup.total_count;
+      const queuePosition: number | null = lookup.queue_position ?? null;
 
       const ud = userData as any;
       const userPoints = ud.points || 0;
       const claims = (ud.social_claims as Record<string, unknown>) || {};
-
-      // Compute waitlist position: 1 + number of people who joined before this user.
-      // Order by created_at ascending = "joined order". Cheap count(*) head query.
-      let queuePosition: number | null = null;
-      if (ud.created_at) {
-        const { count } = await supabase
-          .from("storybuilders_waitlist")
-          .select("id", { count: "exact", head: true })
-          .lt("created_at", ud.created_at);
-        if (typeof count === "number") queuePosition = count + 1;
-      }
 
       // Detect a tier crossing vs the previous client state and trigger
       // the dispatcher inline so the unlock email feels instant instead of
