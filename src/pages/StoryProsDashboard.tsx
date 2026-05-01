@@ -154,8 +154,11 @@ const StoryProsDashboard = () => {
       );
       // Hard reload so the hook re-initializes from localStorage. Calling
       // wl.refreshStats() here is a no-op because the hook's internal
-      // state.referralCode is still empty at this point.
-      window.location.replace(window.location.pathname);
+      // state.referralCode is still empty at this point. We use reload()
+      // (not replace(pathname)) because by this point we've already stripped
+      // ?ref= from the URL, so replace() to the same URL is a no-op in most
+      // browsers and the page never re-initializes.
+      window.location.reload();
       return;
     };
     handleRecoveryRef();
