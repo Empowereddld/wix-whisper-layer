@@ -71,7 +71,7 @@ Deno.serve(async (req) => {
 
     const verificationLink = `${supabaseUrl}/functions/v1/verify-email-waitlist?token=${verificationToken}`;
 
-    // Send the welcome template (it carries the verification link)
+    // Send the verification template (NOT welcome — welcome is gated until after verify)
     await fetch(`${supabaseUrl}/functions/v1/send-waitlist-email`, {
       method: "POST",
       headers: {
@@ -79,12 +79,11 @@ Deno.serve(async (req) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        template: "welcome",
+        template: "verification",
         to: user.email,
         data: {
           name: (user.name || "").split(" ")[0],
           verification_link: verificationLink,
-          resend: true,
         },
       }),
     });
