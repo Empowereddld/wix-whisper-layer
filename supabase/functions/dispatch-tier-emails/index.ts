@@ -54,6 +54,7 @@ Deno.serve(async (req) => {
         "id, name, email, referral_code, points, email_verified, founder_slot_number, email3_sent_at, email4_sent_at, email5_sent_at, email6_sent_at, email7_sent_at"
       )
       .eq("email_verified", true)
+      .is("deleted_at", null)
       .gte("points", 35)
       .order("points", { ascending: false })
       .limit(200);
