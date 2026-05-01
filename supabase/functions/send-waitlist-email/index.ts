@@ -1167,6 +1167,23 @@ Deno.serve(async (req) => {
     const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const supabase = createClient(supabaseUrl, serviceKey);
 
+    // Suppression check: never send to bounced / complained / unsubscribed addresses.
+    // Protects sender reputation (SPF/DKIM/DMARC alignment is moot if we keep
+    // mailing addresses Gmail has already rejected).
+    const normalizedTo = to.trim().toLowerCase();
+    const { data: suppressed } = await supabase
+      .from("suppressed_emails")
+      .select("email, reason")
+      .eq("email", normalizedTo)
+      .maybeSingle();
+    if (suppressed) {
+      console.log(`Suppressed send to ${normalizedTo} (reason: ${suppressed.reason}, template: ${template})`);
+      return new Response(
+        JSON.stringify({ success: true, suppressed: true, reason: suppressed.reason }),
+        { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
     const resendApiKey = Deno.env.get("RESEND_API_KEY");
     const lovableApiKey = Deno.env.get("LOVABLE_API_KEY");
     if (!resendApiKey) {
