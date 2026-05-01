@@ -956,6 +956,10 @@ export type Database = {
         Args: { p_id: string; p_reason?: string }
         Returns: undefined
       }
+      apply_tier_multiplier: {
+        Args: { p_base_award: number; p_current_points: number }
+        Returns: number
+      }
       award_referral: {
         Args: {
           p_first_bonus: number
@@ -965,6 +969,13 @@ export type Database = {
         Returns: {
           first_bonus_awarded: boolean
           new_invite_count: number
+          new_points: number
+          success: boolean
+        }[]
+      }
+      award_slp_referral_bonus: {
+        Args: { p_bonus: number; p_referrer_code: string }
+        Returns: {
           new_points: number
           success: boolean
         }[]

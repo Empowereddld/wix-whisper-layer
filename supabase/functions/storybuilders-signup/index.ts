@@ -332,7 +332,19 @@ Deno.serve(async (req) => {
           p_first_bonus: 10,
         });
 
-        const awardedPoints = (awardResult as any)?.[0]?.new_points ?? (referrer.points ?? 0) + 25;
+        let awardedPoints = (awardResult as any)?.[0]?.new_points ?? (referrer.points ?? 0) + 25;
+
+        // SLP referrer top-up: if the new signup self-IDs as SLP, add the +25
+        // delta on top of the base referral so the referrer ends up with the
+        // full SLP_REFERRAL_TOTAL of 50 for this referral.
+        if (isSpeechPro) {
+          const SLP_REFERRAL_BONUS = 25;
+          const { data: slpResult } = await supabase.rpc("award_slp_referral_bonus", {
+            p_referrer_code: ref,
+            p_bonus: SLP_REFERRAL_BONUS,
+          });
+          awardedPoints = (slpResult as any)?.[0]?.new_points ?? awardedPoints;
+        }
 
         // Send referral notification email
         await notifyReferrer(supabaseUrl, referrer.email, referrer.name, name, awardedPoints);
