@@ -950,17 +950,11 @@ export type Database = {
     Functions: {
       admin_restore_waitlist_entry: {
         Args: { p_id: string }
-        Returns: {
-          message: string
-          success: boolean
-        }[]
+        Returns: undefined
       }
       admin_soft_delete_waitlist_entry: {
         Args: { p_id: string; p_reason?: string }
-        Returns: {
-          message: string
-          success: boolean
-        }[]
+        Returns: undefined
       }
       award_referral: {
         Args: {
