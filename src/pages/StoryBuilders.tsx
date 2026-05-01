@@ -646,9 +646,13 @@ const StoryBuilders = () => {
                     <FindMyDashboardLink />
                   </div>
                 </>
+              ) : !wl.emailVerified ? (
+                <div id="dashboard" className="scroll-mt-24">
+                  <PostSignupCard wl={wl} />
+                </div>
               ) : (
                 <div id="dashboard" className="scroll-mt-24">
-                  <DashboardCard wl={wl} />
+                  <WelcomeBackCard wl={wl} />
                 </div>
               )}
               {wl.error && <p className="text-white/70 text-[13px]">{wl.error}</p>}
