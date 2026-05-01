@@ -1200,4 +1200,137 @@ const StoryProsDashboard = () => {
   );
 };
 
+
+// ─── Limited "verify your email first" view ───
+// Shown on /storypros/dashboard when the user is on the waitlist but hasn't
+// verified yet. Locks every interactive earning surface (referral link,
+// share buttons, social claims) until email_verified flips true. The tier
+// roadmap stays visible so they understand what they're working toward.
+const UnverifiedDashboardView = ({
+  wl,
+  resending,
+  onResend,
+}: {
+  wl: ReturnType<typeof useStorybuildersWaitlist>;
+  resending: boolean;
+  onResend: () => void;
+}) => {
+  const firstName = (wl.name || "Friend").split(" ")[0];
+  return (
+    <div className="min-h-screen bg-white">
+      <SEOHead
+        title="Verify your email | Story Pros"
+        description="Verify your email to unlock your Story Pros referral link and rewards."
+        path="/storypros/dashboard"
+      />
+
+      {/* Top bar */}
+      <div className="sticky top-0 z-40 bg-deep-purple text-white shadow-sm">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
+          <Link
+            to="/storypros"
+            className="flex items-center gap-2 text-sm text-white/90 hover:text-white"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Back to Story Pros
+          </Link>
+          <button
+            onClick={() => {
+              wl.signOut();
+              toast.success("Signed out.");
+            }}
+            className="text-xs text-white/80 hover:text-white underline underline-offset-2"
+          >
+            Sign out
+          </button>
+        </div>
+      </div>
+
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+        {/* Verify banner */}
+        <Card className="bg-amber-50 border border-amber-200 rounded-2xl p-5 sm:p-6">
+          <div className="flex items-start gap-3">
+            <AlertCircle className="h-6 w-6 text-amber-600 shrink-0 mt-0.5" />
+            <div className="flex-1 min-w-0">
+              <h1 className="text-lg sm:text-xl font-bold text-amber-900 leading-snug">
+                You're almost there, {firstName}!
+              </h1>
+              <p className="text-sm sm:text-[15px] text-amber-900/90 leading-[1.65] mt-2">
+                We sent a quick verification email to{" "}
+                <strong className="break-all">{wl.email}</strong>. Once you verify, your
+                referral link and all your rewards unlock.
+              </p>
+              <p className="text-amber-900/80 text-[13px] leading-[1.6] mt-3">
+                Check your inbox (and your <em>Promotions</em> or <em>Spam</em> folder, just in case).
+              </p>
+              <button
+                type="button"
+                onClick={onResend}
+                disabled={resending}
+                className="mt-4 inline-flex items-center gap-2 text-[13px] font-semibold text-amber-800 hover:text-amber-900 underline underline-offset-2 disabled:opacity-60"
+              >
+                {resending ? "Sending…" : "Resend verification email"}
+              </button>
+            </div>
+          </div>
+        </Card>
+
+        {/* Locked referral preview */}
+        <Card className="bg-background border border-border rounded-2xl p-5 sm:p-6">
+          <div className="flex items-center gap-2 text-muted-foreground mb-2">
+            <Lock className="h-4 w-4" />
+            <span className="text-xs font-semibold uppercase tracking-wide">
+              Unlocks after verification
+            </span>
+          </div>
+          <h2 className="text-base sm:text-lg font-bold text-foreground">Your referral link</h2>
+          <p className="text-sm text-muted-foreground mt-1.5 leading-[1.6]">
+            Share your personal link to climb tiers, earn Story Coins, and unlock founder rewards.
+            Verify your email above to reveal it.
+          </p>
+        </Card>
+
+        {/* Tier roadmap */}
+        <Card className="bg-background border border-border rounded-2xl p-5 sm:p-6">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-base sm:text-lg font-bold text-foreground">Your reward roadmap</h2>
+            <Badge className="bg-primary/10 text-primary">Tier 1</Badge>
+          </div>
+          <ol className="space-y-3">
+            {TIER_REWARDS.map((reward, idx) => {
+              const threshold = TIER_THRESHOLDS[idx + 1] ?? TIER_THRESHOLDS[idx];
+              return (
+                <li
+                  key={reward.tier}
+                  className="flex items-start gap-3 p-3 rounded-xl border border-border/60 bg-muted/30"
+                >
+                  <span className="text-xl shrink-0" aria-hidden>
+                    {reward.icon}
+                  </span>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between gap-2 flex-wrap">
+                      <p className="text-sm font-semibold text-foreground">{reward.name}</p>
+                      <span className="text-[11px] font-semibold text-primary bg-primary/10 rounded-full px-2 py-0.5 shrink-0">
+                        Tier {idx + 1} · {threshold} pts
+                      </span>
+                    </div>
+                    <p className="text-[13px] text-muted-foreground leading-[1.55] mt-1">
+                      {reward.description}
+                    </p>
+                  </div>
+                </li>
+              );
+            })}
+          </ol>
+        </Card>
+
+        <p className="text-center text-xs text-muted-foreground">
+          This page will refresh automatically once your email is verified.
+        </p>
+      </div>
+    </div>
+  );
+};
+
 export default StoryProsDashboard;
+
