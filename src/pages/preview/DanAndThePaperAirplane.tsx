@@ -127,9 +127,9 @@ const DanAndThePaperAirplane = () => {
         .dan-bg-deep h2, .dan-bg-soft h2 { color: #fff; }
 
         .dan-lifestyle {
-          position: relative; width: 100%; height: 520px; overflow: hidden;
+          position: relative; width: 100%; aspect-ratio: 16 / 9; max-height: 640px; overflow: hidden; background: #1a1033;
         }
-        .dan-lifestyle img { width: 100%; height: 100%; object-fit: cover; }
+        .dan-lifestyle img { width: 100%; height: 100%; object-fit: contain; object-position: center; }
         .dan-lifestyle-overlay {
           position: absolute; inset: 0;
           background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.65));
@@ -235,7 +235,7 @@ const DanAndThePaperAirplane = () => {
             grid-template-columns: 1fr; gap: 32px;
           }
           .dan-section { padding: 56px 0; }
-          .dan-lifestyle { height: 320px; }
+          .dan-lifestyle { aspect-ratio: 4 / 3; height: auto; }
           .dan-cta-row .dan-btn { width: 100%; text-align: center; }
         }
       `}</style>
