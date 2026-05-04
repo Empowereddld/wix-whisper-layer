@@ -12,5 +12,6 @@ Allow: /
 
 User-agent: *
 Allow: /
+Disallow: /preview/
 
 Sitemap: https://www.empowereddld.com/sitemap.xml
