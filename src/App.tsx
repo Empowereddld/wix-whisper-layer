@@ -161,6 +161,7 @@ const App = () => (
               <Route path="/admin/storypros" element={<AdminProtectedRoute><AdminStoryBuilders /></AdminProtectedRoute>} />
               <Route path="/admin/storybuilders" element={<Navigate to="/admin/storypros" replace />} />
               <Route path="/admin/waitlist-guide" element={<AdminProtectedRoute><AdminWaitlistGuide /></AdminProtectedRoute>} />
+              <Route path="/preview/dan-and-the-paper-airplane" element={<DanAndThePaperAirplane />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
