@@ -1,93 +1,78 @@
-## Goal
 
-Tighten the verification flow so unverified users have one clear job (check email + verify), and verified users have one clear destination (the dashboard). No premature dashboard access, no redundant dashboard buttons before verification.
+# Dan and the Paper Airplane — Preview Landing Page
 
-## Changes
+A self-contained landing page at `/preview/dan-and-the-paper-airplane`, built from the supplied HTML blueprint exactly. UK SLT audience, two conversion goals: Amazon UK click and mailto to hello@empowereddld.com (both with UTM pass-through).
 
-### 1. Simplify post-signup confirmation view (`src/pages/StoryBuilders.tsx`)
+## Assets
 
-Replace the existing `DashboardCard` component (lines ~358-560, rendered at line 728) with a much smaller `PostSignupCard`:
+Copy uploaded images to `src/assets/preview/dan-airplane/`:
+- `book-cover.jpg`
+- `lifestyle-boy-reading.jpg` (from `download_2-4.webp`)
+- `lifestyle-classroom.jpg` (from `image-gen_68-4.webp`)
+- `scene1-instructions-left.jpg` / `scene1-instructions-right.jpg`
+- `scene2-dld-explained-left.jpg` / `scene2-dld-explained-right.jpg`
+- `scene3-one-step-left.jpg` / `scene3-one-step-right.jpg`
+- `scene4-glossary.jpg` (uses scene4-glossary.jpg from uploads)
 
-- Heading: "Thank you for joining the Story Pros waitlist!"
-- Body: "Check your inbox for a quick verification email. Once you verify, we'll send you everything you need to get started, including your personal referral link."
-- Text link: "Didn't get it? Resend verification email" → calls `wl.resendVerification()`, shows toast on success + 2-minute rate-limit message on failure.
-- Text link: "Not you? Sign up a different person" → clears `sb_waitlist_state` and `sp_pending_ref` from localStorage, calls `window.location.reload()` to reset the page back to the original signup form.
+## Files
 
-Remove from this view:
-- "Your Details" section (name input + save button)
-- "Open your dashboard" button
-- SLP self-ID checkbox
+- **Create** `src/pages/preview/DanAndThePaperAirplane.tsx` — the page. Single-file implementation: minimal logo-only header (top-left, links to `/`), all sections from the HTML in order, minimal footer (logo, © 2026 Empowered DLD, Privacy, Terms). Inline `<style>` block with the exact CSS from the HTML so visuals match pixel-for-pixel; load Poppins + Inter via `<link>` injected through a `useEffect` head append (or a SEOHead pass).
+- **Create** `src/components/preview/MinimalHeader.tsx` and `src/components/preview/MinimalFooter.tsx` — only used on this page, so they live under `preview/`.
+- **Edit** `src/App.tsx` — add route `<Route path="/preview/dan-and-the-paper-airplane" element={<DanAndThePaperAirplane />} />` (lazy-loaded) above the catch-all.
+- **Edit** `public/robots.txt` — add `Disallow: /preview/` so the preview tree is excluded from crawling (page itself also sets `noindex, follow`).
 
-The SLP option remains only in the initial signup `Select` ("I am a..." dropdown, lines 691-700) — already in place, no change needed there.
+## Page structure (from the HTML, copy verbatim)
 
-If the user is already verified when this card would render (e.g. they verified in another tab and came back), automatically swap to the "Welcome back" state from change #4 instead of showing the post-signup card.
+1. Minimal header — Empowered DLD logo (links `/`), nothing else.
+2. Hero — eyebrow pill, h1 with italic title, subtitle, book cover right with soft-purple radial glow (`::before` radial gradient).
+3. "What this story gives a child" — alternating block, off-white bg, image left + 3 paragraphs right.
+4. Lifestyle band — full-bleed photo, max-height 520px (320 mobile), bottom dark gradient overlay, centered Poppins caption "In homes. In clinics. In classrooms."
+5. "Why it belongs in your work" — deep purple bg, 2 glassmorphism cards (white/6%, 1px white/10% border, 16px radius), yellow uppercase tracked headings, list items with a 14×2px yellow bar accent.
+6. Glossary callout — softer purple bg, 2-col (text + glossary photo with caption).
+7. "Read a Sample" — white bg, 4 scene cards (off-white, 1px soft border, 16px radius). Cards 1–3 are 2-col spreads; card 4 is single-page.
+8. CTA — soft purple bg, two stacked-on-mobile buttons. Primary: deep purple solid → Amazon UK. Secondary: warm yellow solid → mailto with subject `Wholesale enquiry - Dan and the Paper Airplane` (regular hyphen, not em-dash).
+9. Sign-off — "A note from us", signatures grid (Camesha Russell / Jinean Cheng), co-founders tag.
+10. Minimal footer.
 
-### 2. Add dashboard CTA to verified celebration page (`src/pages/VerifySuccess.tsx`)
+## Outbound link UTM pass-through
 
-The page already has a "Go to Dashboard" button (lines 145-153). Confirm it is the **primary** CTA and visually prominent — already correct. No structural change needed; this is the first place a user sees a path to the dashboard, which matches the requirement. The "Back to Story Pros" secondary button stays.
+Inside the page component:
 
-(Implementation note: this change is largely a content/no-op verification — the button already exists and routes to `/storypros/dashboard?ref=...`.)
-
-### 3. Gate the dashboard for unverified users (`src/pages/StoryProsDashboard.tsx`)
-
-After hydration completes and `wl.joined` is true, branch on `wl.emailVerified`:
-
-**If `emailVerified === false`**, render a limited view instead of the full dashboard:
-- Top banner: "You're almost there! We sent a quick verification email to **{wl.email}**. Once you verify, your referral link and all your rewards unlock."
-- "Resend verification email" link below the banner (reuses `handleResendVerification`, shows toast).
-- Tier roadmap section (extract or reuse the existing tier journey rendering) so they can see what they're working toward.
-- All other interactive elements hidden or disabled: referral link card, copy button, share buttons, social claim buttons, suggestion board, role edit, etc.
-
-Realtime subscription + visibility-change refetch (already wired in the hook) will flip `emailVerified` to true and re-render the full dashboard automatically once they click the verify link.
-
-**If `emailVerified === true`**, render the existing full dashboard unchanged.
-
-### 4. Welcome-back state for verified users on `/storypros` (`src/pages/StoryBuilders.tsx`)
-
-In the hero signup block (lines 671-730), add a third branch:
-
-```text
-if (!wl.joined)              -> signup form
-else if (!wl.emailVerified)  -> PostSignupCard (change #1)
-else                          -> WelcomeBackCard
-```
-
-`WelcomeBackCard` shows:
-- "Welcome back, {firstName}!"
-- "Open your dashboard →" button → `/storypros/dashboard`
-- Small "Not you? Sign up a different person" link (same reset behavior as #1) so a shared device isn't trapped.
-
-## Technical Details
-
-**Files to edit:**
-- `src/pages/StoryBuilders.tsx` — replace `DashboardCard` with `PostSignupCard` + add `WelcomeBackCard`; update the branching at line 671.
-- `src/pages/StoryProsDashboard.tsx` — add unverified gating branch before the full dashboard render (around line 334).
-- `src/pages/VerifySuccess.tsx` — confirmed existing dashboard CTA satisfies requirement; no edit unless copy needs tweaking.
-
-**Reset helper** (used by both "Not you?" links):
 ```ts
-const resetSignup = () => {
-  try {
-    localStorage.removeItem("sb_waitlist_state");
-    localStorage.removeItem("sp_pending_ref");
-  } catch {}
-  window.location.reload();
-};
+const search = typeof window !== "undefined" ? window.location.search : "";
+const utmParams = new URLSearchParams(search);
+const utmString = Array.from(utmParams.entries())
+  .filter(([k]) => k.startsWith("utm_"))
+  .map(([k,v]) => `${k}=${encodeURIComponent(v)}`)
+  .join("&");
+
+const amazonHref = `https://amzn.eu/d/0bpPo1FJ${utmString ? `?${utmString}` : ""}`;
+const mailtoHref = `mailto:hello@empowereddld.com?subject=Wholesale%20enquiry%20-%20Dan%20and%20the%20Paper%20Airplane${utmString ? `&body=${encodeURIComponent("Source: " + utmString)}` : ""}`;
 ```
 
-**Unverified dashboard structure** (sketch):
-```text
-[Banner: verify email to {{email}}]
-[Resend verification email link]
-[Tier roadmap — read-only, shows current tier 1 and what unlocks at 2-6]
-```
+Computed in a `useMemo` so it's stable.
 
-Hidden/disabled when unverified: `ReferralLinkCard`, share buttons, `SocialClaimButtons`, `RewardsInventory` claim actions, `SuggestionBoard`, role edit dialog.
+## SEO / head
 
-**No backend or schema changes required.** All state derives from existing `wl.emailVerified`, `wl.email`, `wl.name`, and `wl.resendVerification()`.
+Use the existing `SEOHead` component if compatible, otherwise inline `react-helmet`-style `useEffect`:
+- `<title>Dan and the Paper Airplane | Sample Pages | Empowered DLD</title>`
+- `<meta name="description" content="Read a free sample of Dan and the Paper Airplane, the first book in the Living Life with DLD series. Written by an SLP and an educator for children with DLD." />`
+- `<meta name="robots" content="noindex, follow" />`
+- Preconnect + Google Fonts link for Poppins (400-800) + Inter (400-700).
+
+## Voice and copy rules
+
+- Copy is **verbatim** from the HTML — no rewrites.
+- No em-dashes anywhere; mailto subject uses a regular hyphen.
+- British English — already present in source ("realising", "organisations" not introduced anywhere I'm adding).
+- This page bypasses the site-wide DM Sans / 1100px / "people not children" memory rules — that's intentional and noted in the prompt (Poppins + Inter, 1140px, "child" appears in source copy).
 
 ## Out of scope
 
-- Changing email content, timing, or the 2-hour Email 2 delay (already shipped).
-- Changing `/storypros/verified` layout beyond confirming the dashboard CTA.
-- Admin UI changes.
+- No analytics events wired (UTMs flow through to outbound links and Amazon/inbox handle attribution).
+- No A/B variants.
+- Page is reachable only by direct URL (no nav links added anywhere).
+
+## Verification after build
+
+I'll screenshot at 1280 and 390 widths to confirm: hero glow, lifestyle band overlay caption, deep-purple why-section glass cards with yellow accents, scene cards rounded with off-white bg, CTA buttons stack on mobile, no em-dashes.
