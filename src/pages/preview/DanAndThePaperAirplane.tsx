@@ -257,9 +257,9 @@ const DanAndThePaperAirplane = () => {
           <div className="dan-container">
             <div className="dan-hero-grid">
               <div>
-                <span className="dan-pill">Sample pages</span>
+                <span className="dan-pill">Sample pages from</span>
                 <h1 className="dan-h1">
-                  Meet <em>Dan and the Paper Airplane</em>
+                  <em>Dan and the Paper Airplane</em>
                 </h1>
                 <p className="dan-sub">
                   The first book in the Living Life with DLD series. Written for children
