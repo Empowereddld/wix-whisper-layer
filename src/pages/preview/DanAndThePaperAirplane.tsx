@@ -277,7 +277,7 @@ const DanAndThePaperAirplane = () => {
         {/* What this story gives a child */}
         <section className="dan-section dan-bg-offwhite">
           <div className="dan-container">
-            <div className="dan- 2col dan-2col">
+            <div className="dan-2col">
               <img src={lifestyleBoy} alt="Child reading Dan and the Paper Airplane at home" />
               <div>
                 <h2>What this story gives a child</h2>
