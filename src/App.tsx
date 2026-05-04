@@ -79,6 +79,7 @@ const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
 const TermsAndConditions = lazy(() => import("./pages/TermsAndConditions"));
 const Disclaimer = lazy(() => import("./pages/Disclaimer"));
 const Unsubscribe = lazy(() => import("./pages/Unsubscribe"));
+const DanAndThePaperAirplane = lazy(() => import("./pages/preview/DanAndThePaperAirplane"));
 
 // Lazy-loaded: Protected route wrappers
 const ProtectedRoute = lazy(() => import("@/components/hub/ProtectedRoute"));
@@ -160,6 +161,7 @@ const App = () => (
               <Route path="/admin/storypros" element={<AdminProtectedRoute><AdminStoryBuilders /></AdminProtectedRoute>} />
               <Route path="/admin/storybuilders" element={<Navigate to="/admin/storypros" replace />} />
               <Route path="/admin/waitlist-guide" element={<AdminProtectedRoute><AdminWaitlistGuide /></AdminProtectedRoute>} />
+              <Route path="/preview/dan-and-the-paper-airplane" element={<DanAndThePaperAirplane />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
