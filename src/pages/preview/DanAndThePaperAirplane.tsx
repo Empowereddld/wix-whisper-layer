@@ -285,18 +285,17 @@ const DanAndThePaperAirplane = () => {
               <div>
                 <h2>What this story gives a child</h2>
                 <p>
-                  A character who thinks the way they do. Dan finds words hard. He gets
-                  stuck. He tries again. For a child with DLD, that mirror matters more
-                  than any lesson.
+                  Dan loves making paper airplanes. At school, he keeps getting in trouble
+                  for not following Mr. Mac's instructions. At recess, the words won't come
+                  out right. He doesn't have language for what's happening to him.
                 </p>
                 <p>
-                  Short sentences. One idea per line. Pictures that carry meaning so the
-                  story stays accessible, even on a tired day.
+                  Then he meets Ms. Lopez, a speech and language therapist who explains DLD
+                  in a way Dan can understand. By the end of the story, Dan has a name for
+                  his experience, a strategy he can use, and the words to ask his friends
+                  for what he needs.
                 </p>
-                <p>
-                  And a quiet ending that says: you are not the only one. You are not
-                  broken. You are figuring it out, like Dan.
-                </p>
+                <p>It's a story about a child finding language for himself.</p>
               </div>
             </div>
           </div>
