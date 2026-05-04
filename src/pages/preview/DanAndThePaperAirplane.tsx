@@ -235,7 +235,7 @@ const DanAndThePaperAirplane = () => {
             grid-template-columns: 1fr; gap: 32px;
           }
           .dan-section { padding: 56px 0; }
-          .dan-lifestyle { height: 320px; }
+          .dan-lifestyle { aspect-ratio: 4 / 3; height: auto; }
           .dan-cta-row .dan-btn { width: 100%; text-align: center; }
         }
       `}</style>
