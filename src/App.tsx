@@ -79,6 +79,7 @@ const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
 const TermsAndConditions = lazy(() => import("./pages/TermsAndConditions"));
 const Disclaimer = lazy(() => import("./pages/Disclaimer"));
 const Unsubscribe = lazy(() => import("./pages/Unsubscribe"));
+const DanAndThePaperAirplane = lazy(() => import("./pages/preview/DanAndThePaperAirplane"));
 
 // Lazy-loaded: Protected route wrappers
 const ProtectedRoute = lazy(() => import("@/components/hub/ProtectedRoute"));
