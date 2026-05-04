@@ -113,7 +113,10 @@ const DanAndThePaperAirplane = () => {
         .dan-2col {
           display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
         }
-        .dan-2col img { width: 100%; height: auto; border-radius: 12px; }
+        .dan-2col img {
+          width: 100%; height: 100%; max-height: 420px;
+          object-fit: cover; border-radius: 12px;
+        }
         .dan-section h2 {
           font-family: ${fontDisplay}; font-weight: 700;
           font-size: clamp(28px, 3.5vw, 40px); line-height: 1.15;
