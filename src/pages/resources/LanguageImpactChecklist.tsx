@@ -185,10 +185,9 @@ const LanguageImpactChecklist = () => {
                 across a student's school day.
               </p>
               <p className="lic-desc">
-                Built by a speech-language pathologist and an educator, this printable
-                checklist helps SLTs and teachers map where DLD is affecting a child's day.
-                Use it in your next assessment, your next IEP meeting, or your next parent
-                conversation.
+                This printable checklist helps SLTs and teachers map where DLD is affecting
+                a child's day. Use it in your next assessment, your next IEP meeting, or
+                your next parent conversation.
               </p>
 
               <a
