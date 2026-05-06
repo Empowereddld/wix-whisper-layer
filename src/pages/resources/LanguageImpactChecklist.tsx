@@ -156,17 +156,21 @@ const LanguageImpactChecklist = () => {
         }
         .lic-footer a { margin: 0 12px; text-decoration: none; }
 
+        .lic-logo { height: 38px; width: auto; max-width: 100%; display: block; }
+        @media (max-width: 1024px) { .lic-logo { height: 34px; } }
         @media (max-width: 700px) {
           .lic-hero { padding: 56px 0 40px; }
           .lic-btn { width: 100%; text-align: center; padding: 18px 24px; }
+          .lic-logo { height: 28px; }
+          .lic-container { padding: 0 16px; }
         }
       `}</style>
 
       <div className="lic-page">
         <header className="lic-header">
-          <div className="lic-container" style={{ display: "flex", alignItems: "center" }}>
-            <Link to="/" aria-label="Empowered DLD home">
-              <img src={logoImage} alt="Empowered DLD" style={{ height: 38, width: "auto", display: "block" }} />
+          <div className="lic-container" style={{ display: "flex", alignItems: "center", minWidth: 0 }}>
+            <Link to="/" aria-label="Empowered DLD home" style={{ display: "inline-flex", maxWidth: "100%" }}>
+              <img src={logoImage} alt="Empowered DLD" className="lic-logo" />
             </Link>
           </div>
         </header>
