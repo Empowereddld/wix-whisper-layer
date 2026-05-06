@@ -181,9 +181,9 @@ const LanguageImpactChecklist = () => {
                 across a student's school day.
               </p>
               <p className="lic-desc">
-                This printable checklist helps SLTs and teachers map where DLD is affecting
-                a child's day. Use it in your next assessment, your next IEP meeting, or
-                your next parent conversation.
+                Covers comprehension, expression, attention, social use, and academic
+                impact across the school day. Use it in your next assessment, IEP meeting,
+                or parent conversation.
               </p>
 
               <a
@@ -196,8 +196,8 @@ const LanguageImpactChecklist = () => {
               </a>
 
               <p className="lic-credit">
-                Created by Jinean Cheng, MSc.A S-LP (RADLD Ambassador) and Camesha Russell,
-                B.Ed. Co-founders, Empowered DLD.
+                Created by Jinean Cheng, MSc.A S-LP and Camesha Russell, B.Ed. Both RADLD
+                Ambassadors and co-founders of Empowered DLD.
               </p>
             </div>
           </div>
