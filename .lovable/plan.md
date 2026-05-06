@@ -1,78 +1,49 @@
+## Rebuild `/preview/dan-and-the-paper-airplane`
 
-# Dan and the Paper Airplane — Preview Landing Page
+Replace `src/pages/preview/DanAndThePaperAirplane.tsx` with a faithful React port of the uploaded `dan-and-the-paper-airplane-FINAL-3.html`. All copy, structure, classnames, and styles will be transcribed verbatim (no rewrites, no em-dashes, British English preserved).
 
-A self-contained landing page at `/preview/dan-and-the-paper-airplane`, built from the supplied HTML blueprint exactly. UK SLT audience, two conversion goals: Amazon UK click and mailto to hello@empowereddld.com (both with UTM pass-through).
+### Image assets (copy uploads → `src/assets/preview/dan-airplane/`)
 
-## Assets
+- `book-cover-2.jpg` → `book-cover.jpg`
+- existing `lifestyle-boy-reading.webp` and `lifestyle-classroom.webp` will be reused (already in repo)
+- `scene1-instructions-left-2.jpg` → `scene1-instructions-left.jpg`
+- `scene1-instructions-right-2.jpg` → `scene1-instructions-right.jpg`
+- `scene2-dld-explained-left-2.jpg` → `scene2-dld-explained-left.jpg`
+- `scene2-dld-explained-right-2.jpg` → `scene2-dld-explained-right.jpg`
+- `scene3-one-step-left-2.jpg` → `scene3-one-step-left.jpg`
+- `scene3-one-step-right-2.jpg` → `scene3-one-step-right.jpg`
+- `scene4-glossary-left.jpg` → `scene4-glossary-left.jpg`
+- `scene4-glossary-right.jpg` → `scene4-glossary-right.jpg`
 
-Copy uploaded images to `src/assets/preview/dan-airplane/`:
-- `book-cover.jpg`
-- `lifestyle-boy-reading.jpg` (from `download_2-4.webp`)
-- `lifestyle-classroom.jpg` (from `image-gen_68-4.webp`)
-- `scene1-instructions-left.jpg` / `scene1-instructions-right.jpg`
-- `scene2-dld-explained-left.jpg` / `scene2-dld-explained-right.jpg`
-- `scene3-one-step-left.jpg` / `scene3-one-step-right.jpg`
-- `scene4-glossary.jpg` (uses scene4-glossary.jpg from uploads)
+(I'll ask the user to upload `lifestyle-boy-reading.jpg` and `lifestyle-classroom.jpg` replacements only if they want them swapped; otherwise the existing webp assets are kept.)
 
-## Files
+### Page sections (verbatim from HTML)
 
-- **Create** `src/pages/preview/DanAndThePaperAirplane.tsx` — the page. Single-file implementation: minimal logo-only header (top-left, links to `/`), all sections from the HTML in order, minimal footer (logo, © 2026 Empowered DLD, Privacy, Terms). Inline `<style>` block with the exact CSS from the HTML so visuals match pixel-for-pixel; load Poppins + Inter via `<link>` injected through a `useEffect` head append (or a SEOHead pass).
-- **Create** `src/components/preview/MinimalHeader.tsx` and `src/components/preview/MinimalFooter.tsx` — only used on this page, so they live under `preview/`.
-- **Edit** `src/App.tsx` — add route `<Route path="/preview/dan-and-the-paper-airplane" element={<DanAndThePaperAirplane />} />` (lazy-loaded) above the catch-all.
-- **Edit** `public/robots.txt` — add `Disallow: /preview/` so the preview tree is excluded from crawling (page itself also sets `noindex, follow`).
+1. Hero — eyebrow "A Sample From Empowered DLD", h1 "A first look at *Dan and the Paper Airplane*", subtitle about *Living Life with DLD* series, with `book-cover.jpg` on right.
+2. "What this story gives a child" — image left, 3 paragraphs right.
+3. Lifestyle band — full-width classroom image with overlay "In homes. In clinics. In classrooms."
+4. "Why we think it belongs in your work" — deep-purple section, two cards: "For your sessions" / "For the families you work with" (verbatim bullets).
+5. "A note on the glossary" — eyebrow "Inside The Book", paired with `scene4-glossary-left.jpg` + caption "The glossary table at the back of the book."
+6. "Four scenes from the book" — intro "The story moves through these moments in order. The full book is 28 pages." Then four scene cards:
+   - Scene One: "Dan tries to follow Mr. Mac's multi-step instructions." — 2-image spread
+   - Scene Two: "Ms. Lopez explains DLD to Dan in plain language." — 2-image spread
+   - Scene Three: "Dan asks his friend for one step at a time." — 2-image spread
+   - Scene Four: "A look at the back-of-book glossary spread." — 2-image spread (glossary-left + glossary-right)
+7. CTA "When you're ready" — Amazon UK button + wholesale email button (preserving existing UTM-passthrough logic on Amazon link).
+8. Sign-off "A note from us" — full paragraph + "With care," + signature grid (Camesha Russell / Jinean Cheng with credentials) + "Co-founders, Empowered DLD".
 
-## Page structure (from the HTML, copy verbatim)
+### Technical implementation
 
-1. Minimal header — Empowered DLD logo (links `/`), nothing else.
-2. Hero — eyebrow pill, h1 with italic title, subtitle, book cover right with soft-purple radial glow (`::before` radial gradient).
-3. "What this story gives a child" — alternating block, off-white bg, image left + 3 paragraphs right.
-4. Lifestyle band — full-bleed photo, max-height 520px (320 mobile), bottom dark gradient overlay, centered Poppins caption "In homes. In clinics. In classrooms."
-5. "Why it belongs in your work" — deep purple bg, 2 glassmorphism cards (white/6%, 1px white/10% border, 16px radius), yellow uppercase tracked headings, list items with a 14×2px yellow bar accent.
-6. Glossary callout — softer purple bg, 2-col (text + glossary photo with caption).
-7. "Read a Sample" — white bg, 4 scene cards (off-white, 1px soft border, 16px radius). Cards 1–3 are 2-col spreads; card 4 is single-page.
-8. CTA — soft purple bg, two stacked-on-mobile buttons. Primary: deep purple solid → Amazon UK. Secondary: warm yellow solid → mailto with subject `Wholesale enquiry - Dan and the Paper Airplane` (regular hyphen, not em-dash).
-9. Sign-off — "A note from us", signatures grid (Camesha Russell / Jinean Cheng), co-founders tag.
-10. Minimal footer.
+- Single TSX file with inline `<style>` block transcribed from the HTML (CSS variables, all selectors, responsive breakpoints at 900px/540px).
+- Use ES module imports for all images from `src/assets/preview/dan-airplane/`.
+- Keep `useEffect` for `<title>`, meta description, robots noindex, and Google Fonts (Poppins + Inter) preconnect/stylesheet.
+- Preserve the UTM-passthrough behaviour for the Amazon CTA (existing code).
+- Mailto: `mailto:hello@empowereddld.com?subject=Wholesale%20enquiry%20%E2%80%94%20Dan%20and%20the%20Paper%20Airplane` (note: source HTML uses `%E2%80%94` em-dash in URL only — this is in the original HTML so kept verbatim per "strict source of truth").
+- No header/footer chrome (matches original standalone HTML).
 
-## Outbound link UTM pass-through
+### Confirmed scene captions (verbatim)
 
-Inside the page component:
-
-```ts
-const search = typeof window !== "undefined" ? window.location.search : "";
-const utmParams = new URLSearchParams(search);
-const utmString = Array.from(utmParams.entries())
-  .filter(([k]) => k.startsWith("utm_"))
-  .map(([k,v]) => `${k}=${encodeURIComponent(v)}`)
-  .join("&");
-
-const amazonHref = `https://amzn.eu/d/0bpPo1FJ${utmString ? `?${utmString}` : ""}`;
-const mailtoHref = `mailto:hello@empowereddld.com?subject=Wholesale%20enquiry%20-%20Dan%20and%20the%20Paper%20Airplane${utmString ? `&body=${encodeURIComponent("Source: " + utmString)}` : ""}`;
-```
-
-Computed in a `useMemo` so it's stable.
-
-## SEO / head
-
-Use the existing `SEOHead` component if compatible, otherwise inline `react-helmet`-style `useEffect`:
-- `<title>Dan and the Paper Airplane | Sample Pages | Empowered DLD</title>`
-- `<meta name="description" content="Read a free sample of Dan and the Paper Airplane, the first book in the Living Life with DLD series. Written by an SLP and an educator for children with DLD." />`
-- `<meta name="robots" content="noindex, follow" />`
-- Preconnect + Google Fonts link for Poppins (400-800) + Inter (400-700).
-
-## Voice and copy rules
-
-- Copy is **verbatim** from the HTML — no rewrites.
-- No em-dashes anywhere; mailto subject uses a regular hyphen.
-- British English — already present in source ("realising", "organisations" not introduced anywhere I'm adding).
-- This page bypasses the site-wide DM Sans / 1100px / "people not children" memory rules — that's intentional and noted in the prompt (Poppins + Inter, 1140px, "child" appears in source copy).
-
-## Out of scope
-
-- No analytics events wired (UTMs flow through to outbound links and Amazon/inbox handle attribution).
-- No A/B variants.
-- Page is reachable only by direct URL (no nav links added anywhere).
-
-## Verification after build
-
-I'll screenshot at 1280 and 390 widths to confirm: hero glow, lifestyle band overlay caption, deep-purple why-section glass cards with yellow accents, scene cards rounded with off-white bg, CTA buttons stack on mobile, no em-dashes.
+1. Dan tries to follow Mr. Mac's multi-step instructions.
+2. Ms. Lopez explains DLD to Dan in plain language.
+3. Dan asks his friend for one step at a time.
+4. A look at the back-of-book glossary spread.
