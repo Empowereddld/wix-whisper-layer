@@ -1,4 +1,5 @@
 import { useEffect, useMemo } from "react";
+import logoImage from "@/assets/empowered-logo.webp";
 import { Link } from "react-router-dom";
 
 const DEEP_PURPLE = "#1f1147";
@@ -165,12 +166,7 @@ const LanguageImpactChecklist = () => {
         <header className="lic-header">
           <div className="lic-container" style={{ display: "flex", alignItems: "center" }}>
             <Link to="/" aria-label="Empowered DLD home">
-              <span style={{
-                fontFamily: fontDisplay, fontWeight: 700, fontSize: 18,
-                color: DEEP_PURPLE, letterSpacing: "-0.01em",
-              }}>
-                Empowered DLD
-              </span>
+              <img src={logoImage} alt="Empowered DLD" style={{ height: 38, width: "auto", display: "block" }} />
             </Link>
           </div>
         </header>
