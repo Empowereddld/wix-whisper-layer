@@ -247,7 +247,7 @@ function getEmailTemplate(
 
             <p style="${plainP}">"I found something I think you'll want to see. It's called Story Pros, a membership that gives kids structured storytelling practice plus a monthly live gathering with other families. I'm in and would love for you to join me: ${referralLink}"</p>
 
-            <p style="${plainP}">Tomorrow, we'll send you the full breakdown of how points and tiers work so you know exactly how to climb.</p>
+            <p style="${plainP}">In a couple of hours, we'll send you the full breakdown of how points and tiers work so you know exactly how to climb.</p>
 
             <p style="${plainP}">We're so glad you're here.</p>
 
