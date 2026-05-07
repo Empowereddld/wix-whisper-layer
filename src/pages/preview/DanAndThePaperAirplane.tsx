@@ -11,6 +11,129 @@ import scene3Right from "@/assets/preview/dan-airplane/scene3-one-step-right.jpg
 import scene4Left from "@/assets/preview/dan-airplane/scene4-glossary-left.jpg";
 import scene4Right from "@/assets/preview/dan-airplane/scene4-glossary-right.jpg";
 
+const css = `
+:root {
+  --purple-deep: #1F1640;
+  --purple-mid: #3A2A6E;
+  --purple-primary: #6B4FA0;
+  --purple-soft: #EDE7F8;
+  --purple-softer: #F6F2FB;
+  --yellow-warm: #F4C84A;
+  --yellow-warm-hover: #E0B73D;
+  --navy: #14102A;
+  --charcoal: #2D2D3D;
+  --text-body: #3F3F52;
+  --text-muted: #6B6B7B;
+  --bg-white: #FFFFFF;
+  --bg-off-white: #FAFAFB;
+  --border-soft: #E8E5EE;
+}
+.dan-page * { box-sizing: border-box; }
+.dan-page { font-family: 'Inter', system-ui, -apple-system, sans-serif; font-size: 17px; line-height: 1.65; color: var(--text-body); background-color: var(--bg-white); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+.dan-page h1, .dan-page h2, .dan-page h3, .dan-page h4, .dan-page h5 { font-family: 'Poppins', system-ui, sans-serif; color: var(--navy); letter-spacing: -0.015em; font-weight: 700; margin: 0; }
+.dan-page p { margin: 0; }
+.dan-page a { color: inherit; }
+.dan-page .container { max-width: 1140px; margin: 0 auto; padding: 0 32px; }
+.dan-page .container-narrow { max-width: 880px; margin: 0 auto; padding: 0 32px; }
+
+.dan-page .hero { padding: 96px 0 88px; background: var(--bg-white); }
+.dan-page .hero-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 80px; align-items: center; }
+.dan-page .eyebrow { display: inline-block; font-family: 'Poppins', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--purple-primary); background-color: var(--purple-soft); padding: 8px 16px; border-radius: 100px; margin-bottom: 28px; }
+.dan-page .hero h1 { font-size: 56px; font-weight: 800; line-height: 1.08; margin-bottom: 24px; color: var(--navy); }
+.dan-page .hero h1 em { font-style: italic; font-weight: 700; color: var(--purple-mid); }
+.dan-page .hero-subtitle { font-size: 19px; line-height: 1.6; color: var(--text-muted); max-width: 520px; }
+.dan-page .hero-subtitle em { font-style: italic; }
+.dan-page .hero-cover-wrap { position: relative; display: flex; justify-content: center; align-items: center; }
+.dan-page .hero-cover-wrap::before { content: ""; position: absolute; inset: -20px; background: radial-gradient(ellipse at center, var(--purple-soft) 0%, transparent 65%); z-index: 0; border-radius: 50%; }
+.dan-page .hero-cover { position: relative; z-index: 1; max-width: 420px; width: 100%; height: auto; filter: drop-shadow(0 24px 48px rgba(31, 22, 64, 0.22)); }
+
+.dan-page .story-block { padding: 80px 0; background-color: var(--bg-off-white); }
+.dan-page .story-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+.dan-page .story-block .image-side img { width: 100%; height: auto; border-radius: 12px; box-shadow: 0 18px 50px rgba(31, 22, 64, 0.12); }
+.dan-page .story-block h2 { font-size: 36px; line-height: 1.2; margin-bottom: 20px; }
+.dan-page .story-block p { margin-bottom: 16px; font-size: 17px; color: var(--text-body); }
+.dan-page .story-block p:last-child { margin-bottom: 0; }
+
+.dan-page .lifestyle-band { background-color: var(--bg-white); padding: 0; }
+.dan-page .lifestyle-image-wrap { position: relative; width: 100%; max-height: 520px; overflow: hidden; }
+.dan-page .lifestyle-image-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; max-height: 520px; }
+.dan-page .lifestyle-overlay { position: absolute; inset: 0; display: flex; align-items: flex-end; justify-content: center; padding: 48px; background: linear-gradient(180deg, transparent 50%, rgba(31, 22, 64, 0.55) 100%); }
+.dan-page .lifestyle-text { font-family: 'Poppins', sans-serif; font-size: 28px; font-weight: 600; color: white; letter-spacing: -0.01em; text-align: center; text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4); }
+
+.dan-page .why-section { padding: 96px 0; background-color: var(--purple-deep); color: white; }
+.dan-page .why-section h2 { color: white; text-align: center; font-size: 36px; line-height: 1.2; margin-bottom: 56px; max-width: 720px; margin-left: auto; margin-right: auto; }
+.dan-page .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+.dan-page .why-card { background-color: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 36px 32px; }
+.dan-page .why-card h3 { color: var(--yellow-warm); font-size: 14px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 24px; font-family: 'Poppins', sans-serif; }
+.dan-page .why-card ul { list-style: none; padding: 0; margin: 0; }
+.dan-page .why-card li { padding: 12px 0; padding-left: 28px; position: relative; color: rgba(255, 255, 255, 0.92); line-height: 1.55; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+.dan-page .why-card li:last-child { border-bottom: none; }
+.dan-page .why-card li::before { content: ""; position: absolute; left: 0; top: 22px; width: 14px; height: 2px; background-color: var(--yellow-warm); border-radius: 2px; }
+
+.dan-page .glossary-section { padding: 96px 0; background-color: var(--purple-softer); }
+.dan-page .glossary-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 80px; align-items: center; }
+.dan-page .glossary-section h2 { font-size: 36px; line-height: 1.2; margin-bottom: 20px; }
+.dan-page .glossary-section p { font-size: 17px; margin-bottom: 16px; color: var(--text-body); }
+.dan-page .glossary-section .image-side img { width: 100%; height: auto; border-radius: 12px; box-shadow: 0 18px 50px rgba(31, 22, 64, 0.12); border: 1px solid var(--border-soft); }
+.dan-page .glossary-section .image-side .img-caption { display: block; text-align: center; font-size: 13px; color: var(--text-muted); margin-top: 12px; font-style: italic; }
+
+.dan-page .pages-section { padding: 96px 0; background-color: var(--bg-white); }
+.dan-page .pages-section .section-head { text-align: center; margin-bottom: 64px; }
+.dan-page .pages-section h2 { font-size: 36px; line-height: 1.2; margin-bottom: 16px; }
+.dan-page .pages-section .section-head p { color: var(--text-muted); font-size: 17px; max-width: 520px; margin: 0 auto; }
+.dan-page .scene-card { background-color: var(--bg-off-white); border-radius: 16px; padding: 40px; margin-bottom: 32px; border: 1px solid var(--border-soft); }
+.dan-page .scene-card:last-child { margin-bottom: 0; }
+.dan-page .scene-header { display: flex; align-items: baseline; gap: 20px; margin-bottom: 28px; flex-wrap: wrap; }
+.dan-page .scene-number { font-family: 'Poppins', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--purple-primary); background-color: var(--purple-soft); padding: 6px 14px; border-radius: 100px; flex-shrink: 0; }
+.dan-page .scene-caption { font-family: 'Poppins', sans-serif; font-size: 20px; font-weight: 600; color: var(--navy); line-height: 1.35; }
+.dan-page .spread-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; border-radius: 12px; overflow: hidden; box-shadow: 0 14px 40px rgba(31, 22, 64, 0.12); background-color: white; }
+.dan-page .spread-grid img { width: 100%; height: auto; display: block; }
+
+.dan-page .cta-section { padding: 96px 0; background-color: var(--purple-soft); text-align: center; }
+.dan-page .cta-section h2 { font-size: 36px; line-height: 1.2; margin-bottom: 20px; }
+.dan-page .cta-section .lead { font-size: 18px; color: var(--text-body); max-width: 600px; margin: 0 auto 16px; }
+.dan-page .cta-section .small { font-size: 15px; color: var(--text-muted); max-width: 580px; margin: 0 auto 40px; }
+.dan-page .cta-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+.dan-page .btn { display: inline-flex; align-items: center; justify-content: center; padding: 16px 32px; font-family: 'Poppins', sans-serif; font-size: 16px; font-weight: 600; text-decoration: none; border-radius: 8px; transition: all 0.2s ease; letter-spacing: 0.005em; min-height: 54px; }
+.dan-page .btn-primary { background-color: var(--purple-deep); color: white; }
+.dan-page .btn-primary:hover { background-color: var(--purple-mid); transform: translateY(-1px); box-shadow: 0 12px 28px rgba(31, 22, 64, 0.25); }
+.dan-page .btn-secondary { background-color: var(--yellow-warm); color: var(--navy); }
+.dan-page .btn-secondary:hover { background-color: var(--yellow-warm-hover); transform: translateY(-1px); box-shadow: 0 12px 28px rgba(244, 200, 74, 0.4); }
+
+.dan-page .signoff-section { padding: 96px 0 112px; background-color: var(--bg-white); }
+.dan-page .signoff { max-width: 680px; margin: 0 auto; text-align: center; }
+.dan-page .signoff h2 { font-size: 32px; margin-bottom: 24px; line-height: 1.25; }
+.dan-page .signoff > p { font-size: 18px; line-height: 1.7; color: var(--text-body); margin-bottom: 36px; }
+.dan-page .signature { display: inline-block; text-align: center; padding-top: 36px; border-top: 1px solid var(--border-soft); }
+.dan-page .signature-greeting { font-family: 'Poppins', sans-serif; font-size: 14px; font-weight: 500; color: var(--text-muted); letter-spacing: 0.04em; margin-bottom: 24px; text-transform: uppercase; }
+.dan-page .signature-grid { display: flex; gap: 56px; justify-content: center; flex-wrap: wrap; margin-bottom: 24px; }
+.dan-page .signature-name { font-family: 'Poppins', sans-serif; font-size: 18px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+.dan-page .signature-cred { font-size: 14px; color: var(--text-muted); line-height: 1.4; }
+.dan-page .signature-role { font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 600; color: var(--purple-primary); letter-spacing: 0.1em; text-transform: uppercase; }
+
+@media (max-width: 900px) {
+  .dan-page .hero { padding: 64px 0 56px; }
+  .dan-page .hero-grid { grid-template-columns: 1fr; gap: 48px; }
+  .dan-page .hero h1 { font-size: 38px; }
+  .dan-page .hero-cover { max-width: 280px; }
+  .dan-page .story-block, .dan-page .why-section, .dan-page .glossary-section, .dan-page .pages-section, .dan-page .cta-section, .dan-page .signoff-section { padding: 64px 0; }
+  .dan-page .story-grid, .dan-page .why-grid, .dan-page .glossary-grid { grid-template-columns: 1fr; gap: 40px; }
+  .dan-page .story-block h2, .dan-page .why-section h2, .dan-page .glossary-section h2, .dan-page .pages-section h2, .dan-page .cta-section h2 { font-size: 28px; }
+  .dan-page .scene-card { padding: 28px 20px; }
+  .dan-page .spread-grid { grid-template-columns: 1fr; }
+  .dan-page .cta-buttons { flex-direction: column; align-items: stretch; }
+  .dan-page .btn { width: 100%; }
+  .dan-page .signature-grid { flex-direction: column; gap: 28px; }
+  .dan-page .lifestyle-image-wrap, .dan-page .lifestyle-image-wrap img { max-height: 320px; }
+  .dan-page .lifestyle-text { font-size: 20px; }
+  .dan-page .lifestyle-overlay { padding: 24px; }
+}
+@media (max-width: 540px) {
+  .dan-page .container, .dan-page .container-narrow { padding: 0 20px; }
+  .dan-page .hero h1 { font-size: 32px; }
+}
+`;
+
 const DanAndThePaperAirplane = () => {
   const { amazonHref, mailtoHref } = useMemo(() => {
     const search = typeof window !== "undefined" ? window.location.search : "";
@@ -58,234 +181,7 @@ const DanAndThePaperAirplane = () => {
 
   return (
     <div className="dan-page">
-      <style>{`
-        .dan-page {
-          --purple-deep: #1F1640;
-          --purple-mid: #3A2A6E;
-          --purple-primary: #6B4FA0;
-          --purple-soft: #EDE7F8;
-          --purple-softer: #F6F2FB;
-          --yellow-warm: #F4C84A;
-          --yellow-warm-hover: #E0B73D;
-          --navy: #14102A;
-          --charcoal: #2D2D3D;
-          --text-body: #3F3F52;
-          --text-muted: #6B6B7B;
-          --bg-white: #FFFFFF;
-          --bg-off-white: #FAFAFB;
-          --border-soft: #E8E5EE;
-
-          font-family: 'Inter', system-ui, -apple-system, sans-serif;
-          font-size: 17px;
-          line-height: 1.65;
-          color: var(--text-body);
-          background-color: var(--bg-white);
-          -webkit-font-smoothing: antialiased;
-          -moz-osx-font-smoothing: grayscale;
-        }
-        .dan-page * { box-sizing: border-box; }
-        .dan-page h1, .dan-page h2, .dan-page h3, .dan-page h4, .dan-page h5 {
-          font-family: 'Poppins', system-ui, sans-serif;
-          color: var(--navy);
-          letter-spacing: -0.015em;
-          font-weight: 700;
-          margin: 0;
-        }
-        .dan-page p { margin: 0; }
-        .dan-page ul { margin: 0; padding: 0; }
-
-        .dan-page .container { max-width: 1140px; margin: 0 auto; padding: 0 32px; }
-        .dan-page .container-narrow { max-width: 880px; margin: 0 auto; padding: 0 32px; }
-
-        .dan-page .hero { padding: 96px 0 88px; background: var(--bg-white); }
-        .dan-page .hero-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 80px; align-items: center; }
-        .dan-page .eyebrow {
-          display: inline-block; font-family: 'Poppins', sans-serif; font-size: 12px; font-weight: 600;
-          letter-spacing: 0.16em; text-transform: uppercase; color: var(--purple-primary);
-          background-color: var(--purple-soft); padding: 8px 16px; border-radius: 100px; margin-bottom: 28px;
-        }
-        .dan-page .hero h1 { font-size: 56px; font-weight: 800; line-height: 1.08; margin-bottom: 24px; color: var(--navy); }
-        .dan-page .hero h1 em { font-style: italic; font-weight: 700; color: var(--purple-mid); }
-        .dan-page .hero-subtitle { font-size: 19px; line-height: 1.6; color: var(--text-muted); max-width: 520px; }
-        .dan-page .hero-subtitle em { font-style: italic; }
-        .dan-page .hero-cover-wrap { position: relative; display: flex; justify-content: center; align-items: center; }
-        .dan-page .hero-cover-wrap::before {
-          content: ""; position: absolute; inset: -20px;
-          background: radial-gradient(ellipse at center, var(--purple-soft) 0%, transparent 65%);
-          z-index: 0; border-radius: 50%;
-        }
-        .dan-page .hero-cover {
-          position: relative; z-index: 1; max-width: 420px; width: 100%; height: auto;
-          filter: drop-shadow(0 24px 48px rgba(31, 22, 64, 0.22));
-        }
-
-        .dan-page .story-block { padding: 80px 0; background-color: var(--bg-off-white); }
-        .dan-page .story-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
-        .dan-page .story-block .image-side img {
-          width: 100%; height: auto; border-radius: 12px;
-          box-shadow: 0 18px 50px rgba(31, 22, 64, 0.12);
-        }
-        .dan-page .story-block h2 { font-size: 36px; line-height: 1.2; margin-bottom: 20px; }
-        .dan-page .story-block p { margin-bottom: 16px; font-size: 17px; color: var(--text-body); }
-        .dan-page .story-block p:last-child { margin-bottom: 0; }
-
-        .dan-page .lifestyle-band { background-color: var(--bg-white); padding: 0; }
-        .dan-page .lifestyle-image-wrap { position: relative; width: 100%; max-height: 520px; overflow: hidden; }
-        .dan-page .lifestyle-image-wrap img {
-          width: 100%; height: 100%; object-fit: cover; display: block; max-height: 520px;
-        }
-        .dan-page .lifestyle-overlay {
-          position: absolute; inset: 0; display: flex; align-items: flex-end; justify-content: center;
-          padding: 48px; background: linear-gradient(180deg, transparent 50%, rgba(31, 22, 64, 0.55) 100%);
-        }
-        .dan-page .lifestyle-text {
-          font-family: 'Poppins', sans-serif; font-size: 28px; font-weight: 600; color: white;
-          letter-spacing: -0.01em; text-align: center; text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
-        }
-
-        .dan-page .why-section { padding: 96px 0; background-color: var(--purple-deep); color: white; }
-        .dan-page .why-section h2 {
-          color: white; text-align: center; font-size: 36px; line-height: 1.2; margin-bottom: 56px;
-          max-width: 720px; margin-left: auto; margin-right: auto;
-        }
-        .dan-page .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
-        .dan-page .why-card {
-          background-color: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.1);
-          border-radius: 16px; padding: 36px 32px;
-        }
-        .dan-page .why-card h3 {
-          color: var(--yellow-warm); font-size: 14px; font-weight: 600; letter-spacing: 0.14em;
-          text-transform: uppercase; margin-bottom: 24px; font-family: 'Poppins', sans-serif;
-        }
-        .dan-page .why-card ul { list-style: none; padding: 0; }
-        .dan-page .why-card li {
-          padding: 12px 0; padding-left: 28px; position: relative; color: rgba(255, 255, 255, 0.92);
-          line-height: 1.55; border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        }
-        .dan-page .why-card li:last-child { border-bottom: none; }
-        .dan-page .why-card li::before {
-          content: ""; position: absolute; left: 0; top: 22px; width: 14px; height: 2px;
-          background-color: var(--yellow-warm); border-radius: 2px;
-        }
-
-        .dan-page .glossary-section { padding: 96px 0; background-color: var(--purple-softer); }
-        .dan-page .glossary-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 80px; align-items: center; }
-        .dan-page .glossary-section h2 { font-size: 36px; line-height: 1.2; margin-bottom: 20px; }
-        .dan-page .glossary-section p { font-size: 17px; margin-bottom: 16px; color: var(--text-body); }
-        .dan-page .glossary-section .image-side img {
-          width: 100%; height: auto; border-radius: 12px;
-          box-shadow: 0 18px 50px rgba(31, 22, 64, 0.12); border: 1px solid var(--border-soft);
-        }
-        .dan-page .glossary-section .image-side .img-caption {
-          display: block; text-align: center; font-size: 13px; color: var(--text-muted);
-          margin-top: 12px; font-style: italic;
-        }
-
-        .dan-page .pages-section { padding: 96px 0; background-color: var(--bg-white); }
-        .dan-page .pages-section .section-head { text-align: center; margin-bottom: 64px; }
-        .dan-page .pages-section h2 { font-size: 36px; line-height: 1.2; margin-bottom: 16px; }
-        .dan-page .pages-section .section-head p {
-          color: var(--text-muted); font-size: 17px; max-width: 520px; margin: 0 auto;
-        }
-        .dan-page .scene-card {
-          background-color: var(--bg-off-white); border-radius: 16px; padding: 40px;
-          margin-bottom: 32px; border: 1px solid var(--border-soft);
-        }
-        .dan-page .scene-card:last-child { margin-bottom: 0; }
-        .dan-page .scene-header { display: flex; align-items: baseline; gap: 20px; margin-bottom: 28px; flex-wrap: wrap; }
-        .dan-page .scene-number {
-          font-family: 'Poppins', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.16em;
-          text-transform: uppercase; color: var(--purple-primary); background-color: var(--purple-soft);
-          padding: 6px 14px; border-radius: 100px; flex-shrink: 0;
-        }
-        .dan-page .scene-caption {
-          font-family: 'Poppins', sans-serif; font-size: 20px; font-weight: 600; color: var(--navy); line-height: 1.35;
-        }
-        .dan-page .spread-grid {
-          display: grid; grid-template-columns: 1fr 1fr; gap: 8px; border-radius: 12px; overflow: hidden;
-          box-shadow: 0 14px 40px rgba(31, 22, 64, 0.12); background-color: white;
-        }
-        .dan-page .spread-grid img { width: 100%; height: auto; display: block; }
-
-        .dan-page .cta-section { padding: 96px 0; background-color: var(--purple-soft); text-align: center; }
-        .dan-page .cta-section h2 { font-size: 36px; line-height: 1.2; margin-bottom: 20px; }
-        .dan-page .cta-section .lead { font-size: 18px; color: var(--text-body); max-width: 600px; margin: 0 auto 16px; }
-        .dan-page .cta-section .small { font-size: 15px; color: var(--text-muted); max-width: 580px; margin: 0 auto 40px; }
-        .dan-page .cta-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
-        .dan-page .btn {
-          display: inline-flex; align-items: center; justify-content: center; padding: 16px 32px;
-          font-family: 'Poppins', sans-serif; font-size: 16px; font-weight: 600; text-decoration: none;
-          border-radius: 8px; transition: all 0.2s ease; letter-spacing: 0.005em; min-height: 54px;
-        }
-        .dan-page .btn-primary { background-color: var(--purple-deep); color: white; }
-        .dan-page .btn-primary:hover {
-          background-color: var(--purple-mid); transform: translateY(-1px);
-          box-shadow: 0 12px 28px rgba(31, 22, 64, 0.25);
-        }
-        .dan-page .btn-secondary { background-color: var(--yellow-warm); color: var(--navy); }
-        .dan-page .btn-secondary:hover {
-          background-color: var(--yellow-warm-hover); transform: translateY(-1px);
-          box-shadow: 0 12px 28px rgba(244, 200, 74, 0.4);
-        }
-
-        .dan-page .signoff-section { padding: 96px 0 112px; background-color: var(--bg-white); }
-        .dan-page .signoff { max-width: 680px; margin: 0 auto; text-align: center; }
-        .dan-page .signoff h2 { font-size: 32px; margin-bottom: 24px; line-height: 1.25; }
-        .dan-page .signoff > p { font-size: 18px; line-height: 1.7; color: var(--text-body); margin-bottom: 36px; }
-        .dan-page .signature {
-          display: inline-block; text-align: center; padding-top: 36px; border-top: 1px solid var(--border-soft);
-        }
-        .dan-page .signature-greeting {
-          font-family: 'Poppins', sans-serif; font-size: 14px; font-weight: 500; color: var(--text-muted);
-          letter-spacing: 0.04em; margin-bottom: 24px; text-transform: uppercase;
-        }
-        .dan-page .signature-grid {
-          display: flex; gap: 56px; justify-content: center; flex-wrap: wrap; margin-bottom: 24px;
-        }
-        .dan-page .signature-name {
-          font-family: 'Poppins', sans-serif; font-size: 18px; font-weight: 700; color: var(--navy); margin-bottom: 4px;
-        }
-        .dan-page .signature-cred { font-size: 14px; color: var(--text-muted); line-height: 1.4; }
-        .dan-page .signature-role {
-          font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 600;
-          color: var(--purple-primary); letter-spacing: 0.1em; text-transform: uppercase;
-        }
-
-        @media (max-width: 900px) {
-          .dan-page .hero { padding: 64px 0 56px; }
-          .dan-page .hero-grid { grid-template-columns: 1fr; gap: 48px; }
-          .dan-page .hero h1 { font-size: 38px; }
-          .dan-page .hero-cover { max-width: 280px; }
-          .dan-page .story-block,
-          .dan-page .why-section,
-          .dan-page .glossary-section,
-          .dan-page .pages-section,
-          .dan-page .cta-section,
-          .dan-page .signoff-section { padding: 64px 0; }
-          .dan-page .story-grid,
-          .dan-page .why-grid,
-          .dan-page .glossary-grid { grid-template-columns: 1fr; gap: 40px; }
-          .dan-page .story-block h2,
-          .dan-page .why-section h2,
-          .dan-page .glossary-section h2,
-          .dan-page .pages-section h2,
-          .dan-page .cta-section h2 { font-size: 28px; }
-          .dan-page .scene-card { padding: 28px 20px; }
-          .dan-page .spread-grid { grid-template-columns: 1fr; }
-          .dan-page .cta-buttons { flex-direction: column; align-items: stretch; }
-          .dan-page .btn { width: 100%; }
-          .dan-page .signature-grid { flex-direction: column; gap: 28px; }
-          .dan-page .lifestyle-image-wrap,
-          .dan-page .lifestyle-image-wrap img { max-height: 320px; }
-          .dan-page .lifestyle-text { font-size: 20px; }
-          .dan-page .lifestyle-overlay { padding: 24px; }
-        }
-        @media (max-width: 540px) {
-          .dan-page .container,
-          .dan-page .container-narrow { padding: 0 20px; }
-          .dan-page .hero h1 { font-size: 32px; }
-        }
-      `}</style>
+      <style>{css}</style>
 
       <header className="hero">
         <div className="container">
