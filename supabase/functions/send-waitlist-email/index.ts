@@ -226,9 +226,10 @@ function getEmailTemplate(
 
             <p style="${plainP}"><strong>What you just joined</strong></p>
 
-            <p style="${plainP}">The app waitlist. A structured, playful tool your child can use at home to build storytelling and narrative language skills, step by step.</p>
-
-            <p style="${plainP}">Monthly Live Community Circles. Once a month, we host a live Zoom gathering for Story Pros kids, facilitated by us (Camesha, an elementary school teacher, and Jinean, a speech-language pathologist). So many children who struggle with language also struggle with feeling like they're the only one. They're not. And this is where they get to see that for themselves.</p>
+            <ul style="${plainP}; padding-left: 20px; margin: 0 0 16px;">
+              <li style="margin-bottom: 8px;"><strong>The app waitlist.</strong> A structured, playful tool your child can use at home to build storytelling and narrative language skills, step by step.</li>
+              <li style="margin-bottom: 8px;"><strong>Monthly Live Community Circles.</strong> Once a month, we host a live Zoom gathering for Story Pros kids, facilitated by us (Camesha, an elementary school teacher, and Jinean, a speech-language pathologist). So many children who struggle with language also struggle with feeling like they're the only one. They're not. And this is where they get to see that for themselves.</li>
+            </ul>
 
             <p style="${plainP}">Your Story Pros membership includes both. App access and live Zoom community. All for $9.99/month.</p>
 
@@ -246,7 +247,7 @@ function getEmailTemplate(
 
             <p style="${plainP}">"I found something I think you'll want to see. It's called Story Pros, a membership that gives kids structured storytelling practice plus a monthly live gathering with other families. I'm in and would love for you to join me: ${referralLink}"</p>
 
-            <p style="${plainP}">Tomorrow, we'll send you the full breakdown of how points and tiers work so you know exactly how to climb.</p>
+            <p style="${plainP}">In a couple of hours, we'll send you the full breakdown of how points and tiers work so you know exactly how to climb.</p>
 
             <p style="${plainP}">We're so glad you're here.</p>
 
