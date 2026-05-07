@@ -226,9 +226,10 @@ function getEmailTemplate(
 
             <p style="${plainP}"><strong>What you just joined</strong></p>
 
-            <p style="${plainP}">The app waitlist. A structured, playful tool your child can use at home to build storytelling and narrative language skills, step by step.</p>
-
-            <p style="${plainP}">Monthly Live Community Circles. Once a month, we host a live Zoom gathering for Story Pros kids, facilitated by us (Camesha, an elementary school teacher, and Jinean, a speech-language pathologist). So many children who struggle with language also struggle with feeling like they're the only one. They're not. And this is where they get to see that for themselves.</p>
+            <ul style="${plainP}; padding-left: 20px; margin: 0 0 16px;">
+              <li style="margin-bottom: 8px;"><strong>The app waitlist.</strong> A structured, playful tool your child can use at home to build storytelling and narrative language skills, step by step.</li>
+              <li style="margin-bottom: 8px;"><strong>Monthly Live Community Circles.</strong> Once a month, we host a live Zoom gathering for Story Pros kids, facilitated by us (Camesha, an elementary school teacher, and Jinean, a speech-language pathologist). So many children who struggle with language also struggle with feeling like they're the only one. They're not. And this is where they get to see that for themselves.</li>
+            </ul>
 
             <p style="${plainP}">Your Story Pros membership includes both. App access and live Zoom community. All for $9.99/month.</p>
 
