@@ -42,3 +42,6 @@ verify_jwt = false
 [functions.find-storypros-dashboard]
 verify_jwt = false
 
+[functions.weekly-app-summary]
+verify_jwt = false
+
