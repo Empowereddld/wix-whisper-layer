@@ -261,8 +261,11 @@ const DanAndThePaperAirplane = () => {
               <p>This is the part SLTs tell us they reach for most. It turns the book into a working language tool, not just a story.</p>
             </div>
             <div className="image-side">
-              <img src={scene4Left} alt="The back-of-book glossary with word, meaning, context, and similar words columns" />
-              <span className="img-caption">The glossary table at the back of the book.</span>
+              <div className="spread-grid">
+                <img src={scene4Left} alt="The back-of-book glossary with word, meaning, context, and similar words columns" />
+                <img src={scene4Right} alt="Use the word in a sentence practice page with character icons next to each line" />
+              </div>
+              <span className="img-caption">The glossary spread at the back of the book.</span>
             </div>
           </div>
         </div>
