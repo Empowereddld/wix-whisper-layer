@@ -28,7 +28,7 @@ interface EmailData {
   };
 }
 
-const SIGN_OFF = "Camesha, Jinean and The Story Pros Team";
+const SIGN_OFF = "Warmly, Camesha & Jinean";
 const SITE_BASE = "https://empowereddld.com";
 const DEFAULT_DASHBOARD = `${SITE_BASE}/storypros/dashboard`;
 const DEFAULT_VIDEO = `https://youtu.be/S4ke41x89s0`;
