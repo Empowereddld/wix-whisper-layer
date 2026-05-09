@@ -328,7 +328,7 @@ const DanAndThePaperAirplane = () => {
           <p className="lead text-base">The full book is available on Amazon for personal copies and quick orders.</p>
           <p className="small text-lg font-light">For SLTs, clinics, schools, and bulk orders, we'd love to hear from you. We can offer better pricing at our wholesale rate.</p>
           <div className="cta-buttons">
-            <a className="btn btn-primary" href={amazonHref} target="_blank" rel="noopener noreferrer">Buy on Amazon UK</a>
+            <a className="btn btn-primary" href={amazonHref} target="_blank" rel="noopener noreferrer">Buy on Amazon</a>
             <a className="btn btn-secondary" href={mailtoHref}>Email hello@empowereddld.com</a>
           </div>
         </div>
