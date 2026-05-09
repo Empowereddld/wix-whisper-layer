@@ -951,7 +951,7 @@ function getEmailTemplate(
     case "verification": {
       const plainContainer = `max-width: 580px; margin: 0 auto; padding: 24px 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 15px; line-height: 1.55; color: #222; background: #ffffff;`;
       const plainP = `margin: 0 0 14px;`;
-      const verifyButton = `display: inline-block; background: ${brandColor}; color: #ffffff !important; padding: 16px 32px; text-decoration: none; border-radius: 999px; font-weight: 700; font-size: 16px; line-height: 1.2; mso-padding-alt: 16px 32px;`;
+      const verifyButton = `display: inline-block; background: ${brandColor}; color: #ffffff !important; padding: 14px 28px; text-decoration: none; border-radius: 999px; font-weight: 700; font-size: 15px; line-height: 1.2; mso-padding-alt: 14px 28px;`;
       return {
         subject: `Verify your email to get started, ${name}`,
         html: `
