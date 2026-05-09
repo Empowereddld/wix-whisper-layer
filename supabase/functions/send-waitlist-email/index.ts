@@ -972,7 +972,7 @@ function getEmailTemplate(
     case "verification_reminder_1": {
       const plainContainer = `max-width: 580px; margin: 0 auto; padding: 24px 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 15px; line-height: 1.55; color: #222; background: #ffffff;`;
       const plainP = `margin: 0 0 14px;`;
-      const plainLink = `color: ${brandColor}; text-decoration: underline;`;
+      const verifyButton = `display: inline-block; background: ${brandColor}; color: #ffffff !important; padding: 14px 28px; text-decoration: none; border-radius: 999px; font-weight: 700; font-size: 15px; line-height: 1.2; mso-padding-alt: 14px 28px;`;
       return {
         subject: `Still need to verify, ${name}`,
         html: `
@@ -980,8 +980,8 @@ function getEmailTemplate(
             <div style="display:none;max-height:0;overflow:hidden;opacity:0;color:transparent;">Your 15 points are waiting.</div>
             <p style="${plainP}">Hi ${name},</p>
             <p style="${plainP}">Just a quick reminder to verify your email so we can send you everything you need to get started with Story Pros, including your referral link, your welcome video, and your first 15 points.</p>
-            <p style="${plainP}"><a href="${data.verification_link}" style="${plainLink}">Verify my email (+15 points)</a></p>
-            <p style="${plainP}">Camesha, Jinean and The Story Pros Team</p>
+            <p style="${plainP}; text-align: center; margin: 24px 0;"><a href="${data.verification_link}" style="${verifyButton}">Verify my email (+15 points)</a></p>
+            <p style="${plainP}">Warmly,<br/>Camesha & Jinean</p>
           </div>
         `,
       };
@@ -991,7 +991,7 @@ function getEmailTemplate(
     case "verification_reminder_2": {
       const plainContainer = `max-width: 580px; margin: 0 auto; padding: 24px 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 15px; line-height: 1.55; color: #222; background: #ffffff;`;
       const plainP = `margin: 0 0 14px;`;
-      const plainLink = `color: ${brandColor}; text-decoration: underline;`;
+      const verifyButton = `display: inline-block; background: ${brandColor}; color: #ffffff !important; padding: 14px 28px; text-decoration: none; border-radius: 999px; font-weight: 700; font-size: 15px; line-height: 1.2; mso-padding-alt: 14px 28px;`;
       return {
         subject: `Last chance to verify, ${name}`,
         html: `
@@ -1000,8 +1000,8 @@ function getEmailTemplate(
             <p style="${plainP}">Hi ${name},</p>
             <p style="${plainP}">We noticed you haven't verified your email yet. We'd love to have you as part of Story Pros, but we can only send you your welcome, your referral link, and your rewards once you've confirmed.</p>
             <p style="${plainP}">This is our last reminder. Tap below and you're in.</p>
-            <p style="${plainP}"><a href="${data.verification_link}" style="${plainLink}">Verify my email (+15 points)</a></p>
-            <p style="${plainP}">Camesha, Jinean and The Story Pros Team</p>
+            <p style="${plainP}; text-align: center; margin: 24px 0;"><a href="${data.verification_link}" style="${verifyButton}">Verify my email (+15 points)</a></p>
+            <p style="${plainP}">Warmly,<br/>Camesha & Jinean</p>
           </div>
         `,
       };
