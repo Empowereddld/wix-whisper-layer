@@ -301,7 +301,7 @@ const DanAndThePaperAirplane = () => {
           <div className="scene-card">
             <div className="scene-header">
               <span className="scene-number">Scene Three</span>
-              <span className="scene-caption">Dan asks his friend for one step at a time.</span>
+              <span className="scene-caption">Dan begins to advocate for himself.</span>
             </div>
             <div className="spread-grid">
               <img src={scene3Left} alt="Dan asking Molly to give instructions one step at a time" />
