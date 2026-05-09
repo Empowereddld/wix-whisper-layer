@@ -213,7 +213,7 @@ const DanAndThePaperAirplane = () => {
               <h2>What this story gives a child</h2>
               <p>Dan loves making paper airplanes. At school, he keeps getting in trouble for not following Mr. Mac's instructions. At recess, the words won't come out right. He doesn't have language for what's happening to him.</p>
               <p>Then he meets Ms. Lopez, a speech and language therapist who explains DLD in a way Dan can understand. By the end of the story, Dan has a name for his experience, a strategy he can use, and the words to ask his friends for what he needs.</p>
-              <p>It's a story about a child finding language for himself.</p>
+              
             </div>
           </div>
         </div>
