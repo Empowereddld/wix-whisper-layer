@@ -220,43 +220,36 @@ function getEmailTemplate(
 
             <p style="${plainP}">You're in. Welcome to Story Pros as one of our founding members.</p>
 
-            <p style="${plainP}">Story Pros is an interactive storytelling app designed for children ages 5 to 12 with Developmental Language Disorder and other communication challenges. It helps children understand stories, retell them in their own words, organize their thoughts, and build the language skills they need to express themselves clearly and confidently, step by step, with structured support.</p>
+            <p style="${plainP}">The Story Pros App helps children understand stories, retell them in their own words, put events in order, grow their vocabulary, and connect stories to their own lives.</p>
 
             <p style="${plainP}">If you'd like a quick intro, here's our welcome video: <a href="${videoLink}" style="${plainLink}">${videoLink}</a></p>
 
-            <p style="${plainP}"><strong>What you just joined</strong></p>
+            <p style="${plainP}"><strong>One thing we want you to know.</strong></p>
 
-            <ul style="${plainP}; padding-left: 20px; margin: 0 0 16px;">
-              <li style="margin-bottom: 8px;"><strong>The app waitlist.</strong> A structured, playful tool your child can use at home to build storytelling and narrative language skills, step by step.</li>
-              <li style="margin-bottom: 8px;"><strong>Monthly Live Community Circles.</strong> Once a month, we host a live Zoom gathering for Story Pros kids, facilitated by us (Camesha, an elementary school teacher, and Jinean, a speech-language pathologist). So many children who struggle with language also struggle with feeling like they're the only one. They're not. And this is where they get to see that for themselves.</li>
-            </ul>
-
-            <p style="${plainP}">Your Story Pros membership includes both. App access and live Zoom community. All for $9.99/month.</p>
+            <p style="${plainP}">Your membership includes something we believe in deeply: monthly Live Community Circles on Zoom, hosted by us. So many children who struggle with language also struggle with feeling like they're the only one. They're not. And this is where they get to see that for themselves.</p>
 
             <p style="${plainP}"><strong>You're not just on a waitlist.</strong></p>
 
-            <p style="${plainP}">You're part of the group helping bring Story Pros to life. The more people who join through you, the more you unlock: early access at launch, bonus Coins, a signed Dan & Daria book, founder pricing, and DLD-themed merch.</p>
+            <p style="${plainP}">You're part of the group helping bring the Story Pros App to life. The more people who join through your link, the more you unlock: early access, bonus Coins, founder pricing, and more.</p>
 
             <p style="${plainP}">Your referral link:<br/><a href="${referralLink}" style="${plainLink}; word-break: break-all;">${referralLink}</a></p>
 
-            <p style="${plainP}">Every person who joins through your link moves you forward, unlocks rewards, and helps more families find Story Pros when we launch.</p>
-
             <p style="${plainP}"><strong>Not sure what to say? Try one of these:</strong></p>
 
-            <p style="${plainP}">"Hey, I'm on the early list for Story Pros. It's an app and monthly community for kids who need extra support with storytelling and language. Built by speech-language pathologists and teachers. Thought of you: ${referralLink}"</p>
+            <p style="${plainP}">For a text: "I just joined the early list for Story Pros, an app and community for kids who need extra support with storytelling and language. Thought of you: ${referralLink}"</p>
 
-            <p style="${plainP}">"I found something I think you'll want to see. It's called Story Pros, a membership that gives kids structured storytelling practice plus a monthly live gathering with other families. I'm in and would love for you to join me: ${referralLink}"</p>
+            <p style="${plainP}">For email or messenger: "I found something I think you'll want to see. It's called Story Pros, a membership that gives kids structured storytelling practice plus a monthly live gathering with other families. I'm in and would love for you to join me: ${referralLink}"</p>
 
             <p style="${plainP}">In a couple of hours, we'll send you the full breakdown of how points and tiers work so you know exactly how to climb.</p>
 
             <p style="${plainP}">We're so glad you're here.</p>
 
-            <p style="${plainP}">Warmly,<br/>${SIGN_OFF}</p>
+            <p style="${plainP}">${SIGN_OFF}</p>
 
             <p style="${plainP}; margin-top: 28px;"><em>P.S. If this email landed in your Promotions or Updates tab, drag it over to your Primary inbox so you don't miss the next one. It really helps.</em></p>
 
             <div style="${plainFooter}">
-              <p style="margin: 0 0 6px;">You're receiving this because you joined the Story Pros waitlist.</p>
+              <p style="margin: 0 0 6px;">You're receiving this as a Story Pros founding member.</p>
               <p style="margin: 0;"><a href="${unsubscribeUrl}" style="color: #888; text-decoration: underline;">Unsubscribe</a></p>
             </div>
           </div>
