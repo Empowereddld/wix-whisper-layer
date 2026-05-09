@@ -188,12 +188,19 @@ const DanAndThePaperAirplane = () => {
         <div className="container">
           <div className="hero-grid">
             <div>
-              <span className="eyebrow">A Sample From Empowered DLD</span>
-              <h1>
-                A first look at <em>Dan and the Paper Airplane</em>
-              </h1>
+              <span className="eyebrow">Book 1: Living Life with Developmental Language Disorder Series</span>
+              <h1>Dan and the Paper Airplane</h1>
               <p className="hero-subtitle">
-                Book one in the <em>Living Life with DLD</em> series, written for children with DLD and the people who support them.
+                Dan loves making paper airplanes. But at school, the words don't always come and instructions feel too fast to follow. Through Dan's eyes, readers learn to recognise language challenges, implement strategies, and experience what it truly feels like to live with DLD.
+              </p>
+              <p className="hero-subtitle" style={{ marginTop: 16 }}>
+                A conversation starter for families, a mirror for children with DLD, and a window for educators who want to understand their students better.
+              </p>
+              <p className="hero-subtitle" style={{ marginTop: 16 }}>
+                Also available in French, Spanish, Czech, Welsh and Persian.
+              </p>
+              <p className="hero-subtitle" style={{ marginTop: 4, fontStyle: "italic" }}>
+                Chinese and Arabic coming soon.
               </p>
             </div>
             <div className="hero-cover-wrap">
