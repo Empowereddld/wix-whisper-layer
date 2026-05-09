@@ -48,8 +48,9 @@ const css = `
 .dan-page .hero-cover { position: relative; z-index: 1; max-width: 420px; width: 100%; height: auto; filter: drop-shadow(0 24px 48px rgba(31, 22, 64, 0.22)); }
 
 .dan-page .story-block { padding: 80px 0; background-color: var(--bg-off-white); }
-.dan-page .story-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
-.dan-page .story-block .image-side img { width: 100%; height: auto; border-radius: 12px; box-shadow: 0 18px 50px rgba(31, 22, 64, 0.12); }
+.dan-page .story-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: stretch; }
+.dan-page .story-block .image-side { height: 100%; }
+.dan-page .story-block .image-side img { width: 100%; height: 100%; object-fit: cover; object-position: center 30%; border-radius: 12px; box-shadow: 0 18px 50px rgba(31, 22, 64, 0.12); }
 .dan-page .story-block h2 { font-size: 36px; line-height: 1.2; margin-bottom: 20px; }
 .dan-page .story-block p { margin-bottom: 16px; font-size: 17px; color: var(--text-body); }
 .dan-page .story-block p:last-child { margin-bottom: 0; }
