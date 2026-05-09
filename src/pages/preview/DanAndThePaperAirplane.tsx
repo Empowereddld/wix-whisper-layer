@@ -273,7 +273,7 @@ const DanAndThePaperAirplane = () => {
           <div className="section-head">
             <span className="eyebrow">Read A Sample</span>
             <h2>Four scenes from the book</h2>
-            <p>The story moves through these moments in order. The full book is 28 pages.</p>
+            <p>The story moves through these moments in order. <br />The full book is 28 pages.</p>
           </div>
 
           <div className="scene-card">
@@ -325,7 +325,7 @@ const DanAndThePaperAirplane = () => {
       <section className="cta-section">
         <div className="container-narrow">
           <h2>When you're ready</h2>
-          <p className="lead">The full book is available on Amazon UK for personal copies and quick orders.</p>
+          <p className="lead text-base">The full book is available on Amazon for personal copies and quick orders.</p>
           <p className="small">For SLTs, clinics, schools, and bulk orders, we'd love to hear from you. We can offer better pricing at our wholesale rate.</p>
           <div className="cta-buttons">
             <a className="btn btn-primary" href={amazonHref} target="_blank" rel="noopener noreferrer">Buy on Amazon UK</a>
