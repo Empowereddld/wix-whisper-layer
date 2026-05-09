@@ -290,7 +290,7 @@ const DanAndThePaperAirplane = () => {
           <div className="scene-card">
             <div className="scene-header">
               <span className="scene-number">Scene Two</span>
-              <span className="scene-caption">Ms. Lopez explains DLD to Dan in plain language.</span>
+              <span className="scene-caption">Ms. Lopez explains DLD to Dan.</span>
             </div>
             <div className="spread-grid">
               <img src={scene2Left} alt="Ms. Lopez explaining what DLD is" />
