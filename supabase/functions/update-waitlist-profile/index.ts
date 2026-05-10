@@ -113,7 +113,74 @@ Deno.serve(async (req) => {
       }
     }
 
-    if (Object.keys(updates).length === 0) {
+    // ----- New profile completion fields -----
+    const ALLOWED_HOPES = [
+      "understanding_stories",
+      "retelling",
+      "putting_events_in_order",
+      "vocabulary",
+      "confidence",
+      "other",
+    ];
+    const ALLOWED_HEAR_ABOUT = [
+      "facebook_group",
+      "friend_or_family",
+      "slp_recommendation",
+      "social_media",
+      "other",
+    ];
+
+    if (typeof child_age !== "undefined" && child_age !== null) {
+      const ageNum = Number(child_age);
+      if (!Number.isInteger(ageNum) || ageNum < 1 || ageNum > 25) {
+        return new Response(
+          JSON.stringify({ error: "Please enter an age between 1 and 25." }),
+          { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+      updates.child_age = ageNum;
+    }
+
+    if (Array.isArray(hopes)) {
+      const cleaned = Array.from(new Set(hopes.filter((h) => ALLOWED_HOPES.includes(h))));
+      if (cleaned.length > 3) {
+        return new Response(
+          JSON.stringify({ error: "Pick up to 3." }),
+          { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+      updates.hopes = cleaned;
+      if (cleaned.includes("other")) {
+        const detail = typeof hopes_other === "string" ? hopes_other.trim() : "";
+        if (!detail) {
+          return new Response(
+            JSON.stringify({ error: "Please tell us a bit more about your 'Other' hope." }),
+            { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+          );
+        }
+        if (detail.length > 200) {
+          return new Response(
+            JSON.stringify({ error: "Please keep it under 200 characters." }),
+            { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+          );
+        }
+        updates.hopes_other = detail;
+      } else {
+        updates.hopes_other = null;
+      }
+    }
+
+    if (typeof hear_about !== "undefined" && hear_about !== null) {
+      if (!ALLOWED_HEAR_ABOUT.includes(hear_about)) {
+        return new Response(
+          JSON.stringify({ error: "Invalid 'how did you hear' value." }),
+          { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+      updates.hear_about = hear_about;
+    }
+
+    if (Object.keys(updates).length === 0 && complete_profile !== true) {
       return new Response(
         JSON.stringify({ error: "No valid fields to update" }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
@@ -125,10 +192,6 @@ Deno.serve(async (req) => {
     const supabase = createClient(supabaseUrl, serviceKey);
 
     // One-time SLP +50 bonus.
-    // Read current row first. The +50 is only ever added when
-    // speech_professional_verified transitions false → true on this update.
-    // If the row is already verified, we strip any verified/SLP flags from the
-    // updates payload so re-saving "Speech Professional" can NEVER stack points.
     if (updates.speech_professional_verified === true) {
       const { data: existing } = await supabase
         .from("storybuilders_waitlist")
@@ -137,7 +200,6 @@ Deno.serve(async (req) => {
         .maybeSingle();
 
       if (existing?.speech_professional_verified) {
-        // Already claimed — do not award again, do not re-touch the flags.
         delete (updates as Record<string, unknown>).speech_professional_verified;
         delete (updates as Record<string, unknown>).is_speech_professional;
       } else if (existing) {
@@ -145,11 +207,40 @@ Deno.serve(async (req) => {
       }
     }
 
+    // One-time profile completion +10 bonus.
+    // Only awarded the first time complete_profile=true is sent AND all
+    // required fields (child_age, hopes, hear_about) are present.
+    if (complete_profile === true) {
+      const { data: existing } = await supabase
+        .from("storybuilders_waitlist")
+        .select("points, profile_completed_at, child_age, hopes, hear_about")
+        .eq("referral_code", referral_code)
+        .maybeSingle();
+
+      if (existing && !existing.profile_completed_at) {
+        const finalChildAge = (updates.child_age as number | undefined) ?? existing.child_age;
+        const finalHopes =
+          (updates.hopes as string[] | undefined) ?? (existing.hopes as string[] | undefined) ?? [];
+        const finalHearAbout =
+          (updates.hear_about as string | undefined) ?? existing.hear_about;
+        if (finalChildAge && finalHopes.length > 0 && finalHearAbout) {
+          const basePoints = (updates.points as number | undefined) ?? existing.points ?? 0;
+          (updates as Record<string, unknown>).points = basePoints + 10;
+          (updates as Record<string, unknown>).profile_completed_at = new Date().toISOString();
+        } else {
+          return new Response(
+            JSON.stringify({ error: "Please fill in all profile fields before submitting." }),
+            { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+          );
+        }
+      }
+    }
+
     const { data, error } = await supabase
       .from("storybuilders_waitlist")
       .update(updates)
       .eq("referral_code", referral_code)
-      .select("id, name, is_speech_professional, speech_professional_verified, role, role_other")
+      .select("id, name, is_speech_professional, speech_professional_verified, role, role_other, child_age, hopes, hopes_other, hear_about, profile_completed_at, points")
       .maybeSingle();
 
     if (error || !data) {
