@@ -185,7 +185,15 @@ function getEmailTemplate(
   const referralLink =
     data.referral_link ||
     (data.referral_code ? `${SITE_BASE}/storypros?ref=${data.referral_code}` : `${SITE_BASE}/storypros`);
-  const dashboard = data.dashboard_url || DEFAULT_DASHBOARD;
+  const dashboardBase = data.dashboard_url || DEFAULT_DASHBOARD;
+  // Always include ?ref=CODE on dashboard links sent in email so the dashboard
+  // can hydrate the user's session even when they open the email in a browser
+  // / device where localStorage is empty (Gmail in-app browsers, a different
+  // computer, private windows). Without this, the dashboard mounts, sees no
+  // local session, and bounces them back to /storypros.
+  const dashboard = data.referral_code
+    ? `${dashboardBase}${dashboardBase.includes("?") ? "&" : "?"}ref=${data.referral_code}`
+    : dashboardBase;
   const videoLink = data.video_link || DEFAULT_VIDEO;
   const pointsToNext = data.points_to_next ?? 0;
   const guideUrl = data.guide_download_url || DEFAULT_GUIDE;
