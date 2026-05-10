@@ -45,6 +45,11 @@ export interface WaitlistState {
   speechProfessionalVerified: boolean;
   role: string | null;
   roleOther: string | null;
+  childAge: number | null;
+  hopes: string[];
+  hopesOther: string | null;
+  hearAbout: string | null;
+  profileCompleted: boolean;
   rewardsClaimed: Record<string, { claimed_at: string }>;
   loading: boolean;
   error: string | null;
