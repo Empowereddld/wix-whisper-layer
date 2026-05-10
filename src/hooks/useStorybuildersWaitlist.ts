@@ -954,6 +954,7 @@ export function useStorybuildersWaitlist() {
       profileCompleted: false,
       rewardsClaimed: {},
       loading: false,
+      statsHydrated: true,
       error: null,
       notifications: [],
     });
