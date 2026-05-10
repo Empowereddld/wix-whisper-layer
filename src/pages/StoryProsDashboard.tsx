@@ -335,6 +335,19 @@ const StoryProsDashboard = () => {
     );
   }
 
+  // Wait for the first server fetch to complete before deciding which view to
+  // render. Otherwise stale localStorage (e.g. emailVerified=false from when
+  // the user first signed up) makes us paint the unverified "almost there"
+  // screen for a split second before the real data flips us to the verified
+  // dashboard. That flash is jarring and confusing.
+  if (!wl.statsHydrated) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <div className="text-muted-foreground">Loading your dashboard…</div>
+      </div>
+    );
+  }
+
   // Gate the full dashboard until email is verified. Show a focused
   // "verify first" view with the tier roadmap so users can see what they're
   // working toward, but no referral link, share buttons, or other interactive
