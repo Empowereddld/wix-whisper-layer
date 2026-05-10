@@ -103,6 +103,7 @@ export function useStorybuildersWaitlist() {
     profileCompleted: false,
     rewardsClaimed: {},
     loading: false,
+    statsHydrated: false,
     error: null,
     notifications: [],
   });
