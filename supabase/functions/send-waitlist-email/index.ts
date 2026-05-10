@@ -904,7 +904,7 @@ function getEmailTemplate(
               You earned <strong>+25 points</strong>${data.points ? ` (you're now at <strong>${data.points}</strong> total)` : ""}. Every referral moves you closer to founder pricing and the bigger rewards.
             </p>
             <p style="${plainP}">
-              See your updated dashboard: <a href="${dashboard}" style="${plainLink}">${dashboard}</a>
+              See your updated dashboard: <a href="${dashboard}" style="${plainLink}">${dashboardBase}</a>
             </p>
             <p style="${plainP}">${SIGN_OFF}</p>
             <p style="${plainP}; font-size: 13px; color: #666;">
