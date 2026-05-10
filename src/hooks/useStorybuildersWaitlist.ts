@@ -52,6 +52,10 @@ export interface WaitlistState {
   profileCompleted: boolean;
   rewardsClaimed: Record<string, { claimed_at: string }>;
   loading: boolean;
+  // True only after the first server refresh has completed (success or failure).
+  // Use this to gate UI that branches on emailVerified/profileCompleted so we
+  // don't render the wrong state from stale localStorage during hydration.
+  statsHydrated: boolean;
   error: string | null;
   notifications: Notification[];
 }
