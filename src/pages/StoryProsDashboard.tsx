@@ -41,6 +41,7 @@ import SEOHead from "@/components/SEOHead";
 import RewardsInventory from "@/components/waitlist/RewardsInventory";
 import ScriptCarousel from "@/components/waitlist/ScriptCarousel";
 import SharePostFlow from "@/components/waitlist/SharePostFlow";
+import CompleteProfileCard from "@/components/waitlist/CompleteProfileCard";
 import { useStorybuildersWaitlist } from "@/hooks/useStorybuildersWaitlist";
 import { useIsMobile } from "@/hooks/use-mobile";
 import {
@@ -362,7 +363,7 @@ const StoryProsDashboard = () => {
   const earnRows = [
     { label: "Sign up", done: wl.joined, pts: ONETIME_POINTS.SIGNUP },
     { label: "Verify email", done: wl.emailVerified, pts: ONETIME_POINTS.VERIFY_EMAIL },
-    { label: "Complete profile", done: !!wl.name && !wl.name.includes("@"), pts: ONETIME_POINTS.COMPLETE_PROFILE },
+    { label: "Complete profile", done: wl.profileCompleted, pts: ONETIME_POINTS.COMPLETE_PROFILE },
     { label: "Follow Instagram", done: wl.socialClaims.instagram, pts: ONETIME_POINTS.FOLLOW_INSTAGRAM },
     { label: "Follow Facebook", done: wl.socialClaims.facebook, pts: ONETIME_POINTS.FOLLOW_FACEBOOK },
     { label: "Subscribe YouTube", done: wl.socialClaims.youtube, pts: ONETIME_POINTS.SUBSCRIBE_YOUTUBE },
@@ -632,6 +633,11 @@ const StoryProsDashboard = () => {
             </div>
           </div>
         </motion.div>
+      )}
+
+      {/* Complete-your-profile card: shown only after email verified, until profile saved */}
+      {wl.emailVerified && !wl.profileCompleted && (
+        <CompleteProfileCard onSubmit={wl.completeProfile} />
       )}
 
       {/* Verify-email nudge banner */}

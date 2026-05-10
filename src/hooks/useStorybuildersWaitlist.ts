@@ -45,6 +45,11 @@ export interface WaitlistState {
   speechProfessionalVerified: boolean;
   role: string | null;
   roleOther: string | null;
+  childAge: number | null;
+  hopes: string[];
+  hopesOther: string | null;
+  hearAbout: string | null;
+  profileCompleted: boolean;
   rewardsClaimed: Record<string, { claimed_at: string }>;
   loading: boolean;
   error: string | null;
@@ -87,6 +92,11 @@ export function useStorybuildersWaitlist() {
     speechProfessionalVerified: false,
     role: null,
     roleOther: null,
+    childAge: null,
+    hopes: [],
+    hopesOther: null,
+    hearAbout: null,
+    profileCompleted: false,
     rewardsClaimed: {},
     loading: false,
     error: null,
@@ -306,6 +316,11 @@ export function useStorybuildersWaitlist() {
           speechProfessionalVerified: !!ud.speech_professional_verified,
           role: (ud.role as string | null) ?? null,
           roleOther: (ud.role_other as string | null) ?? null,
+          childAge: (ud.child_age as number | null) ?? null,
+          hopes: (ud.hopes as string[] | null) ?? [],
+          hopesOther: (ud.hopes_other as string | null) ?? null,
+          hearAbout: (ud.hear_about as string | null) ?? null,
+          profileCompleted: !!ud.profile_completed_at,
           rewardsClaimed: (ud.rewards_claimed as Record<string, { claimed_at: string }>) || {},
           loading: false,
         };
@@ -520,6 +535,52 @@ export function useStorybuildersWaitlist() {
       return updateProfile({ role, roleOther });
     },
     [updateProfile]
+  );
+
+  // Submits the dashboard "Complete your profile" card.
+  // Awards the one-time +10 profile bonus on the server when this transitions
+  // the row's profile_completed_at from null → set.
+  const completeProfile = useCallback(
+    async (input: {
+      childAge: number;
+      hopes: string[];
+      hopesOther: string | null;
+      hearAbout: string;
+    }): Promise<{ success: boolean; error?: string }> => {
+      if (!state.referralCode) {
+        return { success: false, error: "Not on the waitlist yet." };
+      }
+      try {
+        const { data, error } = await supabase.functions.invoke("update-waitlist-profile", {
+          body: {
+            referral_code: state.referralCode,
+            child_age: input.childAge,
+            hopes: input.hopes,
+            hopes_other: input.hopesOther,
+            hear_about: input.hearAbout,
+            complete_profile: true,
+          },
+        });
+        if (error) {
+          const msg = error.message || "Could not save your profile.";
+          addNotification("error", msg);
+          return { success: false, error: msg };
+        }
+        const errMsg = (data as any)?.error;
+        if (errMsg) {
+          addNotification("error", errMsg);
+          return { success: false, error: errMsg };
+        }
+        await refreshStatsInternal(state.referralCode);
+        addNotification("success", "Profile complete! +10 points");
+        return { success: true };
+      } catch (err) {
+        const msg = err instanceof Error ? err.message : "Could not save your profile.";
+        addNotification("error", msg);
+        return { success: false, error: msg };
+      }
+    },
+    [state.referralCode, refreshStatsInternal]
   );
 
   const trackShare = useCallback(
@@ -881,6 +942,11 @@ export function useStorybuildersWaitlist() {
       speechProfessionalVerified: false,
       role: null,
       roleOther: null,
+      childAge: null,
+      hopes: [],
+      hopesOther: null,
+      hearAbout: null,
+      profileCompleted: false,
       rewardsClaimed: {},
       loading: false,
       error: null,
@@ -908,6 +974,7 @@ export function useStorybuildersWaitlist() {
     linkAuthAccount,
     updateProfile,
     updateRole,
+    completeProfile,
     signOut,
   };
 }
