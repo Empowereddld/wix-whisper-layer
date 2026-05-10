@@ -31,6 +31,11 @@ const SAFE_COLUMNS = [
   "click_count",
   "rewards_claimed",
   "deleted_at",
+  "child_age",
+  "hopes",
+  "hopes_other",
+  "hear_about",
+  "profile_completed_at",
 ].join(", ");
 
 Deno.serve(async (req) => {
