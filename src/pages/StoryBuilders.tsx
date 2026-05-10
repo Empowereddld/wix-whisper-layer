@@ -493,7 +493,7 @@ const StoryBuilders = () => {
       if (result.already_joined) {
         toast.success("You're already on the list! Welcome back.");
       } else {
-        toast.success("You're on the Launch Team!");
+        toast.success("You're in! Welcome, founding member.");
       }
     }
   };
