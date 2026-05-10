@@ -974,6 +974,7 @@ export function useStorybuildersWaitlist() {
     linkAuthAccount,
     updateProfile,
     updateRole,
+    completeProfile,
     signOut,
   };
 }
