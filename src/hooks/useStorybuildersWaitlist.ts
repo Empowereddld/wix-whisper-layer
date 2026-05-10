@@ -316,6 +316,11 @@ export function useStorybuildersWaitlist() {
           speechProfessionalVerified: !!ud.speech_professional_verified,
           role: (ud.role as string | null) ?? null,
           roleOther: (ud.role_other as string | null) ?? null,
+          childAge: (ud.child_age as number | null) ?? null,
+          hopes: (ud.hopes as string[] | null) ?? [],
+          hopesOther: (ud.hopes_other as string | null) ?? null,
+          hearAbout: (ud.hear_about as string | null) ?? null,
+          profileCompleted: !!ud.profile_completed_at,
           rewardsClaimed: (ud.rewards_claimed as Record<string, { claimed_at: string }>) || {},
           loading: false,
         };
