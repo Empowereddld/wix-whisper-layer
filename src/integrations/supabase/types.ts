@@ -588,6 +588,7 @@ export type Database = {
       }
       storybuilders_waitlist: {
         Row: {
+          child_age: number | null
           click_count: number
           clicks_today: number
           created_at: string
@@ -605,6 +606,9 @@ export type Database = {
           first_referral_bonus_awarded: boolean
           first_share_bonus_awarded: boolean
           founder_slot_number: number | null
+          hear_about: string | null
+          hopes: string[] | null
+          hopes_other: string | null
           id: string
           invite_count: number
           is_speech_professional: boolean
@@ -613,6 +617,7 @@ export type Database = {
           last_share_date: string | null
           name: string
           points: number
+          profile_completed_at: string | null
           referral_code: string
           referred_by_code: string | null
           rewards_claimed: Json
@@ -630,6 +635,7 @@ export type Database = {
           welcome_sent_at: string | null
         }
         Insert: {
+          child_age?: number | null
           click_count?: number
           clicks_today?: number
           created_at?: string
@@ -647,6 +653,9 @@ export type Database = {
           first_referral_bonus_awarded?: boolean
           first_share_bonus_awarded?: boolean
           founder_slot_number?: number | null
+          hear_about?: string | null
+          hopes?: string[] | null
+          hopes_other?: string | null
           id?: string
           invite_count?: number
           is_speech_professional?: boolean
@@ -655,6 +664,7 @@ export type Database = {
           last_share_date?: string | null
           name: string
           points?: number
+          profile_completed_at?: string | null
           referral_code: string
           referred_by_code?: string | null
           rewards_claimed?: Json
@@ -672,6 +682,7 @@ export type Database = {
           welcome_sent_at?: string | null
         }
         Update: {
+          child_age?: number | null
           click_count?: number
           clicks_today?: number
           created_at?: string
@@ -689,6 +700,9 @@ export type Database = {
           first_referral_bonus_awarded?: boolean
           first_share_bonus_awarded?: boolean
           founder_slot_number?: number | null
+          hear_about?: string | null
+          hopes?: string[] | null
+          hopes_other?: string | null
           id?: string
           invite_count?: number
           is_speech_professional?: boolean
@@ -697,6 +711,7 @@ export type Database = {
           last_share_date?: string | null
           name?: string
           points?: number
+          profile_completed_at?: string | null
           referral_code?: string
           referred_by_code?: string | null
           rewards_claimed?: Json
