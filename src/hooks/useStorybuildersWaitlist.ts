@@ -125,11 +125,20 @@ export function useStorybuildersWaitlist() {
           }));
 
           if (parsed.referralCode) {
-            await refreshStatsInternal(parsed.referralCode);
+            try {
+              await refreshStatsInternal(parsed.referralCode);
+            } finally {
+              setState((s) => ({ ...s, statsHydrated: true }));
+            }
+          } else {
+            setState((s) => ({ ...s, statsHydrated: true }));
           }
         } catch (err) {
           console.error("Failed to parse stored state:", err);
+          setState((s) => ({ ...s, statsHydrated: true }));
         }
+      } else {
+        setState((s) => ({ ...s, statsHydrated: true }));
       }
 
       await fetchTotalCount();
