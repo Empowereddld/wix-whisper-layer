@@ -261,7 +261,6 @@ function getEmailTemplate(
     // EMAIL 2 — How Points Work (1h after verification)
     // ============================================================
     case "email2_points_tiers": {
-      const verifyLink = data.verification_link || dashboard;
       const plainContainer = `
         max-width: 580px;
         margin: 0 auto;
@@ -275,8 +274,8 @@ function getEmailTemplate(
       const plainP = `margin: 0 0 14px;`;
       const plainLink = `color: ${brandColor}; text-decoration: underline;`;
       const plainFooter = `margin-top: 28px; font-size: 12px; color: #888;`;
-      const verifyButton = `display: inline-block; background: ${brandColor}; color: #ffffff !important; padding: 14px 28px; text-decoration: none; border-radius: 999px; font-weight: 700; font-size: 15px; line-height: 1.2; mso-padding-alt: 14px 28px;`;
-      const dashButton = `display: inline-block; background: ${brandColor}; color: #ffffff !important; padding: 14px 28px; text-decoration: none; border-radius: 999px; font-weight: 700; font-size: 15px; line-height: 1.2; mso-padding-alt: 14px 28px;`;
+      const profileButton = `display: inline-block; background: ${brandColor}; color: #ffffff !important; padding: 14px 28px; text-decoration: none; border-radius: 999px; font-weight: 700; font-size: 15px; line-height: 1.2; mso-padding-alt: 14px 28px;`;
+      const dashButton = profileButton;
 
       return {
         subject: `Here's how points and tiers work, ${name}.`,
@@ -286,16 +285,16 @@ function getEmailTemplate(
 
             <p style="${plainP}">A little while ago, you joined Story Pros as a founding member. Here's the breakdown we promised: how points work, what you unlock, and the fastest ways to move forward.</p>
 
-            <p style="${plainP}">You already have 10 points for signing up. If you haven't verified your email yet, that's another 15:</p>
+            <p style="${plainP}">You already have 25 points (10 for signing up, 15 for verifying your email). Your next quick win: complete your profile for another 10.</p>
 
-            <p style="${plainP}; text-align: center; margin: 24px 0;"><a href="${verifyLink}" style="${verifyButton}">Verify my email (+15 points)</a></p>
+            <p style="${plainP}; text-align: center; margin: 24px 0;"><a href="${dashboard}" style="${profileButton}">Complete my profile (+10 points)</a></p>
 
             <p style="${plainP}"><strong>How you earn points</strong></p>
 
             <p style="${plainP}">One-time actions:</p>
             <ul style="${plainP}; padding-left: 20px;">
               <li>Sign up: +10 (already yours)</li>
-              <li>Verify your email: +15</li>
+              <li>Verify your email: +15 (already yours)</li>
               <li>Complete your profile: +10</li>
               <li>Follow us on Instagram: +8</li>
               <li>Follow us on Facebook: +8</li>
@@ -324,6 +323,8 @@ function getEmailTemplate(
               <li><strong>Tier 5 (250 pts):</strong> Founder Pricing locked in for life.</li>
               <li><strong>Tier 6 (500 pts):</strong> A signed Dan & Daria book plus DLD-themed merch. Limited to the first 50 members to reach Tier 6. After those 50 slots are claimed, Tier 6 still unlocks 100 Story Coins to spend at launch.</li>
             </ul>
+
+            <p style="${plainP}">Every tier you reach, every person you refer, that's one more family finding out their child isn't alone.</p>
 
             <p style="${plainP}"><strong>Quickest ways to move forward right now</strong></p>
 
