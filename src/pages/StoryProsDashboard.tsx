@@ -1224,7 +1224,10 @@ const UnverifiedDashboardView = ({
   resending: boolean;
   onResend: () => void;
 }) => {
-  const firstName = (wl.name || "Friend").split(" ")[0];
+  const rawFirst = (wl.name || "").split(" ")[0].trim();
+  const hasName = rawFirst.length > 0;
+  const headline = hasName ? `You're almost there, ${rawFirst}!` : "You're almost there!";
+  const hasEmail = !!(wl.email && wl.email.trim().length > 0);
   return (
     <div className="min-h-screen bg-white">
       <SEOHead
