@@ -362,7 +362,7 @@ const StoryProsDashboard = () => {
   const earnRows = [
     { label: "Sign up", done: wl.joined, pts: ONETIME_POINTS.SIGNUP },
     { label: "Verify email", done: wl.emailVerified, pts: ONETIME_POINTS.VERIFY_EMAIL },
-    { label: "Complete profile", done: !!wl.name && !wl.name.includes("@"), pts: ONETIME_POINTS.COMPLETE_PROFILE },
+    { label: "Complete profile", done: wl.profileCompleted, pts: ONETIME_POINTS.COMPLETE_PROFILE },
     { label: "Follow Instagram", done: wl.socialClaims.instagram, pts: ONETIME_POINTS.FOLLOW_INSTAGRAM },
     { label: "Follow Facebook", done: wl.socialClaims.facebook, pts: ONETIME_POINTS.FOLLOW_FACEBOOK },
     { label: "Subscribe YouTube", done: wl.socialClaims.youtube, pts: ONETIME_POINTS.SUBSCRIBE_YOUTUBE },
