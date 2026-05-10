@@ -634,6 +634,11 @@ const StoryProsDashboard = () => {
         </motion.div>
       )}
 
+      {/* Complete-your-profile card: shown only after email verified, until profile saved */}
+      {wl.emailVerified && !wl.profileCompleted && (
+        <CompleteProfileCard onSubmit={wl.completeProfile} />
+      )}
+
       {/* Verify-email nudge banner */}
       {!wl.emailVerified && (
         <motion.div
