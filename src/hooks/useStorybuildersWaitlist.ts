@@ -537,6 +537,52 @@ export function useStorybuildersWaitlist() {
     [updateProfile]
   );
 
+  // Submits the dashboard "Complete your profile" card.
+  // Awards the one-time +10 profile bonus on the server when this transitions
+  // the row's profile_completed_at from null → set.
+  const completeProfile = useCallback(
+    async (input: {
+      childAge: number;
+      hopes: string[];
+      hopesOther: string | null;
+      hearAbout: string;
+    }): Promise<{ success: boolean; error?: string }> => {
+      if (!state.referralCode) {
+        return { success: false, error: "Not on the waitlist yet." };
+      }
+      try {
+        const { data, error } = await supabase.functions.invoke("update-waitlist-profile", {
+          body: {
+            referral_code: state.referralCode,
+            child_age: input.childAge,
+            hopes: input.hopes,
+            hopes_other: input.hopesOther,
+            hear_about: input.hearAbout,
+            complete_profile: true,
+          },
+        });
+        if (error) {
+          const msg = error.message || "Could not save your profile.";
+          addNotification("error", msg);
+          return { success: false, error: msg };
+        }
+        const errMsg = (data as any)?.error;
+        if (errMsg) {
+          addNotification("error", errMsg);
+          return { success: false, error: errMsg };
+        }
+        await refreshStatsInternal(state.referralCode);
+        addNotification("success", "Profile complete! +10 points");
+        return { success: true };
+      } catch (err) {
+        const msg = err instanceof Error ? err.message : "Could not save your profile.";
+        addNotification("error", msg);
+        return { success: false, error: msg };
+      }
+    },
+    [state.referralCode, refreshStatsInternal]
+  );
+
   const trackShare = useCallback(
     async (platform: string): Promise<boolean> => {
       if (!state.referralCode) {
