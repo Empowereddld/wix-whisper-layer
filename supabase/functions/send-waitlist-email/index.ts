@@ -258,7 +258,7 @@ function getEmailTemplate(
     }
 
     // ============================================================
-    // EMAIL 2 — How Points Work (24h after signup)
+    // EMAIL 2 — How Points Work (1h after verification)
     // ============================================================
     case "email2_points_tiers": {
       const verifyLink = data.verification_link || dashboard;
@@ -275,22 +275,20 @@ function getEmailTemplate(
       const plainP = `margin: 0 0 14px;`;
       const plainLink = `color: ${brandColor}; text-decoration: underline;`;
       const plainFooter = `margin-top: 28px; font-size: 12px; color: #888;`;
+      const verifyButton = `display: inline-block; background: ${brandColor}; color: #ffffff !important; padding: 14px 28px; text-decoration: none; border-radius: 999px; font-weight: 700; font-size: 15px; line-height: 1.2; mso-padding-alt: 14px 28px;`;
+      const dashButton = `display: inline-block; background: ${brandColor}; color: #ffffff !important; padding: 14px 28px; text-decoration: none; border-radius: 999px; font-weight: 700; font-size: 15px; line-height: 1.2; mso-padding-alt: 14px 28px;`;
 
       return {
-        subject: `Welcome back, ${name}. Here's how Story Pros points work.`,
+        subject: `Here's how points and tiers work, ${name}.`,
         html: `
           <div style="${plainContainer}">
             <p style="${plainP}">Hi ${name},</p>
 
-            <p style="${plainP}">Yesterday you joined the Story Pros community. Welcome back.</p>
+            <p style="${plainP}">A little while ago, you joined Story Pros as a founding member. Here's the breakdown we promised: how points work, what you unlock, and the fastest ways to move forward.</p>
 
-            <p style="${plainP}">Before we get into the points breakdown, a quick reminder of what your Story Pros membership includes: full app access for your child plus Monthly Live Community Circles on Zoom, where kids get to see they're not the only one, facilitated by us. The app builds the skills. The community builds the belonging. Both are included at $9.99/month.</p>
+            <p style="${plainP}">You already have 10 points for signing up. If you haven't verified your email yet, that's another 15:</p>
 
-            <p style="${plainP}">Now, here's how the points and tiers work, and the easiest moves you can make right now.</p>
-
-            <p style="${plainP}">You already have <strong>10 points</strong> for signing up. Verifying your email adds another <strong>15</strong> if you haven't yet:</p>
-
-            <p style="${plainP}"><a href="${verifyLink}" style="${plainLink}">Verify my email (+15 points)</a></p>
+            <p style="${plainP}; text-align: center; margin: 24px 0;"><a href="${verifyLink}" style="${verifyButton}">Verify my email (+15 points)</a></p>
 
             <p style="${plainP}"><strong>How you earn points</strong></p>
 
@@ -314,20 +312,20 @@ function getEmailTemplate(
               <li>Someone taps your link: +3 per tap (max 15/day)</li>
             </ul>
 
-            <p style="${plainP}">The one-timers are your fastest early wins. The repeatables are how you climb to the top tiers.</p>
+            <p style="${plainP}">The one-timers are your fastest early wins. The repeatables are how you climb.</p>
 
             <p style="${plainP}"><strong>What you unlock</strong></p>
 
             <ul style="${plainP}; padding-left: 20px;">
-              <li><strong>Tier 1 (0 pts):</strong> Development Updates plus your name on the Early Supporters Wall as a founding member</li>
-              <li><strong>Tier 2 (35 pts):</strong> Our paid digital guide "Executive Function Skills for Your Child", free as a thank you</li>
-              <li><strong>Tier 3 (75 pts):</strong> Bonus Story Coins to spend inside the app at launch</li>
-              <li><strong>Tier 4 (130 pts):</strong> VIP Beta Access. Test Story Pros before launch and help shape the final product.</li>
-              <li><strong>Tier 5 (250 pts):</strong> Founder Pricing locked in for life: $7.99/month instead of $9.99. Heads up, points double from here on to help you push toward Tier 6.</li>
+              <li><strong>Tier 1 (0 pts):</strong> Development updates and your name on the Early Supporters Wall as a founding member.</li>
+              <li><strong>Tier 2 (35 pts):</strong> Our paid digital guide "Executive Function Skills for Your Child," free as a thank you.</li>
+              <li><strong>Tier 3 (75 pts):</strong> Bonus Story Coins to spend inside the app at launch.</li>
+              <li><strong>Tier 4 (130 pts):</strong> VIP Beta Access. Test the Story Pros App before launch and help shape the final product.</li>
+              <li><strong>Tier 5 (250 pts):</strong> Founder Pricing locked in for life.</li>
               <li><strong>Tier 6 (500 pts):</strong> A signed Dan & Daria book plus DLD-themed merch. Limited to the first 50 members to reach Tier 6. After those 50 slots are claimed, Tier 6 still unlocks 100 Story Coins to spend at launch.</li>
             </ul>
 
-            <p style="${plainP}"><strong>Quickest ways to move forward</strong></p>
+            <p style="${plainP}"><strong>Quickest ways to move forward right now</strong></p>
 
             <ul style="${plainP}; padding-left: 20px;">
               <li>Complete your profile (+10 pts, takes 30 seconds)</li>
@@ -337,17 +335,15 @@ function getEmailTemplate(
 
             <p style="${plainP}">Your referral link:<br/><a href="${referralLink}" style="${plainLink}; word-break: break-all;">${referralLink}</a></p>
 
-            <p style="${plainP}">Or jump straight to your dashboard: <a href="${dashboard}" style="${plainLink}">${dashboard}</a></p>
+            <p style="${plainP}; text-align: center; margin: 20px 0;"><a href="${dashboard}" style="${dashButton}">Go to my dashboard</a></p>
 
-            <p style="${plainP}"><strong>Two scripts, if you'd like something to paste</strong></p>
+            <p style="${plainP}"><strong>Know a teacher or therapist?</strong></p>
 
-            <p style="${plainP}">For a friend or family member:</p>
-            <p style="${plainP}">"Hey! Found a new app and community I think you'd want to know about. Story Pros helps kids retell stories, put their thoughts in order, and find the right words, plus there's a monthly live group for kids on Zoom. I just joined: ${referralLink}"</p>
+            <p style="${plainP}">This one's worth sharing with them:</p>
 
-            <p style="${plainP}">For a teacher or therapist:</p>
             <p style="${plainP}">"I came across something called Story Pros. It's an app and monthly community built by speech-language pathologists and teachers that helps kids with storytelling and narrative language. Thought you'd want a look: ${referralLink}"</p>
 
-            <p style="${plainP}">Talk soon,<br/>${SIGN_OFF}</p>
+            <p style="${plainP}">${SIGN_OFF}</p>
 
             <p style="${plainP}; margin-top: 28px;"><em>P.S. If this email landed in your Promotions or Updates tab, drag it over to your Primary inbox so you don't miss the next one. It really helps.</em></p>
 
