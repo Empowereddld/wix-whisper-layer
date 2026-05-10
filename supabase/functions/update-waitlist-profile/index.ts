@@ -12,12 +12,28 @@ Deno.serve(async (req) => {
 
   try {
     const body = await req.json().catch(() => ({}));
-    const { referral_code, name, is_speech_professional, role, role_other } = body as {
+    const {
+      referral_code,
+      name,
+      is_speech_professional,
+      role,
+      role_other,
+      child_age,
+      hopes,
+      hopes_other,
+      hear_about,
+      complete_profile,
+    } = body as {
       referral_code?: string;
       name?: string;
       is_speech_professional?: boolean;
       role?: string;
       role_other?: string | null;
+      child_age?: number | null;
+      hopes?: string[];
+      hopes_other?: string | null;
+      hear_about?: string | null;
+      complete_profile?: boolean;
     };
 
     if (!referral_code || typeof referral_code !== "string") {
