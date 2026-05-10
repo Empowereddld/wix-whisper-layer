@@ -92,8 +92,6 @@ export function useStorybuildersWaitlist() {
     speechProfessionalVerified: false,
     role: null,
     roleOther: null,
-    role: null,
-    roleOther: null,
     childAge: null,
     hopes: [],
     hopesOther: null,
