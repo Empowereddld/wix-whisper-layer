@@ -1224,7 +1224,10 @@ const UnverifiedDashboardView = ({
   resending: boolean;
   onResend: () => void;
 }) => {
-  const firstName = (wl.name || "Friend").split(" ")[0];
+  const rawFirst = (wl.name || "").split(" ")[0].trim();
+  const hasName = rawFirst.length > 0;
+  const headline = hasName ? `You're almost there, ${rawFirst}!` : "You're almost there!";
+  const hasEmail = !!(wl.email && wl.email.trim().length > 0);
   return (
     <div className="min-h-screen bg-white">
       <SEOHead
@@ -1262,12 +1265,21 @@ const UnverifiedDashboardView = ({
             <AlertCircle className="h-6 w-6 text-amber-600 shrink-0 mt-0.5" />
             <div className="flex-1 min-w-0">
               <h1 className="text-lg sm:text-xl font-bold text-amber-900 leading-snug">
-                You're almost there, {firstName}!
+                {headline}
               </h1>
               <p className="text-sm sm:text-[15px] text-amber-900/90 leading-[1.65] mt-2">
-                We sent a quick verification email to{" "}
-                <strong className="break-all">{wl.email}</strong>. Once you verify, your
-                referral link and all your rewards unlock.
+                {hasEmail ? (
+                  <>
+                    We sent a quick verification email to{" "}
+                    <strong className="break-all">{wl.email}</strong>. Once you verify, your
+                    referral link and all your rewards unlock.
+                  </>
+                ) : (
+                  <>
+                    We sent a quick verification email to the address you signed up with.
+                    Once you verify, your referral link and all your rewards unlock.
+                  </>
+                )}
               </p>
               <p className="text-amber-900/80 text-[13px] leading-[1.6] mt-3">
                 Check your inbox (and your <em>Promotions</em> or <em>Spam</em> folder, just in case).
