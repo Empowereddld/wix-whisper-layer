@@ -53,7 +53,7 @@ export const COIN_PACKS = [
       "Personalized Founding Supporter Certificate",
       "48-hour 2x referral power-up",
       "Story theme/character voting access",
-      "Legend leaderboard flair",
+      "Leaderboard flair",
     ],
   },
 ] as const;

@@ -332,7 +332,7 @@ const CommunityMilestone: React.FC<CommunityMilestoneProps> = ({
           </h4>
           <p className="text-white/70 text-sm">
             Thanks to our amazing community, Story Pros has achieved
-            incredible growth. You're all legends!
+            incredible growth. Thank you all!
           </p>
         </motion.div>
       )}

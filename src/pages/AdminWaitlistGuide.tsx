@@ -568,7 +568,7 @@ Reason: Bonus for social media share`} />
                     <span className="font-semibold text-[#3b1f59]">Tier 6 (Founder)</span>
                     <span className="text-gray-500 font-bold">500+ points</span>
                   </div>
-                  <p className="text-gray-500 text-xs">Signed Dan &amp; Daria book with handwritten note — first 20 only (Legends after that get 100 bonus Story Coins)</p>
+                  <p className="text-gray-500 text-xs">Signed Dan &amp; Daria book with handwritten note — first 20 only (after that, additional Tier 6 members get 100 bonus Story Coins instead)</p>
                 </div>
               </div>
             </CollapsibleSection>
@@ -913,7 +913,7 @@ Events to enable:
                 <li>Submissions appear in the Founders tab of the Story Pros admin dashboard</li>
               </ul>
               <p className="text-sm text-gray-500 mb-4">
-                <strong>IMPORTANT:</strong> Once 20 users reach Tier 6, additional members who hit 500 points become Legends instead and receive 100 bonus Story Coins (no book).
+                <strong>IMPORTANT:</strong> Once 20 users reach Tier 6, additional members who hit 500 points receive 100 bonus Story Coins instead of the book.
               </p>
               <p className="text-sm text-gray-500">
                 Fulfill Founders in slot order (#1 to #20) once all 20 slots are claimed.

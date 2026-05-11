@@ -903,7 +903,7 @@ const StoryBuilders = () => {
               {
                 task: "Tier 6 — 500 points",
                 impact: "You're a true Story Pros founder. Limited to the first 20 members to reach Tier 6.",
-                reward: { icon: <Crown size={20} />, title: "Signed Dan & Daria book", desc: "A personally signed copy of the Dan & Daria book with a handwritten note, plus your Tier 6 Founder badge", subdesc: "After the first 20 Founder slots are claimed, additional Tier 6 members earn 100 bonus Story Coins as Legends" },
+                reward: { icon: <Crown size={20} />, title: "Signed Dan & Daria book", desc: "A personally signed copy of the Dan & Daria book with a handwritten note, plus your Tier 6 Founder badge", subdesc: "After the first 20 Founder slots are claimed, additional Tier 6 members earn 100 bonus Story Coins instead" },
                 invites: 25,
               },
             ];
