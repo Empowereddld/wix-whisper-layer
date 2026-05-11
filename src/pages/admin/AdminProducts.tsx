@@ -75,11 +75,11 @@ const AdminProducts = () => {
     onSuccess: () => qc.invalidateQueries({ queryKey: ["admin-products"] }),
   });
 
-  const closeForm = () => { setFormOpen(false); setEditing(null); setResourceId(""); setPrice(""); setCurrency("CAD"); };
-  const openEdit = (p: ProductRow) => { setEditing(p); setPrice((p.price / 100).toFixed(2)); setCurrency(p.currency); setFormOpen(true); };
+  const closeForm = () => { setFormOpen(false); setEditing(null); setResourceId(""); setPrice(""); };
+  const openEdit = (p: ProductRow) => { setEditing(p); setPrice((p.price / 100).toFixed(2)); setFormOpen(true); };
   const openNew = () => { setEditing(null); setFormOpen(true); };
 
-  const formatPrice = (cents: number, cur: string) => `${cur === "CAD" ? "CA$" : "$"}${(cents / 100).toFixed(2)}`;
+  const formatPrice = (cents: number) => `$${(cents / 100).toFixed(2)}`;
 
   return (
     <AdminLayout>
