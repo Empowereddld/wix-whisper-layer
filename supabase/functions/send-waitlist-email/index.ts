@@ -788,9 +788,10 @@ function getEmailTemplate(
     }
 
     // ============================================================
-    // EMAIL 7B — Tier 6 Reached (Legend, after 20 Founder slots claimed)
+    // EMAIL 7B — Tier 6 Reached (after 20 Founder slots claimed)
     // ============================================================
-    case "email7b_tier6_legend": {
+    case "email7b_tier6_legend":
+    case "email7b_tier6": {
       const referralCount = data.referral_count ?? 0;
       return {
         subject: `You went all the way, ${name}.`,
@@ -804,41 +805,31 @@ function getEmailTemplate(
 
                 <p style="${baseStyles}"><strong>500 points. Tier 6. The final one.</strong></p>
 
+                <p style="${baseStyles}"><strong>You made it to the top.</strong></p>
+
                 <p style="${baseStyles}">
-                  The 20 Founder slots are claimed, but reaching 500 points is its own achievement, and
-                  it comes with real rewards. You earned every one of these.
+                  Not everyone gets here. You didn't just sign up and wait. You showed up, you shared,
+                  you brought families in. That matters more than you know.
                 </p>
 
-                <p style="${baseStyles}">You're officially a <strong>Story Pros Legend</strong>.</p>
+                <p style="${baseStyles}">
+                  You brought <strong>${referralCount} families</strong> into this. That's ${referralCount}
+                  children who will have access to a tool that helps them put their thoughts into words
+                  and share their world, and a community where they get to see they're not the only one.
+                </p>
 
                 <hr style="${dividerStyles}" />
 
-                <p style="${baseStyles}"><strong>Here's everything that's yours:</strong></p>
+                <p style="${baseStyles}"><strong>Here's what you've unlocked at Tier 6:</strong></p>
 
                 <p style="${baseStyles}">
-                  <strong>150 Story Coins total.</strong> 50 from Tier 3 plus 100 as a Legend bonus, all
-                  ready to spend on premium content the moment the app launches.
+                  <strong>100 bonus Story Coins.</strong> Combined with the 50 you earned at Tier 3,
+                  that's 150 Story Coins ready to spend the moment the app launches.
                 </p>
 
                 <p style="${baseStyles}">
-                  <strong>Founder Pricing, locked for life.</strong> $7.99/month, forever. It never goes
-                  up, no matter how much we add to the app, the Community Circles, or any other features
-                  down the road.
-                </p>
-
-                <p style="${baseStyles}">
-                  <strong>Early testing access.</strong> You're in the app before the general public. No
-                  waitlist. No delay.
-                </p>
-
-                <p style="${baseStyles}">
-                  <strong>Legend badge, permanent.</strong> A distinct badge on your profile and the Early
-                  Supporters Wall. Anyone who visits will see you went all the way.
-                </p>
-
-                <p style="${baseStyles}">
-                  <strong>First in line for future merch drops.</strong> Whenever we release new Story
-                  Pros gear, Legends get access before anyone else.
+                  <strong>Tier 6 badge, permanent.</strong> A distinct badge on your profile and the
+                  Early Supporters Wall. Anyone who visits will see you went all the way.
                 </p>
 
                 <p style="${baseStyles}">
@@ -854,22 +845,20 @@ function getEmailTemplate(
                   ${tierLine("Tier 3", "50 Story Coins")}
                   ${tierLine("Tier 4", "Early testing access + Suggestion Box")}
                   ${tierLine("Tier 5", "Founder Pricing + double points")}
-                  ${tierLine("Tier 6", "Legend status + 100 bonus Story Coins + Legend badge", true)}
+                  ${tierLine("Tier 6", "100 bonus Story Coins + Tier 6 badge (you are here)", true)}
                 </ul>
 
+                <p style="${baseStyles}"><strong>What happens now?</strong></p>
+
                 <p style="${baseStyles}">
-                  You brought <strong>${referralCount} families</strong> into this. That's ${referralCount}
-                  children who will have access to a tool that helps them share more of their world, and
-                  a community where they get to see they're not the only one.
+                  You've reached the top of the waitlist. When Story Pros officially launches, you'll
+                  be the first to know. We'll send you everything you need to get your child started,
+                  and your Founder Pricing and Monthly Live Community Circles kick in from day one.
                 </p>
 
-                <div style="text-align: center;">
-                  <a href="${dashboard}" style="${buttonStyles}">See your dashboard</a>
-                </div>
-
                 <p style="${baseStyles}">
-                  Your link still works. And every share still means another child who gets the support
-                  they need to not just communicate... but connect.
+                  Until then, your link still works. And every person you bring in is still another
+                  child who gets closer to finding their voice.
                 </p>
 
                 <div style="text-align: center;">
