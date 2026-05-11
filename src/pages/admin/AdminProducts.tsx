@@ -29,7 +29,7 @@ const AdminProducts = () => {
   const [editing, setEditing] = useState<ProductRow | null>(null);
   const [resourceId, setResourceId] = useState("");
   const [price, setPrice] = useState("");
-  const [currency, setCurrency] = useState("CAD");
+  const currency = "USD";
 
   const { data: products, isLoading } = useQuery({
     queryKey: ["admin-products"],
@@ -75,11 +75,11 @@ const AdminProducts = () => {
     onSuccess: () => qc.invalidateQueries({ queryKey: ["admin-products"] }),
   });
 
-  const closeForm = () => { setFormOpen(false); setEditing(null); setResourceId(""); setPrice(""); setCurrency("CAD"); };
-  const openEdit = (p: ProductRow) => { setEditing(p); setPrice((p.price / 100).toFixed(2)); setCurrency(p.currency); setFormOpen(true); };
+  const closeForm = () => { setFormOpen(false); setEditing(null); setResourceId(""); setPrice(""); };
+  const openEdit = (p: ProductRow) => { setEditing(p); setPrice((p.price / 100).toFixed(2)); setFormOpen(true); };
   const openNew = () => { setEditing(null); setFormOpen(true); };
 
-  const formatPrice = (cents: number, cur: string) => `${cur === "CAD" ? "CA$" : "$"}${(cents / 100).toFixed(2)}`;
+  const formatPrice = (cents: number) => `$${(cents / 100).toFixed(2)}`;
 
   return (
     <AdminLayout>
@@ -103,7 +103,6 @@ const AdminProducts = () => {
               <TableRow>
                 <TableHead>Resource</TableHead>
                 <TableHead>Price</TableHead>
-                <TableHead>Currency</TableHead>
                 <TableHead>Active</TableHead>
                 <TableHead>Actions</TableHead>
               </TableRow>
@@ -112,8 +111,7 @@ const AdminProducts = () => {
               {products.map((p) => (
                 <TableRow key={p.id}>
                   <TableCell className="font-medium">{p.resource_title}</TableCell>
-                  <TableCell>{formatPrice(p.price, p.currency)}</TableCell>
-                  <TableCell>{p.currency}</TableCell>
+                  <TableCell>{formatPrice(p.price)}</TableCell>
                   <TableCell>
                     <Switch checked={p.is_active} onCheckedChange={(v) => toggleActive.mutate({ id: p.id, active: v })} />
                   </TableCell>
@@ -147,16 +145,6 @@ const AdminProducts = () => {
             <div>
               <label className="text-sm font-medium mb-1 block">Price ($)</label>
               <Input type="number" step="0.01" min="0" value={price} onChange={(e) => setPrice(e.target.value)} placeholder="9.99" />
-            </div>
-            <div>
-              <label className="text-sm font-medium mb-1 block">Currency</label>
-              <Select value={currency} onValueChange={setCurrency}>
-                <SelectTrigger><SelectValue /></SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="CAD">CAD</SelectItem>
-                  <SelectItem value="USD">USD</SelectItem>
-                </SelectContent>
-              </Select>
             </div>
             <Button className="w-full" onClick={() => saveMutation.mutate()} disabled={saveMutation.isPending || (!editing && !resourceId) || !price}>
               {saveMutation.isPending ? "Saving…" : editing ? "Update" : "Create Product"}
