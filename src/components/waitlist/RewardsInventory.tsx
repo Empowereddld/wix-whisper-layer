@@ -324,10 +324,10 @@ export default function RewardsInventory({
                           </span>
                         </div>
                         <p className={`text-sm font-bold ${!isLocked ? "text-[#3b1f59]" : "text-gray-500"}`}>
-                          {reward.name}
+                          {isLocked && idx >= SURPRISE_TIER_INDEX ? surpriseName(idx) : reward.name}
                         </p>
                         <p className={`text-xs mt-0.5 ${!isLocked ? "text-[#121212]" : "text-gray-400"}`}>
-                          {reward.description}
+                          {isLocked && idx >= SURPRISE_TIER_INDEX ? surpriseDesc(idx) : reward.description}
                         </p>
 
                         {/* Action */}
