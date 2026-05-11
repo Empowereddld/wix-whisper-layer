@@ -716,7 +716,7 @@ function getEmailTemplate(
                 <p style="${baseStyles}">
                   Every person you brought in is a family whose child will have access to something that
                   helps them put their thoughts into words and share their world. That's what your 500
-                  points actually represent. Not numbers. Real kids. And you made that happen.
+                  points represent. Not numbers. Real kids. And you made that happen.
                 </p>
 
                 <p style="${baseStyles}"><strong>Here's what you've unlocked:</strong></p>
