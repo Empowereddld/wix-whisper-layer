@@ -867,7 +867,7 @@ function getEmailTemplate(
 
                 <p style="${baseStyles}">Thank you for going all the way.</p>
 
-                <p style="${baseStyles}">${SIGN_OFF}</p>
+                <p style="${baseStyles}">Warmly, Camesha, Jinean and the Story Pros Team</p>
               </div>
 
               ${footerBlock}
