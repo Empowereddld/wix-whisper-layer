@@ -891,7 +891,7 @@ const StoryBuilders = () => {
               {
                 task: "Tier 4 — 130 points",
                 impact: "You're making a real difference for families navigating DLD, ADHD, and Dyslexia. Your referrals bring more children into a tool designed specifically for how they think and communicate.",
-                reward: { icon: <Crown size={20} />, title: "VIP Beta Access + Suggestion Board", desc: "Be one of the first families inside Story Pros before launch. Test the app, shape the final product, and unlock the Suggestion Board to weigh in on what we build next, plus your Tier 4 badge" },
+                reward: { icon: <Crown size={20} />, title: "VIP Beta Access + Suggestion Box", desc: "Be one of the first families inside Story Pros before launch. Test the app, shape the final product, and unlock the Suggestion Box to weigh in on what we build next, plus your Tier 4 badge" },
                 invites: 5,
               },
               {
