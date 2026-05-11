@@ -29,7 +29,7 @@ const AdminProducts = () => {
   const [editing, setEditing] = useState<ProductRow | null>(null);
   const [resourceId, setResourceId] = useState("");
   const [price, setPrice] = useState("");
-  const [currency, setCurrency] = useState("CAD");
+  const currency = "USD";
 
   const { data: products, isLoading } = useQuery({
     queryKey: ["admin-products"],
