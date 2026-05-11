@@ -902,13 +902,15 @@ const StoryProsDashboard = () => {
           </Card>
         </motion.div>
 
-        {/* Suggestion Box (Tier 4+) */}
-        <SuggestionBox
-          currentTier={currentTier}
-          referralCode={wl.referralCode}
-          submitSuggestion={wl.submitSuggestion}
-          voteSuggestion={wl.voteSuggestion}
-        />
+        {/* Suggestion Box (Tier 4+ only — locked preview is merged into "Coming up" below) */}
+        {currentTier >= 3 && (
+          <SuggestionBox
+            currentTier={currentTier}
+            referralCode={wl.referralCode}
+            submitSuggestion={wl.submitSuggestion}
+            voteSuggestion={wl.voteSuggestion}
+          />
+        )}
 
         {/* Coming up */}
         {nextThreshold && TIER_REWARDS[currentTier + 1] && (
@@ -920,21 +922,38 @@ const StoryProsDashboard = () => {
               <p className="text-sm text-gray-600 mb-4">
                 You're {nextThreshold - wl.points} points away from your next reward.
               </p>
-              <div className="bg-white rounded-lg p-4 border border-[#dedede]">
-                {currentTier + 1 >= 4 ? (
-                  <>
-                    <p className="font-semibold text-[#3b1f59]">{TIER_NAMES[currentTier + 1]} Mystery Reward</p>
+              {currentTier + 1 === 3 ? (
+                <div className="space-y-3">
+                  <div className="bg-white rounded-lg p-4 border border-[#dedede]">
+                    <p className="font-semibold text-[#3b1f59]">VIP Beta Access</p>
                     <p className="text-sm text-gray-500 mt-1">
-                      Reach {TIER_NAMES[currentTier + 1]} ({nextThreshold} pts) to reveal this reward.
+                      Test Story Pros before launch and help shape the final product.
                     </p>
-                  </>
-                ) : (
-                  <>
-                    <p className="font-semibold text-[#3b1f59]">{TIER_REWARDS[currentTier + 1]?.name}</p>
-                    <p className="text-sm text-gray-500 mt-1">{TIER_REWARDS[currentTier + 1]?.description}</p>
-                  </>
-                )}
-              </div>
+                  </div>
+                  <div className="bg-white rounded-lg p-4 border border-[#dedede]">
+                    <p className="font-semibold text-[#3b1f59]">Suggestion Box</p>
+                    <p className="text-sm text-gray-500 mt-1">
+                      Submit ideas and vote on what we build next, from story themes and characters to app features.
+                    </p>
+                  </div>
+                </div>
+              ) : (
+                <div className="bg-white rounded-lg p-4 border border-[#dedede]">
+                  {currentTier + 1 >= 4 ? (
+                    <>
+                      <p className="font-semibold text-[#3b1f59]">{TIER_NAMES[currentTier + 1]} Mystery Reward</p>
+                      <p className="text-sm text-gray-500 mt-1">
+                        Reach {TIER_NAMES[currentTier + 1]} ({nextThreshold} pts) to reveal this reward.
+                      </p>
+                    </>
+                  ) : (
+                    <>
+                      <p className="font-semibold text-[#3b1f59]">{TIER_REWARDS[currentTier + 1]?.name}</p>
+                      <p className="text-sm text-gray-500 mt-1">{TIER_REWARDS[currentTier + 1]?.description}</p>
+                    </>
+                  )}
+                </div>
+              )}
             </Card>
           </motion.div>
         )}
