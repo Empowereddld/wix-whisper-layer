@@ -8,6 +8,14 @@ import {
   Lock,
 } from "lucide-react";
 import CoinDropAnimation from "./CoinDropAnimation";
+import { TIER_THRESHOLDS } from "@/lib/waitlist-constants";
+
+// Tier 5 (idx 4) and Tier 6 (idx 5) keep their reward details hidden until
+// the user actually reaches that tier — preserves the surprise/reveal moment.
+const SURPRISE_TIER_INDEX = 4;
+const surpriseName = (idx: number) => `Tier ${idx + 1} Mystery Reward`;
+const surpriseDesc = (idx: number) =>
+  `Reach Tier ${idx + 1} (${TIER_THRESHOLDS[idx]} pts) to reveal this reward.`;
 
 export interface RewardsInventoryProps {
   currentTier: number;
