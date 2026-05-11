@@ -336,7 +336,7 @@ function getEmailTemplate(
               <li><strong>Tier 3 (75 pts):</strong> Bonus Story Coins to spend inside the app at launch.</li>
               <li><strong>Tier 4 (130 pts):</strong> VIP Beta Access. Test the Story Pros App before launch and help shape the final product.</li>
               <li><strong>Tier 5 (250 pts):</strong> Founder Pricing locked in for life.</li>
-              <li><strong>Tier 6 (500 pts):</strong> A signed Dan & Daria book plus DLD-themed merch. Limited to the first 50 members to reach Tier 6. After those 50 slots are claimed, Tier 6 still unlocks 100 Story Coins to spend at launch.</li>
+              <li><strong>Tier 6 (500 pts):</strong> A signed Dan & Daria book with a handwritten note. Limited to the first 20 members to reach Tier 6. After those 20 slots are claimed, Tier 6 still unlocks 100 Story Coins to spend at launch.</li>
             </ul>
 
             <p style="${plainP}">Every tier you reach, every person you refer, that's one more family finding out their child isn't alone.</p>
@@ -653,8 +653,8 @@ function getEmailTemplate(
                 <p style="${baseStyles}"><strong>One tier left: Tier 6 (500 pts)</strong></p>
 
                 <p style="${baseStyles}">
-                  A signed <strong>Dan & Daria book</strong> plus <strong>DLD-themed merch</strong>,
-                  limited to the first 50 members to reach Tier 6. After those 50 slots are claimed,
+                  A signed <strong>Dan & Daria book</strong> with a handwritten note,
+                  limited to the first 20 members to reach Tier 6. After those 20 slots are claimed,
                   Tier 6 still unlocks <strong>100 Story Coins</strong> to spend at launch.
                 </p>
 
@@ -694,7 +694,7 @@ function getEmailTemplate(
     }
 
     // ============================================================
-    // EMAIL 7 — Tier 6 Reached (Founder, first 50)
+    // EMAIL 7 — Tier 6 Reached (Founder, first 20)
     // ============================================================
     case "email7_tier6_founder": {
       const slot = data.founder_slot_number ?? 1;
@@ -704,14 +704,14 @@ function getEmailTemplate(
         html: `
           <div style="${containerStyles}">
             <div style="${cardStyles}">
-              ${tierHero("Tier 6 Unlocked", "Signed book and Founder merch headed your way.")}
+              ${tierHero("Tier 6 Unlocked", "A signed book is headed your way.")}
 
               <div style="${bodyPad}">
                 <p style="${baseStyles}">Hi ${name},</p>
 
                 <p style="${baseStyles}"><strong>500 points. Tier 6. The final one.</strong></p>
 
-                <p style="${baseStyles}">You're <strong>Founder #${slot} of 50</strong>.</p>
+                <p style="${baseStyles}">You're <strong>Founder #${slot} of 20</strong>.</p>
 
                 <p style="${baseStyles}">
                   Every person you brought in is a family whose child will have access to something that
@@ -728,13 +728,8 @@ function getEmailTemplate(
                 </p>
 
                 <p style="${baseStyles}">
-                  <strong>DLD-themed Founder merch.</strong> A limited bundle made for the people who
-                  helped us get this off the ground. You won't find it anywhere else.
-                </p>
-
-                <p style="${baseStyles}">
                   <strong>Founder status, locked for life.</strong> Your $7.99/month pricing stays forever.
-                  Your name stays on the Early Supporters Wall. And you'll always be one of the first 50
+                  Your name stays on the Early Supporters Wall. And you'll always be one of the first 20
                   people who made Story Pros real.
                 </p>
 
@@ -747,7 +742,7 @@ function getEmailTemplate(
                   ${tierLine("Tier 3", "50 Bonus Story Coins")}
                   ${tierLine("Tier 4", "Early testing access + Suggestion Board")}
                   ${tierLine("Tier 5", "Founder Pricing + double points")}
-                  ${tierLine("Tier 6", "Signed Dan & Daria book + DLD-themed Founder merch", true)}
+                  ${tierLine("Tier 6", "Signed Dan & Daria book", true)}
                 </ul>
 
                 <hr style="${dividerStyles}" />
@@ -757,8 +752,8 @@ function getEmailTemplate(
                 </div>
 
                 <p style="${baseStyles}">
-                  Tell us where to ship your signed book and merch, and how you'd like it inscribed. Takes
-                  about 60 seconds. Once all 50 Founder slots are claimed, we ship everything together.
+                  Tell us where to ship your signed book and how you'd like it inscribed. Takes
+                  about 60 seconds. Once all 20 Founder slots are claimed, we ship everything together.
                 </p>
 
                 <p style="${baseStyles}">
@@ -783,7 +778,7 @@ function getEmailTemplate(
     }
 
     // ============================================================
-    // EMAIL 7B — Tier 6 Reached (Legend, after 50 Founder slots claimed)
+    // EMAIL 7B — Tier 6 Reached (Legend, after 20 Founder slots claimed)
     // ============================================================
     case "email7b_tier6_legend": {
       const referralCount = data.referral_count ?? 0;
@@ -800,7 +795,7 @@ function getEmailTemplate(
                 <p style="${baseStyles}"><strong>500 points. Tier 6. The final one.</strong></p>
 
                 <p style="${baseStyles}">
-                  The 50 Founder slots are claimed, but reaching 500 points is its own achievement, and
+                  The 20 Founder slots are claimed, but reaching 500 points is its own achievement, and
                   it comes with real rewards. You earned every one of these.
                 </p>
 

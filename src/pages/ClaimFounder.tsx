@@ -16,6 +16,20 @@ import { supabase } from "@/integrations/supabase/client";
 import { countries } from "@/lib/countries";
 import SEOHead from "@/components/SEOHead";
 
+type Submission = {
+  recipient_name: string | null;
+  shipping_street: string | null;
+  shipping_street2: string | null;
+  shipping_city: string | null;
+  shipping_region: string | null;
+  shipping_postal_code: string | null;
+  shipping_country: string | null;
+  shipping_phone: string | null;
+  inscription_to: string | null;
+  inscription_note: string | null;
+  additional_notes: string | null;
+};
+
 type Status =
   | { state: "loading" }
   | { state: "invalid"; message: string }
@@ -25,10 +39,9 @@ type Status =
       email: string;
       slot: number;
       alreadyClaimed: boolean;
+      submission: Submission | null;
     }
-  | { state: "submitted" };
-
-const SHIRT_SIZES = ["Skip / one-size", "XS", "S", "M", "L", "XL", "2XL", "3XL"];
+  | { state: "submitted"; updated: boolean; email: string };
 
 export default function ClaimFounder() {
   const [params] = useSearchParams();
@@ -48,7 +61,6 @@ export default function ClaimFounder() {
   const [phone, setPhone] = useState("");
   const [inscriptionTo, setInscriptionTo] = useState("");
   const [inscriptionNote, setInscriptionNote] = useState("");
-  const [merchSize, setMerchSize] = useState<string>("Skip / one-size");
   const [notes, setNotes] = useState("");
 
   useEffect(() => {
@@ -72,21 +84,37 @@ export default function ClaimFounder() {
         if (!data.ok) {
           const msg =
             data.error === "not_eligible"
-              ? "This link isn't eligible for a Founder claim. The 50 Founder slots may already be filled, or you haven't reached Tier 6 yet."
+              ? "This link isn't eligible for a Founder claim. The 20 Founder slots may already be filled, or you haven't reached Tier 6 yet."
               : data.error === "not_found"
                 ? "We couldn't find a Founder slot tied to this link."
                 : "This link isn't valid. Please use the button in your Founder email.";
           setStatus({ state: "invalid", message: msg });
           return;
         }
-        setRecipientName(data.user.name || "");
-        setInscriptionTo(data.user.name?.split(" ")[0] || "");
+        const sub: Submission | null = data.user.submission ?? null;
+        if (sub) {
+          setRecipientName(sub.recipient_name ?? "");
+          setStreet(sub.shipping_street ?? "");
+          setStreet2(sub.shipping_street2 ?? "");
+          setCity(sub.shipping_city ?? "");
+          setRegion(sub.shipping_region ?? "");
+          setPostal(sub.shipping_postal_code ?? "");
+          setCountry(sub.shipping_country ?? "");
+          setPhone(sub.shipping_phone ?? "");
+          setInscriptionTo(sub.inscription_to ?? "");
+          setInscriptionNote(sub.inscription_note ?? "");
+          setNotes(sub.additional_notes ?? "");
+        } else {
+          setRecipientName(data.user.name || "");
+          setInscriptionTo(data.user.name?.split(" ")[0] || "");
+        }
         setStatus({
           state: "ready",
           name: data.user.name,
           email: data.user.email,
           slot: data.user.founder_slot_number,
           alreadyClaimed: data.user.already_claimed,
+          submission: sub,
         });
       } catch (e) {
         setStatus({
@@ -117,7 +145,6 @@ export default function ClaimFounder() {
             shipping_phone: phone,
             inscription_to: inscriptionTo,
             inscription_note: inscriptionNote,
-            merch_size: merchSize === "Skip / one-size" ? "" : merchSize,
             additional_notes: notes,
           },
         },
@@ -133,7 +160,11 @@ export default function ClaimFounder() {
         });
         return;
       }
-      setStatus({ state: "submitted" });
+      setStatus({
+        state: "submitted",
+        updated: !!(data as any)?.updated,
+        email: status.email,
+      });
     } catch (err) {
       toast({
         title: "Something went wrong",
@@ -144,6 +175,8 @@ export default function ClaimFounder() {
       setSubmitting(false);
     }
   };
+
+  const isEdit = status.state === "ready" && status.alreadyClaimed;
 
   return (
     <>
@@ -182,12 +215,13 @@ export default function ClaimFounder() {
             {status.state === "submitted" && (
               <div className="mt-10 rounded-2xl border border-border bg-card p-8 md:p-10 text-center">
                 <h1 className="text-[28px] md:text-[36px] font-black text-foreground leading-[1.1] mb-3">
-                  You're all set.
+                  {status.updated ? "Your details are updated." : "You're all set."}
                 </h1>
                 <p className="text-[14px] md:text-[15px] text-muted-foreground leading-[1.7] mb-6">
-                  Your shipping and inscription details are locked in. Once all 50 Founder slots
-                  are claimed, we ship everything together. We'll email a tracking number when
-                  it's on the way.
+                  {status.updated
+                    ? "We saved your changes. We'll use these details when we ship your signed Dan & Daria book. A confirmation has been emailed to "
+                    : "Your shipping and inscription details are locked in. Once all 20 Founder slots are claimed, we ship the signed Dan & Daria books together. We'll email a tracking number when it's on the way. A confirmation has been emailed to "}
+                  {status.email}.
                 </p>
                 <Button asChild>
                   <Link to="/storypros/dashboard">Back to my dashboard</Link>
@@ -199,21 +233,16 @@ export default function ClaimFounder() {
               <>
                 <div className="mt-6 mb-8 text-center">
                   <p className="inline-block rounded-full bg-primary/10 text-primary px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em] mb-4">
-                    Founder slot #{status.slot} of 50
+                    Founder slot #{status.slot} of 20
                   </p>
                   <h1 className="text-[30px] md:text-[42px] font-black text-foreground leading-[1.05] mb-3">
-                    Claim your Founder package
+                    {isEdit ? "Update your Founder details" : "Claim your Founder package"}
                   </h1>
                   <p className="text-[14px] md:text-[15px] text-muted-foreground leading-[1.7]">
-                    Tell us where to ship your signed Dan &amp; Daria book and DLD-themed merch,
-                    and how you'd like the book inscribed. Takes about 60 seconds.
+                    {isEdit
+                      ? "Make any changes to your shipping address or book inscription. Your updates save instantly."
+                      : "Tell us where to ship your signed Dan & Daria book and how you'd like it inscribed. Takes about 60 seconds."}
                   </p>
-                  {status.alreadyClaimed && (
-                    <p className="mt-4 text-[12px] text-muted-foreground italic">
-                      You've already submitted these details. Resubmitting won't create a duplicate
-                      claim — to update them, email us instead.
-                    </p>
-                  )}
                 </div>
 
                 <form
@@ -279,28 +308,6 @@ export default function ClaimFounder() {
                     </div>
                   </section>
 
-                  {/* Merch */}
-                  <section>
-                    <h2 className="text-[16px] font-bold text-foreground mb-2">
-                      DLD-themed merch
-                    </h2>
-                    <p className="text-[12px] text-muted-foreground mb-4 leading-[1.6]">
-                      Most items are one-size. If apparel is included in the final Founder bundle,
-                      we'll use the size below. You can leave it as "Skip" if you'd rather we follow
-                      up.
-                    </p>
-                    <Field label="Apparel size (optional)" optional>
-                      <Select value={merchSize} onValueChange={setMerchSize}>
-                        <SelectTrigger><SelectValue /></SelectTrigger>
-                        <SelectContent>
-                          {SHIRT_SIZES.map((s) => (
-                            <SelectItem key={s} value={s}>{s}</SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </Field>
-                  </section>
-
                   {/* Notes */}
                   <section>
                     <Field label="Anything else we should know?" optional>
@@ -309,7 +316,9 @@ export default function ClaimFounder() {
                   </section>
 
                   <Button type="submit" disabled={submitting} className="w-full h-12 text-[12px] font-bold uppercase tracking-[0.12em]">
-                    {submitting ? "Locking it in…" : "Submit my Founder details"}
+                    {submitting
+                      ? (isEdit ? "Saving changes…" : "Locking it in…")
+                      : (isEdit ? "Save my updates" : "Submit my Founder details")}
                   </Button>
                   <p className="text-[11px] text-muted-foreground text-center leading-[1.6]">
                     A confirmation will be emailed to {status.email}.

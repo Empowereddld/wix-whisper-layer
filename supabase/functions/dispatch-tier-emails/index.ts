@@ -6,7 +6,7 @@
 //   Tier 3 = 75 pts   -> email4_tier3
 //   Tier 4 = 130 pts  -> email5_tier4
 //   Tier 5 = 250 pts  -> email6_tier5
-//   Tier 6 = 500 pts  -> email7_tier6_founder (first 50) OR email7b_tier6_legend
+//   Tier 6 = 500 pts  -> email7_tier6_founder (first 20) OR email7b_tier6_legend
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const corsHeaders = {
@@ -14,7 +14,7 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-const FOUNDER_SLOT_CAP = 50;
+const FOUNDER_SLOT_CAP = 20;
 const BASE_URL = "https://empowereddld.com";
 
 // EF guide download link surfaced in Email 3 (Tier 2 reward).

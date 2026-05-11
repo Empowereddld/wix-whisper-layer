@@ -59,7 +59,7 @@ export const COIN_PACKS = [
 ] as const;
 
 // Founding Elite program cap
-export const FOUNDING_ELITE_CAP = 50;
+export const FOUNDING_ELITE_CAP = 20;
 
 // Pricing
 export const REGULAR_PRICE = 9.99;
@@ -106,7 +106,7 @@ export const TIER_REWARDS = [
   {
     tier: 5,
     name: "Founding Elite Package",
-    description: "Signed Dan & Daria book plus DLD-themed merch (limited to the first 50 members to reach Tier 6 by June 1)",
+    description: "Signed Dan & Daria book with a handwritten note (limited to the first 20 members to reach Tier 6)",
     icon: "👑",
     claimType: "activate",
   },

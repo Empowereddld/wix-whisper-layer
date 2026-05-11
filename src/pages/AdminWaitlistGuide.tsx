@@ -568,7 +568,7 @@ Reason: Bonus for social media share`} />
                     <span className="font-semibold text-[#3b1f59]">Tier 6 (Founding Elite)</span>
                     <span className="text-gray-500 font-bold">500+ points</span>
                   </div>
-                  <p className="text-gray-500 text-xs">20+ referrals — named in founder credits forever (first 50 only)</p>
+                  <p className="text-gray-500 text-xs">20+ referrals, named in founder credits forever (first 20 only)</p>
                 </div>
               </div>
             </CollapsibleSection>
