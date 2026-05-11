@@ -37,6 +37,7 @@ import {
   Eye,
   Lightbulb,
   Trash2,
+  Crown,
 } from "lucide-react";
 import {
   AlertDialog,
@@ -58,6 +59,7 @@ import { getTierName, getTierForPoints } from "@/lib/waitlist-utils";
 import { formatRole } from "@/lib/storypros-roles";
 import { AGE_RANGES, HOPE_OPTIONS, formatHopes } from "@/lib/storypros-profile";
 import StoryProsUserDetailModal, { AdminWaitlistUser } from "@/components/admin/StoryProsUserDetailModal";
+import FounderClaimsPanel from "@/components/admin/FounderClaimsPanel";
 import { format } from "date-fns";
 
 type WaitlistUser = AdminWaitlistUser;
@@ -301,7 +303,7 @@ const AdminStoryBuilders = () => {
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-6 mb-8 bg-background border border-border">
+          <TabsList className="grid w-full grid-cols-7 mb-8 bg-background border border-border">
             <TabsTrigger
               value="overview"
               className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-muted-foreground"
@@ -329,6 +331,13 @@ const AdminStoryBuilders = () => {
             >
               <Lightbulb className="h-4 w-4" />
               <span className="hidden sm:inline">Suggestions</span>
+            </TabsTrigger>
+            <TabsTrigger
+              value="founders"
+              className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-muted-foreground"
+            >
+              <Crown className="h-4 w-4" />
+              <span className="hidden sm:inline">Founders</span>
             </TabsTrigger>
             <TabsTrigger
               value="emails"
@@ -609,6 +618,20 @@ const AdminStoryBuilders = () => {
                     <strong>Note:</strong> Detailed referral network visualization is coming soon. For now, use the Users tab to analyze individual referral chains.
                   </p>
                 </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Founder Claims Tab */}
+          <TabsContent value="founders" className="space-y-4">
+            <Card className="bg-background border border-border rounded-2xl shadow-sm">
+              <CardHeader>
+                <CardTitle className="font-serif italic text-foreground">
+                  Founder Claims
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <FounderClaimsPanel />
               </CardContent>
             </Card>
           </TabsContent>
