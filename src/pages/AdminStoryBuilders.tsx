@@ -56,21 +56,11 @@ import WaitlistAnalyticsChart from "@/components/admin/WaitlistAnalyticsChart";
 import BulkEmailComposer from "@/components/admin/BulkEmailComposer";
 import { getTierName, getTierForPoints } from "@/lib/waitlist-utils";
 import { formatRole } from "@/lib/storypros-roles";
+import { AGE_RANGES, HOPE_OPTIONS, formatHopes } from "@/lib/storypros-profile";
+import StoryProsUserDetailModal, { AdminWaitlistUser } from "@/components/admin/StoryProsUserDetailModal";
 import { format } from "date-fns";
 
-// Aligned with actual storybuilders_waitlist table columns
-interface WaitlistUser {
-  id: string;
-  name: string;
-  email: string;
-  referral_code: string;
-  invite_count: number;
-  points: number;
-  email_verified: boolean;
-  created_at: string;
-  role: string | null;
-  role_other: string | null;
-}
+type WaitlistUser = AdminWaitlistUser;
 
 const AdminStoryBuilders = () => {
   const [activeTab, setActiveTab] = useState("overview");
@@ -84,6 +74,9 @@ const AdminStoryBuilders = () => {
   const [showUserPreview, setShowUserPreview] = useState(false);
   const [userToDelete, setUserToDelete] = useState<WaitlistUser | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [ageFilter, setAgeFilter] = useState<string>("any");
+  const [hopeFilter, setHopeFilter] = useState<string>("any");
+  const [detailUser, setDetailUser] = useState<WaitlistUser | null>(null);
 
   const handleDeleteUser = useCallback(async () => {
     if (!userToDelete) return;
@@ -116,7 +109,7 @@ const AdminStoryBuilders = () => {
       setError(null);
       const { data, error: fetchError } = await supabase
         .from("storybuilders_waitlist")
-        .select("id, name, email, referral_code, invite_count, points, email_verified, created_at, role, role_other")
+        .select("id, name, email, referral_code, invite_count, points, email_verified, created_at, role, role_other, child_age, hopes, hopes_other, hear_about, profile_completed_at")
         .is("deleted_at", null)
         .order("created_at", { ascending: false });
 
@@ -197,12 +190,23 @@ const AdminStoryBuilders = () => {
 
     if (searchTerm) {
       const term = searchTerm.toLowerCase();
-      filtered = users.filter(
+      filtered = filtered.filter(
         (u) =>
           u.name.toLowerCase().includes(term) ||
           u.email.toLowerCase().includes(term) ||
           u.referral_code.toLowerCase().includes(term)
       );
+    }
+
+    if (ageFilter !== "any") {
+      const range = AGE_RANGES.find((r) => r.value === ageFilter);
+      if (range) {
+        filtered = filtered.filter((u) => u.child_age != null && range.test(u.child_age));
+      }
+    }
+
+    if (hopeFilter !== "any") {
+      filtered = filtered.filter((u) => Array.isArray(u.hopes) && u.hopes.includes(hopeFilter));
     }
 
     if (sortBy === "name") {
@@ -214,7 +218,7 @@ const AdminStoryBuilders = () => {
     }
 
     return filtered;
-  }, [users, searchTerm, sortBy]);
+  }, [users, searchTerm, sortBy, ageFilter, hopeFilter]);
 
   const topReferrers = useMemo(() => {
     return [...users]
@@ -444,6 +448,23 @@ const AdminStoryBuilders = () => {
                   <SelectItem value="name">Name</SelectItem>
                 </SelectContent>
               </Select>
+              <Select value={ageFilter} onValueChange={setAgeFilter}>
+                <SelectTrigger className="w-full sm:w-36"><SelectValue placeholder="Child age" /></SelectTrigger>
+                <SelectContent>
+                  {AGE_RANGES.map((r) => (
+                    <SelectItem key={r.value} value={r.value}>{r.label}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <Select value={hopeFilter} onValueChange={setHopeFilter}>
+                <SelectTrigger className="w-full sm:w-44"><SelectValue placeholder="Hope" /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="any">Any hope</SelectItem>
+                  {HOPE_OPTIONS.map((o) => (
+                    <SelectItem key={o.value} value={o.value}>{o.label}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
               <Button
                 onClick={handleExportCSV}
                 variant="outline"
@@ -468,11 +489,12 @@ const AdminStoryBuilders = () => {
                 <div className="overflow-x-auto">
                   <Table>
                     <TableHeader className="bg-muted">
-                      <TableRow className="border-b border-border">
+                       <TableRow className="border-b border-border">
                         <TableHead className="text-foreground">Name</TableHead>
                         <TableHead className="text-foreground">Email</TableHead>
                         <TableHead className="text-foreground">Role</TableHead>
-                        <TableHead className="text-foreground">Referral Code</TableHead>
+                        <TableHead className="text-foreground">Child Age</TableHead>
+                        <TableHead className="text-foreground">Hopes</TableHead>
                         <TableHead className="text-right text-foreground">Referrals</TableHead>
                         <TableHead className="text-foreground">Tier</TableHead>
                         <TableHead className="text-foreground">Joined</TableHead>
@@ -484,10 +506,17 @@ const AdminStoryBuilders = () => {
                         filteredUsers.map((user) => (
                           <TableRow
                             key={user.id}
-                            className="hover:bg-muted border-b border-border"
+                            className="hover:bg-muted border-b border-border cursor-pointer"
+                            onClick={() => setDetailUser(user)}
                           >
                             <TableCell className="font-medium text-foreground">
-                              {user.name}
+                              <button
+                                type="button"
+                                className="text-left hover:text-primary hover:underline"
+                                onClick={(e) => { e.stopPropagation(); setDetailUser(user); }}
+                              >
+                                {user.name}
+                              </button>
                             </TableCell>
                             <TableCell className="text-sm text-muted-foreground">
                               {user.email}
@@ -497,8 +526,11 @@ const AdminStoryBuilders = () => {
                                 ? formatRole(user.role, user.role_other)
                                 : <span className="italic text-muted-foreground/60">—</span>}
                             </TableCell>
-                            <TableCell className="font-mono text-xs text-muted-foreground">
-                              {user.referral_code}
+                            <TableCell className="text-sm text-muted-foreground">
+                              {user.child_age != null ? user.child_age : <span className="italic text-muted-foreground/60">—</span>}
+                            </TableCell>
+                            <TableCell className="text-xs text-muted-foreground max-w-[220px] truncate" title={formatHopes(user.hopes)}>
+                              {formatHopes(user.hopes)}
                             </TableCell>
                             <TableCell className="text-right font-semibold text-foreground">
                               {user.invite_count}
@@ -519,7 +551,7 @@ const AdminStoryBuilders = () => {
                                 variant="ghost"
                                 size="icon"
                                 className="text-muted-foreground hover:text-destructive hover:bg-destructive/10"
-                                onClick={() => setUserToDelete(user)}
+                                onClick={(e) => { e.stopPropagation(); setUserToDelete(user); }}
                                 aria-label={`Delete ${user.name}`}
                               >
                                 <Trash2 className="h-4 w-4" />
@@ -529,7 +561,7 @@ const AdminStoryBuilders = () => {
                         ))
                       ) : (
                         <TableRow>
-                          <TableCell colSpan={8} className="text-center py-12">
+                          <TableCell colSpan={9} className="text-center py-12">
                             <p className="text-muted-foreground">
                               {users.length === 0 ? "No users in the waitlist yet" : "No results matching your search"}
                             </p>
@@ -653,6 +685,13 @@ const AdminStoryBuilders = () => {
       {showUserPreview && (
         <UserPreviewMode onClose={() => setShowUserPreview(false)} />
       )}
+
+      <StoryProsUserDetailModal
+        user={detailUser}
+        open={!!detailUser}
+        onOpenChange={(open) => !open && setDetailUser(null)}
+        onSaved={() => fetchUsers()}
+      />
 
       <AlertDialog
         open={!!userToDelete}
