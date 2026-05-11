@@ -754,14 +754,13 @@ export function useStorybuildersWaitlist() {
   }, [state.referralCode]);
 
   const submitSuggestion = useCallback(
-    async (title: string, description: string, category: string): Promise<{ success: boolean; message: string }> => {
+    async (text: string, category: string): Promise<{ success: boolean; message: string }> => {
       if (!state.referralCode) {
         return { success: false, message: "Join the waitlist first" };
       }
       const { data, error } = await supabase.rpc("submit_waitlist_suggestion", {
         p_referral_code: state.referralCode,
-        p_title: title,
-        p_description: description,
+        p_text: text,
         p_category: category,
         p_points: REPEATABLE_POINTS.SUGGESTION,
       });
