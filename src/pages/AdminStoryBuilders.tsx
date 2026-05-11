@@ -686,6 +686,13 @@ const AdminStoryBuilders = () => {
         <UserPreviewMode onClose={() => setShowUserPreview(false)} />
       )}
 
+      <StoryProsUserDetailModal
+        user={detailUser}
+        open={!!detailUser}
+        onOpenChange={(open) => !open && setDetailUser(null)}
+        onSaved={() => fetchUsers()}
+      />
+
       <AlertDialog
         open={!!userToDelete}
         onOpenChange={(open) => !open && !isDeleting && setUserToDelete(null)}
