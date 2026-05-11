@@ -852,78 +852,71 @@ Events to enable:
               <h2 className="text-3xl font-bold text-[#3b1f59] font-sans font-bold">Tier Rewards Fulfillment</h2>
             </div>
 
-            <CollapsibleSection title="Tier 0 (Starter)">
+            <CollapsibleSection title="Tier 1 — Founding Member Status (0 pts)">
               <p className="text-sm text-gray-500 mb-4">
-                <strong>Reward:</strong> Welcome email + developer updates
-              </p>
-              <p className="text-sm text-gray-500">
-                Send welcome email and enroll in dev update newsletter to keep them informed of progress.
-              </p>
-            </CollapsibleSection>
-
-            <CollapsibleSection title="Tier 1 (Language Activities)">
-              <p className="text-sm text-gray-500 mb-4">
-                <strong>Reward:</strong> "5 Language Activities" PDF
+                <strong>Reward:</strong> Founding Member badge, behind-the-scenes development updates, and name on the Early Supporters Wall.
               </p>
               <ul className="space-y-2 text-sm list-disc list-inside text-[#121212]">
-                <li>Send via email with download link</li>
-                <li>Create shareable link in /admin resources section</li>
+                <li>Auto-granted on signup</li>
+                <li>Send welcome email and enroll in dev update newsletter</li>
+              </ul>
+            </CollapsibleSection>
+
+            <CollapsibleSection title="Tier 2 — Executive Function Skills Guide (35 pts)">
+              <p className="text-sm text-gray-500 mb-4">
+                <strong>Reward:</strong> FREE digital download of "Executive Function Skills for Your Child" (normally paid in the Resource Hub).
+              </p>
+              <ul className="space-y-2 text-sm list-disc list-inside text-[#121212]">
+                <li>Tier-up email includes a download link to the EF guide</li>
                 <li>Track downloads in analytics</li>
               </ul>
             </CollapsibleSection>
 
-            <CollapsibleSection title="Tier 2 (Story Starter)">
+            <CollapsibleSection title="Tier 3 — 50 Bonus Story Coins (75 pts)">
               <p className="text-sm text-gray-500 mb-4">
-                <strong>Reward:</strong> 75 Story Coins + Story Starter Pack
+                <strong>Reward:</strong> 50 Story Coins dropped into the user's account to spend at app launch.
               </p>
               <ul className="space-y-2 text-sm list-disc list-inside text-[#121212]">
-                <li>Award 75 coins to user account</li>
-                <li>Send Story Starter Pack via email</li>
-                <li>Coins can be redeemed at Tier 2 level (50 coins) or combined for Tier 4 reward (150 coins)</li>
+                <li>Auto-awarded by the tier dispatcher</li>
+                <li>Coin balance visible on the Story Pros dashboard</li>
               </ul>
             </CollapsibleSection>
 
-            <CollapsibleSection title="Tier 4 (Founder Pricing)">
+            <CollapsibleSection title="Tier 4 — VIP Beta Access + Suggestion Box (130 pts)">
               <p className="text-sm text-gray-500 mb-4">
-                <strong>Reward:</strong> Founder pricing ($5.99/mo for life) + sneak peek video
+                <strong>Reward:</strong> VIP Beta access to Story Pros before launch + Suggestion Box unlocked.
               </p>
               <ul className="space-y-2 text-sm list-disc list-inside text-[#121212]">
-                <li>Lock in $5.99/month for life (regular $7.99)</li>
-                <li>Send exclusive sneak peek video via email</li>
-                <li>Include recognition message in next community email</li>
+                <li>Beta invite goes out close to the beta window</li>
+                <li>Suggestion Box becomes visible on user dashboard</li>
               </ul>
             </CollapsibleSection>
 
-            <CollapsibleSection title="Tier 5 (VIP Beta Access)">
+            <CollapsibleSection title="Tier 5 — Founder Pricing for Life (250 pts)">
               <p className="text-sm text-gray-500 mb-4">
-                <strong>Reward:</strong> VIP Beta access + 200 Story Coins + Champion Pack
+                <strong>Reward:</strong> $7.99/month for life instead of the regular $9.99 (permanent 20% discount). Points double from this tier on.
               </p>
-              <ul className="space-y-2 text-sm list-disc list-inside mb-4 text-[#121212]">
-                <li>Beta access to test Story Pros before launch</li>
-                <li>Award 200 Story Coins to account</li>
-                <li>Send Champion Pack via email</li>
+              <ul className="space-y-2 text-sm list-disc list-inside text-[#121212]">
+                <li>Founder pricing is locked in at subscription time at launch</li>
+                <li>Tier-up email confirms lifetime price</li>
               </ul>
-              <p className="text-sm text-gray-500">
-                Create unique coupon code for discounted subscription. Coins can be combined with Tier 3 coins for Tier 5 pack.
-              </p>
             </CollapsibleSection>
 
-            <CollapsibleSection title="Tier 6 (Founding Elite) - CAPPED AT 50">
+            <CollapsibleSection title="Tier 6 — Founder Package (500 pts) — CAPPED AT 20">
               <p className="text-sm text-gray-500 mb-4">
-                <strong>Reward:</strong> Founding Elite everything - FIRST 50 users only
+                <strong>Reward:</strong> Signed Dan &amp; Daria book with a handwritten note. Limited to the FIRST 20 members to reach Tier 6.
               </p>
               <ul className="space-y-2 text-sm list-disc list-inside mb-4 text-[#121212]">
-                <li>All Tier 5 benefits (beta access, 200 coins)</li>
-                <li>Named in Story Pros founder credits forever</li>
-                <li>VIP lifetime access to all future content and beta features</li>
-                <li>Priority support + direct line to founder</li>
-                <li>Founding member merchandise package</li>
+                <li>No DLD-themed merch — book only</li>
+                <li>Founder slot number assigned automatically (1–20)</li>
+                <li>Founders receive a tokenized "Claim my Founder package" email link to submit shipping + inscription</li>
+                <li>Submissions appear in the Founders tab of the Story Pros admin dashboard</li>
               </ul>
               <p className="text-sm text-gray-500 mb-4">
-                <strong>IMPORTANT:</strong> Tier 6 cap is FIRST 50 users. Once 50 users reach Tier 6, no additional users qualify for this tier. They stop at Tier 5.
+                <strong>IMPORTANT:</strong> Once 20 users reach Tier 6, additional members who hit 500 points become Legends instead and receive 100 bonus Story Coins (no book).
               </p>
               <p className="text-sm text-gray-500">
-                Tier 6 users must be fulfilled in queue order. Use the queue position from Users table to determine fulfillment sequence.
+                Fulfill Founders in slot order (#1 to #20) once all 20 slots are claimed.
               </p>
             </CollapsibleSection>
 
