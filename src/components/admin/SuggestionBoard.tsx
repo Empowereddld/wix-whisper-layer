@@ -159,7 +159,7 @@ const SuggestionBoard = () => {
                             onClick={() => updateStatus(s.id, "planned")}
                           >
                             <Check className="h-3 w-3 mr-1" />
-                            Plan
+                            Building
                           </Button>
                         )}
                         {s.status !== "done" && (
