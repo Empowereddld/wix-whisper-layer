@@ -530,45 +530,45 @@ Reason: Bonus for social media share`} />
               <div className="space-y-3 text-sm">
                 <div className="p-4 bg-[#f3ebf8] rounded-lg border border-[#dedede]">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="font-semibold text-[#3b1f59]">Tier 1 (Starter)</span>
+                    <span className="font-semibold text-[#3b1f59]">Tier 1 (Founding Member)</span>
                     <span className="text-gray-500 font-bold">0 points</span>
                   </div>
-                  <p className="text-gray-500 text-xs">Just signed up — development updates</p>
+                  <p className="text-gray-500 text-xs">Just signed up — badge, dev updates, Early Supporters Wall</p>
                 </div>
                 <div className="p-4 bg-[#f3ebf8] rounded-lg border border-[#dedede]">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="font-semibold text-[#3b1f59]">Tier 2 (Early Access)</span>
+                    <span className="font-semibold text-[#3b1f59]">Tier 2 (Executive Function Guide)</span>
                     <span className="text-gray-500 font-bold">35+ points</span>
                   </div>
-                  <p className="text-gray-500 text-xs">1+ referral — early access on launch day</p>
+                  <p className="text-gray-500 text-xs">Free Executive Function Skills digital download</p>
                 </div>
                 <div className="p-4 bg-[#f3ebf8] rounded-lg border border-[#dedede]">
                   <div className="flex items-center justify-between mb-2">
                     <span className="font-semibold text-[#3b1f59]">Tier 3 (Story Coins)</span>
                     <span className="text-gray-500 font-bold">75+ points</span>
                   </div>
-                  <p className="text-gray-500 text-xs">3+ referrals — 75 bonus Story Coins</p>
+                  <p className="text-gray-500 text-xs">50 bonus Story Coins dropped into account</p>
                 </div>
                 <div className="p-4 bg-[#f3ebf8] rounded-lg border border-[#dedede]">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="font-semibold text-[#3b1f59]">Tier 4 (Founder Pricing)</span>
+                    <span className="font-semibold text-[#3b1f59]">Tier 4 (VIP Beta + Suggestion Box)</span>
                     <span className="text-gray-500 font-bold">130+ points</span>
                   </div>
-                  <p className="text-gray-500 text-xs">5+ referrals — $5.99/mo for life</p>
+                  <p className="text-gray-500 text-xs">Pre-launch beta access + Suggestion Box unlocked</p>
                 </div>
                 <div className="p-4 bg-[#f3ebf8] rounded-lg border border-[#dedede]">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="font-semibold text-[#3b1f59]">Tier 5 (VIP Beta)</span>
+                    <span className="font-semibold text-[#3b1f59]">Tier 5 (Founder Pricing)</span>
                     <span className="text-gray-500 font-bold">250+ points</span>
                   </div>
-                  <p className="text-gray-500 text-xs">10+ referrals — beta access + 200 coins</p>
+                  <p className="text-gray-500 text-xs">$7.99/mo for life (vs $9.99) — points double from here</p>
                 </div>
                 <div className="p-4 bg-[#f3ebf8] rounded-lg border border-[#dedede]">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="font-semibold text-[#3b1f59]">Tier 6 (Founding Elite)</span>
+                    <span className="font-semibold text-[#3b1f59]">Tier 6 (Founder)</span>
                     <span className="text-gray-500 font-bold">500+ points</span>
                   </div>
-                  <p className="text-gray-500 text-xs">20+ referrals, named in founder credits forever (first 20 only)</p>
+                  <p className="text-gray-500 text-xs">Signed Dan &amp; Daria book with handwritten note — first 20 only (Legends after that get 100 bonus Story Coins)</p>
                 </div>
               </div>
             </CollapsibleSection>
