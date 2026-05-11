@@ -43,6 +43,7 @@ import ScriptCarousel from "@/components/waitlist/ScriptCarousel";
 import SharePostFlow from "@/components/waitlist/SharePostFlow";
 import CompleteProfileCard from "@/components/waitlist/CompleteProfileCard";
 import EditProfileDialog from "@/components/waitlist/EditProfileDialog";
+import SuggestionBox from "@/components/waitlist/SuggestionBox";
 import { useStorybuildersWaitlist } from "@/hooks/useStorybuildersWaitlist";
 import { useIsMobile } from "@/hooks/use-mobile";
 import {
@@ -900,6 +901,14 @@ const StoryProsDashboard = () => {
             </div>
           </Card>
         </motion.div>
+
+        {/* Suggestion Box (Tier 4+) */}
+        <SuggestionBox
+          currentTier={currentTier}
+          referralCode={wl.referralCode}
+          submitSuggestion={wl.submitSuggestion}
+          voteSuggestion={wl.voteSuggestion}
+        />
 
         {/* Coming up */}
         {nextThreshold && TIER_REWARDS[currentTier + 1] && (

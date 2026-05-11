@@ -20,9 +20,9 @@ interface Suggestion {
 
 const COLUMN_DEFS: { id: string; title: string }[] = [
   { id: "pending", title: "New" },
-  { id: "under_review", title: "Under Review" },
-  { id: "planned", title: "Planned" },
-  { id: "done", title: "Done" },
+  { id: "under_review", title: "Considering" },
+  { id: "planned", title: "Building" },
+  { id: "done", title: "Built" },
 ];
 
 const SuggestionBoard = () => {
@@ -147,7 +147,7 @@ const SuggestionBoard = () => {
                             onClick={() => updateStatus(s.id, "under_review")}
                           >
                             <Star className="h-3 w-3 mr-1" />
-                            Review
+                            Considering
                           </Button>
                         )}
                         {s.status !== "planned" && (
@@ -159,7 +159,7 @@ const SuggestionBoard = () => {
                             onClick={() => updateStatus(s.id, "planned")}
                           >
                             <Check className="h-3 w-3 mr-1" />
-                            Plan
+                            Building
                           </Button>
                         )}
                         {s.status !== "done" && (
@@ -171,7 +171,7 @@ const SuggestionBoard = () => {
                             onClick={() => updateStatus(s.id, "done")}
                           >
                             <Check className="h-3 w-3 mr-1" />
-                            Done
+                            Built
                           </Button>
                         )}
                         <Button
