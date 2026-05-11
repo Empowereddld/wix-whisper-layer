@@ -902,6 +902,14 @@ const StoryProsDashboard = () => {
           </Card>
         </motion.div>
 
+        {/* Suggestion Box (Tier 4+) */}
+        <SuggestionBox
+          currentTier={currentTier}
+          referralCode={wl.referralCode}
+          submitSuggestion={wl.submitSuggestion}
+          voteSuggestion={wl.voteSuggestion}
+        />
+
         {/* Coming up */}
         {nextThreshold && TIER_REWARDS[currentTier + 1] && (
           <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.55 }}>
