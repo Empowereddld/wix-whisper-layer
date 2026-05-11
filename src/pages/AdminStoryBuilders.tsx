@@ -448,6 +448,23 @@ const AdminStoryBuilders = () => {
                   <SelectItem value="name">Name</SelectItem>
                 </SelectContent>
               </Select>
+              <Select value={ageFilter} onValueChange={setAgeFilter}>
+                <SelectTrigger className="w-full sm:w-36"><SelectValue placeholder="Child age" /></SelectTrigger>
+                <SelectContent>
+                  {AGE_RANGES.map((r) => (
+                    <SelectItem key={r.value} value={r.value}>{r.label}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <Select value={hopeFilter} onValueChange={setHopeFilter}>
+                <SelectTrigger className="w-full sm:w-44"><SelectValue placeholder="Hope" /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="any">Any hope</SelectItem>
+                  {HOPE_OPTIONS.map((o) => (
+                    <SelectItem key={o.value} value={o.value}>{o.label}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
               <Button
                 onClick={handleExportCSV}
                 variant="outline"
