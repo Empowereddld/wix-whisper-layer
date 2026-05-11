@@ -56,21 +56,11 @@ import WaitlistAnalyticsChart from "@/components/admin/WaitlistAnalyticsChart";
 import BulkEmailComposer from "@/components/admin/BulkEmailComposer";
 import { getTierName, getTierForPoints } from "@/lib/waitlist-utils";
 import { formatRole } from "@/lib/storypros-roles";
+import { AGE_RANGES, HOPE_OPTIONS, formatHopes } from "@/lib/storypros-profile";
+import StoryProsUserDetailModal, { AdminWaitlistUser } from "@/components/admin/StoryProsUserDetailModal";
 import { format } from "date-fns";
 
-// Aligned with actual storybuilders_waitlist table columns
-interface WaitlistUser {
-  id: string;
-  name: string;
-  email: string;
-  referral_code: string;
-  invite_count: number;
-  points: number;
-  email_verified: boolean;
-  created_at: string;
-  role: string | null;
-  role_other: string | null;
-}
+type WaitlistUser = AdminWaitlistUser;
 
 const AdminStoryBuilders = () => {
   const [activeTab, setActiveTab] = useState("overview");
