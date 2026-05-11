@@ -540,15 +540,19 @@ function getEmailTemplate(
                 </p>
 
                 <p style="${baseStyles}">
-                  You'll get to test the app, use it with your kids, and tell us what's working and what
-                  isn't so we can shape the final version around real feedback from people who actually get it.
+                  You'll get to test the app, use it with your child, and tell us what's working and what
+                  isn't so we can shape the final version around real feedback from the families who'll use it.
                 </p>
 
                 <p style="${baseStyles}">
-                  <strong>You've also unlocked the Suggestion Board.</strong> This is where families who
-                  are testing the app weigh in on what we build next, both in the app and in our Monthly
-                  Live Community Circles. Your ideas help guide what we create, and your voice carries
-                  real weight here.
+                  <strong>You've also unlocked the Suggestion Box.</strong> This is where families who
+                  are testing the app weigh in on what we build next, from story themes and characters to
+                  app features and Community Circle topics. Your ideas help guide what we create, and
+                  your voice carries real weight here.
+                </p>
+
+                <p style="${baseStyles}">
+                  <a href="${dashboard}" style="color: ${brandColor}; text-decoration: underline;">Head to your dashboard to submit your first suggestion.</a>
                 </p>
 
                 <hr style="${dividerStyles}" />
@@ -558,18 +562,15 @@ function getEmailTemplate(
                   ${tierLine("Tier 1", "Development Updates + Early Supporters Wall")}
                   ${tierLine("Tier 2", "Free Executive Function guide")}
                   ${tierLine("Tier 3", "50 Bonus Story Coins")}
-                  ${tierLine("Tier 4", "Early testing access + Suggestion Board", true)}
+                  ${tierLine("Tier 4", "Early testing access + Suggestion Box", true)}
                 </ul>
 
                 <hr style="${dividerStyles}" />
 
-                <p style="${baseStyles}"><strong>What's next: Tier 5 (250 pts), Founder Pricing</strong></p>
+                <p style="${baseStyles}"><strong>What's next: Tier 5 (250 pts)</strong></p>
 
                 <p style="${baseStyles}">
-                  At 250 points, you lock in <strong>$7.99/month for life</strong> instead of the regular
-                  $9.99. That's the lowest price Story Pros will ever be offered at, and it's yours to
-                  keep as long as you stay subscribed. Heads up, points double from Tier 5 on to help
-                  you push toward Tier 6.
+                  Something worth working toward. Reach 250 points to unlock it.
                 </p>
 
                 <p style="${baseStyles}">You're <strong>${pointsToNext} points away</strong>.</p>
@@ -579,20 +580,22 @@ function getEmailTemplate(
                   <a href="${referralLink}" style="color: ${brandColor}; word-break: break-all;">${referralLink}</a>
                 </p>
 
-                <p style="${baseStyles}"><strong>A message to copy and paste if you'd like:</strong></p>
+                <p style="${baseStyles}"><strong>Something to share right now:</strong></p>
 
                 <div style="${scriptBlock}">
-                  Hey, check this out. Story Pros is an app and monthly community that helps kids who
-                  need extra support with storytelling and putting their thoughts into words. Built by
-                  speech-language pathologists and teachers. You can get in early: ${referralLink}
+                  For a text: "I just got early access to test Story Pros before it launches. It's an app and community for kids who need support with storytelling and language. You can still get in: ${referralLink}"
+                </div>
+
+                <div style="${scriptBlock}">
+                  For a friend or therapist: "I'm one of the first families testing Story Pros before it goes public. It's built by speech-language pathologists and teachers to help kids with storytelling and language. I get to give feedback and help shape the app. Thought you'd want in: ${referralLink}"
                 </div>
 
                 ${ctaPair(referralLink, dashboard)}
 
-                <p style="${baseStyles}">Talk soon,<br/>${SIGN_OFF}</p>
+                <p style="${baseStyles}">Warmly,<br/>Camesha, Jinean and the Story Pros Team</p>
               </div>
 
-              ${footerBlock}
+              ${footerBlockNoPS}
             </div>
           </div>
         `,
