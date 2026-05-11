@@ -150,6 +150,7 @@ export default function ClaimFounder() {
       <SEOHead
         title="Claim your Founder package | Story Pros"
         description="Confirm shipping and inscription details for your Story Pros Founder package."
+        path="/storypros/claim-founder"
       />
       <main className="min-h-screen bg-background py-12 md:py-20">
         <div className="container px-6 md:px-8">
