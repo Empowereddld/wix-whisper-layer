@@ -621,20 +621,20 @@ function getEmailTemplate(
                   kept sharing, kept going. That means everything to us.
                 </p>
 
-                <p style="${baseStyles}">
-                  <strong>250 points.</strong> You're at <strong>Tier 5</strong>.
-                </p>
+                <p style="${baseStyles}"><strong>250 points. You're at Tier 5.</strong></p>
+
+                <p style="${baseStyles}"><strong>Founder Pricing, locked in for life.</strong></p>
 
                 <p style="${baseStyles}">
-                  <strong>Founder Pricing, locked in for life.</strong> Your subscription will be
-                  <strong>$7.99/month forever</strong>, instead of the regular $9.99. That price stays
+                  Your subscription will be <strong>$7.99/month forever</strong>, instead of the regular $9.99. That price stays
                   no matter how much we add to the app, the Community Circles, or any other features
                   down the road.
                 </p>
 
+                <p style="${baseStyles}"><strong>One more thing: your points now count double.</strong></p>
+
                 <p style="${baseStyles}">
-                  <strong>Your points now count double.</strong> Every share, every referral, every follow.
-                  Tier 6 is closer than it looks.
+                  Every share, every referral, every follow. Tier 6 is closer than it looks.
                 </p>
 
                 <hr style="${dividerStyles}" />
@@ -644,7 +644,7 @@ function getEmailTemplate(
                   ${tierLine("Tier 1", "Development Updates + Early Supporters Wall")}
                   ${tierLine("Tier 2", "Free Executive Function guide")}
                   ${tierLine("Tier 3", "50 Bonus Story Coins")}
-                  ${tierLine("Tier 4", "Early testing access + Suggestion Board")}
+                  ${tierLine("Tier 4", "Early testing access + Suggestion Box")}
                   ${tierLine("Tier 5", "Founder Pricing, locked for life + double points", true)}
                 </ul>
 
@@ -667,36 +667,26 @@ function getEmailTemplate(
                   <a href="${referralLink}" style="color: ${brandColor}; word-break: break-all;">${referralLink}</a>
                 </p>
 
-                <p style="${baseStyles}"><strong>A few messages to copy and paste if you'd like:</strong></p>
+                <p style="${baseStyles}"><strong>Something to share right now:</strong></p>
 
                 <div style="${scriptBlock}">
-                  I'm on the early list for an app called Story Pros. It helps kids build the skills they
-                  need to tell stories and express what's on their mind, plus there's a monthly live community
-                  for families on Zoom. Worth a look: ${referralLink}
+                  For a text: "I just locked in founder pricing for Story Pros, an app and community for kids who need support with storytelling and language. They're still letting people in early: ${referralLink}"
                 </div>
 
                 <div style="${scriptBlock}">
-                  Ok I have to share this with you. There's an app coming out that helps kids who have
-                  a hard time explaining things or getting their words out. Speech-language pathologists
-                  and teachers built it. Get in early with me: ${referralLink}
-                </div>
-
-                <div style="${scriptBlock}">
-                  Have you heard of Story Pros? It's an app and monthly community built by speech-language
-                  pathologists and teachers that helps kids with narrative language. They're giving early
-                  access right now: ${referralLink}
+                  For a friend or therapist: "I've been part of the Story Pros founding community for a while now and just hit a milestone. It's built by speech-language pathologists and teachers to help kids with storytelling and language. I think you'd want to see this before it launches: ${referralLink}"
                 </div>
 
                 ${ctaPair(referralLink, dashboard)}
 
                 <p style="${baseStyles}">
-                  Thank you for helping more children not just communicate... but connect.
+                  Thank you for helping more children not just communicate, but connect.
                 </p>
 
-                <p style="${baseStyles}">${SIGN_OFF}</p>
+                <p style="${baseStyles}">Warmly, Camesha, Jinean and the Story Pros Team</p>
               </div>
 
-              ${footerBlock}
+              ${footerBlockNoPS}
             </div>
           </div>
         `,
