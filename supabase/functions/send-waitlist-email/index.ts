@@ -365,12 +365,17 @@ function getEmailTemplate(
       };
     }
 
-    // ============================================================
-    // EMAIL 3 — Tier 2 Reached (35 pts)
-    // ============================================================
     case "email3_tier2": {
+      const tier2Footer = `
+        <div style="${footerStyles}">
+          <img src="${LOGO_URL}" alt="Story Pros" width="96" style="display: inline-block; max-width: 96px; height: auto; opacity: 0.9; margin-bottom: 12px; border: 0;" />
+          <p style="margin: 12px 0 6px;">You're receiving this as a Story Pros founding member.</p>
+          <p style="margin: 0;"><a href="${unsubscribeUrl}" style="color: ${brandColor}; text-decoration: none;">Unsubscribe</a></p>
+        </div>
+      `;
+
       return {
-        subject: `Your free guide is ready, ${name}`,
+        subject: `Your free guide is ready, ${name}.`,
         html: `
           <div style="${containerStyles}">
             <div style="${cardStyles}">
@@ -384,8 +389,7 @@ function getEmailTemplate(
                 </p>
 
                 <p style="${baseStyles}">
-                  As a thank you, the <strong>"Executive Function Skills for Your Child"</strong> guide is
-                  yours, on us. It's normally a paid product in our resource library, but at Tier 2 it's free.
+                  As a thank you, the <strong>"Executive Function Skills for Your Child"</strong> guide is yours, on us. It's normally a paid product in our resource library, but at Tier 2 it's free.
                 </p>
 
                 <div style="text-align: center;">
@@ -393,9 +397,7 @@ function getEmailTemplate(
                 </div>
 
                 <p style="${baseStyles}">
-                  Inside you'll find practical strategies to help your child plan, focus, remember instructions,
-                  and manage big feelings, the kind of skills that support storytelling, schoolwork, and
-                  everyday life.
+                  Inside you'll find practical strategies to help your child plan, focus, remember instructions, and manage big feelings. The kind of skills that support storytelling, schoolwork, and everyday life.
                 </p>
 
                 <hr style="${dividerStyles}" />
@@ -403,13 +405,11 @@ function getEmailTemplate(
                 <p style="${baseStyles}"><strong>What's next: Tier 3 (75 pts), 50 Story Coins</strong></p>
 
                 <p style="${baseStyles}">
-                  Story Coins are yours to spend inside the Story Pros app at launch on themes, characters,
-                  and extras.
+                  Story Coins are yours to spend inside the Story Pros App at launch on themes, characters, and extras.
                 </p>
 
                 <p style="${baseStyles}">
-                  You're <strong>${pointsToNext} points away</strong>. The fastest way there is referrals.
-                  Every new person you bring in gets you 25 points.
+                  You're <strong>${pointsToNext} points away</strong>. The fastest way there is referrals. Every new person you bring in gets you 25 points.
                 </p>
 
                 <p style="${baseStyles}">
@@ -417,33 +417,24 @@ function getEmailTemplate(
                   <a href="${referralLink}" style="color: ${brandColor}; word-break: break-all;">${referralLink}</a>
                 </p>
 
-                <p style="${baseStyles}"><strong>A few messages to copy and paste if you'd like:</strong></p>
+                <p style="${baseStyles}"><strong>Something to share right now:</strong></p>
 
+                <p style="${baseStyles}"><strong>For a text:</strong></p>
                 <div style="${scriptBlock}">
-                  I'm on the early list for an app called Story Pros. It helps kids build the skills they
-                  need to tell stories and express what's on their mind, plus there's a monthly live community
-                  for families on Zoom. Worth a look: ${referralLink}
+                  "I just got a free guide on executive function skills for kids through Story Pros. It's an app and community for kids who need support with storytelling and language. Worth a look: ${referralLink}"
                 </div>
 
+                <p style="${baseStyles}; margin-bottom: 4px;"><strong>For a teacher, therapist, or friend:</strong></p>
                 <div style="${scriptBlock}">
-                  Hey! Found a new app and community I think you'd want to know about. Story Pros helps
-                  kids retell stories, put their thoughts in order, and find the right words, plus there's
-                  a monthly live group for kids on Zoom. I just joined: ${referralLink}
-                </div>
-
-                <p style="${baseStyles}; margin-bottom: 4px;"><strong>For a teacher or therapist:</strong></p>
-                <div style="${scriptBlock}">
-                  I came across something called Story Pros. It's an app and monthly community built by
-                  speech-language pathologists and teachers that helps kids with storytelling and narrative
-                  language. Thought you'd want a look: ${referralLink}
+                  "I came across something called Story Pros. It's an app and monthly community built by speech-language pathologists and teachers that helps kids with storytelling and narrative language. I just unlocked a free guide on executive function skills and thought you'd want to check it out: ${referralLink}"
                 </div>
 
                 ${ctaPair(referralLink, dashboard)}
 
-                <p style="${baseStyles}">Talk soon,<br/>${SIGN_OFF}</p>
+                <p style="${baseStyles}">Warmly,<br/>Camesha, Jinean and the Story Pros Team</p>
               </div>
 
-              ${footerBlock}
+              ${tier2Footer}
             </div>
           </div>
         `,
