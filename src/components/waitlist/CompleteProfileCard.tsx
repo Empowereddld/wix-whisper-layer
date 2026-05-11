@@ -12,25 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
-const HOPE_OPTIONS = [
-  { value: "understanding_stories", label: "Understanding stories" },
-  { value: "retelling", label: "Retelling" },
-  { value: "putting_events_in_order", label: "Putting events in order" },
-  { value: "vocabulary", label: "Vocabulary" },
-  { value: "confidence", label: "Confidence" },
-  { value: "other", label: "Other" },
-];
-
-const HEAR_ABOUT_OPTIONS = [
-  { value: "facebook_group", label: "Facebook group" },
-  { value: "friend_or_family", label: "Friend or family referral" },
-  { value: "slp_recommendation", label: "SLP recommendation" },
-  { value: "social_media", label: "Social media" },
-  { value: "other", label: "Other" },
-];
-
-const AGE_OPTIONS = Array.from({ length: 16 }, (_, i) => i + 3); // 3..18
+import { AGE_OPTIONS, HEAR_ABOUT_OPTIONS, HOPE_OPTIONS } from "@/lib/storypros-profile";
 
 interface Props {
   onSubmit: (input: {
