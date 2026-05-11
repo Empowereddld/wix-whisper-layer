@@ -1130,8 +1130,19 @@ const StoryProsDashboard = () => {
                 You're {nextThreshold - wl.points} points away from your next reward.
               </p>
               <div className="bg-white rounded-lg p-4 border border-[#dedede]">
-                <p className="font-semibold text-[#3b1f59]">{TIER_REWARDS[currentTier + 1]?.name}</p>
-                <p className="text-sm text-gray-500 mt-1">{TIER_REWARDS[currentTier + 1]?.description}</p>
+                {currentTier + 1 >= 4 ? (
+                  <>
+                    <p className="font-semibold text-[#3b1f59]">{TIER_NAMES[currentTier + 1]} Mystery Reward</p>
+                    <p className="text-sm text-gray-500 mt-1">
+                      Reach {TIER_NAMES[currentTier + 1]} ({nextThreshold} pts) to reveal this reward.
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <p className="font-semibold text-[#3b1f59]">{TIER_REWARDS[currentTier + 1]?.name}</p>
+                    <p className="text-sm text-gray-500 mt-1">{TIER_REWARDS[currentTier + 1]?.description}</p>
+                  </>
+                )}
               </div>
             </Card>
           </motion.div>
