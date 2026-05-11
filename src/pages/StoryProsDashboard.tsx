@@ -42,6 +42,7 @@ import RewardsInventory from "@/components/waitlist/RewardsInventory";
 import ScriptCarousel from "@/components/waitlist/ScriptCarousel";
 import SharePostFlow from "@/components/waitlist/SharePostFlow";
 import CompleteProfileCard from "@/components/waitlist/CompleteProfileCard";
+import EditProfileDialog from "@/components/waitlist/EditProfileDialog";
 import { useStorybuildersWaitlist } from "@/hooks/useStorybuildersWaitlist";
 import { useIsMobile } from "@/hooks/use-mobile";
 import {
@@ -72,6 +73,7 @@ const StoryProsDashboard = () => {
   const [authHydrating, setAuthHydrating] = useState(false);
   const [recoveryInvalid, setRecoveryInvalid] = useState(false);
   const [roleEditOpen, setRoleEditOpen] = useState(false);
+  const [editProfileOpen, setEditProfileOpen] = useState(false);
   const [roleDraft, setRoleDraft] = useState<string>("");
   const [roleOtherDraft, setRoleOtherDraft] = useState<string>("");
   const [savingRole, setSavingRole] = useState(false);
