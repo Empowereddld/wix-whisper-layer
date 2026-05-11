@@ -72,6 +72,7 @@ const AdminWaitlistGuide = lazy(() => import("./pages/AdminWaitlistGuide"));
 // Lazy-loaded: Legal & misc
 const StoryBuilders = lazy(() => import("./pages/StoryBuilders"));
 const StoryProsDashboard = lazy(() => import("./pages/StoryProsDashboard"));
+const ClaimFounder = lazy(() => import("./pages/ClaimFounder"));
 const VerifySuccess = lazy(() => import("./pages/VerifySuccess"));
 const WaitlistUserGuide = lazy(() => import("./pages/WaitlistUserGuide"));
 const EarlySupportersWall = lazy(() => import("./pages/EarlySupportersWall"));
