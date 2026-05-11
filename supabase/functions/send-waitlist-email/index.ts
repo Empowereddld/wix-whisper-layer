@@ -446,7 +446,7 @@ function getEmailTemplate(
     // ============================================================
     case "email4_tier3": {
       return {
-        subject: `You just earned 50 Story Coins, ${name}`,
+        subject: `You just earned 50 Story Coins, ${name}.`,
         html: `
           <div style="${containerStyles}">
             <div style="${cardStyles}">
@@ -459,8 +459,6 @@ function getEmailTemplate(
                   You did it. You just hit <strong>75 points</strong> and crossed into <strong>Tier 3</strong>.
                 </p>
 
-                <p style="${baseStyles}">Here's what that means:</p>
-
                 <p style="${baseStyles}">
                   <strong>50 Story Coins are yours.</strong> They'll land in your account the moment Story
                   Pros launches, ready to spend on stories, characters, and extras inside the app.
@@ -468,13 +466,17 @@ function getEmailTemplate(
 
                 <hr style="${dividerStyles}" />
 
-                <p style="${baseStyles}"><strong>What's next: Tier 4 (130 pts), VIP Beta Access + Suggestion Board</strong></p>
+                <p style="${baseStyles}"><strong>What's next: Tier 4 (130 pts), VIP Beta Access + The Suggestion Box</strong></p>
 
                 <p style="${baseStyles}">
                   At Tier 4, you'll be one of the first families inside Story Pros before it launches.
-                  You'll test the app, use it with your child, and help shape the final product with real
-                  feedback. You'll also unlock the Suggestion Board, where you can weigh in on what we
-                  build next, both in the app and in our Monthly Live Community Circles.
+                  You'll test the app, use it with your child, and help shape the final product with real feedback.
+                </p>
+
+                <p style="${baseStyles}">
+                  You'll also unlock the Suggestion Box, where you can submit ideas for what we build next
+                  and vote on suggestions from other founding members. From story themes and characters to
+                  app features and Community Circle topics, your voice helps shape the app your child will use.
                 </p>
 
                 <p style="${baseStyles}">You're <strong>${pointsToNext} points away</strong>.</p>
@@ -484,17 +486,22 @@ function getEmailTemplate(
                   <a href="${referralLink}" style="color: ${brandColor}; word-break: break-all;">${referralLink}</a>
                 </p>
 
-                <p style="${baseStyles}"><strong>A message to copy and paste if you'd like:</strong></p>
+                <p style="${baseStyles}"><strong>Something to share right now:</strong></p>
 
                 <div style="${scriptBlock}">
-                  Hey!! Wanted to send you this. Story Pros is a new app and community built by
-                  speech-language pathologists and teachers to help kids with storytelling and language
-                  skills. I've been sharing it with people I care about: ${referralLink}
+                  For a text: "I found an app called Story Pros that helps kids build storytelling and
+                  language skills, plus there's a monthly live community on Zoom. Thought of you: ${referralLink}"
+                </div>
+
+                <div style="${scriptBlock}">
+                  For a friend or therapist: "I've been part of the early community for Story Pros. It's
+                  built by speech-language pathologists and teachers to help kids with storytelling and
+                  language. I'm helping shape the app before it launches and thought you'd want in: ${referralLink}"
                 </div>
 
                 ${ctaPair(referralLink, dashboard)}
 
-                <p style="${baseStyles}">Talk soon,<br/>${SIGN_OFF}</p>
+                <p style="${baseStyles}">Warmly,<br/>${SIGN_OFF}</p>
               </div>
 
               ${footerBlock}
