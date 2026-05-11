@@ -211,6 +211,72 @@ export type Database = {
         }
         Relationships: []
       }
+      founder_claims: {
+        Row: {
+          additional_notes: string | null
+          founder_slot_number: number | null
+          fulfilled_at: string | null
+          id: string
+          inscription_note: string | null
+          inscription_to: string
+          merch_size: string | null
+          recipient_name: string
+          shipping_city: string
+          shipping_country: string
+          shipping_phone: string | null
+          shipping_postal_code: string
+          shipping_region: string
+          shipping_street: string
+          shipping_street2: string | null
+          status: string
+          submitted_at: string
+          updated_at: string
+          waitlist_id: string
+        }
+        Insert: {
+          additional_notes?: string | null
+          founder_slot_number?: number | null
+          fulfilled_at?: string | null
+          id?: string
+          inscription_note?: string | null
+          inscription_to: string
+          merch_size?: string | null
+          recipient_name: string
+          shipping_city: string
+          shipping_country: string
+          shipping_phone?: string | null
+          shipping_postal_code: string
+          shipping_region: string
+          shipping_street: string
+          shipping_street2?: string | null
+          status?: string
+          submitted_at?: string
+          updated_at?: string
+          waitlist_id: string
+        }
+        Update: {
+          additional_notes?: string | null
+          founder_slot_number?: number | null
+          fulfilled_at?: string | null
+          id?: string
+          inscription_note?: string | null
+          inscription_to?: string
+          merch_size?: string | null
+          recipient_name?: string
+          shipping_city?: string
+          shipping_country?: string
+          shipping_phone?: string | null
+          shipping_postal_code?: string
+          shipping_region?: string
+          shipping_street?: string
+          shipping_street2?: string | null
+          status?: string
+          submitted_at?: string
+          updated_at?: string
+          waitlist_id?: string
+        }
+        Relationships: []
+      }
       lead_captures: {
         Row: {
           created_at: string
