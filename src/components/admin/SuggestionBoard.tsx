@@ -171,7 +171,7 @@ const SuggestionBoard = () => {
                             onClick={() => updateStatus(s.id, "done")}
                           >
                             <Check className="h-3 w-3 mr-1" />
-                            Done
+                            Built
                           </Button>
                         )}
                         <Button
