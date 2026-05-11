@@ -534,6 +534,18 @@ const StoryProsDashboard = () => {
                       </span>
                     </>
                   ) : null}
+                  {wl.profileCompleted && (
+                    <>
+                      {" · "}
+                      <button
+                        type="button"
+                        onClick={() => setEditProfileOpen(true)}
+                        className="text-[#8861d4] hover:underline font-medium"
+                      >
+                        Edit profile
+                      </button>
+                    </>
+                  )}
                 </p>
               </div>
             </div>
