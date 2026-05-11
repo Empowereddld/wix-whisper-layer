@@ -20,9 +20,9 @@ interface Suggestion {
 
 const COLUMN_DEFS: { id: string; title: string }[] = [
   { id: "pending", title: "New" },
-  { id: "under_review", title: "Under Review" },
-  { id: "planned", title: "Planned" },
-  { id: "done", title: "Done" },
+  { id: "under_review", title: "Considering" },
+  { id: "planned", title: "Building" },
+  { id: "done", title: "Built" },
 ];
 
 const SuggestionBoard = () => {
