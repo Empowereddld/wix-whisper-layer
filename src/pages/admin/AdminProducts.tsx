@@ -146,16 +146,6 @@ const AdminProducts = () => {
               <label className="text-sm font-medium mb-1 block">Price ($)</label>
               <Input type="number" step="0.01" min="0" value={price} onChange={(e) => setPrice(e.target.value)} placeholder="9.99" />
             </div>
-            <div>
-              <label className="text-sm font-medium mb-1 block">Currency</label>
-              <Select value={currency} onValueChange={setCurrency}>
-                <SelectTrigger><SelectValue /></SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="CAD">CAD</SelectItem>
-                  <SelectItem value="USD">USD</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
             <Button className="w-full" onClick={() => saveMutation.mutate()} disabled={saveMutation.isPending || (!editing && !resourceId) || !price}>
               {saveMutation.isPending ? "Saving…" : editing ? "Update" : "Create Product"}
             </Button>
