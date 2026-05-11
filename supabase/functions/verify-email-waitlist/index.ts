@@ -163,13 +163,15 @@ Deno.serve(async (req) => {
       });
     }
 
-    // Check token expiry - must be within 24 hours
+    // Check token expiry - must be within 7 days (168 hours).
+    // Parents are busy; if it expires they can self-serve a fresh link
+    // from the unverified dashboard via "Resend verification email".
     if (user.verification_sent_at) {
       const sentAt = new Date(user.verification_sent_at);
       const now = new Date();
       const hoursDiff = (now.getTime() - sentAt.getTime()) / (1000 * 60 * 60);
 
-      if (hoursDiff > 24) {
+      if (hoursDiff > 168) {
         return new Response(getErrorHTML("This verification link has expired. Please request a new one."), {
           status: 410,
           headers: { "Access-Control-Allow-Origin": "*", "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store" },
