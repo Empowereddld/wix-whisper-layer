@@ -511,7 +511,7 @@ function getEmailTemplate(
                 <p style="${baseStyles}">Warmly,<br/>${SIGN_OFF}</p>
               </div>
 
-              ${footerBlock}
+              ${footerBlockNoPS}
             </div>
           </div>
         `,
