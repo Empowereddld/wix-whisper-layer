@@ -190,12 +190,23 @@ const AdminStoryBuilders = () => {
 
     if (searchTerm) {
       const term = searchTerm.toLowerCase();
-      filtered = users.filter(
+      filtered = filtered.filter(
         (u) =>
           u.name.toLowerCase().includes(term) ||
           u.email.toLowerCase().includes(term) ||
           u.referral_code.toLowerCase().includes(term)
       );
+    }
+
+    if (ageFilter !== "any") {
+      const range = AGE_RANGES.find((r) => r.value === ageFilter);
+      if (range) {
+        filtered = filtered.filter((u) => u.child_age != null && range.test(u.child_age));
+      }
+    }
+
+    if (hopeFilter !== "any") {
+      filtered = filtered.filter((u) => Array.isArray(u.hopes) && u.hopes.includes(hopeFilter));
     }
 
     if (sortBy === "name") {
@@ -207,7 +218,7 @@ const AdminStoryBuilders = () => {
     }
 
     return filtered;
-  }, [users, searchTerm, sortBy]);
+  }, [users, searchTerm, sortBy, ageFilter, hopeFilter]);
 
   const topReferrers = useMemo(() => {
     return [...users]
