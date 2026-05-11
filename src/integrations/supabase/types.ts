@@ -1015,6 +1015,12 @@ export type Database = {
       }
       get_resource_price: { Args: { p_resource_id: string }; Returns: number }
       get_storybuilders_waitlist_count: { Args: never; Returns: number }
+      get_user_voted_suggestions: {
+        Args: { p_referral_code: string }
+        Returns: {
+          suggestion_id: string
+        }[]
+      }
       get_waitlist_by_referral: {
         Args: { p_code: string }
         Returns: {
@@ -1072,10 +1078,9 @@ export type Database = {
       submit_waitlist_suggestion: {
         Args: {
           p_category: string
-          p_description: string
           p_points: number
           p_referral_code: string
-          p_title: string
+          p_text: string
         }
         Returns: {
           message: string
