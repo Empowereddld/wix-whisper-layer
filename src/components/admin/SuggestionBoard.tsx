@@ -147,7 +147,7 @@ const SuggestionBoard = () => {
                             onClick={() => updateStatus(s.id, "under_review")}
                           >
                             <Star className="h-3 w-3 mr-1" />
-                            Review
+                            Considering
                           </Button>
                         )}
                         {s.status !== "planned" && (
