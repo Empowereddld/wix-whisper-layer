@@ -99,6 +99,11 @@ Deno.serve(async (req) => {
             template = "email7b_tier6_legend";
           }
 
+          const claimUrl =
+            template === "email7_tier6_founder"
+              ? `${BASE_URL}/storypros/claim-founder?token=${u.id}`
+              : undefined;
+
           const { error: sendError } = await supabase.functions.invoke("send-waitlist-email", {
             body: {
               template,
@@ -108,6 +113,7 @@ Deno.serve(async (req) => {
                 referral_link: referralLink,
                 founder_slot_number: founderSlot ?? undefined,
                 referral_count: undefined,
+                claim_url: claimUrl,
               },
             },
           });
