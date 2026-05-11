@@ -112,7 +112,7 @@ Deno.serve(async (req) => {
                 name: firstName,
                 referral_link: referralLink,
                 founder_slot_number: founderSlot ?? undefined,
-                referral_count: undefined,
+                referral_count: u.invite_count ?? 0,
                 claim_url: claimUrl,
               },
             },
