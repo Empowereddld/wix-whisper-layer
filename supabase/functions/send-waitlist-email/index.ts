@@ -716,7 +716,7 @@ function getEmailTemplate(
                 <p style="${baseStyles}">
                   Every person you brought in is a family whose child will have access to something that
                   helps them put their thoughts into words and share their world. That's what your 500
-                  points actually represent. Not numbers. Real kids. And you made that happen.
+                  points represent. Not numbers. Real kids. And you made that happen.
                 </p>
 
                 <p style="${baseStyles}"><strong>Here's what you've unlocked:</strong></p>
@@ -756,9 +756,19 @@ function getEmailTemplate(
                   about 60 seconds. Once all 20 Founder slots are claimed, we ship everything together.
                 </p>
 
+                <hr style="${dividerStyles}" />
+
+                <p style="${baseStyles}"><strong>What happens now?</strong></p>
+
                 <p style="${baseStyles}">
-                  Your link still works. And every person you bring in is still another child who gets
-                  closer to being part of a community where they're not the only one.
+                  You've reached the top of the waitlist. When Story Pros officially launches, you'll be
+                  the first to know. We'll send you everything you need to get your child started, and
+                  your Founder Pricing and Monthly Live Community Circles kick in from day one.
+                </p>
+
+                <p style="${baseStyles}">
+                  Until then, your link still works. And every person you bring in is still another child
+                  who gets closer to being part of a community where they're not the only one.
                 </p>
 
                 <div style="text-align: center;">
