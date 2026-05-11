@@ -489,11 +489,12 @@ const AdminStoryBuilders = () => {
                 <div className="overflow-x-auto">
                   <Table>
                     <TableHeader className="bg-muted">
-                      <TableRow className="border-b border-border">
+                       <TableRow className="border-b border-border">
                         <TableHead className="text-foreground">Name</TableHead>
                         <TableHead className="text-foreground">Email</TableHead>
                         <TableHead className="text-foreground">Role</TableHead>
-                        <TableHead className="text-foreground">Referral Code</TableHead>
+                        <TableHead className="text-foreground">Child Age</TableHead>
+                        <TableHead className="text-foreground">Hopes</TableHead>
                         <TableHead className="text-right text-foreground">Referrals</TableHead>
                         <TableHead className="text-foreground">Tier</TableHead>
                         <TableHead className="text-foreground">Joined</TableHead>
@@ -505,10 +506,17 @@ const AdminStoryBuilders = () => {
                         filteredUsers.map((user) => (
                           <TableRow
                             key={user.id}
-                            className="hover:bg-muted border-b border-border"
+                            className="hover:bg-muted border-b border-border cursor-pointer"
+                            onClick={() => setDetailUser(user)}
                           >
                             <TableCell className="font-medium text-foreground">
-                              {user.name}
+                              <button
+                                type="button"
+                                className="text-left hover:text-primary hover:underline"
+                                onClick={(e) => { e.stopPropagation(); setDetailUser(user); }}
+                              >
+                                {user.name}
+                              </button>
                             </TableCell>
                             <TableCell className="text-sm text-muted-foreground">
                               {user.email}
@@ -518,8 +526,11 @@ const AdminStoryBuilders = () => {
                                 ? formatRole(user.role, user.role_other)
                                 : <span className="italic text-muted-foreground/60">—</span>}
                             </TableCell>
-                            <TableCell className="font-mono text-xs text-muted-foreground">
-                              {user.referral_code}
+                            <TableCell className="text-sm text-muted-foreground">
+                              {user.child_age != null ? user.child_age : <span className="italic text-muted-foreground/60">—</span>}
+                            </TableCell>
+                            <TableCell className="text-xs text-muted-foreground max-w-[220px] truncate" title={formatHopes(user.hopes)}>
+                              {formatHopes(user.hopes)}
                             </TableCell>
                             <TableCell className="text-right font-semibold text-foreground">
                               {user.invite_count}
@@ -540,7 +551,7 @@ const AdminStoryBuilders = () => {
                                 variant="ghost"
                                 size="icon"
                                 className="text-muted-foreground hover:text-destructive hover:bg-destructive/10"
-                                onClick={() => setUserToDelete(user)}
+                                onClick={(e) => { e.stopPropagation(); setUserToDelete(user); }}
                                 aria-label={`Delete ${user.name}`}
                               >
                                 <Trash2 className="h-4 w-4" />
@@ -550,7 +561,7 @@ const AdminStoryBuilders = () => {
                         ))
                       ) : (
                         <TableRow>
-                          <TableCell colSpan={8} className="text-center py-12">
+                          <TableCell colSpan={9} className="text-center py-12">
                             <p className="text-muted-foreground">
                               {users.length === 0 ? "No users in the waitlist yet" : "No results matching your search"}
                             </p>
