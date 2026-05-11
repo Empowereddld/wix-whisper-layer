@@ -106,7 +106,7 @@ const AdminStoryBuilders = () => {
       setError(null);
       const { data, error: fetchError } = await supabase
         .from("storybuilders_waitlist")
-        .select("id, name, email, referral_code, invite_count, points, email_verified, created_at, role, role_other")
+        .select("id, name, email, referral_code, invite_count, points, email_verified, created_at, role, role_other, child_age, hopes, hopes_other, hear_about, profile_completed_at")
         .is("deleted_at", null)
         .order("created_at", { ascending: false });
 
