@@ -45,3 +45,6 @@ verify_jwt = false
 [functions.weekly-app-summary]
 verify_jwt = false
 
+[functions.claim-founder-package]
+verify_jwt = false
+
