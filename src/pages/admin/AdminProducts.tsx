@@ -103,7 +103,6 @@ const AdminProducts = () => {
               <TableRow>
                 <TableHead>Resource</TableHead>
                 <TableHead>Price</TableHead>
-                <TableHead>Currency</TableHead>
                 <TableHead>Active</TableHead>
                 <TableHead>Actions</TableHead>
               </TableRow>
@@ -112,8 +111,7 @@ const AdminProducts = () => {
               {products.map((p) => (
                 <TableRow key={p.id}>
                   <TableCell className="font-medium">{p.resource_title}</TableCell>
-                  <TableCell>{formatPrice(p.price, p.currency)}</TableCell>
-                  <TableCell>{p.currency}</TableCell>
+                  <TableCell>{formatPrice(p.price)}</TableCell>
                   <TableCell>
                     <Switch checked={p.is_active} onCheckedChange={(v) => toggleActive.mutate({ id: p.id, active: v })} />
                   </TableCell>
