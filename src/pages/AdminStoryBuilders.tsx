@@ -74,6 +74,9 @@ const AdminStoryBuilders = () => {
   const [showUserPreview, setShowUserPreview] = useState(false);
   const [userToDelete, setUserToDelete] = useState<WaitlistUser | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [ageFilter, setAgeFilter] = useState<string>("any");
+  const [hopeFilter, setHopeFilter] = useState<string>("any");
+  const [detailUser, setDetailUser] = useState<WaitlistUser | null>(null);
 
   const handleDeleteUser = useCallback(async () => {
     if (!userToDelete) return;
