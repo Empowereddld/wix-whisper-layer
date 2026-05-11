@@ -180,6 +180,13 @@ function getEmailTemplate(
       <p style="margin: 0;"><a href="${unsubscribeUrl}" style="color: ${brandColor}; text-decoration: none;">Unsubscribe</a></p>
     </div>
   `;
+  const footerBlockNoPS = `
+    <div style="${footerStyles}">
+      <img src="${LOGO_URL}" alt="Story Pros" width="96" style="display: inline-block; max-width: 96px; height: auto; opacity: 0.9; margin-bottom: 12px; border: 0;" />
+      <p style="margin: 12px 0 6px;">You're receiving this as a Story Pros founding member.</p>
+      <p style="margin: 0;"><a href="${unsubscribeUrl}" style="color: ${brandColor}; text-decoration: none;">Unsubscribe</a></p>
+    </div>
+  `;
 
   const name = data.name || "there";
   const referralLink =
