@@ -913,7 +913,7 @@ Events to enable:
                 <li>Submissions appear in the Founders tab of the Story Pros admin dashboard</li>
               </ul>
               <p className="text-sm text-gray-500 mb-4">
-                <strong>IMPORTANT:</strong> Once 20 users reach Tier 6, additional members who hit 500 points become Legends instead and receive 100 bonus Story Coins (no book).
+                <strong>IMPORTANT:</strong> Once 20 users reach Tier 6, additional members who hit 500 points receive 100 bonus Story Coins instead of the book.
               </p>
               <p className="text-sm text-gray-500">
                 Fulfill Founders in slot order (#1 to #20) once all 20 slots are claimed.
