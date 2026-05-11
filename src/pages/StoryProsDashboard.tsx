@@ -1245,6 +1245,21 @@ const StoryProsDashboard = () => {
         </DialogFooter>
       </DialogContent>
     </Dialog>
+
+    {wl.referralCode && (
+      <EditProfileDialog
+        open={editProfileOpen}
+        onOpenChange={setEditProfileOpen}
+        referralCode={wl.referralCode}
+        initial={{
+          childAge: wl.childAge,
+          hopes: wl.hopes,
+          hopesOther: wl.hopesOther,
+          hearAbout: wl.hearAbout,
+        }}
+        onSaved={() => wl.refreshStats()}
+      />
+    )}
     </div>
   );
 };
