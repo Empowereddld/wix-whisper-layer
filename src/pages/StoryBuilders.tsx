@@ -39,7 +39,7 @@ const milestones = [
  { invites: 3, label: "Tier 3 (75 pts)", reward: "50 Story Coins dropped into your account to spend on in-app extras at launch" },
  { invites: 5, label: "Tier 4 (130 pts)", reward: "VIP Beta access to test Story Pros before launch and help shape the final product" },
  { invites: 10, label: "Tier 5 (250 pts)", reward: "Founder Pricing locked for life: $7.99/month forever instead of $9.99 (points double from this tier on)" },
- { invites: -1, label: "Tier 6 (500 pts)", reward: "Signed Dan & Daria book plus DLD-themed merch, limited to the first 50 members to reach Tier 6 by June 1" },
+ { invites: -1, label: "Tier 6 (500 pts)", reward: "Signed Dan & Daria book with a handwritten note, limited to the first 20 members to reach Tier 6" },
 ];
 
 const COLLECTIVE_GOAL = 4000;
@@ -902,8 +902,8 @@ const StoryBuilders = () => {
               },
               {
                 task: "Tier 6 — 500 points",
-                impact: "You're a true Story Pros founder. Limited to the first 50 members to reach Tier 6 by June 1.",
-                reward: { icon: <Crown size={20} />, title: "Signed Dan & Daria book + DLD-themed merch", desc: "A signed copy of the Dan & Daria book and exclusive DLD-themed merch shipped to you, plus your Tier 6 Founder badge", subdesc: "After the first 50 Founder slots are claimed, additional Tier 6 members earn 100 bonus Story Coins as Legends" },
+                impact: "You're a true Story Pros founder. Limited to the first 20 members to reach Tier 6.",
+                reward: { icon: <Crown size={20} />, title: "Signed Dan & Daria book", desc: "A personally signed copy of the Dan & Daria book with a handwritten note, plus your Tier 6 Founder badge", subdesc: "After the first 20 Founder slots are claimed, additional Tier 6 members earn 100 bonus Story Coins as Legends" },
                 invites: 25,
               },
             ];
