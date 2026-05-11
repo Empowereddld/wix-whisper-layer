@@ -842,7 +842,7 @@ function getEmailTemplate(
                   ${tierLine("Tier 1", "Development Updates + Early Supporters Wall")}
                   ${tierLine("Tier 2", "Free Executive Function guide")}
                   ${tierLine("Tier 3", "50 Story Coins")}
-                  ${tierLine("Tier 4", "Early testing access + Suggestion Board")}
+                  ${tierLine("Tier 4", "Early testing access + Suggestion Box")}
                   ${tierLine("Tier 5", "Founder Pricing + double points")}
                   ${tierLine("Tier 6", "Legend status + 100 bonus Story Coins + Legend badge", true)}
                 </ul>
