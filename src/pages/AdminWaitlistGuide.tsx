@@ -77,7 +77,7 @@ const sections: Section[] = [
     id: "tier-rewards",
     title: "Tier Rewards Fulfillment",
     icon: Gift,
-    subsections: ["Tier 1 (Starter)", "Tier 2 (Early Access)", "Tier 3 (Story Coins)", "Tier 4 (Founding Voice)", "Tier 5 (Founder Pricing)", "Tier 6 (Founding Elite) - CAPPED AT 50", "Social Follow/Subscribe System", "Story Coins System", "Rewards Inventory Tab"],
+    subsections: ["Tier 1 (Founding Member)", "Tier 2 (EF Guide)", "Tier 3 (Story Coins)", "Tier 4 (VIP Beta + Suggestion Box)", "Tier 5 (Founder Pricing)", "Tier 6 (Founder) — CAPPED AT 20", "Social Follow/Subscribe System", "Story Coins System", "Rewards Inventory Tab"],
   },
   {
     id: "troubleshooting",
