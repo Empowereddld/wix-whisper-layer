@@ -750,6 +750,212 @@ const StoryProsDashboard = () => {
           </motion.div>
         </div>
 
+
+        {/* Referral Link + Share Preview */}
+        <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.3 }}>
+          <Card className="bg-background border border-border rounded-2xl shadow-sm p-4 sm:p-6">
+            <h3 className="font-sans font-bold text-foreground text-lg sm:text-xl mb-4">Your Referral Link</h3>
+            <div className="flex gap-2">
+              <div className="flex-1 bg-muted border border-border rounded-lg px-4 py-3 font-mono text-sm text-foreground truncate">
+                {wl.referralLink || "—"}
+              </div>
+              <Button
+                onClick={handleCopy}
+                className="bg-primary hover:bg-primary/90 text-primary-foreground"
+              >
+                {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+              </Button>
+            </div>
+
+            {/* Share preview — what your friends will see (collapsed by default on mobile) */}
+            <div className="mt-5">
+              <button
+                type="button"
+                onClick={() => setSharePreviewOpen((v) => !v)}
+                className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground hover:text-foreground transition-colors"
+                aria-expanded={sharePreviewOpen}
+              >
+                <Sparkles className="h-3.5 w-3.5 text-primary" />
+                Preview when shared
+                {sharePreviewOpen ? (
+                  <span aria-hidden className="text-muted-foreground/70">−</span>
+                ) : (
+                  <span aria-hidden className="text-muted-foreground/70">+</span>
+                )}
+              </button>
+              {sharePreviewOpen && (
+                <div className="mt-3">
+                  <div className="rounded-xl border border-border overflow-hidden bg-white w-full max-w-sm">
+                    <div className="aspect-[2/1] w-full overflow-hidden bg-muted">
+                      <img
+                        src={storypros}
+                        alt="Story Pros share preview"
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div className="p-3 border-t border-border">
+                      <p className="text-[11px] uppercase tracking-wide text-muted-foreground">
+                        empowereddld.com
+                      </p>
+                      <p className="text-sm font-semibold text-foreground leading-snug mt-1">
+                        Story Pros — the storytelling app for kids with DLD
+                      </p>
+                      <p className="text-xs text-muted-foreground mt-1 leading-snug">
+                        Built by an SLP and an elementary school teacher. Join the founding waitlist.
+                      </p>
+                    </div>
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-2 leading-snug">
+                    This is how your link appears in iMessage, WhatsApp, Facebook, and X when someone receives it.
+                  </p>
+                </div>
+              )}
+            </div>
+          </Card>
+        </motion.div>
+
+        {/* Share */}
+        <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.35 }}>
+          <Card className="bg-background border border-border rounded-2xl shadow-sm p-4 sm:p-6">
+            <h3 className="font-sans font-bold text-foreground text-lg sm:text-xl mb-2">Share & Earn Referrals</h3>
+            <p className="text-sm text-muted-foreground mb-4 leading-snug">
+              Tap a platform for a quick text share with a ready-made caption. Want a richer post with an image? Use <strong>Share a Post</strong> below.
+            </p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              <Button onClick={() => handleShare("twitter")} className="bg-foreground hover:bg-foreground/90 text-background flex items-center gap-2">
+                <Twitter className="h-4 w-4" />
+                <span className="hidden sm:inline">Twitter</span>
+              </Button>
+              <Button onClick={() => handleShare("facebook")} className="bg-[#1877F2] hover:bg-[#0A66C2] text-white flex items-center gap-2">
+                <Facebook className="h-4 w-4" />
+                <span className="hidden sm:inline">Facebook</span>
+              </Button>
+              <Button onClick={() => handleShare("email")} className="bg-[#EA4335] hover:bg-[#C5221F] text-white flex items-center gap-2">
+                <Mail className="h-4 w-4" />
+                <span className="hidden sm:inline">Email</span>
+              </Button>
+              <Button onClick={() => handleShare("whatsapp")} className="bg-[#25D366] hover:bg-[#128C7E] text-white flex items-center gap-2">
+                <Share2 className="h-4 w-4" />
+                <span className="hidden sm:inline">WhatsApp</span>
+              </Button>
+              <Button onClick={() => handleShare("instagram")} className="bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 hover:opacity-90 text-white flex items-center gap-2">
+                <Instagram className="h-4 w-4" />
+                <span className="hidden sm:inline">Instagram</span>
+              </Button>
+              <Button onClick={handleCopy} className="bg-primary hover:bg-primary/90 text-primary-foreground flex items-center gap-2">
+                <Copy className="h-4 w-4" />
+                <span className="hidden sm:inline">Copy</span>
+              </Button>
+            </div>
+
+            {/* Scripts to share */}
+            <div className="mt-5 pt-5 border-t border-border">
+              <ScriptCarousel referralLink={wl.referralLink || ""} />
+            </div>
+
+          </Card>
+        </motion.div>
+
+        {/* Share a Post (Make It Yours) — guided share-first flow */}
+        <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.37 }}>
+          <SharePostFlow referralLink={wl.referralLink} onShareTracked={wl.trackShare} />
+        </motion.div>
+
+        {/* Impact */}
+        <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.5 }}>
+          <Card className="bg-gradient-to-br from-primary to-primary/80 text-primary-foreground rounded-2xl shadow-sm p-6 sm:p-8">
+            <div className="text-center space-y-2">
+              <p className="text-sm font-semibold uppercase tracking-wide opacity-90">Your Impact</p>
+              {wl.inviteCount === 0 ? (
+                <>
+                  <h3 className="font-sans font-bold text-2xl">
+                    Be the first to bring a family in 💜
+                  </h3>
+                  <p className="text-sm opacity-90 max-w-md mx-auto">
+                    Every family who joins through your link helps more kids with DLD find Story Pros at launch. Share your link above to get started.
+                  </p>
+                </>
+              ) : (
+                <>
+                  <h3 className="font-sans font-bold text-4xl">
+                    {wl.inviteCount} {wl.inviteCount === 1 ? "Family" : "Families"}
+                  </h3>
+                  <p className="text-sm opacity-90">discovered Story Pros because of you</p>
+                </>
+              )}
+            </div>
+          </Card>
+        </motion.div>
+
+        {/* Coming up */}
+        {nextThreshold && TIER_REWARDS[currentTier + 1] && (
+          <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.55 }}>
+            <Card className="bg-gradient-to-br from-[#f3ebf8] to-white border border-[#8861d4]/20 rounded-2xl shadow-sm p-4 sm:p-6">
+              <h3 className="font-sans font-bold text-[#3b1f59] text-lg sm:text-xl mb-2">
+                Coming at {TIER_NAMES[currentTier + 1]} ({nextThreshold} pts)
+              </h3>
+              <p className="text-sm text-gray-600 mb-4">
+                You're {nextThreshold - wl.points} points away from your next reward.
+              </p>
+              <div className="bg-white rounded-lg p-4 border border-[#dedede]">
+                {currentTier + 1 >= 4 ? (
+                  <>
+                    <p className="font-semibold text-[#3b1f59]">{TIER_NAMES[currentTier + 1]} Mystery Reward</p>
+                    <p className="text-sm text-gray-500 mt-1">
+                      Reach {TIER_NAMES[currentTier + 1]} ({nextThreshold} pts) to reveal this reward.
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <p className="font-semibold text-[#3b1f59]">{TIER_REWARDS[currentTier + 1]?.name}</p>
+                    <p className="text-sm text-gray-500 mt-1">{TIER_REWARDS[currentTier + 1]?.description}</p>
+                  </>
+                )}
+              </div>
+            </Card>
+          </motion.div>
+        )}
+
+        {/* Follow */}
+        <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.4 }}>
+          <Card className="bg-background border border-border rounded-2xl shadow-sm p-4 sm:p-6">
+            <h3 className="font-sans font-bold text-foreground text-lg sm:text-xl mb-2">Follow Us & Earn Points</h3>
+            <p className="text-sm text-muted-foreground mb-4">
+              Follow us on social media to earn bonus points per platform.
+            </p>
+            <div className="grid grid-cols-3 gap-3">
+              {([
+                { id: "instagram" as const, label: "Instagram", color: "bg-gradient-to-r from-purple-500 via-pink-500 to-red-500", url: SOCIAL_LINKS.INSTAGRAM, points: ONETIME_POINTS.FOLLOW_INSTAGRAM, Icon: Instagram },
+                { id: "facebook" as const, label: "Facebook", color: "bg-[#1877F2]", url: SOCIAL_LINKS.FACEBOOK, points: ONETIME_POINTS.FOLLOW_FACEBOOK, Icon: Facebook },
+                { id: "youtube" as const, label: "YouTube", color: "bg-red-600", url: SOCIAL_LINKS.YOUTUBE, points: ONETIME_POINTS.SUBSCRIBE_YOUTUBE, Icon: () => <span className="text-lg">▶️</span> },
+              ]).map(({ id, label, color, url, points, Icon }) => {
+                const followed = wl.socialClaims[id];
+                return (
+                  <Button
+                    key={id}
+                    onClick={() => handleFollowClick(id, url)}
+                    disabled={followed}
+                    className={`h-14 rounded-xl flex items-center justify-center gap-2 text-white font-medium transition-all ${
+                      followed
+                        ? "bg-emerald-500/20 border border-emerald-500/50 text-emerald-600"
+                        : `${color} hover:opacity-90`
+                    } disabled:opacity-100`}
+                    aria-label={followed ? `${label} followed, +${points} points awarded` : `Follow ${label} for ${points} points`}
+                  >
+                    {followed ? <Check className="h-5 w-5 text-emerald-500" /> : <Icon className="h-5 w-5" />}
+                    <span className="text-sm font-semibold">
+                      {followed ? `+${points} ✓` : `+${points}`}
+                    </span>
+                    <span className="hidden sm:inline text-sm font-normal opacity-90">
+                      {label}
+                    </span>
+                  </Button>
+                );
+              })}
+            </div>
+          </Card>
+        </motion.div>
+
         {/* How to Earn Points */}
         <motion.div
           initial={{ y: 20, opacity: 0 }}
@@ -872,156 +1078,6 @@ const StoryProsDashboard = () => {
           </Card>
         </motion.div>
 
-        {/* Referral Link + Share Preview */}
-        <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.3 }}>
-          <Card className="bg-background border border-border rounded-2xl shadow-sm p-4 sm:p-6">
-            <h3 className="font-sans font-bold text-foreground text-lg sm:text-xl mb-4">Your Referral Link</h3>
-            <div className="flex gap-2">
-              <div className="flex-1 bg-muted border border-border rounded-lg px-4 py-3 font-mono text-sm text-foreground truncate">
-                {wl.referralLink || "—"}
-              </div>
-              <Button
-                onClick={handleCopy}
-                className="bg-primary hover:bg-primary/90 text-primary-foreground"
-              >
-                {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-              </Button>
-            </div>
-
-            {/* Share preview — what your friends will see (collapsed by default on mobile) */}
-            <div className="mt-5">
-              <button
-                type="button"
-                onClick={() => setSharePreviewOpen((v) => !v)}
-                className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground hover:text-foreground transition-colors"
-                aria-expanded={sharePreviewOpen}
-              >
-                <Sparkles className="h-3.5 w-3.5 text-primary" />
-                Preview when shared
-                {sharePreviewOpen ? (
-                  <span aria-hidden className="text-muted-foreground/70">−</span>
-                ) : (
-                  <span aria-hidden className="text-muted-foreground/70">+</span>
-                )}
-              </button>
-              {sharePreviewOpen && (
-                <div className="mt-3">
-                  <div className="rounded-xl border border-border overflow-hidden bg-white w-full max-w-sm">
-                    <div className="aspect-[2/1] w-full overflow-hidden bg-muted">
-                      <img
-                        src={storypros}
-                        alt="Story Pros share preview"
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <div className="p-3 border-t border-border">
-                      <p className="text-[11px] uppercase tracking-wide text-muted-foreground">
-                        empowereddld.com
-                      </p>
-                      <p className="text-sm font-semibold text-foreground leading-snug mt-1">
-                        Story Pros — the storytelling app for kids with DLD
-                      </p>
-                      <p className="text-xs text-muted-foreground mt-1 leading-snug">
-                        Built by an SLP and an elementary school teacher. Join the founding waitlist.
-                      </p>
-                    </div>
-                  </div>
-                  <p className="text-xs text-muted-foreground mt-2 leading-snug">
-                    This is how your link appears in iMessage, WhatsApp, Facebook, and X when someone receives it.
-                  </p>
-                </div>
-              )}
-            </div>
-          </Card>
-        </motion.div>
-
-        {/* Share */}
-        <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.35 }}>
-          <Card className="bg-background border border-border rounded-2xl shadow-sm p-4 sm:p-6">
-            <h3 className="font-sans font-bold text-foreground text-lg sm:text-xl mb-2">Share & Earn Referrals</h3>
-            <p className="text-sm text-muted-foreground mb-4 leading-snug">
-              Tap a platform for a quick text share with a ready-made caption. Want a richer post with an image? Use <strong>Share a Post</strong> below.
-            </p>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-              <Button onClick={() => handleShare("twitter")} className="bg-foreground hover:bg-foreground/90 text-background flex items-center gap-2">
-                <Twitter className="h-4 w-4" />
-                <span className="hidden sm:inline">Twitter</span>
-              </Button>
-              <Button onClick={() => handleShare("facebook")} className="bg-[#1877F2] hover:bg-[#0A66C2] text-white flex items-center gap-2">
-                <Facebook className="h-4 w-4" />
-                <span className="hidden sm:inline">Facebook</span>
-              </Button>
-              <Button onClick={() => handleShare("email")} className="bg-[#EA4335] hover:bg-[#C5221F] text-white flex items-center gap-2">
-                <Mail className="h-4 w-4" />
-                <span className="hidden sm:inline">Email</span>
-              </Button>
-              <Button onClick={() => handleShare("whatsapp")} className="bg-[#25D366] hover:bg-[#128C7E] text-white flex items-center gap-2">
-                <Share2 className="h-4 w-4" />
-                <span className="hidden sm:inline">WhatsApp</span>
-              </Button>
-              <Button onClick={() => handleShare("instagram")} className="bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 hover:opacity-90 text-white flex items-center gap-2">
-                <Instagram className="h-4 w-4" />
-                <span className="hidden sm:inline">Instagram</span>
-              </Button>
-              <Button onClick={handleCopy} className="bg-primary hover:bg-primary/90 text-primary-foreground flex items-center gap-2">
-                <Copy className="h-4 w-4" />
-                <span className="hidden sm:inline">Copy</span>
-              </Button>
-            </div>
-
-            {/* Scripts to share */}
-            <div className="mt-5 pt-5 border-t border-border">
-              <ScriptCarousel referralLink={wl.referralLink || ""} />
-            </div>
-
-          </Card>
-        </motion.div>
-
-        {/* Share a Post (Make It Yours) — guided share-first flow */}
-        <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.37 }}>
-          <SharePostFlow referralLink={wl.referralLink} onShareTracked={wl.trackShare} />
-        </motion.div>
-
-        {/* Follow */}
-        <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.4 }}>
-          <Card className="bg-background border border-border rounded-2xl shadow-sm p-4 sm:p-6">
-            <h3 className="font-sans font-bold text-foreground text-lg sm:text-xl mb-2">Follow Us & Earn Points</h3>
-            <p className="text-sm text-muted-foreground mb-4">
-              Follow us on social media to earn bonus points per platform.
-            </p>
-            <div className="grid grid-cols-3 gap-3">
-              {([
-                { id: "instagram" as const, label: "Instagram", color: "bg-gradient-to-r from-purple-500 via-pink-500 to-red-500", url: SOCIAL_LINKS.INSTAGRAM, points: ONETIME_POINTS.FOLLOW_INSTAGRAM, Icon: Instagram },
-                { id: "facebook" as const, label: "Facebook", color: "bg-[#1877F2]", url: SOCIAL_LINKS.FACEBOOK, points: ONETIME_POINTS.FOLLOW_FACEBOOK, Icon: Facebook },
-                { id: "youtube" as const, label: "YouTube", color: "bg-red-600", url: SOCIAL_LINKS.YOUTUBE, points: ONETIME_POINTS.SUBSCRIBE_YOUTUBE, Icon: () => <span className="text-lg">▶️</span> },
-              ]).map(({ id, label, color, url, points, Icon }) => {
-                const followed = wl.socialClaims[id];
-                return (
-                  <Button
-                    key={id}
-                    onClick={() => handleFollowClick(id, url)}
-                    disabled={followed}
-                    className={`h-14 rounded-xl flex items-center justify-center gap-2 text-white font-medium transition-all ${
-                      followed
-                        ? "bg-emerald-500/20 border border-emerald-500/50 text-emerald-600"
-                        : `${color} hover:opacity-90`
-                    } disabled:opacity-100`}
-                    aria-label={followed ? `${label} followed, +${points} points awarded` : `Follow ${label} for ${points} points`}
-                  >
-                    {followed ? <Check className="h-5 w-5 text-emerald-500" /> : <Icon className="h-5 w-5" />}
-                    <span className="text-sm font-semibold">
-                      {followed ? `+${points} ✓` : `+${points}`}
-                    </span>
-                    <span className="hidden sm:inline text-sm font-normal opacity-90">
-                      {label}
-                    </span>
-                  </Button>
-                );
-              })}
-            </div>
-          </Card>
-        </motion.div>
-
         {/* Tier rewards / Claim / Coin Packs */}
         <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.42 }}>
           <Card className="bg-background border border-border rounded-2xl shadow-sm p-4 sm:p-6 relative overflow-hidden">
@@ -1093,49 +1149,6 @@ const StoryProsDashboard = () => {
           </motion.div>
         )}
 
-        {/* Impact */}
-        <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.5 }}>
-          <Card className="bg-gradient-to-br from-primary to-primary/80 text-primary-foreground rounded-2xl shadow-sm p-6 sm:p-8">
-            <div className="text-center space-y-2">
-              <p className="text-sm font-semibold uppercase tracking-wide opacity-90">Your Impact</p>
-              {wl.inviteCount === 0 ? (
-                <>
-                  <h3 className="font-sans font-bold text-2xl">
-                    Be the first to bring a family in 💜
-                  </h3>
-                  <p className="text-sm opacity-90 max-w-md mx-auto">
-                    Every family who joins through your link helps more kids with DLD find Story Pros at launch. Share your link above to get started.
-                  </p>
-                </>
-              ) : (
-                <>
-                  <h3 className="font-sans font-bold text-4xl">
-                    {wl.inviteCount} {wl.inviteCount === 1 ? "Family" : "Families"}
-                  </h3>
-                  <p className="text-sm opacity-90">discovered Story Pros because of you</p>
-                </>
-              )}
-            </div>
-          </Card>
-        </motion.div>
-
-        {/* Coming up */}
-        {nextThreshold && TIER_REWARDS[currentTier + 1] && (
-          <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.55 }}>
-            <Card className="bg-gradient-to-br from-[#f3ebf8] to-white border border-[#8861d4]/20 rounded-2xl shadow-sm p-4 sm:p-6">
-              <h3 className="font-sans font-bold text-[#3b1f59] text-lg sm:text-xl mb-2">
-                Coming at {TIER_NAMES[currentTier + 1]} ({nextThreshold} pts)
-              </h3>
-              <p className="text-sm text-gray-600 mb-4">
-                You're {nextThreshold - wl.points} points away from your next reward.
-              </p>
-              <div className="bg-white rounded-lg p-4 border border-[#dedede]">
-                <p className="font-semibold text-[#3b1f59]">{TIER_REWARDS[currentTier + 1]?.name}</p>
-                <p className="text-sm text-gray-500 mt-1">{TIER_REWARDS[currentTier + 1]?.description}</p>
-              </div>
-            </Card>
-          </motion.div>
-        )}
 
         {/* Bottom spacing */}
         <div className="h-12 sm:h-16" />

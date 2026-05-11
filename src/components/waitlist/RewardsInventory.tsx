@@ -8,6 +8,14 @@ import {
   Lock,
 } from "lucide-react";
 import CoinDropAnimation from "./CoinDropAnimation";
+import { TIER_THRESHOLDS } from "@/lib/waitlist-constants";
+
+// Tier 5 (idx 4) and Tier 6 (idx 5) keep their reward details hidden until
+// the user actually reaches that tier — preserves the surprise/reveal moment.
+const SURPRISE_TIER_INDEX = 4;
+const surpriseName = (idx: number) => `Tier ${idx + 1} Mystery Reward`;
+const surpriseDesc = (idx: number) =>
+  `Reach Tier ${idx + 1} (${TIER_THRESHOLDS[idx]} pts) to reveal this reward.`;
 
 export interface RewardsInventoryProps {
   currentTier: number;
@@ -263,10 +271,10 @@ export default function RewardsInventory({
                           </span>
                         </div>
                         <p className={`text-sm font-bold ${isUnlocked ? "text-[#3b1f59]" : "text-gray-500"}`}>
-                          {reward.name}
+                          {isLocked && idx >= SURPRISE_TIER_INDEX ? surpriseName(idx) : reward.name}
                         </p>
                         <p className={`text-xs ${isUnlocked ? "text-[#121212]" : "text-gray-400"}`}>
-                          {reward.description}
+                          {isLocked && idx >= SURPRISE_TIER_INDEX ? surpriseDesc(idx) : reward.description}
                         </p>
                       </div>
 
@@ -316,10 +324,10 @@ export default function RewardsInventory({
                           </span>
                         </div>
                         <p className={`text-sm font-bold ${!isLocked ? "text-[#3b1f59]" : "text-gray-500"}`}>
-                          {reward.name}
+                          {isLocked && idx >= SURPRISE_TIER_INDEX ? surpriseName(idx) : reward.name}
                         </p>
                         <p className={`text-xs mt-0.5 ${!isLocked ? "text-[#121212]" : "text-gray-400"}`}>
-                          {reward.description}
+                          {isLocked && idx >= SURPRISE_TIER_INDEX ? surpriseDesc(idx) : reward.description}
                         </p>
 
                         {/* Action */}
