@@ -97,8 +97,8 @@ const TIER_REWARDS: TierReward[] = [
   {
     tier: 5,
     rewardId: "tier_6_elite",
-    name: "Founder or Legend Reward",
-    description: "First 20 to Tier 6: signed Dan & Daria book with a handwritten note (Founder). After slots fill: 100 bonus Story Coins + Legend badge.",
+    name: "Tier 6 Reward",
+    description: "First 20 to Tier 6: signed Dan & Daria book with a handwritten note (Founder). After slots fill: 100 bonus Story Coins + Tier 6 badge.",
     icon: "👑",
     earnedVia: "Auto-awarded based on Tier 6 slot",
     claimType: "onboard",
