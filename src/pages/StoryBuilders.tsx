@@ -38,11 +38,14 @@ const milestones = [
  { invites: 1, label: "Tier 2 (35 pts)", reward: "FREE digital product: Executive Function Skills for Your Child (normally paid in the Resource Hub)" },
  { invites: 3, label: "Tier 3 (75 pts)", reward: "50 Story Coins dropped into your account to spend on in-app extras at launch" },
  { invites: 5, label: "Tier 4 (130 pts)", reward: "VIP Beta access to test Story Pros before launch and help shape the final product" },
- { invites: 10, label: "Tier 5 (250 pts)", reward: "Founder Pricing locked for life: $7.99/month forever instead of $9.99 (points double from this tier on)" },
- { invites: -1, label: "Tier 6 (500 pts)", reward: "Signed Dan & Daria book with a handwritten note, limited to the first 20 members to reach Tier 6" },
+ { invites: 10, label: "Tier 5 (250 pts)", reward: "A reward that changes what you pay for Story Pros. Reach 250 points to find out." },
+ { invites: -1, label: "Tier 6 (500 pts)", reward: "Reach 500 points to reveal the final reward. Limited to the first 20 members." },
 ];
 
 const COLLECTIVE_GOAL = 4000;
+// Feature flag — Collective Goal section is temporarily hidden so it can be
+// reintroduced as its own announcement in ~1 month. Flip to `true` to restore.
+const SHOW_COLLECTIVE_GOAL = false;
 
 /* ─── Scroll-animated Progress Journey ─── */
 type ProgressStep = {
@@ -640,7 +643,7 @@ const StoryBuilders = () => {
                     </Button>
                   </form>
                   <p className="text-[13px] text-white/60 mt-6 leading-[1.6]">
-                    <span className="font-semibold text-white/80">Not just stories</span> — A guided way to build language step by step
+                    <span className="font-semibold text-white/80">Not just stories.</span> A guided way to build language step by step
                   </p>
                   <div className="mt-3">
                     <FindMyDashboardLink />
@@ -695,9 +698,10 @@ const StoryBuilders = () => {
                   <ul className="flex flex-col gap-2 max-w-[500px]">
                     {[
                       "Understand and retell stories",
+                      "Put events in order",
                       "Build vocabulary and sentence structure",
                       "Share their ideas with more confidence",
-                      "Feel proud of how they communicate",
+                      "Connect stories to their own lives",
                     ].map((item) => (
                       <li key={item} className="flex items-start gap-2.5 text-base md:text-lg text-muted-foreground leading-relaxed">
                         <Check className="w-4 h-4 text-primary mt-1.5 shrink-0" />
@@ -706,7 +710,7 @@ const StoryBuilders = () => {
                     ))}
                   </ul>
                   <p className="text-sm md:text-base text-muted-foreground leading-relaxed max-w-[500px]">
-                    It was designed for children with Developmental Language Disorder and can be used at home, in therapy, or in the classroom.
+                    Designed for children with DLD, ADHD, autism, dyslexia, late talkers, and every child who benefits from a stronger foundation in language and storytelling. It can be used at home, in therapy, or in the classroom.
                   </p>
                 </div>
                 {/* Right column — mockup */}
@@ -719,8 +723,38 @@ const StoryBuilders = () => {
                 </div>
               </div>
 
-              {/* Video embed */}
-              <div className="mt-14 md:mt-20 max-w-[900px] mx-auto text-center flex flex-col gap-4">
+          </FadeSection>
+        </div>
+      </section>
+
+      {/* ─── MONTHLY COMMUNITY CIRCLES ─── */}
+      <section className="py-16 md:py-24 bg-[hsl(266,100%,97%)]">
+        <FadeSection className="max-w-[800px] mx-auto px-6 md:px-8 text-center">
+          <span className="text-primary text-[12px] md:text-[13px] tracking-[0.22em] uppercase font-semibold">
+            MORE THAN AN APP
+          </span>
+          <h2 className="text-[28px] md:text-[36px] lg:text-[40px] font-bold tracking-tight text-foreground leading-[1.15] mt-4">
+            A monthly community where your child isn't the only one.
+          </h2>
+          <div className="mt-6 space-y-5 text-base md:text-lg text-muted-foreground leading-[1.7] text-left md:text-center">
+            <p>
+              Every month, we host a live Community Circle on Zoom for Story Pros kids, facilitated by Camesha (an elementary school teacher) and Jinean (a speech-language pathologist).
+            </p>
+            <p>
+              So many children who struggle with language also struggle with feeling like they're the only one. They're not. And this is where they get to see that for themselves.
+            </p>
+            <p>
+              Your Story Pros membership includes both: app access for your child and monthly live Community Circles. The app builds the skills. The community builds the belonging.
+            </p>
+          </div>
+        </FadeSection>
+      </section>
+
+      {/* ─── WHY WE BUILT STORY PROS (video) ─── */}
+      <section className="py-12 md:py-20">
+        <div className="max-w-[1300px] mx-auto px-6 md:px-8">
+          <FadeSection>
+              <div className="max-w-[900px] mx-auto text-center flex flex-col gap-4">
                 <span className="text-primary text-[12px] md:text-[13px] tracking-[0.22em] uppercase font-semibold">
                   FROM OUR FOUNDERS
                 </span>
@@ -754,8 +788,7 @@ const StoryBuilders = () => {
               We're Building Something Bigger Than an App
             </h3>
             <p className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-[700px] mx-auto">
-              Story Pros is being created for children who struggle to understand and express their ideas
-              — and for the parents, educators, and therapists supporting them every day.
+              Story Pros is being created for children who struggle to understand and express their ideas, and for the parents, educators, and therapists supporting them every day.
             </p>
             <p className="text-base md:text-lg text-foreground font-semibold leading-relaxed">
               We're inviting you to be part of it from the very beginning.
@@ -896,14 +929,14 @@ const StoryBuilders = () => {
               },
               {
                 task: "Tier 5 — 250 points",
-                impact: "You're among our most dedicated supporters. Heads up: points double from Tier 5 onward to push you toward Tier 6.",
-                reward: { icon: <Headphones size={20} />, title: "Founder Pricing locked in for life", desc: "$7.99/month forever instead of the regular $9.99, a permanent 20% discount as long as your subscription stays active, plus your Tier 5 badge", subdesc: "This reward never expires. Once you earn it, it's yours" },
+                impact: "You're among our most dedicated supporters. Keep climbing to unlock the next reward.",
+                reward: { icon: <Headphones size={20} />, title: "Locked until Tier 5", desc: "A reward that changes what you pay for Story Pros. Reach 250 points to find out." },
                 invites: 10,
               },
               {
                 task: "Tier 6 — 500 points",
-                impact: "You're a true Story Pros founder. Limited to the first 20 members to reach Tier 6.",
-                reward: { icon: <Crown size={20} />, title: "Signed Dan & Daria book", desc: "A personally signed copy of the Dan & Daria book with a handwritten note, plus your Tier 6 Founder badge", subdesc: "After the first 20 Founder slots are claimed, additional Tier 6 members earn 100 bonus Story Coins instead" },
+                impact: "Limited to the first 20 members to reach Tier 6.",
+                reward: { icon: <Crown size={20} />, title: "Locked until Tier 6", desc: "Reach 500 points to reveal the final reward. Limited to the first 20 members.", subdesc: "After the first 20 Founder slots are claimed, additional Tier 6 members earn 100 bonus Story Coins and a Tier 6 badge." },
                 invites: 25,
               },
             ];
@@ -913,145 +946,136 @@ const StoryBuilders = () => {
         </div>
       </section>
 
-      <div className="w-16 h-px bg-border mx-auto" />
+      {/* ─── S7: COLLECTIVE GOAL — temporarily hidden, reintroduce as separate announcement ─── */}
+      {SHOW_COLLECTIVE_GOAL && (
+        <>
+          <div className="w-16 h-px bg-border mx-auto" />
+          {(() => {
+            const GOAL = COLLECTIVE_GOAL;
+            const FILL_DURATION = 4000; // ms
+            const HOLD_DURATION = 5000; // ms
 
-      {/* ─── S7: COLLECTIVE GOAL ─── */}
-      {(() => {
-        const GOAL = COLLECTIVE_GOAL;
-        const FILL_DURATION = 4000; // ms
-        const HOLD_DURATION = 5000; // ms
+            const AnimatedGoal = () => {
+              const sectionRef = useRef<HTMLDivElement>(null);
+              const barRef = useRef<HTMLDivElement>(null);
+              const [displayCount, setDisplayCount] = useState(0);
+              const [isVisible, setIsVisible] = useState(false);
+              const phaseRef = useRef<"idle" | "filling" | "celebrating" | "holding">("idle");
+              const rafRef = useRef<number>(0);
+              const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
 
-        const AnimatedGoal = () => {
-          const sectionRef = useRef<HTMLDivElement>(null);
-          const barRef = useRef<HTMLDivElement>(null);
-          const [displayCount, setDisplayCount] = useState(0);
-          const [isVisible, setIsVisible] = useState(false);
-          const phaseRef = useRef<"idle" | "filling" | "celebrating" | "holding">("idle");
-          const rafRef = useRef<number>(0);
-          const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
+              const ease = (t: number) => 1 - Math.pow(1 - t, 3);
 
-          // Ease-out cubic
-          const ease = (t: number) => 1 - Math.pow(1 - t, 3);
+              const fireConfetti = useCallback(() => {
+                if (!barRef.current) return;
+                const rect = barRef.current.getBoundingClientRect();
+                const x = (rect.right - 4) / window.innerWidth;
+                const y = (rect.top + rect.height / 2) / window.innerHeight;
+                const colors = ["#7E5BEF", "#B794F6", "#DDD6FE", "#EDE9FE"];
+                confetti({ particleCount: 60, spread: 45, origin: { x, y }, colors, gravity: 1.2, scalar: 0.9, ticks: 80 });
+                setTimeout(() => {
+                  confetti({ particleCount: 40, spread: 35, origin: { x: x - 0.02, y: y - 0.02 }, colors, gravity: 1, scalar: 0.7, ticks: 60 });
+                }, 150);
+              }, []);
 
-          const fireConfetti = useCallback(() => {
-            if (!barRef.current) return;
-            const rect = barRef.current.getBoundingClientRect();
-            const x = (rect.right - 4) / window.innerWidth;
-            const y = (rect.top + rect.height / 2) / window.innerHeight;
-
-            // Fire a few bursts for effect
-            const colors = ["#7E5BEF", "#B794F6", "#DDD6FE", "#EDE9FE"];
-            confetti({ particleCount: 60, spread: 45, origin: { x, y }, colors, gravity: 1.2, scalar: 0.9, ticks: 80 });
-            setTimeout(() => {
-              confetti({ particleCount: 40, spread: 35, origin: { x: x - 0.02, y: y - 0.02 }, colors, gravity: 1, scalar: 0.7, ticks: 60 });
-            }, 150);
-          }, []);
-
-          const runCycle = useCallback(() => {
-            phaseRef.current = "filling";
-            const start = performance.now();
-
-            const tick = (now: number) => {
-              if (phaseRef.current !== "filling") return;
-              const elapsed = now - start;
-              const progress = Math.min(elapsed / FILL_DURATION, 1);
-              const eased = ease(progress);
-              setDisplayCount(Math.round(eased * GOAL));
-
-              if (progress < 1) {
-                rafRef.current = requestAnimationFrame(tick);
-              } else {
-                // Reached goal — celebrate
-                phaseRef.current = "celebrating";
-                setDisplayCount(GOAL);
-                fireConfetti();
-
-                // Hold phase
-                phaseRef.current = "holding";
-                timeoutRef.current = setTimeout(() => {
-                  if (phaseRef.current === "holding") {
-                    setDisplayCount(0);
-                    // Restart cycle
-                    runCycle();
+              const runCycle = useCallback(() => {
+                phaseRef.current = "filling";
+                const start = performance.now();
+                const tick = (now: number) => {
+                  if (phaseRef.current !== "filling") return;
+                  const elapsed = now - start;
+                  const progress = Math.min(elapsed / FILL_DURATION, 1);
+                  const eased = ease(progress);
+                  setDisplayCount(Math.round(eased * GOAL));
+                  if (progress < 1) {
+                    rafRef.current = requestAnimationFrame(tick);
+                  } else {
+                    phaseRef.current = "celebrating";
+                    setDisplayCount(GOAL);
+                    fireConfetti();
+                    phaseRef.current = "holding";
+                    timeoutRef.current = setTimeout(() => {
+                      if (phaseRef.current === "holding") {
+                        setDisplayCount(0);
+                        runCycle();
+                      }
+                    }, HOLD_DURATION);
                   }
-                }, HOLD_DURATION);
-              }
-            };
+                };
+                rafRef.current = requestAnimationFrame(tick);
+              }, [fireConfetti]);
 
-            rafRef.current = requestAnimationFrame(tick);
-          }, [fireConfetti]);
+              const stopAll = useCallback(() => {
+                phaseRef.current = "idle";
+                cancelAnimationFrame(rafRef.current);
+                if (timeoutRef.current) clearTimeout(timeoutRef.current);
+              }, []);
 
-          const stopAll = useCallback(() => {
-            phaseRef.current = "idle";
-            cancelAnimationFrame(rafRef.current);
-            if (timeoutRef.current) clearTimeout(timeoutRef.current);
-          }, []);
+              useEffect(() => {
+                const el = sectionRef.current;
+                if (!el) return;
+                const obs = new IntersectionObserver(
+                  ([entry]) => {
+                    if (entry.isIntersecting) {
+                      setIsVisible(true);
+                    } else {
+                      setIsVisible(false);
+                      stopAll();
+                      setDisplayCount(0);
+                    }
+                  },
+                  { threshold: 0.85 }
+                );
+                obs.observe(el);
+                return () => { obs.disconnect(); stopAll(); };
+              }, [stopAll]);
 
-          useEffect(() => {
-            const el = sectionRef.current;
-            if (!el) return;
-
-            const obs = new IntersectionObserver(
-              ([entry]) => {
-                if (entry.isIntersecting) {
-                  setIsVisible(true);
-                } else {
-                  setIsVisible(false);
-                  stopAll();
-                  setDisplayCount(0);
+              useEffect(() => {
+                if (isVisible && phaseRef.current === "idle") {
+                  runCycle();
                 }
-              },
-              { threshold: 0.85 }
-            );
-            obs.observe(el);
-            return () => { obs.disconnect(); stopAll(); };
-          }, [stopAll]);
+              }, [isVisible, runCycle]);
 
-          useEffect(() => {
-            if (isVisible && phaseRef.current === "idle") {
-              runCycle();
-            }
-          }, [isVisible, runCycle]);
+              const pct = Math.min((displayCount / GOAL) * 100, 100);
+              const remaining = GOAL - displayCount;
 
-          const pct = Math.min((displayCount / GOAL) * 100, 100);
-          const remaining = GOAL - displayCount;
-
-          return (
-            <section ref={sectionRef} className="bg-lavender py-16 md:py-[120px]">
-              <div className="container px-6 md:px-8">
-                <div className="max-w-[650px] mx-auto text-center">
-                  <h2 className="text-[32px] md:text-[42px] lg:text-[46px] font-bold tracking-tight text-foreground mb-6">
-                    Our Collective Goal
-                  </h2>
-                  <p className="text-[15px] md:text-[16px] text-muted-foreground leading-[1.7] mb-8">
-                    If we reach 4,000 supporters, we will create a brand new Dan and Daria
-                    story together. The community will help choose the theme, and this story
-                    will become the fifth book in our Living Life with DLD book series.
-                  </p>
-                  <div className="bg-background/60 rounded-xl border border-border p-6">
-                    <p className="text-[14px] font-semibold text-foreground mb-3">
-                      {displayCount.toLocaleString()} supporter{displayCount !== 1 ? "s" : ""} and counting.{" "}
-                      <span className="text-muted-foreground font-normal">
-                        {remaining > 0 ? `${remaining.toLocaleString()} to go.` : "Goal reached! 🎉"}
-                      </span>
-                    </p>
-                    <div ref={barRef} className="relative h-3 w-full rounded-full bg-border overflow-hidden">
-                      <div
-                        className="h-full rounded-full bg-primary transition-none"
-                        style={{ width: `${pct}%` }}
-                      />
+              return (
+                <section ref={sectionRef} className="bg-lavender py-16 md:py-[120px]">
+                  <div className="container px-6 md:px-8">
+                    <div className="max-w-[650px] mx-auto text-center">
+                      <h2 className="text-[32px] md:text-[42px] lg:text-[46px] font-bold tracking-tight text-foreground mb-6">
+                        Our Collective Goal
+                      </h2>
+                      <p className="text-[15px] md:text-[16px] text-muted-foreground leading-[1.7] mb-8">
+                        If we reach 4,000 supporters, we will create a brand new Dan and Daria
+                        story together. The community will help choose the theme, and this story
+                        will become the fifth book in our Living Life with DLD book series.
+                      </p>
+                      <div className="bg-background/60 rounded-xl border border-border p-6">
+                        <p className="text-[14px] font-semibold text-foreground mb-3">
+                          {displayCount.toLocaleString()} supporter{displayCount !== 1 ? "s" : ""} and counting.{" "}
+                          <span className="text-muted-foreground font-normal">
+                            {remaining > 0 ? `${remaining.toLocaleString()} to go.` : "Goal reached! 🎉"}
+                          </span>
+                        </p>
+                        <div ref={barRef} className="relative h-3 w-full rounded-full bg-border overflow-hidden">
+                          <div
+                            className="h-full rounded-full bg-primary transition-none"
+                            style={{ width: `${pct}%` }}
+                          />
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
-            </section>
-          );
-        };
+                </section>
+              );
+            };
 
-        return <AnimatedGoal />;
-      })()}
-
-      <div className="w-16 h-px bg-border mx-auto" />
+            return <AnimatedGoal />;
+          })()}
+          <div className="w-16 h-px bg-border mx-auto" />
+        </>
+      )}
 
       {/* ─── S8: SHARE THIS ─── */}
       <section className="py-16 md:py-[120px]">
@@ -1062,7 +1086,7 @@ const StoryBuilders = () => {
             </h2>
             <div className="bg-lavender rounded-xl border border-border p-6 text-left mb-5">
               <p className="text-[14px] md:text-[15px] text-foreground leading-[1.7] italic">
-                "I just came across an app called Story Pros and have been trying to spread the word about it. It's being built to help kids feel more confident understanding and explaining their ideas. Thought of you. You can join the waitlist here."
+                "I found an app called Story Pros that helps kids build storytelling and language skills, plus there's a monthly live community on Zoom. It's being built by speech-language pathologists and teachers. Thought of you. You can join the waitlist here."
               </p>
             </div>
             {wl.joined && wl.referralLink ? (
@@ -1094,7 +1118,7 @@ const StoryBuilders = () => {
             Be Part of Something That Could Change How Children Experience Communication
           </h2>
 
-          {!wl.joined ? (
+          {!(wl.joined && wl.emailVerified && wl.referralLink) ? (
             <div className="w-full max-w-[520px]">
               <form onSubmit={handleSubmit} className="flex flex-col gap-3 w-full mt-4">
                 <div className="flex flex-col sm:flex-row gap-3 w-full">
