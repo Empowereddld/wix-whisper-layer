@@ -983,7 +983,7 @@ function getEmailTemplate(
             <p style="${plainP}">You asked us to help you find your Story Pros dashboard. Tap the link below to open it:</p>
             <p style="${plainP}"><a href="${data.dashboard_link}" style="${plainLink}">Open my dashboard</a></p>
             <p style="${plainP}">If you didn't request this, you can safely ignore this email.</p>
-            <p style="${plainP}">Camesha, Jinean and The Story Pros Team</p>
+            <p style="${plainP}">Camesha, Jinean and the Story Pros Team</p>
           </div>
         `,
       };
