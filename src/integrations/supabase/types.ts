@@ -671,17 +671,21 @@ export type Database = {
           email7_sent_at: string | null
           first_referral_bonus_awarded: boolean
           first_share_bonus_awarded: boolean
+          founder_scarcity_sent_at: string | null
           founder_slot_number: number | null
           hear_about: string | null
           hopes: string[] | null
           hopes_other: string | null
           id: string
+          inactivity_email_sent_at: string | null
           invite_count: number
           is_speech_professional: boolean
           last_click_date: string | null
+          last_points_earned_at: string | null
           last_share_at: string | null
           last_share_date: string | null
           name: string
+          nudge_sent_for_tier: number | null
           points: number
           profile_completed_at: string | null
           referral_code: string
@@ -718,17 +722,21 @@ export type Database = {
           email7_sent_at?: string | null
           first_referral_bonus_awarded?: boolean
           first_share_bonus_awarded?: boolean
+          founder_scarcity_sent_at?: string | null
           founder_slot_number?: number | null
           hear_about?: string | null
           hopes?: string[] | null
           hopes_other?: string | null
           id?: string
+          inactivity_email_sent_at?: string | null
           invite_count?: number
           is_speech_professional?: boolean
           last_click_date?: string | null
+          last_points_earned_at?: string | null
           last_share_at?: string | null
           last_share_date?: string | null
           name: string
+          nudge_sent_for_tier?: number | null
           points?: number
           profile_completed_at?: string | null
           referral_code: string
@@ -765,17 +773,21 @@ export type Database = {
           email7_sent_at?: string | null
           first_referral_bonus_awarded?: boolean
           first_share_bonus_awarded?: boolean
+          founder_scarcity_sent_at?: string | null
           founder_slot_number?: number | null
           hear_about?: string | null
           hopes?: string[] | null
           hopes_other?: string | null
           id?: string
+          inactivity_email_sent_at?: string | null
           invite_count?: number
           is_speech_professional?: boolean
           last_click_date?: string | null
+          last_points_earned_at?: string | null
           last_share_at?: string | null
           last_share_date?: string | null
           name?: string
+          nudge_sent_for_tier?: number | null
           points?: number
           profile_completed_at?: string | null
           referral_code?: string
