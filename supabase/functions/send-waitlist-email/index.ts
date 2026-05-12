@@ -943,7 +943,7 @@ function getEmailTemplate(
             <p style="${plainP}">Hi ${name},</p>
             <p style="${plainP}">Just a quick reminder to verify your email so we can send you everything you need to get started with Story Pros, including your referral link, your welcome video, and your first 15 points.</p>
             <p style="${plainP}; text-align: center; margin: 24px 0;"><a href="${data.verification_link}" style="${verifyButton}">Verify my email (+15 points)</a></p>
-            <p style="${plainP}">Warmly,<br/>Camesha & Jinean</p>
+            <p style="${plainP}">Warmly, Camesha, Jinean and the Story Pros Team</p>
           </div>
         `,
       };
