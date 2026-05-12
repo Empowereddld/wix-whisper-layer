@@ -186,7 +186,7 @@ const BulkEmailComposer = ({ users, onClose }: BulkEmailComposerProps) => {
                 <SelectContent>
                   <SelectItem value="announcement">Announcement</SelectItem>
                   <SelectItem value="nudge">Referral Nudge</SelectItem>
-                  <SelectItem value="milestone_unlocked">Milestone Unlocked</SelectItem>
+                  
                   <SelectItem value="weekly_digest">Weekly Digest</SelectItem>
                   <SelectItem value="custom">Custom</SelectItem>
                 </SelectContent>
