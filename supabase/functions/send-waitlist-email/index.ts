@@ -958,7 +958,7 @@ function getEmailTemplate(
         subject: `Last chance to verify, ${name}`,
         html: `
           <div style="${plainContainer}">
-            <div style="display:none;max-height:0;overflow:hidden;opacity:0;color:transparent;">We don't want you to miss out.</div>
+            <div style="display:none;max-height:0;overflow:hidden;opacity:0;color:transparent;">This is our last reminder.</div>
             <p style="${plainP}">Hi ${name},</p>
             <p style="${plainP}">We noticed you haven't verified your email yet. We'd love to have you as part of Story Pros, but we can only send you your welcome, your referral link, and your rewards once you've confirmed.</p>
             <p style="${plainP}">This is our last reminder. Tap below and you're in.</p>
