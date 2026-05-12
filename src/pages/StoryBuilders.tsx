@@ -926,14 +926,14 @@ const StoryBuilders = () => {
               },
               {
                 task: "Tier 5 — 250 points",
-                impact: "You're among our most dedicated supporters. Heads up: points double from Tier 5 onward to push you toward Tier 6.",
-                reward: { icon: <Headphones size={20} />, title: "Founder Pricing locked in for life", desc: "$7.99/month forever instead of the regular $9.99, a permanent 20% discount as long as your subscription stays active, plus your Tier 5 badge", subdesc: "This reward never expires. Once you earn it, it's yours" },
+                impact: "You're among our most dedicated supporters. Keep climbing to unlock the next reward.",
+                reward: { icon: <Headphones size={20} />, title: "Locked until Tier 5", desc: "A reward that changes what you pay for Story Pros. Reach 250 points to find out." },
                 invites: 10,
               },
               {
                 task: "Tier 6 — 500 points",
-                impact: "You're a true Story Pros founder. Limited to the first 20 members to reach Tier 6.",
-                reward: { icon: <Crown size={20} />, title: "Signed Dan & Daria book", desc: "A personally signed copy of the Dan & Daria book with a handwritten note, plus your Tier 6 Founder badge", subdesc: "After the first 20 Founder slots are claimed, additional Tier 6 members earn 100 bonus Story Coins instead" },
+                impact: "Limited to the first 20 members to reach Tier 6.",
+                reward: { icon: <Crown size={20} />, title: "Locked until Tier 6", desc: "Reach 500 points to reveal the final reward. Limited to the first 20 members.", subdesc: "After the first 20 Founder slots are claimed, additional Tier 6 members earn 100 bonus Story Coins and a Tier 6 badge." },
                 invites: 25,
               },
             ];
