@@ -38,8 +38,8 @@ const milestones = [
  { invites: 1, label: "Tier 2 (35 pts)", reward: "FREE digital product: Executive Function Skills for Your Child (normally paid in the Resource Hub)" },
  { invites: 3, label: "Tier 3 (75 pts)", reward: "50 Story Coins dropped into your account to spend on in-app extras at launch" },
  { invites: 5, label: "Tier 4 (130 pts)", reward: "VIP Beta access to test Story Pros before launch and help shape the final product" },
- { invites: 10, label: "Tier 5 (250 pts)", reward: "Founder Pricing locked for life: $7.99/month forever instead of $9.99 (points double from this tier on)" },
- { invites: -1, label: "Tier 6 (500 pts)", reward: "Signed Dan & Daria book with a handwritten note, limited to the first 20 members to reach Tier 6" },
+ { invites: 10, label: "Tier 5 (250 pts)", reward: "A reward that changes what you pay for Story Pros. Reach 250 points to find out." },
+ { invites: -1, label: "Tier 6 (500 pts)", reward: "Reach 500 points to reveal the final reward. Limited to the first 20 members." },
 ];
 
 const COLLECTIVE_GOAL = 4000;
