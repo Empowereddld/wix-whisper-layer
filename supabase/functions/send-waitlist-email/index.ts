@@ -1017,64 +1017,66 @@ function getEmailTemplate(
       };
     }
 
-    // PLACEHOLDER COPY — final copy to be supplied. Triggered by
-    // send-nudge-emails cron when user is within 15 pts of next tier
-    // and has been inactive for 4+ days. Sent once per tier.
+    // Triggered by send-nudge-emails cron when user is within 15 pts of
+    // next tier and has been inactive for 4+ days. Sent once per tier.
     case "nudge": {
       const plainContainer = `max-width: 580px; margin: 0 auto; padding: 24px 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 15px; line-height: 1.55; color: #222; background: #ffffff;`;
       const plainP = `margin: 0 0 14px;`;
-      const plainBtn = `display: inline-block; background: ${brandColor}; color: #ffffff !important; padding: 14px 28px; text-decoration: none; border-radius: 999px; font-weight: 700; font-size: 15px; line-height: 1.2;`;
+      const plainLink = `color: ${brandColor}; text-decoration: underline; word-break: break-all;`;
       const pointsAway = data.points_to_next ?? 15;
       return {
-        subject: `You're close, ${name}`,
+        subject: `You're close, ${name}.`,
         html: `
           <div style="${plainContainer}">
             <p style="${plainP}">Hi ${name},</p>
-            <p style="${plainP}">You're only <strong>${pointsAway} points</strong> away from your next Story Pros tier. One or two more shares and you're there.</p>
-            <p style="${plainP}; text-align: center; margin: 24px 0;"><a href="${dashboard}" style="${plainBtn}">Share my link</a></p>
-            <p style="${plainP}">Warmly,<br/>Camesha & Jinean</p>
+            <p style="${plainP}">You're <strong>${pointsAway} points</strong> away from your next tier. That's closer than you think.</p>
+            <p style="${plainP}">The fastest way there: share your referral link. Every person who joins through you earns you 25 points.</p>
+            <p style="${plainP}">Your referral link: <a href="${referralLink}" style="${plainLink}">${referralLink}</a></p>
+            <p style="${plainP}">For a quick text: "I'm on the early list for Story Pros, an app and community for kids who need support with storytelling and language. Worth a look: ${referralLink}"</p>
+            <p style="${plainP}">Warmly, Camesha, Jinean and the Story Pros Team</p>
           </div>
         `,
       };
     }
 
-    // PLACEHOLDER COPY — final copy to be supplied. One-time broadcast
-    // when Founder slots remaining hits 5. Sent to verified users not
-    // yet at Tier 6.
+    // One-time broadcast when Founder slots remaining hits 5. Sent to
+    // verified users not yet at Tier 6.
     case "founder_scarcity": {
       const plainContainer = `max-width: 580px; margin: 0 auto; padding: 24px 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 15px; line-height: 1.55; color: #222; background: #ffffff;`;
       const plainP = `margin: 0 0 14px;`;
-      const plainBtn = `display: inline-block; background: ${brandColor}; color: #ffffff !important; padding: 14px 28px; text-decoration: none; border-radius: 999px; font-weight: 700; font-size: 15px; line-height: 1.2;`;
+      const plainLink = `color: ${brandColor}; text-decoration: underline; word-break: break-all;`;
       const slots = data.slots_remaining ?? 5;
+      const userPoints = data.points ?? 0;
       return {
-        subject: `Only ${slots} Founder slots left`,
+        subject: `Only ${slots} Founder slots left.`,
         html: `
           <div style="${plainContainer}">
             <p style="${plainP}">Hi ${name},</p>
-            <p style="${plainP}">Heads up: only <strong>${slots} Founder slots</strong> remain. After they're claimed, the signed book + Founder package is gone for good.</p>
-            <p style="${plainP}">Hit Tier 6 (500 points) before slots run out and you're in.</p>
-            <p style="${plainP}; text-align: center; margin: 24px 0;"><a href="${dashboard}" style="${plainBtn}">Claim my spot</a></p>
-            <p style="${plainP}">Warmly,<br/>Camesha & Jinean</p>
+            <p style="${plainP}">The first 20 people to reach Tier 6 (500 points) claim a signed Dan & Daria book with a handwritten note from us. Only <strong>${slots} slots</strong> are left.</p>
+            <p style="${plainP}">You're at <strong>${userPoints} points</strong>. Every referral earns you 25. Every share, every follow, every action moves you closer.</p>
+            <p style="${plainP}">Your referral link: <a href="${referralLink}" style="${plainLink}">${referralLink}</a></p>
+            <p style="${plainP}">Warmly, Camesha, Jinean and the Story Pros Team</p>
           </div>
         `,
       };
     }
 
-    // PLACEHOLDER COPY — final copy to be supplied. Triggered by
-    // send-inactivity-emails cron when user verified 14+ days ago and
-    // hasn't earned points beyond the verification bonus. Sent once.
+    // Triggered by send-inactivity-emails cron when user verified 14+ days
+    // ago and hasn't earned points beyond the verification bonus. Sent once.
     case "inactivity_reengagement": {
       const plainContainer = `max-width: 580px; margin: 0 auto; padding: 24px 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 15px; line-height: 1.55; color: #222; background: #ffffff;`;
       const plainP = `margin: 0 0 14px;`;
-      const plainBtn = `display: inline-block; background: ${brandColor}; color: #ffffff !important; padding: 14px 28px; text-decoration: none; border-radius: 999px; font-weight: 700; font-size: 15px; line-height: 1.2;`;
+      const plainLink = `color: ${brandColor}; text-decoration: underline; word-break: break-all;`;
       return {
-        subject: `We saved your spot, ${name}`,
+        subject: `We saved your spot, ${name}.`,
         html: `
           <div style="${plainContainer}">
             <p style="${plainP}">Hi ${name},</p>
-            <p style="${plainP}">Your spot on the Story Pros founding waitlist is still here. Share your link with one person and you're back on the road to Founder pricing.</p>
-            <p style="${plainP}; text-align: center; margin: 24px 0;"><a href="${dashboard}" style="${plainBtn}">Open my dashboard</a></p>
-            <p style="${plainP}">Warmly,<br/>Camesha & Jinean</p>
+            <p style="${plainP}">You joined the Story Pros founding community a little while ago and we're glad you're here. Your spot, your points, and your referral link are all still waiting for you.</p>
+            <p style="${plainP}">If you're not sure where to start, the fastest way to climb is to share your link. Every person who joins through you earns you 25 points and gets you closer to your next tier.</p>
+            <p style="${plainP}">Your referral link: <a href="${referralLink}" style="${plainLink}">${referralLink}</a></p>
+            <p style="${plainP}">We're building something that helps children understand stories, retell them in their own words, and find the confidence to share their world. Every family you bring in is one more child who gets that chance.</p>
+            <p style="${plainP}">Warmly, Camesha, Jinean and the Story Pros Team</p>
           </div>
         `,
       };
