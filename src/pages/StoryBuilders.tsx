@@ -695,9 +695,10 @@ const StoryBuilders = () => {
                   <ul className="flex flex-col gap-2 max-w-[500px]">
                     {[
                       "Understand and retell stories",
+                      "Put events in order",
                       "Build vocabulary and sentence structure",
                       "Share their ideas with more confidence",
-                      "Feel proud of how they communicate",
+                      "Connect stories to their own lives",
                     ].map((item) => (
                       <li key={item} className="flex items-start gap-2.5 text-base md:text-lg text-muted-foreground leading-relaxed">
                         <Check className="w-4 h-4 text-primary mt-1.5 shrink-0" />
@@ -706,7 +707,7 @@ const StoryBuilders = () => {
                     ))}
                   </ul>
                   <p className="text-sm md:text-base text-muted-foreground leading-relaxed max-w-[500px]">
-                    It was designed for children with Developmental Language Disorder and can be used at home, in therapy, or in the classroom.
+                    Designed for children with DLD, ADHD, autism, dyslexia, late talkers, and every child who benefits from a stronger foundation in language and storytelling. It can be used at home, in therapy, or in the classroom.
                   </p>
                 </div>
                 {/* Right column — mockup */}
