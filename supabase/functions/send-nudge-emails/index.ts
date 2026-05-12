@@ -28,7 +28,7 @@ Deno.serve(async (req) => {
     // Pull verified, non-Tier-6 users inactive for 4+ days.
     const { data: candidates, error } = await supabase
       .from("storybuilders_waitlist")
-      .select("id, name, email, points, nudge_sent_for_tier, last_points_earned_at")
+      .select("id, name, email, points, referral_code, nudge_sent_for_tier, last_points_earned_at")
       .eq("email_verified", true)
       .is("deleted_at", null)
       .lt("points", 500)
@@ -65,7 +65,7 @@ Deno.serve(async (req) => {
           body: {
             template: "nudge",
             to: u.email,
-            data: { name: firstName, points_to_next: pointsAway },
+            data: { name: firstName, points_to_next: pointsAway, referral_code: u.referral_code },
           },
         });
         if (sendError) throw sendError;
