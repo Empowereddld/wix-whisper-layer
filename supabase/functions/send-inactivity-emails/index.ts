@@ -46,7 +46,7 @@ Deno.serve(async (req) => {
           body: {
             template: "inactivity_reengagement",
             to: u.email,
-            data: { name: firstName },
+            data: { name: firstName, referral_code: u.referral_code },
           },
         });
         if (sendError) throw sendError;
