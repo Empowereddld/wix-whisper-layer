@@ -963,7 +963,7 @@ function getEmailTemplate(
             <p style="${plainP}">We noticed you haven't verified your email yet. We'd love to have you as part of Story Pros, but we can only send you your welcome, your referral link, and your rewards once you've confirmed.</p>
             <p style="${plainP}">This is our last reminder. Tap below and you're in.</p>
             <p style="${plainP}; text-align: center; margin: 24px 0;"><a href="${data.verification_link}" style="${verifyButton}">Verify my email (+15 points)</a></p>
-            <p style="${plainP}">Warmly,<br/>Camesha & Jinean</p>
+            <p style="${plainP}">Warmly, Camesha, Jinean and the Story Pros Team</p>
           </div>
         `,
       };
