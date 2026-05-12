@@ -26,7 +26,7 @@ Deno.serve(async (req) => {
 
     const { data: candidates, error } = await supabase
       .from("storybuilders_waitlist")
-      .select("id, name, email, points")
+      .select("id, name, email, points, referral_code")
       .eq("email_verified", true)
       .is("deleted_at", null)
       .is("inactivity_email_sent_at", null)
