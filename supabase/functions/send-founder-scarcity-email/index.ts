@@ -41,7 +41,7 @@ Deno.serve(async (req) => {
     // Eligible recipients: verified, not yet Tier 6, not already sent.
     const { data: candidates, error } = await supabase
       .from("storybuilders_waitlist")
-      .select("id, name, email, points")
+      .select("id, name, email, points, referral_code")
       .eq("email_verified", true)
       .is("deleted_at", null)
       .is("founder_scarcity_sent_at", null)
