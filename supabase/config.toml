@@ -48,3 +48,12 @@ verify_jwt = false
 [functions.claim-founder-package]
 verify_jwt = false
 
+[functions.send-nudge-emails]
+verify_jwt = false
+
+[functions.send-founder-scarcity-email]
+verify_jwt = false
+
+[functions.send-inactivity-emails]
+verify_jwt = false
+

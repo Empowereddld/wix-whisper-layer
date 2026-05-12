@@ -40,7 +40,7 @@ interface BulkEmailComposerProps {
   onClose: () => void;
 }
 
-type TemplateType = "announcement" | "nudge" | "milestone_unlocked" | "weekly_digest" | "custom";
+type TemplateType = "announcement" | "nudge" | "weekly_digest" | "custom";
 type RecipientFilter = "all" | "verified_only" | "tier" | "flagged" | "custom";
 
 const TEMPLATES: Record<string, { subject: string; body: string }> = {
@@ -51,10 +51,6 @@ const TEMPLATES: Record<string, { subject: string; body: string }> = {
   nudge: {
     subject: "Earn more rewards - Share your referral link",
     body: "Hi {name},\n\nYou're doing great on the waitlist! One of the best ways to earn more rewards is by inviting others.\n\nShare your referral link with friends and family to unlock higher tiers and exclusive benefits.\n\nThanks for being part of the Launch Team!",
-  },
-  milestone_unlocked: {
-    subject: "Congratulations! You've unlocked a new milestone",
-    body: "Hey {name},\n\nCongratulations on reaching a new milestone! Your dedication to the Story Pros community is amazing.\n\nYou've unlocked exclusive benefits as a thank you for your support.\n\nWe're excited to have you with us!",
   },
   weekly_digest: {
     subject: "Your Story Pros Weekly Digest",
@@ -190,7 +186,7 @@ const BulkEmailComposer = ({ users, onClose }: BulkEmailComposerProps) => {
                 <SelectContent>
                   <SelectItem value="announcement">Announcement</SelectItem>
                   <SelectItem value="nudge">Referral Nudge</SelectItem>
-                  <SelectItem value="milestone_unlocked">Milestone Unlocked</SelectItem>
+                  
                   <SelectItem value="weekly_digest">Weekly Digest</SelectItem>
                   <SelectItem value="custom">Custom</SelectItem>
                 </SelectContent>

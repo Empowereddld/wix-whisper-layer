@@ -908,33 +908,6 @@ function getEmailTemplate(
       };
     }
 
-    case "milestone_unlocked": {
-      return {
-        subject: `Congratulations! You've unlocked the ${data.tier_name} Tier!`,
-        html: `
-          <div style="${containerStyles}">
-            <div style="${cardStyles}">
-              <div style="${headerStyles}">
-                <h1 style="margin: 0; font-size: 28px;">Tier Unlocked!</h1>
-              </div>
-              <div style="padding: 20px 0;">
-                <p style="${baseStyles}">Wow! You've reached a new milestone!</p>
-                <p style="${baseStyles}">
-                  You've just unlocked the <strong>${data.tier_name}</strong> tier!
-                </p>
-                <p style="${baseStyles}">
-                  <strong>Reward:</strong> ${data.tier_reward || "Coming soon!"}
-                </p>
-                <a href="${dashboard}" style="${buttonStyles}">View Your Rewards</a>
-                <p style="${baseStyles}">${SIGN_OFF}</p>
-              </div>
-              ${footerBlock}
-            </div>
-          </div>
-        `,
-      };
-    }
-
     // ============================================================
     // VERIFICATION EMAIL — sent immediately on signup (locked copy)
     // ============================================================
@@ -1045,30 +1018,69 @@ function getEmailTemplate(
       };
     }
 
+    // PLACEHOLDER COPY — final copy to be supplied. Triggered by
+    // send-nudge-emails cron when user is within 15 pts of next tier
+    // and has been inactive for 4+ days. Sent once per tier.
     case "nudge": {
+      const plainContainer = `max-width: 580px; margin: 0 auto; padding: 24px 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 15px; line-height: 1.55; color: #222; background: #ffffff;`;
+      const plainP = `margin: 0 0 14px;`;
+      const plainBtn = `display: inline-block; background: ${brandColor}; color: #ffffff !important; padding: 14px 28px; text-decoration: none; border-radius: 999px; font-weight: 700; font-size: 15px; line-height: 1.2;`;
+      const pointsAway = data.points_to_next ?? 15;
       return {
-        subject: "You're so close to unlocking the next tier!",
+        subject: `You're close, ${name}`,
         html: `
-          <div style="${containerStyles}">
-            <div style="${cardStyles}">
-              <div style="${headerStyles}">
-                <h1 style="margin: 0; font-size: 28px;">Keep the Momentum Going</h1>
-              </div>
-              <div style="padding: 20px 0;">
-                <p style="${baseStyles}">Hey ${name},</p>
-                <p style="${baseStyles}">You're close to unlocking the next tier.</p>
-                <p style="${baseStyles}">
-                  Share your referral link with one or two more friends to get there.
-                </p>
-                <a href="${dashboard}" style="${buttonStyles}">Share Your Link</a>
-                <p style="${baseStyles}">${SIGN_OFF}</p>
-              </div>
-              ${footerBlock}
-            </div>
+          <div style="${plainContainer}">
+            <p style="${plainP}">Hi ${name},</p>
+            <p style="${plainP}">You're only <strong>${pointsAway} points</strong> away from your next Story Pros tier. One or two more shares and you're there.</p>
+            <p style="${plainP}; text-align: center; margin: 24px 0;"><a href="${dashboard}" style="${plainBtn}">Share my link</a></p>
+            <p style="${plainP}">Warmly,<br/>Camesha & Jinean</p>
           </div>
         `,
       };
     }
+
+    // PLACEHOLDER COPY — final copy to be supplied. One-time broadcast
+    // when Founder slots remaining hits 5. Sent to verified users not
+    // yet at Tier 6.
+    case "founder_scarcity": {
+      const plainContainer = `max-width: 580px; margin: 0 auto; padding: 24px 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 15px; line-height: 1.55; color: #222; background: #ffffff;`;
+      const plainP = `margin: 0 0 14px;`;
+      const plainBtn = `display: inline-block; background: ${brandColor}; color: #ffffff !important; padding: 14px 28px; text-decoration: none; border-radius: 999px; font-weight: 700; font-size: 15px; line-height: 1.2;`;
+      const slots = data.slots_remaining ?? 5;
+      return {
+        subject: `Only ${slots} Founder slots left`,
+        html: `
+          <div style="${plainContainer}">
+            <p style="${plainP}">Hi ${name},</p>
+            <p style="${plainP}">Heads up: only <strong>${slots} Founder slots</strong> remain. After they're claimed, the signed book + Founder package is gone for good.</p>
+            <p style="${plainP}">Hit Tier 6 (500 points) before slots run out and you're in.</p>
+            <p style="${plainP}; text-align: center; margin: 24px 0;"><a href="${dashboard}" style="${plainBtn}">Claim my spot</a></p>
+            <p style="${plainP}">Warmly,<br/>Camesha & Jinean</p>
+          </div>
+        `,
+      };
+    }
+
+    // PLACEHOLDER COPY — final copy to be supplied. Triggered by
+    // send-inactivity-emails cron when user verified 14+ days ago and
+    // hasn't earned points beyond the verification bonus. Sent once.
+    case "inactivity_reengagement": {
+      const plainContainer = `max-width: 580px; margin: 0 auto; padding: 24px 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 15px; line-height: 1.55; color: #222; background: #ffffff;`;
+      const plainP = `margin: 0 0 14px;`;
+      const plainBtn = `display: inline-block; background: ${brandColor}; color: #ffffff !important; padding: 14px 28px; text-decoration: none; border-radius: 999px; font-weight: 700; font-size: 15px; line-height: 1.2;`;
+      return {
+        subject: `We saved your spot, ${name}`,
+        html: `
+          <div style="${plainContainer}">
+            <p style="${plainP}">Hi ${name},</p>
+            <p style="${plainP}">Your spot on the Story Pros founding waitlist is still here. Share your link with one person and you're back on the road to Founder pricing.</p>
+            <p style="${plainP}; text-align: center; margin: 24px 0;"><a href="${dashboard}" style="${plainBtn}">Open my dashboard</a></p>
+            <p style="${plainP}">Warmly,<br/>Camesha & Jinean</p>
+          </div>
+        `,
+      };
+    }
+
 
     case "announcement": {
       return {
