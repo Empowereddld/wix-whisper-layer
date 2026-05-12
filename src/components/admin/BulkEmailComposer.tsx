@@ -52,10 +52,6 @@ const TEMPLATES: Record<string, { subject: string; body: string }> = {
     subject: "Earn more rewards - Share your referral link",
     body: "Hi {name},\n\nYou're doing great on the waitlist! One of the best ways to earn more rewards is by inviting others.\n\nShare your referral link with friends and family to unlock higher tiers and exclusive benefits.\n\nThanks for being part of the Launch Team!",
   },
-  milestone_unlocked: {
-    subject: "Congratulations! You've unlocked a new milestone",
-    body: "Hey {name},\n\nCongratulations on reaching a new milestone! Your dedication to the Story Pros community is amazing.\n\nYou've unlocked exclusive benefits as a thank you for your support.\n\nWe're excited to have you with us!",
-  },
   weekly_digest: {
     subject: "Your Story Pros Weekly Digest",
     body: "Hello {name},\n\nHere's your weekly digest of community highlights and your progress on the waitlist.\n\nKeep up the great work!\n\nBest regards,\nThe Story Pros Team",
