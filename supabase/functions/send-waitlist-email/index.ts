@@ -884,24 +884,23 @@ function getEmailTemplate(
       // Plain-text-first to land in Primary, not Promotions.
       const plainP = `margin: 0 0 14px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 16px; line-height: 1.55; color: #222;`;
       const plainLink = `color: #6a47b8; text-decoration: underline;`;
+      const referredName = data.referred_name || data.name || "Someone";
+      const firstName = data.first_name || name;
       return {
-        subject: `🎉 ${data.name} just joined using your link`,
+        subject: `🎉 ${referredName} just joined using your link`,
         html: `
           <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 560px; margin: 0 auto; padding: 24px 20px; color: #222;">
-            <p style="${plainP}">Hey ${name || "there"},</p>
+            <p style="${plainP}">Hey ${firstName},</p>
             <p style="${plainP}">
-              Quick celebration: <strong>${data.name}</strong> just joined the Story Pros founding waitlist using your link.
-            </p>
-            <p style="${plainP}">
-              You earned <strong>+25 points</strong>${data.points ? ` (you're now at <strong>${data.points}</strong> total)` : ""}. Every referral moves you closer to founder pricing and the bigger rewards.
+              Quick celebration: <strong>${referredName}</strong> just joined the Story Pros founding waitlist using your link.
             </p>
             <p style="${plainP}">
-              See your updated dashboard: <a href="${dashboard}" style="${plainLink}">${dashboardBase}</a>
+              You earned <strong>+25 points</strong>${data.points ? ` (you're now at <strong>${data.points}</strong> total)` : ""}. Every referral moves you closer to your next tier and the rewards that come with it.
             </p>
-            <p style="${plainP}">${SIGN_OFF}</p>
-            <p style="${plainP}; font-size: 13px; color: #666;">
-              P.S. If this email landed in Promotions or Spam, drag it to Primary so you don't miss the next tier-up.
+            <p style="${plainP}">
+              See your updated dashboard: <a href="${dashboard}" style="${plainLink}">Go to my dashboard</a>
             </p>
+            <p style="${plainP}">Warmly, Camesha, Jinean and the Story Pros Team</p>
             ${footerBlock}
           </div>
         `,
