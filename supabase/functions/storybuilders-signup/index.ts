@@ -74,7 +74,9 @@ async function notifyReferrer(
         template: "referral_joined",
         to: referrerEmail,
         data: {
-          name: newUserName.split(" ")[0],
+          name: (referrerName || "").split(" ")[0] || "there",
+          first_name: (referrerName || "").split(" ")[0] || "there",
+          referred_name: newUserName.split(" ")[0],
           points: newUserPoints,
         },
       }),
