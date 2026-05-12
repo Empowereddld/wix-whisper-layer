@@ -40,7 +40,7 @@ interface BulkEmailComposerProps {
   onClose: () => void;
 }
 
-type TemplateType = "announcement" | "nudge" | "milestone_unlocked" | "weekly_digest" | "custom";
+type TemplateType = "announcement" | "nudge" | "weekly_digest" | "custom";
 type RecipientFilter = "all" | "verified_only" | "tier" | "flagged" | "custom";
 
 const TEMPLATES: Record<string, { subject: string; body: string }> = {
