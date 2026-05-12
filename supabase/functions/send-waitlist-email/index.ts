@@ -908,33 +908,6 @@ function getEmailTemplate(
       };
     }
 
-    case "milestone_unlocked": {
-      return {
-        subject: `Congratulations! You've unlocked the ${data.tier_name} Tier!`,
-        html: `
-          <div style="${containerStyles}">
-            <div style="${cardStyles}">
-              <div style="${headerStyles}">
-                <h1 style="margin: 0; font-size: 28px;">Tier Unlocked!</h1>
-              </div>
-              <div style="padding: 20px 0;">
-                <p style="${baseStyles}">Wow! You've reached a new milestone!</p>
-                <p style="${baseStyles}">
-                  You've just unlocked the <strong>${data.tier_name}</strong> tier!
-                </p>
-                <p style="${baseStyles}">
-                  <strong>Reward:</strong> ${data.tier_reward || "Coming soon!"}
-                </p>
-                <a href="${dashboard}" style="${buttonStyles}">View Your Rewards</a>
-                <p style="${baseStyles}">${SIGN_OFF}</p>
-              </div>
-              ${footerBlock}
-            </div>
-          </div>
-        `,
-      };
-    }
-
     // ============================================================
     // VERIFICATION EMAIL — sent immediately on signup (locked copy)
     // ============================================================
