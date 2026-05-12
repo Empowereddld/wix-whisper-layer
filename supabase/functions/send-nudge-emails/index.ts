@@ -65,7 +65,7 @@ Deno.serve(async (req) => {
           body: {
             template: "nudge",
             to: u.email,
-            data: { name: firstName, points_to_next: pointsAway },
+            data: { name: firstName, points_to_next: pointsAway, referral_code: u.referral_code },
           },
         });
         if (sendError) throw sendError;
