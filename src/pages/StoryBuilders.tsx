@@ -785,8 +785,7 @@ const StoryBuilders = () => {
               We're Building Something Bigger Than an App
             </h3>
             <p className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-[700px] mx-auto">
-              Story Pros is being created for children who struggle to understand and express their ideas
-              — and for the parents, educators, and therapists supporting them every day.
+              Story Pros is being created for children who struggle to understand and express their ideas, and for the parents, educators, and therapists supporting them every day.
             </p>
             <p className="text-base md:text-lg text-foreground font-semibold leading-relaxed">
               We're inviting you to be part of it from the very beginning.
