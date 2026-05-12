@@ -43,6 +43,9 @@ const milestones = [
 ];
 
 const COLLECTIVE_GOAL = 4000;
+// Feature flag — Collective Goal section is temporarily hidden so it can be
+// reintroduced as its own announcement in ~1 month. Flip to `true` to restore.
+const SHOW_COLLECTIVE_GOAL = false;
 
 /* ─── Scroll-animated Progress Journey ─── */
 type ProgressStep = {
