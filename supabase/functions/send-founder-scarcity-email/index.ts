@@ -60,7 +60,7 @@ Deno.serve(async (req) => {
           body: {
             template: "founder_scarcity",
             to: u.email,
-            data: { name: firstName, slots_remaining: remaining },
+            data: { name: firstName, slots_remaining: remaining, points: u.points ?? 0, referral_code: u.referral_code },
           },
         });
         if (sendError) throw sendError;
