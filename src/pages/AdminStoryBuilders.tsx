@@ -496,7 +496,7 @@ const AdminStoryBuilders = () => {
             <Card className="bg-background border border-border rounded-2xl shadow-sm">
               <CardContent className="p-0">
                 <div className="overflow-x-auto">
-                  <Table>
+                  <Table className="min-w-[1100px]">
                     <TableHeader className="bg-muted">
                        <TableRow className="border-b border-border">
                         <TableHead className="text-foreground">Name</TableHead>
