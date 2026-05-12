@@ -720,8 +720,38 @@ const StoryBuilders = () => {
                 </div>
               </div>
 
-              {/* Video embed */}
-              <div className="mt-14 md:mt-20 max-w-[900px] mx-auto text-center flex flex-col gap-4">
+          </FadeSection>
+        </div>
+      </section>
+
+      {/* ─── MONTHLY COMMUNITY CIRCLES ─── */}
+      <section className="py-16 md:py-24 bg-[hsl(266,100%,97%)]">
+        <FadeSection className="max-w-[800px] mx-auto px-6 md:px-8 text-center">
+          <span className="text-primary text-[12px] md:text-[13px] tracking-[0.22em] uppercase font-semibold">
+            MORE THAN AN APP
+          </span>
+          <h2 className="text-[28px] md:text-[36px] lg:text-[40px] font-bold tracking-tight text-foreground leading-[1.15] mt-4">
+            A monthly community where your child isn't the only one.
+          </h2>
+          <div className="mt-6 space-y-5 text-base md:text-lg text-muted-foreground leading-[1.7] text-left md:text-center">
+            <p>
+              Every month, we host a live Community Circle on Zoom for Story Pros kids, facilitated by Camesha (an elementary school teacher) and Jinean (a speech-language pathologist).
+            </p>
+            <p>
+              So many children who struggle with language also struggle with feeling like they're the only one. They're not. And this is where they get to see that for themselves.
+            </p>
+            <p>
+              Your Story Pros membership includes both: app access for your child and monthly live Community Circles. The app builds the skills. The community builds the belonging.
+            </p>
+          </div>
+        </FadeSection>
+      </section>
+
+      {/* ─── WHY WE BUILT STORY PROS (video) ─── */}
+      <section className="py-12 md:py-20">
+        <div className="max-w-[1300px] mx-auto px-6 md:px-8">
+          <FadeSection>
+              <div className="max-w-[900px] mx-auto text-center flex flex-col gap-4">
                 <span className="text-primary text-[12px] md:text-[13px] tracking-[0.22em] uppercase font-semibold">
                   FROM OUR FOUNDERS
                 </span>
