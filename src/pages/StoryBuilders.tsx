@@ -1118,7 +1118,7 @@ const StoryBuilders = () => {
             Be Part of Something That Could Change How Children Experience Communication
           </h2>
 
-          {!wl.joined ? (
+          {!(wl.joined && wl.emailVerified && wl.referralLink) ? (
             <div className="w-full max-w-[520px]">
               <form onSubmit={handleSubmit} className="flex flex-col gap-3 w-full mt-4">
                 <div className="flex flex-col sm:flex-row gap-3 w-full">
