@@ -287,7 +287,7 @@ const UserDetailModal = ({
                 <SelectContent>
                   <SelectItem value="verification_resend">Verification Resend</SelectItem>
                   <SelectItem value="nudge">Referral Nudge</SelectItem>
-                  <SelectItem value="milestone_unlocked">Milestone Unlocked</SelectItem>
+                  
                   <SelectItem value="weekly_digest">Weekly Digest</SelectItem>
                 </SelectContent>
               </Select>
