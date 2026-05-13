@@ -9,8 +9,7 @@ const WhoWeServeHero = () => {
           Supporting Every Member of the DLD Community
         </h1>
         <p className="text-[14px] md:text-[16px] text-white/80 leading-[1.7] max-w-[620px]">
-          Whether you're a parent, therapist/clinician, educator, or organization,
-          we provide the tools and resources you need to support children with DLD.
+          Whether you're a parent who has heard terms like 'language delay' or 'delays in speech development,' a therapist or clinician, an educator, or an organization, we provide tools and resources to help you understand Developmental Language Disorder and support the children in your care.
         </p>
         <p className="text-[13px] md:text-[14px] text-white/50 mt-4">
           Trusted by families and professionals
