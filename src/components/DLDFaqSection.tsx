@@ -26,6 +26,26 @@ export const faqs = [
       "People with DLD may experience challenges with understanding complex instructions, learning new vocabulary, expressing ideas clearly, following conversations in busy environments, and organizing ideas when speaking or writing. These differences can affect learning, friendships, and confidence if the right supports are not in place.",
   },
   {
+    question: "Is Developmental Language Disorder lifelong?",
+    answer:
+      "Developmental Language Disorder, or DLD, is a lifelong neurodevelopmental condition. Children do not simply grow out of it, but they can make meaningful progress with the right support. With understanding, explicit teaching, helpful strategies, and self advocacy, children with DLD can build communication skills, confidence, friendships, literacy skills, and independence over time.",
+  },
+  {
+    question: "Can Developmental Language Disorder be cured?",
+    answer:
+      "DLD is not something that is cured in the way an infection might be cured. It is a lifelong difference in how a person understands and uses language. That does not mean a child is stuck. Children with DLD can learn strategies, strengthen their language skills, and thrive when the people around them understand their needs and provide the right support.",
+  },
+  {
+    question: "What causes Developmental Language Disorder?",
+    answer:
+      "DLD is a neurodevelopmental condition, which means it is connected to how the brain develops and processes language. It often runs in families, so there may be a genetic component. DLD is not caused by parents doing something wrong. It is not caused by bilingualism, lack of intelligence, laziness, or a child not trying hard enough.",
+  },
+  {
+    question: "Is Developmental Language Disorder a disability?",
+    answer:
+      "DLD can be considered a disability because it can affect many parts of everyday life, including understanding instructions, telling stories, learning to read and write, following classroom lessons, joining conversations, and building friendships. At the same time, children with DLD have strengths, ideas, personalities, and important things to say. The goal is not to define a child by DLD, but to make sure they have the support, access, and understanding they need to thrive.",
+  },
+  {
     question: "Why does awareness matter?",
     answer:
       "Language is the foundation for learning, relationships, and participation in everyday life. When Developmental Language Disorder is misunderstood, individuals may be labeled as inattentive or struggling academically when the underlying challenge is language. Increasing awareness helps people receive the right support earlier.",
