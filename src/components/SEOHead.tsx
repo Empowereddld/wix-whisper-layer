@@ -19,7 +19,7 @@ interface SEOHeadProps {
 
 const SEOHead = ({ title, description, path, ogImage, type = "website", jsonLd, breadcrumbs }: SEOHeadProps) => {
   const canonicalUrl = `${BASE_URL}${path}`;
-  const defaultOgImage = "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/786b7754-4032-4112-8b7e-ff71931a9602/id-preview-0f696399--51a660d5-acfd-48f5-86f4-38b3ac526ca2.lovable.app-1773034135768.png";
+  const defaultOgImage = "https://www.empowereddld.com/og-empowered-dld.png";
 
   const breadcrumbJsonLd = breadcrumbs?.length ? {
     "@context": "https://schema.org",
