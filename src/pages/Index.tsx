@@ -30,8 +30,8 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Empowered DLD — Supporting Children with Developmental Language Disorder"
-        description="Evidence-based resources, books, and community for families and professionals supporting children with Developmental Language Disorder (DLD). Tools for parents, therapists, educators, and organizations."
+        title="Developmental Language Disorder Resources | Empowered DLD"
+        description="Evidence-based resources, books, and community for families and professionals supporting people with Developmental Language Disorder (DLD). Empowered DLD does not provide diagnosis."
         path="/"
         jsonLd={organizationJsonLd}
       />

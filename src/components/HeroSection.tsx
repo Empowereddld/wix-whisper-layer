@@ -36,7 +36,7 @@ const HeroSection = () => {
               Every child with DLD deserves to feel seen.
             </h1>
             <p className="text-[12px] sm:text-[13px] md:text-[15px] leading-[1.6] text-foreground/55 mb-5 md:mb-9 max-w-[340px] sm:max-w-[420px]">
-              We partner with families, educators, clinicians, and organizations to bring clear, practical DLD resources into homes, schools, and communities.
+              We partner with families, educators, clinicians, and organizations to bring clear, practical resources about Developmental Language Disorder into homes, schools, and communities.
             </p>
             <div>
               <a href="/who-we-serve">
