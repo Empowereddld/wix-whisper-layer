@@ -21,9 +21,28 @@ export const faqs = [
       "Developmental Language Disorder affects approximately 1 in 14 people, making it one of the most common neurodevelopmental conditions. DLD is more common than autism, yet awareness remains far lower. Because many educators, families, and even professionals have never heard the term, individuals with language difficulties are often misunderstood or do not receive the support they need.",
   },
   {
-    question: "What does DLD look like?",
+    question: "What are the signs of DLD?",
     answer:
       "People with DLD may experience challenges with understanding complex instructions, learning new vocabulary, expressing ideas clearly, following conversations in busy environments, and organizing ideas when speaking or writing. These differences can affect learning, friendships, and confidence if the right supports are not in place.",
+  },
+  {
+    question: "What are the symptoms of DLD?",
+    answer:
+      "Common symptoms of Developmental Language Disorder include difficulty learning and remembering new vocabulary, trouble following multi-step instructions, struggling to put ideas into clear sentences, and challenges organizing thoughts when speaking or writing. Symptoms look different at different ages and can be subtle, which is one reason DLD is often missed.",
+  },
+  {
+    question: "How is DLD diagnosed?",
+    answer:
+      "DLD is diagnosed by a qualified speech-language pathologist through a comprehensive language assessment that looks at how a person understands and uses language across different contexts. A diagnosis also rules out other explanations for the language differences. Empowered DLD provides education and resources to help families and professionals understand DLD, but we do not provide clinical diagnosis.",
+  },
+  {
+    question: "What is the difference between DLD and autism?",
+    answer:
+      "DLD and autism are two different neurodevelopmental conditions, though they can sometimes look similar or co-occur. DLD primarily affects how a person understands and uses language. Autism affects social communication, sensory processing, and behavior more broadly. A person can have DLD, autism, or both, and each requires its own assessment and support.",
+    link: {
+      text: "Read more: Autism vs DLD →",
+      url: "/blog/autism-vs-dld-understand-the-difference",
+    },
   },
   {
     question: "Is Developmental Language Disorder lifelong?",

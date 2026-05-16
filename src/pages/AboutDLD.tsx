@@ -27,8 +27,8 @@ const AboutDLD = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="What is DLD? — Understanding Developmental Language Disorder | Empowered DLD"
-        description="Learn about Developmental Language Disorder (DLD), the most common childhood condition you've never heard of. Symptoms, diagnosis, FAQs, and how to support children with DLD."
+        title="What is DLD? Symptoms, Signs & Diagnosis | Empowered DLD"
+        description="Learn about Developmental Language Disorder (DLD): signs, symptoms, and how DLD is diagnosed. Empowered DLD shares resources and education, not clinical diagnosis."
         path="/about-dld"
         breadcrumbs={[
           { name: "Home", path: "/" },
