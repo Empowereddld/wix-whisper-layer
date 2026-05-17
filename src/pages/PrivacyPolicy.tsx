@@ -18,7 +18,7 @@ const PrivacyPolicy = () => {
 
           <div className="prose prose-sm max-w-none text-muted-foreground space-y-6 [&_h2]:text-foreground [&_h2]:text-[20px] [&_h2]:font-bold [&_h2]:mt-10 [&_h2]:mb-3 [&_p]:leading-[1.8] [&_ul]:space-y-1 [&_li]:leading-[1.8]">
             <h2>1. Information We Collect</h2>
-            <p>When you use our website, sign up for our resource hub, subscribe to our newsletter, or contact us, we may collect the following information:</p>
+            <p>When you use our website, sign up for our resource library, subscribe to our newsletter, or contact us, we may collect the following information:</p>
             <ul className="list-disc pl-6">
               <li>Name and email address</li>
               <li>Professional role (e.g., parent, therapist, educator)</li>
@@ -30,7 +30,7 @@ const PrivacyPolicy = () => {
             <h2>2. How We Use Your Information</h2>
             <p>We use your information to:</p>
             <ul className="list-disc pl-6">
-              <li>Provide access to our DLD Resource Hub and downloadable materials</li>
+              <li>Provide access to our DLD Resource Library and downloadable materials</li>
               <li>Send newsletters and helpful updates about DLD</li>
               <li>Respond to your inquiries and support requests</li>
               <li>Improve our website, resources, and services</li>

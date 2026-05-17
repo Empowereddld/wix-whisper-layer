@@ -76,8 +76,8 @@ const Footer = () => {
                    <li>Practical tips for parents, therapists, and educators</li>
                    <li>Updates on our books, workshops, and upcoming projects</li>
                  </ul>
-                 <p>Want to dive in right now? Explore our Resource Hub for guides, tools, and resources you can use today.</p>
-                 <p><a href="https://empowereddld.com/hub/preview" style="display:inline-block;background:#5B2D8E;color:#fff;padding:12px 24px;text-decoration:none;border-radius:6px;font-weight:600;">Explore the Resource Hub →</a></p>
+                 <p>Want to dive in right now? Explore our Resource Library for guides, tools, and resources you can use today.</p>
+                 <p><a href="https://empowereddld.com/hub/preview" style="display:inline-block;background:#5B2D8E;color:#fff;padding:12px 24px;text-decoration:none;border-radius:6px;font-weight:600;">Explore the Resource Library →</a></p>
                  <p>Talk soon,<br/>The Empowered DLD Team</p>
                  <p style="font-size:12px;color:#999;margin-top:24px;">You're receiving this because you signed up at empowereddld.com. You can unsubscribe anytime.</p>`,
         },

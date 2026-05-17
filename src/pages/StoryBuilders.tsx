@@ -35,7 +35,7 @@ import FindMyDashboardLink from "@/components/waitlist/FindMyDashboardLink";
 /* ─── Milestones ─── */
 const milestones = [
   { invites: 0, label: "Tier 1 (0 pts)", reward: "Behind-the-scenes updates on Story Pros development, Founding Member status, and your name on the Early Supporters Wall" },
- { invites: 1, label: "Tier 2 (35 pts)", reward: "FREE digital product: Executive Function Skills for Your Child (normally paid in the Resource Hub)" },
+ { invites: 1, label: "Tier 2 (35 pts)", reward: "FREE digital product: Executive Function Skills for Your Child (normally paid in the Resource Library)" },
  { invites: 3, label: "Tier 3 (75 pts)", reward: "50 Story Coins dropped into your account to spend on in-app extras at launch" },
  { invites: 5, label: "Tier 4 (130 pts)", reward: "VIP Beta access to test Story Pros before launch and help shape the final product" },
  { invites: 10, label: "Tier 5 (250 pts)", reward: "A reward that changes what you pay for Story Pros. Reach 250 points to find out." },
@@ -912,7 +912,7 @@ const StoryBuilders = () => {
               {
                 task: "Tier 2 — 35 points",
                 impact: "Share your referral link with other families and post on social media to climb. You can reach this tier without any referrals.",
-                reward: { icon: <Gift size={20} />, title: "FREE: Executive Function Skills for Your Child", desc: "A digital product normally paid in the Resource Hub, yours free the moment you hit Tier 2, plus your Tier 2 badge", subdesc: "Tip: Profile + email + 3 social follows gets you past Tier 2 right away" },
+                reward: { icon: <Gift size={20} />, title: "FREE: Executive Function Skills for Your Child", desc: "A digital product normally paid in the Resource Library, yours free the moment you hit Tier 2, plus your Tier 2 badge", subdesc: "Tip: Profile + email + 3 social follows gets you past Tier 2 right away" },
                 invites: 1,
               },
               {

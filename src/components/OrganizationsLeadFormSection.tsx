@@ -49,7 +49,7 @@ const OrganizationsLeadFormSection = () => {
           subject: "Thanks for reaching out, Empowered DLD",
           html: `<p>Hi ${name.trim()},</p>
                  <p>Thank you for getting in touch about how Empowered DLD can support <strong>${orgName.trim()}</strong>. We received your inquiry and a member of our team will personally respond within 1–2 business days.</p>
-                 <p>In the meantime, feel free to explore our <a href="https://empowereddld.com/hub/preview" style="color:#5B2D8E;font-weight:600;">Resource Hub</a> for guides, tools, and resources to support people with Developmental Language Disorder.</p>
+                 <p>In the meantime, feel free to explore our <a href="https://empowereddld.com/hub/preview" style="color:#5B2D8E;font-weight:600;">Resource Library</a> for guides, tools, and resources to support people with Developmental Language Disorder.</p>
                  <p>Talk soon,<br/>The Empowered DLD Team</p>`,
         },
       }).catch((e) => console.warn("Lead email failed:", e));

@@ -16,7 +16,7 @@ const VerifyEmail = () => {
           </div>
           <h1 className="text-2xl font-bold text-midnight">Check Your Email</h1>
           <p className="text-stone-ui leading-relaxed">
-            We've sent a verification link to your email address. Click the link to verify your account and access the Resource Hub.
+            We've sent a verification link to your email address. Click the link to verify your account and access the Resource Library.
           </p>
           <div className="pt-4 border-t border-thistle">
             <p className="text-sm text-stone-ui">

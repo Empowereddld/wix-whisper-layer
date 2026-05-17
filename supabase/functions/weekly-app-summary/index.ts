@@ -161,7 +161,7 @@ Deno.serve(async (req) => {
 
       <h2 style="color:${BRAND};font-size:16px;margin:24px 0 8px;">📈 Growth at a glance</h2>
       <table style="width:100%;border-collapse:collapse;font-size:14px;">
-        ${row("New Resource Hub signups", profCur, profPrev)}
+        ${row("New Resource Library signups", profCur, profPrev)}
         ${row("Newsletter waitlist", wlCur, wlPrev)}
         ${row("Story Pros waitlist", sbCur, sbPrev)}
         ${row("Resource downloads", dlCur, dlPrev)}

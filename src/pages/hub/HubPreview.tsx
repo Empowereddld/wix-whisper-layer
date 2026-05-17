@@ -41,9 +41,9 @@ const testimonials = [
 ];
 
 const faqs = [
-  { q: "Is the Resource Hub free to join?", a: "Yes, completely free. We created it so families, educators, and therapists can easily find practical tools for supporting children with Developmental Language Disorder (DLD)." },
-  { q: "Who is the Resource Hub designed for?", a: "Anyone supporting a child with DLD, including parents, educators, speech-language pathologists, and other professionals. If a child with DLD is in your life, this space is for you." },
-  { q: "What kinds of resources are included in the Resource Hub?", a: "Printable guides, checklists, activity ideas, and discussion tools, all designed to help children with DLD build communication skills, understand themselves, and feel more confident." },
+  { q: "Is the Resource Library free to join?", a: "Yes, completely free. We created it so families, educators, and therapists can easily find practical tools for supporting children with Developmental Language Disorder (DLD)." },
+  { q: "Who is the Resource Library designed for?", a: "Anyone supporting a child with DLD, including parents, educators, speech-language pathologists, and other professionals. If a child with DLD is in your life, this space is for you." },
+  { q: "What kinds of resources are included in the Resource Library?", a: "Printable guides, checklists, activity ideas, and discussion tools, all designed to help children with DLD build communication skills, understand themselves, and feel more confident." },
   { q: "How do I access resources after signing up?", a: "Create your free account and you'll have immediate access to the Resource Library. New materials are added regularly, so it's always worth coming back." },
   { q: "Can I share resources with colleagues or other parents?", a: "Please do. Sharing helps more families and communities understand DLD, and that's exactly the point." },
   { q: "What is Developmental Language Disorder (DLD)?", a: "Developmental Language Disorder is a difference in how the brain learns and uses language. Children with DLD may have difficulty understanding language, expressing their ideas, or learning new words and grammar. DLD is common, affecting about 1 in 14 children, yet many families and educators have never heard the term. With the right understanding and support, children with DLD can thrive." },
@@ -107,7 +107,7 @@ const HubPreview = () => {
         {/* Layer 3: Content */}
         <div className="relative z-10 container px-6 md:px-8 flex flex-col items-center text-center gap-6">
           <p className="text-[11px] md:text-[12px] font-bold uppercase tracking-[0.22em] text-primary/85">
-            DLD RESOURCE HUB
+            DLD RESOURCE LIBRARY
           </p>
           <h1 className="text-[32px] md:text-[48px] lg:text-[56px] font-black text-foreground leading-[1.1] max-w-[800px]">
             Everything You Need to Support a Child with DLD
@@ -124,7 +124,7 @@ const HubPreview = () => {
             </Button>
           </Link>
           <p className="text-[13px] text-foreground/35">
-            Create an account to explore the Resource Hub.
+            Create an account to explore the Resource Library.
           </p>
         </div>
       </section>
@@ -164,7 +164,7 @@ const HubPreview = () => {
         <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
             <h2 className="text-[28px] md:text-[36px] font-black text-foreground leading-[1.1] mb-3">
-              A Few of the Tools Inside the Resource Hub
+              A Few of the Tools Inside the Resource Library
             </h2>
             <p className="text-[14px] md:text-[16px] text-muted-foreground leading-[1.7] max-w-[620px] mx-auto">
               Create your account to access the full library of printable guides, checklists, and practical supports for children with Developmental Language Disorder.
@@ -233,7 +233,7 @@ const HubPreview = () => {
       <section className="bg-black py-20 md:py-24">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <h2 className="text-[28px] md:text-[36px] lg:text-[42px] font-black text-white leading-[1.1] mb-4">
-            Start exploring the DLD Resource Hub
+            Start exploring the DLD Resource Library
           </h2>
           <p className="text-[14px] md:text-[16px] text-white/70 leading-[1.7] mb-8 max-w-[620px] mx-auto">
             Create your account and discover tools for supporting children with Developmental Language Disorder.
