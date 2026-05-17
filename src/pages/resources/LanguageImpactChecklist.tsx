@@ -70,6 +70,12 @@ const LanguageImpactChecklist = () => {
   };
 
   return (
+    <>
+      <SEOHead
+        title="Free Language Impact Checklist for DLD | Empowered DLD"
+        description="A free printable checklist that helps parents, educators, and SLPs notice how Developmental Language Disorder shows up in everyday moments at home and at school."
+        path="/resources/language-impact-checklist"
+      />
     <div style={{ fontFamily: fontBody, color: TEXT_DARK, background: "#fff", lineHeight: 1.6 }}>
       <style>{`
         .lic-page * { box-sizing: border-box; }
