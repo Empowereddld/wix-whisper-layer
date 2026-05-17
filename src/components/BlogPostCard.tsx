@@ -14,24 +14,9 @@ const BlogPostCard = ({ slug, title, excerpt, featuredImageUrl, categories, publ
   return (
     <Link
       to={`/resources/blog/${slug}`}
-      className="group flex flex-col bg-card rounded-xl border border-border/40 overflow-hidden transition-all duration-300 hover:shadow-[var(--shadow-card-hover)] hover:-translate-y-1"
+      className="group flex flex-col bg-card rounded-xl border border-border/40 overflow-hidden transition-all duration-300 hover:shadow-[var(--shadow-card-hover)] hover:-translate-y-1 h-full"
     >
-      <div className="aspect-[16/10] overflow-hidden bg-muted">
-        {featuredImageUrl ? (
-          <img
-            src={featuredImageUrl}
-            alt={title}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-            loading="lazy"
-          />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center text-muted-foreground/40">
-            <span className="text-4xl">✦</span>
-          </div>
-        )}
-      </div>
-
-      <div className="flex flex-col flex-1 p-5 md:p-6">
+      <div className="flex flex-col flex-1 p-6 md:p-8">
         {categories && categories.length > 0 && (
           <div className="flex flex-wrap gap-1.5 mb-3">
             {categories.slice(0, 3).map((cat) => (
