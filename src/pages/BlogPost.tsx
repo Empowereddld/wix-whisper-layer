@@ -124,15 +124,8 @@ const BlogPost = () => {
                 </time>
               )}
 
-              {post.featured_image_url && (
-                <div className="mt-8 mb-10 rounded-xl overflow-hidden md:max-w-[800px] md:mx-auto">
-                  <img
-                    src={post.featured_image_url}
-                    alt={(post as any).featured_image_alt || post.title}
-                    className="w-full h-auto object-cover max-h-[400px] md:max-h-[450px]"
-                  />
-                </div>
-              )}
+
+
 
               {/* Body */}
               <div className="max-w-[700px] mx-auto blog-content">
