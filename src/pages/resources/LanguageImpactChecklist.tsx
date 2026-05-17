@@ -1,6 +1,7 @@
 import { useEffect, useMemo } from "react";
 import logoImage from "@/assets/empowered-logo.webp";
 import { Link } from "react-router-dom";
+import SEOHead from "@/components/SEOHead";
 
 const DEEP_PURPLE = "#1f1147";
 const YELLOW = "#f5c542";
@@ -23,9 +24,6 @@ const LanguageImpactChecklist = () => {
   }, []);
 
   useEffect(() => {
-    const prevTitle = document.title;
-    document.title = "Language Impact Checklist | Empowered DLD";
-
     const tags: HTMLElement[] = [];
     const addTag = (tag: string, attrs: Record<string, string>) => {
       const el = document.createElement(tag);
@@ -33,12 +31,6 @@ const LanguageImpactChecklist = () => {
       document.head.appendChild(el);
       tags.push(el);
     };
-    addTag("meta", { name: "robots", content: "noindex, follow" });
-    addTag("meta", {
-      name: "description",
-      content:
-        "A free clinical tool for identifying how language difficulties show up across a student's school day.",
-    });
     addTag("link", { rel: "preconnect", href: "https://fonts.googleapis.com" });
     addTag("link", { rel: "preconnect", href: "https://fonts.gstatic.com", crossorigin: "" });
     addTag("link", {
@@ -47,7 +39,6 @@ const LanguageImpactChecklist = () => {
     });
 
     return () => {
-      document.title = prevTitle;
       tags.forEach((t) => t.remove());
     };
   }, []);
