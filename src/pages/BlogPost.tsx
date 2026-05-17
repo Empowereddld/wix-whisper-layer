@@ -34,7 +34,7 @@ const BlogPost = () => {
     "@type": "Article",
     headline: post.title,
     description: (post as any).meta_description || post.excerpt || "",
-    image: post.featured_image_url || "",
+    image: `${BASE_URL}/og-empowered-dld.png`,
     datePublished: post.published_at || post.created_at,
     dateModified: post.updated_at,
     author: {
@@ -81,7 +81,9 @@ const BlogPost = () => {
                 <meta property="og:description" content={(post as any).meta_description || post.excerpt || ""} />
                 <meta property="og:type" content="article" />
                 <meta property="og:url" content={`${BASE_URL}/resources/blog/${slug}`} />
-                {post.featured_image_url && <meta property="og:image" content={post.featured_image_url} />}
+                <meta property="og:image" content={`${BASE_URL}/og-empowered-dld.png`} />
+                <meta name="twitter:card" content="summary_large_image" />
+                <meta name="twitter:image" content={`${BASE_URL}/og-empowered-dld.png`} />
                 {articleJsonLd && (
                   <script type="application/ld+json">
                     {JSON.stringify(articleJsonLd)}
@@ -124,18 +126,8 @@ const BlogPost = () => {
                 </time>
               )}
 
-              {post.featured_image_url && (
-                <div className="mt-8 mb-10 rounded-xl overflow-hidden md:max-w-[800px] md:mx-auto">
-                  <img
-                    src={post.featured_image_url}
-                    alt={(post as any).featured_image_alt || post.title}
-                    className="w-full h-auto object-cover max-h-[400px] md:max-h-[450px]"
-                  />
-                </div>
-              )}
-
               {/* Body */}
-              <div className="max-w-[700px] mx-auto blog-content">
+              <div className="max-w-[700px] mx-auto blog-content mt-10 md:mt-12">
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>
                   {post.body || ""}
                 </ReactMarkdown>
