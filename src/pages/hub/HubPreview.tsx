@@ -94,6 +94,11 @@ const AnimatedCounter = ({ target, suffix }: { target: number; suffix: string })
 const HubPreview = () => {
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title="DLD Resource Library: Tools, Guides and Activities | Empowered DLD"
+        description="Free and paid resources for families, educators, and speech-language pathologists supporting children with Developmental Language Disorder. Books, guides, posters, and practical tools in one place."
+        path="/hub/preview"
+      />
       <Header />
 
       {/* ── Section 1: Hero ── */}
