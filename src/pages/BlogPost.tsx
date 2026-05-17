@@ -126,11 +126,8 @@ const BlogPost = () => {
                 </time>
               )}
 
-
-
-
               {/* Body */}
-              <div className="max-w-[700px] mx-auto blog-content">
+              <div className="max-w-[700px] mx-auto blog-content mt-10 md:mt-12">
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>
                   {post.body || ""}
                 </ReactMarkdown>
