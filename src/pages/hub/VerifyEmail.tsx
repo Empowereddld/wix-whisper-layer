@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import NoIndexHead from "@/components/NoIndexHead";
 import { Mail } from "lucide-react";
 import empoweredLogo from "@/assets/empowered-logo.webp";
 
