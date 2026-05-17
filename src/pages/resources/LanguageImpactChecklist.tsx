@@ -228,6 +228,7 @@ const LanguageImpactChecklist = () => {
         </footer>
       </div>
     </div>
+    </>
   );
 };
 
