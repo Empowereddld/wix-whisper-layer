@@ -4,6 +4,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { LogOut } from "lucide-react";
 import empoweredLogo from "@/assets/empowered-logo.webp";
+import NoIndexHead from "@/components/NoIndexHead";
 
 interface AdminLayoutProps {
   children: React.ReactNode;
@@ -20,6 +21,7 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
 
   return (
     <SidebarProvider>
+      <NoIndexHead />
       <div className="min-h-screen flex w-full bg-muted/30">
         <AdminSidebar />
         <div className="flex-1 flex flex-col min-w-0">
