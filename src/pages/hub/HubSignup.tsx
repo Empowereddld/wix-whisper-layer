@@ -74,6 +74,7 @@ const HubSignup = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-thistle/30 to-background flex items-center justify-center pt-12 px-4 pb-4">
+      <NoIndexHead />
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <Link to="/">

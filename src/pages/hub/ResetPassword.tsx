@@ -56,6 +56,7 @@ const ResetPassword = () => {
   if (!ready) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-thistle/30 to-background flex items-center justify-center p-4">
+        <NoIndexHead />
         <div className="text-center">
           <p className="text-stone-ui mb-4">Validating your reset link...</p>
           <Link to="/hub/login" className="text-hub-lavender hover:underline text-sm">Back to login</Link>
@@ -66,6 +67,7 @@ const ResetPassword = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-thistle/30 to-background flex items-center justify-center p-4">
+      <NoIndexHead />
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <Link to="/">
