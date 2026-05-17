@@ -37,7 +37,9 @@ const navLinks = [
 
 const Header = () => {
   const { session } = useAuth();
-  const loginTarget = session ? "/hub" : "/hub/preview";
+  const signupHref = "/signup";
+  const loginHref = "/login";
+  const libraryHref = "/hub";
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [mobileSubOpen, setMobileSubOpen] = useState<string | null>(null);
@@ -110,9 +112,23 @@ const Header = () => {
             </span>
           </button>
 
-          <Button asChild variant="outline" size="default" className="rounded-md h-10 px-7 text-[12px] font-semibold tracking-[0.08em] border-foreground/30 hover:bg-accent transition-all duration-300 ml-2">
-            <Link to={loginTarget}>{session ? "MY HUB" : "LOGIN"}</Link>
-          </Button>
+          {session ? (
+            <Button asChild size="default" className="rounded-md h-10 px-7 text-[12px] font-semibold tracking-[0.08em] bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 ml-2 whitespace-nowrap">
+              <Link to={libraryHref}>MY LIBRARY</Link>
+            </Button>
+          ) : (
+            <div className="flex items-center gap-3 xl:gap-4 ml-2">
+              <Link
+                to={loginHref}
+                className="text-[12px] xl:text-[13px] font-medium tracking-[0.04em] text-foreground/80 hover:text-primary transition-colors duration-200 whitespace-nowrap"
+              >
+                Log in
+              </Link>
+              <Button asChild size="default" className="rounded-md h-10 px-5 xl:px-7 text-[12px] font-semibold tracking-[0.08em] bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 whitespace-nowrap">
+                <Link to={signupHref}>JOIN THE LIBRARY</Link>
+              </Button>
+            </div>
+          )}
         </nav>
 
         <button
@@ -169,9 +185,24 @@ const Header = () => {
                 0
               </span>
             </button>
-            <Button asChild className="flex-1 font-bold text-[12px] tracking-[0.1em]">
-              <Link to={loginTarget} onClick={() => setMobileOpen(false)}>{session ? "MY HUB" : "LOGIN"}</Link>
-            </Button>
+            {session ? (
+              <Button asChild className="flex-1 font-bold text-[12px] tracking-[0.1em]">
+                <Link to={libraryHref} onClick={() => setMobileOpen(false)}>MY LIBRARY</Link>
+              </Button>
+            ) : (
+              <div className="flex-1 flex flex-col gap-2">
+                <Button asChild className="font-bold text-[12px] tracking-[0.1em]">
+                  <Link to={signupHref} onClick={() => setMobileOpen(false)}>JOIN THE LIBRARY</Link>
+                </Button>
+                <Link
+                  to={loginHref}
+                  onClick={() => setMobileOpen(false)}
+                  className="text-center text-[13px] font-medium text-foreground/80 hover:text-primary py-1"
+                >
+                  Log in
+                </Link>
+              </div>
+            )}
           </div>
         </nav>
       )}
