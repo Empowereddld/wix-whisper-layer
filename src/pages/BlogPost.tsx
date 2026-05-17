@@ -81,7 +81,9 @@ const BlogPost = () => {
                 <meta property="og:description" content={(post as any).meta_description || post.excerpt || ""} />
                 <meta property="og:type" content="article" />
                 <meta property="og:url" content={`${BASE_URL}/resources/blog/${slug}`} />
-                {post.featured_image_url && <meta property="og:image" content={post.featured_image_url} />}
+                <meta property="og:image" content={`${BASE_URL}/og-empowered-dld.png`} />
+                <meta name="twitter:card" content="summary_large_image" />
+                <meta name="twitter:image" content={`${BASE_URL}/og-empowered-dld.png`} />
                 {articleJsonLd && (
                   <script type="application/ld+json">
                     {JSON.stringify(articleJsonLd)}
