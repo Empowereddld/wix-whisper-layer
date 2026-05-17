@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/accordion";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import SEOHead from "@/components/SEOHead";
 import TestimonialMasonry from "@/components/hub/TestimonialMasonry";
 
 /* ── Data ── */
