@@ -186,7 +186,7 @@ const Header = () => {
               </span>
             </button>
             {session ? (
-              <Button asChild className="flex-1 font-bold text-[12px] tracking-[0.1em]">
+              <Button asChild variant="outline" className="flex-1 font-bold text-[12px] tracking-[0.1em] border-primary text-primary bg-transparent hover:bg-primary hover:text-primary-foreground">
                 <Link to={libraryHref} onClick={() => setMobileOpen(false)}>MY LIBRARY</Link>
               </Button>
             ) : (
