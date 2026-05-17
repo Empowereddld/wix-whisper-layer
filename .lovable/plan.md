@@ -1,44 +1,53 @@
-# Phase 8: SEO tuning for DLD keywords
+## Goal
 
-Copy and metadata edits only. No layout, routing, sitemap, or logic changes.
+Replace user-facing "Resource Hub" / "resource hub" / "RESOURCE HUB" with "Resource Library" / "resource library" / "RESOURCE LIBRARY" across the site, preserving capitalization. Do not touch URL slugs, class names, variable names, or file names (none containing `resource-hub` were found anyway).
 
-## 1. Homepage metadata (`src/pages/Index.tsx`)
+## Scope of changes
 
-- **Title** → `Developmental Language Disorder Resources | Empowered DLD`
-- **Description** → `Evidence-based resources, books, and community for families and professionals supporting people with Developmental Language Disorder (DLD). Empowered DLD does not provide diagnosis.`
+A site-wide grep found **17 files** with user-facing "Resource Hub" text. No URL slug, class name, or filename contains "resource-hub", so there are no slugs to leave alone or flag for redirect.
 
-## 2. Homepage hero (`src/components/HeroSection.tsx`)
+### Marketing site / shared components (4 files)
+- `src/components/ContactSection.tsx` — confirmation email body link text
+- `src/components/Footer.tsx` — newsletter confirmation email copy + CTA button text (URL unchanged)
+- `src/components/HowWeSupportSchoolsSection.tsx` — body copy "...available in our resource hub" (lowercase)
+- `src/components/OrganizationsLeadFormSection.tsx` — lead form confirmation email link text
 
-- Eyebrow: **unchanged** (`SUPPORTING CHILDREN WITH DLD`)
-- H1: **unchanged** (`Every child with DLD deserves to feel seen.`)
-- Subheading → `We partner with families, educators, clinicians, and organizations to bring clear, practical resources about Developmental Language Disorder into homes, schools, and communities.`
+### Legal pages (2 files)
+- `src/pages/PrivacyPolicy.tsx` — 2 mentions ("sign up for our resource hub", "DLD Resource Hub")
+- `src/pages/TermsAndConditions.tsx` — 1 mention ("DLD Resource Hub")
 
-## 3. About DLD metadata (`src/pages/AboutDLD.tsx`)
+### Hub pages (4 files)
+- `src/pages/hub/HubPreview.tsx` — 6 mentions: 3 FAQ Q&As, hero eyebrow `DLD RESOURCE HUB` → `DLD RESOURCE LIBRARY`, subhead, "A Few of the Tools Inside the Resource Hub", "Start exploring the DLD Resource Hub"
+- `src/pages/hub/HubDashboard.tsx` — welcome greeting "Welcome, X, to the DLD Resource Hub"
+- `src/pages/hub/PaymentSuccess.tsx` — 3 mentions (success message + 2 "Back to Resource Hub" buttons)
+- `src/pages/hub/VerifyEmail.tsx` — verification message
+- `src/pages/auth/SignupRole.tsx` — 2 mentions (welcome message + "Take me to the Resource Hub" button)
 
-- **Title** → `What is DLD? Symptoms, Signs & Diagnosis | Empowered DLD`
-- **Description** → `Learn about Developmental Language Disorder (DLD): signs, symptoms, and how DLD is diagnosed. Empowered DLD shares resources and education, not clinical diagnosis.`
+### Story Pros / waitlist reward copy (4 files)
+- `src/components/waitlist/RewardsInventory.tsx` — reward description "(normally paid in the Resource Hub)"
+- `src/lib/waitlist-constants.ts` — reward description "(normally paid in the Resource Hub)"
+- `src/pages/AdminWaitlistGuide.tsx` — internal guide reward description
+- `src/pages/StoryBuilders.tsx` — 2 reward descriptions
 
-Verify H1 in `AboutDLDHero` reads naturally as "What is Developmental Language Disorder (DLD)?" (read-only check; edit only if missing the full phrase).
+### Edge functions / emails (2 files)
+- `supabase/functions/verify-payment/index.ts` — payment confirmation email "...unlocked in your Resource Hub"
+- `supabase/functions/weekly-app-summary/index.ts` — internal admin summary label "New Resource Hub signups"
 
-## 4. FAQ section (`src/components/DLDFaqSection.tsx`)
+## What will NOT change
+- No URL routes, slugs, file paths, class names, variable names, or `id` attributes contain "resource-hub" — confirmed by grep. Nothing to preserve there.
+- Image filenames and alt text were searched; none contain "Resource Hub".
+- Code comments — none contain "Resource Hub".
 
-Rewrite question wording so target search phrases appear as `<h3>` triggers. Keep existing answers.
+## Edge cases / things to flag
 
-- `What does DLD look like?` → `What are the signs of DLD?`
+1. **`HowWeSupportSchoolsSection.tsx`** uses lowercase "resource hub" mid-sentence. Will become "resource library" per spec.
+2. **`AdminWaitlistGuide.tsx`** and **`weekly-app-summary`** are admin-internal, not visitor-facing, but they still contain the phrase as readable copy — will update for consistency. Flagging in case you'd rather leave admin internals untouched.
+3. **Footer.tsx line 80** has CTA button text "Explore the Resource Hub →" with `href="https://empowereddld.com/hub/preview"` (no slug change needed). Visible text becomes "Explore the Resource Library →".
+4. **`StoryBuilders.tsx` line 915** has both a card title and a sub-description; only the descriptive phrase "(normally paid in the Resource Hub)" / "A digital product normally paid in the Resource Hub" will change.
+5. Sentence "When you use our website, sign up for our resource hub, subscribe to our newsletter..." (PrivacyPolicy) — lowercase per source, becomes lowercase "resource library".
 
-Add three new FAQs (site voice, "people" terminology, no "free", no em dashes):
+## Final deliverable summary (will be reported after implementation)
 
-- **What are the symptoms of DLD?** — vocabulary, following instructions, expressing ideas, organizing language in speech and writing.
-- **How is DLD diagnosed?** — explains DLD is diagnosed by a qualified speech-language pathologist through language assessment; clarifies Empowered DLD provides education and resources, not diagnosis.
-- **What is the difference between DLD and autism?** — short explainer with a link to `/blog/autism-vs-dld-understand-the-difference` (confirmed) using the existing `link` pattern from the first FAQ.
-
-The `FAQPage` JSON-LD on About DLD picks up new entries automatically via the exported `faqs` array.
-
-## Verification
-
-- `SEOHead` props on Index and AboutDLD remain valid.
-- `FAQPage` JSON-LD still maps from `faqs` array — no manual schema edits.
-- No canonical / Open Graph / sitemap / routing / layout changes.
-- FAQ link slug confirmed: `/blog/autism-vs-dld-understand-the-difference`.
-- Terminology: "people with DLD" in new copy; hero copy stays child-focused per direction.
-- No em dashes in new copy.
+- **Files changed:** 17
+- **URLs still containing `resource-hub`:** none found in the project
+- **Items flagged for your review:** admin-internal copy in `AdminWaitlistGuide.tsx` and `weekly-app-summary/index.ts` (updated by default, easy to revert if you'd rather keep "Resource Hub" internally)
