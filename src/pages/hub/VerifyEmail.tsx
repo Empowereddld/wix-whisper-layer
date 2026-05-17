@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom";
+import NoIndexHead from "@/components/NoIndexHead";
 import { Mail } from "lucide-react";
 import empoweredLogo from "@/assets/empowered-logo.webp";
 
 const VerifyEmail = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-thistle/30 to-background flex items-center justify-center p-4">
+      <NoIndexHead />
       <div className="w-full max-w-md text-center">
         <Link to="/">
           <img src={empoweredLogo} alt="Empowered DLD" className="h-10 mx-auto mb-8" />

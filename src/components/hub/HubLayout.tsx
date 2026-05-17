@@ -1,4 +1,5 @@
 import HubHeader from "./HubHeader";
+import NoIndexHead from "@/components/NoIndexHead";
 
 interface HubLayoutProps {
   children: React.ReactNode;
@@ -9,6 +10,7 @@ interface HubLayoutProps {
 const HubLayout = ({ children, activeAudience, onAudienceChange }: HubLayoutProps) => {
   return (
     <div className="min-h-screen bg-background flex flex-col">
+      <NoIndexHead />
       <HubHeader activeAudience={activeAudience} onAudienceChange={onAudienceChange} />
       <main className="flex-1">{children}</main>
       <footer className="bg-midnight text-white/50 text-center text-sm py-5 mt-16">

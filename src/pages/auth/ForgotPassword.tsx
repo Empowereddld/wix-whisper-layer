@@ -1,4 +1,5 @@
 import { useState } from "react";
+import NoIndexHead from "@/components/NoIndexHead";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -35,6 +36,7 @@ const ForgotPassword = () => {
   if (sent) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-thistle/30 to-background flex items-center justify-center p-4">
+        <NoIndexHead />
         <div className="w-full max-w-md text-center">
           <Link to="/">
             <img src={empoweredLogo} alt="Empowered DLD" className="h-10 mx-auto mb-8" />
@@ -63,6 +65,7 @@ const ForgotPassword = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-thistle/30 to-background flex items-center justify-center p-4">
+      <NoIndexHead />
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <Link to="/">

@@ -15,9 +15,10 @@ interface SEOHeadProps {
   type?: string;
   jsonLd?: Record<string, unknown>;
   breadcrumbs?: BreadcrumbItem[];
+  noindex?: boolean;
 }
 
-const SEOHead = ({ title, description, path, ogImage, type = "website", jsonLd, breadcrumbs }: SEOHeadProps) => {
+const SEOHead = ({ title, description, path, ogImage, type = "website", jsonLd, breadcrumbs, noindex }: SEOHeadProps) => {
   const canonicalUrl = `${BASE_URL}${path}`;
   const defaultOgImage = "https://www.empowereddld.com/og-empowered-dld.png";
 
@@ -37,6 +38,7 @@ const SEOHead = ({ title, description, path, ogImage, type = "website", jsonLd, 
       <title>{title}</title>
       <meta name="description" content={description} />
       <link rel="canonical" href={canonicalUrl} />
+      {noindex && <meta name="robots" content="noindex, nofollow" />}
 
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />

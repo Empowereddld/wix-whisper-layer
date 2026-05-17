@@ -1,4 +1,5 @@
 import { useState } from "react";
+import NoIndexHead from "@/components/NoIndexHead";
 import { useNavigate, Link, useSearchParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable/index";
@@ -89,6 +90,7 @@ const Signup = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-thistle/30 to-background flex items-center justify-center p-4">
+      <NoIndexHead />
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <Link to="/">
