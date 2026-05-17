@@ -1,4 +1,5 @@
 import { useEffect, useMemo } from "react";
+import SEOHead from "@/components/SEOHead";
 import bookCover from "@/assets/preview/dan-airplane/book-cover.jpg";
 import lifestyleBoy from "@/assets/preview/dan-airplane/lifestyle-boy-reading.webp";
 import lifestyleClassroom from "@/assets/preview/dan-airplane/lifestyle-classroom.webp";
@@ -151,9 +152,6 @@ const DanAndThePaperAirplane = () => {
   }, []);
 
   useEffect(() => {
-    const prevTitle = document.title;
-    document.title = "Dan and the Paper Airplane | Sample Pages | Empowered DLD";
-
     const tags: HTMLElement[] = [];
     const addTag = (tag: string, attrs: Record<string, string>) => {
       const el = document.createElement(tag);
@@ -161,12 +159,6 @@ const DanAndThePaperAirplane = () => {
       document.head.appendChild(el);
       tags.push(el);
     };
-    addTag("meta", { name: "robots", content: "noindex, follow" });
-    addTag("meta", {
-      name: "description",
-      content:
-        "Read a free sample of Dan and the Paper Airplane, the first book in the Living Life with DLD series. Written by an SLP and an educator for children with DLD.",
-    });
     addTag("link", { rel: "preconnect", href: "https://fonts.googleapis.com" });
     addTag("link", { rel: "preconnect", href: "https://fonts.gstatic.com", crossorigin: "" });
     addTag("link", {
@@ -175,13 +167,17 @@ const DanAndThePaperAirplane = () => {
     });
 
     return () => {
-      document.title = prevTitle;
       tags.forEach((t) => t.remove());
     };
   }, []);
 
   return (
     <div className="dan-page">
+      <SEOHead
+        title="Dan and the Paper Airplane: Free Book Preview | Empowered DLD"
+        description="Free preview of Dan and the Paper Airplane, a children's book from the Living Life with DLD series. Helps children with Developmental Language Disorder feel seen and understood."
+        path="/preview/dan-and-the-paper-airplane"
+      />
       <style>{css}</style>
 
       <header className="hero">
