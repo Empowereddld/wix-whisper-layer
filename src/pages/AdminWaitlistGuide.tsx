@@ -864,7 +864,7 @@ Events to enable:
 
             <CollapsibleSection title="Tier 2 — Executive Function Skills Guide (35 pts)">
               <p className="text-sm text-gray-500 mb-4">
-                <strong>Reward:</strong> FREE digital download of "Executive Function Skills for Your Child" (normally paid in the Resource Hub).
+                <strong>Reward:</strong> FREE digital download of "Executive Function Skills for Your Child" (normally paid in the Resource Library).
               </p>
               <ul className="space-y-2 text-sm list-disc list-inside text-[#121212]">
                 <li>Tier-up email includes a download link to the EF guide</li>

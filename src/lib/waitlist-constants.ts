@@ -78,7 +78,7 @@ export const TIER_REWARDS = [
   {
     tier: 1,
     name: "Executive Function Skills Guide",
-    description: "FREE digital product: Executive Function Skills for Your Child (normally paid in the Resource Hub)",
+    description: "FREE digital product: Executive Function Skills for Your Child (normally paid in the Resource Library)",
     icon: "🎁",
     claimType: "download",
   },

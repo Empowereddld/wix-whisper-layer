@@ -67,7 +67,7 @@ const TermsAndConditions = () => {
             <p>Because digital resources are delivered instantly and cannot be "returned," <strong>all sales of digital products are final</strong>. If you experience a technical issue (corrupted file, failed download, duplicate purchase, etc.), contact <a href="mailto:hello@empowereddld.com" className="text-primary hover:underline">hello@empowereddld.com</a> within 14 days of purchase and we will make it right.</p>
 
             <h2>5. User Accounts</h2>
-            <p>When you create an account on our DLD Resource Hub, you are responsible for maintaining the confidentiality of your login credentials and for all activities under your account.</p>
+            <p>When you create an account on our DLD Resource Library, you are responsible for maintaining the confidentiality of your login credentials and for all activities under your account.</p>
 
             <h2>6. Newsletter & Communications</h2>
             <p>By subscribing to our newsletter or providing your email, you consent to receiving periodic emails from Empowered DLD. You can unsubscribe at any time using the link in any email.</p>

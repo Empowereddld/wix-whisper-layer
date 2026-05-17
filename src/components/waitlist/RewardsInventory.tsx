@@ -62,7 +62,7 @@ const TIER_REWARDS: TierReward[] = [
     tier: 1,
     rewardId: "tier_2_ef_guide",
     name: "Executive Function Skills Guide",
-    description: "FREE digital product (normally paid in the Resource Hub)",
+    description: "FREE digital product (normally paid in the Resource Library)",
     icon: "🎁",
     earnedVia: "Download digital guide",
     claimType: "download",

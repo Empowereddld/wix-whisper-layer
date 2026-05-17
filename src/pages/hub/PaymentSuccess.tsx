@@ -55,7 +55,7 @@ const PaymentSuccess = () => {
             <CheckCircle className="h-16 w-16 text-emerald-500 mx-auto" />
             <h1 className="text-2xl font-bold text-midnight">Payment Successful!</h1>
             <p className="text-stone-ui">
-              Your resource has been unlocked. You can now download it anytime from the Resource Hub.
+              Your resource has been unlocked. You can now download it anytime from the Resource Library.
             </p>
             <div className="flex flex-col gap-3 pt-4">
               {resourceId && (
@@ -64,7 +64,7 @@ const PaymentSuccess = () => {
                 </Button>
               )}
               <Button variant="outline" onClick={() => navigate("/hub")}>
-                Back to Resource Hub
+                Back to Resource Library
               </Button>
             </div>
           </>
@@ -78,7 +78,7 @@ const PaymentSuccess = () => {
               We couldn't verify your payment. If you were charged, your purchase will be recorded shortly. Please contact support if the issue persists.
             </p>
             <Button variant="outline" onClick={() => navigate("/hub")}>
-              Back to Resource Hub
+              Back to Resource Library
             </Button>
           </>
         )}

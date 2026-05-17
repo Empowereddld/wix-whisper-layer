@@ -113,7 +113,7 @@ const HubDashboard = () => {
   const firstName = rawFirstName && !looksLikeEmailHandle ? rawFirstName : "there";
   const welcomeHeading = isReturning
     ? `Welcome back, ${firstName}!`
-    : `Welcome, ${firstName}, to the DLD Resource Hub`;
+    : `Welcome, ${firstName}, to the DLD Resource Library`;
 
   return (
     <HubLayout activeAudience={filters.audienceTab} onAudienceChange={setAudienceTab}>
