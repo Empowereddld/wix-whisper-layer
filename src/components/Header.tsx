@@ -113,7 +113,7 @@ const Header = () => {
           </button>
 
           {session ? (
-            <Button asChild size="default" className="rounded-md h-10 px-7 text-[12px] font-semibold tracking-[0.08em] bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 ml-2 whitespace-nowrap">
+            <Button asChild variant="outline" size="default" className="rounded-md h-10 px-7 text-[12px] font-semibold tracking-[0.08em] border-primary text-primary bg-transparent hover:bg-primary hover:text-primary-foreground transition-all duration-300 ml-2 whitespace-nowrap">
               <Link to={libraryHref}>MY LIBRARY</Link>
             </Button>
           ) : (
@@ -186,7 +186,7 @@ const Header = () => {
               </span>
             </button>
             {session ? (
-              <Button asChild className="flex-1 font-bold text-[12px] tracking-[0.1em]">
+              <Button asChild variant="outline" className="flex-1 font-bold text-[12px] tracking-[0.1em] border-primary text-primary bg-transparent hover:bg-primary hover:text-primary-foreground">
                 <Link to={libraryHref} onClick={() => setMobileOpen(false)}>MY LIBRARY</Link>
               </Button>
             ) : (
