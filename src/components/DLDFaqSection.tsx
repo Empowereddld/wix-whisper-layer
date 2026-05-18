@@ -18,7 +18,7 @@ export const faqs = [
   {
     question: "How common is DLD?",
     answer:
-      "Developmental Language Disorder affects approximately 1 in 14 people, making it one of the most common neurodevelopmental conditions. DLD is more common than autism, yet awareness remains far lower. Because many educators, families, and even professionals have never heard the term, individuals with language difficulties are often misunderstood or do not receive the support they need.",
+      "Developmental Language Disorder affects approximately 1 in 14 people, making it one of the most common neurodevelopmental conditions. DLD is more common than autism, yet awareness remains far lower. Because many educators, families, and even professionals have never heard the term, individuals with language difficulties are often misunderstood or do not receive the support they need. (Source: Norbury et al., 2016.)",
   },
   {
     question: "What are the signs of DLD?",

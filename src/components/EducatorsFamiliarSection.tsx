@@ -26,8 +26,11 @@ const EducatorsFamiliarSection = () => {
             <li>A lack of culturally and linguistically diverse materials</li>
           </ul>
 
-          <p className="text-[14px] md:text-[15px] text-muted-foreground leading-[1.7] mb-6">
+          <p className="text-[14px] md:text-[15px] text-muted-foreground leading-[1.7] mb-2">
             DLD affects 1 in 14 people — that means in every classroom, there are likely students who need more support than they're getting.
+          </p>
+          <p className="text-[12px] text-muted-foreground/70 leading-[1.5] mb-6">
+            Source: Norbury et al. (2016).
           </p>
 
           <p className="text-[14px] md:text-[15px] text-muted-foreground leading-[1.7]">

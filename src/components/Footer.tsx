@@ -99,7 +99,7 @@ const Footer = () => {
             <div className="h-12 mb-5 overflow-y-hidden overflow-x-visible">
               <img src={logoWhite} alt="EmpoweredDLD logo" className="h-48 -mt-[4.35rem] ml-0" style={{ objectFit: 'contain', objectPosition: 'left' }} loading="lazy" />
             </div>
-            <p className="text-[13px] text-primary-foreground/50 leading-relaxed">
+            <p className="text-[14px] text-primary-foreground/75 leading-relaxed">
               Supporting 4,000+ families and professionals navigating Developmental Language Disorder with evidence-based resources, multilingual materials, and community connection.
             </p>
           </div>
@@ -110,7 +110,7 @@ const Footer = () => {
             <ul className="space-y-2">
               {quickLinks.map((link) => (
                 <li key={link.label}>
-                  <Link to={link.to} className="text-[13px] text-primary-foreground/50 hover:text-primary-foreground transition-colors duration-200">
+                  <Link to={link.to} className="text-[14px] text-primary-foreground/75 hover:text-primary-foreground transition-colors duration-200">
                     {link.label}
                   </Link>
                 </li>
@@ -124,7 +124,7 @@ const Footer = () => {
             <ul className="space-y-2">
               {usefulLinks.map((link) => (
                 <li key={link.label}>
-                  <Link to={link.to} className="text-[13px] text-primary-foreground/50 hover:text-primary-foreground transition-colors duration-200">
+                  <Link to={link.to} className="text-[14px] text-primary-foreground/75 hover:text-primary-foreground transition-colors duration-200">
                     {link.label}
                   </Link>
                 </li>
@@ -137,7 +137,7 @@ const Footer = () => {
             <p className="font-bold text-base mb-4 text-primary-foreground">Contact</p>
             <a
               href="mailto:hello@empowereddld.com"
-              className="inline-flex items-center gap-2 text-[13px] text-primary-foreground/50 hover:text-primary-foreground transition-colors duration-200"
+              className="inline-flex items-center gap-2 text-[14px] text-primary-foreground/75 hover:text-primary-foreground transition-colors duration-200"
             >
               <Mail className="w-4 h-4 shrink-0" />
               hello@empowereddld.com

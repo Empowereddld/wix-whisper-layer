@@ -37,6 +37,10 @@ const ShopGlobalCommunity = () => {
             </div>
           ))}
         </div>
+
+        <p className="text-[11px] text-stone-ui/70 leading-[1.5] mt-6 md:mt-8">
+          DLD prevalence: Norbury et al. (2016).
+        </p>
       </div>
     </section>
   );

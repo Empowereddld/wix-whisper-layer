@@ -47,7 +47,7 @@ const faqs = [
   { q: "What kinds of resources are included in the Resource Library?", a: "Printable guides, checklists, activity ideas, and discussion tools, all designed to help children with DLD build communication skills, understand themselves, and feel more confident." },
   { q: "How do I access resources after signing up?", a: "Create your free account and you'll have immediate access to the Resource Library. New materials are added regularly, so it's always worth coming back." },
   { q: "Can I share resources with colleagues or other parents?", a: "Please do. Sharing helps more families and communities understand DLD, and that's exactly the point." },
-  { q: "What is Developmental Language Disorder (DLD)?", a: "Developmental Language Disorder is a difference in how the brain learns and uses language. Children with DLD may have difficulty understanding language, expressing their ideas, or learning new words and grammar. DLD is common, affecting about 1 in 14 children, yet many families and educators have never heard the term. With the right understanding and support, children with DLD can thrive." },
+  { q: "What is Developmental Language Disorder (DLD)?", a: "Developmental Language Disorder is a difference in how the brain learns and uses language. Children with DLD may have difficulty understanding language, expressing their ideas, or learning new words and grammar. DLD is common, affecting about 1 in 14 children (Norbury et al., 2016), yet many families and educators have never heard the term. With the right understanding and support, children with DLD can thrive." },
 ];
 
 

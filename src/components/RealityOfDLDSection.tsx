@@ -72,6 +72,10 @@ const RealityOfDLDSection = () => {
             </div>
           ))}
         </div>
+
+        <p className="text-[12px] text-muted-foreground/70 leading-[1.6] text-center max-w-[760px] mx-auto mt-10 md:mt-14">
+          Sources: Norbury et al. (2016) for prevalence; Conti-Ramsden et al. (2013) for mental health risk; RADLD international campaign for awareness data.
+        </p>
       </div>
     </section>
   );

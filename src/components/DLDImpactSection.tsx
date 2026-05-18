@@ -94,6 +94,9 @@ const DLDImpactSection = () => {
               Developmental Language Disorder affects 1 in 14 children, yet most
               people have never heard of it. Your organization can change that.
             </p>
+            <p className="text-[11px] text-muted-foreground/60 leading-[1.5] pt-3 max-w-[440px] mx-auto md:mx-0">
+              Source: Norbury et al. (2016); RADLD.
+            </p>
           </div>
 
           {/* Center — Card Stack */}

@@ -16,6 +16,9 @@ const StatBand = ({ description, hideButton }: StatBandProps = {}) => {
           <p className="text-[13px] md:text-[17px] text-background/85 leading-[1.65]">
             {description || "Developmental Language Disorder (DLD) affects 1 in 14 people. It's 7x more common than autism, yet most people have never heard of it."}
           </p>
+          <p className="text-[11px] text-background/55 leading-[1.5]">
+            Source: Norbury et al. (2016); RADLD awareness campaign.
+          </p>
           {!hideButton && (
             <div>
               <a href="/about-dld">
