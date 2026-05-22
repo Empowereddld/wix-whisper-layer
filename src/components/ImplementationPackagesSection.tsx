@@ -1,47 +1,38 @@
 const packages = [
   {
-    name: "Resource Package",
+    name: "Self-Guided Kit",
     price: "$1,500",
-    bestFor: "Schools that want high-quality DLD materials.",
+    bestFor: "Schools ready to lead their own DLD awareness initiative.",
     items: [
-      "Full DLD book series (print + digital)",
-      "Discussion guides for each book",
-      "Parent letters in 7+ languages",
-      "Classroom poster set",
-      "Digital resource library access (1 year)",
+      "Complete DLD Book Series (all 5 titles)",
+      "Discussion guides for all 5 books",
+      "Classroom accommodation strategy guide",
+      "DLD Awareness Display with facilitation guide",
+      "Professional Resource Library access (1 year)",
     ],
   },
   {
-    name: "Staff Training",
+    name: "Guided Training",
     price: "$2,800",
-    bestFor: "Schools that want to build staff capacity to support students with DLD.",
+    bestFor: "Schools that want hands-on support building DLD awareness across staff.",
     items: [
-      "Everything in the Resource Package",
-      "2-hour interactive professional development session",
-      "DLD screening and identification guide",
-      "Classroom accommodation toolkit",
-      "30-day follow-up consultation",
+      "Everything in the Self-Guided Kit",
+      "Pre-session consultation to tailor training to your team",
+      "60-90 minute interactive professional development session",
+      "30-day follow-up check-in call",
     ],
   },
   {
-    name: "Staff and Family Support",
+    name: "Full Partnership",
     price: "$4,500",
-    bestFor: "Schools that want a comprehensive, equity-driven DLD initiative.",
+    bestFor: "Schools launching a comprehensive DLD initiative with staff and family support.",
     items: [
-      "Everything in Staff Training",
-      "Parent workshop (virtual or in-person)",
-      "Multilingual family resource packets",
-      "IEP goal bank access",
-      "Quarterly check-in calls (1 year)",
-      "Priority email support",
+      "Everything in the Guided Training package",
+      "Parent/family workshop (virtual)",
+      "IEP Goal Bank access for your SLP team",
+      "Two check-in calls over 12 months",
     ],
   },
-];
-
-const addOns = [
-  "Additional professional development sessions — $800/session",
-  "Custom multilingual resource translation — $500/language",
-  "On-site implementation coaching (full day) — $1,200",
 ];
 
 const ImplementationPackagesSection = () => {
