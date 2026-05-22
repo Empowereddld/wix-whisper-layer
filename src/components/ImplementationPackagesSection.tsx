@@ -81,16 +81,17 @@ const ImplementationPackagesSection = () => {
           ))}
         </div>
 
-        {/* Add-ons */}
-        <div className="max-w-[700px] mx-auto">
-          <h3 className="text-[18px] md:text-[22px] font-black text-foreground mb-4 text-center">
-            Add-Ons
-          </h3>
-          <ul className="list-disc pl-5 space-y-2 text-[13px] md:text-[14px] text-muted-foreground leading-[1.7]">
-            {addOns.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
+        <div className="max-w-[700px] mx-auto text-center space-y-3">
+          <p className="text-[13px] md:text-[14px] text-muted-foreground leading-[1.7]">
+            Additional book copies available at school pricing. Shipping covered by school.
+          </p>
+          <p className="text-[13px] md:text-[14px] text-muted-foreground leading-[1.7]">
+            Working with multiple sites or looking for something custom?{" "}
+            <a href="/contact" className="text-foreground font-semibold underline hover:text-primary transition-colors">
+              Contact us
+            </a>{" "}
+            to discuss enterprise pricing and tailored training solutions.
+          </p>
         </div>
       </div>
     </section>
