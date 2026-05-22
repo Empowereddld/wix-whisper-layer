@@ -64,6 +64,43 @@ Deno.serve(async (req) => {
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
     );
 
+    // Email lookup must be authenticated AND the email must match the
+    // caller's JWT email. This prevents unauthenticated enumeration of
+    // waitlist PII while still allowing logged-in dashboard recovery.
+    if (email) {
+      const authHeader = req.headers.get("Authorization") || "";
+      const token = authHeader.startsWith("Bearer ")
+        ? authHeader.slice(7)
+        : "";
+      if (!token) {
+        return new Response(
+          JSON.stringify({ error: "Authentication required for email lookup" }),
+          {
+            status: 401,
+            headers: { ...corsHeaders, "Content-Type": "application/json" },
+          }
+        );
+      }
+      const authClient = createClient(
+        Deno.env.get("SUPABASE_URL")!,
+        Deno.env.get("SUPABASE_ANON_KEY")!
+      );
+      const { data: claimsData, error: claimsError } =
+        await authClient.auth.getClaims(token);
+      const jwtEmail = (claimsData?.claims?.email as string | undefined)
+        ?.toLowerCase();
+      if (claimsError || !jwtEmail || jwtEmail !== email) {
+        return new Response(
+          JSON.stringify({ error: "Email does not match authenticated user" }),
+          {
+            status: 403,
+            headers: { ...corsHeaders, "Content-Type": "application/json" },
+          }
+        );
+      }
+    }
+
+
     let query = supabase.from("storybuilders_waitlist").select(SAFE_COLUMNS);
     if (ref) {
       query = query.eq("referral_code", ref);
