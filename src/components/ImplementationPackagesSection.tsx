@@ -1,38 +1,47 @@
 const packages = [
   {
-    name: "Self-Guided Kit",
+    name: "Resource Package",
     price: "$1,500",
-    bestFor: "Schools ready to lead their own DLD awareness initiative.",
+    bestFor: "Schools that want high-quality DLD materials.",
     items: [
-      "Complete DLD Book Series (all 5 titles)",
-      "Discussion guides for all 5 books",
-      "Classroom accommodation strategy guide",
-      "DLD Awareness Display with facilitation guide",
-      "Professional Resource Library access (1 year)",
+      "Full DLD book series (print + digital)",
+      "Discussion guides for each book",
+      "Parent letters in 7+ languages",
+      "Classroom poster set",
+      "Digital resource library access (1 year)",
     ],
   },
   {
-    name: "Guided Training",
+    name: "Staff Training",
     price: "$2,800",
-    bestFor: "Schools that want hands-on support building DLD awareness across staff.",
+    bestFor: "Schools that want to build staff capacity to support students with DLD.",
     items: [
-      "Everything in the Self-Guided Kit",
-      "Pre-session consultation to tailor training to your team",
-      "60-90 minute interactive professional development session",
-      "30-day follow-up check-in call",
+      "Everything in the Resource Package",
+      "2-hour interactive professional development session",
+      "DLD screening and identification guide",
+      "Classroom accommodation toolkit",
+      "30-day follow-up consultation",
     ],
   },
   {
-    name: "Full Partnership",
+    name: "Staff and Family Support",
     price: "$4,500",
-    bestFor: "Schools launching a comprehensive DLD initiative with staff and family support.",
+    bestFor: "Schools that want a comprehensive, equity-driven DLD initiative.",
     items: [
-      "Everything in the Guided Training package",
-      "Parent/family workshop (virtual)",
-      "IEP Goal Bank access for your SLP team",
-      "Two check-in calls over 12 months",
+      "Everything in Staff Training",
+      "Parent workshop (virtual or in-person)",
+      "Multilingual family resource packets",
+      "IEP goal bank access",
+      "Quarterly check-in calls (1 year)",
+      "Priority email support",
     ],
   },
+];
+
+const addOns = [
+  "Additional professional development sessions — $800/session",
+  "Custom multilingual resource translation — $500/language",
+  "On-site implementation coaching (full day) — $1,200",
 ];
 
 const ImplementationPackagesSection = () => {
@@ -81,17 +90,16 @@ const ImplementationPackagesSection = () => {
           ))}
         </div>
 
-        <div className="max-w-[700px] mx-auto text-center space-y-3">
-          <p className="text-[13px] md:text-[14px] text-muted-foreground leading-[1.7]">
-            Additional book copies available at school pricing. Shipping covered by school.
-          </p>
-          <p className="text-[13px] md:text-[14px] text-muted-foreground leading-[1.7]">
-            Working with multiple sites or looking for something custom?{" "}
-            <a href="/contact" className="text-foreground font-semibold underline hover:text-primary transition-colors">
-              Contact us
-            </a>{" "}
-            to discuss enterprise pricing and tailored training solutions.
-          </p>
+        {/* Add-ons */}
+        <div className="max-w-[700px] mx-auto">
+          <h3 className="text-[18px] md:text-[22px] font-black text-foreground mb-4 text-center">
+            Add-Ons
+          </h3>
+          <ul className="list-disc pl-5 space-y-2 text-[13px] md:text-[14px] text-muted-foreground leading-[1.7]">
+            {addOns.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
         </div>
       </div>
     </section>
