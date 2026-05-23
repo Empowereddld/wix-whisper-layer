@@ -1,5 +1,6 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { serve } from "https://deno.land/std@0.208.0/http/server.ts";
+import { Webhook } from "https://esm.sh/svix@1.21.0";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -24,7 +25,31 @@ serve(async (req) => {
   }
 
   try {
-    const payload: ResendEvent = await req.json();
+    const rawBody = await req.text();
+
+    // Verify SVIX signature (Resend uses SVIX). If RESEND_WEBHOOK_SECRET is set,
+    // reject any request that doesn't carry a valid signature.
+    const webhookSecret = Deno.env.get("RESEND_WEBHOOK_SECRET");
+    if (webhookSecret) {
+      try {
+        const wh = new Webhook(webhookSecret);
+        wh.verify(rawBody, {
+          "svix-id": req.headers.get("svix-id") ?? "",
+          "svix-timestamp": req.headers.get("svix-timestamp") ?? "",
+          "svix-signature": req.headers.get("svix-signature") ?? "",
+        });
+      } catch (verifyErr) {
+        console.error("Invalid webhook signature:", verifyErr);
+        return new Response(
+          JSON.stringify({ error: "Invalid signature" }),
+          { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+        );
+      }
+    } else {
+      console.warn("RESEND_WEBHOOK_SECRET not set — webhook signature verification is disabled.");
+    }
+
+    const payload: ResendEvent = JSON.parse(rawBody);
     const { type, data } = payload;
 
     if (!type || !data) {
