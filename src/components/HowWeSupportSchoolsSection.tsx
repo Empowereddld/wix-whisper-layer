@@ -15,7 +15,7 @@ const cards = [
   },
   {
     title: "Implementation Toolkit",
-    description: "Everything you need to launch a DLD-aware initiative in your school: staff awareness training, classroom integration guides, accommodation strategies, and family engagement resources.",
+    description: "Everything you need to launch a DLD-aware initiative in your school: screening guides, referral pathways, accommodation checklists, and progress monitoring tools.",
     link: "View the Toolkit",
     href: "/contact",
   },
