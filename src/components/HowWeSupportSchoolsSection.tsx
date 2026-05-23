@@ -2,8 +2,8 @@ import { ChevronRight } from "lucide-react";
 
 const cards = [
   {
-    title: "Diverse Children's Books",
-    description: "Our DLD book series features characters from diverse backgrounds, available in 7+ languages. Each book contains a visual glossary. Discussion guides and character-themed strategy posters available in our resource library.",
+    title: "DLD Children's Book Series",
+    description: "Stories that help kids with DLD feel seen and give classmates a way to understand language differences. Each book comes with a visual glossary and can be paired with discussion guides and strategy posters from our resource library.",
     link: "Explore the Books",
     href: "/shop/books",
   },
