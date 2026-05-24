@@ -382,7 +382,7 @@ function getEmailTemplate(
       `;
 
       return {
-        subject: `Your free guide is ready, ${name}.`,
+        subject: `Your free guide is ready, ${name}`,
         html: `
           <div style="${containerStyles}">
             <div style="${cardStyles}">
@@ -404,7 +404,7 @@ function getEmailTemplate(
                 </div>
 
                 <p style="${baseStyles}">
-                  Inside you'll find practical strategies to help your child plan, focus, remember instructions, and manage big feelings. The kind of skills that support storytelling, schoolwork, and everyday life.
+                  Inside you'll find practical strategies to help your child plan, focus, remember instructions, and manage big feelings, the kind of skills that support storytelling, schoolwork, and everyday life.
                 </p>
 
                 <hr style="${dividerStyles}" />
@@ -412,7 +412,7 @@ function getEmailTemplate(
                 <p style="${baseStyles}"><strong>What's next: Tier 3 (75 pts), 50 Story Coins</strong></p>
 
                 <p style="${baseStyles}">
-                  Story Coins are yours to spend inside the Story Pros App at launch on themes, characters, and extras.
+                  Story Coins are yours to spend inside the Story Pros app at launch on themes, characters, and extras.
                 </p>
 
                 <p style="${baseStyles}">
@@ -424,21 +424,24 @@ function getEmailTemplate(
                   <a href="${referralLink}" style="color: ${brandColor}; word-break: break-all;">${referralLink}</a>
                 </p>
 
-                <p style="${baseStyles}"><strong>Something to share right now:</strong></p>
+                <p style="${baseStyles}"><strong>A few messages to copy and paste if you'd like:</strong></p>
 
-                <p style="${baseStyles}"><strong>For a text:</strong></p>
                 <div style="${scriptBlock}">
-                  "I just got a free guide on executive function skills for kids through Story Pros. It's an app and community for kids who need support with storytelling and language. Worth a look: ${referralLink}"
+                  "I'm on the early list for an app called Story Pros. It helps kids build the skills they need to tell stories and express what's on their mind, plus there's a monthly live community for families on Zoom. Worth a look: ${referralLink}"
                 </div>
 
-                <p style="${baseStyles}; margin-bottom: 4px;"><strong>For a teacher, therapist, or friend:</strong></p>
                 <div style="${scriptBlock}">
-                  "I came across something called Story Pros. It's an app and monthly community built by speech-language pathologists and teachers that helps kids with storytelling and narrative language. I just unlocked a free guide on executive function skills and thought you'd want to check it out: ${referralLink}"
+                  "Hey! Found a new app and community I think you'd want to know about. Story Pros helps kids retell stories, put their thoughts in order, and find the right words, plus there's a monthly live group for kids on Zoom. I just joined: ${referralLink}"
+                </div>
+
+                <p style="${baseStyles}; margin-bottom: 4px;"><strong>For a teacher or therapist:</strong></p>
+                <div style="${scriptBlock}">
+                  "I came across something called Story Pros. It's an app and monthly community built by speech-language pathologists and teachers that helps kids with storytelling and narrative language. Thought you'd want a look: ${referralLink}"
                 </div>
 
                 ${ctaPair(referralLink, dashboard)}
 
-                <p style="${baseStyles}">Warmly,<br/>Camesha, Jinean and the Story Pros Team</p>
+                <p style="${baseStyles}">Talk soon,<br/>Camesha, Jinean and The Story Pros Team</p>
               </div>
 
               ${tier2Footer}
