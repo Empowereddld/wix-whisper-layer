@@ -1,7 +1,14 @@
-// Public lookup of a storybuilders_waitlist row by referral_code (or email).
-// Uses the service role to bypass RLS so unauthenticated dashboard visits
-// (recovery links, returning users on a fresh device) can hydrate state
-// without us opening up SELECT on the table to anon.
+// Public lookup of a storybuilders_waitlist row.
+//
+// Two modes:
+//   - ref:   public referral-code lookup. Referral codes are share-link tokens
+//            (not enumerable), so this stays unauthenticated.
+//   - email: PII lookup. Requires a valid Supabase JWT AND the requested email
+//            must match the authenticated user's email. Prevents email
+//            enumeration of waitlist members.
+//
+// Uses the service role to bypass RLS so the dashboard can hydrate without us
+// opening up SELECT on the table to anon.
 //
 // Returns ONLY a safe subset of columns — never includes verification_token,
 // deleted_by, deleted_reason, or any internal admin fields.
@@ -59,10 +66,44 @@ Deno.serve(async (req) => {
       );
     }
 
-    const supabase = createClient(
-      Deno.env.get("SUPABASE_URL")!,
-      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
-    );
+    const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
+    const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+
+    // Email lookup is PII-sensitive: require an authenticated session and
+    // verify the requested email matches the caller's own auth email.
+    if (email && !ref) {
+      const authHeader = req.headers.get("Authorization") ?? "";
+      const token = authHeader.startsWith("Bearer ")
+        ? authHeader.slice(7)
+        : "";
+      if (!token) {
+        return new Response(JSON.stringify({ error: "Unauthorized" }), {
+          status: 401,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      const anonClient = createClient(
+        supabaseUrl,
+        Deno.env.get("SUPABASE_ANON_KEY")!,
+        { global: { headers: { Authorization: `Bearer ${token}` } } }
+      );
+      const { data: userData, error: userErr } = await anonClient.auth.getUser();
+      const callerEmail = userData?.user?.email?.toLowerCase() ?? "";
+      if (userErr || !callerEmail) {
+        return new Response(JSON.stringify({ error: "Unauthorized" }), {
+          status: 401,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      if (callerEmail !== email) {
+        return new Response(JSON.stringify({ error: "Forbidden" }), {
+          status: 403,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+    }
+
+    const supabase = createClient(supabaseUrl, serviceKey);
 
     let query = supabase.from("storybuilders_waitlist").select(SAFE_COLUMNS);
     if (ref) {
