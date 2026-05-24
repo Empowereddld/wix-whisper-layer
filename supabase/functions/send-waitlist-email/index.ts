@@ -1126,6 +1126,49 @@ function getEmailTemplate(
   }
 }
 
+// Templates the public can request without authentication. Everything else
+// (tier emails, founder scarcity, verification reminders, etc.) must be
+// invoked by trusted cron jobs / internal edge functions (x-cron-secret) or
+// by an admin user (JWT with admin role).
+const PUBLIC_TEMPLATES = new Set(["invite"]);
+
+async function isPrivilegedWaitlistCall(req: Request): Promise<boolean> {
+  const cronSecret = Deno.env.get("CRON_SECRET");
+  if (cronSecret && req.headers.get("x-cron-secret") === cronSecret) return true;
+
+  const auth = req.headers.get("authorization") || "";
+  const token = auth.startsWith("Bearer ") ? auth.slice(7) : "";
+  if (!token) return false;
+
+  // Service-role JWT (used by edge-to-edge supabase.functions.invoke) → trusted.
+  try {
+    const parts = token.split(".");
+    if (parts.length === 3) {
+      const payload = JSON.parse(atob(parts[1].replace(/-/g, "+").replace(/_/g, "/")));
+      if (payload?.role === "service_role") return true;
+    }
+  } catch { /* fall through to admin check */ }
+
+  // Otherwise check admin role for the authenticated user.
+  try {
+    const supabase = createClient(
+      Deno.env.get("SUPABASE_URL")!,
+      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
+    );
+    const { data: userRes } = await supabase.auth.getUser(token);
+    if (!userRes?.user) return false;
+    const { data: roleRow } = await supabase
+      .from("user_roles")
+      .select("role")
+      .eq("user_id", userRes.user.id)
+      .eq("role", "admin")
+      .maybeSingle();
+    return !!roleRow;
+  } catch {
+    return false;
+  }
+}
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -1143,6 +1186,19 @@ Deno.serve(async (req) => {
           headers: { ...corsHeaders, "Content-Type": "application/json" },
         }
       );
+    }
+
+    // Template-level access control: anything outside the public allowlist
+    // must come from a trusted caller (cron secret, service role, or admin).
+    if (!PUBLIC_TEMPLATES.has(template)) {
+      const allowed = await isPrivilegedWaitlistCall(req);
+      if (!allowed) {
+        console.warn(`Blocked unauthorized send-waitlist-email call (template=${template})`);
+        return new Response(
+          JSON.stringify({ error: "Forbidden: template requires privileged caller" }),
+          { status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
     }
 
     const { subject, html } = getEmailTemplate(template, data, to);

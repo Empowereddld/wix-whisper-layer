@@ -61,6 +61,35 @@ function appendFooterToHtml(html: string, footer: string) {
   return html + footer;
 }
 
+// Privileged caller check: either x-cron-secret matches CRON_SECRET (cron jobs
+// and edge-to-edge calls) OR Authorization JWT belongs to an admin user.
+// Public callers (contact forms, signup) get only the safe defaults.
+async function isPrivileged(req: Request): Promise<boolean> {
+  const cronSecret = Deno.env.get("CRON_SECRET");
+  if (cronSecret && req.headers.get("x-cron-secret") === cronSecret) return true;
+
+  const auth = req.headers.get("authorization") || "";
+  const token = auth.startsWith("Bearer ") ? auth.slice(7) : "";
+  if (!token) return false;
+  try {
+    const supabase = createClient(
+      Deno.env.get("SUPABASE_URL")!,
+      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
+    );
+    const { data: userRes } = await supabase.auth.getUser(token);
+    if (!userRes?.user) return false;
+    const { data: roleRow } = await supabase
+      .from("user_roles")
+      .select("role")
+      .eq("user_id", userRes.user.id)
+      .eq("role", "admin")
+      .maybeSingle();
+    return !!roleRow;
+  } catch {
+    return false;
+  }
+}
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
@@ -75,6 +104,23 @@ Deno.serve(async (req) => {
       });
     }
 
+    // Privileged-only options: custom `from` and `bypass_suppression`.
+    // Public callers (contact form, signup welcome) cannot spoof the sender
+    // domain or email people who unsubscribed.
+    const privileged = (from || bypass_suppression) ? await isPrivileged(req) : false;
+    if (from && !privileged) {
+      return new Response(JSON.stringify({ error: "Custom 'from' requires privileged caller" }), {
+        status: 403,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+    if (bypass_suppression && !privileged) {
+      return new Response(JSON.stringify({ error: "bypass_suppression requires privileged caller" }), {
+        status: 403,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
     const lovableKey = Deno.env.get("LOVABLE_API_KEY");
     const resendKey = Deno.env.get("RESEND_API_KEY");
     if (!lovableKey) throw new Error("LOVABLE_API_KEY not configured");
@@ -84,7 +130,7 @@ Deno.serve(async (req) => {
       .map((e) => e.trim().toLowerCase())
       .filter(Boolean);
 
-    // Filter against suppression list unless explicitly bypassed.
+    // Filter against suppression list unless explicitly bypassed by a privileged caller.
     let suppressed = 0;
     if (!bypass_suppression && recipients.length > 0) {
       const supabase = createClient(
