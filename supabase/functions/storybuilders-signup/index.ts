@@ -110,6 +110,7 @@ async function checkFraud(
       headers: {
         "Authorization": `Bearer ${serviceKey}`,
         "Content-Type": "application/json",
+        "x-cron-secret": Deno.env.get("CRON_SECRET") ?? "",
       },
       body: JSON.stringify({
         email,
