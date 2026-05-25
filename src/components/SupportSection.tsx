@@ -18,7 +18,7 @@ const features = [
   },
   {
     icon: Package,
-    title: "Implementation Kits",
+    title: "Implementation Packages",
     description: "Tiered packages with books, lesson plans, activities, and implementation support for schools.",
     cta: "EXPLORE SCHOOL SUPPORT",
     href: "/for-educators",
