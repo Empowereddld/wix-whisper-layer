@@ -4,7 +4,7 @@ const BookGuidebookSection = () => {
   return (
     <section className="py-6 md:py-10">
       <div className="max-w-[1100px] mx-auto px-6 md:px-10">
-        <div className="flex flex-col lg:flex-row items-start gap-8 lg:gap-12">
+        <div className="flex flex-col-reverse lg:flex-row items-start gap-8 lg:gap-12">
           {/* Text */}
           <div className="flex-1 flex flex-col justify-center py-4 lg:py-8">
             <p className="text-[11px] md:text-[12px] font-semibold text-foreground tracking-wide mb-2">
