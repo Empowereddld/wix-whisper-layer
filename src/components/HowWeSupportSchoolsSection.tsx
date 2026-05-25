@@ -14,10 +14,10 @@ const cards = [
     href: "#implementation-packages",
   },
   {
-    title: "Implementation Toolkit",
+    title: "Implementation Packages",
     description: "Everything you need to launch a DLD-aware initiative in your school: staff awareness training, classroom integration guides, accommodation strategies, and family engagement resources.",
-    link: "View the Toolkit",
-    href: "/contact",
+    link: "View the Packages",
+    href: "#implementation-packages",
   },
   {
     title: "Parent Partnership Resources",
