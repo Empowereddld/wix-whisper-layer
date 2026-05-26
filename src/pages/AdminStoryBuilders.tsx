@@ -632,17 +632,23 @@ const AdminStoryBuilders = () => {
                               {(() => {
                                 const log = emailLogs[user.email?.toLowerCase()];
                                 if (!log) return <span className="italic text-muted-foreground/60">none logged</span>;
+                                const engagement = log.clicked_at
+                                  ? { label: "🖱️ Clicked", cls: "text-purple-700" }
+                                  : log.opened_at
+                                  ? { label: "👀 Opened", cls: "text-blue-700" }
+                                  : null;
                                 return (
                                   <div className="space-y-0.5">
                                     <div className="font-medium text-foreground truncate max-w-[180px]" title={log.template_name}>
                                       {log.template_name}
                                     </div>
-                                    <div className="flex items-center gap-1">
+                                    <div className="flex items-center gap-1 flex-wrap">
                                       <span className={
-                                        log.status === "sent" ? "text-green-700"
+                                        log.status === "sent" || log.status === "delivered" || log.status === "opened" || log.status === "clicked" ? "text-green-700"
                                           : log.status === "pending" ? "text-amber-700"
                                           : "text-red-700"
                                       }>{log.status}</span>
+                                      {engagement && <span className={`font-semibold ${engagement.cls}`}>· {engagement.label}</span>}
                                       <span>· {format(new Date(log.created_at), "MMM d, h:mma")}</span>
                                     </div>
                                   </div>
