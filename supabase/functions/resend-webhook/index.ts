@@ -219,6 +219,7 @@ serve(async (req) => {
             })
             .eq("email", emailRecord.recipient_email);
         }
+        await stampSendLog({ status: "bounced" });
         break;
       }
 
