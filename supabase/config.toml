@@ -57,3 +57,6 @@ verify_jwt = false
 [functions.send-inactivity-emails]
 verify_jwt = false
 
+[functions.waitlist-email-healthcheck]
+verify_jwt = false
+
