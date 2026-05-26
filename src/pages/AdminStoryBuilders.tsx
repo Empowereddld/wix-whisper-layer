@@ -190,7 +190,7 @@ const AdminStoryBuilders = () => {
   useEffect(() => {
     const loadData = async () => {
       setIsLoading(true);
-      await fetchUsers();
+      await Promise.all([fetchUsers(), fetchEmailLogs()]);
       setIsLoading(false);
     };
     loadData();
