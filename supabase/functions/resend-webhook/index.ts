@@ -261,6 +261,7 @@ serve(async (req) => {
             })
             .eq("resend_id", resendId);
         }
+        await stampSendLog({ status: "complained" });
         break;
       }
 
