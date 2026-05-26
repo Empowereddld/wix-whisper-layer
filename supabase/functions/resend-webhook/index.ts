@@ -44,6 +44,16 @@ serve(async (req) => {
 
     const resendId = data.id;
 
+    // Mirror status onto email_send_log (correlated by message_id = Resend id).
+    const stampSendLog = async (patch: Record<string, unknown>) => {
+      if (!resendId) return;
+      const { error } = await supabase
+        .from("email_send_log")
+        .update(patch)
+        .eq("message_id", resendId);
+      if (error) console.error("email_send_log update failed:", error);
+    };
+
     // Handle different event types
     switch (type) {
       case "email.sent": {
@@ -59,6 +69,7 @@ serve(async (req) => {
         if (error) {
           console.error("Failed to update email status:", error);
         }
+        await stampSendLog({ status: "sent" });
         break;
       }
 
