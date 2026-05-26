@@ -617,6 +617,38 @@ const AdminStoryBuilders = () => {
                             <TableCell className="text-sm text-muted-foreground">
                               {user.email}
                             </TableCell>
+                            <TableCell>
+                              {user.email_verified ? (
+                                <Badge className="bg-green-100 text-green-800 border-green-200 hover:bg-green-100">
+                                  <CheckCircle2 className="h-3 w-3 mr-1" /> Verified
+                                </Badge>
+                              ) : (
+                                <Badge variant="outline" className="bg-amber-50 text-amber-800 border-amber-200">
+                                  <XCircle className="h-3 w-3 mr-1" /> Pending
+                                </Badge>
+                              )}
+                            </TableCell>
+                            <TableCell className="text-xs text-muted-foreground">
+                              {(() => {
+                                const log = emailLogs[user.email?.toLowerCase()];
+                                if (!log) return <span className="italic text-muted-foreground/60">none logged</span>;
+                                return (
+                                  <div className="space-y-0.5">
+                                    <div className="font-medium text-foreground truncate max-w-[180px]" title={log.template_name}>
+                                      {log.template_name}
+                                    </div>
+                                    <div className="flex items-center gap-1">
+                                      <span className={
+                                        log.status === "sent" ? "text-green-700"
+                                          : log.status === "pending" ? "text-amber-700"
+                                          : "text-red-700"
+                                      }>{log.status}</span>
+                                      <span>· {format(new Date(log.created_at), "MMM d, h:mma")}</span>
+                                    </div>
+                                  </div>
+                                );
+                              })()}
+                            </TableCell>
                             <TableCell className="text-sm text-muted-foreground">
                               {user.role
                                 ? formatRole(user.role, user.role_other)
