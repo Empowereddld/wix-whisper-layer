@@ -99,7 +99,7 @@ Deno.serve(async (req) => {
 
   try {
     const payload = (await req.json()) as SendEmailRequest;
-    const { to, subject, html, text, reply_to, from, include_unsubscribe = false, bypass_suppression = false } = payload;
+    const { to, subject, html, text, reply_to, from, include_unsubscribe = false, bypass_suppression = false, template_name } = payload;
 
     if (!to || !subject || (!html && !text)) {
       return new Response(JSON.stringify({ error: "to, subject, and html or text are required" }), {
