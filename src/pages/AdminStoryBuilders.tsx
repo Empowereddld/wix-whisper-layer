@@ -139,6 +139,54 @@ const AdminStoryBuilders = () => {
     }
   }, []);
 
+  const fetchEmailLogs = useCallback(async () => {
+    const { data } = await supabase
+      .from("email_send_log" as never)
+      .select("recipient_email, template_name, status, created_at")
+      .order("created_at", { ascending: false })
+      .limit(2000);
+    if (!data) return;
+    const map: Record<string, { template_name: string; status: string; created_at: string }> = {};
+    for (const row of data as Array<{ recipient_email: string; template_name: string; status: string; created_at: string }>) {
+      const key = row.recipient_email?.toLowerCase();
+      if (key && !map[key]) map[key] = { template_name: row.template_name, status: row.status, created_at: row.created_at };
+    }
+    setEmailLogs(map);
+  }, []);
+
+  const openNudgeDialog = useCallback(async () => {
+    setNudgeOpen(true);
+    setNudgeCount(null);
+    try {
+      const { data, error } = await supabase.functions.invoke("admin-nudge-unverified", {
+        body: { dry_run: true },
+      });
+      if (error) throw error;
+      setNudgeCount((data as { would_send_to?: number })?.would_send_to ?? 0);
+    } catch (e) {
+      toast.error(`Preview failed: ${e instanceof Error ? e.message : "unknown"}`);
+      setNudgeCount(0);
+    }
+  }, []);
+
+  const sendNudge = useCallback(async () => {
+    setNudgeLoading(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("admin-nudge-unverified", {
+        body: { dry_run: false },
+      });
+      if (error) throw error;
+      const res = data as { sent?: number; failed?: number };
+      toast.success(`Nudge sent to ${res?.sent ?? 0} unverified users${res?.failed ? ` (${res.failed} failed)` : ""}`);
+      setNudgeOpen(false);
+      fetchEmailLogs();
+    } catch (e) {
+      toast.error(`Send failed: ${e instanceof Error ? e.message : "unknown"}`);
+    } finally {
+      setNudgeLoading(false);
+    }
+  }, [fetchEmailLogs]);
+
   useEffect(() => {
     const loadData = async () => {
       setIsLoading(true);
