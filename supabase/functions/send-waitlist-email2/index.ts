@@ -12,16 +12,24 @@ Deno.serve(async (req) => {
     return new Response(null, { headers: corsHeaders });
   }
 
+  // Cron-only.
+  const cronSecret = Deno.env.get("CRON_SECRET");
+  if (!cronSecret || req.headers.get("x-cron-secret") !== cronSecret) {
+    return new Response(JSON.stringify({ error: "Forbidden" }), {
+      status: 403,
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+    });
+  }
+
   try {
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
     const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const supabase = createClient(supabaseUrl, serviceKey);
 
-    // Find verified waitlist members whose verification was 1+ hour ago and
-    // haven't received Email 2 yet. Window is intentionally short so the
-    // points/tiers explainer reaches them BEFORE they start crossing tier
-    // thresholds (which can happen within ~10 min of engaged signup).
-    const cutoff = new Date(Date.now() - 1 * 60 * 60 * 1000).toISOString();
+    // Email 2 ("Welcome back") goes out 24 hours after verification, matching
+    // the locked copy. Email 1 already lands at verify, so the day-2 cadence
+    // gives users time to engage before the points/tiers explainer.
+    const cutoff = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
 
     const { data: pending, error } = await supabase
       .from("storybuilders_waitlist")
