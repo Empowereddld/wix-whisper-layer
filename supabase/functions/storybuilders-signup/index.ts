@@ -22,34 +22,60 @@ async function sendVerificationEmail(
   email: string,
   verificationToken: string
 ) {
+  const emailFunctionUrl = `${supabaseUrl}/functions/v1/send-waitlist-email`;
+  const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+
+  const verificationLink = `${supabaseUrl}/functions/v1/verify-email-waitlist?token=${verificationToken}`;
+
+  const response = await fetch(emailFunctionUrl, {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${serviceKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      template: "verification",
+      to: email,
+      data: {
+        name: name.split(" ")[0],
+        verification_link: verificationLink,
+      },
+    }),
+  });
+
+  if (!response.ok) {
+    const error = await response.text();
+    console.error("Failed to send verification email:", error);
+    throw new Error(error || `Verification email send failed with status ${response.status}`);
+  }
+}
+
+async function alertSignupEmailFailure(
+  supabaseUrl: string,
+  email: string,
+  name: string,
+  errorMessage: string
+) {
   try {
-    const emailFunctionUrl = `${supabaseUrl}/functions/v1/send-waitlist-email`;
     const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-
-    const verificationLink = `${supabaseUrl}/functions/v1/verify-email-waitlist?token=${verificationToken}`;
-
-    const response = await fetch(emailFunctionUrl, {
+    await fetch(`${supabaseUrl}/functions/v1/send-email`, {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${serviceKey}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        template: "verification",
-        to: email,
-        data: {
-          name: name.split(" ")[0],
-          verification_link: verificationLink,
-        },
+        to: "hello@empowereddld.com",
+        subject: "🚨 Story Pros signup email failed",
+        html: `<p><strong>A signup could not receive its verification email.</strong></p>
+          <p><strong>Name:</strong> ${name}</p>
+          <p><strong>Email:</strong> ${email}</p>
+          <p><strong>Error:</strong> ${errorMessage}</p>`,
+        text: `A Story Pros signup could not receive its verification email.\n\nName: ${name}\nEmail: ${email}\nError: ${errorMessage}`,
       }),
     });
-
-    if (!response.ok) {
-      const error = await response.text();
-      console.error("Failed to send verification email:", error);
-    }
   } catch (error) {
-    console.error("Error calling send-waitlist-email:", error);
+    console.error("Failed to send signup email failure alert:", error);
   }
 }
 
@@ -292,7 +318,6 @@ Deno.serve(async (req) => {
         referred_by_code: ref || null,
         points: initialPoints,
         verification_token: verificationToken,
-        verification_sent_at: new Date().toISOString(),
         email_verified: false,
         is_speech_professional: isSpeechPro,
         speech_professional_verified: isSpeechPro, // auto-verified at signup (Option A)
@@ -317,7 +342,40 @@ Deno.serve(async (req) => {
 
     // Double opt-in: send ONLY the verification email on signup.
     // The Welcome email is sent by verify-email-waitlist after the user clicks the link.
-    await sendVerificationEmail(supabaseUrl, name, normalizedEmail, verificationToken);
+    try {
+      await sendVerificationEmail(supabaseUrl, name, normalizedEmail, verificationToken);
+
+      const { error: sentAtError } = await supabase
+        .from("storybuilders_waitlist")
+        .update({ verification_sent_at: new Date().toISOString() })
+        .eq("id", newEntry.id);
+
+      if (sentAtError) {
+        throw new Error(`Failed to record verification send timestamp: ${sentAtError.message}`);
+      }
+    } catch (emailError) {
+      const message = emailError instanceof Error ? emailError.message : "unknown verification email error";
+      console.error("Storybuilders signup verification email failure:", normalizedEmail, message);
+
+      const { error: cleanupError } = await supabase
+        .from("storybuilders_waitlist")
+        .delete()
+        .eq("id", newEntry.id);
+
+      if (cleanupError) {
+        console.error("Failed to clean up waitlist row after email failure:", cleanupError);
+      }
+
+      await alertSignupEmailFailure(supabaseUrl, normalizedEmail, name.trim(), message);
+
+      return new Response(
+        JSON.stringify({ error: "We couldn't send your verification email just now. Please try again in a few minutes." }),
+        {
+          status: 502,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        }
+      );
+    }
 
     // Handle referral
     if (ref) {
