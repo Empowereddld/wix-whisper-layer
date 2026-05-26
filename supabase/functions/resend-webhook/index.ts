@@ -173,6 +173,7 @@ serve(async (req) => {
             });
           }
         }
+        await stampSendLog({ status: "clicked", clicked_at: new Date().toISOString() });
         break;
       }
 
