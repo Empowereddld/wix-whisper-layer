@@ -422,12 +422,24 @@ const AdminStoryBuilders = () => {
 
           {/* Overview Tab */}
           <TabsContent value="overview" className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" style={{ perspective: "1000px" }}>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4" style={{ perspective: "1000px" }}>
               <StatsCard
                 title="Total Signups"
                 value={totalSignups}
                 icon={Users}
                 subtitle="all time"
+              />
+              <StatsCard
+                title="Verified"
+                value={verifiedCount}
+                icon={CheckCircle2}
+                subtitle={totalSignups ? `${Math.round((verifiedCount / totalSignups) * 100)}% of signups` : "—"}
+              />
+              <StatsCard
+                title="Unverified"
+                value={unverifiedCount}
+                icon={XCircle}
+                subtitle="awaiting email confirm"
               />
               <StatsCard
                 title="Total Referrals"
