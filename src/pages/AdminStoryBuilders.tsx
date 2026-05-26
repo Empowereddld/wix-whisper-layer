@@ -38,6 +38,9 @@ import {
   Lightbulb,
   Trash2,
   Crown,
+  CheckCircle2,
+  XCircle,
+  BellRing,
 } from "lucide-react";
 import {
   AlertDialog,
@@ -79,6 +82,11 @@ const AdminStoryBuilders = () => {
   const [ageFilter, setAgeFilter] = useState<string>("any");
   const [hopeFilter, setHopeFilter] = useState<string>("any");
   const [detailUser, setDetailUser] = useState<WaitlistUser | null>(null);
+  const [verifiedFilter, setVerifiedFilter] = useState<"any" | "verified" | "unverified">("any");
+  const [emailLogs, setEmailLogs] = useState<Record<string, { template_name: string; status: string; created_at: string }>>({});
+  const [nudgeOpen, setNudgeOpen] = useState(false);
+  const [nudgeCount, setNudgeCount] = useState<number | null>(null);
+  const [nudgeLoading, setNudgeLoading] = useState(false);
 
   const handleDeleteUser = useCallback(async () => {
     if (!userToDelete) return;
@@ -131,10 +139,58 @@ const AdminStoryBuilders = () => {
     }
   }, []);
 
+  const fetchEmailLogs = useCallback(async () => {
+    const { data } = await supabase
+      .from("email_send_log" as never)
+      .select("recipient_email, template_name, status, created_at")
+      .order("created_at", { ascending: false })
+      .limit(2000);
+    if (!data) return;
+    const map: Record<string, { template_name: string; status: string; created_at: string }> = {};
+    for (const row of data as Array<{ recipient_email: string; template_name: string; status: string; created_at: string }>) {
+      const key = row.recipient_email?.toLowerCase();
+      if (key && !map[key]) map[key] = { template_name: row.template_name, status: row.status, created_at: row.created_at };
+    }
+    setEmailLogs(map);
+  }, []);
+
+  const openNudgeDialog = useCallback(async () => {
+    setNudgeOpen(true);
+    setNudgeCount(null);
+    try {
+      const { data, error } = await supabase.functions.invoke("admin-nudge-unverified", {
+        body: { dry_run: true },
+      });
+      if (error) throw error;
+      setNudgeCount((data as { would_send_to?: number })?.would_send_to ?? 0);
+    } catch (e) {
+      toast.error(`Preview failed: ${e instanceof Error ? e.message : "unknown"}`);
+      setNudgeCount(0);
+    }
+  }, []);
+
+  const sendNudge = useCallback(async () => {
+    setNudgeLoading(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("admin-nudge-unverified", {
+        body: { dry_run: false },
+      });
+      if (error) throw error;
+      const res = data as { sent?: number; failed?: number };
+      toast.success(`Nudge sent to ${res?.sent ?? 0} unverified users${res?.failed ? ` (${res.failed} failed)` : ""}`);
+      setNudgeOpen(false);
+      fetchEmailLogs();
+    } catch (e) {
+      toast.error(`Send failed: ${e instanceof Error ? e.message : "unknown"}`);
+    } finally {
+      setNudgeLoading(false);
+    }
+  }, [fetchEmailLogs]);
+
   useEffect(() => {
     const loadData = async () => {
       setIsLoading(true);
-      await fetchUsers();
+      await Promise.all([fetchUsers(), fetchEmailLogs()]);
       setIsLoading(false);
     };
     loadData();
@@ -211,6 +267,12 @@ const AdminStoryBuilders = () => {
       filtered = filtered.filter((u) => Array.isArray(u.hopes) && u.hopes.includes(hopeFilter));
     }
 
+    if (verifiedFilter === "verified") {
+      filtered = filtered.filter((u) => u.email_verified);
+    } else if (verifiedFilter === "unverified") {
+      filtered = filtered.filter((u) => !u.email_verified);
+    }
+
     if (sortBy === "name") {
       filtered = [...filtered].sort((a, b) => a.name.localeCompare(b.name));
     } else if (sortBy === "date") {
@@ -220,7 +282,10 @@ const AdminStoryBuilders = () => {
     }
 
     return filtered;
-  }, [users, searchTerm, sortBy, ageFilter, hopeFilter]);
+  }, [users, searchTerm, sortBy, ageFilter, hopeFilter, verifiedFilter]);
+
+  const verifiedCount = useMemo(() => users.filter((u) => u.email_verified).length, [users]);
+  const unverifiedCount = totalSignups - verifiedCount;
 
   const topReferrers = useMemo(() => {
     return [...users]
@@ -357,12 +422,24 @@ const AdminStoryBuilders = () => {
 
           {/* Overview Tab */}
           <TabsContent value="overview" className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" style={{ perspective: "1000px" }}>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4" style={{ perspective: "1000px" }}>
               <StatsCard
                 title="Total Signups"
                 value={totalSignups}
                 icon={Users}
                 subtitle="all time"
+              />
+              <StatsCard
+                title="Verified"
+                value={verifiedCount}
+                icon={CheckCircle2}
+                subtitle={totalSignups ? `${Math.round((verifiedCount / totalSignups) * 100)}% of signups` : "—"}
+              />
+              <StatsCard
+                title="Unverified"
+                value={unverifiedCount}
+                icon={XCircle}
+                subtitle="awaiting email confirm"
               />
               <StatsCard
                 title="Total Referrals"
@@ -474,6 +551,14 @@ const AdminStoryBuilders = () => {
                   ))}
                 </SelectContent>
               </Select>
+              <Select value={verifiedFilter} onValueChange={(v) => setVerifiedFilter(v as typeof verifiedFilter)}>
+                <SelectTrigger className="w-full sm:w-36"><SelectValue placeholder="Verified" /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="any">Any status</SelectItem>
+                  <SelectItem value="verified">Verified only</SelectItem>
+                  <SelectItem value="unverified">Unverified only</SelectItem>
+                </SelectContent>
+              </Select>
               <Button
                 onClick={handleExportCSV}
                 variant="outline"
@@ -496,11 +581,13 @@ const AdminStoryBuilders = () => {
             <Card className="bg-background border border-border rounded-2xl shadow-sm">
               <CardContent className="p-0">
                 <div className="overflow-x-auto">
-                  <Table className="min-w-[1100px]">
+                  <Table className="min-w-[1300px]">
                     <TableHeader className="bg-muted">
                        <TableRow className="border-b border-border">
                         <TableHead className="text-foreground">Name</TableHead>
                         <TableHead className="text-foreground">Email</TableHead>
+                        <TableHead className="text-foreground">Verified</TableHead>
+                        <TableHead className="text-foreground">Last email</TableHead>
                         <TableHead className="text-foreground">Role</TableHead>
                         <TableHead className="text-foreground">Child Age</TableHead>
                         <TableHead className="text-foreground">Hopes</TableHead>
@@ -529,6 +616,38 @@ const AdminStoryBuilders = () => {
                             </TableCell>
                             <TableCell className="text-sm text-muted-foreground">
                               {user.email}
+                            </TableCell>
+                            <TableCell>
+                              {user.email_verified ? (
+                                <Badge className="bg-green-100 text-green-800 border-green-200 hover:bg-green-100">
+                                  <CheckCircle2 className="h-3 w-3 mr-1" /> Verified
+                                </Badge>
+                              ) : (
+                                <Badge variant="outline" className="bg-amber-50 text-amber-800 border-amber-200">
+                                  <XCircle className="h-3 w-3 mr-1" /> Pending
+                                </Badge>
+                              )}
+                            </TableCell>
+                            <TableCell className="text-xs text-muted-foreground">
+                              {(() => {
+                                const log = emailLogs[user.email?.toLowerCase()];
+                                if (!log) return <span className="italic text-muted-foreground/60">none logged</span>;
+                                return (
+                                  <div className="space-y-0.5">
+                                    <div className="font-medium text-foreground truncate max-w-[180px]" title={log.template_name}>
+                                      {log.template_name}
+                                    </div>
+                                    <div className="flex items-center gap-1">
+                                      <span className={
+                                        log.status === "sent" ? "text-green-700"
+                                          : log.status === "pending" ? "text-amber-700"
+                                          : "text-red-700"
+                                      }>{log.status}</span>
+                                      <span>· {format(new Date(log.created_at), "MMM d, h:mma")}</span>
+                                    </div>
+                                  </div>
+                                );
+                              })()}
                             </TableCell>
                             <TableCell className="text-sm text-muted-foreground">
                               {user.role
@@ -570,7 +689,7 @@ const AdminStoryBuilders = () => {
                         ))
                       ) : (
                         <TableRow>
-                          <TableCell colSpan={9} className="text-center py-12">
+                          <TableCell colSpan={11} className="text-center py-12">
                             <p className="text-muted-foreground">
                               {users.length === 0 ? "No users in the waitlist yet" : "No results matching your search"}
                             </p>
@@ -638,13 +757,21 @@ const AdminStoryBuilders = () => {
 
           {/* Emails Tab */}
           <TabsContent value="emails" className="space-y-4">
-            <div className="flex gap-3">
+            <div className="flex flex-wrap gap-3">
               <Button
                 onClick={() => setShowBulkEmailComposer(true)}
                 className="bg-primary hover:bg-primary/90 text-primary-foreground"
               >
                 <Mail className="h-4 w-4 mr-2" />
                 Compose Email
+              </Button>
+              <Button
+                onClick={openNudgeDialog}
+                variant="outline"
+                className="border-primary/30 text-primary hover:bg-primary/10"
+              >
+                <BellRing className="h-4 w-4 mr-2" />
+                Resend nudge to unverified ({unverifiedCount})
               </Button>
             </div>
 
@@ -740,6 +867,35 @@ const AdminStoryBuilders = () => {
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
             >
               {isDeleting ? "Removing..." : "Remove user"}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      <AlertDialog open={nudgeOpen} onOpenChange={(o) => !o && !nudgeLoading && setNudgeOpen(false)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Resend nudge to unverified signups?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This sends a friendly "did our email land in spam?" message with a fresh verification link
+              from <strong>hello@mail.empowereddld.com</strong> to every unverified Story Pros signup.
+              {nudgeCount === null ? (
+                <span className="block mt-3 text-muted-foreground">Calculating recipients...</span>
+              ) : (
+                <span className="block mt-3 font-medium text-foreground">
+                  {nudgeCount} {nudgeCount === 1 ? "person" : "people"} will receive this email.
+                </span>
+              )}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={nudgeLoading}>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={(e) => { e.preventDefault(); sendNudge(); }}
+              disabled={nudgeLoading || nudgeCount === null || nudgeCount === 0}
+              className="bg-primary text-primary-foreground hover:bg-primary/90"
+            >
+              {nudgeLoading ? "Sending..." : `Send nudge${nudgeCount ? ` to ${nudgeCount}` : ""}`}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
