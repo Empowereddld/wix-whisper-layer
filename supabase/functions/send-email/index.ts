@@ -21,11 +21,11 @@ interface SendEmailRequest {
   reply_to?: string;
   from?: string;
   // If true, append the unsubscribe footer (use for bulk campaigns).
-  // Defaults to false for transactional sends.
   include_unsubscribe?: boolean;
-  // If true, skip suppression filtering. Use ONLY for hard transactional
-  // (e.g., password resets, purchase receipts). Default false.
+  // If true, skip suppression filtering. Privileged callers only.
   bypass_suppression?: boolean;
+  // Optional label written to email_send_log for analytics.
+  template_name?: string;
 }
 
 function escapeHtml(s: string) {
@@ -99,7 +99,7 @@ Deno.serve(async (req) => {
 
   try {
     const payload = (await req.json()) as SendEmailRequest;
-    const { to, subject, html, text, reply_to, from, include_unsubscribe = false, bypass_suppression = false } = payload;
+    const { to, subject, html, text, reply_to, from, include_unsubscribe = false, bypass_suppression = false, template_name } = payload;
 
     if (!to || !subject || (!html && !text)) {
       return new Response(JSON.stringify({ error: "to, subject, and html or text are required" }), {
@@ -201,6 +201,27 @@ Deno.serve(async (req) => {
         });
       }
       results.push(data);
+
+      // Log each recipient -> Resend message_id so the resend-webhook can
+      // correlate opens/clicks/bounces back to this send.
+      try {
+        const supabase = createClient(
+          Deno.env.get("SUPABASE_URL")!,
+          Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
+        );
+        const messageId = (data as { id?: string })?.id ?? null;
+        const rows = chunk.map((recipient) => ({
+          message_id: messageId,
+          template_name: template_name || "transactional",
+          recipient_email: recipient,
+          status: "sent",
+        }));
+        if (rows.length > 0) {
+          await supabase.from("email_send_log").insert(rows);
+        }
+      } catch (logErr) {
+        console.error("email_send_log insert failed:", logErr);
+      }
     }
 
     return new Response(

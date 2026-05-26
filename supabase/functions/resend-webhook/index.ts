@@ -44,6 +44,16 @@ serve(async (req) => {
 
     const resendId = data.id;
 
+    // Mirror status onto email_send_log (correlated by message_id = Resend id).
+    const stampSendLog = async (patch: Record<string, unknown>) => {
+      if (!resendId) return;
+      const { error } = await supabase
+        .from("email_send_log")
+        .update(patch)
+        .eq("message_id", resendId);
+      if (error) console.error("email_send_log update failed:", error);
+    };
+
     // Handle different event types
     switch (type) {
       case "email.sent": {
@@ -59,6 +69,7 @@ serve(async (req) => {
         if (error) {
           console.error("Failed to update email status:", error);
         }
+        await stampSendLog({ status: "sent" });
         break;
       }
 
@@ -74,6 +85,7 @@ serve(async (req) => {
         if (error) {
           console.error("Failed to update email status:", error);
         }
+        await stampSendLog({ status: "delivered" });
         break;
       }
 
@@ -117,6 +129,7 @@ serve(async (req) => {
             });
           }
         }
+        await stampSendLog({ status: "opened", opened_at: new Date().toISOString() });
         break;
       }
 
@@ -160,6 +173,7 @@ serve(async (req) => {
             });
           }
         }
+        await stampSendLog({ status: "clicked", clicked_at: new Date().toISOString() });
         break;
       }
 
@@ -205,6 +219,7 @@ serve(async (req) => {
             })
             .eq("email", emailRecord.recipient_email);
         }
+        await stampSendLog({ status: "bounced" });
         break;
       }
 
@@ -246,6 +261,7 @@ serve(async (req) => {
             })
             .eq("resend_id", resendId);
         }
+        await stampSendLog({ status: "complained" });
         break;
       }
 

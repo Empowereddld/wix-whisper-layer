@@ -83,7 +83,7 @@ const AdminStoryBuilders = () => {
   const [hopeFilter, setHopeFilter] = useState<string>("any");
   const [detailUser, setDetailUser] = useState<WaitlistUser | null>(null);
   const [verifiedFilter, setVerifiedFilter] = useState<"any" | "verified" | "unverified">("any");
-  const [emailLogs, setEmailLogs] = useState<Record<string, { template_name: string; status: string; created_at: string }>>({});
+  const [emailLogs, setEmailLogs] = useState<Record<string, { template_name: string; status: string; created_at: string; opened_at: string | null; clicked_at: string | null }>>({});
   const [nudgeOpen, setNudgeOpen] = useState(false);
   const [nudgeCount, setNudgeCount] = useState<number | null>(null);
   const [nudgeLoading, setNudgeLoading] = useState(false);
@@ -142,14 +142,14 @@ const AdminStoryBuilders = () => {
   const fetchEmailLogs = useCallback(async () => {
     const { data } = await supabase
       .from("email_send_log" as never)
-      .select("recipient_email, template_name, status, created_at")
+      .select("recipient_email, template_name, status, created_at, opened_at, clicked_at")
       .order("created_at", { ascending: false })
       .limit(2000);
     if (!data) return;
-    const map: Record<string, { template_name: string; status: string; created_at: string }> = {};
-    for (const row of data as Array<{ recipient_email: string; template_name: string; status: string; created_at: string }>) {
+    const map: Record<string, { template_name: string; status: string; created_at: string; opened_at: string | null; clicked_at: string | null }> = {};
+    for (const row of data as Array<{ recipient_email: string; template_name: string; status: string; created_at: string; opened_at: string | null; clicked_at: string | null }>) {
       const key = row.recipient_email?.toLowerCase();
-      if (key && !map[key]) map[key] = { template_name: row.template_name, status: row.status, created_at: row.created_at };
+      if (key && !map[key]) map[key] = { template_name: row.template_name, status: row.status, created_at: row.created_at, opened_at: row.opened_at, clicked_at: row.clicked_at };
     }
     setEmailLogs(map);
   }, []);
@@ -632,17 +632,23 @@ const AdminStoryBuilders = () => {
                               {(() => {
                                 const log = emailLogs[user.email?.toLowerCase()];
                                 if (!log) return <span className="italic text-muted-foreground/60">none logged</span>;
+                                const engagement = log.clicked_at
+                                  ? { label: "🖱️ Clicked", cls: "text-purple-700" }
+                                  : log.opened_at
+                                  ? { label: "👀 Opened", cls: "text-blue-700" }
+                                  : null;
                                 return (
                                   <div className="space-y-0.5">
                                     <div className="font-medium text-foreground truncate max-w-[180px]" title={log.template_name}>
                                       {log.template_name}
                                     </div>
-                                    <div className="flex items-center gap-1">
+                                    <div className="flex items-center gap-1 flex-wrap">
                                       <span className={
-                                        log.status === "sent" ? "text-green-700"
+                                        log.status === "sent" || log.status === "delivered" || log.status === "opened" || log.status === "clicked" ? "text-green-700"
                                           : log.status === "pending" ? "text-amber-700"
                                           : "text-red-700"
                                       }>{log.status}</span>
+                                      {engagement && <span className={`font-semibold ${engagement.cls}`}>· {engagement.label}</span>}
                                       <span>· {format(new Date(log.created_at), "MMM d, h:mma")}</span>
                                     </div>
                                   </div>
