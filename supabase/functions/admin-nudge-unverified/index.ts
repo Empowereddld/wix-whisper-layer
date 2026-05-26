@@ -58,19 +58,23 @@ Deno.serve(async (req) => {
       });
     }
     const supabase = createClient(supabaseUrl, serviceKey);
-    const { data: userRes } = await supabase.auth.getUser(token);
-    if (!userRes?.user) {
-      return new Response(JSON.stringify({ error: "Unauthorized" }), {
-        status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
-    }
-    const { data: roleRow } = await supabase
-      .from("user_roles").select("role")
-      .eq("user_id", userRes.user.id).eq("role", "admin").maybeSingle();
-    if (!roleRow) {
-      return new Response(JSON.stringify({ error: "Admin only" }), {
-        status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
+
+    // Allow service-role key as privileged caller; otherwise require admin JWT.
+    if (token !== serviceKey) {
+      const { data: userRes } = await supabase.auth.getUser(token);
+      if (!userRes?.user) {
+        return new Response(JSON.stringify({ error: "Unauthorized" }), {
+          status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      const { data: roleRow } = await supabase
+        .from("user_roles").select("role")
+        .eq("user_id", userRes.user.id).eq("role", "admin").maybeSingle();
+      if (!roleRow) {
+        return new Response(JSON.stringify({ error: "Admin only" }), {
+          status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
     }
 
     // Optional dry-run mode (default true to be safe)
