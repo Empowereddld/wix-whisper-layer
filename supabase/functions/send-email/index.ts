@@ -201,6 +201,27 @@ Deno.serve(async (req) => {
         });
       }
       results.push(data);
+
+      // Log each recipient -> Resend message_id so the resend-webhook can
+      // correlate opens/clicks/bounces back to this send.
+      try {
+        const supabase = createClient(
+          Deno.env.get("SUPABASE_URL")!,
+          Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
+        );
+        const messageId = (data as { id?: string })?.id ?? null;
+        const rows = chunk.map((recipient) => ({
+          message_id: messageId,
+          template_name: template_name || "transactional",
+          recipient_email: recipient,
+          status: "sent",
+        }));
+        if (rows.length > 0) {
+          await supabase.from("email_send_log").insert(rows);
+        }
+      } catch (logErr) {
+        console.error("email_send_log insert failed:", logErr);
+      }
     }
 
     return new Response(
