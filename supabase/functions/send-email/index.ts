@@ -71,6 +71,10 @@ async function isPrivileged(req: Request): Promise<boolean> {
   const auth = req.headers.get("authorization") || "";
   const token = auth.startsWith("Bearer ") ? auth.slice(7) : "";
   if (!token) return false;
+
+  const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || "";
+  if (serviceKey && token === serviceKey) return true;
+
   try {
     const supabase = createClient(
       Deno.env.get("SUPABASE_URL")!,
