@@ -871,6 +871,35 @@ const AdminStoryBuilders = () => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      <AlertDialog open={nudgeOpen} onOpenChange={(o) => !o && !nudgeLoading && setNudgeOpen(false)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Resend nudge to unverified signups?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This sends a friendly "did our email land in spam?" message with a fresh verification link
+              from <strong>hello@mail.empowereddld.com</strong> to every unverified Story Pros signup.
+              {nudgeCount === null ? (
+                <span className="block mt-3 text-muted-foreground">Calculating recipients...</span>
+              ) : (
+                <span className="block mt-3 font-medium text-foreground">
+                  {nudgeCount} {nudgeCount === 1 ? "person" : "people"} will receive this email.
+                </span>
+              )}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={nudgeLoading}>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={(e) => { e.preventDefault(); sendNudge(); }}
+              disabled={nudgeLoading || nudgeCount === null || nudgeCount === 0}
+              className="bg-primary text-primary-foreground hover:bg-primary/90"
+            >
+              {nudgeLoading ? "Sending..." : `Send nudge${nudgeCount ? ` to ${nudgeCount}` : ""}`}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </AdminLayout>
   );
 };
