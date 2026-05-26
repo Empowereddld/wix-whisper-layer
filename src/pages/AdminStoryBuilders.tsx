@@ -551,6 +551,14 @@ const AdminStoryBuilders = () => {
                   ))}
                 </SelectContent>
               </Select>
+              <Select value={verifiedFilter} onValueChange={(v) => setVerifiedFilter(v as typeof verifiedFilter)}>
+                <SelectTrigger className="w-full sm:w-36"><SelectValue placeholder="Verified" /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="any">Any status</SelectItem>
+                  <SelectItem value="verified">Verified only</SelectItem>
+                  <SelectItem value="unverified">Unverified only</SelectItem>
+                </SelectContent>
+              </Select>
               <Button
                 onClick={handleExportCSV}
                 variant="outline"
