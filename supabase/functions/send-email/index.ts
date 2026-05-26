@@ -21,11 +21,11 @@ interface SendEmailRequest {
   reply_to?: string;
   from?: string;
   // If true, append the unsubscribe footer (use for bulk campaigns).
-  // Defaults to false for transactional sends.
   include_unsubscribe?: boolean;
-  // If true, skip suppression filtering. Use ONLY for hard transactional
-  // (e.g., password resets, purchase receipts). Default false.
+  // If true, skip suppression filtering. Privileged callers only.
   bypass_suppression?: boolean;
+  // Optional label written to email_send_log for analytics.
+  template_name?: string;
 }
 
 function escapeHtml(s: string) {
