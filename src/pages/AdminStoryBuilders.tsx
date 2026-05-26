@@ -83,7 +83,7 @@ const AdminStoryBuilders = () => {
   const [hopeFilter, setHopeFilter] = useState<string>("any");
   const [detailUser, setDetailUser] = useState<WaitlistUser | null>(null);
   const [verifiedFilter, setVerifiedFilter] = useState<"any" | "verified" | "unverified">("any");
-  const [emailLogs, setEmailLogs] = useState<Record<string, { template_name: string; status: string; created_at: string }>>({});
+  const [emailLogs, setEmailLogs] = useState<Record<string, { template_name: string; status: string; created_at: string; opened_at: string | null; clicked_at: string | null }>>({});
   const [nudgeOpen, setNudgeOpen] = useState(false);
   const [nudgeCount, setNudgeCount] = useState<number | null>(null);
   const [nudgeLoading, setNudgeLoading] = useState(false);
