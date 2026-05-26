@@ -267,6 +267,12 @@ const AdminStoryBuilders = () => {
       filtered = filtered.filter((u) => Array.isArray(u.hopes) && u.hopes.includes(hopeFilter));
     }
 
+    if (verifiedFilter === "verified") {
+      filtered = filtered.filter((u) => u.email_verified);
+    } else if (verifiedFilter === "unverified") {
+      filtered = filtered.filter((u) => !u.email_verified);
+    }
+
     if (sortBy === "name") {
       filtered = [...filtered].sort((a, b) => a.name.localeCompare(b.name));
     } else if (sortBy === "date") {
