@@ -1143,7 +1143,11 @@ async function isPrivilegedWaitlistCall(req: Request): Promise<boolean> {
   const token = auth.startsWith("Bearer ") ? auth.slice(7) : "";
   if (!token) return false;
 
-  // Service-role JWT (used by edge-to-edge supabase.functions.invoke) → trusted.
+  // Direct service-role match (works for both legacy JWT and new sb_secret_* keys).
+  const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || "";
+  if (serviceKey && token === serviceKey) return true;
+
+  // Legacy service-role JWT decode (kept for backward compatibility).
   try {
     const parts = token.split(".");
     if (parts.length === 3) {
