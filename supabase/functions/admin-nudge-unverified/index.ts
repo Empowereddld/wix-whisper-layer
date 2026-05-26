@@ -118,6 +118,7 @@ Deno.serve(async (req) => {
             subject: "Did our Story Pros email land in spam? (here's a fresh link)",
             html,
             bypass_suppression: false,
+            template_name: "nudge_unverified",
           }),
         });
 
