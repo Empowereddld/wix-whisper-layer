@@ -85,6 +85,7 @@ serve(async (req) => {
         if (error) {
           console.error("Failed to update email status:", error);
         }
+        await stampSendLog({ status: "delivered" });
         break;
       }
 
