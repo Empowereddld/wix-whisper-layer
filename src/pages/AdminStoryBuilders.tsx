@@ -757,13 +757,21 @@ const AdminStoryBuilders = () => {
 
           {/* Emails Tab */}
           <TabsContent value="emails" className="space-y-4">
-            <div className="flex gap-3">
+            <div className="flex flex-wrap gap-3">
               <Button
                 onClick={() => setShowBulkEmailComposer(true)}
                 className="bg-primary hover:bg-primary/90 text-primary-foreground"
               >
                 <Mail className="h-4 w-4 mr-2" />
                 Compose Email
+              </Button>
+              <Button
+                onClick={openNudgeDialog}
+                variant="outline"
+                className="border-primary/30 text-primary hover:bg-primary/10"
+              >
+                <BellRing className="h-4 w-4 mr-2" />
+                Resend nudge to unverified ({unverifiedCount})
               </Button>
             </div>
 
