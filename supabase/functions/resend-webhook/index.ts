@@ -132,6 +132,8 @@ serve(async (req) => {
         await stampSendLog({ status: "opened", opened_at: new Date().toISOString() });
         break;
       }
+
+      case "email.clicked": {
         // Email link was clicked
         const { error } = await supabase
           .from("waitlist_emails")
