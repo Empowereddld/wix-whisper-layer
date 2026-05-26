@@ -282,7 +282,10 @@ const AdminStoryBuilders = () => {
     }
 
     return filtered;
-  }, [users, searchTerm, sortBy, ageFilter, hopeFilter]);
+  }, [users, searchTerm, sortBy, ageFilter, hopeFilter, verifiedFilter]);
+
+  const verifiedCount = useMemo(() => users.filter((u) => u.email_verified).length, [users]);
+  const unverifiedCount = totalSignups - verifiedCount;
 
   const topReferrers = useMemo(() => {
     return [...users]
