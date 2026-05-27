@@ -187,8 +187,8 @@ Deno.serve(async (req) => {
       });
     }
 
-    // Already verified (either flag on user, or this specific token was already consumed)
-    // — redirect straight to the success page.
+    // Fast-path: if we can already see the user is verified, or this specific
+    // token was already consumed, redirect straight to the success page.
     if (user.email_verified || tokenUsedAt) {
       return new Response(null, {
         status: 302,
@@ -213,30 +213,23 @@ Deno.serve(async (req) => {
       }
     }
 
-    // Mark email verified and award +15 bonus points (matches verification email promise)
-    const { data: current } = await supabase
-      .from("storybuilders_waitlist")
-      .select("points, name, referral_code, welcome_sent_at")
-      .eq("id", user.id)
-      .maybeSingle();
-    const currentPoints = (current?.points as number | undefined) ?? 0;
+    // Atomic verify + award. The RPC takes a row lock, checks email_verified
+    // inside the transaction, and only awards +15 to the first caller. Any
+    // concurrent click sees already_verified=true and skips points + welcome.
+    const { data: rpcRows, error: rpcError } = await supabase.rpc(
+      "verify_waitlist_and_award",
+      { p_waitlist_id: user.id, p_bonus: 15 }
+    );
 
-    const { error: updateError } = await supabase
-      .from("storybuilders_waitlist")
-      .update({
-        email_verified: true,
-        verified_at: new Date().toISOString(),
-        points: currentPoints + 15,
-      })
-      .eq("id", user.id);
-
-    if (updateError) {
-      console.error("Update error:", updateError);
+    if (rpcError) {
+      console.error("verify_waitlist_and_award error:", rpcError);
       return new Response(getErrorHTML("Failed to verify email. Please try again."), {
         status: 500,
         headers: { "Access-Control-Allow-Origin": "*", "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store" },
       });
     }
+
+    const result = Array.isArray(rpcRows) ? rpcRows[0] : rpcRows;
 
     // Mark this specific token as used (other unused tokens for this user
     // remain valid until their own expiry — a second click on any of them
@@ -248,43 +241,66 @@ Deno.serve(async (req) => {
         .eq("id", tokenRowId);
     }
 
+    // If we lost the race (someone else already verified), redirect to the
+    // already-verified page WITHOUT sending another welcome email.
+    if (!result?.verified_now) {
+      return new Response(null, {
+        status: 302,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Location": "https://empowereddld.com/storypros/verified?already=1",
+          "Cache-Control": "no-store",
+        },
+      });
+    }
+
     console.log("verify-email-waitlist: verified", {
       id: user.id,
       email: user.email,
-      points_after: currentPoints + 15,
+      points_after: result.new_points,
       verified_at: new Date().toISOString(),
     });
 
-    // Now that the user is verified, send the full Welcome email (only once).
-    if (!current?.welcome_sent_at) {
-      try {
-        const firstName = (current?.name as string | undefined)?.split(" ")[0] || "friend";
-        const referralCode = (current?.referral_code as string | undefined) || "";
+    // Send the Welcome email exactly once. Gated by a conditional UPDATE on
+    // welcome_sent_at IS NULL so two near-simultaneous winners can't both send.
+    if (!result.welcome_sent_at) {
+      const { data: claimed } = await supabase
+        .from("storybuilders_waitlist")
+        .update({ welcome_sent_at: new Date().toISOString() })
+        .eq("id", user.id)
+        .is("welcome_sent_at", null)
+        .select("id");
 
-        await fetch(`${supabaseUrl}/functions/v1/send-waitlist-email`, {
-          method: "POST",
-          headers: {
-            "Authorization": `Bearer ${serviceKey}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            template: "welcome",
-            to: user.email,
-            data: {
-              name: firstName,
-              referral_code: referralCode,
+      if (claimed && claimed.length > 0) {
+        try {
+          const firstName = (result.name as string | undefined)?.split(" ")[0] || "friend";
+          const referralCode = (result.referral_code as string | undefined) || "";
+
+          await fetch(`${supabaseUrl}/functions/v1/send-waitlist-email`, {
+            method: "POST",
+            headers: {
+              "Authorization": `Bearer ${serviceKey}`,
+              "Content-Type": "application/json",
             },
-          }),
-        });
-
-        await supabase
-          .from("storybuilders_waitlist")
-          .update({ welcome_sent_at: new Date().toISOString() })
-          .eq("id", user.id);
-      } catch (welcomeErr) {
-        // Don't block verification on welcome email failure; the cron-driven Email 2
-        // dispatcher will still reach this user 24h later now that they're verified.
-        console.error("Welcome email dispatch failed:", welcomeErr);
+            body: JSON.stringify({
+              template: "welcome",
+              to: result.email ?? user.email,
+              data: {
+                name: firstName,
+                referral_code: referralCode,
+              },
+            }),
+          });
+        } catch (welcomeErr) {
+          // Don't block verification on welcome email failure; the cron-driven Email 2
+          // dispatcher will still reach this user 24h later now that they're verified.
+          console.error("Welcome email dispatch failed:", welcomeErr);
+          // Roll back the welcome_sent_at stamp so the next cron can retry.
+          await supabase
+            .from("storybuilders_waitlist")
+            .update({ welcome_sent_at: null })
+            .eq("id", user.id);
+        }
       }
     }
 
@@ -292,7 +308,7 @@ Deno.serve(async (req) => {
       status: 302,
       headers: {
         "Access-Control-Allow-Origin": "*",
-        "Location": `https://empowereddld.com/storypros/verified?name=${encodeURIComponent((current?.name as string | undefined) || "")}&points=15&ref=${encodeURIComponent((current?.referral_code as string | undefined) || "")}`,
+        "Location": `https://empowereddld.com/storypros/verified?name=${encodeURIComponent((result.name as string | undefined) || "")}&points=15&ref=${encodeURIComponent((result.referral_code as string | undefined) || "")}`,
         "Cache-Control": "no-store",
       },
     });
