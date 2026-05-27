@@ -238,6 +238,16 @@ Deno.serve(async (req) => {
       });
     }
 
+    // Mark this specific token as used (other unused tokens for this user
+    // remain valid until their own expiry — a second click on any of them
+    // will land on the "already verified" success page above).
+    if (tokenRowId) {
+      await supabase
+        .from("waitlist_verification_tokens")
+        .update({ used_at: new Date().toISOString() })
+        .eq("id", tokenRowId);
+    }
+
     console.log("verify-email-waitlist: verified", {
       id: user.id,
       email: user.email,
