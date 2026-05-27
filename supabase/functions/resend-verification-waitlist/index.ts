@@ -59,8 +59,12 @@ Deno.serve(async (req) => {
       }
     }
 
-    // Issue a fresh token
+    // Issue a fresh token (additive — old tokens remain valid until their own
+    // 7-day expiry or until one of them is used).
     const verificationToken = crypto.randomUUID();
+    await supabase
+      .from("waitlist_verification_tokens")
+      .insert({ waitlist_id: user.id, token: verificationToken });
     await supabase
       .from("storybuilders_waitlist")
       .update({
