@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import ScrollToTop from "./components/ScrollToTop";
+import AnnouncementBar from "./components/AnnouncementBar";
 
 // Eagerly loaded (main public pages)
 import Index from "./pages/Index";
