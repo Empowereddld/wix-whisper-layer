@@ -87,18 +87,19 @@ Deno.serve(async (req) => {
           let founderSlot: number | null = u.founder_slot_number;
 
           if (!founderSlot) {
-            const { count } = await supabase
-              .from("storybuilders_waitlist")
-              .select("id", { count: "exact", head: true })
-              .not("founder_slot_number", "is", null);
-            const nextSlot = (count ?? 0) + 1;
-            if (nextSlot <= FOUNDER_SLOT_CAP) {
-              const { error: claimErr } = await supabase
-                .from("storybuilders_waitlist")
-                .update({ founder_slot_number: nextSlot })
-                .eq("id", u.id)
-                .is("founder_slot_number", null);
-              if (!claimErr) founderSlot = nextSlot;
+            // Atomic slot assignment: a SECURITY DEFINER RPC takes an
+            // advisory lock + FOR UPDATE so two concurrent Tier 6 users
+            // cannot be handed the same slot. Returns null if the cap is
+            // reached, in which case we fall through to the Legend email.
+            const { data: slotRows, error: slotErr } = await supabase.rpc(
+              "assign_founder_slot",
+              { p_user_id: u.id, p_cap: FOUNDER_SLOT_CAP }
+            );
+            if (slotErr) {
+              console.error("assign_founder_slot failed:", slotErr);
+            } else {
+              const row = Array.isArray(slotRows) ? slotRows[0] : slotRows;
+              if (row?.slot_number) founderSlot = row.slot_number;
             }
           }
 
