@@ -71,6 +71,7 @@ export default {
         mauve: "hsl(var(--mauve))",
         "stone-ui": "hsl(var(--stone-ui))",
         "pale-yellow": "hsl(var(--pale-yellow))",
+        golden: "hsl(var(--golden))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
