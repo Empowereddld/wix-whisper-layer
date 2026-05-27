@@ -1,66 +1,43 @@
-## The problem
+# Fix Story Pros email verification
 
-Today the `storybuilders_waitlist` table stores **one** `verification_token` column. Every time we issue a fresh link (resend button, admin nudge, reminder cron, backfill), we overwrite that column. The old link in the user's inbox becomes a dead 404 because `verify-email-waitlist` looks up by `eq("verification_token", token)`.
+## Status
 
-That's exactly what happened to Fiona, and yes, it will keep happening to anyone who clicks the first email after we've sent a second one.
+- Database migration **already applied** (verify_waitlist_and_award now uses `out_*` column names, no more 42702 collision).
+- Edge function code changes below need build mode to apply.
 
-## The fix
+## Fix 1 — Edge function reads renamed RPC fields
 
-Move verification tokens out of a single column and into their own table, so multiple tokens can be valid at the same time. Each token still independently expires after 7 days.
+In `supabase/functions/verify-email-waitlist/index.ts`, change the `rpcRows[0]` consumer from `verified_now / new_points / welcome_sent_at / name / referral_code / email` to `out_verified_now / out_new_points / out_welcome_sent_at / out_name / out_referral_code / out_email`. No other callers exist.
 
-### 1. New table: `waitlist_verification_tokens`
+## Fix 2 — Self-serve resend on error pages
 
-| column | purpose |
-|---|---|
-| `id` | pk |
-| `waitlist_id` | fk to `storybuilders_waitlist.id` |
-| `token` (unique) | the URL token |
-| `created_at` | for the 7-day expiry check |
-| `used_at` | set when consumed (kept for audit, not deleted) |
+Rewrite `getErrorHTML()` in the same file to:
 
-RLS: no anon/authenticated access. Edge functions use service role only. Index on `token` and on `waitlist_id`.
+- Soften the page title to "Verification Link Issue" and drop the harsh red "Verification Failed" framing.
+- Add an inline form: email input + "Resend my verification link" button.
+- Pre-fill the email when the verify branch already knows the user (expired token, RPC error after lookup succeeded).
+- Inline `<script>` posts JSON `{ email }` to `${SUPABASE_URL}/functions/v1/resend-verification-waitlist` with the anon key as both `apikey` and `Authorization: Bearer` headers.
+- On success: hide form, show "Check your inbox, a fresh link is on the way." If `already_verified`, show that instead.
+- On failure: render the error message returned by the function and re-enable the button.
+- Copy stays warm, no em dashes ("This link is no longer valid. Drop your email below and we'll send you a fresh one.").
 
-### 2. Issue tokens additively
+Centralize HTML response headers in one `HTML_HEADERS` const that always includes `Content-Type: text/html; charset=utf-8` so Outlook / Gmail webviews stop rendering raw source. Wrap all error returns in a single `errorPage(reason, status, prefillEmail?)` helper so no branch can forget the header.
 
-Anywhere we currently overwrite `verification_token` on the waitlist row, instead `INSERT` a new row into `waitlist_verification_tokens`:
+## Fix 2b — Loosen `resend-verification-waitlist` to accept email
 
-- `storybuilders-signup`
-- `resend-verification-waitlist`
-- `admin-nudge-unverified`
-- `send-verification-reminders` (both 24h and 72h branches)
-- `backfill-verification-emails`
+The current function only accepts `referral_code`. The recovery form only has email. Update `supabase/functions/resend-verification-waitlist/index.ts` to accept **either** `referral_code` **or** `email` in the body and look up the waitlist row accordingly. Everything else (2-minute rate limit, new token issue, verification email send, `already_verified` response) stays identical. No other behavior or auth changes.
 
-We'll keep updating `verification_sent_at` on the waitlist row so the resend rate-limit and reminder cadence keep working unchanged.
+Edge functions deploy with `verify_jwt = false` by default, so the anon-key-only call from the static HTML form will be accepted as-is.
 
-### 3. Verification lookup accepts any unused, unexpired token
+## Verification after deploy
 
-Rewrite the lookup in `verify-email-waitlist`:
-
-1. Find the token row by `token`.
-2. If none → "invalid or expired" page (same as today).
-3. If `used_at IS NOT NULL` → treat as already-verified path (redirect to success/already page).
-4. If `created_at` older than 7 days → expired page.
-5. Otherwise: mark `used_at = now()`, mark the waitlist row `email_verified = true`, award the +15, send the Welcome email (gated on `welcome_sent_at` like today).
-
-Other unused tokens for the same `waitlist_id` are left alone — on a second click, step 3 redirects cleanly to the "already verified" page, which is the behavior we want.
-
-### 4. Backfill + cleanup
-
-- One-time migration: for every existing waitlist row where `verification_token IS NOT NULL` and `email_verified = false`, insert a row into the new table using the existing token and `verification_sent_at` as `created_at`. No user-visible breakage; their current link keeps working.
-- The `verification_token` column on `storybuilders_waitlist` becomes legacy. Leave it in place for now (don't break the admin nudge/reminder queries that filter on `not("verification_token", "is", null)`); we'll switch those reads to the new table in the same PR and drop the column in a follow-up once safe.
-
-### 5. Touch points to update in the same change
-
-- Admin nudge + reminder crons: instead of reading `verification_token` off the waitlist row, issue a fresh token (insert) and use that in the email. Old links in the inbox still work because we never invalidate them.
-- Resend rate-limit logic stays as-is (2 minutes, based on `verification_sent_at`).
-
-## What this means for users
-
-- Fiona's case never repeats. Every link we ever sent works until it naturally expires after 7 days or until one of them gets clicked.
-- After a successful click, subsequent clicks on any other link from that user land on the friendly "already verified" page instead of a scary error.
-- No change to the 7-day window, the +15 points, the Welcome email gating, or the verified-success redirect.
+1. Tail `verify-email-waitlist` logs and confirm `column reference "email" is ambiguous` (42702) errors stop.
+2. Trigger one fresh verification end-to-end: confirm redirect to `/storypros/verified`, +15 points lands, welcome email fires once.
+3. Hit a garbage token URL, confirm the new resend form renders, posts, and shows the inline success message.
+4. Resend Naz and Justine's links from the admin tool, confirm they land on `/storypros/verified`.
 
 ## Out of scope
 
-- Changing the 7-day expiry length.
-- Removing the legacy `verification_token` column (do this in a small follow-up once we confirm nothing else reads it).
+- Token expiry length (still 7 days).
+- Any copy outside the two error pages.
+- Any UI work outside the two edge functions.

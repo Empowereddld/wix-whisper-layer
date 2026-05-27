@@ -13,9 +13,21 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const { referral_code } = await req.json();
-    if (!referral_code || typeof referral_code !== "string") {
-      return new Response(JSON.stringify({ error: "referral_code required" }), {
+    const body = await req.json().catch(() => ({} as any));
+    const referral_code: string | undefined =
+      typeof body?.referral_code === "string" ? body.referral_code : undefined;
+    const emailInput: string | undefined =
+      typeof body?.email === "string" ? body.email.trim().toLowerCase() : undefined;
+
+    if (!referral_code && !emailInput) {
+      return new Response(JSON.stringify({ error: "Email or referral code required" }), {
+        status: 400,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    if (emailInput && (emailInput.indexOf("@") < 1 || emailInput.length > 320)) {
+      return new Response(JSON.stringify({ error: "Please enter a valid email address" }), {
         status: 400,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
@@ -25,17 +37,26 @@ Deno.serve(async (req) => {
     const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const supabase = createClient(supabaseUrl, serviceKey);
 
-    const { data: user, error } = await supabase
+    let query = supabase
       .from("storybuilders_waitlist")
-      .select("id, name, email, email_verified, verification_token, verification_sent_at")
-      .eq("referral_code", referral_code)
-      .maybeSingle();
+      .select("id, name, email, email_verified, verification_token, verification_sent_at, deleted_at");
 
-    if (error || !user) {
-      return new Response(JSON.stringify({ error: "User not found" }), {
-        status: 404,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
+    if (referral_code) {
+      query = query.eq("referral_code", referral_code);
+    } else if (emailInput) {
+      query = query.ilike("email", emailInput);
+    }
+
+    const { data: user, error } = await query.maybeSingle();
+
+    if (error || !user || user.deleted_at) {
+      // Generic message so we don't leak which emails are on the waitlist
+      return new Response(
+        JSON.stringify({
+          error: "We couldn't find that signup. Please check the email or join the waitlist again.",
+        }),
+        { status: 404, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
     }
 
     if (user.email_verified) {
@@ -44,14 +65,13 @@ Deno.serve(async (req) => {
       });
     }
 
-    // Rate limit: only allow resend every 2 minutes
     if (user.verification_sent_at) {
       const sentAt = new Date(user.verification_sent_at).getTime();
       const ageMin = (Date.now() - sentAt) / 60000;
       if (ageMin < RATE_LIMIT_MINUTES) {
         return new Response(
           JSON.stringify({
-            error: "Please wait before requesting another verification email",
+            error: "Please wait a couple of minutes before requesting another verification email.",
             retry_after_seconds: Math.ceil((RATE_LIMIT_MINUTES - ageMin) * 60),
           }),
           { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } }
@@ -59,8 +79,6 @@ Deno.serve(async (req) => {
       }
     }
 
-    // Issue a fresh token (additive — old tokens remain valid until their own
-    // 7-day expiry or until one of them is used).
     const verificationToken = crypto.randomUUID();
     await supabase
       .from("waitlist_verification_tokens")
@@ -75,7 +93,6 @@ Deno.serve(async (req) => {
 
     const verificationLink = `${supabaseUrl}/functions/v1/verify-email-waitlist?token=${verificationToken}`;
 
-    // Send the verification template (NOT welcome — welcome is gated until after verify)
     await fetch(`${supabaseUrl}/functions/v1/send-waitlist-email`, {
       method: "POST",
       headers: {
