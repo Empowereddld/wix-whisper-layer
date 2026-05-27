@@ -21,7 +21,7 @@ const AnnouncementBar = () => {
   };
 
   return (
-    <div className="relative bg-midnight text-white">
+    <div className="relative bg-golden text-white">
       <Link
         to="/storypros"
         className="block w-full px-10 py-2 text-center text-[12px] sm:text-[13px] font-medium leading-snug hover:opacity-90 transition-opacity"
