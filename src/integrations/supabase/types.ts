@@ -1178,6 +1178,14 @@ export type Database = {
         Args: { p_base_award: number; p_current_points: number }
         Returns: number
       }
+      assign_founder_slot: {
+        Args: { p_cap?: number; p_user_id: string }
+        Returns: {
+          already_had: boolean
+          cap_reached: boolean
+          slot_number: number
+        }[]
+      }
       award_referral: {
         Args: {
           p_first_bonus: number
