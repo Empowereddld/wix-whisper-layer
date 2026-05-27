@@ -21,7 +21,7 @@ const AnnouncementBar = () => {
   };
 
   return (
-    <div className="relative bg-golden text-foreground">
+    <div className="relative bg-golden text-white">
       <Link
         to="/storypros"
         className="block w-full px-10 py-2 text-center text-[12px] sm:text-[13px] font-medium leading-snug hover:opacity-90 transition-opacity"
@@ -31,7 +31,7 @@ const AnnouncementBar = () => {
       <button
         onClick={dismiss}
         aria-label="Dismiss announcement"
-        className="absolute right-2 top-1/2 -translate-y-1/2 p-2 text-foreground/70 hover:text-foreground"
+        className="absolute right-2 top-1/2 -translate-y-1/2 p-2 text-white/80 hover:text-white"
       >
         <X className="w-4 h-4" />
       </button>
