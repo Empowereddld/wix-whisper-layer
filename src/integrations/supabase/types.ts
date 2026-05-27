@@ -1333,6 +1333,18 @@ export type Database = {
           success: boolean
         }[]
       }
+      verify_waitlist_and_award: {
+        Args: { p_bonus?: number; p_waitlist_id: string }
+        Returns: {
+          already_verified: boolean
+          email: string
+          name: string
+          new_points: number
+          referral_code: string
+          verified_now: boolean
+          welcome_sent_at: string
+        }[]
+      }
       verify_waitlist_email: {
         Args: { p_token: string }
         Returns: {
