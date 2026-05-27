@@ -335,6 +335,12 @@ Deno.serve(async (req) => {
       });
     }
 
+    // Also insert into the multi-token table so the link stays valid even if
+    // a new token is later issued (resend, nudge, reminder).
+    await supabase
+      .from("waitlist_verification_tokens")
+      .insert({ waitlist_id: newEntry.id, token: verificationToken });
+
     // Note: fraud check result is informational only (no DB columns yet)
     if (fraudCheck.flagged) {
       console.log("Fraud flagged:", normalizedEmail, fraudCheck.reasons.join("; "), "score:", fraudCheck.risk_score);
