@@ -241,15 +241,24 @@ Deno.serve(async (req) => {
 
     const normalizedEmail = email.toLowerCase().trim();
 
-    // Check if email already exists
-    const { data: existing } = await supabase
+    // Check if email already exists (active row only — mirrors the partial unique index
+    // storybuilders_waitlist_email_active_unique). Without the deleted_at filter,
+    // soft-deleted duplicates can make maybeSingle() return a "multiple rows" error,
+    // which previously caused the function to fall through to INSERT and 500.
+    const { data: existing, error: existingErr } = await supabase
       .from("storybuilders_waitlist")
-      .select("referral_code, invite_count, points")
+      .select("id, referral_code, invite_count, points, email_verified")
       .eq("email", normalizedEmail)
+      .is("deleted_at", null)
+      .order("created_at", { ascending: false })
+      .limit(1)
       .maybeSingle();
 
+    if (existingErr) {
+      console.error("Existing-email lookup failed (will rely on 23505 fallback):", existingErr);
+    }
+
     if (existing) {
-      // Return existing entry
       const { data: totalCount } = await supabase.rpc("get_storybuilders_waitlist_count");
       return new Response(
         JSON.stringify({
