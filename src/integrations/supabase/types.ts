@@ -1129,6 +1129,38 @@ export type Database = {
           },
         ]
       }
+      waitlist_verification_tokens: {
+        Row: {
+          created_at: string
+          id: string
+          token: string
+          used_at: string | null
+          waitlist_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          token: string
+          used_at?: string | null
+          waitlist_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          token?: string
+          used_at?: string | null
+          waitlist_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "waitlist_verification_tokens_waitlist_id_fkey"
+            columns: ["waitlist_id"]
+            isOneToOne: false
+            referencedRelation: "storybuilders_waitlist"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
