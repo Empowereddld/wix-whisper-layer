@@ -112,7 +112,17 @@ Deno.serve(async (req) => {
 
     for (const u of round2 ?? []) {
       try {
-        const verificationLink = `${supabaseUrl}/functions/v1/verify-email-waitlist?token=${u.verification_token}`;
+        // Issue a fresh token; old tokens remain valid until their own expiry.
+        const freshToken = crypto.randomUUID();
+        await supabase
+          .from("waitlist_verification_tokens")
+          .insert({ waitlist_id: u.id, token: freshToken });
+        await supabase
+          .from("storybuilders_waitlist")
+          .update({ verification_token: freshToken })
+          .eq("id", u.id);
+
+        const verificationLink = `${supabaseUrl}/functions/v1/verify-email-waitlist?token=${freshToken}`;
         const firstName = u.name?.split(" ")[0] || "friend";
 
         const res = await fetch(`${supabaseUrl}/functions/v1/send-waitlist-email`, {
