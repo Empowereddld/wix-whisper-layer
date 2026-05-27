@@ -337,6 +337,34 @@ Deno.serve(async (req) => {
       .single();
 
     if (insertError) {
+      // Race safety net: another concurrent submit (or a stale soft-deleted dup
+      // pattern we somehow missed) won the unique index. Re-read the active row
+      // and return the friendly already_joined payload instead of a 500.
+      if ((insertError as any).code === "23505") {
+        const { data: raceRow } = await supabase
+          .from("storybuilders_waitlist")
+          .select("referral_code, invite_count, points")
+          .eq("email", normalizedEmail)
+          .is("deleted_at", null)
+          .order("created_at", { ascending: false })
+          .limit(1)
+          .maybeSingle();
+
+        if (raceRow) {
+          const { data: totalCount } = await supabase.rpc("get_storybuilders_waitlist_count");
+          return new Response(
+            JSON.stringify({
+              already_joined: true,
+              referral_code: raceRow.referral_code,
+              invite_count: raceRow.invite_count ?? 0,
+              points: raceRow.points,
+              total_count: totalCount ?? 0,
+            }),
+            { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+          );
+        }
+      }
+
       console.error("Insert error:", insertError);
       return new Response(JSON.stringify({ error: "Failed to join waitlist" }), {
         status: 500,
