@@ -49,6 +49,9 @@ Deno.serve(async (req) => {
     try {
       const token = crypto.randomUUID();
       await supabase
+        .from("waitlist_verification_tokens")
+        .insert({ waitlist_id: u.id, token });
+      await supabase
         .from("storybuilders_waitlist")
         .update({
           verification_token: token,

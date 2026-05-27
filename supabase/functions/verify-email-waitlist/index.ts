@@ -136,23 +136,60 @@ Deno.serve(async (req) => {
     const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const supabase = createClient(supabaseUrl, serviceKey);
 
-    // Look up the waitlist entry by verification_token
-    const { data: user, error: findError } = await supabase
-      .from("storybuilders_waitlist")
-      .select("id, email, verification_token, verification_sent_at, email_verified")
-      .eq("verification_token", token)
+    // Look up the token in the new multi-token table (preferred).
+    // Fall back to the legacy single-column lookup for any token issued before
+    // the new table was introduced.
+    let waitlistId: string | null = null;
+    let tokenRowId: string | null = null;
+    let tokenCreatedAt: string | null = null;
+    let tokenUsedAt: string | null = null;
+
+    const { data: tokenRow } = await supabase
+      .from("waitlist_verification_tokens")
+      .select("id, waitlist_id, created_at, used_at")
+      .eq("token", token)
       .maybeSingle();
 
-    if (findError || !user) {
-      console.error("Token lookup error:", findError);
+    if (tokenRow) {
+      waitlistId = tokenRow.waitlist_id;
+      tokenRowId = tokenRow.id;
+      tokenCreatedAt = tokenRow.created_at;
+      tokenUsedAt = tokenRow.used_at;
+    } else {
+      const { data: legacy } = await supabase
+        .from("storybuilders_waitlist")
+        .select("id, verification_sent_at")
+        .eq("verification_token", token)
+        .maybeSingle();
+      if (legacy) {
+        waitlistId = legacy.id;
+        tokenCreatedAt = legacy.verification_sent_at;
+      }
+    }
+
+    if (!waitlistId) {
       return new Response(getErrorHTML("Invalid or expired verification token"), {
         status: 404,
         headers: { "Access-Control-Allow-Origin": "*", "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store" },
       });
     }
 
-    // Already verified — redirect straight to the success page
-    if (user.email_verified) {
+    const { data: user } = await supabase
+      .from("storybuilders_waitlist")
+      .select("id, email, email_verified")
+      .eq("id", waitlistId)
+      .maybeSingle();
+
+    if (!user) {
+      return new Response(getErrorHTML("Invalid or expired verification token"), {
+        status: 404,
+        headers: { "Access-Control-Allow-Origin": "*", "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store" },
+      });
+    }
+
+    // Already verified (either flag on user, or this specific token was already consumed)
+    // — redirect straight to the success page.
+    if (user.email_verified || tokenUsedAt) {
       return new Response(null, {
         status: 302,
         headers: {
@@ -163,14 +200,11 @@ Deno.serve(async (req) => {
       });
     }
 
-    // Check token expiry - must be within 7 days (168 hours).
-    // Parents are busy; if it expires they can self-serve a fresh link
-    // from the unverified dashboard via "Resend verification email".
-    if (user.verification_sent_at) {
-      const sentAt = new Date(user.verification_sent_at);
-      const now = new Date();
-      const hoursDiff = (now.getTime() - sentAt.getTime()) / (1000 * 60 * 60);
-
+    // Per-token expiry: 7 days (168 hours) from when THIS link was issued.
+    // Other unused tokens for the same user remain valid until their own expiry.
+    if (tokenCreatedAt) {
+      const sentAt = new Date(tokenCreatedAt);
+      const hoursDiff = (Date.now() - sentAt.getTime()) / (1000 * 60 * 60);
       if (hoursDiff > 168) {
         return new Response(getErrorHTML("This verification link has expired. Please request a new one."), {
           status: 410,
@@ -202,6 +236,16 @@ Deno.serve(async (req) => {
         status: 500,
         headers: { "Access-Control-Allow-Origin": "*", "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store" },
       });
+    }
+
+    // Mark this specific token as used (other unused tokens for this user
+    // remain valid until their own expiry — a second click on any of them
+    // will land on the "already verified" success page above).
+    if (tokenRowId) {
+      await supabase
+        .from("waitlist_verification_tokens")
+        .update({ used_at: new Date().toISOString() })
+        .eq("id", tokenRowId);
     }
 
     console.log("verify-email-waitlist: verified", {
