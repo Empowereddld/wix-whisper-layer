@@ -86,11 +86,11 @@ const HubHeader = ({ activeAudience = "", onAudienceChange }: HubHeaderProps) =>
           <button
             onClick={handleStoryProsClick}
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-purple-600/20 hover:bg-purple-600/30 border border-purple-500/30 text-purple-300 hover:text-purple-200 text-sm font-medium transition-all mr-4 flex-shrink-0"
-            aria-label={hasJoinedStoryPros ? "Open Story Pros Dashboard" : "Join Story Pros"}
+            aria-label={hasJoinedStoryPros ? "Open Story Pros Dashboard" : "Join the Story Pros Waitlist"}
           >
             <Rocket className="h-4 w-4" />
             <span className="hidden sm:inline">
-              {hasJoinedStoryPros ? "Story Pros Dashboard" : "Join Story Pros"}
+              {hasJoinedStoryPros ? "Story Pros Dashboard" : "Join the Story Pros Waitlist"}
             </span>
           </button>
 
