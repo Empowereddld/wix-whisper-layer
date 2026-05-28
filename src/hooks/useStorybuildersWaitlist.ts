@@ -809,6 +809,7 @@ export function useStorybuildersWaitlist() {
       const { data, error } = await supabase
         .from("storybuilders_waitlist")
         .select("email, name, invite_count, referral_code")
+        .is("deleted_at", null)
         .order("invite_count", { ascending: false })
         .limit(limit);
 
@@ -832,6 +833,7 @@ export function useStorybuildersWaitlist() {
       const { data, error } = await supabase
         .from("storybuilders_waitlist")
         .select("id, name, created_at")
+        .is("deleted_at", null)
         .order("created_at", { ascending: false })
         .limit(limit);
 
@@ -913,6 +915,7 @@ export function useStorybuildersWaitlist() {
           .from("storybuilders_waitlist")
           .select("id")
           .eq("email", email.toLowerCase().trim())
+          .is("deleted_at", null)
           .maybeSingle();
 
         if (!existing) {
