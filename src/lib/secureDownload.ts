@@ -2,18 +2,38 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
 /**
- * Securely download a resource. For paid resources stored in the private bucket,
- * this calls the generate-download-url edge function to get a signed URL.
- * For free resources with public URLs, it opens the URL directly.
+ * Securely download a resource. For private resources, calls the
+ * generate-download-url edge function to get a signed URL. For public
+ * resources, opens the file_url directly.
+ *
+ * Accepts either a boolean (legacy: treat as isPrivate) or a resource-like
+ * object with { file_url, is_private } for forward compatibility.
  */
-export const secureDownload = async (resourceId: string, fileUrl: string | null) => {
-  if (!fileUrl) {
+export const secureDownload = async (
+  resourceId: string,
+  fileUrlOrResource: string | null | { file_url: string | null; is_private?: boolean | null },
+  isPrivateArg?: boolean,
+) => {
+  let fileUrl: string | null = null;
+  let isPrivate = false;
+
+  if (typeof fileUrlOrResource === "object" && fileUrlOrResource !== null) {
+    fileUrl = fileUrlOrResource.file_url ?? null;
+    isPrivate = !!fileUrlOrResource.is_private;
+  } else {
+    fileUrl = fileUrlOrResource ?? null;
+    // Legacy heuristic: paths beginning with resources-private/ are private.
+    isPrivate =
+      isPrivateArg === true ||
+      (typeof fileUrl === "string" && fileUrl.startsWith("resources-private/"));
+  }
+
+  if (!isPrivate && !fileUrl) {
     toast.info("This resource file will be available soon.");
     return;
   }
 
-  // If the file is in the private bucket, call the edge function
-  if (fileUrl.startsWith("resources-private/")) {
+  if (isPrivate) {
     try {
       const { data, error } = await supabase.functions.invoke("generate-download-url", {
         body: { resource_id: resourceId },
@@ -33,8 +53,9 @@ export const secureDownload = async (resourceId: string, fileUrl: string | null)
     } catch {
       toast.error("Download failed. Please try again.");
     }
-  } else {
-    // Public URL — open directly
-    window.open(fileUrl, "_blank");
+    return;
   }
+
+  // Public URL — open directly
+  window.open(fileUrl!, "_blank");
 };
