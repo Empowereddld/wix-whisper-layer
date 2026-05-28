@@ -197,6 +197,7 @@ Deno.serve(async (req) => {
         .from("storybuilders_waitlist")
         .select("points, speech_professional_verified")
         .eq("referral_code", referral_code)
+        .is("deleted_at", null)
         .maybeSingle();
 
       if (existing?.speech_professional_verified) {
@@ -215,6 +216,7 @@ Deno.serve(async (req) => {
         .from("storybuilders_waitlist")
         .select("points, profile_completed_at, child_age, hopes, hear_about")
         .eq("referral_code", referral_code)
+        .is("deleted_at", null)
         .maybeSingle();
 
       if (existing && !existing.profile_completed_at) {
@@ -240,14 +242,15 @@ Deno.serve(async (req) => {
       .from("storybuilders_waitlist")
       .update(updates)
       .eq("referral_code", referral_code)
+      .is("deleted_at", null)
       .select("id, name, is_speech_professional, speech_professional_verified, role, role_other, child_age, hopes, hopes_other, hear_about, profile_completed_at, points")
       .maybeSingle();
 
     if (error || !data) {
       console.error("Update failed:", error);
       return new Response(
-        JSON.stringify({ error: "Could not update your details. Try again." }),
-        { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        JSON.stringify({ error: "This signup is no longer active or could not be updated." }),
+        { status: 404, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
 

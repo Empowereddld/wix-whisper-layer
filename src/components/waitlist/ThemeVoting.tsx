@@ -26,31 +26,10 @@ const ThemeVoting = ({ canVote, userEmail }: ThemeVotingProps) => {
   const [loading, setLoading] = useState(false);
   const [checkingVote, setCheckingVote] = useState(true);
 
-  // Check if user has already voted
+  // Theme voting backend (check_user_vote RPC + story_theme_votes table) is
+  // not deployed to production. Skip the prior-vote lookup until that ships.
   useEffect(() => {
-    const checkUserVote = async () => {
-      if (!userEmail) {
-        setCheckingVote(false);
-        return;
-      }
-
-      try {
-        const { data } = await (supabase.rpc as any)("check_user_vote", {
-          p_email: userEmail,
-        });
-
-        if (data && (data as any).length > 0) {
-          setHasVoted(true);
-          setSelectedTheme((data as any)[0].theme_id);
-        }
-      } catch (error) {
-        console.error("Error checking vote:", error);
-      } finally {
-        setCheckingVote(false);
-      }
-    };
-
-    checkUserVote();
+    setCheckingVote(false);
   }, [userEmail]);
 
   // Load theme results
