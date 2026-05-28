@@ -47,10 +47,10 @@ Deno.serve(async (req) => {
     // Admin client for DB queries and signed URLs
     const admin = createClient(supabaseUrl, serviceRoleKey);
 
-    // Get resource (private_file_path readable here via service role)
+    // Get resource (public columns only — private path lives in resource_private_files)
     const { data: resource, error: resErr } = await admin
       .from("resources")
-      .select("id, file_url, private_file_path, is_private, title")
+      .select("id, file_url, is_private, title")
       .eq("id", resource_id)
       .single();
 
@@ -61,13 +61,16 @@ Deno.serve(async (req) => {
       });
     }
 
-    // Resolve the private storage path. Prefer the new column; fall back to legacy file_url prefix.
     const r: any = resource;
-    const privatePath: string | null =
-      r.private_file_path ||
-      (r.file_url && typeof r.file_url === "string" && r.file_url.startsWith("resources-private/")
-        ? r.file_url.replace("resources-private/", "")
-        : null);
+
+    // Look up private storage path from the admin-only table
+    const { data: privateRow } = await admin
+      .from("resource_private_files")
+      .select("storage_path")
+      .eq("resource_id", resource_id)
+      .maybeSingle();
+
+    const privatePath: string | null = privateRow?.storage_path ?? null;
     const isPrivate = r.is_private === true || !!privatePath;
 
     if (!privatePath && !r.file_url) {
@@ -76,6 +79,7 @@ Deno.serve(async (req) => {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
+
 
     // Check if resource is paid
     const { data: product } = await admin
