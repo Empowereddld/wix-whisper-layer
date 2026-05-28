@@ -1,51 +1,74 @@
-# Batch 1 Fixes (in order, confirm each before moving on)
+# Batch 3 Plan
 
-## Fix 1 — RPC column collisions (42702 prevention)
+Same approach as Batches 1 and 2: do them in order, confirm each.
 
-Single migration that drops the old signatures first, then recreates with `out_` prefixed OUT columns (same pattern as `verify_waitlist_and_award`).
+## Important findings before we touch anything
 
-**`get_pending_slp_verifications()`**
-- `DROP FUNCTION IF EXISTS public.get_pending_slp_verifications();`
-- Recreate returning `out_id`, `out_user_email`, `out_referred_by_email`, `out_created_at`.
-- No frontend callers found, so nothing to update on the client.
+Two items in your batch don't match what's actually deployed. Confirming so we don't ship dead code:
 
-**`check_user_vote(p_email text)`**
-- `DROP FUNCTION IF EXISTS public.check_user_vote(text);`
-- Recreate returning `out_theme_id`, `out_voted_at`.
-- Update caller `src/components/waitlist/ThemeVoting.tsx:44` to read `(data as any)[0].out_theme_id`. (Lines 64 and 100 belong to `get_theme_results` — leave untouched.)
+- **`get_waitlist_leaderboard` and `get_waitlist_analytics` RPCs don't exist** in the production database. The full live RPC list does not contain them. The leaderboard/activity feed are served by the inline queries in `useStorybuildersWaitlist.ts` (lines 810 and 833), not by RPCs. I will skip those two RPC renames and instead make sure the inline equivalents are filtered.
+- **Fix 8 (Content-Type headers) is already done.** I just verified all `JSON.stringify(...)` responses in `dispatch-tier-emails`, `send-waitlist-email2`, and `resend-webhook`. Every one of them already passes `{ ...corsHeaders, "Content-Type": "application/json" }`. There is nothing to change. I will mark Fix 8 complete with no edit and link the verifying grep in the confirmation.
 
-**Confirm:** call both RPCs via `supabase--read_query` / curl and verify no 42702.
+If you'd rather I add `get_waitlist_leaderboard` / `get_waitlist_analytics` as new RPCs (instead of inline queries), say so and I'll spec that separately.
 
----
+## Fix 6 — Exclude soft-deleted users from leaderboards, analytics, counts
 
-## Fix 2 — Stop emailing soft-deleted users
+**Single migration** (schema-only DROP + CREATE, no data writes) for the RPCs that do exist:
 
-- `supabase/functions/send-verification-reminders/index.ts` line ~48: append `.is("deleted_at", null)` to the waitlist query.
-- `src/pages/admin/AdminEmails.tsx` line ~59: append `.is("deleted_at", null)` to the bulk recipient query.
+1. `get_storybuilders_waitlist_count()` — add `WHERE deleted_at IS NULL` to the `SELECT COUNT(*)`.
+2. `get_waitlist_by_referral(p_code text)` — add `AND w.deleted_at IS NULL` to the predicate. No OUT-column rename needed (its OUT names already don't collide; we just need the filter).
 
-**Confirm:** read the updated queries; spot-check that a row with `deleted_at IS NOT NULL` is excluded via `supabase--read_query`.
+**Frontend / inline queries**:
 
----
+3. `src/hooks/useStorybuildersWaitlist.ts:810` (leaderboard query) — append `.is("deleted_at", null)`.
+4. `src/hooks/useStorybuildersWaitlist.ts:833` (activity feed query) — append `.is("deleted_at", null)`.
+5. `src/hooks/useStorybuildersWaitlist.ts:913` (`linkAuthAccount` lookup) — append `.is("deleted_at", null)` so a deleted row can't be linked.
 
-## Fix 3 — Stop verifying / updating soft-deleted records
+**Edge function** `supabase/functions/weekly-app-summary/index.ts`:
 
-- `supabase/functions/verify-email-waitlist/index.ts` line ~260: after fetching the waitlist row, reject if `deleted_at !== null` with a clear message: `"This signup is no longer active."` (HTML response uses existing `HTML_HEADERS`; JSON response uses standard JSON error shape — match whichever branch this line sits in).
-- `supabase/functions/update-waitlist-profile/index.ts` lines ~197, ~215, ~240: append `.is("deleted_at", null)` to all three query paths so updates no-op on deleted rows and return a clear error when the lookup yields nothing.
+6. Extend the `countRange` helper with an optional `excludeDeleted?: boolean` arg that appends `.is("deleted_at", null)` when true. Pass it for both `storybuilders_waitlist` calls at lines 87 and 88.
+7. Top StoryPros referrers query (~line 132) — append `.is("deleted_at", null)`.
+8. Recent waitlist signups query (~line 143) — append `.is("deleted_at", null)`.
 
-**Confirm:**
-- `verify-email-waitlist` rejects a soft-deleted row with the new message.
-- `update-waitlist-profile` returns an error when targeting a deleted row.
+**Confirm**: `supabase--read_query` against `get_storybuilders_waitlist_count()` and `get_waitlist_by_referral(...)` returning excluded counts when a row has `deleted_at IS NOT NULL`; spot-check the three inline queries by reading the updated lines.
 
----
+## Fix 7 — Recovery actions on dead-end error states
+
+**`src/pages/ClaimFounder.tsx`** — the `status.state === "invalid"` block (lines ~204-213). Add a prominent recovery CTA inside the card, below the message:
+
+```tsx
+<Button asChild className="mt-6">
+  <Link to="/storypros">Back to Story Pros</Link>
+</Button>
+```
+
+(Uses the existing `Button` + `Link` imports already in the file; matches the styling pattern from the `submitted` block right below it.)
+
+**`src/pages/EarlySupportersWall.tsx`** — the `error` block (lines ~172-175). Refactor the fetch into a `useCallback` so the same function can be called from `useEffect` and from a retry button, then render two CTAs in the error state:
+
+```tsx
+<div className="text-center py-20 space-y-6">
+  <p style={{ color: "#ef4444" }}>{error}</p>
+  <div className="flex flex-wrap items-center justify-center gap-3">
+    <Button onClick={fetchSupporters}>Try again</Button>
+    <Button variant="outline" asChild>
+      <Link to="/">Back to home</Link>
+    </Button>
+  </div>
+</div>
+```
+
+(`Button` and `Link` are already in scope; just hoist the existing fetch function out of the `useEffect`.)
+
+**Confirm**: Read both files at the new line ranges to verify the buttons exist; the user can also click through in the preview.
+
+## Fix 8 — Content-Type on JSON Edge Functions
+
+**No change required.** Verified by `rg`: all three functions already emit `Content-Type: application/json` on every JSON response (including the `Forbidden` / `error` branches). I'll re-run the same grep as the confirmation step so you have a clean record, and we won't touch the files.
 
 ## Scope guardrails
 
 - No other files touched.
-- No behavior changes to `get_theme_results`, leaderboard RPCs, `useSavedResources`, `EducationalApp`, `ClaimFounder`, `EarlySupportersWall`, or any Content-Type header work — those are Batch 2+.
-- Migration is schema-only (DROP + CREATE FUNCTION), no data writes.
-
-## Thoughts on the plan
-
-This batch is well-scoped and low-risk. The two RPC renames are the same pattern that already worked for `verify_waitlist_and_award`, and `get_pending_slp_verifications` has zero client callers so it's effectively free. The four soft-delete filters are one-line additions each. Sequencing makes sense: schema first (so callers can be updated atomically), then read-side filters, then write-side guards.
-
-One small note: the `verify-email-waitlist` rejection needs to land in whichever response branch (HTML vs JSON) line 260 actually sits in — I'll match the surrounding pattern rather than introduce a new one.
+- No data writes; the only DB work is a schema-only migration that drops and recreates two RPC bodies with an added `deleted_at IS NULL` predicate.
+- No behavior changes to `verify_waitlist_and_award`, `assign_founder_slot`, `admin_*_waitlist_entry`, or any other RPC already filtering `deleted_at`.
+- Email copy and tier logic untouched.
