@@ -26,7 +26,7 @@ const AnnouncementBar = () => {
         to="/storypros"
         className="block w-full px-10 py-2 text-center text-[12px] sm:text-[13px] font-medium leading-snug hover:opacity-90 transition-opacity"
       >
-        <strong>Join the Story Pros Waitlist:</strong> the first app built for kids with DLD →
+        <strong>Join the Story Pros App Waitlist:</strong> the first app built for kids with DLD →
       </Link>
       <button
         onClick={dismiss}
