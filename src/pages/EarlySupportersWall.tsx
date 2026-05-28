@@ -169,8 +169,14 @@ const EarlySupportersWall = () => {
                 </p>
               </div>
             ) : error ? (
-              <div className="text-center py-20">
+              <div className="text-center py-20 space-y-6">
                 <p style={{ color: "#ef4444" }}>{error}</p>
+                <div className="flex flex-wrap items-center justify-center gap-3">
+                  <Button onClick={fetchSupporters}>Try again</Button>
+                  <Button variant="outline" asChild>
+                    <Link to="/">Back to home</Link>
+                  </Button>
+                </div>
               </div>
             ) : supporters.length === 0 ? (
               <div className="text-center py-20">
