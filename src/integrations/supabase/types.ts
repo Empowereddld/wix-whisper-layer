@@ -636,10 +636,12 @@ export type Database = {
           file_url: string | null
           great_for: string[] | null
           id: string
+          is_private: boolean
           is_published: boolean
           languages: string[] | null
           long_description: string | null
           page_count: number | null
+          private_file_path: string | null
           resource_type: Database["public"]["Enums"]["resource_type"]
           roles: string[] | null
           sample_images: string[] | null
@@ -655,10 +657,12 @@ export type Database = {
           file_url?: string | null
           great_for?: string[] | null
           id?: string
+          is_private?: boolean
           is_published?: boolean
           languages?: string[] | null
           long_description?: string | null
           page_count?: number | null
+          private_file_path?: string | null
           resource_type: Database["public"]["Enums"]["resource_type"]
           roles?: string[] | null
           sample_images?: string[] | null
@@ -674,10 +678,12 @@ export type Database = {
           file_url?: string | null
           great_for?: string[] | null
           id?: string
+          is_private?: boolean
           is_published?: boolean
           languages?: string[] | null
           long_description?: string | null
           page_count?: number | null
+          private_file_path?: string | null
           resource_type?: Database["public"]["Enums"]["resource_type"]
           roles?: string[] | null
           sample_images?: string[] | null
