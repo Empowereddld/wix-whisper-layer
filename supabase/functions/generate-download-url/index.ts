@@ -47,19 +47,39 @@ Deno.serve(async (req) => {
     // Admin client for DB queries and signed URLs
     const admin = createClient(supabaseUrl, serviceRoleKey);
 
-    // Get resource
+    // Get resource (public columns only — private path lives in resource_private_files)
     const { data: resource, error: resErr } = await admin
       .from("resources")
-      .select("id, file_url, title")
+      .select("id, file_url, is_private, title")
       .eq("id", resource_id)
       .single();
 
-    if (resErr || !resource || !resource.file_url) {
+    if (resErr || !resource) {
       return new Response(JSON.stringify({ error: "Resource not found" }), {
         status: 404,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
+
+    const r: any = resource;
+
+    // Look up private storage path from the admin-only table
+    const { data: privateRow } = await admin
+      .from("resource_private_files")
+      .select("storage_path")
+      .eq("resource_id", resource_id)
+      .maybeSingle();
+
+    const privatePath: string | null = privateRow?.storage_path ?? null;
+    const isPrivate = r.is_private === true || !!privatePath;
+
+    if (!privatePath && !r.file_url) {
+      return new Response(JSON.stringify({ error: "Resource not found" }), {
+        status: 404,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
 
     // Check if resource is paid
     const { data: product } = await admin
@@ -96,25 +116,18 @@ Deno.serve(async (req) => {
       }
     }
 
-    // Determine bucket and path from file_url
-    // file_url format: "resources-private/filename.pdf" or full public URL
-    let bucket: string;
-    let path: string;
-
-    if (resource.file_url.startsWith("resources-private/")) {
-      bucket = "resources-private";
-      path = resource.file_url.replace("resources-private/", "");
-    } else if (resource.file_url.includes("/storage/v1/object/public/resources/")) {
-      // Legacy public URL — just redirect
-      return new Response(JSON.stringify({ url: resource.file_url }), {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
-    } else {
-      // Direct URL (external or old format)
-      return new Response(JSON.stringify({ url: resource.file_url }), {
+    // Public (non-private) URL — just return it directly
+    if (!isPrivate) {
+      return new Response(JSON.stringify({ url: r.file_url }), {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
+
+    const bucket = "resources-private";
+    // Stored paths may include the bucket prefix from legacy data — strip it.
+    const path = privatePath!.startsWith("resources-private/")
+      ? privatePath!.replace("resources-private/", "")
+      : privatePath!;
 
     // Generate signed URL (60 seconds)
     const { data: signedUrl, error: signErr } = await admin.storage

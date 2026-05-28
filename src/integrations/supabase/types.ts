@@ -597,6 +597,27 @@ export type Database = {
         }
         Relationships: []
       }
+      resource_private_files: {
+        Row: {
+          created_at: string
+          resource_id: string
+          storage_path: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          resource_id: string
+          storage_path: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          resource_id?: string
+          storage_path?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       resource_requests: {
         Row: {
           audience: string
@@ -636,6 +657,7 @@ export type Database = {
           file_url: string | null
           great_for: string[] | null
           id: string
+          is_private: boolean
           is_published: boolean
           languages: string[] | null
           long_description: string | null
@@ -655,6 +677,7 @@ export type Database = {
           file_url?: string | null
           great_for?: string[] | null
           id?: string
+          is_private?: boolean
           is_published?: boolean
           languages?: string[] | null
           long_description?: string | null
@@ -674,6 +697,7 @@ export type Database = {
           file_url?: string | null
           great_for?: string[] | null
           id?: string
+          is_private?: boolean
           is_published?: boolean
           languages?: string[] | null
           long_description?: string | null
