@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { motion } from "motion/react";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SEOHead from "@/components/SEOHead";
@@ -33,54 +33,53 @@ const EarlySupportersWall = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchSupporters = async () => {
-      try {
-        setError(null);
-        const { data, error: fetchError } = await supabase
-          .from("storybuilders_waitlist")
-          .select("id, name, email, created_at, current_tier, rewards_inventory")
-          .is("deleted_at", null)
-          .order("created_at", { ascending: true });
+  const fetchSupporters = useCallback(async () => {
+    try {
+      setIsLoading(true);
+      setError(null);
+      const { data, error: fetchError } = await supabase
+        .from("storybuilders_waitlist")
+        .select("id, name, email, created_at, current_tier, rewards_inventory")
+        .is("deleted_at", null)
+        .order("created_at", { ascending: true });
 
-        if (fetchError) {
-          setError(`Failed to load supporters: ${fetchError.message}`);
-          return;
-        }
-
-        if (data) {
-          // Filter for users who have redeemed the Story Starter Pack
-          const redeemed = data.filter((user: any) => {
-            // Check if user has redeemed story_starter_pack
-            if (user.rewards_inventory && typeof user.rewards_inventory === 'object') {
-              const inventory = user.rewards_inventory as Record<string, any>;
-              return inventory.story_starter_pack?.claimed === true;
-            }
-            return false;
-          });
-
-          // Map to our interface, filtering out rewards_inventory
-          const supporters = redeemed.map((user: any) => ({
-            id: user.id,
-            name: user.name,
-            email: user.email,
-            created_at: user.created_at,
-            current_tier: user.current_tier,
-          }));
-
-          setSupporters(supporters);
-        }
-      } catch (error) {
-        const message = error instanceof Error ? error.message : "Unknown error occurred";
-        setError(`Error fetching supporters: ${message}`);
-        console.error("Error fetching supporters:", error);
-      } finally {
-        setIsLoading(false);
+      if (fetchError) {
+        setError(`Failed to load supporters: ${fetchError.message}`);
+        return;
       }
-    };
 
-    fetchSupporters();
+      if (data) {
+        // Filter for users who have redeemed the Story Starter Pack
+        const redeemed = data.filter((user: any) => {
+          if (user.rewards_inventory && typeof user.rewards_inventory === 'object') {
+            const inventory = user.rewards_inventory as Record<string, any>;
+            return inventory.story_starter_pack?.claimed === true;
+          }
+          return false;
+        });
+
+        const supporters = redeemed.map((user: any) => ({
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          created_at: user.created_at,
+          current_tier: user.current_tier,
+        }));
+
+        setSupporters(supporters);
+      }
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Unknown error occurred";
+      setError(`Error fetching supporters: ${message}`);
+      console.error("Error fetching supporters:", error);
+    } finally {
+      setIsLoading(false);
+    }
   }, []);
+
+  useEffect(() => {
+    fetchSupporters();
+  }, [fetchSupporters]);
 
   const getTierColor = (tier: number): string => {
     return TIER_COLORS[tier] || TIER_COLORS[0];
