@@ -48,6 +48,7 @@ const ActivityFeed = () => {
         const { data, error } = await supabase
           .from("storybuilders_waitlist")
           .select("id, name, created_at")
+          .is("deleted_at", null)
           .order("created_at", { ascending: false })
           .limit(20);
 

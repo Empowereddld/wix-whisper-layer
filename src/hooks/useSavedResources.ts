@@ -26,7 +26,16 @@ export function useSavedResources(userId?: string) {
       await supabase.from("saved_resources").delete().eq("user_id", userId).eq("resource_id", resourceId);
     } else {
       setSavedIds((prev) => new Set(prev).add(resourceId));
-      await supabase.from("saved_resources").insert({ user_id: userId, resource_id: resourceId });
+      const { error } = await supabase
+        .from("saved_resources")
+        .insert({ user_id: userId, resource_id: resourceId });
+      // 23505 = unique_violation: the row already exists (e.g. rapid double-tap).
+      // Treat as a successful save instead of surfacing an error.
+      if (error && (error as { code?: string }).code !== "23505") {
+        // Roll back optimistic update on real errors.
+        setSavedIds((prev) => { const n = new Set(prev); n.delete(resourceId); return n; });
+        throw error;
+      }
     }
   }, [userId, savedIds]);
 

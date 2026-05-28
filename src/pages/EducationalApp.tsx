@@ -55,7 +55,13 @@ const EducationalApp = () => {
     setLoading(false);
 
     if (error) {
-      toast({ title: "Something went wrong", description: "Please try again later.", variant: "destructive" });
+      // 23505 = unique_violation: this email is already on the list.
+      if ((error as { code?: string }).code === "23505") {
+        setSubmitted(true);
+        toast({ title: "You're already on the list! 🎉", description: "We'll notify you as soon as the app launches." });
+      } else {
+        toast({ title: "Something went wrong", description: "Please try again later.", variant: "destructive" });
+      }
     } else {
       setSubmitted(true);
       toast({ title: "You're on the list! 🎉", description: "We'll notify you as soon as the app launches." });

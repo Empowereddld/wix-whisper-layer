@@ -42,6 +42,7 @@ const HubHeader = ({ activeAudience = "", onAudienceChange }: HubHeaderProps) =>
         .from("storybuilders_waitlist")
         .select("id")
         .eq("email", user.email.toLowerCase())
+        .is("deleted_at", null)
         .maybeSingle();
       if (!cancelled) setHasJoinedStoryPros(!!data);
     };

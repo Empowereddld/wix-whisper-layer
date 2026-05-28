@@ -40,6 +40,7 @@ const EarlySupportersWall = () => {
         const { data, error: fetchError } = await supabase
           .from("storybuilders_waitlist")
           .select("id, name, email, created_at, current_tier, rewards_inventory")
+          .is("deleted_at", null)
           .order("created_at", { ascending: true });
 
         if (fetchError) {

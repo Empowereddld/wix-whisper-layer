@@ -28,6 +28,7 @@ const ReferralTracker = ({ referralCode }: ReferralTrackerProps) => {
           .from("storybuilders_waitlist")
           .select("id, name, email, created_at")
           .eq("referred_by_code", referralCode)
+          .is("deleted_at", null)
           .order("created_at", { ascending: false });
 
         if (error) throw error;
