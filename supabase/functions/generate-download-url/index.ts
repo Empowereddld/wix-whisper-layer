@@ -124,7 +124,10 @@ Deno.serve(async (req) => {
     }
 
     const bucket = "resources-private";
-    const path = privatePath!;
+    // Stored paths may include the bucket prefix from legacy data — strip it.
+    const path = privatePath!.startsWith("resources-private/")
+      ? privatePath!.replace("resources-private/", "")
+      : privatePath!;
 
     // Generate signed URL (60 seconds)
     const { data: signedUrl, error: signErr } = await admin.storage
