@@ -258,12 +258,16 @@ Deno.serve(async (req) => {
 
     const { data: user } = await supabase
       .from("storybuilders_waitlist")
-      .select("id, email, email_verified")
+      .select("id, email, email_verified, deleted_at")
       .eq("id", waitlistId)
       .maybeSingle();
 
     if (!user) {
       return errorPage("We couldn't find this signup.", 404);
+    }
+
+    if (user.deleted_at) {
+      return errorPage("This signup is no longer active.", 410);
     }
 
     if (user.email_verified || tokenUsedAt) {

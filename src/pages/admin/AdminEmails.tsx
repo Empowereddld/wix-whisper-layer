@@ -56,7 +56,10 @@ const AdminEmails = () => {
         recipients = filtered.map((w) => w.email);
 
         if (audience === "all") {
-          const { data: sp } = await supabase.from("storybuilders_waitlist").select("email");
+          const { data: sp } = await supabase
+            .from("storybuilders_waitlist")
+            .select("email")
+            .is("deleted_at", null);
           recipients.push(...(sp || []).map((s) => s.email));
         }
       }
