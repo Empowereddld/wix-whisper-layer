@@ -34,10 +34,12 @@ async function countRange(
   column: string,
   start: string,
   end: string,
-  filter?: { col: string; val: string }
+  filter?: { col: string; val: string },
+  opts?: { excludeDeleted?: boolean }
 ) {
   let q = supa.from(table).select("*", { count: "exact", head: true }).gte(column, start).lt(column, end);
   if (filter) q = q.eq(filter.col, filter.val);
+  if (opts?.excludeDeleted) q = q.is("deleted_at", null);
   const { count, error } = await q;
   if (error) {
     console.error(`count ${table}:`, error.message);
@@ -84,8 +86,8 @@ Deno.serve(async (req) => {
       countRange(supa, "profiles", "created_at", prev.start, prev.end),
       countRange(supa, "waitlist", "created_at", cur.start, cur.end),
       countRange(supa, "waitlist", "created_at", prev.start, prev.end),
-      countRange(supa, "storybuilders_waitlist", "created_at", cur.start, cur.end),
-      countRange(supa, "storybuilders_waitlist", "created_at", prev.start, prev.end),
+      countRange(supa, "storybuilders_waitlist", "created_at", cur.start, cur.end, undefined, { excludeDeleted: true }),
+      countRange(supa, "storybuilders_waitlist", "created_at", prev.start, prev.end, undefined, { excludeDeleted: true }),
       countRange(supa, "user_downloads", "downloaded_at", cur.start, cur.end),
       countRange(supa, "user_downloads", "downloaded_at", prev.start, prev.end),
       countRange(supa, "purchases", "purchased_at", cur.start, cur.end, { col: "status", val: "completed" }),
@@ -131,6 +133,7 @@ Deno.serve(async (req) => {
     const { data: refRows } = await supa
       .from("storybuilders_waitlist")
       .select("name, email, invite_count, points")
+      .is("deleted_at", null)
       .gt("invite_count", 0)
       .order("invite_count", { ascending: false })
       .limit(5);
@@ -142,6 +145,7 @@ Deno.serve(async (req) => {
     const { data: recentSignups } = await supa
       .from("storybuilders_waitlist")
       .select("name, email, created_at, referred_by_code")
+      .is("deleted_at", null)
       .gte("created_at", cur.start)
       .order("created_at", { ascending: false })
       .limit(5);

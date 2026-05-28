@@ -206,9 +206,12 @@ export default function ClaimFounder() {
                 <h1 className="text-[28px] md:text-[34px] font-black text-foreground leading-[1.1] mb-3">
                   We couldn't load your claim
                 </h1>
-                <p className="text-[14px] text-muted-foreground leading-[1.7]">
+                <p className="text-[14px] text-muted-foreground leading-[1.7] mb-6">
                   {status.message}
                 </p>
+                <Button asChild>
+                  <Link to="/storypros">Back to Story Pros</Link>
+                </Button>
               </div>
             )}
 
