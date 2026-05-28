@@ -17,11 +17,11 @@ export const secureDownload = async (
   let fileUrl: string | null = null;
   let isPrivate = false;
 
-  if (typeof fileUrlOrResource === "object" && fileUrlOrResource !== null) {
+  if (fileUrlOrResource !== null && typeof fileUrlOrResource === "object") {
     fileUrl = fileUrlOrResource.file_url ?? null;
     isPrivate = !!fileUrlOrResource.is_private;
   } else {
-    fileUrl = fileUrlOrResource ?? null;
+    fileUrl = (fileUrlOrResource as string | null) ?? null;
     // Legacy heuristic: paths beginning with resources-private/ are private.
     isPrivate =
       isPrivateArg === true ||
