@@ -20,8 +20,12 @@ const corsHeaders = {
 };
 
 // Whitelist of columns safe to return to the public client.
+// NOTE: `id` is intentionally excluded — the waitlist row UUID is used as the
+// Founder claim token (?token=<id> in the Tier 6 unlock email), so exposing it
+// via a public referral-code lookup would let anyone read shipping PII via
+// /claim-founder-package. The Founder email link is the only legitimate way to
+// learn that UUID.
 const SAFE_COLUMNS = [
-  "id",
   "name",
   "email",
   "role",
