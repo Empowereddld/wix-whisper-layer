@@ -75,6 +75,7 @@ const StoryBuilders = lazy(() => import("./pages/StoryBuilders"));
 const StoryProsDashboard = lazy(() => import("./pages/StoryProsDashboard"));
 const ClaimFounder = lazy(() => import("./pages/ClaimFounder"));
 const VerifySuccess = lazy(() => import("./pages/VerifySuccess"));
+const VerifyEmailHandoff = lazy(() => import("./pages/VerifyEmailHandoff"));
 const WaitlistUserGuide = lazy(() => import("./pages/WaitlistUserGuide"));
 const EarlySupportersWall = lazy(() => import("./pages/EarlySupportersWall"));
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
@@ -125,6 +126,7 @@ const App = () => (
               <Route path="/storypros" element={<StoryBuilders />} />
               <Route path="/storypros/dashboard" element={<StoryProsDashboard />} />
               <Route path="/storypros/claim-founder" element={<ClaimFounder />} />
+              <Route path="/storypros/verify" element={<VerifyEmailHandoff />} />
               <Route path="/storypros/verified" element={<VerifySuccess />} />
               <Route path="/storybuilders" element={<Navigate to="/storypros" replace />} />
               <Route path="/storybuilders/dashboard" element={<Navigate to="/storypros/dashboard" replace />} />

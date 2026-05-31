@@ -68,7 +68,7 @@ Deno.serve(async (req) => {
           .update({ verification_token: freshToken })
           .eq("id", u.id);
 
-        const verificationLink = `${supabaseUrl}/functions/v1/verify-email-waitlist?token=${freshToken}`;
+        const verificationLink = `https://empowereddld.com/storypros/verify?token=${freshToken}`;
         const firstName = u.name?.split(" ")[0] || "friend";
 
         const res = await fetch(`${supabaseUrl}/functions/v1/send-waitlist-email`, {
@@ -124,7 +124,7 @@ Deno.serve(async (req) => {
           .update({ verification_token: freshToken })
           .eq("id", u.id);
 
-        const verificationLink = `${supabaseUrl}/functions/v1/verify-email-waitlist?token=${freshToken}`;
+        const verificationLink = `https://empowereddld.com/storypros/verify?token=${freshToken}`;
         const firstName = u.name?.split(" ")[0] || "friend";
 
         const res = await fetch(`${supabaseUrl}/functions/v1/send-waitlist-email`, {

@@ -25,7 +25,9 @@ async function sendVerificationEmail(
   const emailFunctionUrl = `${supabaseUrl}/functions/v1/send-waitlist-email`;
   const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 
-  const verificationLink = `${supabaseUrl}/functions/v1/verify-email-waitlist?token=${verificationToken}`;
+  // Branded handoff page on our own domain (more resilient to email scanners
+  // and inbox link rewriters than pointing directly at the functions URL).
+  const verificationLink = `https://empowereddld.com/storypros/verify?token=${verificationToken}`;
 
   const response = await fetch(emailFunctionUrl, {
     method: "POST",
