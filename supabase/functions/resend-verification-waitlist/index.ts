@@ -91,7 +91,7 @@ Deno.serve(async (req) => {
       })
       .eq("id", user.id);
 
-    const verificationLink = `${supabaseUrl}/functions/v1/verify-email-waitlist?token=${verificationToken}`;
+    const verificationLink = `https://empowereddld.com/storypros/verify?token=${verificationToken}`;
 
     await fetch(`${supabaseUrl}/functions/v1/send-waitlist-email`, {
       method: "POST",
