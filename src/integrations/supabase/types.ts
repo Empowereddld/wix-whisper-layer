@@ -1076,6 +1076,57 @@ export type Database = {
         }
         Relationships: []
       }
+      waitlist_healthcheck_runs: {
+        Row: {
+          alert_send_error: string | null
+          alert_sent: boolean
+          checks_tripped: Json
+          id: string
+          ran_at: string
+        }
+        Insert: {
+          alert_send_error?: string | null
+          alert_sent?: boolean
+          checks_tripped?: Json
+          id?: string
+          ran_at?: string
+        }
+        Update: {
+          alert_send_error?: string | null
+          alert_sent?: boolean
+          checks_tripped?: Json
+          id?: string
+          ran_at?: string
+        }
+        Relationships: []
+      }
+      waitlist_healthcheck_state: {
+        Row: {
+          check1_last_alert_at: string | null
+          check2_last_alert_at: string | null
+          check3_last_alert_at: string | null
+          check4_last_alert_at: string | null
+          id: number
+          updated_at: string
+        }
+        Insert: {
+          check1_last_alert_at?: string | null
+          check2_last_alert_at?: string | null
+          check3_last_alert_at?: string | null
+          check4_last_alert_at?: string | null
+          id?: number
+          updated_at?: string
+        }
+        Update: {
+          check1_last_alert_at?: string | null
+          check2_last_alert_at?: string | null
+          check3_last_alert_at?: string | null
+          check4_last_alert_at?: string | null
+          id?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       waitlist_suggestion_votes: {
         Row: {
           created_at: string
