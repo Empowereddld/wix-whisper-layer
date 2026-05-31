@@ -216,7 +216,7 @@ Deno.serve(async (req) => {
   const errorPage = (reason: string, status: number, prefillEmail?: string) =>
     new Response(getErrorHTML(reason, { prefillEmail, supabaseUrl, anonKey }), {
       status,
-      headers: HTML_HEADERS,
+      headers: htmlHeaders(),
     });
 
   try {
