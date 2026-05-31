@@ -1,65 +1,67 @@
-# Batch 4 Plan
+# Tier 1: Waitlist Email Monitoring
 
-Same approach as Batches 1-3: do them in order, confirm each before moving on.
+Ship the alert system + smoke-test habit. No dashboard, no automated tests.
 
-## Findings before we change anything
+## 1. Migration — `waitlist_healthcheck_monitoring.sql`
 
-- **Realtime publication confirmed**: `storybuilders_waitlist` IS in the `supabase_realtime` publication. RLS is enabled and the only SELECT policy is admin-only, so Postgres Changes will only deliver row payloads to subscribers whose JWT satisfies `has_role(auth.uid(),'admin')`. Anon and signed-in non-admin subscribers receive zero events. That said, the scanner flags this because (a) the table contains very sensitive fields (`email`, `verification_token`, `deleted_reason`), and (b) any future loosening of the SELECT policy would silently start broadcasting them. The safest move is to remove the table from the publication. Trade-off documented below.
-- **suppressed_emails**: there are two INSERT policies — `"Anyone can unsubscribe"` (anon + authenticated, `WITH CHECK true`) and `"Service role can insert suppressed emails"`. Dropping the first leaves the service-role path intact, which is what `email-unsubscribe` uses.
-- **resources.file_url leak confirmed**: 5 rows currently store `resources-private/...` paths in the anon-readable column. `generate-download-url` already handles the `resources-private/` prefix correctly, so the server side is fine — only the public column needs to be scrubbed.
-- **Client coupling**: `src/lib/secureDownload.ts` decides whether to call the edge function by checking `fileUrl.startsWith("resources-private/")`. Once we hide that path from anon, the client needs a different signal. We'll add an `is_private` boolean column for the client to read.
+Two new tables (auth-only, RLS on, GRANTs included):
 
-## Fix 9 — Realtime on storybuilders_waitlist
+- **`waitlist_healthcheck_state`** — single row, 4 timestamp columns for per-check 6-hour cooldown (`check1_last_alert_at`, `check2_last_alert_at`, `check3_last_alert_at`, `check4_last_alert_at`).
+- **`waitlist_healthcheck_runs`** — append-only paper trail. Columns: `id`, `ran_at`, `checks_tripped` (jsonb of which checks tripped + counts), `alert_sent` (bool), `alert_send_error` (text, null on success). Independent of email delivery so you can audit even when Resend is down.
 
-**Change**: a schema-only migration that runs `ALTER PUBLICATION supabase_realtime DROP TABLE public.storybuilders_waitlist`.
+## 2. Expanded `supabase/functions/waitlist-email-healthcheck/index.ts`
 
-**Trade-off**: three components currently subscribe to live changes on this table:
-- `src/components/waitlist/ReferralTracker.tsx` (live referral count)
-- `src/components/waitlist/ActivityFeed.tsx` (live activity feed)
-- `src/hooks/useStorybuildersWaitlist.ts` (dashboard auto-refresh)
+Runs all 4 checks every invocation. Thresholds tightened:
 
-After this change, those `.subscribe()` calls will still succeed but no events will arrive. The data stays correct on initial load and on manual refresh / route changes — it just won't update live. The user explicitly said "either disable Realtime on that table or ensure RLS filters apply", so this matches the stated acceptance criteria. We are NOT touching the components themselves in this batch (out of scope per "don't touch anything outside these fixes").
+| # | Check | Threshold |
+|---|---|---|
+| 1 | Stuck unverified (>26h, no reminder 1) | **> 2** |
+| 2 | Verified >30min, no Welcome sent | **> 0** |
+| 3 | Reminder sent to already-verified user | **> 0** |
+| 4 | Bounces/complaints/dlq in 24h, or auth-gate 403 | **> 5 / any 403** |
 
-**Confirm**: re-run `SELECT * FROM pg_publication_tables WHERE pubname='supabase_realtime'` and verify `storybuilders_waitlist` is gone.
+Per-check 6-hour cooldown via `waitlist_healthcheck_state`. Every run writes one row to `waitlist_healthcheck_runs` regardless of outcome.
 
-## Fix 10 — Lock down suppressed_emails INSERT
+**Alert delivery (consolidated digest):** If one or more checks trip and none are cooling down, send **one** email to `hello@empowereddld.com` via existing `send-email` (Resend). Subject: `[ALERT] Waitlist health: N check(s) failing`. Body lists each tripped check with count + suggested action.
 
-**Change**: a schema-only migration that drops the `"Anyone can unsubscribe"` INSERT policy. The `"Service role can insert suppressed emails"` policy stays, so `email-unsubscribe` (which uses the service role key) keeps working.
+**Monitor-the-monitor fallback:** If alert email send fails (Resend down, 5xx), function returns **HTTP 500** and writes `alert_sent=false` + `alert_send_error` to the runs row. The hourly cron retains the failure in pg_cron's `cron.job_run_details` (visible via DB), giving you an independent trail even if no email ever arrived.
 
-I checked `supabase/functions/email-unsubscribe/index.ts` is in the function list and uses the service role pattern, so no function code changes are needed. If when I open it I find it's using the anon key for the insert, I'll flip it to service role inside this same fix — that would be the only client-side touch and it's required for the policy drop to not break unsubscribe.
+## 3. Cron update
 
-**Confirm**: re-run the security scan or `supabase--linter`, and read `pg_policies` for `suppressed_emails` to verify the anon policy is gone.
+Switch existing `waitlist-email-healthcheck` pg_cron from daily → **hourly** via insert tool.
 
-## Fix 11 — Strip private file paths from the public resources table
+## 4. `EMAIL_SMOKE_TEST.md` (new, repo root)
 
-**Schema migration**:
-1. `ALTER TABLE public.resources ADD COLUMN private_file_path text` (admin/service-role only — same table RLS already covers writes; reads are gated by the existing "Anyone can view resources" SELECT, which we will narrow below).
-2. `ALTER TABLE public.resources ADD COLUMN is_private boolean NOT NULL DEFAULT false`.
-3. Backfill: for every row where `file_url LIKE 'resources-private/%'`, copy `file_url` into `private_file_path`, set `is_private = true`, and set `file_url = NULL`.
-4. Replace the `"Anyone can view resources"` policy with one that returns all columns except `private_file_path` to anon/authenticated. Postgres RLS can't hide individual columns, so we'll instead:
-   - Keep RLS on `resources` as-is for SELECT (anon can read rows), AND
-   - `REVOKE SELECT (private_file_path) ON public.resources FROM anon, authenticated;`
-   - `GRANT SELECT (private_file_path) ON public.resources TO service_role;` (admins read via service role / RPC; the admin UI doesn't need this column to render the list — see step 6).
+Top section (future-you note):
+- This system runs hourly. **Normal = silence in your inbox.**
+- **Concerning = email with subject starting `[ALERT] Waitlist health:`** — open it, it lists what tripped and what to check.
+- If you suspect silent failure (no alerts for weeks + something feels off), query `waitlist_healthcheck_runs` for recent rows where `alert_sent=false`.
 
-**Edge function change** (`supabase/functions/generate-download-url/index.ts`):
-- Update the `select` to `"id, file_url, private_file_path, is_private, title"`.
-- Prefer `private_file_path` when `is_private = true`; fall back to the legacy `file_url` path-prefix logic so we don't break any unmigrated rows.
+Then the 5-step manual smoke test (run before any waitlist/email change ships):
+1. Sign up with a real Gmail
+2. Receive verification email within 2 min
+3. Click link → land on dashboard
+4. Receive Welcome email within 2 min
+5. Admin row shows `email_verified=true`, `welcome_sent_at` set, `points >= 25`; retry signup shows friendly "already verified" state
 
-**Client change** (`src/lib/secureDownload.ts`):
-- Change the signature from `(resourceId, fileUrl)` to `(resourceId, opts: { fileUrl: string | null; isPrivate: boolean })`.
-- Route to the edge function when `isPrivate === true`; otherwise open `fileUrl` directly.
-- Update the two callers (`src/pages/hub/ResourceDetail.tsx:88`, `src/pages/hub/HubDashboard.tsx:85`) to pass `{ fileUrl: r.file_url, isPrivate: r.is_private }`.
+## Build order
 
-**Admin UI**: `AdminResources.tsx` only uploads to the public `resources` bucket (writes a public URL into `file_url`). It doesn't touch private rows, so no admin-side changes needed for this batch. If admins later need to attach private files, that's a separate workstream.
+1. Migration (2 tables + GRANTs + RLS)
+2. Expand edge function
+3. Update pg_cron to hourly (insert tool)
+4. Write `EMAIL_SMOKE_TEST.md`
+5. Deploy edge function
+6. Manually invoke function once; confirm HTTP 200 and one row in `waitlist_healthcheck_runs`
 
-**Confirm**:
-- `SELECT id, file_url, private_file_path, is_private FROM resources WHERE is_private;` — verify `file_url` is NULL and `private_file_path` is populated for the 5 known rows.
-- `supabase--read_query` as anon (simulated via a query that selects `private_file_path` from `resources`) should fail with a permission error; selecting `file_url` should still succeed for those rows but return NULL.
-- Smoke check: open one paid resource detail page → "Download" → confirm the edge function still issues a signed URL.
+## Files changed
 
-## Scope guardrails
+```
+supabase/migrations/<ts>_waitlist_healthcheck_monitoring.sql   NEW
+supabase/functions/waitlist-email-healthcheck/index.ts         EXPANDED
+EMAIL_SMOKE_TEST.md                                            NEW
+pg_cron job                                                    UPDATED (hourly)
+```
 
-- No other files touched.
-- No data writes beyond the one-time backfill of `private_file_path` / `is_private` inside the Fix 11 migration.
-- The 68 warnings (SECURITY DEFINER EXECUTE grants, search_path, public bucket listing, extension-in-public) are explicitly NOT in scope.
-- No changes to the live components that subscribe to Realtime on `storybuilders_waitlist` — they will silently stop receiving live updates, as accepted in Fix 9.
+## After it ships
+
+Live with it 2 weeks. Useful and quiet → done. Still feeling exposed → revisit Tier 2 with real data.
