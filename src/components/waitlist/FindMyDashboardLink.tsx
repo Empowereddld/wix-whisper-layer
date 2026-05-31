@@ -51,22 +51,19 @@ const FindMyDashboardLink = ({ className }: FindMyDashboardLinkProps) => {
     if (!email.trim()) return;
     setSubmitting(true);
     try {
-      const { data, error } = await supabase.functions.invoke(
+      const { error } = await supabase.functions.invoke(
         "find-storypros-dashboard",
         { body: { email: email.trim().toLowerCase() } }
       );
       if (error) throw error;
-      if (data?.found) {
-        toast.success(
-          "Check your inbox! We just emailed you a link to your dashboard."
-        );
-        setOpen(false);
-        setEmail("");
-      } else {
-        toast.error(
-          "We couldn't find that email. Try signing up or check that you're using the same email you registered with."
-        );
-      }
+      // Always show the same generic confirmation so the response doesn't
+      // leak which emails are on the waitlist. If they used the right email,
+      // they'll get the link in a moment; if not, they won't.
+      toast.success(
+        "If that email is on our waitlist, we just sent you a link. Check your inbox."
+      );
+      setOpen(false);
+      setEmail("");
     } catch (err) {
       console.error("find dashboard error:", err);
       toast.error("Something went wrong. Please try again in a moment.");
