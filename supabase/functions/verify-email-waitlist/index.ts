@@ -5,11 +5,18 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-const HTML_HEADERS = {
-  "Access-Control-Allow-Origin": "*",
-  "Content-Type": "text/html; charset=utf-8",
-  "Cache-Control": "no-store",
-};
+// Use a Headers instance with explicit lowercase keys + nosniff so no
+// CDN/gateway/proxy can mis-detect or strip the Content-Type. The "page of
+// random text" symptom users reported came from an intermittent text/plain
+// response that browsers rendered as raw HTML source.
+function htmlHeaders(): Headers {
+  const h = new Headers();
+  h.set("content-type", "text/html; charset=utf-8");
+  h.set("x-content-type-options", "nosniff");
+  h.set("cache-control", "no-store");
+  h.set("access-control-allow-origin", "*");
+  return h;
+}
 
 function getSuccessHTML(email: string, alreadyVerified = false): string {
   const brandColor = "#5B2D8E";
