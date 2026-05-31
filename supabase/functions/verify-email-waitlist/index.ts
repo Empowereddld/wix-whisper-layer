@@ -93,8 +93,7 @@ function getErrorHTML(
   const resendUrl = `${opts.supabaseUrl}/functions/v1/resend-verification-waitlist`;
   const anonKey = escapeAttr(opts.anonKey);
 
-  return `
-    <!DOCTYPE html>
+  return `<!DOCTYPE html>
     <html>
     <head>
       <meta charset="UTF-8">
