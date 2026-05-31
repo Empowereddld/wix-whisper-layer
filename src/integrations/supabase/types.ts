@@ -1127,6 +1127,24 @@ export type Database = {
         }
         Relationships: []
       }
+      waitlist_recovery_attempts: {
+        Row: {
+          attempted_at: string
+          id: string
+          ip_address: string
+        }
+        Insert: {
+          attempted_at?: string
+          id?: string
+          ip_address: string
+        }
+        Update: {
+          attempted_at?: string
+          id?: string
+          ip_address?: string
+        }
+        Relationships: []
+      }
       waitlist_suggestion_votes: {
         Row: {
           created_at: string
