@@ -32,8 +32,7 @@ function getSuccessHTML(email: string, alreadyVerified = false): string {
     ? "Head back to Story Pros to keep climbing the tiers."
     : "You've secured your spot on our exclusive waitlist!";
 
-  return `
-    <!DOCTYPE html>
+  return `<!DOCTYPE html>
     <html>
     <head>
       <meta charset="UTF-8">
