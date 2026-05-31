@@ -83,18 +83,14 @@ const SignupRole = () => {
       return;
     }
 
-    // Fire-and-forget welcome email
+    // Fire-and-forget welcome email (server renders from template registry)
     if (user.email) {
       const firstName = profile?.first_name || user.email.split("@")[0];
       supabase.functions.invoke("send-email", {
         body: {
+          template: "hub_welcome",
           to: user.email,
-          subject: "Welcome to Empowered DLD 💜",
-          html: `<p>Hi ${firstName},</p>
-            <p>Welcome to Empowered DLD! Your Resource Library account is ready.</p>
-            <p>You now have access to evidence-based tools, guides, and printable resources designed to help children with Developmental Language Disorder thrive at home, in the classroom, and in therapy.</p>
-            <p><a href="https://www.empowereddld.com/hub" style="display:inline-block;background:#5B2D8E;color:#fff;padding:12px 24px;text-decoration:none;border-radius:6px;font-weight:600;">Go to My Hub →</a></p>
-            <p>Have questions? Don't hesitate to reach out.</p>`,
+          data: { firstName },
         },
       }).catch((e) => console.warn("Welcome email failed:", e));
     }
