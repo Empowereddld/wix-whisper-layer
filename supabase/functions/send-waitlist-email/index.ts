@@ -202,7 +202,14 @@ function getEmailTemplate(
     ? `${dashboardBase}${dashboardBase.includes("?") ? "&" : "?"}ref=${data.referral_code}`
     : dashboardBase;
   const videoLink = data.video_link || DEFAULT_VIDEO;
-  const pointsToNext = data.points_to_next ?? 0;
+  // Fallback: infer points-to-next from the template's tier when caller didn't pass it.
+  const tierDefaults: Record<string, number> = {
+    email3_tier2: 45,   // 30 -> 75 (Tier 3)
+    email4_tier3: 55,   // 75 -> 130 (Tier 4)
+    email5_tier4: 70,   // 130 -> 200 (Tier 5)
+    email6_tier5: 100,  // 200 -> 300 (Tier 6)
+  };
+  const pointsToNext = data.points_to_next ?? tierDefaults[template] ?? 0;
   const guideUrl = data.guide_download_url || DEFAULT_GUIDE;
 
   switch (template) {
