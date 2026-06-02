@@ -518,7 +518,7 @@ function getEmailTemplate(
 
                 ${ctaPair(referralLink, dashboard)}
 
-                <p style="${baseStyles}">Warmly,<br/>${SIGN_OFF}</p>
+                <p style="${baseStyles}">${SIGN_OFF}</p>
               </div>
 
               ${footerBlockNoPS}
