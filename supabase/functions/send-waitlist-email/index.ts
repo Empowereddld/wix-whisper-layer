@@ -545,20 +545,22 @@ function getEmailTemplate(
                 <p style="${baseStyles}">This is a big one.</p>
 
                 <p style="${baseStyles}">
-                  You just crossed <strong>130 points</strong> and hit <strong>Tier 4</strong>, which means
-                  you'll be one of the first families to try Story Pros before it opens to the public.
+                  You just crossed <strong>130 points</strong> and hit <strong>Tier 4</strong>, which locks in
+                  your seat as one of the first families to test the full Story Pros app the moment our beta opens.
                 </p>
 
                 <p style="${baseStyles}">
-                  You'll get to test the app, use it with your child, and tell us what's working and what
-                  isn't so we can shape the final version around real feedback from the families who'll use it.
+                  <strong>Here's what's live for you right now:</strong>
                 </p>
 
+                <ul style="${baseStyles}">
+                  <li><strong>A sneak peek of Story 1</strong> on your dashboard, so you can get a feel for where Story Pros is headed.</li>
+                  <li><strong>The Suggestion Box is open today.</strong> Share story themes, characters, app features, or Community Circle topics you'd love to see, and vote on ideas from other families. Your input directly shapes what we build.</li>
+                </ul>
+
                 <p style="${baseStyles}">
-                  <strong>You've also unlocked the Suggestion Box.</strong> This is where families who
-                  are testing the app weigh in on what we build next, from story themes and characters to
-                  app features and Community Circle topics. Your ideas help guide what we create, and
-                  your voice carries real weight here.
+                  When the full beta opens, you'll be first in line to test the app with your child and help us shape
+                  the final version around real feedback from the families who'll use it.
                 </p>
 
                 <p style="${baseStyles}">
@@ -572,15 +574,15 @@ function getEmailTemplate(
                   ${tierLine("Tier 1", "Development Updates + Early Supporters Wall")}
                   ${tierLine("Tier 2", "Free Executive Function guide")}
                   ${tierLine("Tier 3", "50 Bonus Story Coins")}
-                  ${tierLine("Tier 4", "Early testing access + Suggestion Box", true)}
+                  ${tierLine("Tier 4", "Sneak peek + Suggestion Box + first-in-line beta seat", true)}
                 </ul>
 
                 <hr style="${dividerStyles}" />
 
-                <p style="${baseStyles}"><strong>What's next: Tier 5 (250 pts)</strong></p>
+                <p style="${baseStyles}"><strong>What's next: Tier 5 (250 pts), Founder Pricing for life</strong></p>
 
                 <p style="${baseStyles}">
-                  Something worth working toward. Reach 250 points to unlock it.
+                  Reach 250 points and you lock in <strong>$7.99/month or $9.99/family for life</strong>, even after public pricing goes up. From Tier 5 on, your referral points also start <strong>doubling</strong>, putting Tier 6 (Founder Package: signed book + merch for the first 50) within reach.
                 </p>
 
                 <p style="${baseStyles}">You're <strong>${pointsToNext} points away</strong>.</p>
