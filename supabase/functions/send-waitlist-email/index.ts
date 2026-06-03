@@ -562,7 +562,7 @@ function getEmailTemplate(
                 </p>
 
                 <p style="${baseStyles}">
-                  <a href="${dashboard}" style="color: ${brandColor}; text-decoration: underline;">Head to your dashboard to submit your first suggestion.</a>
+                  <a href="${dashboard}${dashboard.includes('#') ? '' : '#suggestions'}" style="color: ${brandColor}; text-decoration: underline;">Head to your dashboard to submit your first suggestion.</a>
                 </p>
 
                 <hr style="${dividerStyles}" />
@@ -600,7 +600,7 @@ function getEmailTemplate(
                   For a friend or therapist: "I'm one of the first families testing Story Pros before it goes public. It's built by speech-language pathologists and teachers to help kids with storytelling and language. I get to give feedback and help shape the app. Thought you'd want in: ${referralLink}"
                 </div>
 
-                ${ctaPair(referralLink, dashboard)}
+                ${ctaPair(referralLink, `${dashboard}${dashboard.includes('#') ? '' : '#suggestions'}`)}
 
                 <p style="${baseStyles}">Warmly,<br/>Camesha, Jinean and the Story Pros Team</p>
               </div>
