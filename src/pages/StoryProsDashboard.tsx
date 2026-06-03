@@ -327,7 +327,7 @@ const StoryProsDashboard = () => {
         });
       }
     }
-    return <Navigate to="/storypros" replace />;
+    return <Navigate to="/storypros?find=1" replace />;
   }
 
   if (!wl.joined) {
