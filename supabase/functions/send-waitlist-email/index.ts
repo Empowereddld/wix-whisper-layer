@@ -562,7 +562,7 @@ function getEmailTemplate(
                 </p>
 
                 <p style="${baseStyles}">
-                  <a href="${dashboard}" style="color: ${brandColor}; text-decoration: underline;">Head to your dashboard to submit your first suggestion.</a>
+                  <a href="${dashboard}${dashboard.includes('#') ? '' : '#suggestions'}" style="color: ${brandColor}; text-decoration: underline;">Head to your dashboard to submit your first suggestion.</a>
                 </p>
 
                 <hr style="${dividerStyles}" />
