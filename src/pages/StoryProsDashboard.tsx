@@ -311,7 +311,7 @@ const StoryProsDashboard = () => {
         );
       }
     }
-    return <Navigate to="/storypros" replace />;
+    return <Navigate to="/storypros?find=1" replace />;
   }
 
   // If they're truly not on the waitlist, send them back to /storypros to join.
