@@ -904,12 +904,26 @@ const StoryProsDashboard = () => {
 
         {/* Suggestion Box (Tier 4+ only — locked preview is merged into "Coming up" below) */}
         {currentTier >= 3 && (
-          <SuggestionBox
-            currentTier={currentTier}
-            referralCode={wl.referralCode}
-            submitSuggestion={wl.submitSuggestion}
-            voteSuggestion={wl.voteSuggestion}
-          />
+          <div
+            id="suggestions"
+            ref={(el) => {
+              if (!el) return;
+              if (typeof window === "undefined") return;
+              if (window.location.hash !== "#suggestions") return;
+              // Brief highlight ring so users land oriented on the section.
+              el.classList.add("ring-2", "ring-[#8861d4]", "ring-offset-2", "rounded-2xl", "transition-shadow");
+              window.setTimeout(() => {
+                el.classList.remove("ring-2", "ring-[#8861d4]", "ring-offset-2");
+              }, 2200);
+            }}
+          >
+            <SuggestionBox
+              currentTier={currentTier}
+              referralCode={wl.referralCode}
+              submitSuggestion={wl.submitSuggestion}
+              voteSuggestion={wl.voteSuggestion}
+            />
+          </div>
         )}
 
         {/* Coming up */}
