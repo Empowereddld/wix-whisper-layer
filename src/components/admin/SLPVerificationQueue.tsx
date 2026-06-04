@@ -11,7 +11,8 @@ import {
   TableCell,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { Check, X } from "lucide-react";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Check, X, RotateCcw } from "lucide-react";
 import { format } from "date-fns";
 import { toast } from "sonner";
 import { SLP_REFERRAL_BONUS, SLP_REFERRAL_TOTAL } from "@/lib/waitlist-constants";
@@ -22,9 +23,13 @@ interface PendingClaim {
   email: string;
   points: number;
   created_at: string;
+  speech_professional_rejected: boolean;
 }
 
+type View = "pending" | "rejected";
+
 const SLPVerificationQueue = () => {
+  const [view, setView] = useState<View>("pending");
   const [requests, setRequests] = useState<PendingClaim[]>([]);
   const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState<string | null>(null);
@@ -32,11 +37,12 @@ const SLPVerificationQueue = () => {
   const load = async () => {
     try {
       setLoading(true);
-      const { data, error } = await supabase
+      const { data, error } = await (supabase as any)
         .from("storybuilders_waitlist")
-        .select("id, name, email, points, created_at")
+        .select("id, name, email, points, created_at, speech_professional_rejected")
         .eq("is_speech_professional", true)
         .eq("speech_professional_verified", false)
+        .eq("speech_professional_rejected", view === "rejected")
         .order("created_at", { ascending: false });
 
       if (error) throw error;
@@ -53,7 +59,8 @@ const SLPVerificationQueue = () => {
     load();
     const interval = setInterval(load, 30000);
     return () => clearInterval(interval);
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [view]);
 
   const handleVerify = async (id: string) => {
     setBusy(id);
@@ -81,13 +88,42 @@ const SLPVerificationQueue = () => {
   const handleReject = async (id: string) => {
     setBusy(id);
     try {
-      // Just clear the speech-pro flag so they no longer appear in the queue.
-      // Done via insert tool would be ideal but UPDATE on this table is admin-locked via RLS;
-      // we use service-side via an edge function call only if needed. For now use direct update —
-      // admin is_speech_professional is admin-only writable through the verify RPC, so we soft-reject by marking verified=false stays.
-      // Simplest: mark is_speech_professional = false via a small admin RPC (TODO). For now, just hide locally.
-      setRequests((r) => r.filter((x) => x.id !== id));
-      toast.info("Marked as rejected (local). Add a reject RPC for permanent action.");
+      const { data, error } = await (supabase as any).rpc("reject_speech_professional", {
+        p_waitlist_id: id,
+      });
+      if (error) throw error;
+      const row = Array.isArray(data) ? data[0] : data;
+      if (row?.success) {
+        toast.success("Rejected. They won't reappear in the queue.");
+        await load();
+      } else {
+        toast.error(row?.message || "Could not reject");
+      }
+    } catch (err) {
+      console.error("Reject error:", err);
+      toast.error("Failed to reject");
+    } finally {
+      setBusy(null);
+    }
+  };
+
+  const handleReset = async (id: string) => {
+    setBusy(id);
+    try {
+      const { data, error } = await (supabase as any).rpc("reset_speech_professional_rejection", {
+        p_waitlist_id: id,
+      });
+      if (error) throw error;
+      const row = Array.isArray(data) ? data[0] : data;
+      if (row?.success) {
+        toast.success("Moved back to pending.");
+        await load();
+      } else {
+        toast.error(row?.message || "Could not reset");
+      }
+    } catch (err) {
+      console.error("Reset error:", err);
+      toast.error("Failed to reset");
     } finally {
       setBusy(null);
     }
@@ -98,16 +134,25 @@ const SLPVerificationQueue = () => {
       <CardHeader>
         <CardTitle className="flex items-center justify-between">
           <span>Speech Professional Verification</span>
-          <Badge variant="secondary">{requests.length} pending</Badge>
+          <Badge variant="secondary">
+            {requests.length} {view}
+          </Badge>
         </CardTitle>
+        <Tabs value={view} onValueChange={(v) => setView(v as View)} className="mt-3">
+          <TabsList>
+            <TabsTrigger value="pending">Pending</TabsTrigger>
+            <TabsTrigger value="rejected">Rejected</TabsTrigger>
+          </TabsList>
+        </Tabs>
       </CardHeader>
       <CardContent>
         {loading ? (
           <p className="text-muted-foreground text-sm py-6 text-center">Loading…</p>
         ) : requests.length === 0 ? (
           <p className="text-muted-foreground text-sm py-6 text-center">
-            No pending verifications. SLPs, SLTs, and Speech Therapists
-            who self-identified at signup will appear here.
+            {view === "pending"
+              ? "No pending verifications. SLPs, SLTs, and Speech Therapists who self-identified at signup will appear here."
+              : "No rejected entries."}
           </p>
         ) : (
           <Table>
@@ -128,21 +173,34 @@ const SLPVerificationQueue = () => {
                   <TableCell>{format(new Date(r.created_at), "MMM d, yyyy")}</TableCell>
                   <TableCell>{r.points}</TableCell>
                   <TableCell className="text-right space-x-2">
-                    <Button
-                      size="sm"
-                      onClick={() => handleVerify(r.id)}
-                      disabled={busy === r.id}
-                    >
-                      <Check className="w-4 h-4 mr-1" /> Verify (flat +{SLP_REFERRAL_TOTAL})
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={() => handleReject(r.id)}
-                      disabled={busy === r.id}
-                    >
-                      <X className="w-4 h-4 mr-1" /> Hide
-                    </Button>
+                    {view === "pending" ? (
+                      <>
+                        <Button
+                          size="sm"
+                          onClick={() => handleVerify(r.id)}
+                          disabled={busy === r.id}
+                        >
+                          <Check className="w-4 h-4 mr-1" /> Verify (flat +{SLP_REFERRAL_TOTAL})
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => handleReject(r.id)}
+                          disabled={busy === r.id}
+                        >
+                          <X className="w-4 h-4 mr-1" /> Reject
+                        </Button>
+                      </>
+                    ) : (
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => handleReset(r.id)}
+                        disabled={busy === r.id}
+                      >
+                        <RotateCcw className="w-4 h-4 mr-1" /> Reset to pending
+                      </Button>
+                    )}
                   </TableCell>
                 </TableRow>
               ))}

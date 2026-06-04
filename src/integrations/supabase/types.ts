@@ -864,6 +864,7 @@ export type Database = {
           share_count: number
           shares_today: number
           social_claims: Json
+          speech_professional_rejected: boolean
           speech_professional_verified: boolean
           verification_reminder_1_sent_at: string | null
           verification_reminder_2_sent_at: string | null
@@ -915,6 +916,7 @@ export type Database = {
           share_count?: number
           shares_today?: number
           social_claims?: Json
+          speech_professional_rejected?: boolean
           speech_professional_verified?: boolean
           verification_reminder_1_sent_at?: string | null
           verification_reminder_2_sent_at?: string | null
@@ -966,6 +968,7 @@ export type Database = {
           share_count?: number
           shares_today?: number
           social_claims?: Json
+          speech_professional_rejected?: boolean
           speech_professional_verified?: boolean
           verification_reminder_1_sent_at?: string | null
           verification_reminder_2_sent_at?: string | null
@@ -1452,6 +1455,20 @@ export type Database = {
           capped: boolean
           new_points: number
           points_awarded: number
+          success: boolean
+        }[]
+      }
+      reject_speech_professional: {
+        Args: { p_waitlist_id: string }
+        Returns: {
+          message: string
+          success: boolean
+        }[]
+      }
+      reset_speech_professional_rejection: {
+        Args: { p_waitlist_id: string }
+        Returns: {
+          message: string
           success: boolean
         }[]
       }
