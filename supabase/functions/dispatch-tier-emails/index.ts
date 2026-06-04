@@ -44,6 +44,7 @@ Deno.serve(async (req) => {
   // Cron-only.
   const cronSecret = Deno.env.get("CRON_SECRET");
   if (!cronSecret || req.headers.get("x-cron-secret") !== cronSecret) {
+    await logCronAuthFailure(req, "dispatch-tier-emails");
     return new Response(JSON.stringify({ error: "Forbidden" }), {
       status: 403,
       headers: { ...corsHeaders, "Content-Type": "application/json" },

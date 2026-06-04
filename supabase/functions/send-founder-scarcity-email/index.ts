@@ -21,6 +21,7 @@ Deno.serve(async (req) => {
 
   const cronSecret = Deno.env.get("CRON_SECRET");
   if (!cronSecret || req.headers.get("x-cron-secret") !== cronSecret) {
+    await logCronAuthFailure(req, "send-founder-scarcity-email");
     return new Response(JSON.stringify({ error: "Forbidden" }), {
       status: 403,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
