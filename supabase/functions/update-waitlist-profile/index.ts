@@ -69,11 +69,10 @@ Deno.serve(async (req) => {
     }
 
     if (typeof is_speech_professional === "boolean") {
-      // Only allow setting to true via the dashboard (client cannot un-claim).
-      // Option A: auto-verify and award the +50 bonus immediately.
+      // Self-claimed only — never auto-verifies, never awards the +50 bonus.
+      // Admin must approve via the SLP verification queue to award points.
       if (is_speech_professional === true) {
         updates.is_speech_professional = true;
-        updates.speech_professional_verified = true;
       }
     }
 
