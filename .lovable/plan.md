@@ -1,30 +1,32 @@
 ## Goal
-Update Email 5 (Tier 4 Unlocked) so it:
-1. Clearly separates what's available **today** (sneak peek of Story 1 + Suggestion Box) from the **future beta** seat (first-in-line when the full app opens).
-2. Names the Tier 5 reward explicitly instead of teasing "something worth working toward."
+Notify hello@empowereddld.com whenever a waitlist user self-claims "I'm a speech professional" so admins know to review the SLP Verification Queue promptly.
 
-## File
-`supabase/functions/send-waitlist-email/index.ts` — `case "email5_tier4"` block (lines ~547-584).
+## Where the self-claim happens
+`supabase/functions/update-waitlist-profile/index.ts` is the only path that flips `is_speech_professional = true` (either via the direct boolean flag or via `role === "speech_pro"`). The +50 bonus is already admin-gated; we just need to add notification when the flag flips from false → true.
 
-## Copy changes
+## Plan
 
-**Body (replace the current "you'll be one of the first families to try" + "test the app, use it with your child" + Suggestion Box paragraphs) with:**
+1. **Detect the transition in `update-waitlist-profile`**
+   - Before applying updates, fetch current `is_speech_professional` + `name`, `email`, `referral_code` for the row (we already do a similar lookup for `complete_profile`; extend it to always fetch these fields).
+   - After the UPDATE succeeds, compare: if previous value was `false`/null AND new value is `true` AND `speech_professional_verified` is still `false`, trigger the notification.
 
-- Opener: "You just crossed **130 points** and hit **Tier 4**, which locks in your seat as one of the first families to test the full Story Pros app the moment our beta opens."
-- New "Here's what's live for you right now:" list:
-  - **Sneak peek of Story 1** on your dashboard.
-  - **Suggestion Box is open today** — submit story themes, characters, app features, Community Circle topics, and vote on others.
-- Follow-up: "When the full beta opens, you'll be first in line to test the app with your child and help shape the final version."
-- Keep the existing "Head to your dashboard to submit your first suggestion" link.
+2. **Send the admin notification email**
+   - Reuse the existing internal sender `send-waitlist-email` (already auth-gated with `CRON_SECRET`/service-role).
+   - Add a new template key `slp-claim-admin-alert` with:
+     - To: `hello@empowereddld.com`
+     - Subject: `[Action needed] New SLP self-claim — review in admin queue`
+     - Body: claimant's name, email, referral code, timestamp, and a direct link to `/admin/waitlist` (or the SLP Verification Queue route) plus a one-line reminder that the +50 bonus is only awarded on approval.
+   - Invoke it from `update-waitlist-profile` using the service-role client already in the function (fire-and-forget; failure must not block the profile update — log only).
 
-**Unlocked list:** change Tier 4 line to "Sneak peek + Suggestion Box + first-in-line beta seat".
+3. **De-dupe**
+   - Only send when the flag actually transitions to true (skip when it was already true). This prevents repeated alerts if the user re-saves the profile.
 
-**What's next section (replace the vague tease):**
-- Heading: "What's next: Tier 5 (250 pts), Founder Pricing for life"
-- Body: "Reach 250 points and you lock in **$7.99/month or $9.99/family for life**, even after public pricing goes up. From Tier 5 on, your referral points also start **doubling**, putting Tier 6 (Founder Package: signed book + merch for the first 50) within reach."
-- Keep the "You're X points away" line, referral link, share scripts, and CTAs unchanged.
+4. **Deploy**
+   - Deploy `send-waitlist-email` (new template) and `update-waitlist-profile`.
 
-## After edit
-- Deploy `send-waitlist-email`.
-- Resend Email 5 preview to `hello@empowereddld.com` so you can confirm the new copy reads right end to end.
-- Update the locked-template memory note for Email 5 to reflect the new wording.
+## Out of scope
+- No schema changes, no new tables, no changes to the admin queue UI or the verification RPC.
+- Not touching the self-claim UX or copy.
+
+## Verification
+- Manually flip a test user via the dashboard role picker → confirm one email arrives at hello@empowereddld.com and the row shows up in the SLP Verification Queue. Re-save the same profile → confirm no duplicate email.
