@@ -125,6 +125,57 @@ export type Database = {
         }
         Relationships: []
       }
+      cron_abuse_alerts: {
+        Row: {
+          alert_window_end: string
+          alert_window_start: string
+          created_at: string
+          details: Json | null
+          failure_count: number
+          id: number
+        }
+        Insert: {
+          alert_window_end: string
+          alert_window_start: string
+          created_at?: string
+          details?: Json | null
+          failure_count: number
+          id?: number
+        }
+        Update: {
+          alert_window_end?: string
+          alert_window_start?: string
+          created_at?: string
+          details?: Json | null
+          failure_count?: number
+          id?: number
+        }
+        Relationships: []
+      }
+      cron_auth_failures: {
+        Row: {
+          created_at: string
+          function_name: string
+          id: number
+          ip_address: string | null
+          user_agent: string | null
+        }
+        Insert: {
+          created_at?: string
+          function_name: string
+          id?: number
+          ip_address?: string | null
+          user_agent?: string | null
+        }
+        Update: {
+          created_at?: string
+          function_name?: string
+          id?: number
+          ip_address?: string | null
+          user_agent?: string | null
+        }
+        Relationships: []
+      }
       discount_codes: {
         Row: {
           applies_to: string
