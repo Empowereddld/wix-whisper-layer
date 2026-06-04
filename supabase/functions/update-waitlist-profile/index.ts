@@ -224,12 +224,28 @@ Deno.serve(async (req) => {
       }
     }
 
+    // Snapshot the prior SLP flag so we can detect a fresh self-claim transition
+    // (false/null -> true) and notify the admins. We avoid extra DB roundtrips
+    // when the request is not touching the SLP fields.
+    let priorIsSlp: boolean | null = null;
+    const mayTransitionSlp =
+      updates.is_speech_professional === true || updates.role === "speech_pro";
+    if (mayTransitionSlp) {
+      const { data: prior } = await supabase
+        .from("storybuilders_waitlist")
+        .select("is_speech_professional, speech_professional_verified")
+        .eq("referral_code", referral_code)
+        .is("deleted_at", null)
+        .maybeSingle();
+      priorIsSlp = prior?.is_speech_professional ?? null;
+    }
+
     const { data, error } = await supabase
       .from("storybuilders_waitlist")
       .update(updates)
       .eq("referral_code", referral_code)
       .is("deleted_at", null)
-      .select("id, name, is_speech_professional, speech_professional_verified, role, role_other, child_age, hopes, hopes_other, hear_about, profile_completed_at, points")
+      .select("id, name, email, referral_code, is_speech_professional, speech_professional_verified, role, role_other, child_age, hopes, hopes_other, hear_about, profile_completed_at, points")
       .maybeSingle();
 
     if (error || !data) {
@@ -238,6 +254,36 @@ Deno.serve(async (req) => {
         JSON.stringify({ error: "This signup is no longer active or could not be updated." }),
         { status: 404, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
+    }
+
+    // Fire admin alert on fresh SLP self-claim transition. Best-effort: failures
+    // here must never block the profile update response.
+    if (
+      mayTransitionSlp &&
+      !priorIsSlp &&
+      data.is_speech_professional === true &&
+      data.speech_professional_verified !== true
+    ) {
+      try {
+        const cronSecret = Deno.env.get("CRON_SECRET") || "";
+        await supabase.functions.invoke("send-waitlist-email", {
+          body: {
+            template: "slp_claim_admin_alert",
+            to: "hello@empowereddld.com",
+            data: {
+              name: data.name,
+              claimant_email: data.email,
+              referral_code: data.referral_code,
+              claimed_at: new Date().toISOString(),
+              role_label:
+                data.role === "speech_pro" ? "Speech Professional (role)" : "Speech Professional",
+            },
+          },
+          headers: cronSecret ? { "x-cron-secret": cronSecret } : undefined,
+        });
+      } catch (notifyErr) {
+        console.error("SLP admin alert send failed (non-blocking):", notifyErr);
+      }
     }
 
     return new Response(
