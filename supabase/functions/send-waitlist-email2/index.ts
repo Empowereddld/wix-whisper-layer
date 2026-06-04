@@ -7,6 +7,34 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
+
+async function logCronAuthFailure(req: Request, functionName: string) {
+  try {
+    const url = Deno.env.get("SUPABASE_URL");
+    const key = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+    if (!url || !key) return;
+    await fetch(`${url}/rest/v1/cron_auth_failures`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "apikey": key,
+        "Authorization": `Bearer ${key}`,
+        "Prefer": "return=minimal",
+      },
+      body: JSON.stringify({
+        function_name: functionName,
+        ip_address:
+          req.headers.get("x-forwarded-for")?.split(",")[0].trim() ??
+          req.headers.get("cf-connecting-ip") ??
+          null,
+        user_agent: req.headers.get("user-agent") ?? null,
+      }),
+    });
+  } catch (_) {
+    // never block the response on logging
+  }
+}
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -15,6 +43,7 @@ Deno.serve(async (req) => {
   // Cron-only.
   const cronSecret = Deno.env.get("CRON_SECRET");
   if (!cronSecret || req.headers.get("x-cron-secret") !== cronSecret) {
+    await logCronAuthFailure(req, "send-waitlist-email2");
     return new Response(JSON.stringify({ error: "Forbidden" }), {
       status: 403,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
