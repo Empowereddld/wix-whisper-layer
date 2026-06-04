@@ -1121,6 +1121,43 @@ function getEmailTemplate(
       };
     }
 
+    case "slp_claim_admin_alert": {
+      const claimantName = data.name || "Unknown";
+      const claimantEmail = data.claimant_email || "(no email)";
+      const refCode = data.referral_code || "(none)";
+      const claimedAt = data.claimed_at || new Date().toISOString();
+      const roleLabel = data.role_label || "Speech Professional";
+      const queueUrl = `${SITE_BASE}/admin/waitlist`;
+      return {
+        subject: "[Action needed] New SLP self-claim — review in admin queue",
+        html: `
+          <div style="${containerStyles}">
+            <div style="${cardStyles}">
+              <div style="${headerStyles}">
+                <h1 style="margin: 0; font-size: 22px;">New SLP self-claim</h1>
+              </div>
+              <div style="${bodyPad}">
+                <p style="${baseStyles}">A waitlist user just self-identified as a <strong>${roleLabel}</strong>. The +50 bonus has NOT been awarded — it only applies after admin approval.</p>
+                <table style="width: 100%; border-collapse: collapse; margin: 16px 0;">
+                  <tr><td style="padding: 6px 0; color: ${mutedText};">Name</td><td style="padding: 6px 0;"><strong>${claimantName}</strong></td></tr>
+                  <tr><td style="padding: 6px 0; color: ${mutedText};">Email</td><td style="padding: 6px 0;"><strong>${claimantEmail}</strong></td></tr>
+                  <tr><td style="padding: 6px 0; color: ${mutedText};">Referral code</td><td style="padding: 6px 0;"><strong>${refCode}</strong></td></tr>
+                  <tr><td style="padding: 6px 0; color: ${mutedText};">Claimed at</td><td style="padding: 6px 0;">${claimedAt}</td></tr>
+                </table>
+                <div style="text-align: center;">
+                  <a href="${queueUrl}" style="${buttonStyles}">Open SLP Verification Queue</a>
+                </div>
+                <p style="${baseStyles}; color: ${mutedText}; font-size: 13px;">Approve in the queue to award the +50 bonus, or hide to dismiss.</p>
+              </div>
+              <div style="${footerStyles}">
+                <p style="margin: 0;">Internal admin alert — Story Pros</p>
+              </div>
+            </div>
+          </div>
+        `,
+      };
+    }
+
     default: {
       return {
         subject: "Story Pros",
