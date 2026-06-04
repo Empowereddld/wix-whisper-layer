@@ -69,11 +69,10 @@ Deno.serve(async (req) => {
     }
 
     if (typeof is_speech_professional === "boolean") {
-      // Only allow setting to true via the dashboard (client cannot un-claim).
-      // Option A: auto-verify and award the +50 bonus immediately.
+      // Self-claimed only — never auto-verifies, never awards the +50 bonus.
+      // Admin must approve via the SLP verification queue to award points.
       if (is_speech_professional === true) {
         updates.is_speech_professional = true;
-        updates.speech_professional_verified = true;
       }
     }
 
@@ -107,8 +106,8 @@ Deno.serve(async (req) => {
       } else {
         updates.role_other = null;
         if (role === "speech_pro") {
+          // Self-claimed only — admin must verify to award the +50 bonus.
           updates.is_speech_professional = true;
-          updates.speech_professional_verified = true;
         }
       }
     }
@@ -191,22 +190,9 @@ Deno.serve(async (req) => {
     const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const supabase = createClient(supabaseUrl, serviceKey);
 
-    // One-time SLP +50 bonus.
-    if (updates.speech_professional_verified === true) {
-      const { data: existing } = await supabase
-        .from("storybuilders_waitlist")
-        .select("points, speech_professional_verified")
-        .eq("referral_code", referral_code)
-        .is("deleted_at", null)
-        .maybeSingle();
-
-      if (existing?.speech_professional_verified) {
-        delete (updates as Record<string, unknown>).speech_professional_verified;
-        delete (updates as Record<string, unknown>).is_speech_professional;
-      } else if (existing) {
-        (updates as Record<string, unknown>).points = (existing.points || 0) + 50;
-      }
-    }
+    // SLP +50 bonus is now admin-gated. Self-claims set is_speech_professional
+    // but never speech_professional_verified — admins approve via the
+    // verify_speech_professional RPC (SLP Verification Queue) to award points.
 
     // One-time profile completion +10 bonus.
     // Only awarded the first time complete_profile=true is sent AND all
