@@ -60,6 +60,10 @@ verify_jwt = false
 [functions.waitlist-email-healthcheck]
 verify_jwt = false
 
+[functions.monitor-cron-abuse]
+verify_jwt = false
+
+
 
 [functions.process-email-queue]
 verify_jwt = true
