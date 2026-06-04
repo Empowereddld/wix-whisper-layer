@@ -14,6 +14,34 @@ const INACTIVITY_DAYS = 14;
 const VERIFY_BONUS_POINTS = 15;
 const BATCH_LIMIT = 200;
 
+
+async function logCronAuthFailure(req: Request, functionName: string) {
+  try {
+    const url = Deno.env.get("SUPABASE_URL");
+    const key = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+    if (!url || !key) return;
+    await fetch(`${url}/rest/v1/cron_auth_failures`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "apikey": key,
+        "Authorization": `Bearer ${key}`,
+        "Prefer": "return=minimal",
+      },
+      body: JSON.stringify({
+        function_name: functionName,
+        ip_address:
+          req.headers.get("x-forwarded-for")?.split(",")[0].trim() ??
+          req.headers.get("cf-connecting-ip") ??
+          null,
+        user_agent: req.headers.get("user-agent") ?? null,
+      }),
+    });
+  } catch (_) {
+    // never block the response on logging
+  }
+}
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
