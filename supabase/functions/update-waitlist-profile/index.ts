@@ -106,8 +106,8 @@ Deno.serve(async (req) => {
       } else {
         updates.role_other = null;
         if (role === "speech_pro") {
+          // Self-claimed only — admin must verify to award the +50 bonus.
           updates.is_speech_professional = true;
-          updates.speech_professional_verified = true;
         }
       }
     }
