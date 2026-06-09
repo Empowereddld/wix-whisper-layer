@@ -655,9 +655,9 @@ function getEmailTemplate(
                 <ul style="${baseStyles}">
                   ${tierLine("Tier 1", "Development Updates + Early Supporters Wall")}
                   ${tierLine("Tier 2", "Free Executive Function guide")}
-                  ${tierLine("Tier 3", "50 Bonus Story Coins")}
+                  ${tierLine("Tier 3", "75 Story Coins")}
                   ${tierLine("Tier 4", "Early testing access + Suggestion Box")}
-                  ${tierLine("Tier 5", "Founder Pricing, locked for life + double points", true)}
+                  ${tierLine("Tier 5", "Founder Pricing + 200 Story Coins + double points", true)}
                 </ul>
 
                 <hr style="${dividerStyles}" />
