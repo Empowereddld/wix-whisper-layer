@@ -930,7 +930,7 @@ const StoryBuilders = () => {
               {
                 task: "Tier 5 — 250 points",
                 impact: "You're among our most dedicated supporters. Keep climbing to unlock the next reward.",
-                reward: { icon: <Headphones size={20} />, title: "Locked until Tier 5", desc: "A reward that changes what you pay for Story Pros. Reach 250 points to find out." },
+                reward: { icon: <Headphones size={20} />, title: "Founder Pricing for life + 200 Story Coins", desc: "Lock in $7.99/month forever (instead of $9.99) and get 200 Story Coins dropped into your account, plus your Tier 5 badge. Points double from this tier on." },
                 invites: 10,
               },
               {
