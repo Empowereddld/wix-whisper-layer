@@ -416,7 +416,7 @@ function getEmailTemplate(
 
                 <hr style="${dividerStyles}" />
 
-                <p style="${baseStyles}"><strong>What's next: Tier 3 (75 pts), 50 Story Coins</strong></p>
+                <p style="${baseStyles}"><strong>What's next: Tier 3 (75 pts), 75 Story Coins</strong></p>
 
                 <p style="${baseStyles}">
                   Story Coins are yours to spend inside the Story Pros app at launch on themes, characters, and extras.
