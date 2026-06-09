@@ -842,8 +842,8 @@ function getEmailTemplate(
                 <p style="${baseStyles}"><strong>Here's what you've unlocked at Tier 6:</strong></p>
 
                 <p style="${baseStyles}">
-                  <strong>100 bonus Story Coins.</strong> Combined with the 50 you earned at Tier 3,
-                  that's 150 Story Coins ready to spend the moment the app launches.
+                  <strong>100 bonus Story Coins.</strong> Combined with the 75 you earned at Tier 3
+                  and the 200 you earned at Tier 5, that's 375 Story Coins ready to spend the moment the app launches.
                 </p>
 
                 <p style="${baseStyles}">
