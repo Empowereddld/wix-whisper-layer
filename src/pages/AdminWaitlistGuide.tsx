@@ -892,9 +892,9 @@ Events to enable:
               </ul>
             </CollapsibleSection>
 
-            <CollapsibleSection title="Tier 5 — Founder Pricing for Life (250 pts)">
+            <CollapsibleSection title="Tier 5 — Founder Pricing for Life + 200 Story Coins (250 pts)">
               <p className="text-sm text-gray-500 mb-4">
-                <strong>Reward:</strong> $7.99/month for life instead of the regular $9.99 (permanent 20% discount). Points double from this tier on.
+                <strong>Reward:</strong> $7.99/month for life instead of the regular $9.99 (permanent 20% discount), plus 200 Story Coins dropped into the user's account. Points double from this tier on.
               </p>
               <ul className="space-y-2 text-sm list-disc list-inside text-[#121212]">
                 <li>Founder pricing is locked in at subscription time at launch</li>
