@@ -70,8 +70,8 @@ const TIER_REWARDS: TierReward[] = [
   {
     tier: 2,
     rewardId: "tier_3_coins",
-    name: "50 Bonus Story Coins",
-    description: "A bonus coin drop to spend on in-app extras at launch",
+    name: "75 Story Coins",
+    description: "75 bonus Story Coins dropped into your account to spend on in-app extras at launch",
     icon: "🪙",
     earnedVia: "Auto-deposited to your balance",
     claimType: "auto",
@@ -88,8 +88,8 @@ const TIER_REWARDS: TierReward[] = [
   {
     tier: 4,
     rewardId: "tier_5_founder_price",
-    name: "Founder Pricing Locked",
-    description: "$7.99/month for life instead of $9.99. Points double from this tier on.",
+    name: "Founder Pricing + 200 Story Coins",
+    description: "$7.99/month for life instead of $9.99, plus 200 Story Coins dropped into your account. Points double from this tier on.",
     icon: "💎",
     earnedVia: "Activate lifetime pricing",
     claimType: "activate",
