@@ -918,7 +918,7 @@ const StoryBuilders = () => {
               {
                 task: "Tier 3 — 75 points",
                 impact: "Keep referring families and sharing your link. Consistency is rewarded, the more you share, the faster you climb.",
-                reward: { icon: <Gift size={20} />, title: "50 Story Coins dropped into your account", desc: "Story Coins are in-app currency you can spend on upgrades and extras when the app launches, plus your Tier 3 badge" },
+                reward: { icon: <Gift size={20} />, title: "75 Story Coins dropped into your account", desc: "Story Coins are in-app currency you can spend on upgrades and extras when the app launches, plus your Tier 3 badge" },
                 invites: 3,
               },
               {
