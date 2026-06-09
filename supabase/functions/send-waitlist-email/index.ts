@@ -573,7 +573,7 @@ function getEmailTemplate(
                 <ul style="${baseStyles}">
                   ${tierLine("Tier 1", "Development Updates + Early Supporters Wall")}
                   ${tierLine("Tier 2", "Free Executive Function guide")}
-                  ${tierLine("Tier 3", "50 Bonus Story Coins")}
+                  ${tierLine("Tier 3", "75 Story Coins")}
                   ${tierLine("Tier 4", "Sneak peek + Suggestion Box + first-in-line beta seat", true)}
                 </ul>
 
