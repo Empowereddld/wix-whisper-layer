@@ -478,8 +478,12 @@ const StoryProsDashboard = () => {
     wl.claimSocialFollow(platform);
   };
 
-  // Coin balance: derived from tier-up coin drops only (Tier 3 = 50 currently)
-  const coinBalance = currentTier >= 2 ? COIN_DROPS[2] || 0 : 0;
+  // Coin balance: sum of all tier-up coin drops the user has reached.
+  // COIN_DROPS keys are 0-based tier indexes (matches DB award trigger).
+  const coinBalance = Object.entries(COIN_DROPS).reduce(
+    (sum, [tierIdx, amt]) => (currentTier >= Number(tierIdx) ? sum + amt : sum),
+    0
+  );
 
   return (
     <div className="min-h-screen bg-white">
