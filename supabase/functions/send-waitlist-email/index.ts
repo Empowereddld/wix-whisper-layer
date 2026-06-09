@@ -340,7 +340,7 @@ function getEmailTemplate(
             <ul style="${plainP}; padding-left: 20px;">
               <li><strong>Tier 1 (0 pts):</strong> Development updates and your name on the Early Supporters Wall as a founding member.</li>
               <li><strong>Tier 2 (35 pts):</strong> Our paid digital guide "Executive Function Skills for Your Child," free as a thank you.</li>
-              <li><strong>Tier 3 (75 pts):</strong> Bonus Story Coins to spend inside the app at launch.</li>
+              <li><strong>Tier 3 (75 pts):</strong> 75 Story Coins to spend inside the app at launch.</li>
               <li><strong>Tier 4 (130 pts):</strong> VIP Beta Access. Test the Story Pros App before launch and help shape the final product.</li>
               <li><strong>Tier 5 (250 pts):</strong> Founder Pricing locked in for life.</li>
               <li><strong>Tier 6 (500 pts):</strong> A signed Dan & Daria book with a handwritten note. Limited to the first 20 members to reach Tier 6. After those 20 slots are claimed, Tier 6 still unlocks 100 Story Coins to spend at launch.</li>
