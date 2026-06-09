@@ -467,7 +467,7 @@ function getEmailTemplate(
         html: `
           <div style="${containerStyles}">
             <div style="${cardStyles}">
-              ${tierHero("Tier 3 Unlocked", "50 Story Coins are yours.")}
+              ${tierHero("Tier 3 Unlocked", "75 Story Coins are yours.")}
 
               <div style="${bodyPad}">
                 <p style="${baseStyles}">Hi ${name},</p>
