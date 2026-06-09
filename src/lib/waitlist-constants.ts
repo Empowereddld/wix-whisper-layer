@@ -87,8 +87,8 @@ export const TIER_REWARDS = [
   },
   {
     tier: 2,
-    name: "50 Bonus Story Coins",
-    description: "A bonus coin drop to spend on in-app extras at launch",
+    name: "75 Story Coins",
+    description: "75 bonus Story Coins dropped into your account to spend on in-app extras at launch",
     icon: "🪙",
     claimType: "auto",
   },
