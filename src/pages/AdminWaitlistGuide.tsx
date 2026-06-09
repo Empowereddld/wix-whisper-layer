@@ -547,7 +547,7 @@ Reason: Bonus for social media share`} />
                     <span className="font-semibold text-[#3b1f59]">Tier 3 (Story Coins)</span>
                     <span className="text-gray-500 font-bold">75+ points</span>
                   </div>
-                  <p className="text-gray-500 text-xs">50 bonus Story Coins dropped into account</p>
+                  <p className="text-gray-500 text-xs">75 Story Coins dropped into account</p>
                 </div>
                 <div className="p-4 bg-[#f3ebf8] rounded-lg border border-[#dedede]">
                   <div className="flex items-center justify-between mb-2">
