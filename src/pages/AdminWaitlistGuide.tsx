@@ -872,9 +872,9 @@ Events to enable:
               </ul>
             </CollapsibleSection>
 
-            <CollapsibleSection title="Tier 3 — 50 Bonus Story Coins (75 pts)">
+            <CollapsibleSection title="Tier 3 — 75 Story Coins (75 pts)">
               <p className="text-sm text-gray-500 mb-4">
-                <strong>Reward:</strong> 50 Story Coins dropped into the user's account to spend at app launch.
+                <strong>Reward:</strong> 75 Story Coins dropped into the user's account to spend at app launch.
               </p>
               <ul className="space-y-2 text-sm list-disc list-inside text-[#121212]">
                 <li>Auto-awarded by the tier dispatcher</li>
