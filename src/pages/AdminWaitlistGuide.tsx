@@ -561,7 +561,7 @@ Reason: Bonus for social media share`} />
                     <span className="font-semibold text-[#3b1f59]">Tier 5 (Founder Pricing)</span>
                     <span className="text-gray-500 font-bold">250+ points</span>
                   </div>
-                  <p className="text-gray-500 text-xs">$7.99/mo for life (vs $9.99) — points double from here</p>
+                  <p className="text-gray-500 text-xs">$7.99/mo for life (vs $9.99) + 200 Story Coins — points double from here</p>
                 </div>
                 <div className="p-4 bg-[#f3ebf8] rounded-lg border border-[#dedede]">
                   <div className="flex items-center justify-between mb-2">
