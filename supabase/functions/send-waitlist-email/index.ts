@@ -477,7 +477,7 @@ function getEmailTemplate(
                 </p>
 
                 <p style="${baseStyles}">
-                  <strong>50 Story Coins are yours.</strong> They'll land in your account the moment Story
+                  <strong>75 Story Coins are yours.</strong> They'll land in your account the moment Story
                   Pros launches, ready to spend on stories, characters, and extras inside the app.
                 </p>
 
