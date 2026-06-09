@@ -157,9 +157,13 @@ export default function RewardsInventory({
 
   const handleClaimReward = (rewardId: string) => {
     const reward = TIER_REWARDS.find((r) => r.rewardId === rewardId);
-    // Tier 3 (index 2) drops 50 bonus Story Coins
+    // Coin drops match the database trigger:
+    // Tier 3 (index 2) = 75 Story Coins, Tier 5 (index 4) = 200 Story Coins.
     if (reward && reward.tier === 2) {
-      setCoinDropAmount(50);
+      setCoinDropAmount(75);
+      setCoinDropTrigger(true);
+    } else if (reward && reward.tier === 4) {
+      setCoinDropAmount(200);
       setCoinDropTrigger(true);
     }
     onClaimReward(rewardId);
