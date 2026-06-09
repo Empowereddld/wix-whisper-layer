@@ -619,11 +619,11 @@ function getEmailTemplate(
     // ============================================================
     case "email6_tier5": {
       return {
-        subject: `You just hit Tier 5, ${name}.`,
+        subject: `You just hit Tier 5, ${name}. Founder Pricing + 200 Story Coins.`,
         html: `
           <div style="${containerStyles}">
             <div style="${cardStyles}">
-              ${tierHero("Tier 5 Unlocked", "Founder Pricing is locked in. For life.")}
+              ${tierHero("Tier 5 Unlocked", "Founder Pricing for life + 200 Story Coins.")}
 
               <div style="${bodyPad}">
                 <p style="${baseStyles}">Hi ${name},</p>
@@ -641,6 +641,13 @@ function getEmailTemplate(
                   Your subscription will be <strong>$7.99/month forever</strong>, instead of the regular $9.99. That price stays
                   no matter how much we add to the app, the Community Circles, or any other features
                   down the road.
+                </p>
+
+                <p style="${baseStyles}"><strong>And 200 Story Coins are yours.</strong></p>
+
+                <p style="${baseStyles}">
+                  Dropped straight into your account, ready to spend the moment Story Pros launches.
+                  Combined with the 75 you earned at Tier 3, that's 275 Story Coins waiting for you.
                 </p>
 
                 <p style="${baseStyles}"><strong>One more thing: your points now count double.</strong></p>
