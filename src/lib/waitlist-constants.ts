@@ -29,9 +29,12 @@ export const TIER_REWARDS_OLD = [
   "VIP Founding Elite: Virtual meet & greet + Signed Dan & Daria book",
 ] as const;
 
-// Coin drop amounts when tier-up (key = tier index, value = coins awarded)
-// Locked: Tier 3 (75 pts) = 50 bonus Story Coins. No other tier-up coin drops.
-export const COIN_DROPS: Record<number, number> = { 2: 50 };
+// Coin drop amounts when tier-up (key = 0-based tier index, value = coins awarded).
+// Matches the database trigger (award_waitlist_points). Canonical source of truth:
+//   Tier 3 (index 2, 75 pts)  = 75 Story Coins
+//   Tier 5 (index 4, 250 pts) = 200 Story Coins
+//   Tier 6 (post-Founder)     = 100 Story Coins (handled separately in the Tier 6 email)
+export const COIN_DROPS: Record<number, number> = { 2: 75, 4: 200 };
 
 // Coin packs for purchase
 export const COIN_PACKS = [
