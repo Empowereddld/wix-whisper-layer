@@ -101,8 +101,8 @@ export const TIER_REWARDS = [
   },
   {
     tier: 4,
-    name: "Founder Pricing Locked",
-    description: "$7.99/month for life instead of $9.99: permanent 20% discount. Points double from this tier on.",
+    name: "Founder Pricing + 200 Story Coins",
+    description: "$7.99/month for life instead of $9.99 (permanent 20% discount), plus 200 Story Coins dropped into your account. Points double from this tier on.",
     icon: "💎",
     claimType: "auto",
   },
