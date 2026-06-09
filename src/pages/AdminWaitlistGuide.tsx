@@ -547,7 +547,7 @@ Reason: Bonus for social media share`} />
                     <span className="font-semibold text-[#3b1f59]">Tier 3 (Story Coins)</span>
                     <span className="text-gray-500 font-bold">75+ points</span>
                   </div>
-                  <p className="text-gray-500 text-xs">50 bonus Story Coins dropped into account</p>
+                  <p className="text-gray-500 text-xs">75 Story Coins dropped into account</p>
                 </div>
                 <div className="p-4 bg-[#f3ebf8] rounded-lg border border-[#dedede]">
                   <div className="flex items-center justify-between mb-2">
@@ -561,7 +561,7 @@ Reason: Bonus for social media share`} />
                     <span className="font-semibold text-[#3b1f59]">Tier 5 (Founder Pricing)</span>
                     <span className="text-gray-500 font-bold">250+ points</span>
                   </div>
-                  <p className="text-gray-500 text-xs">$7.99/mo for life (vs $9.99) — points double from here</p>
+                  <p className="text-gray-500 text-xs">$7.99/mo for life (vs $9.99) + 200 Story Coins — points double from here</p>
                 </div>
                 <div className="p-4 bg-[#f3ebf8] rounded-lg border border-[#dedede]">
                   <div className="flex items-center justify-between mb-2">
@@ -872,9 +872,9 @@ Events to enable:
               </ul>
             </CollapsibleSection>
 
-            <CollapsibleSection title="Tier 3 — 50 Bonus Story Coins (75 pts)">
+            <CollapsibleSection title="Tier 3 — 75 Story Coins (75 pts)">
               <p className="text-sm text-gray-500 mb-4">
-                <strong>Reward:</strong> 50 Story Coins dropped into the user's account to spend at app launch.
+                <strong>Reward:</strong> 75 Story Coins dropped into the user's account to spend at app launch.
               </p>
               <ul className="space-y-2 text-sm list-disc list-inside text-[#121212]">
                 <li>Auto-awarded by the tier dispatcher</li>
@@ -892,9 +892,9 @@ Events to enable:
               </ul>
             </CollapsibleSection>
 
-            <CollapsibleSection title="Tier 5 — Founder Pricing for Life (250 pts)">
+            <CollapsibleSection title="Tier 5 — Founder Pricing for Life + 200 Story Coins (250 pts)">
               <p className="text-sm text-gray-500 mb-4">
-                <strong>Reward:</strong> $7.99/month for life instead of the regular $9.99 (permanent 20% discount). Points double from this tier on.
+                <strong>Reward:</strong> $7.99/month for life instead of the regular $9.99 (permanent 20% discount), plus 200 Story Coins dropped into the user's account. Points double from this tier on.
               </p>
               <ul className="space-y-2 text-sm list-disc list-inside text-[#121212]">
                 <li>Founder pricing is locked in at subscription time at launch</li>

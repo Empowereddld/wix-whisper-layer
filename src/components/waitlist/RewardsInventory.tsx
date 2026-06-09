@@ -70,8 +70,8 @@ const TIER_REWARDS: TierReward[] = [
   {
     tier: 2,
     rewardId: "tier_3_coins",
-    name: "50 Bonus Story Coins",
-    description: "A bonus coin drop to spend on in-app extras at launch",
+    name: "75 Story Coins",
+    description: "75 bonus Story Coins dropped into your account to spend on in-app extras at launch",
     icon: "🪙",
     earnedVia: "Auto-deposited to your balance",
     claimType: "auto",
@@ -88,8 +88,8 @@ const TIER_REWARDS: TierReward[] = [
   {
     tier: 4,
     rewardId: "tier_5_founder_price",
-    name: "Founder Pricing Locked",
-    description: "$7.99/month for life instead of $9.99. Points double from this tier on.",
+    name: "Founder Pricing + 200 Story Coins",
+    description: "$7.99/month for life instead of $9.99, plus 200 Story Coins dropped into your account. Points double from this tier on.",
     icon: "💎",
     earnedVia: "Activate lifetime pricing",
     claimType: "activate",
@@ -157,9 +157,13 @@ export default function RewardsInventory({
 
   const handleClaimReward = (rewardId: string) => {
     const reward = TIER_REWARDS.find((r) => r.rewardId === rewardId);
-    // Tier 3 (index 2) drops 50 bonus Story Coins
+    // Coin drops match the database trigger:
+    // Tier 3 (index 2) = 75 Story Coins, Tier 5 (index 4) = 200 Story Coins.
     if (reward && reward.tier === 2) {
-      setCoinDropAmount(50);
+      setCoinDropAmount(75);
+      setCoinDropTrigger(true);
+    } else if (reward && reward.tier === 4) {
+      setCoinDropAmount(200);
       setCoinDropTrigger(true);
     }
     onClaimReward(rewardId);

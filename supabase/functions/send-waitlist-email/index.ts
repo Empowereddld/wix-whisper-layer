@@ -340,7 +340,7 @@ function getEmailTemplate(
             <ul style="${plainP}; padding-left: 20px;">
               <li><strong>Tier 1 (0 pts):</strong> Development updates and your name on the Early Supporters Wall as a founding member.</li>
               <li><strong>Tier 2 (35 pts):</strong> Our paid digital guide "Executive Function Skills for Your Child," free as a thank you.</li>
-              <li><strong>Tier 3 (75 pts):</strong> Bonus Story Coins to spend inside the app at launch.</li>
+              <li><strong>Tier 3 (75 pts):</strong> 75 Story Coins to spend inside the app at launch.</li>
               <li><strong>Tier 4 (130 pts):</strong> VIP Beta Access. Test the Story Pros App before launch and help shape the final product.</li>
               <li><strong>Tier 5 (250 pts):</strong> Founder Pricing locked in for life.</li>
               <li><strong>Tier 6 (500 pts):</strong> A signed Dan & Daria book with a handwritten note. Limited to the first 20 members to reach Tier 6. After those 20 slots are claimed, Tier 6 still unlocks 100 Story Coins to spend at launch.</li>
@@ -416,7 +416,7 @@ function getEmailTemplate(
 
                 <hr style="${dividerStyles}" />
 
-                <p style="${baseStyles}"><strong>What's next: Tier 3 (75 pts), 50 Story Coins</strong></p>
+                <p style="${baseStyles}"><strong>What's next: Tier 3 (75 pts), 75 Story Coins</strong></p>
 
                 <p style="${baseStyles}">
                   Story Coins are yours to spend inside the Story Pros app at launch on themes, characters, and extras.
@@ -463,11 +463,11 @@ function getEmailTemplate(
     // ============================================================
     case "email4_tier3": {
       return {
-        subject: `You just earned 50 Story Coins, ${name}.`,
+        subject: `You just earned 75 Story Coins, ${name}.`,
         html: `
           <div style="${containerStyles}">
             <div style="${cardStyles}">
-              ${tierHero("Tier 3 Unlocked", "50 Story Coins are yours.")}
+              ${tierHero("Tier 3 Unlocked", "75 Story Coins are yours.")}
 
               <div style="${bodyPad}">
                 <p style="${baseStyles}">Hi ${name},</p>
@@ -477,7 +477,7 @@ function getEmailTemplate(
                 </p>
 
                 <p style="${baseStyles}">
-                  <strong>50 Story Coins are yours.</strong> They'll land in your account the moment Story
+                  <strong>75 Story Coins are yours.</strong> They'll land in your account the moment Story
                   Pros launches, ready to spend on stories, characters, and extras inside the app.
                 </p>
 
@@ -573,7 +573,7 @@ function getEmailTemplate(
                 <ul style="${baseStyles}">
                   ${tierLine("Tier 1", "Development Updates + Early Supporters Wall")}
                   ${tierLine("Tier 2", "Free Executive Function guide")}
-                  ${tierLine("Tier 3", "50 Bonus Story Coins")}
+                  ${tierLine("Tier 3", "75 Story Coins")}
                   ${tierLine("Tier 4", "Sneak peek + Suggestion Box + first-in-line beta seat", true)}
                 </ul>
 
@@ -619,11 +619,11 @@ function getEmailTemplate(
     // ============================================================
     case "email6_tier5": {
       return {
-        subject: `You just hit Tier 5, ${name}.`,
+        subject: `You just hit Tier 5, ${name}. Founder Pricing + 200 Story Coins.`,
         html: `
           <div style="${containerStyles}">
             <div style="${cardStyles}">
-              ${tierHero("Tier 5 Unlocked", "Founder Pricing is locked in. For life.")}
+              ${tierHero("Tier 5 Unlocked", "Founder Pricing for life + 200 Story Coins.")}
 
               <div style="${bodyPad}">
                 <p style="${baseStyles}">Hi ${name},</p>
@@ -643,6 +643,13 @@ function getEmailTemplate(
                   down the road.
                 </p>
 
+                <p style="${baseStyles}"><strong>And 200 Story Coins are yours.</strong></p>
+
+                <p style="${baseStyles}">
+                  Dropped straight into your account, ready to spend the moment Story Pros launches.
+                  Combined with the 75 you earned at Tier 3, that's 275 Story Coins waiting for you.
+                </p>
+
                 <p style="${baseStyles}"><strong>One more thing: your points now count double.</strong></p>
 
                 <p style="${baseStyles}">
@@ -655,9 +662,9 @@ function getEmailTemplate(
                 <ul style="${baseStyles}">
                   ${tierLine("Tier 1", "Development Updates + Early Supporters Wall")}
                   ${tierLine("Tier 2", "Free Executive Function guide")}
-                  ${tierLine("Tier 3", "50 Bonus Story Coins")}
+                  ${tierLine("Tier 3", "75 Story Coins")}
                   ${tierLine("Tier 4", "Early testing access + Suggestion Box")}
-                  ${tierLine("Tier 5", "Founder Pricing, locked for life + double points", true)}
+                  ${tierLine("Tier 5", "Founder Pricing + 200 Story Coins + double points", true)}
                 </ul>
 
                 <hr style="${dividerStyles}" />
@@ -751,9 +758,9 @@ function getEmailTemplate(
                 <ul style="${baseStyles}">
                   ${tierLine("Tier 1", "Development Updates + Early Supporters Wall")}
                   ${tierLine("Tier 2", "Free Executive Function guide")}
-                  ${tierLine("Tier 3", "50 Bonus Story Coins")}
+                  ${tierLine("Tier 3", "75 Story Coins")}
                   ${tierLine("Tier 4", "Early testing access + Suggestion Box")}
-                  ${tierLine("Tier 5", "Founder Pricing + double points")}
+                  ${tierLine("Tier 5", "Founder Pricing + 200 Story Coins + double points")}
                   ${tierLine("Tier 6", "Signed Dan & Daria book", true)}
                 </ul>
 
@@ -835,8 +842,8 @@ function getEmailTemplate(
                 <p style="${baseStyles}"><strong>Here's what you've unlocked at Tier 6:</strong></p>
 
                 <p style="${baseStyles}">
-                  <strong>100 bonus Story Coins.</strong> Combined with the 50 you earned at Tier 3,
-                  that's 150 Story Coins ready to spend the moment the app launches.
+                  <strong>100 bonus Story Coins.</strong> Combined with the 75 you earned at Tier 3
+                  and the 200 you earned at Tier 5, that's 375 Story Coins ready to spend the moment the app launches.
                 </p>
 
                 <p style="${baseStyles}">
@@ -854,9 +861,9 @@ function getEmailTemplate(
                 <ul style="${baseStyles}">
                   ${tierLine("Tier 1", "Development Updates + Early Supporters Wall")}
                   ${tierLine("Tier 2", "Free Executive Function guide")}
-                  ${tierLine("Tier 3", "50 Story Coins")}
+                  ${tierLine("Tier 3", "75 Story Coins")}
                   ${tierLine("Tier 4", "Early testing access + Suggestion Box")}
-                  ${tierLine("Tier 5", "Founder Pricing + double points")}
+                  ${tierLine("Tier 5", "Founder Pricing + 200 Story Coins + double points")}
                   ${tierLine("Tier 6", "100 bonus Story Coins + Tier 6 badge (you are here)", true)}
                 </ul>
 

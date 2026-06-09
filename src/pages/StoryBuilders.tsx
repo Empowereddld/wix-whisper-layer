@@ -36,9 +36,9 @@ import FindMyDashboardLink from "@/components/waitlist/FindMyDashboardLink";
 const milestones = [
   { invites: 0, label: "Tier 1 (0 pts)", reward: "Behind-the-scenes updates on Story Pros development, Founding Member status, and your name on the Early Supporters Wall" },
  { invites: 1, label: "Tier 2 (35 pts)", reward: "FREE digital product: Executive Function Skills for Your Child (normally paid in the Resource Library)" },
- { invites: 3, label: "Tier 3 (75 pts)", reward: "50 Story Coins dropped into your account to spend on in-app extras at launch" },
+ { invites: 3, label: "Tier 3 (75 pts)", reward: "75 Story Coins dropped into your account to spend on in-app extras at launch" },
  { invites: 5, label: "Tier 4 (130 pts)", reward: "VIP Beta access to test Story Pros before launch and help shape the final product" },
- { invites: 10, label: "Tier 5 (250 pts)", reward: "A reward that changes what you pay for Story Pros. Reach 250 points to find out." },
+ { invites: 10, label: "Tier 5 (250 pts)", reward: "Founder Pricing locked in for life ($7.99/mo instead of $9.99) plus 200 Story Coins dropped into your account" },
  { invites: -1, label: "Tier 6 (500 pts)", reward: "Reach 500 points to reveal the final reward. Limited to the first 20 members." },
 ];
 
@@ -918,7 +918,7 @@ const StoryBuilders = () => {
               {
                 task: "Tier 3 — 75 points",
                 impact: "Keep referring families and sharing your link. Consistency is rewarded, the more you share, the faster you climb.",
-                reward: { icon: <Gift size={20} />, title: "50 Story Coins dropped into your account", desc: "Story Coins are in-app currency you can spend on upgrades and extras when the app launches, plus your Tier 3 badge" },
+                reward: { icon: <Gift size={20} />, title: "75 Story Coins dropped into your account", desc: "Story Coins are in-app currency you can spend on upgrades and extras when the app launches, plus your Tier 3 badge" },
                 invites: 3,
               },
               {
@@ -930,7 +930,7 @@ const StoryBuilders = () => {
               {
                 task: "Tier 5 — 250 points",
                 impact: "You're among our most dedicated supporters. Keep climbing to unlock the next reward.",
-                reward: { icon: <Headphones size={20} />, title: "Locked until Tier 5", desc: "A reward that changes what you pay for Story Pros. Reach 250 points to find out." },
+                reward: { icon: <Headphones size={20} />, title: "Founder Pricing for life + 200 Story Coins", desc: "Lock in $7.99/month forever (instead of $9.99) and get 200 Story Coins dropped into your account, plus your Tier 5 badge. Points double from this tier on." },
                 invites: 10,
               },
               {

@@ -29,9 +29,12 @@ export const TIER_REWARDS_OLD = [
   "VIP Founding Elite: Virtual meet & greet + Signed Dan & Daria book",
 ] as const;
 
-// Coin drop amounts when tier-up (key = tier index, value = coins awarded)
-// Locked: Tier 3 (75 pts) = 50 bonus Story Coins. No other tier-up coin drops.
-export const COIN_DROPS: Record<number, number> = { 2: 50 };
+// Coin drop amounts when tier-up (key = 0-based tier index, value = coins awarded).
+// Matches the database trigger (award_waitlist_points). Canonical source of truth:
+//   Tier 3 (index 2, 75 pts)  = 75 Story Coins
+//   Tier 5 (index 4, 250 pts) = 200 Story Coins
+//   Tier 6 (post-Founder)     = 100 Story Coins (handled separately in the Tier 6 email)
+export const COIN_DROPS: Record<number, number> = { 2: 75, 4: 200 };
 
 // Coin packs for purchase
 export const COIN_PACKS = [
@@ -84,8 +87,8 @@ export const TIER_REWARDS = [
   },
   {
     tier: 2,
-    name: "50 Bonus Story Coins",
-    description: "A bonus coin drop to spend on in-app extras at launch",
+    name: "75 Story Coins",
+    description: "75 bonus Story Coins dropped into your account to spend on in-app extras at launch",
     icon: "🪙",
     claimType: "auto",
   },
@@ -98,8 +101,8 @@ export const TIER_REWARDS = [
   },
   {
     tier: 4,
-    name: "Founder Pricing Locked",
-    description: "$7.99/month for life instead of $9.99: permanent 20% discount. Points double from this tier on.",
+    name: "Founder Pricing + 200 Story Coins",
+    description: "$7.99/month for life instead of $9.99 (permanent 20% discount), plus 200 Story Coins dropped into your account. Points double from this tier on.",
     icon: "💎",
     claimType: "auto",
   },
