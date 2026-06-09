@@ -463,7 +463,7 @@ function getEmailTemplate(
     // ============================================================
     case "email4_tier3": {
       return {
-        subject: `You just earned 50 Story Coins, ${name}.`,
+        subject: `You just earned 75 Story Coins, ${name}.`,
         html: `
           <div style="${containerStyles}">
             <div style="${cardStyles}">
