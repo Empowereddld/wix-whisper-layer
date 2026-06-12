@@ -11,8 +11,8 @@ const FreeCourse = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Free DLD Course — Learn About Developmental Language Disorder | Empowered DLD"
-        description="Take our free, self-paced course on Developmental Language Disorder. Learn what DLD is, how to identify it, and practical strategies to support children at home and in the classroom."
+        title="Free DLD Course for Parents & Educators"
+        description="A free course on Developmental Language Disorder: learn simple, evidence-informed ways to support a child's language and confidence, step by step."
         path="/resources/free-course"
         breadcrumbs={[
           { name: "Home", path: "/" },
