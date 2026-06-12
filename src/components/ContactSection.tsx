@@ -106,9 +106,9 @@ const ContactSection = () => {
             <p className="text-[12px] font-bold uppercase tracking-[0.2em] text-background/60 mb-4">
               Get In Touch
             </p>
-            <h2 className="text-[28px] md:text-[36px] lg:text-[52px] font-bold text-background leading-[1.08] mb-5">
+            <h1 className="text-[28px] md:text-[36px] lg:text-[52px] font-bold text-background leading-[1.08] mb-5">
               Let's Start a Conversation
-            </h2>
+            </h1>
             <p className="text-background/70 text-[15px] leading-[1.7] max-w-[480px]">
               Have a question or want to learn more about how we can help? Drop us a message and we'll get back to you shortly.
             </p>

@@ -6,9 +6,10 @@ const TermsAndConditions = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Terms & Conditions — Empowered DLD"
+        title="Terms & Conditions | Empowered DLD"
         description="Terms of use for the Empowered DLD website, resources, and digital products."
         path="/terms-and-conditions"
+        noindex
       />
       <Header />
       <main className="py-16 md:py-24">

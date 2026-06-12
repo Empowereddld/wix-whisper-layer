@@ -12,8 +12,8 @@ const ForTherapists = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="DLD Resources for Speech-Language Pathologists (SLPs) | Empowered DLD"
-        description="Clinical resources, downloadable therapy materials, and professional development for SLPs working with children who have Developmental Language Disorder (DLD)."
+        title="DLD Resources for Speech-Language Therapists"
+        description="Evidence-informed books, tools, and materials for your DLD caseload, built in collaboration with speech-language pathologists and educators."
         path="/for-therapists"
         breadcrumbs={[
           { name: "Home", path: "/" },

@@ -12,7 +12,7 @@ const Shop = () => {
     <div className="min-h-screen flex flex-col">
       <SEOHead
         title="Shop DLD Books & Resources | Empowered DLD"
-        description="Shop evidence-based books, downloadable resources, and bulk orders for Developmental Language Disorder. The Living Life with DLD book series and more."
+        description="Books and resources that make a real difference for children with Developmental Language Disorder. Created by an educator and a speech-language pathologist."
         path="/shop"
         breadcrumbs={[
           { name: "Home", path: "/" },

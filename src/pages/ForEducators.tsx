@@ -14,8 +14,8 @@ const ForEducators = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="DLD Resources for Educators & Schools | Empowered DLD"
-        description="Classroom resources, implementation packages, and professional development for educators supporting students with Developmental Language Disorder (DLD) in schools."
+        title="DLD Support & Resources for Educators | Empowered DLD"
+        description="Help students with Developmental Language Disorder thrive in your classroom. Practical DLD strategies, training, and resources for teachers and schools."
         path="/for-educators"
         breadcrumbs={[
           { name: "Home", path: "/" },

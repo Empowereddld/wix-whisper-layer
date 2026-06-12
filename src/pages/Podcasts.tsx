@@ -45,8 +45,8 @@ const Podcasts = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Life with DLD Podcast — Real Stories from Children | Empowered DLD"
-        description="Watch the Dan and Daria Podcast where children with Developmental Language Disorder share real, honest conversations about living with DLD. Short episodes for parents, SLPs, and educators."
+        title="Life with DLD: The Dan & Daria Podcast"
+        description="Real stories and practical support for Developmental Language Disorder. Listen to Life with DLD: The Dan and Daria Podcast from Empowered DLD."
         path="/resources/podcasts"
       />
       <Header />

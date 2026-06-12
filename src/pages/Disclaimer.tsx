@@ -6,9 +6,10 @@ const Disclaimer = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Disclaimer — Empowered DLD"
+        title="Disclaimer | Empowered DLD"
         description="Important disclaimers about the educational content and resources provided by Empowered DLD."
         path="/disclaimer"
+        noindex
       />
       <Header />
       <main className="py-16 md:py-24">

@@ -6,9 +6,10 @@ const PrivacyPolicy = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Privacy Policy — Empowered DLD"
+        title="Privacy Policy | Empowered DLD"
         description="How Empowered DLD collects, uses, and protects your personal information."
         path="/privacy-policy"
+        noindex
       />
       <Header />
       <main className="py-16 md:py-24">

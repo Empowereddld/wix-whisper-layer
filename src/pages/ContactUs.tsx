@@ -6,8 +6,8 @@ import SEOHead from "@/components/SEOHead";
 const ContactUs = () => (
   <div className="min-h-screen flex flex-col">
     <SEOHead
-      title="Contact Empowered DLD — Get in Touch"
-      description="Contact Empowered DLD for questions about Developmental Language Disorder resources, bulk orders, workshops, speaking engagements, or partnership inquiries."
+      title="Contact Us | Empowered DLD"
+      description="Questions about Developmental Language Disorder, our books, or working together? Get in touch with the Empowered DLD team. We would love to hear from you."
       path="/contact"
     />
     <Header />

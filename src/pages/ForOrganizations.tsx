@@ -15,8 +15,8 @@ const ForOrganizations = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="DLD Awareness & Training for Organizations | Empowered DLD"
-        description="Partner with Empowered DLD to bring Developmental Language Disorder awareness, training, and resources to your organization. Custom workshops, speaking, and consultation."
+        title="DLD Partnerships for Organizations & Nonprofits"
+        description="Partner with Empowered DLD to bring Developmental Language Disorder awareness, resources, and training to the communities and families you serve."
         path="/for-organizations"
       />
       <Header />

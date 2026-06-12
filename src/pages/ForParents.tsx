@@ -12,8 +12,8 @@ const ForParents = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="DLD Resources for Parents | Empowered DLD"
-        description="Evidence-based resources and support for parents of children with Developmental Language Disorder (DLD). Books, downloadables, free courses, and a supportive community to help your child thrive."
+        title="DLD Support for Parents | Empowered DLD"
+        description="If your child struggles to express themself, you are not alone. Find calm, practical support for parenting a child with Developmental Language Disorder."
         path="/for-parents"
         breadcrumbs={[
           { name: "Home", path: "/" },

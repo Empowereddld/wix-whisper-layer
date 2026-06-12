@@ -15,8 +15,8 @@ const Books = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <SEOHead
-        title="Living Life with DLD Book Series — Children's Books About Language Disorder | Empowered DLD"
-        description="Explore the Living Life with DLD book series. Stories that help children with Developmental Language Disorder feel seen, understood, and empowered. For families, classrooms, and therapy."
+        title="Living Life with DLD Book Series | Empowered DLD"
+        description="The Living Life with DLD book series helps children understand DLD, feel confident, and know they are not alone. A warm entry point for every family."
         path="/shop/books"
         breadcrumbs={[
           { name: "Home", path: "/" },
