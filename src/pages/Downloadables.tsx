@@ -11,8 +11,8 @@ const Downloadables = () => {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <SEOHead
-        title="Downloadable DLD Resources — Posters, Guides & Activities | Empowered DLD"
-        description="Access downloadable resources for Developmental Language Disorder including posters, checklists, handouts, guides, and activities for parents, SLPs, and educators."
+        title="DLD Downloadables & Printables | Empowered DLD"
+        description="Printable guides, activities, and worksheets to support a child with Developmental Language Disorder at home, in the classroom, and in therapy."
         path="/resources/downloadables"
       />
       <Header />
