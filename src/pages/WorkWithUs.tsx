@@ -12,8 +12,8 @@ const WorkWithUs = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Work With Us — DLD Workshops, Speaking & Consultation | Empowered DLD"
-        description="Book Empowered DLD for workshops, speaking engagements, and consultation on Developmental Language Disorder. Professional development for schools, clinics, and conferences."
+        title="Work With Us: DLD Training & Speaking"
+        description="Bring DLD expertise to your school, clinic, or organization. Book Empowered DLD for training, speaking, and consulting on Developmental Language Disorder."
         path="/work-with-us"
       />
       <Header />
