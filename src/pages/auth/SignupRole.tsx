@@ -34,7 +34,7 @@ const interestOptions = [
 const SignupRole = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const { user, profile, loading: authLoading } = useAuth();
+  const { user, profile, loading: authLoading, refreshProfile } = useAuth();
   const [selectedRole, setSelectedRole] = useState<Role | undefined>(undefined);
   const [interests, setInterests] = useState<string[]>([]);
   const [resourceWish, setResourceWish] = useState("");
