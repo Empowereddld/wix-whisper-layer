@@ -83,6 +83,10 @@ const SignupRole = () => {
       return;
     }
 
+    // Refresh profile in AuthContext so ProtectedRoute sees updated interests
+    // and doesn't bounce the user back to /signup/role.
+    await refreshProfile();
+
     // Fire-and-forget welcome email (server renders from template registry)
     if (user.email) {
       const firstName = profile?.first_name || user.email.split("@")[0];
@@ -102,6 +106,7 @@ const SignupRole = () => {
     if (user) {
       // Mark onboarding as complete with empty interests
       await supabase.from("profiles").update({ interests: [] }).eq("id", user.id);
+      await refreshProfile();
     }
     navigate("/hub");
   };
