@@ -19,6 +19,8 @@ import Resources from "./pages/Resources";
 import Shop from "./pages/Shop";
 import Books from "./pages/Books";
 import BulkOrders from "./pages/BulkOrders";
+import ShopMerch from "./pages/ShopMerch";
+import ShopMerchProduct from "./pages/ShopMerchProduct";
 import WorkWithUs from "./pages/WorkWithUs";
 import AboutDLD from "./pages/AboutDLD";
 import ContactUs from "./pages/ContactUs";
@@ -118,6 +120,8 @@ const App = () => (
               <Route path="/shop" element={<Shop />} />
               <Route path="/shop/books" element={<Books />} />
               <Route path="/shop/bulk-orders" element={<BulkOrders />} />
+              <Route path="/shop/merch" element={<ShopMerch />} />
+              <Route path="/shop/merch/:handle" element={<ShopMerchProduct />} />
               <Route path="/shop/educational-app" element={<EducationalApp />} />
               <Route path="/work-with-us" element={<WorkWithUs />} />
               <Route path="/about-dld" element={<AboutDLD />} />
