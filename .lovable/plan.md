@@ -1,67 +1,76 @@
-# Shop Merch (Shopify + Gelato) — Build Plan
 
-Goal: stand up a branded `/shop/merch` page that pulls products from a new Shopify store, hands checkout off to Shopify, and is fulfilled by Gelato. Page stays hidden from visitors until you give the green light. **Phase 2 first** (build the page with placeholder products) so you know the exact image sizes before designing real mockups.
+# Storefront Imagery: Generate Drafts + Reusable Prompts
 
-## Phase 2 (do this first) — Branded /shop/merch page with placeholders
+Goal: get a consistent, on-brand look across the hidden `/shop/merch` page using imagery that matches Empowered DLD (deep purple palette, DM Sans, soft natural daylight, minimalist editorial style). You'll get both: I'll generate first-draft images in the sandbox AND give you the exact prompts to use in ChatGPT 2.0 so you can iterate yourself.
 
-A new page at `/shop/merch`, styled to match Empowered DLD (DM Sans, purple palette, 1100–1300px container, rounded-xl cards, WebP imagery, scroll fade-ins). Sections:
+## Approach: which tool does what
 
-1. **Hero** — purple band, headline "Wear It. Share It. Start the Conversation.", subhead about DLD awareness.
-2. **Mission strip** — short editorial paragraph: every shirt, mug, and tote helps more people learn what DLD is. No "free" framing.
-3. **Product grid** — 3 placeholder products (t-shirt, mug, tote) with generated on-brand mockup images so you can see the layout. Card style matches existing Shop category cards.
-4. **Product detail** (`/shop/merch/:handle`) — gallery, variant selector (size/color), price, add-to-cart, description, shipping note ("Printed on demand and shipped worldwide by our print partner. Allow 5–10 days.").
-5. **Cart drawer** — slide-out from header with line items, qty controls, subtotal, "Checkout" button (stub for now, wired to Shopify in Phase 3).
-6. **FAQ / shipping band** — sizing, returns, international shipping, who fulfills.
-7. **ChoosePathCTA** footer pattern.
+- **ChatGPT 2.0 (or sandbox imagegen)** — branded *storefront* imagery: the lifestyle hero, optional editorial shots. Style-controlled, consistent palette.
+- **Gelato** — actual *product* mockups once your designs are uploaded (true t-shirt cut, true mug shape, accurate print placement). Use these for the live product cards after Phase 1.
+- **For the hidden preview now** — I'll generate placeholder product shots in a single consistent style so the page looks polished while you wait on Gelato.
 
-### Hide the page until launch
-- Route exists but is not linked from anywhere (Shop page Merch card keeps "Coming Soon", stays non-clickable).
-- `noindex` on `/shop/merch` and detail pages.
-- `robots.txt` adds `Disallow: /shop/merch`.
+## What I'll generate in the sandbox (premium quality, on-brand)
 
-### Image specs you can hand to ChatGPT later
-Once the page exists I will give you exact sizes (likely 1200x1200 square product, 1600x900 hero, 800x800 cart thumb) so your real mockups drop straight in.
+Saved to `src/assets/`, replacing current placeholders:
 
-## Phase 1 (after you see the page) — Accounts
+1. `merch-hero.jpg` — 1280x960 (4:3), lifestyle flat lay of tee + mug + tote on a warm neutral surface.
+2. `merch-tshirt.jpg` — 1024x1024, folded purple heather tee on neutral background.
+3. `merch-mug.jpg` — 1024x1024, white 11oz ceramic mug with purple wordmark band.
+4. `merch-tote.jpg` — 1024x1024, natural canvas tote with deep purple print.
 
-### Shopify (I trigger)
-Lovable Shopify enable flow creates a **new development store**. Free while building, 30-day Shopify trial when you claim it, paid plan required to sell live.
+All four use the same lighting, palette, and composition language so the grid looks like one collection.
 
-### Gelato (you do, I guide)
-1. Free account at gelato.com.
-2. Connect Shopify (Stores → Connect → Shopify).
-3. Pick t-shirt, mug, tote.
-4. Upload your final designs (PNG, 300dpi, transparent background).
-5. Set retail prices. Profit margin = retail minus Gelato cost.
-6. Publish, products flow into Shopify automatically.
+## Master style guide (shared across all prompts)
 
-## Phase 3 — Wire it up
+Use this style block in every ChatGPT 2.0 prompt to keep the look consistent:
 
-- Shopify Storefront API (read-only public token) for product listings and cart.
-- Cart state in React context + localStorage.
-- Checkout = redirect to Shopify-hosted checkout. Shopify handles payment, taxes, emails, order records. Gelato auto-receives and ships.
+```
+Style: minimalist editorial e-commerce photography. Soft natural daylight from upper left, gentle realistic shadows. Warm neutral background (off-white #F5F1EA or soft oat). Deep purple brand accent (#5B3A8C). No text overlays, no logos, no people, no props beyond the product itself. Clean composition, generous negative space, slightly desaturated, modern lifestyle brand feel. High resolution, photorealistic.
+```
 
-## Phase 4 — Go-live checklist (when you say "we're good")
+## ChatGPT 2.0 prompts (copy/paste)
 
-1. You claim the Shopify store (starts 30-day trial, pick paid plan to sell).
-2. Confirm Gelato test order prints and ships correctly.
-3. Remove `noindex`, remove `Disallow`, remove "Coming Soon" badge on `/shop`, link the Merch card to `/shop/merch`.
-4. Add `/shop/merch` and product pages to sitemap.
-5. Announce.
+**1. Hero (1280x960, 4:3)**
+```
+Lifestyle flat lay for a DLD awareness merch collection called "Empowered DLD". 
+A neatly folded deep purple heather unisex t-shirt, an 11oz white ceramic mug with a purple band, and a natural canvas tote bag arranged together on a warm neutral oat-colored linen surface. Items slightly overlapping, balanced asymmetric composition with negative space on the right for headline text.
+[paste master style guide]
+```
 
-## Technical notes
+**2. T-shirt (1024x1024, 1:1)**
+```
+Single neatly folded deep purple heather unisex t-shirt, centered on a warm neutral oat-colored surface. Soft fabric texture visible. Subtle realistic shadow.
+[paste master style guide]
+```
 
-- New pages: `src/pages/ShopMerch.tsx`, `src/pages/ShopMerchProduct.tsx`. Routes in `src/App.tsx`.
-- New components in `src/components/merch/`: `MerchHero`, `MerchMissionStrip`, `MerchProductGrid`, `MerchProductCard`, `MerchProductDetail`, `MerchCartDrawer`, `MerchFaq`.
-- New hook `src/hooks/useShopify.ts` (added in Phase 3) wrapping Storefront API.
-- Cart context `src/contexts/CartContext.tsx`, mounted in `App.tsx`.
-- Placeholder product data in `src/data/merchPlaceholders.ts` until Shopify is wired.
-- DM Sans + purple palette tokens, no hardcoded hex, rounded-xl cards, scroll fade-ins via `useScrollFadeIn`, WebP imagery, no em dashes anywhere.
-- Sitemap untouched until launch.
+**3. Mug (1024x1024, 1:1)**
+```
+Single 11oz white ceramic mug with a deep purple horizontal band around the middle. Mug centered, handle facing right, on a warm neutral oat-colored surface. Soft realistic shadow.
+[paste master style guide]
+```
 
-## What I will do as soon as you approve
+**4. Tote (1024x1024, 1:1)**
+```
+Single natural canvas tote bag with a small deep purple geometric print at the center. Bag standing upright with handles natural, on a warm neutral oat-colored surface. Soft realistic shadow.
+[paste master style guide]
+```
 
-1. Generate 3 on-brand placeholder product mockups (t-shirt, mug, tote in purple palette).
-2. Build the hidden `/shop/merch` + product detail pages.
-3. Hand you a private preview URL pattern so only you can see it.
-4. Give you the exact image dimensions to use when you create real mockups in ChatGPT.
+## Build steps
+
+1. Generate the 4 images above using `imagegen--generate_image` at **premium** quality (consistent style, no text needed so `standard` would also work, but premium gives you better fabric/ceramic realism).
+2. Save to `src/assets/merch-hero.jpg`, `merch-tshirt.jpg`, `merch-mug.jpg`, `merch-tote.jpg` (overwriting current placeholders).
+3. Imports in `MerchHero.tsx` and `merchPlaceholders.ts` already point to those filenames, so the page picks them up automatically.
+4. Send you the master style guide + 4 prompts above in chat so you can regenerate any of them in ChatGPT 2.0 whenever you want.
+
+## Important note on Gelato
+
+For the **final** product images post-launch, use Gelato's built-in mockup generator. It renders your actual uploaded designs on the real garments/mugs Gelato will ship, which keeps customer expectations accurate. The ChatGPT/sandbox images stay perfect for the hero and any editorial sections. We'll swap the product images during Phase 3 (Shopify wire-up).
+
+## What does NOT change
+
+- No copy edits.
+- No layout changes.
+- Page stays hidden (`noindex` + robots disallow + "Coming Soon" badge).
+- No Shopify or Gelato actions yet.
+
+Approve and I'll generate the four images and drop the final prompt sheet in chat.
