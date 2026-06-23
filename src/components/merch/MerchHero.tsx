@@ -1,0 +1,40 @@
+import merchHero from "@/assets/merch-hero.jpg";
+
+const MerchHero = () => {
+  return (
+    <section className="bg-deep-purple py-16 md:py-24 lg:py-28">
+      <div className="container px-6 md:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+          <div>
+            <p className="text-[11px] md:text-[12px] font-bold uppercase tracking-[0.22em] text-white/60 mb-4">
+              SHOP MERCH
+            </p>
+            <h1 className="text-[32px] md:text-[44px] lg:text-[54px] font-black text-white leading-[1.08] mb-5">
+              Wear It. Share It.<br />Start the Conversation.
+            </h1>
+            <p className="text-[15px] md:text-[16px] text-white/80 leading-[1.7] max-w-[520px] mb-8">
+              Soft tees, ceramic mugs, and canvas totes that help more people learn what Developmental Language Disorder is. Every piece is a small act of awareness.
+            </p>
+            <a
+              href="#shop"
+              className="inline-flex items-center justify-center h-12 px-8 bg-white text-deep-purple text-[13px] font-bold uppercase tracking-[0.12em] rounded-md hover:bg-white/90 transition-colors duration-200"
+            >
+              Shop the Collection
+            </a>
+          </div>
+          <div className="rounded-2xl overflow-hidden shadow-2xl">
+            <img
+              src={merchHero}
+              alt="Empowered DLD merchandise: tee, mug, and tote bag"
+              className="w-full h-auto object-cover aspect-[4/3]"
+              width={1024}
+              height={768}
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default MerchHero;
