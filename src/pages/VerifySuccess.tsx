@@ -56,6 +56,7 @@ const VerifySuccess = () => {
         title="Email Verified | Story Pros"
         description="Your email is verified and your points are unlocked."
         path="/storypros/verified"
+        noindex
       />
 
       <motion.div
