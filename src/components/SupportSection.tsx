@@ -105,6 +105,7 @@ const SupportSection = () => {
                   href={f.href}
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label={`${f.cta}: ${f.title}`}
                   className="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-[0.14em] text-foreground hover:text-primary transition-colors"
                 >
                   {f.cta}
@@ -113,6 +114,7 @@ const SupportSection = () => {
               ) : (
                 <Link
                   to={f.href}
+                  aria-label={`${f.cta}: ${f.title}`}
                   className="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-[0.14em] text-foreground hover:text-primary transition-colors"
                 >
                   {f.cta}
