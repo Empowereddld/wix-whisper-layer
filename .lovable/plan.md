@@ -1,65 +1,37 @@
+Reordered SEO Roadmap, Quick Wins First (Blogs Deferred)
 
-# Full SEO Audit — empowereddld.com
+Phase 1, This Week, Quick Technical Wins (no writing required, ~2 hours of my time)
+These are the highest-leverage fixes. None require you at a computer writing content.
+- Fix the www vs root domain mismatch in sitemap.xml, robots.txt, and SEOHead so Google stops splitting signals between two versions of your site.
+- Trim meta titles and descriptions that are too long on the Home, About DLD, and Books pages (Google currently cuts them off in search results).
+- Replace generic "LEARN MORE" link text with descriptive anchors like "DLD resources for parents" so Google understands where those links go.
+- Fix the logo alt text from "EmpoweredDLD" to "Empowered DLD" (small, but the scanner flags it).
+- Add fetchpriority and width/height to the homepage hero image so the page scores better on Google's speed test.
+- I add the noindex tag to Story Pros internal routes so they stop competing with your public pages.
 
-Run a consultant-grade SEO audit across organic visibility, technical health, on-page quality, content, competitors, backlinks, and keyword opportunities. Deliver the report in chat and save a copy to `SEO_AUDIT.md` at the repo root.
+Phase 2, This Week, Google Search Console Setup (you, ~30 minutes total, can do from phone)
+- Add BOTH www.empowereddld.com and empowereddld.com as properties in Google Search Console and pick one as preferred. I will walk you through it.
+- Submit your sitemap (sitemap.xml) to GSC so Google knows what to crawl.
+- Disavow the spammy PBN backlinks already pointing at your domain (I prepare the file, you upload it).
+- This is the single biggest reason Janine cannot find you for terms beyond "DLD Books": Google has not been told which version of your site to trust.
 
-## What I'll analyze
+Phase 3, Next Two Weeks, Optimise What Already Exists (no new content)
+We tune existing pages, no new writing.
+- Light edits to your existing blog post "autism-vs-dld-understand-the-difference" so it targets the exact phrase "dld vs autism".
+- Light edits to "dld-as-an-adult" so it targets "DLD in adults".
+- Add the phrases "DLD checklist" and "signs of DLD" naturally into your existing Language Impact Checklist page.
+- Add Product schema to /shop/books so your book listings can show stars, prices, and availability in Google results (helps the "DLD Books" ranking you already have).
+- Add proper page descriptions to any thin pages flagged by the scanner.
 
-### 1. Organic visibility & trend (Semrush)
-- `domain_analysis` on empowereddld.com across **US, UK, AU, CA** databases — traffic, keywords, top rankings per market.
-- `seo_trend` (US) — month-over-month direction; growing, flat, or declining.
-- `top_pages` (US) — what pages drive traffic today.
+Phase 4, When You Are Ready, New Blog Posts (the writing phase, fully deferrable)
+This is the phase you can pause on. Writing new question-led posts ("What causes DLD?", "Is DLD genetic?", "DLD vs ADHD") is what unlocks the next 20 to 40 keyword rankings, but only when you have time. Two posts a month is enough. Nothing breaks if you wait a month.
 
-### 2. Competitive landscape
-- `competitive_analysis` (US + UK) — auto-discover organic competitors and keyword gaps.
-- `compare_domains` against 1-2 named DLD-space competitors (e.g. radld.org, dldandme.org) — head-to-head on authority, keywords, traffic.
+Phase 5, Ongoing, Backlinks and Tracking
+- Outreach to ICAN, Afasic, Reading Rockets, Understood.org, and university SLP departments to earn quality backlinks (a few per week, can be delegated).
+- Monthly check on rankings and Authority Score to see progress.
+- Hreflang setup later if UK content grows enough to compete with US content.
 
-### 3. Keyword opportunity shortlist
-- `keyword_research` on 4-6 core terms: "developmental language disorder", "what is DLD", "DLD vs autism", "DLD in adults", "DLD therapy", "DLD resources for parents".
-- `keyword_compare` to triage the shortlist by volume/difficulty/intent.
-- Flag quick wins (KDI < 40, decent volume, aligned to existing pages).
+What I propose we do right now
+Phases 1 and 2 ONLY. Total time: roughly 2 hours of my work and 30 minutes of yours from your phone. These fix the foundation so that when you DO write blogs later (or optimise existing pages in Phase 3), Google can actually credit your site for them.
 
-### 4. Backlink profile
-- `backlink_analysis` on empowereddld.com — authority score, referring domains, anchor distribution, follow ratio.
-- Compare against one competitor's backlink profile to spot link-building gaps.
-
-### 5. Technical SEO audit (code-level, read-only)
-Re-read and verify:
-- `index.html` — title/description/OG/Twitter/JSON-LD/canonical/viewport/favicon/theme-color.
-- `public/robots.txt` — crawler rules, disallows (note: `/shop/merch` is blocked, that's intentional).
-- `public/sitemap.xml` + `scripts/generate-sitemap.ts` — coverage, freshness, dynamic blog inclusion.
-- `src/components/SEOHead.tsx` — per-route head pattern, canonical/OG self-reference, breadcrumb JSON-LD.
-- Spot-check 5-6 key pages (Index, AboutDLD, ForParents, ForTherapists, Blog, Resources) for: unique title/description, canonical, JSON-LD type match, breadcrumbs, noindex correctness.
-- Lovable's built-in scanner via `seo_chat--list_findings` (no fresh scan triggered unless user asks).
-
-### 6. On-page content quality
-- Heading hierarchy (single H1, semantic structure).
-- Image alt coverage on hero/key sections.
-- Internal linking patterns (Resources → Blog → CTA hubs).
-- Content depth on commercial pages vs informational pages.
-- "Empowered DLD" brand-term ranking and SERP ownership.
-
-### 7. AI search / LLM discoverability
-- `public/llms.txt` presence and quality.
-- Schema completeness for AI engines (Organization, WebSite, FAQ, Article, BreadcrumbList).
-
-## Deliverable
-
-Consultant-style report covering:
-
-1. **Executive summary** — overall health grade, top 3 wins, top 3 risks.
-2. **Current state** — traffic, keywords, authority, trend, per-market breakdown.
-3. **Technical SEO scorecard** — pass/fail per check with evidence.
-4. **On-page findings** — per-page issues with file references.
-5. **Content & keyword strategy** — ranked opportunity list with target page, expected difficulty, recommended action.
-6. **Competitive positioning** — who you compete with, where the gaps are.
-7. **Backlink profile assessment** — strengths, weaknesses, outreach targets.
-8. **Prioritized action plan** — P0 (fix this week), P1 (next 30 days), P2 (next quarter), each with effort estimate and expected impact.
-
-Saved to `SEO_AUDIT.md` at repo root for reference and sharing. No other files created or modified.
-
-## Notes
-
-- Semrush data is Google organic only; real traffic from analytics will be higher.
-- Estimated ~12-15 Semrush calls across the four markets.
-- No content rewrites, schema additions, or robots/sitemap changes happen in this turn — audit only. Fixes come in a follow-up turn once you've reviewed the findings and picked priorities.
+Want me to go ahead with Phase 1?
