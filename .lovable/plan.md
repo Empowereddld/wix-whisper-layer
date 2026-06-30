@@ -1,76 +1,65 @@
 
-# Storefront Imagery: Generate Drafts + Reusable Prompts
+# Full SEO Audit — empowereddld.com
 
-Goal: get a consistent, on-brand look across the hidden `/shop/merch` page using imagery that matches Empowered DLD (deep purple palette, DM Sans, soft natural daylight, minimalist editorial style). You'll get both: I'll generate first-draft images in the sandbox AND give you the exact prompts to use in ChatGPT 2.0 so you can iterate yourself.
+Run a consultant-grade SEO audit across organic visibility, technical health, on-page quality, content, competitors, backlinks, and keyword opportunities. Deliver the report in chat and save a copy to `SEO_AUDIT.md` at the repo root.
 
-## Approach: which tool does what
+## What I'll analyze
 
-- **ChatGPT 2.0 (or sandbox imagegen)** — branded *storefront* imagery: the lifestyle hero, optional editorial shots. Style-controlled, consistent palette.
-- **Gelato** — actual *product* mockups once your designs are uploaded (true t-shirt cut, true mug shape, accurate print placement). Use these for the live product cards after Phase 1.
-- **For the hidden preview now** — I'll generate placeholder product shots in a single consistent style so the page looks polished while you wait on Gelato.
+### 1. Organic visibility & trend (Semrush)
+- `domain_analysis` on empowereddld.com across **US, UK, AU, CA** databases — traffic, keywords, top rankings per market.
+- `seo_trend` (US) — month-over-month direction; growing, flat, or declining.
+- `top_pages` (US) — what pages drive traffic today.
 
-## What I'll generate in the sandbox (premium quality, on-brand)
+### 2. Competitive landscape
+- `competitive_analysis` (US + UK) — auto-discover organic competitors and keyword gaps.
+- `compare_domains` against 1-2 named DLD-space competitors (e.g. radld.org, dldandme.org) — head-to-head on authority, keywords, traffic.
 
-Saved to `src/assets/`, replacing current placeholders:
+### 3. Keyword opportunity shortlist
+- `keyword_research` on 4-6 core terms: "developmental language disorder", "what is DLD", "DLD vs autism", "DLD in adults", "DLD therapy", "DLD resources for parents".
+- `keyword_compare` to triage the shortlist by volume/difficulty/intent.
+- Flag quick wins (KDI < 40, decent volume, aligned to existing pages).
 
-1. `merch-hero.jpg` — 1280x960 (4:3), lifestyle flat lay of tee + mug + tote on a warm neutral surface.
-2. `merch-tshirt.jpg` — 1024x1024, folded purple heather tee on neutral background.
-3. `merch-mug.jpg` — 1024x1024, white 11oz ceramic mug with purple wordmark band.
-4. `merch-tote.jpg` — 1024x1024, natural canvas tote with deep purple print.
+### 4. Backlink profile
+- `backlink_analysis` on empowereddld.com — authority score, referring domains, anchor distribution, follow ratio.
+- Compare against one competitor's backlink profile to spot link-building gaps.
 
-All four use the same lighting, palette, and composition language so the grid looks like one collection.
+### 5. Technical SEO audit (code-level, read-only)
+Re-read and verify:
+- `index.html` — title/description/OG/Twitter/JSON-LD/canonical/viewport/favicon/theme-color.
+- `public/robots.txt` — crawler rules, disallows (note: `/shop/merch` is blocked, that's intentional).
+- `public/sitemap.xml` + `scripts/generate-sitemap.ts` — coverage, freshness, dynamic blog inclusion.
+- `src/components/SEOHead.tsx` — per-route head pattern, canonical/OG self-reference, breadcrumb JSON-LD.
+- Spot-check 5-6 key pages (Index, AboutDLD, ForParents, ForTherapists, Blog, Resources) for: unique title/description, canonical, JSON-LD type match, breadcrumbs, noindex correctness.
+- Lovable's built-in scanner via `seo_chat--list_findings` (no fresh scan triggered unless user asks).
 
-## Master style guide (shared across all prompts)
+### 6. On-page content quality
+- Heading hierarchy (single H1, semantic structure).
+- Image alt coverage on hero/key sections.
+- Internal linking patterns (Resources → Blog → CTA hubs).
+- Content depth on commercial pages vs informational pages.
+- "Empowered DLD" brand-term ranking and SERP ownership.
 
-Use this style block in every ChatGPT 2.0 prompt to keep the look consistent:
+### 7. AI search / LLM discoverability
+- `public/llms.txt` presence and quality.
+- Schema completeness for AI engines (Organization, WebSite, FAQ, Article, BreadcrumbList).
 
-```
-Style: minimalist editorial e-commerce photography. Soft natural daylight from upper left, gentle realistic shadows. Warm neutral background (off-white #F5F1EA or soft oat). Deep purple brand accent (#5B3A8C). No text overlays, no logos, no people, no props beyond the product itself. Clean composition, generous negative space, slightly desaturated, modern lifestyle brand feel. High resolution, photorealistic.
-```
+## Deliverable
 
-## ChatGPT 2.0 prompts (copy/paste)
+Consultant-style report covering:
 
-**1. Hero (1280x960, 4:3)**
-```
-Lifestyle flat lay for a DLD awareness merch collection called "Empowered DLD". 
-A neatly folded deep purple heather unisex t-shirt, an 11oz white ceramic mug with a purple band, and a natural canvas tote bag arranged together on a warm neutral oat-colored linen surface. Items slightly overlapping, balanced asymmetric composition with negative space on the right for headline text.
-[paste master style guide]
-```
+1. **Executive summary** — overall health grade, top 3 wins, top 3 risks.
+2. **Current state** — traffic, keywords, authority, trend, per-market breakdown.
+3. **Technical SEO scorecard** — pass/fail per check with evidence.
+4. **On-page findings** — per-page issues with file references.
+5. **Content & keyword strategy** — ranked opportunity list with target page, expected difficulty, recommended action.
+6. **Competitive positioning** — who you compete with, where the gaps are.
+7. **Backlink profile assessment** — strengths, weaknesses, outreach targets.
+8. **Prioritized action plan** — P0 (fix this week), P1 (next 30 days), P2 (next quarter), each with effort estimate and expected impact.
 
-**2. T-shirt (1024x1024, 1:1)**
-```
-Single neatly folded deep purple heather unisex t-shirt, centered on a warm neutral oat-colored surface. Soft fabric texture visible. Subtle realistic shadow.
-[paste master style guide]
-```
+Saved to `SEO_AUDIT.md` at repo root for reference and sharing. No other files created or modified.
 
-**3. Mug (1024x1024, 1:1)**
-```
-Single 11oz white ceramic mug with a deep purple horizontal band around the middle. Mug centered, handle facing right, on a warm neutral oat-colored surface. Soft realistic shadow.
-[paste master style guide]
-```
+## Notes
 
-**4. Tote (1024x1024, 1:1)**
-```
-Single natural canvas tote bag with a small deep purple geometric print at the center. Bag standing upright with handles natural, on a warm neutral oat-colored surface. Soft realistic shadow.
-[paste master style guide]
-```
-
-## Build steps
-
-1. Generate the 4 images above using `imagegen--generate_image` at **premium** quality (consistent style, no text needed so `standard` would also work, but premium gives you better fabric/ceramic realism).
-2. Save to `src/assets/merch-hero.jpg`, `merch-tshirt.jpg`, `merch-mug.jpg`, `merch-tote.jpg` (overwriting current placeholders).
-3. Imports in `MerchHero.tsx` and `merchPlaceholders.ts` already point to those filenames, so the page picks them up automatically.
-4. Send you the master style guide + 4 prompts above in chat so you can regenerate any of them in ChatGPT 2.0 whenever you want.
-
-## Important note on Gelato
-
-For the **final** product images post-launch, use Gelato's built-in mockup generator. It renders your actual uploaded designs on the real garments/mugs Gelato will ship, which keeps customer expectations accurate. The ChatGPT/sandbox images stay perfect for the hero and any editorial sections. We'll swap the product images during Phase 3 (Shopify wire-up).
-
-## What does NOT change
-
-- No copy edits.
-- No layout changes.
-- Page stays hidden (`noindex` + robots disallow + "Coming Soon" badge).
-- No Shopify or Gelato actions yet.
-
-Approve and I'll generate the four images and drop the final prompt sheet in chat.
+- Semrush data is Google organic only; real traffic from analytics will be higher.
+- Estimated ~12-15 Semrush calls across the four markets.
+- No content rewrites, schema additions, or robots/sitemap changes happen in this turn — audit only. Fixes come in a follow-up turn once you've reviewed the findings and picked priorities.
