@@ -123,6 +123,7 @@ const WaitlistUserGuide = () => {
         title="Waitlist User Guide | Story Pros"
         description="Learn how to maximize your position on the Story Pros Launch Team, earn rewards, and make the most of our referral system."
         path="/waitlist-guide"
+        noindex
       />
 
       <div className="min-h-screen bg-white text-[#121212] overflow-hidden">

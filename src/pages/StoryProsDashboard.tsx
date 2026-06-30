@@ -491,6 +491,7 @@ const StoryProsDashboard = () => {
         title="Your Story Pros Dashboard | Empowered DLD"
         description="Track your Story Pros waitlist tier, points, referrals, and rewards."
         path="/storypros/dashboard"
+        noindex
       />
 
       {/* Top bar */}
@@ -1335,6 +1336,7 @@ const UnverifiedDashboardView = ({
         title="Verify your email | Story Pros"
         description="Verify your email to unlock your Story Pros referral link and rewards."
         path="/storypros/dashboard"
+        noindex
       />
 
       {/* Top bar */}
