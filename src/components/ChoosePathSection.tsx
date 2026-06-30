@@ -65,7 +65,7 @@ const ChoosePathSection = () => {
               </div>
               <h3 className="text-[18px] md:text-[20px] font-bold text-foreground mb-2 leading-[1.25]">{path.title}</h3>
               <p className="text-[13px] text-muted-foreground mb-6 flex-1 leading-[1.65]">{path.description}</p>
-              <a href={path.href}>
+              <a href={path.href} aria-label={`Learn more: ${path.title}`}>
                 <Button
                   size="sm"
                   className="h-10 px-6 rounded-lg text-[11px] font-bold uppercase tracking-[0.12em] bg-deep-purple text-deep-purple-foreground hover:bg-deep-purple/90 shadow-[0_1px_3px_hsl(262_49%_30%/0.2)] transition-all duration-300"
