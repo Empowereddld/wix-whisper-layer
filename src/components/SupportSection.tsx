@@ -6,7 +6,7 @@ const features = [
     icon: BookOpen,
     title: "Dan & Daria Book Series",
     description: "Relatable stories showing DLD impacting kids in everyday life and kids overcoming their challenges.",
-    cta: "LEARN MORE",
+    cta: "SHOP THE SERIES",
     href: "/shop/books",
   },
   {
@@ -27,7 +27,7 @@ const features = [
     icon: Mic,
     title: "Life with DLD Podcast",
     description: "Animated, candid talk with Dan and Daria about how it feels to experience life with DLD and what helps.",
-    cta: "LEARN MORE",
+    cta: "LISTEN NOW",
     href: "/resources/podcasts",
   },
   {
@@ -49,14 +49,14 @@ const features = [
     icon: Briefcase,
     title: "Professional Development",
     description: "Workshops and speaking engagements for educators and SLPs on supporting DLD.",
-    cta: "LEARN MORE",
+    cta: "WORK WITH US",
     href: "/work-with-us",
   },
   {
     icon: Play,
     title: "Free YouTube Course",
     description: "Video lessons teaching families and educators how to support children with DLD.",
-    cta: "LEARN MORE",
+    cta: "WATCH THE COURSE",
     href: "/resources/free-course",
   },
   {

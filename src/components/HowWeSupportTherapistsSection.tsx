@@ -17,7 +17,7 @@ const cards = [
   {
     title: "Workshops & Training",
     description: "Evidence-based DLD training for your team. Topics include recognizing DLD in underserved populations and multilingual considerations. Perfect for in-service training.",
-    link: "Learn More",
+    link: "Book Training",
     href: "/contact",
   },
   {

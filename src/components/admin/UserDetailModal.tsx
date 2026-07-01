@@ -70,7 +70,7 @@ const UserDetailModal = ({
   };
 
   const handleCopyReferralLink = () => {
-    const link = `https://www.empowereddld.com/storypros?ref=${user.referral_code}`;
+    const link = `https://empowereddld.com/storypros?ref=${user.referral_code}`;
     navigator.clipboard.writeText(link);
   };
 
@@ -251,7 +251,7 @@ const UserDetailModal = ({
                 <Label className="text-xs text-muted-foreground">Referral Link</Label>
                 <div className="flex gap-2 mt-1">
                   <code className="flex-1 bg-muted p-2 rounded text-xs font-mono truncate">
-                    {`https://www.empowereddld.com/storypros?ref=${user.referral_code}`}
+                    {`https://empowereddld.com/storypros?ref=${user.referral_code}`}
                   </code>
                   <Button
                     size="sm"

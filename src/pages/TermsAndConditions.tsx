@@ -19,7 +19,7 @@ const TermsAndConditions = () => {
 
           <div className="prose prose-sm max-w-none text-muted-foreground space-y-6 [&_h2]:text-foreground [&_h2]:text-[20px] [&_h2]:font-bold [&_h2]:mt-10 [&_h2]:mb-3 [&_p]:leading-[1.8] [&_ul]:space-y-1 [&_li]:leading-[1.8]">
             <h2>1. Acceptance of Terms</h2>
-            <p>By accessing and using the Empowered DLD website (www.empowereddld.com), you accept and agree to be bound by these Terms & Conditions. If you do not agree, please do not use our website.</p>
+            <p>By accessing and using the Empowered DLD website (empowereddld.com), you accept and agree to be bound by these Terms & Conditions. If you do not agree, please do not use our website.</p>
 
             <h2>2. Use of Our Website</h2>
             <p>You may use our website for lawful purposes only. You agree not to:</p>

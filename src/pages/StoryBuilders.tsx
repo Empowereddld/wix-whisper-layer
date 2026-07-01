@@ -569,7 +569,7 @@ const StoryBuilders = () => {
         title="Story Pros — The Storytelling App for Kids with DLD | Empowered DLD"
         description="Built by an SLP and an elementary school teacher. Join the Story Pros founding waitlist and help bring an interactive storytelling app to children with Developmental Language Disorder."
         path="/storypros"
-        ogImage="https://www.empowereddld.com/og-storypros.png"
+        ogImage="https://empowereddld.com/og-storypros.png"
       />
       <Header />
 

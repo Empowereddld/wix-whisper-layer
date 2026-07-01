@@ -15,4 +15,4 @@ Allow: /
 Disallow: /preview/
 Disallow: /shop/merch
 
-Sitemap: https://www.empowereddld.com/sitemap.xml
+Sitemap: https://empowereddld.com/sitemap.xml
