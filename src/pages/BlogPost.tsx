@@ -57,6 +57,10 @@ const BlogPost = () => {
     enabled: !!slug,
   });
 
+  const parsed = useMemo(() => parseFAQ(post?.body || ""), [post?.body]);
+
+
+
   const articleJsonLd = post ? {
     "@context": "https://schema.org",
     "@type": "Article",
