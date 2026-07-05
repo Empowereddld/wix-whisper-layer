@@ -161,9 +161,14 @@ const BlogPost = () => {
               {/* Body */}
               <div className="max-w-[700px] mx-auto blog-content mt-10 md:mt-12">
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                  {post.body || ""}
+                  {parsed.before || post.body || ""}
                 </ReactMarkdown>
+                {parsed.faqs.length > 0 && <BlogFAQAccordion items={parsed.faqs} />}
+                {parsed.after && (
+                  <ReactMarkdown remarkPlugins={[remarkGfm]}>{parsed.after}</ReactMarkdown>
+                )}
               </div>
+
 
               <div className="max-w-[700px] mx-auto">
                 <BlogPostCTA categories={post.categories} />
