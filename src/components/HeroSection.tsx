@@ -63,7 +63,7 @@ const HeroSection = () => {
               height={1364}
               className="w-[55%] h-auto object-contain"
               loading="eager"
-              fetchPriority="high"
+              {...({ fetchpriority: "high" } as any)}
               decoding="async"
             />
           </div>
