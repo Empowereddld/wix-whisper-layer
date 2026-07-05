@@ -411,4 +411,48 @@
     font-size: 0.875em;
     font-family: 'DM Sans', sans-serif;
   }
+
+  /* Sources section — smaller and visually separated from article body */
+  .blog-sources {
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid hsl(var(--border));
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: hsl(var(--muted-foreground));
+  }
+
+  @media (min-width: 768px) {
+    .blog-sources {
+      font-size: 0.9rem;
+    }
+  }
+
+  .blog-sources h6 {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    font-size: 0.75rem;
+    line-height: 1.3;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: hsl(var(--foreground));
+    margin-bottom: 0.75rem;
+  }
+
+  .blog-sources p {
+    margin-bottom: 0.75rem;
+  }
+
+  .blog-sources p:last-child {
+    margin-bottom: 0;
+  }
+
+  .blog-sources strong {
+    font-weight: 700;
+    color: hsl(var(--foreground));
+  }
+
+  .blog-sources a {
+    color: hsl(var(--primary));
+  }
 }
