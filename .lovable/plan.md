@@ -1,44 +1,38 @@
-# Phase 3: SEO Optimization (Review-First)
+# Batch 6 — DLD vs Autism blog polish
 
-Scan finished. Here's the full list of what the scanner flagged, plus your original Phase 3 keyword work. **I will show you the exact before/after for each item in chat and wait for your "go" before editing anything.**
+Keep child/kids terminology as-is. Ship items 1, 2, 3, 4, 5 from the earlier suggestions.
 
-## A. Scanner findings (6 items)
+## Changes
 
-1. **Generic link text "LEARN MORE"** — `ChoosePathSection.tsx`, `HowWeSupportTherapistsSection.tsx`. Replace with descriptive text like "Learn more about DLD for parents."
-2. **Short logo alt text** — `Header.tsx`, `Footer.tsx`. Change to "Empowered DLD" or "Empowered Developmental Language Disorder."
-3. **Homepage heading structure** — Add `<h2>` to `SupportSection` and `BookShowcase` in `Index.tsx`; check no heading levels are skipped.
-4. **Titles/descriptions too long** — Books page title >60 chars; Home + About DLD meta descriptions >160 chars. Trim while keeping keywords.
-5. **robots.txt sitemap URL** — Points at `www.empowereddld.com`; change to `https://empowereddld.com/sitemap.xml`.
-6. **sitemap.xml** — Same host issue; also missing entries for `/signup`, `/storypros/dashboard`, `/storypros/claim-founder`, `/storypros/verify`, `/storypros/verified`.
+1. **Meta description** — set on the `blog_posts` row (currently NULL):
+   > "Autism and DLD share overlap but differ in key ways. Compare symptoms, diagnosis, and support so you can advocate for the right help."
 
-(Lighthouse performance + accessibility findings apply to the published build; I'll address them last so we can republish once.)
+2. **Intro paragraph** — add 2-3 sentences above the opening comparison table in the post body, framing why the two are confused and what the article covers. No new claims beyond what's already in the post.
 
-## B. Keyword optimizations (your original Phase 3 list)
+3. **Restore missing sources** — append to the existing References section at the end of the body, matching the current citation format:
+   - McGregor & Self (2021)
+   - Marini et al. (2020)
+   - Public Health Agency of Canada (2022)
+   - Saar et al. (2022)
+   - Thomas et al. (2019)
+   - Whitehouse (2021)
 
-7. **Autism vs DLD blog** → target `dld vs autism` (SEO title, meta, H1, light heading tweaks; body untouched).
-8. **DLD as an Adult blog** → target `DLD in adults` (same treatment).
-9. **Language Impact Checklist page** → add `DLD checklist` and `signs of DLD` to SEO title, meta, H1/subhead.
-10. **`/shop/books` Product schema** → add JSON-LD Product structured data via SEOHead.
+   Full citation strings will be pulled verbatim from the user's draft.
 
-## Workflow for every item
+4. **FAQ block** — add an "FAQs" H2 near the end of the body with 3-4 Q&As derived strictly from content already in the post (no new facts). Draft Qs:
+   - Can a child have both DLD and autism?
+   - How is DLD different from autism?
+   - Does DLD affect social skills?
+   - Who diagnoses DLD vs autism?
 
-1. I read the current file.
-2. I post the **exact diff** in chat (current → proposed).
-3. You reply "go" / "change X" / "skip."
-4. I edit and confirm.
+   Answers will be 1-2 sentences each, paraphrased from existing post content.
 
-## Order I suggest
+5. **Legacy slug redirect** — keep current slug `/resources/blog/autism-vs-dld-understand-the-difference`. Add a client-side redirect from `/blog/dld-vs-autism` and `/resources/blog/dld-vs-autism` → current URL in `src/App.tsx` routing (or a small redirect component).
 
-Quick housekeeping first (fast, no judgment calls), then keyword work:
-- Batch 1: #5, #6 (robots + sitemap) — I'll show the exact new file contents.
-- Batch 2: #1, #2 (link/alt text swaps).
-- Batch 3: #4 (title/description trims).
-- Batch 4: #3 (heading structure).
-- Batch 5: #7, #8, #9 (keyword tuning, one at a time).
-- Batch 6: #10 (Product schema).
+## Skipped
+- **Item 6 (terminology sweep)** — per your instruction, keep child/kids wording.
 
-## Out of scope
-
-Blog body content, CTAs, routing, styling, business logic, "free"-language rewrites.
-
-Approve this plan and I'll start with Batch 1 by posting the proposed robots.txt + sitemap changes for your sign-off.
+## Technical notes
+- Items 1-4 are a single `UPDATE` on the `blog_posts` row (`meta_description` + `body`). No schema changes.
+- Item 5 touches `src/App.tsx` only (add `<Route>` entries with `<Navigate replace />`).
+- No FAQPage JSON-LD wiring in `BlogPost.tsx` this pass — content-only FAQ. Can add JSON-LD in a follow-up if you want the rich result.
