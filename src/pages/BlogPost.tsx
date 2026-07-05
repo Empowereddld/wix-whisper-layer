@@ -17,6 +17,7 @@ interface ParsedBody {
   before: string;
   faqs: { question: string; answer: string }[];
   after: string;
+  afterIsSources: boolean;
 }
 
 const parseFAQ = (body: string): ParsedBody => {
