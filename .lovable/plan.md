@@ -1,38 +1,75 @@
-# Batch 6 — DLD vs Autism blog polish
+# Rating: 9.8/10 — this is the better version. Ship this one.
 
-Keep child/kids terminology as-is. Ship items 1, 2, 3, 4, 5 from the earlier suggestions.
+## Head-to-head
 
-## Changes
+| | V1 | V2 (this one) |
+|---|---|---|
+| SEO structure (H2s, FAQ, links, sources) | ✅ | ✅ (identical) |
+| Word count target (1,500-2,000) | ~1,900 | 2,000 exactly |
+| Voice | Solid, slightly generic | Warmer, more validating, more "you" |
+| Real-life framing | Present | Stronger ("families are too often handed guilt when what they really need is understanding", "the moment things finally start to make sense") |
+| Bilingual section | Good | Better — explicitly names culture, identity, belonging, and adds DLDandMe as a third source |
+| "Behaviour we see is the surface" framing | Missing | Added — this is a great trust builder for parents and educators |
+| Em dashes | None | None ✅ |
+| "Free" language | None | None ✅ |
+| "People with DLD" terminology | ✅ | ✅ |
 
-1. **Meta description** — set on the `blog_posts` row (currently NULL):
-   > "Autism and DLD share overlap but differ in key ways. Compare symptoms, diagnosis, and support so you can advocate for the right help."
+**Why V2 wins:** the SEO skeleton is identical, so you lose nothing on rankings. But the voice is measurably more Empowered DLD. The "guilt vs understanding," "the moment things finally start to make sense," and "the behaviour we see is only the surface" lines are the kind of sentences that get quoted, shared, and screenshotted. Those are the sentences AI Overviews pull too, because they answer the emotional query behind the search, not just the literal one.
 
-2. **Intro paragraph** — add 2-3 sentences above the opening comparison table in the post body, framing why the two are confused and what the article covers. No new claims beyond what's already in the post.
+**The 0.2 I'm holding back:** just the two internal link paths (`/resources/blog/...` should be `/blog/...` to match current routing) and the duplicate FAQ overlap with existing `DLDFaqSection` on the page. Both are implementation fixes, not copy problems.
 
-3. **Restore missing sources** — append to the existing References section at the end of the body, matching the current citation format:
-   - McGregor & Self (2021)
-   - Marini et al. (2020)
-   - Public Health Agency of Canada (2022)
-   - Saar et al. (2022)
-   - Thomas et al. (2019)
-   - Whitehouse (2021)
+---
 
-   Full citation strings will be pulled verbatim from the user's draft.
+# Implementation plan (unchanged structure, V2 copy)
 
-4. **FAQ block** — add an "FAQs" H2 near the end of the body with 3-4 Q&As derived strictly from content already in the post (no new facts). Draft Qs:
-   - Can a child have both DLD and autism?
-   - How is DLD different from autism?
-   - Does DLD affect social skills?
-   - Who diagnoses DLD vs autism?
+## 1. `src/components/WhatIsDLDSection.tsx`
+Replace with V2's "What is DLD?" 3 paragraphs + sources line. Keep muted bg and existing tokens.
 
-   Answers will be 1-2 sentences each, paraphrased from existing post content.
+## 2. New sections under `src/components/dld/`
+Same container/spacing rhythm as existing sections (`py-16 md:py-[80px]`, 720px prose, DM Sans, alternating `bg-background`/`bg-muted`). Each ends with a small `text-xs text-muted-foreground` Sources line; external links get `rel="noopener nofollow"` and `target="_blank"`.
 
-5. **Legacy slug redirect** — keep current slug `/resources/blog/autism-vs-dld-understand-the-difference`. Add a client-side redirect from `/blog/dld-vs-autism` and `/resources/blog/dld-vs-autism` → current URL in `src/App.tsx` routing (or a small redirect component).
+- `WhatCausesDLDSection.tsx`
+- `SignsAndSymptomsSection.tsx` (H3 subheads for early childhood / school-age / teens & adults, `list-disc` bullets)
+- `DiagnosisSection.tsx`
+- `DLDvsSpeechDelaySection.tsx` (inline `<Link>` to `/blog/autism-vs-dld-understand-the-difference`)
+- `CureOrOutgrowSection.tsx`
+- `TreatmentAndSupportSection.tsx` (inline `<Link>` to `/for-educators`)
+- `LivingWithDLDSection.tsx` (inline `<Link>`s to `/shop/books`, `/hub`, `/blog/dld-as-an-adult`)
 
-## Skipped
-- **Item 6 (terminology sweep)** — per your instruction, keep child/kids wording.
+## 3. `src/components/DLDFaqSection.tsx`
+Replace the 12-item `faqs` array with V2's 6 FAQs (What is DLD / How common / Same as speech delay / Bilingual / Who diagnoses / Success at school & work). Keep the accordion UI and the `faqs` named export so `AboutDLD.tsx`'s FAQPage JSON-LD auto-updates to the new 6.
+
+## 4. `src/pages/AboutDLD.tsx`
+- Meta description → V2's: *"Learn what developmental language disorder (DLD) is, common signs, diagnosis, treatment, and practical support for home and school."* (149 chars)
+- `<main>` order:
+  1. `AboutDLDHero`
+  2. `WhatIsDLDSection` (new)
+  3. `WhatCausesDLDSection`
+  4. `SignsAndSymptomsSection`
+  5. `DiagnosisSection`
+  6. `DLDvsSpeechDelaySection`
+  7. `CureOrOutgrowSection`
+  8. `TreatmentAndSupportSection`
+  9. `LivingWithDLDSection`
+  10. `RealityOfDLDSection` (keep)
+  11. `NotWholeStoryLamp` (keep)
+  12. `DLDCommunityVideoCarousel` (keep)
+  13. `DLDFaqSection` (new 6-FAQ)
+  14. `ResourceBooksSection`
+  15. `ResourceLibraryCTA`
+
+## 5. Link path corrections during implementation
+V2 uses `/resources/blog/...` for two links; current routes are `/blog/...` (see `src/pages/BlogPost.tsx`). I'll rewrite:
+- `/resources/blog/autism-vs-dld-understand-the-difference` → `/blog/autism-vs-dld-understand-the-difference`
+- `/resources/blog/dld-as-an-adult` → `/blog/dld-as-an-adult`
+
+## 6. JSON-LD
+No `SEOHead` changes. FAQPage JSON-LD is already generated from the exported `faqs` array and will pick up the new 6 questions automatically.
 
 ## Technical notes
-- Items 1-4 are a single `UPDATE` on the `blog_posts` row (`meta_description` + `body`). No schema changes.
-- Item 5 touches `src/App.tsx` only (add `<Route>` entries with `<Navigate replace />`).
-- No FAQPage JSON-LD wiring in `BlogPost.tsx` this pass — content-only FAQ. Can add JSON-LD in a follow-up if you want the rich result.
+- Frontend only. No backend, no routes, no dependencies.
+- Follows spacing rhythm memory (80-120px), primary purple palette, DM Sans, 720px prose max-width.
+- All internal links use React Router `<Link>`, not `<a>`.
+- All 7 new section files kept small and single-purpose for maintainability.
+
+Approve and I'll implement in one pass with V2 copy.

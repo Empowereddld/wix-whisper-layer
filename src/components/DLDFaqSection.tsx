@@ -7,76 +7,36 @@ import {
 
 export const faqs = [
   {
-    question: "What is Developmental Language Disorder?",
+    question: "What is developmental language disorder?",
     answer:
-      "Developmental Language Disorder (DLD) affects how people understand and use language. Individuals with DLD may have difficulty learning new words, following instructions, or expressing ideas clearly. DLD is lifelong, but with the right understanding and support, people with DLD can develop strategies and strengths that help them thrive.",
-    link: {
-      text: "🎧 Listen to Dan and Daria explain DLD →",
-      url: "https://www.youtube.com/watch?v=Zf6PcH4f7rk",
-    },
+      "Developmental language disorder, or DLD, is a lifelong difficulty with understanding and using language. It can affect speaking, listening, reading, writing, learning, relationships, and daily communication. DLD is not explained by hearing loss, autism, intellectual disability, or lack of language exposure.",
   },
   {
     question: "How common is DLD?",
     answer:
-      "Developmental Language Disorder affects approximately 1 in 14 people, making it one of the most common neurodevelopmental conditions. DLD is more common than autism, yet awareness remains far lower. Because many educators, families, and even professionals have never heard the term, individuals with language difficulties are often misunderstood or do not receive the support they need. (Source: Norbury et al., 2016.)",
+      "DLD affects about 1 in 14 people. In a classroom of 30 students, that means roughly two may have DLD. Even though it is common, many families, educators, and professionals have still never heard of it.",
   },
   {
-    question: "What are the signs of DLD?",
+    question: "Is DLD the same as a speech delay?",
     answer:
-      "People with DLD may experience challenges with understanding complex instructions, learning new vocabulary, expressing ideas clearly, following conversations in busy environments, and organizing ideas when speaking or writing. These differences can affect learning, friendships, and confidence if the right supports are not in place.",
+      "No. A speech delay usually refers to difficulty producing speech sounds or talking later than expected. DLD is about deeper language skills, including understanding language, learning words, forming sentences, explaining ideas, telling stories, and understanding what others mean.",
   },
   {
-    question: "What are the symptoms of DLD?",
+    question: "Can bilingual people have DLD?",
     answer:
-      "Common symptoms of Developmental Language Disorder include difficulty learning and remembering new vocabulary, trouble following multi-step instructions, struggling to put ideas into clear sentences, and challenges organizing thoughts when speaking or writing. Symptoms look different at different ages and can be subtle, which is one reason DLD is often missed.",
+      "Yes. Bilingual and multilingual people can have DLD, but bilingualism does not cause DLD. A bilingual person with DLD will show language learning difficulties beyond what would be expected based on their language exposure and learning history.",
   },
   {
-    question: "How is DLD diagnosed?",
+    question: "Who diagnoses DLD?",
     answer:
-      "DLD is diagnosed by a qualified speech-language pathologist through a comprehensive language assessment that looks at how a person understands and uses language across different contexts. A diagnosis also rules out other explanations for the language differences. Empowered DLD provides education and resources to help families and professionals understand DLD, but we do not provide clinical diagnosis.",
+      "DLD is typically diagnosed by a speech-language pathologist, also called an SLP or speech pathologist. Assessment usually looks at understanding, expression, vocabulary, grammar, storytelling, listening comprehension, and how language affects everyday life.",
   },
   {
-    question: "What is the difference between DLD and autism?",
+    question: "Can people with DLD succeed at school and work?",
     answer:
-      "DLD and autism are two different neurodevelopmental conditions, though they can sometimes look similar or co-occur. DLD primarily affects how a person understands and uses language. Autism affects social communication, sensory processing, and behavior more broadly. A person can have DLD, autism, or both, and each requires its own assessment and support.",
-    link: {
-      text: "Read more: Autism vs DLD →",
-      url: "/blog/autism-vs-dld-understand-the-difference",
-    },
-  },
-  {
-    question: "Is Developmental Language Disorder lifelong?",
-    answer:
-      "Developmental Language Disorder, or DLD, is a lifelong neurodevelopmental condition. Children do not simply grow out of it, but they can make meaningful progress with the right support. With understanding, explicit teaching, helpful strategies, and self advocacy, children with DLD can build communication skills, confidence, friendships, literacy skills, and independence over time.",
-  },
-  {
-    question: "Can Developmental Language Disorder be cured?",
-    answer:
-      "DLD is not something that is cured in the way an infection might be cured. It is a lifelong difference in how a person understands and uses language. That does not mean a child is stuck. Children with DLD can learn strategies, strengthen their language skills, and thrive when the people around them understand their needs and provide the right support.",
-  },
-  {
-    question: "What causes Developmental Language Disorder?",
-    answer:
-      "DLD is a neurodevelopmental condition, which means it is connected to how the brain develops and processes language. It often runs in families, so there may be a genetic component. DLD is not caused by parents doing something wrong. It is not caused by bilingualism, lack of intelligence, laziness, or a child not trying hard enough.",
-  },
-  {
-    question: "Is Developmental Language Disorder a disability?",
-    answer:
-      "DLD can be considered a disability because it can affect many parts of everyday life, including understanding instructions, telling stories, learning to read and write, following classroom lessons, joining conversations, and building friendships. At the same time, children with DLD have strengths, ideas, personalities, and important things to say. The goal is not to define a child by DLD, but to make sure they have the support, access, and understanding they need to thrive.",
-  },
-  {
-    question: "Why does awareness matter?",
-    answer:
-      "Language is the foundation for learning, relationships, and participation in everyday life. When Developmental Language Disorder is misunderstood, individuals may be labeled as inattentive or struggling academically when the underlying challenge is language. Increasing awareness helps people receive the right support earlier.",
-  },
-  {
-    question: "How do we support DLD awareness?",
-    answer:
-      "At Empowered DLD we create practical resources that help families, educators, and professionals better understand Developmental Language Disorder. Our work includes children's books, free and paid resources, workshops, and awareness initiatives designed to make DLD easier to recognize and support.",
+      "Yes. DLD is lifelong, but support can make a significant difference. People with DLD can succeed when language demands are recognized, instructions are clear, supports are consistent, and people are taught strategies for communication, learning, literacy, and self-advocacy.",
   },
 ];
-
-const circles = Array.from({ length: 14 }, (_, i) => i);
 
 const DLDFaqSection = () => {
   return (
@@ -84,39 +44,29 @@ const DLDFaqSection = () => {
       <div className="container px-6 md:px-8">
         <div className="max-w-[720px] mx-auto border border-foreground/15 rounded-2xl p-8 md:p-12">
           <h2 className="font-sans font-bold text-[28px] md:text-[38px] lg:text-[42px] leading-[1.1] tracking-tight text-foreground mb-3">
-            Understanding Developmental Language Disorder
+            Frequently asked questions about DLD
           </h2>
           <p className="text-muted-foreground text-[14px] md:text-[15px] leading-[1.7] mb-8 md:mb-10 max-w-[520px]">
             Common questions about Developmental Language Disorder and why
             awareness matters.
           </p>
 
-            <Accordion type="single" collapsible className="w-full">
-              {faqs.map((faq, index) => (
-                <AccordionItem
-                  key={index}
-                  value={`item-${index}`}
-                  className="border-border"
-                >
-                  <AccordionTrigger className="font-sans text-[15px] md:text-[16px] font-bold text-foreground text-left py-5 hover:no-underline tracking-tight">
-                    {faq.question}
-                  </AccordionTrigger>
-                  <AccordionContent className="text-[13px] md:text-[14px] text-muted-foreground leading-[1.8] pb-5">
-                    {faq.answer}
-                    {faq.link && (
-                      <a
-                        href={faq.link.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="mt-3 block text-primary font-semibold hover:underline transition-colors"
-                      >
-                        {faq.link.text}
-                      </a>
-                    )}
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
+          <Accordion type="single" collapsible className="w-full">
+            {faqs.map((faq, index) => (
+              <AccordionItem
+                key={index}
+                value={`item-${index}`}
+                className="border-border"
+              >
+                <AccordionTrigger className="font-sans text-[15px] md:text-[16px] font-bold text-foreground text-left py-5 hover:no-underline tracking-tight">
+                  {faq.question}
+                </AccordionTrigger>
+                <AccordionContent className="text-[13px] md:text-[14px] text-muted-foreground leading-[1.8] pb-5">
+                  {faq.answer}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
         </div>
       </div>
     </section>
