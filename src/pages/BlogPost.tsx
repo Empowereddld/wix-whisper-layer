@@ -1,4 +1,5 @@
 import { useParams, Link } from "react-router-dom";
+import { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Helmet } from "react-helmet-async";
@@ -9,7 +10,34 @@ import remarkGfm from "remark-gfm";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import BlogPostCTA from "@/components/BlogPostCTA";
+import BlogFAQAccordion from "@/components/BlogFAQAccordion";
 import { BASE_URL } from "@/components/SEOHead";
+
+interface ParsedBody {
+  before: string;
+  faqs: { question: string; answer: string }[];
+  after: string;
+}
+
+const parseFAQ = (body: string): ParsedBody => {
+  // Match a "###### **FAQs**" (or FAQ) heading and capture everything until the next ###### heading or end of doc.
+  const re = /###### \*\*FAQs?\*\*\s*\n([\s\S]*?)(?=\n###### |\n?$)/i;
+  const m = body.match(re);
+  if (!m) return { before: body, faqs: [], after: "" };
+  const before = body.slice(0, m.index).trimEnd();
+  const after = body.slice((m.index ?? 0) + m[0].length).trimStart();
+  const block = m[1].trim();
+  // Split into Q&A pairs: **Question?**\nAnswer paragraph
+  const faqs: { question: string; answer: string }[] = [];
+  const pairRe = /\*\*(.+?)\*\*\s*\n([\s\S]*?)(?=\n\s*\*\*|$)/g;
+  let pm: RegExpExecArray | null;
+  while ((pm = pairRe.exec(block)) !== null) {
+    faqs.push({ question: pm[1].trim(), answer: pm[2].trim() });
+  }
+  return { before, faqs, after: after ? "\n\n" + after : "" };
+};
+
+
 
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -28,6 +56,10 @@ const BlogPost = () => {
     },
     enabled: !!slug,
   });
+
+  const parsed = useMemo(() => parseFAQ(post?.body || ""), [post?.body]);
+
+
 
   const articleJsonLd = post ? {
     "@context": "https://schema.org",
@@ -129,9 +161,14 @@ const BlogPost = () => {
               {/* Body */}
               <div className="max-w-[700px] mx-auto blog-content mt-10 md:mt-12">
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                  {post.body || ""}
+                  {parsed.before || post.body || ""}
                 </ReactMarkdown>
+                {parsed.faqs.length > 0 && <BlogFAQAccordion items={parsed.faqs} />}
+                {parsed.after && (
+                  <ReactMarkdown remarkPlugins={[remarkGfm]}>{parsed.after}</ReactMarkdown>
+                )}
               </div>
+
 
               <div className="max-w-[700px] mx-auto">
                 <BlogPostCTA categories={post.categories} />
