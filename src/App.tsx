@@ -117,6 +117,8 @@ const App = () => (
               <Route path="/resources/downloadables" element={<Downloadables />} />
               <Route path="/resources/blog" element={<Blog />} />
               <Route path="/resources/blog/:slug" element={<BlogPost />} />
+              <Route path="/blog/dld-vs-autism" element={<Navigate to="/resources/blog/autism-vs-dld-understand-the-difference" replace />} />
+              <Route path="/resources/blog/dld-vs-autism" element={<Navigate to="/resources/blog/autism-vs-dld-understand-the-difference" replace />} />
               <Route path="/shop" element={<Shop />} />
               <Route path="/shop/books" element={<Books />} />
               <Route path="/shop/bulk-orders" element={<BulkOrders />} />
