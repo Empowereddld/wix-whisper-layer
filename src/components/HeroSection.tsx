@@ -26,7 +26,7 @@ const HeroSection = () => {
               height={1364}
               className="h-full w-auto max-w-none object-cover object-top scale-[0.60] lg:scale-[0.82] xl:scale-[0.94] origin-bottom-left -translate-x-[14%] lg:-translate-x-[12%] xl:-translate-x-[10%]"
               loading="eager"
-              fetchPriority="high"
+              {...({ fetchpriority: "high" } as any)}
               decoding="async"
             />
           </div>
@@ -63,7 +63,7 @@ const HeroSection = () => {
               height={1364}
               className="w-[55%] h-auto object-contain"
               loading="eager"
-              fetchPriority="high"
+              {...({ fetchpriority: "high" } as any)}
               decoding="async"
             />
           </div>
