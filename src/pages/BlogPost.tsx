@@ -166,7 +166,13 @@ const BlogPost = () => {
                 </ReactMarkdown>
                 {parsed.faqs.length > 0 && <BlogFAQAccordion items={parsed.faqs} />}
                 {parsed.after && (
-                  <ReactMarkdown remarkPlugins={[remarkGfm]}>{parsed.after}</ReactMarkdown>
+                  parsed.afterIsSources ? (
+                    <div className="blog-sources">
+                      <ReactMarkdown remarkPlugins={[remarkGfm]}>{parsed.after}</ReactMarkdown>
+                    </div>
+                  ) : (
+                    <ReactMarkdown remarkPlugins={[remarkGfm]}>{parsed.after}</ReactMarkdown>
+                  )
                 )}
               </div>
 
