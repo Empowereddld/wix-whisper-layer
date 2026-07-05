@@ -33,7 +33,7 @@ const BOOKS_ITEM_LIST_JSON_LD = {
         description:
           "A picture book that helps children recognize language challenges and experience what it feels like to live with DLD.",
         url: "https://mybook.to/nwINcA",
-        image: "https://www.empowereddld.com/og-empowered-dld.png",
+        image: "https://empowereddld.com/og-empowered-dld.png",
       },
     },
     {
@@ -49,7 +49,7 @@ const BOOKS_ITEM_LIST_JSON_LD = {
         description:
           "A practical companion for parents with conversation prompts, strategies, and confidence-building activities for children with DLD.",
         url: "https://mybook.to/nwINcA",
-        image: "https://www.empowereddld.com/og-empowered-dld.png",
+        image: "https://empowereddld.com/og-empowered-dld.png",
       },
     },
     {
@@ -65,7 +65,7 @@ const BOOKS_ITEM_LIST_JSON_LD = {
         description:
           "A story about friendship, self-advocacy, and being brave for children with Developmental Language Disorder.",
         url: "https://mybook.to/nwINcA",
-        image: "https://www.empowereddld.com/og-empowered-dld.png",
+        image: "https://empowereddld.com/og-empowered-dld.png",
       },
     },
     {
@@ -81,7 +81,7 @@ const BOOKS_ITEM_LIST_JSON_LD = {
         description:
           "Explores what DLD looks like in social settings and helps children find their voice through the Pause Button strategy.",
         url: "https://mybook.to/nwINcA",
-        image: "https://www.empowereddld.com/og-empowered-dld.png",
+        image: "https://empowereddld.com/og-empowered-dld.png",
       },
     },
     {
@@ -97,7 +97,7 @@ const BOOKS_ITEM_LIST_JSON_LD = {
         description:
           "A story about being brave when words are hard, exploring anxiety, self-advocacy, and finding people who understand DLD.",
         url: "https://mybook.to/nwINcA",
-        image: "https://www.empowereddld.com/og-empowered-dld.png",
+        image: "https://empowereddld.com/og-empowered-dld.png",
       },
     },
   ],
