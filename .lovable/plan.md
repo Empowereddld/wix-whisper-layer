@@ -1,37 +1,44 @@
-Reordered SEO Roadmap, Quick Wins First (Blogs Deferred)
+# Phase 3: SEO Optimization (Review-First)
 
-Phase 1, This Week, Quick Technical Wins (no writing required, ~2 hours of my time)
-These are the highest-leverage fixes. None require you at a computer writing content.
-- Fix the www vs root domain mismatch in sitemap.xml, robots.txt, and SEOHead so Google stops splitting signals between two versions of your site.
-- Trim meta titles and descriptions that are too long on the Home, About DLD, and Books pages (Google currently cuts them off in search results).
-- Replace generic "LEARN MORE" link text with descriptive anchors like "DLD resources for parents" so Google understands where those links go.
-- Fix the logo alt text from "EmpoweredDLD" to "Empowered DLD" (small, but the scanner flags it).
-- Add fetchpriority and width/height to the homepage hero image so the page scores better on Google's speed test.
-- I add the noindex tag to Story Pros internal routes so they stop competing with your public pages.
+Scan finished. Here's the full list of what the scanner flagged, plus your original Phase 3 keyword work. **I will show you the exact before/after for each item in chat and wait for your "go" before editing anything.**
 
-Phase 2, This Week, Google Search Console Setup (you, ~30 minutes total, can do from phone)
-- Add BOTH www.empowereddld.com and empowereddld.com as properties in Google Search Console and pick one as preferred. I will walk you through it.
-- Submit your sitemap (sitemap.xml) to GSC so Google knows what to crawl.
-- Disavow the spammy PBN backlinks already pointing at your domain (I prepare the file, you upload it).
-- This is the single biggest reason Janine cannot find you for terms beyond "DLD Books": Google has not been told which version of your site to trust.
+## A. Scanner findings (6 items)
 
-Phase 3, Next Two Weeks, Optimise What Already Exists (no new content)
-We tune existing pages, no new writing.
-- Light edits to your existing blog post "autism-vs-dld-understand-the-difference" so it targets the exact phrase "dld vs autism".
-- Light edits to "dld-as-an-adult" so it targets "DLD in adults".
-- Add the phrases "DLD checklist" and "signs of DLD" naturally into your existing Language Impact Checklist page.
-- Add Product schema to /shop/books so your book listings can show stars, prices, and availability in Google results (helps the "DLD Books" ranking you already have).
-- Add proper page descriptions to any thin pages flagged by the scanner.
+1. **Generic link text "LEARN MORE"** — `ChoosePathSection.tsx`, `HowWeSupportTherapistsSection.tsx`. Replace with descriptive text like "Learn more about DLD for parents."
+2. **Short logo alt text** — `Header.tsx`, `Footer.tsx`. Change to "Empowered DLD" or "Empowered Developmental Language Disorder."
+3. **Homepage heading structure** — Add `<h2>` to `SupportSection` and `BookShowcase` in `Index.tsx`; check no heading levels are skipped.
+4. **Titles/descriptions too long** — Books page title >60 chars; Home + About DLD meta descriptions >160 chars. Trim while keeping keywords.
+5. **robots.txt sitemap URL** — Points at `www.empowereddld.com`; change to `https://empowereddld.com/sitemap.xml`.
+6. **sitemap.xml** — Same host issue; also missing entries for `/signup`, `/storypros/dashboard`, `/storypros/claim-founder`, `/storypros/verify`, `/storypros/verified`.
 
-Phase 4, When You Are Ready, New Blog Posts (the writing phase, fully deferrable)
-This is the phase you can pause on. Writing new question-led posts ("What causes DLD?", "Is DLD genetic?", "DLD vs ADHD") is what unlocks the next 20 to 40 keyword rankings, but only when you have time. Two posts a month is enough. Nothing breaks if you wait a month.
+(Lighthouse performance + accessibility findings apply to the published build; I'll address them last so we can republish once.)
 
-Phase 5, Ongoing, Backlinks and Tracking
-- Outreach to ICAN, Afasic, Reading Rockets, Understood.org, and university SLP departments to earn quality backlinks (a few per week, can be delegated).
-- Monthly check on rankings and Authority Score to see progress.
-- Hreflang setup later if UK content grows enough to compete with US content.
+## B. Keyword optimizations (your original Phase 3 list)
 
-What I propose we do right now
-Phases 1 and 2 ONLY. Total time: roughly 2 hours of my work and 30 minutes of yours from your phone. These fix the foundation so that when you DO write blogs later (or optimise existing pages in Phase 3), Google can actually credit your site for them.
+7. **Autism vs DLD blog** → target `dld vs autism` (SEO title, meta, H1, light heading tweaks; body untouched).
+8. **DLD as an Adult blog** → target `DLD in adults` (same treatment).
+9. **Language Impact Checklist page** → add `DLD checklist` and `signs of DLD` to SEO title, meta, H1/subhead.
+10. **`/shop/books` Product schema** → add JSON-LD Product structured data via SEOHead.
 
-Want me to go ahead with Phase 1?
+## Workflow for every item
+
+1. I read the current file.
+2. I post the **exact diff** in chat (current → proposed).
+3. You reply "go" / "change X" / "skip."
+4. I edit and confirm.
+
+## Order I suggest
+
+Quick housekeeping first (fast, no judgment calls), then keyword work:
+- Batch 1: #5, #6 (robots + sitemap) — I'll show the exact new file contents.
+- Batch 2: #1, #2 (link/alt text swaps).
+- Batch 3: #4 (title/description trims).
+- Batch 4: #3 (heading structure).
+- Batch 5: #7, #8, #9 (keyword tuning, one at a time).
+- Batch 6: #10 (Product schema).
+
+## Out of scope
+
+Blog body content, CTAs, routing, styling, business logic, "free"-language rewrites.
+
+Approve this plan and I'll start with Batch 1 by posting the proposed robots.txt + sitemap changes for your sign-off.
