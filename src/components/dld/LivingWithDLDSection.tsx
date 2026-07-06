@@ -23,7 +23,7 @@ const LivingWithDLDSection = () => {
             To explore books that help people understand DLD through relatable stories, visit{" "}
             <Link to="/shop/books" className="text-primary font-semibold underline hover:no-underline">Our Books</Link>.
             {" "}For practical tools, guides, and supports, visit the{" "}
-            <Link to="/hub" className="text-primary font-semibold underline hover:no-underline">Empowered DLD Resource Hub</Link>.
+            <Link to="/hub" className="text-primary font-semibold underline hover:no-underline">Empowered DLD Resource Library</Link>.
             {" "}For adults who are learning about DLD later in life, you may also find this helpful:{" "}
             <Link to="/blog/dld-as-an-adult" className="text-primary font-semibold underline hover:no-underline">DLD as an Adult</Link>.
           </p>
@@ -32,7 +32,7 @@ const LivingWithDLDSection = () => {
           </p>
           <p className={p}>
             Understanding DLD is the first step. The next step is making support clear, practical, and available in the moments that matter most. Explore the{" "}
-            <Link to="/hub" className="text-primary font-semibold underline hover:no-underline">Empowered DLD Resource Hub</Link>{" "}
+            <Link to="/hub" className="text-primary font-semibold underline hover:no-underline">Empowered DLD Resource Library</Link>{" "}
             for tools, stories, and educational resources designed to help people with DLD and the adults who care about them.
           </p>
         </div>
