@@ -349,7 +349,7 @@ const DanAndThePaperAirplane = () => {
                   <div className="signature-cred">Educator<br />14+ years</div>
                 </div>
                 <div>
-                  <div className="signature-name">Jinean Cheng</div>
+                  <div className="signature-name">Jinean Whitley</div>
                   <div className="signature-cred">Speech-Language Pathologist<br />15+ years</div>
                 </div>
               </div>

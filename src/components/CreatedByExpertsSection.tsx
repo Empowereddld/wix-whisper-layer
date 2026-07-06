@@ -9,13 +9,13 @@ const CreatedByExpertsSection = () => {
           {/* Left – Text */}
           <div>
             <p className="text-[11px] md:text-[12px] font-bold uppercase tracking-[0.22em] text-foreground/50 mb-3">
-              CREATED BY EXPERTS
+              CREATED BY A TEACHER AND A SPEECH-LANGUAGE PATHOLOGIST
             </p>
             <h2 className="text-[28px] md:text-[36px] lg:text-[42px] font-black text-foreground leading-[1.08] mb-6">
-              Built by an SLP and a Teacher Who Understand What Families Need
+              Created by an SLP and an educator who know what families need
             </h2>
             <p className="text-[14px] md:text-[15px] text-muted-foreground leading-[1.75] mb-4 max-w-[550px]">
-              The Communicate with Confidence course was created by two moms, Camesha Russell, an elementary teacher and co-founder of Empowered DLD, and Jinean Cheng, a Speech-Language Pathologist with 17+ years of experience.
+              The Communicate with Confidence course was created by Camesha Russell, an elementary educator and co-founder of Empowered DLD, and Jinean Whitley, a Speech-Language Pathologist and co-founder of Empowered DLD.
             </p>
             <p className="text-[14px] md:text-[15px] text-muted-foreground leading-[1.75] mb-8 max-w-[550px]">
               Together, they bring real-world classroom experience and clinical expertise to help you support children with DLD in ways that actually work.

@@ -18,7 +18,7 @@ const organizationJsonLd = {
   name: "Empowered DLD",
   url: "https://empowereddld.com",
   logo: "https://empowereddld.com/favicon.png",
-  description: "Evidence-based resources, books, and community for families and professionals supporting people with Developmental Language Disorder (DLD).",
+  description: "A practical, story-led support system for children with Developmental Language Disorder and the parents, educators, and SLPs who support them.",
   sameAs: [
     "https://www.facebook.com/share/g/1GCdxhWtfB/",
     "https://www.instagram.com/empowered.dld/",
@@ -30,8 +30,8 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Empowered DLD: Support for Developmental Language Disorder"
-        description="Resources, books, and community for families and professionals supporting people with Developmental Language Disorder. Help every person find their words."
+        title="Empowered DLD | Support for Children with DLD"
+        description="A practical, story-led support system for children with Developmental Language Disorder and the parents, educators, and SLPs who support them."
         path="/"
         jsonLd={organizationJsonLd}
       />
