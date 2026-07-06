@@ -26,6 +26,7 @@ const InstagramFilled = ({ className }: { className?: string }) => (
 const quickLinks = [
   { label: "Home", to: "/" },
   { label: "About", to: "/about-dld" },
+  { label: "Why Empowered DLD", to: "/why-empowered-dld" },
   { label: "Resources", to: "/resources" },
   { label: "Contact Us", to: "/contact" },
 ];
