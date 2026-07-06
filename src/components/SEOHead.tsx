@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet-async";
 
-const BASE_URL = "https://empowereddld.com";
+const BASE_URL = "https://www.empowereddld.com";
 
 interface BreadcrumbItem {
   name: string;
@@ -20,7 +20,7 @@ interface SEOHeadProps {
 
 const SEOHead = ({ title, description, path, ogImage, type = "website", jsonLd, breadcrumbs, noindex }: SEOHeadProps) => {
   const canonicalUrl = `${BASE_URL}${path}`;
-  const defaultOgImage = "https://empowereddld.com/og-empowered-dld.png";
+  const defaultOgImage = "https://www.empowereddld.com/og-empowered-dld.png";
 
   const breadcrumbJsonLd = breadcrumbs?.length ? {
     "@context": "https://schema.org",
