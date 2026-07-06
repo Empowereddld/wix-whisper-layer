@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import logoImage from "@/assets/empowered-logo.webp";
 import { useAuth } from "@/contexts/AuthContext";
 
-const whoWeServeLinks = [
+const whoWeServeLinks: { label: string; href: string; separator?: boolean }[] = [
   { label: "For Parents", href: "/for-parents" },
   { label: "For Therapists", href: "/for-therapists" },
   { label: "For Educators", href: "/for-educators" },
