@@ -93,7 +93,7 @@ const Header = () => {
                 </button>
                 {openDropdown === link.label && (
                    <div className="absolute top-full left-0 mt-2 bg-background border border-border/30 rounded-lg shadow-lg py-2 min-w-[200px] z-50">
-                    {link.children.map((child) => (
+                    {link.children.map((child: { label: string; href: string; separator?: boolean }) => (
                       <div key={child.label}>
                         {child.separator && <div className="border-t border-border/20 my-1" />}
                         <Link
