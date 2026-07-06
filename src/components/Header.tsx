@@ -153,7 +153,7 @@ const Header = () => {
 
       {mobileOpen && (
         <nav className="lg:hidden bg-background border-b border-border/30 px-6 pb-6 pt-4 flex flex-col gap-4 max-h-[75vh] overflow-y-auto shadow-[var(--shadow-elevated)]">
-          {navLinks.map((link) =>
+          {mobileNavLinks.map((link) =>
             link.children ? (
               <div key={link.label}>
                 <button
