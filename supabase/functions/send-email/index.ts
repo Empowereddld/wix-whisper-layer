@@ -178,7 +178,7 @@ const TEMPLATES: Record<string, TemplateFn> = {
     };
   },
 
-  // 5) Resource Hub welcome (after a logged-in user finishes onboarding).
+  // 5) Resource Library welcome (after a logged-in user finishes onboarding).
   hub_welcome: (data, _to) => {
     const firstName = escapeHtml(firstNameFrom(data.firstName));
     return {
