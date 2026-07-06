@@ -32,7 +32,7 @@ const LivingWithDLDSection = () => {
           </p>
           <p className={p}>
             Understanding DLD is the first step. The next step is making support clear, practical, and available in the moments that matter most. Explore the{" "}
-            <Link to="/hub" className="text-primary font-semibold underline hover:no-underline">Empowered DLD Resource Hub</Link>{" "}
+            <Link to="/hub" className="text-primary font-semibold underline hover:no-underline">Empowered DLD Resource Library</Link>{" "}
             for tools, stories, and educational resources designed to help people with DLD and the adults who care about them.
           </p>
         </div>
