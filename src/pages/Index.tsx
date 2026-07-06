@@ -16,8 +16,8 @@ const organizationJsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
   name: "Empowered DLD",
-  url: "https://empowereddld.com",
-  logo: "https://empowereddld.com/favicon.png",
+  url: "https://www.empowereddld.com",
+  logo: "https://www.empowereddld.com/favicon.png",
   description: "A practical, story-led support system for children with Developmental Language Disorder and the parents, educators, and SLPs who support them.",
   sameAs: [
     "https://www.facebook.com/share/g/1GCdxhWtfB/",
