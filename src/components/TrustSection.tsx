@@ -31,13 +31,13 @@ const TrustSection = () => {
               Why Empowered DLD?
             </p>
             <h2 className="text-[26px] md:text-[30px] font-bold text-foreground mb-3.5 leading-[1.08]">
-              Changing how the world understands DLD
+              Practical, story-led support for children with DLD
             </h2>
             <p className="text-muted-foreground text-[14px] mb-2.5 leading-[1.65]">
-              We are Jinean and Camesha, an SLP and a teacher team. We created Empowered DLD to change how the world understands children with Developmental Language Disorder.
+              We are Jinean Whitley, a Speech-Language Pathologist, and Camesha Russell, an elementary educator. Together, we created Empowered DLD to help children with Developmental Language Disorder feel seen and to give the adults around them practical tools that actually work.
             </p>
             <p className="text-muted-foreground text-[14px] mb-3.5 leading-[1.65]">
-              Too many children with DLD go unseen, misunderstood, or unsupported.
+              Jinean brings clinical expertise in child language, DLD, literacy, parent education, and school-based advocacy. She also has a family connection to DLD. Camesha brings classroom experience, child development knowledge, and a deep understanding of what support needs to look like in real classrooms.
             </p>
 
             <div className="pl-3 border-l-2 border-primary/30 mb-3.5 max-w-[520px]">
@@ -53,7 +53,7 @@ const TrustSection = () => {
             </div>
 
             <p className="text-muted-foreground text-[14px] mb-6 leading-[1.65] max-w-[520px]">
-              That is why we create tools that go beyond awareness. Our resources help adults understand DLD and support children in building confidence, communication, and self-advocacy in everyday life.
+              Our work begins with children while recognizing that DLD is lifelong.
             </p>
 
             <a href="/who-we-serve">
