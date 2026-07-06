@@ -55,7 +55,7 @@ const jsonLd = {
   name: "Why Empowered DLD",
   description:
     "Empowered DLD is a story-led, practical support system for children with Developmental Language Disorder and the parents, educators, and speech-language pathologists (SLPs) who support them.",
-  url: "https://empowereddld.com/why-empowered-dld",
+  url: "https://www.empowereddld.com/why-empowered-dld",
 };
 
 const WhyEmpoweredDLD = () => {

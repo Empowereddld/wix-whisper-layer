@@ -105,7 +105,7 @@ export function getShareMessage(platform: string, referralLink: string): string 
  * Uses the production domain with /storypros path.
  */
 export function generateReferralLink(code: string): string {
-  return `https://empowereddld.com/storypros?ref=${code}`;
+  return `https://www.empowereddld.com/storypros?ref=${code}`;
 }
 
 /**

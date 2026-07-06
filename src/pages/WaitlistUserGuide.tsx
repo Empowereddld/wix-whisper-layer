@@ -277,10 +277,10 @@ const WaitlistUserGuide = () => {
               <motion.div className={`p-6 rounded-2xl bg-white border border-[#dedede]`}>
                 <h3 className="text-xl font-bold mb-4 text-[#3b1f59]">Your Link</h3>
                 <div className={`p-4 rounded-lg bg-[#f3ebf8] border border-[#dedede] mb-4 font-mono text-sm break-all text-[#121212]`}>
-                  https://empowereddld.com/storypros?ref=YOUR_CODE
+                  https://www.empowereddld.com/storypros?ref=YOUR_CODE
                 </div>
                 <Button
-                  onClick={() => copyToClipboard("https://empowereddld.com/storypros?ref=YOUR_CODE")}
+                  onClick={() => copyToClipboard("https://www.empowereddld.com/storypros?ref=YOUR_CODE")}
                   className="w-full bg-[#8861d4] hover:bg-[#7451c4] text-white"
                 >
                   <Copy className="w-4 h-4 mr-2" />
@@ -307,13 +307,13 @@ const WaitlistUserGuide = () => {
                 <div className="bg-[#f3ebf8] p-4 rounded-lg border border-[#dedede]">
                   <p className="text-sm text-gray-600 mb-2">For Parent Groups:</p>
                   <p className="text-[#121212]">
-                    "I'm so excited about Story Pros — an app designed specifically for kids with language challenges. If you know families navigating DLD, check this out! <strong>empowereddld.com/storypros?ref=YOUR_CODE</strong>"
+                    "I'm so excited about Story Pros — an app designed specifically for kids with language challenges. If you know families navigating DLD, check this out! <strong>www.empowereddld.com/storypros?ref=YOUR_CODE</strong>"
                   </p>
                 </div>
                 <div className="bg-[#f3ebf8] p-4 rounded-lg border border-[#dedede]">
                   <p className="text-sm text-gray-600 mb-2">For Therapist/Educator Referrals:</p>
                   <p className="text-[#121212]">
-                    "I'm part of the launch team for Story Pros, an educational app built for kids with DLD. I think your families would love it. Join the waitlist: <strong>empowereddld.com/storypros?ref=YOUR_CODE</strong>"
+                    "I'm part of the launch team for Story Pros, an educational app built for kids with DLD. I think your families would love it. Join the waitlist: <strong>www.empowereddld.com/storypros?ref=YOUR_CODE</strong>"
                   </p>
                 </div>
               </div>

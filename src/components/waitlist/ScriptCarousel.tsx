@@ -77,7 +77,7 @@ const ScriptCarousel = ({ referralLink }: ScriptCarouselProps) => {
     text.replace(/[\s:]*\{\{referral_link\}\}/g, "").trim();
   // Copy payload: replace placeholder with the real referral link so it's appended on copy.
   const fillLink = (text: string) =>
-    text.replace(/\{\{referral_link\}\}/g, referralLink || "https://empowereddld.com/storypros");
+    text.replace(/\{\{referral_link\}\}/g, referralLink || "https://www.empowereddld.com/storypros");
 
   const next = () => {
     setCopied(false);

@@ -4,7 +4,7 @@
 import { writeFileSync } from "fs";
 import { resolve } from "path";
 
-const BASE_URL = "https://empowereddld.com";
+const BASE_URL = "https://www.empowereddld.com";
 
 const SUPABASE_URL = process.env.VITE_SUPABASE_URL || "";
 const SUPABASE_ANON_KEY = process.env.VITE_SUPABASE_PUBLISHABLE_KEY || "";
@@ -25,6 +25,7 @@ const staticEntries: SitemapEntry[] = [
   { path: "/for-therapists", changefreq: "monthly", priority: "0.9" },
   { path: "/for-educators", changefreq: "monthly", priority: "0.9" },
   { path: "/for-organizations", changefreq: "monthly", priority: "0.9" },
+  { path: "/why-empowered-dld", changefreq: "monthly", priority: "0.9" },
   { path: "/about-dld", changefreq: "monthly", priority: "0.9" },
   { path: "/resources", changefreq: "weekly", priority: "0.8" },
   { path: "/resources/blog", changefreq: "weekly", priority: "0.8" },
