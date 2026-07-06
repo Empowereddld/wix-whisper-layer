@@ -38,7 +38,7 @@ const linkCards = [
     body: "Downloadables, tools, and community for parents, educators, and SLPs.",
     to: "/hub",
     Icon: Sparkles,
-    cta: "Explore the Hub",
+    cta: "Explore the Resource Hub",
   },
   {
     title: "Work With Us",
@@ -62,7 +62,7 @@ const WhyEmpoweredDLD = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Why Empowered DLD | Practical Support for Children with DLD"
+        title="Why Empowered DLD | Support for Children with DLD"
         description="Empowered DLD is a story-led, practical support system for children with Developmental Language Disorder and the parents, educators, and speech-language pathologists (SLPs) who support them."
         path="/why-empowered-dld"
         breadcrumbs={[
@@ -84,7 +84,7 @@ const WhyEmpoweredDLD = () => {
               Practical support for children with DLD and the adults around them.
             </h1>
             <p className="text-[16px] md:text-[18px] leading-[1.65] text-foreground/75 max-w-[680px]">
-              Empowered DLD is a story-led, practical support system for children with Developmental Language Disorder and the parents, educators, and speech-language pathologists (SLPs) who care for, teach, and support them.
+              Empowered DLD is a story-led, practical support system for children with Developmental Language Disorder (DLD) and the parents, educators, and speech-language pathologists (SLPs) who care for, teach, and support them.
             </p>
           </div>
         </section>
