@@ -10,7 +10,7 @@ DLD is one of the most common developmental conditions affecting roughly 1 in 14
 
 ## Core pages
 
-- [Home](https://empowereddld.com/): Overview of Empowered DLD's mission, books, and resources for the DLD community.
+- [Home](https://empowereddld.com/): Story-led books, resources, and training for children with DLD and the adults who support them.
 - [About DLD](https://empowereddld.com/about-dld): What Developmental Language Disorder is, how common it is, signs to look for, and why it matters across the lifespan.
 - [Who We Serve](https://empowereddld.com/who-we-serve): Pathways for parents, therapists, educators, and organizations.
 - [For Parents](https://empowereddld.com/for-parents): Family-focused guidance, advocacy tools, and home strategies.
