@@ -35,6 +35,17 @@ const navLinks = [
   { label: "CONTACT", href: "/contact" },
 ];
 
+const mobileNavLinks = [
+  { label: "HOME", href: "/" },
+  { label: "WHO WE SERVE", href: "/who-we-serve", children: whoWeServeLinks },
+  { label: "RESOURCES", href: "/resources", children: resourcesLinks },
+  { label: "SHOP", href: "/shop", children: shopLinks },
+  { label: "WORK WITH US", href: "/work-with-us" },
+  { label: "ABOUT DLD", href: "/about-dld" },
+  { label: "WHY EMPOWERED DLD", href: "/why-empowered-dld" },
+  { label: "CONTACT", href: "/contact" },
+];
+
 const Header = () => {
   const { session } = useAuth();
   const signupHref = "/signup";
