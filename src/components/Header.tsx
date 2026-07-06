@@ -35,6 +35,17 @@ const navLinks = [
   { label: "CONTACT", href: "/contact" },
 ];
 
+const mobileNavLinks = [
+  { label: "HOME", href: "/" },
+  { label: "WHO WE SERVE", href: "/who-we-serve", children: whoWeServeLinks },
+  { label: "RESOURCES", href: "/resources", children: resourcesLinks },
+  { label: "SHOP", href: "/shop", children: shopLinks },
+  { label: "WORK WITH US", href: "/work-with-us" },
+  { label: "ABOUT DLD", href: "/about-dld" },
+  { label: "WHY EMPOWERED DLD", href: "/why-empowered-dld" },
+  { label: "CONTACT", href: "/contact" },
+];
+
 const Header = () => {
   const { session } = useAuth();
   const signupHref = "/signup";
@@ -142,7 +153,7 @@ const Header = () => {
 
       {mobileOpen && (
         <nav className="lg:hidden bg-background border-b border-border/30 px-6 pb-6 pt-4 flex flex-col gap-4 max-h-[75vh] overflow-y-auto shadow-[var(--shadow-elevated)]">
-          {navLinks.map((link) =>
+          {mobileNavLinks.map((link) =>
             link.children ? (
               <div key={link.label}>
                 <button
