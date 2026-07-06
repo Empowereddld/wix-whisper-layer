@@ -197,7 +197,7 @@ const LanguageImpactChecklist = () => {
               </a>
 
               <p className="lic-credit">
-                Created by Jinean Cheng, MSc.A S-LP and Camesha Russell, B.Ed. <br />
+                Created by Jinean Whitley, MSc.A S-LP and Camesha Russell, B.Ed. <br />
                 Both RADLD Ambassadors and co-founders of Empowered DLD.
               </p>
             </div>
