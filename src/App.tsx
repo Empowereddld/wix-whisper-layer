@@ -23,6 +23,7 @@ import ShopMerch from "./pages/ShopMerch";
 import ShopMerchProduct from "./pages/ShopMerchProduct";
 import WorkWithUs from "./pages/WorkWithUs";
 import AboutDLD from "./pages/AboutDLD";
+import WhyEmpoweredDLD from "./pages/WhyEmpoweredDLD";
 import ContactUs from "./pages/ContactUs";
 import NotFound from "./pages/NotFound";
 
@@ -127,6 +128,7 @@ const App = () => (
               <Route path="/shop/educational-app" element={<EducationalApp />} />
               <Route path="/work-with-us" element={<WorkWithUs />} />
               <Route path="/about-dld" element={<AboutDLD />} />
+              <Route path="/why-empowered-dld" element={<WhyEmpoweredDLD />} />
               <Route path="/contact" element={<ContactUs />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/storypros" element={<StoryBuilders />} />

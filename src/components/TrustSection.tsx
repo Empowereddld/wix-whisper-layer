@@ -61,6 +61,9 @@ const TrustSection = () => {
                 FIND WHAT WORKS FOR YOU
               </Button>
             </a>
+            <a href="/why-empowered-dld" className="mt-4 text-[13px] font-semibold text-primary hover:text-primary/80 transition-colors">
+              Learn more about why we built Empowered DLD →
+            </a>
           </div>
 
           {/* Mobile images (below text) */}
