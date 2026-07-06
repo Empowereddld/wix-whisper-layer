@@ -10,6 +10,7 @@ const whoWeServeLinks = [
   { label: "For Therapists", href: "/for-therapists" },
   { label: "For Educators", href: "/for-educators" },
   { label: "For Organizations", href: "/for-organizations" },
+  { label: "Why Empowered DLD", href: "/why-empowered-dld", separator: true },
 ];
 
 const resourcesLinks = [
