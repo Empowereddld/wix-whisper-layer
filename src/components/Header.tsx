@@ -94,14 +94,16 @@ const Header = () => {
                 {openDropdown === link.label && (
                    <div className="absolute top-full left-0 mt-2 bg-background border border-border/30 rounded-lg shadow-lg py-2 min-w-[200px] z-50">
                     {link.children.map((child) => (
-                      <Link
-                        key={child.label}
-                        to={child.href}
-                        className="block px-4 py-2.5 text-[13px] font-medium text-foreground/70 hover:bg-accent hover:text-primary transition-colors"
-                        onClick={() => setOpenDropdown(null)}
-                      >
-                        {child.label}
-                      </Link>
+                      <div key={child.label}>
+                        {child.separator && <div className="border-t border-border/20 my-1" />}
+                        <Link
+                          to={child.href}
+                          className="block px-4 py-2.5 text-[13px] font-medium text-foreground/70 hover:bg-accent hover:text-primary transition-colors"
+                          onClick={() => setOpenDropdown(null)}
+                        >
+                          {child.label}
+                        </Link>
+                      </div>
                     ))}
                   </div>
                 )}
