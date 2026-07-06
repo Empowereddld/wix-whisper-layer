@@ -34,11 +34,11 @@ const linkCards = [
     cta: "Shop books",
   },
   {
-    title: "Resource Hub",
+    title: "Resource Library",
     body: "Downloadables, tools, and community for parents, educators, and SLPs.",
     to: "/hub",
     Icon: Sparkles,
-    cta: "Explore the Resource Hub",
+    cta: "Explore the Resource Library",
   },
   {
     title: "Work With Us",
@@ -84,7 +84,7 @@ const WhyEmpoweredDLD = () => {
               Practical support for children with DLD and the adults around them.
             </h1>
             <p className="text-[16px] md:text-[18px] leading-[1.65] text-foreground/75 max-w-[680px]">
-              Empowered DLD is a story-led, practical support system for children with Developmental Language Disorder (DLD) and the parents, educators, and speech-language pathologists (SLPs) who care for, teach, and support them.
+              Empowered DLD creates story-led books, resources, and training for children with Developmental Language Disorder (DLD) and the parents, educators, and speech-language pathologists who support them.
             </p>
           </div>
         </section>
