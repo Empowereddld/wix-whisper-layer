@@ -14,7 +14,7 @@ const WhoWeServe = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Who We Serve: Families, SLPs, Educators & Schools"
-        description="Empowered DLD supports parents, speech-language pathologists, educators, and schools with practical tools for children with Developmental Language Disorder and the adults who support them."
+        description="Practical DLD tools for parents, speech-language pathologists, educators, and schools supporting children with Developmental Language Disorder."
         path="/who-we-serve"
       />
       <Header />
