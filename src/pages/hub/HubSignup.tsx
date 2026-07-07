@@ -52,7 +52,7 @@ const HubSignup = () => {
     }
 
     setLoading(true);
-    const { error } = await supabase.auth.signUp({
+    const { data, error } = await supabase.auth.signUp({
       email: form.email.trim(),
       password: form.password,
       options: {
@@ -66,9 +66,25 @@ const HubSignup = () => {
     setLoading(false);
 
     if (error) {
-      toast({ title: "Something went wrong. Please try again.", variant: "destructive" });
+      toast({
+        title: error.message || "Something went wrong. Please try again.",
+        variant: "destructive",
+      });
       return;
     }
+
+    // If email confirmation is required, no session is returned. Send the
+    // user to the "check your email" page instead of a protected route,
+    // otherwise ProtectedRoute bounces them back here and it looks broken.
+    if (!data.session) {
+      toast({
+        title: "Check your email to confirm your account.",
+        description: "We just sent you a verification link.",
+      });
+      navigate("/hub/verify-email");
+      return;
+    }
+
     navigate("/signup/role");
   };
 
