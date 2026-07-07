@@ -32,8 +32,8 @@ const Blog = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="DLD Blog — Articles on Developmental Language Disorder | Empowered DLD"
-        description="Read articles about Developmental Language Disorder (DLD) covering awareness, parenting tips, academic strategies, and practical advice for supporting children with DLD."
+        title="DLD Blog: Articles on Developmental Language Disorder"
+        description="Articles on Developmental Language Disorder covering awareness, parenting tips, and classroom strategies for children with DLD."
         path="/resources/blog"
         breadcrumbs={[
           { name: "Home", path: "/" },
