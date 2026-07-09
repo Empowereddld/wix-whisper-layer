@@ -1,44 +1,18 @@
-## Problem
+Plan: Enable Shopify for Empowered DLD Merch
 
-Signup and login flows show raw Supabase error text (or a generic hardcoded "Invalid email or password") for every failure. The most visible case is a user who already has an account seeing "User already registered" verbatim with no path forward.
+You can create the new Shopify store right here through Lovable. You do not need to go to Shopify separately or share API credentials. Lovable's Shopify integration will create a free development store and link it to this project automatically.
 
-## Affected flows
+What will happen:
+1. Enable Shopify integration with a new development store for Empowered DLD.
+2. After the store is created, you can claim it through the Lovable UI when prompted. Claiming starts a 120-day free trial on a Shopify subscription and keeps the store beyond the 30-day unclaimed window.
+3. Replace the placeholder merch products (tee, mug, tote) with real Shopify products, variants, and inventory.
+4. Wire the Empowered DLD `/shop/merch` page to pull product data, images, and pricing from Shopify.
+5. Connect the existing cart UI to Shopify checkout so customers can buy.
+6. (Optional, after launch) Connect Gelato as a print-on-demand fulfillment app inside Shopify for automatic printing and shipping.
 
-1. **HubSignup** (`/hub/signup`) — passes raw `error.message` to the toast.
-2. **Signup** (`/signup`) — same pattern.
-3. **HubLogin** (`/hub/login`) — hardcoded "Invalid email or password" for every error.
-4. **Login** (`/login`) — same hardcoded string.
-5. **SocialLoginButtons** — OAuth errors only hit `console.error`; no toast.
+Notes:
+- The development store is free to build on while we set everything up.
+- Claiming is only required once you are ready to keep the store long-term; you can continue building before claiming.
+- No custom API keys are needed because Lovable handles the Shopify connection.
 
-## Proposed changes
-
-### 1. New utility `src/lib/auth-errors.ts`
-
-Pure `getFriendlyAuthError(rawMessage: string): { title: string; description?: string }` that matches the raw message (case-insensitive substring) and returns friendly copy for exactly these cases:
-
-- **Account already exists** → "An account with this email already exists. Try logging in instead." (matches `already registered`, `already exists`, `user already`)
-- **Incorrect email or password** → "The email or password you entered doesn't match our records." (matches `invalid login`, `invalid credentials`)
-- **Email not verified** → "Please verify your email before logging in. Check your inbox for the verification link." (matches `email not confirmed`)
-- **Too many attempts** → "Too many attempts. Please wait a few minutes and try again." (matches `rate limit`, `too many`, `429`)
-- **Network / connection issue** → "We're having trouble connecting. Please check your internet and try again." (matches `failed to fetch`, `network`, `timeout`)
-- **Fallback** → "Something went wrong. Please try again in a moment."
-
-No mapping for weak-password / HIBP errors. If Supabase ever surfaces one, it falls through to the generic fallback.
-
-### 2. Wire into HubSignup and Signup
-
-Replace `toast({ title: error.message })` with the mapped title/description. For the "already exists" case, the toast description will include a link to the matching login page (`/hub/login` or `/login`) so users can recover in one click.
-
-### 3. Wire into HubLogin and Login
-
-Replace the hardcoded "Invalid email or password" with the mapper. This means rate limits and network errors are labelled correctly instead of always blaming the password.
-
-### 4. Wire into SocialLoginButtons
-
-Import `useToast` and surface a friendly toast when OAuth fails (currently silent for the user).
-
-## Out of scope
-
-- No backend changes, no migrations, no auth-config changes.
-- No changes to the Story Pros waitlist edge function or its hook (already handles `already_joined` gracefully with its own friendly copy).
-- No password-strength UX or messaging.
+After you approve this plan, I'll start the Shopify enable flow and create the new store.
