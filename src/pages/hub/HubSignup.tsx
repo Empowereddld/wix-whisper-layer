@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import SocialLoginButtons from "@/components/hub/SocialLoginButtons";
 import PasswordInput from "@/components/hub/PasswordInput";
 import { useToast } from "@/hooks/use-toast";
+import { getFriendlyAuthError } from "@/lib/auth-errors";
 import empoweredLogo from "@/assets/empowered-logo.webp";
 
 const HubSignup = () => {
@@ -66,8 +67,20 @@ const HubSignup = () => {
     setLoading(false);
 
     if (error) {
+      const friendly = getFriendlyAuthError(error.message);
       toast({
-        title: error.message || "Something went wrong. Please try again.",
+        title: friendly.title,
+        description:
+          friendly.code === "already_exists" ? (
+            <span>
+              <Link to="/hub/login" className="underline font-medium">
+                Log in instead
+              </Link>
+              .
+            </span>
+          ) : (
+            friendly.description
+          ),
         variant: "destructive",
       });
       return;

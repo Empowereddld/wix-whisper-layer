@@ -1,38 +1,44 @@
-## What Lydia is likely hitting
+## Problem
 
-The Facebook comment says she can't create an account at `/hub/signup`. Reading the code, there's a clear bug in the signup flow that would make it look "broken" from the user's side, with no obvious error:
+Signup and login flows show raw Supabase error text (or a generic hardcoded "Invalid email or password") for every failure. The most visible case is a user who already has an account seeing "User already registered" verbatim with no path forward.
 
-1. `src/pages/hub/HubSignup.tsx` calls `supabase.auth.signUp(...)` and then, on success, does `navigate("/signup/role")` **unconditionally**.
-2. Lovable Cloud auth requires email confirmation, so `signUp` returns **no session** for a brand-new user. The user is not actually logged in yet.
-3. `/signup/role` (`SignupRole.tsx`) checks `useAuth()`. Because there's no session, `user` is null, and its effect immediately does `navigate("/hub/signup")`.
-4. Result: the user clicks "Create Account", the page flashes, and they land back on the signup form with no message. From their perspective, "it's not working."
+## Affected flows
 
-A second, related issue: if the email is already registered, Supabase intentionally returns success with no error (to prevent account enumeration). Same outcome, same loop, no message.
+1. **HubSignup** (`/hub/signup`) — passes raw `error.message` to the toast.
+2. **Signup** (`/signup`) — same pattern.
+3. **HubLogin** (`/hub/login`) — hardcoded "Invalid email or password" for every error.
+4. **Login** (`/login`) — same hardcoded string.
+5. **SocialLoginButtons** — OAuth errors only hit `console.error`; no toast.
 
-There's already a `/hub/verify-email` page built for exactly this case, but `HubSignup` never routes to it.
+## Proposed changes
 
-Also worth noting: the current error handler shows a generic "Something went wrong" for every failure (weak password on the server, rate limit, invalid email, etc.), which hides real reasons.
+### 1. New utility `src/lib/auth-errors.ts`
 
-## Fix (small, frontend only)
+Pure `getFriendlyAuthError(rawMessage: string): { title: string; description?: string }` that matches the raw message (case-insensitive substring) and returns friendly copy for exactly these cases:
 
-**File: `src/pages/hub/HubSignup.tsx`**
+- **Account already exists** → "An account with this email already exists. Try logging in instead." (matches `already registered`, `already exists`, `user already`)
+- **Incorrect email or password** → "The email or password you entered doesn't match our records." (matches `invalid login`, `invalid credentials`)
+- **Email not verified** → "Please verify your email before logging in. Check your inbox for the verification link." (matches `email not confirmed`)
+- **Too many attempts** → "Too many attempts. Please wait a few minutes and try again." (matches `rate limit`, `too many`, `429`)
+- **Network / connection issue** → "We're having trouble connecting. Please check your internet and try again." (matches `failed to fetch`, `network`, `timeout`)
+- **Fallback** → "Something went wrong. Please try again in a moment."
 
-- After `supabase.auth.signUp(...)`:
-  - If `error` is set, show the actual `error.message` in the toast (fall back to the generic copy only if there's no message). This surfaces things like "User already registered", "Password should be at least...", or rate-limit messages.
-  - If there's no error and `data.session` is `null` (email confirmation required, the normal path), navigate to `/hub/verify-email` instead of `/signup/role`, and show a toast like "Check your email to confirm your account."
-  - Only if `data.session` exists (auto-confirmed) navigate to `/signup/role`.
-- Keep the referral-code handling and profile metadata exactly as they are today.
+No mapping for weak-password / HIBP errors. If Supabase ever surfaces one, it falls through to the generic fallback.
 
-**No other files change.** `SignupRole`, `AuthContext`, `ProtectedRoute`, and `/hub/verify-email` are already correct; they just weren't being reached in the right order.
+### 2. Wire into HubSignup and Signup
 
-## Verification
+Replace `toast({ title: error.message })` with the mapped title/description. For the "already exists" case, the toast description will include a link to the matching login page (`/hub/login` or `/login`) so users can recover in one click.
 
-- Type-check / build.
-- Manually walk the signup flow in preview with a brand-new email: expect to land on `/hub/verify-email` with a "check your email" toast, not bounce back to the signup form.
-- Try signing up with an email that already exists: expect a clear toast instead of a silent loop.
-- Reply to Lydia on Facebook once deployed with a short "we just fixed this, please try again" note (optional, up to you).
+### 3. Wire into HubLogin and Login
+
+Replace the hardcoded "Invalid email or password" with the mapper. This means rate limits and network errors are labelled correctly instead of always blaming the password.
+
+### 4. Wire into SocialLoginButtons
+
+Import `useToast` and surface a friendly toast when OAuth fails (currently silent for the user).
 
 ## Out of scope
 
-- No changes to auth config, email templates, `SignupRole`, `AuthContext`, or the verify-email page.
-- No SEO/content work (still paused per your earlier instruction).
+- No backend changes, no migrations, no auth-config changes.
+- No changes to the Story Pros waitlist edge function or its hook (already handles `already_joined` gracefully with its own friendly copy).
+- No password-strength UX or messaging.
