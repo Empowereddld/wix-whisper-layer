@@ -1,8 +1,9 @@
 import { ShoppingBag } from "lucide-react";
-import { useMerchCart } from "@/contexts/MerchCartContext";
+import { useMerchCartStore } from "@/stores/merchCartStore";
 
 const MerchCartButton = () => {
-  const { itemCount, openCart } = useMerchCart();
+  const itemCount = useMerchCartStore((state) => state.getItemCount());
+  const openCart = useMerchCartStore((state) => state.openCart);
 
   return (
     <button
