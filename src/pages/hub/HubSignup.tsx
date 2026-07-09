@@ -66,8 +66,20 @@ const HubSignup = () => {
     setLoading(false);
 
     if (error) {
+      const friendly = getFriendlyAuthError(error.message);
       toast({
-        title: error.message || "Something went wrong. Please try again.",
+        title: friendly.title,
+        description:
+          friendly.code === "already_exists" ? (
+            <span>
+              <Link to="/hub/login" className="underline font-medium">
+                Log in instead
+              </Link>
+              .
+            </span>
+          ) : (
+            friendly.description
+          ),
         variant: "destructive",
       });
       return;
