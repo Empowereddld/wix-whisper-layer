@@ -1,4 +1,4 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -7,6 +7,13 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import ScrollToTop from "./components/ScrollToTop";
 import AnnouncementBar from "./components/AnnouncementBar";
+import { useCartSync } from "@/hooks/useCartSync";
+
+function CartSync() {
+  useCartSync();
+  return null;
+}
+
 
 // Eagerly loaded (main public pages)
 import Index from "./pages/Index";
