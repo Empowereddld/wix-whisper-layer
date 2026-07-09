@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import PasswordInput from "@/components/hub/PasswordInput";
 import { useToast } from "@/hooks/use-toast";
+import { getFriendlyAuthError } from "@/lib/auth-errors";
 import empoweredLogo from "@/assets/empowered-logo.webp";
 import { z } from "zod";
 
