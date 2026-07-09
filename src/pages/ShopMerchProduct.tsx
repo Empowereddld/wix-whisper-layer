@@ -1,37 +1,48 @@
 import { useParams, Navigate } from "react-router-dom";
+import { Loader2 } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SEOHead from "@/components/SEOHead";
 import MerchProductDetail from "@/components/merch/MerchProductDetail";
 import MerchCartDrawer from "@/components/merch/MerchCartDrawer";
 import MerchCartButton from "@/components/merch/MerchCartButton";
-import { MerchCartProvider } from "@/contexts/MerchCartContext";
-import { findMerchProduct } from "@/data/merchPlaceholders";
+import { useShopifyProduct } from "@/hooks/useShopifyProduct";
 
 const ShopMerchProduct = () => {
   const { handle } = useParams();
-  const product = handle ? findMerchProduct(handle) : undefined;
+  const { data: product, isLoading, error } = useShopifyProduct(handle);
 
-  if (!product) return <Navigate to="/shop/merch" replace />;
-
-  return (
-    <MerchCartProvider>
+  if (isLoading) {
+    return (
       <div className="min-h-screen flex flex-col">
-        <SEOHead
-          title={`${product.title} | Empowered DLD Merch`}
-          description={product.tagline}
-          path={`/shop/merch/${product.handle}`}
-          noindex
-        />
         <Header />
-        <main className="flex-1">
-          <MerchProductDetail product={product} />
+        <main className="flex-1 flex items-center justify-center">
+          <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
         </main>
         <Footer />
-        <MerchCartDrawer />
         <MerchCartButton />
       </div>
-    </MerchCartProvider>
+    );
+  }
+
+  if (!product || error) return <Navigate to="/shop/merch" replace />;
+
+  return (
+    <div className="min-h-screen flex flex-col">
+      <SEOHead
+        title={`${product.title} | Empowered DLD Merch`}
+        description={product.description}
+        path={`/shop/merch/${product.handle}`}
+        noindex
+      />
+      <Header />
+      <main className="flex-1">
+        <MerchProductDetail product={product} />
+      </main>
+      <Footer />
+      <MerchCartDrawer />
+      <MerchCartButton />
+    </div>
   );
 };
 
