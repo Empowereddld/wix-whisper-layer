@@ -109,9 +109,11 @@ const App = () => (
       <BrowserRouter>
         <AuthProvider>
           <ScrollToTop />
+          <CartSync />
           <AnnouncementBar />
 
           <Suspense fallback={<div className="min-h-screen" />}>
+
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/who-we-serve" element={<WhoWeServe />} />
