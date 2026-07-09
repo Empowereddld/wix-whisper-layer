@@ -1,9 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { lovable } from "@/integrations/lovable/index";
 import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
+import { getFriendlyAuthError } from "@/lib/auth-errors";
 
 const SocialLoginButtons = () => {
   const [loading, setLoading] = useState<string | null>(null);
+  const { toast } = useToast();
 
   const handleOAuth = async (provider: "google" | "apple") => {
     setLoading(provider);
@@ -12,6 +15,12 @@ const SocialLoginButtons = () => {
     });
     if (error) {
       console.error("OAuth error:", error);
+      const friendly = getFriendlyAuthError(error.message);
+      toast({
+        title: `${provider === "google" ? "Google" : "Apple"} sign-in failed`,
+        description: friendly.description,
+        variant: "destructive",
+      });
     }
     setLoading(null);
   };
