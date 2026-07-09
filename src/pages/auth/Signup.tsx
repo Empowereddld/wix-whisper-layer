@@ -82,7 +82,22 @@ const Signup = () => {
     setLoading(false);
 
     if (error) {
-      toast({ title: error.message, variant: "destructive" });
+      const friendly = getFriendlyAuthError(error.message);
+      toast({
+        title: friendly.title,
+        description:
+          friendly.code === "already_exists" ? (
+            <span>
+              <Link to="/login" className="underline font-medium">
+                Log in instead
+              </Link>
+              .
+            </span>
+          ) : (
+            friendly.description
+          ),
+        variant: "destructive",
+      });
       return;
     }
     navigate("/hub/verify-email");
