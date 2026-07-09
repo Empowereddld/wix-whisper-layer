@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import SocialLoginButtons from "@/components/hub/SocialLoginButtons";
 import PasswordInput from "@/components/hub/PasswordInput";
 import { useToast } from "@/hooks/use-toast";
+import { getFriendlyAuthError } from "@/lib/auth-errors";
 import empoweredLogo from "@/assets/empowered-logo.webp";
 
 const HubSignup = () => {
