@@ -32,7 +32,12 @@ const HubLogin = () => {
     });
     setLoading(false);
     if (error) {
-      toast({ title: "Invalid email or password", variant: "destructive" });
+      const friendly = getFriendlyAuthError(error.message);
+      toast({
+        title: friendly.title,
+        description: friendly.description,
+        variant: "destructive",
+      });
       return;
     }
     navigate("/hub");
