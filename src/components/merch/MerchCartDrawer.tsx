@@ -1,17 +1,33 @@
+import { useEffect } from "react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { Minus, Plus, Trash2, ShoppingBag } from "lucide-react";
-import { useMerchCart } from "@/contexts/MerchCartContext";
-import { formatMerchPrice } from "@/data/merchPlaceholders";
-import { toast } from "sonner";
+import { Minus, Plus, Trash2, ShoppingBag, ExternalLink, Loader2 } from "lucide-react";
+import { useMerchCartStore } from "@/stores/merchCartStore";
+import { formatShopifyPrice, getFirstImage } from "@/lib/shopify";
 
 const MerchCartDrawer = () => {
-  const { items, isOpen, closeCart, updateQty, removeItem, subtotal } = useMerchCart();
+  const isOpen = useMerchCartStore((state) => state.isOpen);
+  const closeCart = useMerchCartStore((state) => state.closeCart);
+  const items = useMerchCartStore((state) => state.items);
+  const isLoading = useMerchCartStore((state) => state.isLoading);
+  const isSyncing = useMerchCartStore((state) => state.isSyncing);
+  const updateQuantity = useMerchCartStore((state) => state.updateQuantity);
+  const removeItem = useMerchCartStore((state) => state.removeItem);
+  const syncCart = useMerchCartStore((state) => state.syncCart);
+  const getCheckoutUrl = useMerchCartStore((state) => state.getCheckoutUrl);
+  const subtotal = useMerchCartStore((state) => state.getSubtotal());
+  const currencyCode = items[0]?.price.currencyCode || "CAD";
+
+  useEffect(() => {
+    if (isOpen) syncCart();
+  }, [isOpen, syncCart]);
 
   const handleCheckout = () => {
-    toast.info("Checkout will hand off to Shopify once products are connected.", {
-      description: "Right now this is a preview. Real checkout goes live when Phase 3 is wired.",
-    });
+    const checkoutUrl = getCheckoutUrl();
+    if (checkoutUrl) {
+      window.open(checkoutUrl, "_blank");
+      closeCart();
+    }
   };
 
   return (
@@ -35,21 +51,25 @@ const MerchCartDrawer = () => {
             <div className="flex-1 overflow-y-auto px-6 py-4 space-y-4">
               {items.map((item) => (
                 <div
-                  key={`${item.productHandle}-${item.variantId}`}
+                  key={item.variantId}
                   className="flex gap-3 p-3 rounded-lg bg-muted/50"
                 >
                   <img
-                    src={item.image}
-                    alt={item.title}
+                    src={getFirstImage(item.product.node) || "/placeholder.svg"}
+                    alt={item.product.node.title}
                     className="h-20 w-20 rounded-md object-cover flex-shrink-0 bg-white"
                   />
                   <div className="flex-1 min-w-0">
-                    <p className="text-[14px] font-semibold text-foreground leading-tight">{item.title}</p>
-                    <p className="text-[12px] text-muted-foreground mt-0.5">{item.variantLabel}</p>
+                    <p className="text-[14px] font-semibold text-foreground leading-tight">
+                      {item.product.node.title}
+                    </p>
+                    <p className="text-[12px] text-muted-foreground mt-0.5">
+                      {item.selectedOptions.map((o) => o.value).join(" • ")}
+                    </p>
                     <div className="flex items-center justify-between mt-2">
                       <div className="flex items-center gap-1.5 bg-background rounded-md border border-border">
                         <button
-                          onClick={() => updateQty(item.productHandle, item.variantId, item.quantity - 1)}
+                          onClick={() => updateQuantity(item.variantId, item.quantity - 1)}
                           className="h-7 w-7 flex items-center justify-center text-muted-foreground hover:text-foreground"
                           aria-label="Decrease quantity"
                         >
@@ -57,7 +77,7 @@ const MerchCartDrawer = () => {
                         </button>
                         <span className="text-[13px] font-semibold w-5 text-center">{item.quantity}</span>
                         <button
-                          onClick={() => updateQty(item.productHandle, item.variantId, item.quantity + 1)}
+                          onClick={() => updateQuantity(item.variantId, item.quantity + 1)}
                           className="h-7 w-7 flex items-center justify-center text-muted-foreground hover:text-foreground"
                           aria-label="Increase quantity"
                         >
@@ -65,12 +85,15 @@ const MerchCartDrawer = () => {
                         </button>
                       </div>
                       <p className="text-[14px] font-bold text-foreground">
-                        {formatMerchPrice(item.price * item.quantity)}
+                        {formatShopifyPrice(
+                          (parseFloat(item.price.amount) * item.quantity).toFixed(2),
+                          item.price.currencyCode
+                        )}
                       </p>
                     </div>
                   </div>
                   <button
-                    onClick={() => removeItem(item.productHandle, item.variantId)}
+                    onClick={() => removeItem(item.variantId)}
                     className="text-muted-foreground hover:text-destructive self-start"
                     aria-label="Remove item"
                   >
@@ -83,14 +106,22 @@ const MerchCartDrawer = () => {
             <div className="border-t border-border/50 px-6 py-5 space-y-3">
               <div className="flex items-center justify-between">
                 <span className="text-[14px] text-muted-foreground">Subtotal</span>
-                <span className="text-[18px] font-bold text-foreground">{formatMerchPrice(subtotal)}</span>
+                <span className="text-[18px] font-bold text-foreground">
+                  {formatShopifyPrice(subtotal.toFixed(2), currencyCode)}
+                </span>
               </div>
               <p className="text-[11px] text-muted-foreground">Shipping and taxes calculated at checkout.</p>
               <Button
                 onClick={handleCheckout}
+                disabled={items.length === 0 || isLoading || isSyncing}
                 className="w-full h-12 bg-deep-purple text-white hover:bg-deep-purple/90 font-semibold text-[14px]"
               >
-                Checkout
+                {isLoading || isSyncing ? (
+                  <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                ) : (
+                  <ExternalLink className="h-4 w-4 mr-2" />
+                )}
+                Checkout with Shopify
               </Button>
             </div>
           </>
