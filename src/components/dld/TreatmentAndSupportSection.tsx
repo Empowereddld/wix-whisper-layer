@@ -17,11 +17,11 @@ const TreatmentAndSupportSection = () => {
             In school, people with DLD often need classroom support, not just therapy in a separate room. Helpful supports may include visual schedules, written instructions, chunked directions, extra processing time, vocabulary preview, sentence starters, graphic organizers, repeated instructions, models, and checks for understanding. Educators can also reduce unnecessary language load by making expectations clear and showing examples of finished work.
           </p>
           <p className={p}>
-            In the United States, students may receive support through an IEP or 504 plan. In the United Kingdom, some students may have an EHCP. In Canada and other countries, the names and systems vary, but the principle is the same: language needs should be recognized and supported across learning environments. For practical classroom resources and educator support, visit{" "}
+            In the United States, students may receive support through an IEP or 504 plan. In the United Kingdom, some students may have an EHCP. In Canada a child could also get an IEP. In other countries, the names and systems vary, but the principle is the same: language needs should be recognized and supported across learning environments. For practical classroom resources and educator support, visit{" "}
             <Link to="/for-educators" className="text-primary font-semibold underline hover:no-underline">For Educators</Link>.
           </p>
           <p className={p}>
-            Parent and caregiver strategies matter too. Families can support DLD by slowing down, giving one direction at a time, using visuals, checking understanding gently, modelling language, reading and talking about stories, naming emotions, and giving people time to respond. The goal is not to turn every conversation into a lesson. The goal is to make everyday language more accessible.
+            Parent and caregiver strategies matter too. Families can support individuals with DLD by slowing down, giving one direction at a time, using visuals, checking understanding gently, modelling language, reading and talking about stories, naming emotions, and giving people time to respond. With practice, adults can learn how to find the balance of not turning every conversation into a lesson while also making everyday language more accessible.
           </p>
           <p className={p}>
             As people get older, self-advocacy becomes especially important. Teens and adults with DLD may benefit from learning phrases such as, "Can you say that another way?", "Can I have that in writing?", "I need a minute to think," or "Can you show me an example?" These are not shortcuts. They are communication access tools.

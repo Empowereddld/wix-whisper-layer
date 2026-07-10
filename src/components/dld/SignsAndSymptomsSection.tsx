@@ -5,18 +5,18 @@ const earlyChildhood = [
   "Using fewer words than peers",
   "Having trouble learning new words",
   "Using short or simple sentences",
-  "Leaving out grammar markers, such as past tense or plurals",
+  "Leaving out grammar markers, such as past tense or third person singular",
   "Having difficulty understanding questions",
   "Struggling to follow directions, especially when there is more than one step",
-  "Becoming frustrated when they cannot explain what they mean",
+  "Becoming frustrated or giving up when they cannot explain what they mean",
 ];
 
 const schoolAge = [
   "Trouble following classroom instructions",
   "Difficulty retelling stories in order",
   "Trouble explaining ideas clearly",
-  "Word-finding difficulties, such as knowing the idea but not finding the word",
-  "Grammar errors that continue past the age expected",
+  "Word-finding difficulty (knowing a word but sometimes not being able to access it quickly when needed)",
+  "Challenges using words and sentences to resolve problems",
   "Difficulty understanding jokes, figurative language, or implied meaning",
   "Weak reading comprehension, even when word reading looks stronger",
   "Short written responses or difficulty organizing written work",
@@ -25,8 +25,8 @@ const schoolAge = [
 
 const teensAdults = [
   "Difficulty following fast conversations, lectures, or meetings",
-  "Needing extra time to process spoken information",
-  "Trouble putting thoughts into words under pressure",
+  "Needing extra time and/or support to process spoken information",
+  "Trouble explaining complex information using words",
   "Difficulty understanding dense reading material",
   "Trouble writing emails, reports, assignments, or explanations clearly",
   "Misunderstandings in friendships, school, post-secondary settings, or work",
@@ -50,7 +50,7 @@ const SignsAndSymptomsSection = () => {
         </h2>
         <div className="max-w-[720px] space-y-6 md:space-y-8">
           <p className={bulletClass}>
-            DLD symptoms can look different across ages, languages, and settings. Some people mainly have difficulty understanding language. Others mainly have difficulty using language to express ideas. Many people have both. DLD can also affect reading comprehension, writing, learning, confidence, and participation.
+            DLD symptoms can look different in different people and also vary across ages, languages, and settings. Some people mainly have difficulty understanding language. Others mainly have difficulty using language to express ideas. Many people have both. DLD can also affect reading comprehension, writing, learning, confidence, and participation.
           </p>
 
           <div>
@@ -72,7 +72,7 @@ const SignsAndSymptomsSection = () => {
             Because DLD is hidden, it can be mistaken for inattention, behaviour, low motivation, or lack of confidence. A student may look like they are not listening when the real issue is that the instructions were too long or too fast. A teen may seem quiet while organizing their thoughts. An adult may avoid a meeting, form, or phone call because the language demand is high and the support is low.
           </p>
           <p className={bulletClass}>
-            The behaviour we see is often only the surface. When adults look beneath the surface, they often discover that the issue is not willingness. The issue is language demand.
+            The behaviour we see is often only the surface. When adults look beneath the surface, they often discover that the issue is not related to the degree of willingness. The issue is language demand.
           </p>
           <p className="text-xs text-muted-foreground pt-2">
             Sources:{" "}

@@ -1,18 +1,19 @@
-Plan: Enable Shopify for Empowered DLD Merch
+## Update /about-dld with Jinean's revised copy
 
-You can create the new Shopify store right here through Lovable. You do not need to go to Shopify separately or share API credentials. Lovable's Shopify integration will create a free development store and link it to this project automatically.
+Replace the body copy in each existing section component with the new wording provided. Keep all layout, styling, source-link markup, internal `Link` targets, and section order exactly as-is. Sources lines stay as clickable links using the same URLs already in each file; only the source labels change where Jinean's list differs (e.g. add "Bishop et al (2017)" and "McGregor, 2020" as plain text next to the existing linked sources in the intro section).
 
-What will happen:
-1. Enable Shopify integration with a new development store for Empowered DLD.
-2. After the store is created, you can claim it through the Lovable UI when prompted. Claiming starts a 120-day free trial on a Shopify subscription and keeps the store beyond the 30-day unclaimed window.
-3. Replace the placeholder merch products (tee, mug, tote) with real Shopify products, variants, and inventory.
-4. Wire the Empowered DLD `/shop/merch` page to pull product data, images, and pricing from Shopify.
-5. Connect the existing cart UI to Shopify checkout so customers can buy.
-6. (Optional, after launch) Connect Gelato as a print-on-demand fulfillment app inside Shopify for automatic printing and shipping.
+### Files to edit (copy swaps only, no structural changes)
 
-Notes:
-- The development store is free to build on while we set everything up.
-- Claiming is only required once you are ready to keep the store long-term; you can continue building before claiming.
-- No custom API keys are needed because Lovable handles the Shopify connection.
+1. **src/components/WhatIsDLDSection.tsx** — replace the three paragraphs with Jinean's "What is DLD" text. Update sources line to: RADLD, NIDCD, Bishop et al (2017), McGregor 2020 (first two remain links to existing URLs; the two citations render as plain text).
+2. **src/components/dld/WhatCausesDLDSection.tsx** — replace paragraphs 1–3 with Jinean's shorter "What causes DLD" version (drops the standalone bilingualism paragraph). Sources line unchanged.
+3. **src/components/dld/SignsAndSymptomsSection.tsx** — replace with Jinean's early-childhood / school-age / teens-and-adults bulleted structure plus the closing "hidden…language demand" paragraphs. (Need to view this file during build to preserve its wrapper markup.)
+4. **src/components/dld/DiagnosisSection.tsx** — replace with Jinean's four-paragraph diagnosis copy. (View during build.)
+5. **src/components/dld/DLDvsSpeechDelaySection.tsx** — replace paragraphs with Jinean's version that adds language-delay distinction; keep the existing `Link` to `/blog/autism-vs-dld-understand-the-difference` and closing summary paragraph reworded per Jinean.
+6. **src/components/dld/CureOrOutgrowSection.tsx** — copy is essentially identical to current; only re-verify wording matches Jinean's version and adjust any small diffs.
+7. **src/components/dld/TreatmentAndSupportSection.tsx** — apply Jinean's tweaks: add "In Canada a child could also get an IEP" sentence, soften parent-strategies paragraph ("With practice, adults can learn how to find the balance…"), keep `/for-educators` Link and sources line.
+8. **src/components/dld/LivingWithDLDSection.tsx** — replace with Jinean's new "Living with DLD" copy including the closing paragraphs that CTA to Our Books and the Empowered DLD Resource Library. Keep existing internal links; if the component currently links elsewhere, point "Our Books" → `/books` and "Empowered DLD Resource Library" → `/hub` (matches Core CTA memory). View file during build to confirm.
 
-After you approve this plan, I'll start the Shopify enable flow and create the new store.
+### Out of scope
+- No changes to `AboutDLDHero`, `RealityOfDLDSection`, `NotWholeStoryLamp`, `DLDCommunityVideoCarousel`, `DLDFaqSection`, `ResourceBooksSection`, `ResourceLibraryCTA`, or `AboutDLD.tsx` page composition.
+- No new sections, no new routes, no SEO/JSON-LD changes.
+- Em dashes stay banned per project memory; Jinean's copy already uses commas.
