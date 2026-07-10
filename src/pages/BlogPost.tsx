@@ -67,7 +67,7 @@ const BlogPost = () => {
     "@type": "Article",
     headline: post.title,
     description: (post as any).meta_description || post.excerpt || "",
-    image: `${BASE_URL}/og-empowered-dld.png`,
+    image: (post as any).featured_image_url || `${BASE_URL}/og-empowered-dld.png`,
     datePublished: post.published_at || post.created_at,
     dateModified: post.updated_at,
     author: {
