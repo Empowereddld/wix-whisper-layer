@@ -50,7 +50,7 @@ const SignsAndSymptomsSection = () => {
         </h2>
         <div className="max-w-[720px] space-y-6 md:space-y-8">
           <p className={bulletClass}>
-            DLD symptoms can look different across ages, languages, and settings. Some people mainly have difficulty understanding language. Others mainly have difficulty using language to express ideas. Many people have both. DLD can also affect reading comprehension, writing, learning, confidence, and participation.
+            DLD symptoms can look different in different people and also vary across ages, languages, and settings. Some people mainly have difficulty understanding language. Others mainly have difficulty using language to express ideas. Many people have both. DLD can also affect reading comprehension, writing, learning, confidence, and participation.
           </p>
 
           <div>
