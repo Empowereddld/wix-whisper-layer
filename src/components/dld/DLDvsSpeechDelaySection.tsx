@@ -7,7 +7,7 @@ const DLDvsSpeechDelaySection = () => {
     <section className="py-16 md:py-[80px] bg-muted">
       <div className="container px-6 md:px-8">
         <h2 className="font-sans font-bold text-[28px] md:text-[38px] lg:text-[42px] leading-[1.1] tracking-tight text-foreground max-w-[720px] mb-8 md:mb-10">
-          DLD vs speech delay: what's the difference?
+          DLD vs speech or language delay: what's the difference?
         </h2>
         <div className="max-w-[720px] space-y-5 md:space-y-6">
           <p className={p}>
