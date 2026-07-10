@@ -67,7 +67,7 @@ const BlogPost = () => {
     "@type": "Article",
     headline: post.title,
     description: (post as any).meta_description || post.excerpt || "",
-    image: `${BASE_URL}/og-empowered-dld.png`,
+    image: (post as any).featured_image_url || `${BASE_URL}/og-empowered-dld.png`,
     datePublished: post.published_at || post.created_at,
     dateModified: post.updated_at,
     author: {
@@ -147,6 +147,17 @@ const BlogPost = () => {
                     </span>
                   ))}
                 </div>
+              )}
+
+              {(post as any).featured_image_url && (
+                <figure className="max-w-[900px] mx-auto mb-8 md:mb-10">
+                  <img
+                    src={(post as any).featured_image_url}
+                    alt={post.title}
+                    className="w-full aspect-[16/9] object-cover rounded-xl"
+                    loading="eager"
+                  />
+                </figure>
               )}
 
               <h1 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-3">
