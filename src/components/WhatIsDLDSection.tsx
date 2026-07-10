@@ -8,19 +8,18 @@ const WhatIsDLDSection = () => {
 
         <div className="max-w-[720px] space-y-5 md:space-y-6">
           <p className="text-[16px] md:text-[17px] text-foreground/85 leading-[1.8]">
-            Developmental Language Disorder, often called DLD, is a lifelong difficulty with understanding and using spoken language. People with DLD may have trouble following directions, finding the words they want to say, explaining ideas, understanding stories, answering questions, or keeping up when language is moving quickly. These difficulties are not explained by hearing loss, autism, intellectual disability, or not being exposed to enough language.
+            DLD, is a lifelong difficulty with understanding and/or using spoken language. People with DLD may have trouble following directions, finding the words they want to say, explaining ideas, understanding stories, answering questions, or keeping up when language is moving quickly. These difficulties are not explained by hearing loss, autism, or intellectual disability.
           </p>
           <p className="text-[16px] md:text-[17px] text-foreground/85 leading-[1.8]">
-            DLD is common, but many families, educators, and professionals still have not been given the language to recognize it. Research and awareness organizations describe DLD as affecting about 1 in 14 people, or roughly two students in a classroom of 30. RADLD describes DLD as hidden but common, and NIDCD notes that DLD can affect speaking, listening, reading, and writing.
+            DLD is common, but many families, educators, and professionals still do not recognize it. DLD affects about 1 in 14 people, or roughly two students in a classroom of 30. DLD is hidden but common and can affect speaking, listening, reading, and writing.
           </p>
           <p className="text-[16px] md:text-[17px] text-foreground/85 leading-[1.8]">
-            DLD begins in childhood, but it is not something people simply outgrow. It can affect learning, relationships, confidence, work, and everyday communication across the lifespan. At the same time, DLD is supportable. With the right tools, people with DLD can build skills and advocate for what helps.
+            DLD begins in childhood, but it is not something people simply outgrow. It can affect learning, relationships, confidence, work, and everyday communication across the lifespan. At the same time, DLD is supportable. With the right tools, people with DLD can build many amazing skills and advocate for what helps.
           </p>
           <p className="text-xs text-muted-foreground pt-2">
             Sources:{" "}
             <a href="https://radld.org/about/dld/" target="_blank" rel="noopener nofollow" className="underline hover:text-primary">RADLD</a>,{" "}
-            <a href="https://www.nidcd.nih.gov/health/developmental-language-disorder" target="_blank" rel="noopener nofollow" className="underline hover:text-primary">NIDCD</a>,{" "}
-            <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5638113/" target="_blank" rel="noopener nofollow" className="underline hover:text-primary">CATALISE consortium</a>
+            <a href="https://www.nidcd.nih.gov/health/developmental-language-disorder" target="_blank" rel="noopener nofollow" className="underline hover:text-primary">NIDCD</a>, Bishop et al (2017), McGregor 2020
           </p>
         </div>
       </div>
