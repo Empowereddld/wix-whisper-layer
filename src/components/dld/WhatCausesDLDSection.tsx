@@ -7,16 +7,13 @@ const WhatCausesDLDSection = () => {
         </h2>
         <div className="max-w-[720px] space-y-5 md:space-y-6">
           <p className="text-[16px] md:text-[17px] text-foreground/85 leading-[1.8]">
-            DLD is a neurodevelopmental condition. This means it is connected to how the brain develops and processes language. Researchers do not point to one single cause. Instead, DLD appears to involve complex interactions between genes, brain development, and language learning systems. NIDCD explains that neurodevelopmental disorders are shaped by genes and environment, and that the exact causes of the brain differences linked to DLD are still not fully known.
+            DLD is a neurodevelopmental condition. This means it is connected to how the brain develops and processes language. Researchers do not point to one single cause. Instead, brain differences caused by complex interactions between genes and the environment can result in DLD.
           </p>
           <p className="text-[16px] md:text-[17px] text-foreground/85 leading-[1.8]">
-            DLD often runs in families. A person with DLD may have a parent, sibling, or other family member who also had language, literacy, or communication difficulties. This does not mean anyone caused it. It means language development, like many parts of learning and development, can be influenced by inherited factors.
+            DLD often runs in families. A person with DLD may have a parent, sibling, or other family member who also had language, literacy, or other neurodevelopmental condition. This does not mean anyone caused it. It means language development, like many parts of learning and development, can be influenced by inherited factors.
           </p>
           <p className="text-[16px] md:text-[17px] text-foreground/85 leading-[1.8]">
-            It is also important to name what does not cause DLD, because families are too often handed guilt when what they really need is understanding. DLD is not caused by poor parenting. It is not caused by laziness, stubbornness, or not trying hard enough. It is not caused by bilingualism or multilingualism. Current DLD research points to neurodevelopmental and genetic factors, not blame.
-          </p>
-          <p className="text-[16px] md:text-[17px] text-foreground/85 leading-[1.8]">
-            People who are learning more than one language can have DLD, but speaking more than one language does not create DLD. A bilingual person with DLD will show language learning difficulties beyond what would be expected for their language exposure and learning history. This matters because bilingual families are sometimes told to drop a home language, even though home languages carry culture, identity, connection, and belonging. People with DLD deserve support for language learning, not the loss of a language that connects them to family.
+            It is also important to name what does not cause DLD, because families are too often handed guilt when what they really need is understanding. DLD is not caused by poor parenting. It is not caused by laziness, stubbornness, or not trying hard enough. It is not caused by bilingualism or multilingualism.
           </p>
           <p className="text-xs text-muted-foreground pt-2">
             Sources:{" "}
