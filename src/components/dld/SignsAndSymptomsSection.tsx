@@ -72,7 +72,7 @@ const SignsAndSymptomsSection = () => {
             Because DLD is hidden, it can be mistaken for inattention, behaviour, low motivation, or lack of confidence. A student may look like they are not listening when the real issue is that the instructions were too long or too fast. A teen may seem quiet while organizing their thoughts. An adult may avoid a meeting, form, or phone call because the language demand is high and the support is low.
           </p>
           <p className={bulletClass}>
-            The behaviour we see is often only the surface. When adults look beneath the surface, they often discover that the issue is not willingness. The issue is language demand.
+            The behaviour we see is often only the surface. When adults look beneath the surface, they often discover that the issue is not related to the degree of willingness. The issue is language demand.
           </p>
           <p className="text-xs text-muted-foreground pt-2">
             Sources:{" "}
