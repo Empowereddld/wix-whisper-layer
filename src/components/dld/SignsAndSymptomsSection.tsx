@@ -5,18 +5,18 @@ const earlyChildhood = [
   "Using fewer words than peers",
   "Having trouble learning new words",
   "Using short or simple sentences",
-  "Leaving out grammar markers, such as past tense or plurals",
+  "Leaving out grammar markers, such as past tense or third person singular",
   "Having difficulty understanding questions",
   "Struggling to follow directions, especially when there is more than one step",
-  "Becoming frustrated when they cannot explain what they mean",
+  "Becoming frustrated or giving up when they cannot explain what they mean",
 ];
 
 const schoolAge = [
   "Trouble following classroom instructions",
   "Difficulty retelling stories in order",
   "Trouble explaining ideas clearly",
-  "Word-finding difficulties, such as knowing the idea but not finding the word",
-  "Grammar errors that continue past the age expected",
+  "Word-finding difficulty (knowing a word but sometimes not being able to access it quickly when needed)",
+  "Challenges using words and sentences to resolve problems",
   "Difficulty understanding jokes, figurative language, or implied meaning",
   "Weak reading comprehension, even when word reading looks stronger",
   "Short written responses or difficulty organizing written work",
@@ -25,8 +25,8 @@ const schoolAge = [
 
 const teensAdults = [
   "Difficulty following fast conversations, lectures, or meetings",
-  "Needing extra time to process spoken information",
-  "Trouble putting thoughts into words under pressure",
+  "Needing extra time and/or support to process spoken information",
+  "Trouble explaining complex information using words",
   "Difficulty understanding dense reading material",
   "Trouble writing emails, reports, assignments, or explanations clearly",
   "Misunderstandings in friendships, school, post-secondary settings, or work",
