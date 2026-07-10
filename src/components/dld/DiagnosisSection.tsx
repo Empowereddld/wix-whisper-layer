@@ -9,10 +9,10 @@ const DiagnosisSection = () => {
         </h2>
         <div className="max-w-[720px] space-y-5 md:space-y-6">
           <p className={p}>
-            DLD is typically diagnosed by a speech-language pathologist, also called an SLP or speech pathologist in some countries. An SLP looks at how a person understands and uses language across different tasks and contexts. Assessment may include standardized language tests, language samples, story retell tasks, vocabulary and grammar tasks, listening comprehension tasks, observation, case history, and information from parents, educators, or the person themselves.
+            DLD is typically diagnosed by a speech-language pathologist, also called an SLP or speech and language therapist in some countries. An SLP looks at how a person understands and uses language across different tasks and contexts. Assessment may include standardized language tests, language samples, story retell tasks, vocabulary and grammar tasks, listening comprehension tasks, observation, case history, and information from parents, educators, or the individual themself.
           </p>
           <p className={p}>
-            A strong DLD assessment does not only ask, "What score did this person get?" It also asks, "How does language affect daily life?" For a student, that might include following lessons, understanding classroom directions, joining conversations, reading, writing, and showing what they know. For an adult, it may include workplace communication, post-secondary learning, relationships, forms, appointments, and self-advocacy.
+            A strong DLD assessment does not only ask, "What score did this person get?" It also asks, "How do language challenges affect daily life?" For a student, that might include following lessons, understanding classroom directions, joining conversations, reading, writing, and showing what they know. For an adult, it may include workplace communication, post-secondary learning, relationships, filling in forms etc.
           </p>
           <p className={p}>
             DLD can often be identified in the preschool or early school years, but many people are missed. Some are told they have a language delay without anyone explaining that the difficulty may be persistent. Others have clear speech sounds or strong word reading, so their deeper language needs are overlooked.
