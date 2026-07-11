@@ -1,31 +1,44 @@
-Standardize every resource thumbnail to a 16:9 ratio so the grid and detail views both use the same wide look.
+# Fix: "Failed to save your info" on signup role step
 
-### Standard
-- **Target ratio:** 16:9
-- **Target resolution:** 1920×1080 px (safe for retina); 1280×720 px minimum acceptable
-- **Format:** PNG (high-res doc preview per project memory) or WebP export
+## What's broken
+The `prevent_profile_role_self_escalation` trigger on `public.profiles` blocks any non-admin from changing `role`. New profiles default to `role='parent'`, so the onboarding page (`/signup/role`) fails for every user who picks Therapist/SLP, Educator, School Leader, or Other — the update raises an exception and the UI shows "Failed to save your info. Please try again."
 
-### Code changes
-1. `src/components/hub/ResourceCard.tsx`  
-   - Replace the grid thumbnail `h-40` container with `aspect-video` so the card uses 16:9.
-   - Keep `object-cover` and `rounded-t-xl`.
+The escalation guard is still needed to prevent users from later promoting themselves, but it must allow the initial role selection during onboarding.
 
-2. `src/components/hub/SampleGallery.tsx`  
-   - Replace `aspect-[4/3]` with `aspect-video` so the detail page gallery matches the card ratio.
-   - Keep `object-contain` for the main image and `object-cover` for the strip.
+## Fix
+Relax the trigger so a user may set their own role exactly once — during onboarding, i.e. while `OLD.interests IS NULL` (the flag we already use to detect that onboarding hasn't been completed). All other self role-changes remain blocked; admin changes remain allowed.
 
-3. `src/components/hub/ResourceDetailModal.tsx`  
-   - Replace the icon-only `h-56` placeholder with the actual thumbnail.
-   - Use `aspect-video` for the preview container so the modal is also 16:9.
+### Migration
+Replace the trigger function with:
 
-### Asset updates
-- Regenerate/crop all existing thumbnails in the `thumbnails` bucket to 16:9.
-- Re-upload to the same public bucket paths so existing `resources.thumbnail_url` values stay valid.
+```sql
+CREATE OR REPLACE FUNCTION public.prevent_profile_role_self_escalation()
+RETURNS trigger
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path TO 'public'
+AS $$
+BEGIN
+  IF NEW.role IS DISTINCT FROM OLD.role THEN
+    -- Admins can always change roles
+    IF public.has_role(auth.uid(), 'admin'::app_role) THEN
+      RETURN NEW;
+    END IF;
+    -- Allow the user's first role selection during onboarding
+    -- (interests is NULL until the onboarding form is submitted)
+    IF auth.uid() = NEW.id AND OLD.interests IS NULL THEN
+      RETURN NEW;
+    END IF;
+    RAISE EXCEPTION 'Only admins can change the role on a profile';
+  END IF;
+  RETURN NEW;
+END;
+$$;
+```
 
-### Validation
-- Spot-check grid and detail pages for a paid, free, poster, guide, and bundle resource.
-- Confirm no layout shift or empty letterboxing on any resource.
+No schema, RLS, grant, or client-code changes required.
 
-### Notes
-- This keeps the "wider look" the user prefers across both the library grid and the detail gallery.
-- Future thumbnails should be uploaded at 1920×1080 px.
+## Validation
+1. Sign up as a new user, pick "Therapist / SLP" on the onboarding step → submits successfully, profile row has `role='slp'`, `interests` populated, redirects to `/hub`.
+2. Re-open `/signup/role` for the same account (or attempt a direct update) and change role → trigger blocks it with the same error as before.
+3. Admin-initiated role change in the admin panel still works.
