@@ -1,26 +1,45 @@
-## Improve blog post readability
+## New resource to add
 
-The body currently reads as one flat wall of DM Sans in muted gray, with h2/h3 in the same font weight-family as the body so nothing separates sections. Fix it purely with CSS on `.blog-content` in `src/index.css` — no content changes, applies to every blog post.
+**Title:** Supporting a Child with DLD: A Guide for Tutors
+**Audience tags:** Educators, Parents, Therapists
+**Type:** Guide
+**Status:** Published
+**Card blurb (description):** A gentle, practical guide to help tutors understand DLD and support a child's learning, confidence, and communication.
 
-### Typography
-- Body text: switch color from `--muted-foreground` to `--foreground` at ~90% for stronger contrast; bump body size to 17px desktop / 16px mobile; line-height 1.75; `text-wrap: pretty`.
-- H2: swap to `DM Serif Display` (already loaded), 32px / 36px desktop, tight leading, deeper color. Adds clear visual hierarchy vs body.
-- H3: keep DM Sans but bolder (700), 20/22px, letter-spacing tightened, with a small colored primary bar or uppercase eyebrow feel via `::before` accent to make sub-sections scannable.
-- First paragraph after H1: drop-cap on the first letter (already exists as `.first-letter` pattern in some blogs — verify and use only for the first `<p>` in `.blog-content`).
+The longer copy (short + full description + "Who Is This For") lives in the resource's description field so it shows on the resource detail modal.
 
-### Section rhythm
-- H2 gets a subtle hairline `border-top: 1px solid hsl(var(--border))` with generous `padding-top: 2.5rem` — creates a real section break without visual heaviness.
-- Increase spacing between `<p>` blocks to 1.75rem.
-- Style standalone short italic lines (like "Sometimes the hardest part…") via existing blockquote rule; leave markdown intact.
+## Will it look the same as the other resources?
 
-### Lists + callouts
-- Bulleted lists: custom marker using a small primary dot (`::marker` color primary, already set — bump size); tighter left indent; more breathing room between items (0.75rem).
-- Blockquote: soften background to `--secondary` at lower opacity, larger left border (4px), remove italic default so authors control emphasis.
+Yes, identical. It uses the same `ResourceCard` component every other resource uses:
 
-### Links
-- Inline links: primary color, underline offset 3px, thickness 1px, hover deepens to `--deep-purple`.
+- Thumbnail image on top
+- Title
+- Audience chips (Educators · Parents · Therapists)
+- 3-line truncated blurb
+- Save / Download / View buttons
 
-### Scope
-- Only `src/index.css` `.blog-content` rules.
-- No changes to `BlogPost.tsx`, markdown, DB, FAQ accordion, or other pages.
-- Verify visually at the current preview route after applying.
+No new component, no custom styling, no layout variant. It slots into the Hub grid exactly like the existing resources. The only visual difference is the automatic "New" badge in the corner.
+
+## About the "New" badge
+
+Automatic and per-user, no manual expiry:
+
+- Shows "New" to a signed-in user when the resource was created **after** their account was created **and** they haven't viewed it yet.
+- Disappears for them as soon as they open or download it.
+- For anyone who signs up after we add this, it won't show as "New".
+
+Effectively: it stays "New" for each existing user until they click it. Nothing to configure.
+
+## Steps
+
+1. Wait for you to send the preview image and the PDF.
+2. Upload the image to the `thumbnails` bucket and the PDF to the `resources` bucket.
+3. Insert one row into the `resources` table with the fields above (`roles = ['educator','parent','slp']`, `resource_type = 'guide'`, `is_published = true`).
+4. Verify it appears in the Hub dashboard for the relevant audiences and that the "New" badge shows for existing accounts.
+
+## Not doing
+
+- No schema changes (no new "tutor" tag, no manual "new until" field).
+- No changes to card layout or copy elsewhere on the site.
+
+Send over the preview image and PDF whenever ready and I'll do the upload + insert in one go.
