@@ -28,7 +28,7 @@ const SampleGallery = ({ thumbnailUrl, sampleImages, title, fallbackIcon: Icon }
   return (
     <div className="w-full space-y-3">
       {/* Main image — fixed 4:3 container so layout never shifts */}
-      <div className="w-full aspect-[4/3] rounded-xl border border-border overflow-hidden bg-muted flex items-center justify-center">
+      <div className="w-full aspect-video rounded-xl border border-border overflow-hidden bg-muted flex items-center justify-center">
         <img
           src={activeImage!}
           alt={`${title} — preview ${activeIndex + 1}`}

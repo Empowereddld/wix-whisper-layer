@@ -1,45 +1,31 @@
-## New resource to add
+Standardize every resource thumbnail to a 16:9 ratio so the grid and detail views both use the same wide look.
 
-**Title:** Supporting a Child with DLD: A Guide for Tutors
-**Audience tags:** Educators, Parents, Therapists
-**Type:** Guide
-**Status:** Published
-**Card blurb (description):** A gentle, practical guide to help tutors understand DLD and support a child's learning, confidence, and communication.
+### Standard
+- **Target ratio:** 16:9
+- **Target resolution:** 1920×1080 px (safe for retina); 1280×720 px minimum acceptable
+- **Format:** PNG (high-res doc preview per project memory) or WebP export
 
-The longer copy (short + full description + "Who Is This For") lives in the resource's description field so it shows on the resource detail modal.
+### Code changes
+1. `src/components/hub/ResourceCard.tsx`  
+   - Replace the grid thumbnail `h-40` container with `aspect-video` so the card uses 16:9.
+   - Keep `object-cover` and `rounded-t-xl`.
 
-## Will it look the same as the other resources?
+2. `src/components/hub/SampleGallery.tsx`  
+   - Replace `aspect-[4/3]` with `aspect-video` so the detail page gallery matches the card ratio.
+   - Keep `object-contain` for the main image and `object-cover` for the strip.
 
-Yes, identical. It uses the same `ResourceCard` component every other resource uses:
+3. `src/components/hub/ResourceDetailModal.tsx`  
+   - Replace the icon-only `h-56` placeholder with the actual thumbnail.
+   - Use `aspect-video` for the preview container so the modal is also 16:9.
 
-- Thumbnail image on top
-- Title
-- Audience chips (Educators · Parents · Therapists)
-- 3-line truncated blurb
-- Save / Download / View buttons
+### Asset updates
+- Regenerate/crop all existing thumbnails in the `thumbnails` bucket to 16:9.
+- Re-upload to the same public bucket paths so existing `resources.thumbnail_url` values stay valid.
 
-No new component, no custom styling, no layout variant. It slots into the Hub grid exactly like the existing resources. The only visual difference is the automatic "New" badge in the corner.
+### Validation
+- Spot-check grid and detail pages for a paid, free, poster, guide, and bundle resource.
+- Confirm no layout shift or empty letterboxing on any resource.
 
-## About the "New" badge
-
-Automatic and per-user, no manual expiry:
-
-- Shows "New" to a signed-in user when the resource was created **after** their account was created **and** they haven't viewed it yet.
-- Disappears for them as soon as they open or download it.
-- For anyone who signs up after we add this, it won't show as "New".
-
-Effectively: it stays "New" for each existing user until they click it. Nothing to configure.
-
-## Steps
-
-1. Wait for you to send the preview image and the PDF.
-2. Upload the image to the `thumbnails` bucket and the PDF to the `resources` bucket.
-3. Insert one row into the `resources` table with the fields above (`roles = ['educator','parent','slp']`, `resource_type = 'guide'`, `is_published = true`).
-4. Verify it appears in the Hub dashboard for the relevant audiences and that the "New" badge shows for existing accounts.
-
-## Not doing
-
-- No schema changes (no new "tutor" tag, no manual "new until" field).
-- No changes to card layout or copy elsewhere on the site.
-
-Send over the preview image and PDF whenever ready and I'll do the upload + insert in one go.
+### Notes
+- This keeps the "wider look" the user prefers across both the library grid and the detail gallery.
+- Future thumbnails should be uploaded at 1920×1080 px.
