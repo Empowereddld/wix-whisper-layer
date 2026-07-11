@@ -121,7 +121,7 @@ const ResourceCard = ({
   return (
     <div className="bg-card rounded-xl border border-thistle/60 premium-card flex flex-col h-full">
       {/* Thumbnail */}
-      <div className="h-40 rounded-t-xl bg-thistle/30 flex items-center justify-center relative overflow-hidden">
+      <div className="aspect-video rounded-t-xl bg-thistle/30 flex items-center justify-center relative overflow-hidden">
         {resource.thumbnail_url ? (
           <img src={resource.thumbnail_url} alt={resource.title} className="w-full h-full object-cover" loading="lazy" />
         ) : (

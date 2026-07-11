@@ -57,8 +57,12 @@ const ResourceDetailModal = ({ resource, open, onClose, onDownload }: ResourceDe
         </DialogHeader>
 
         {/* Preview */}
-        <div className="h-56 rounded-xl bg-thistle/30 flex items-center justify-center mb-2">
-          <Icon className="h-16 w-16 text-hub-lavender/50" />
+        <div className="aspect-video rounded-xl bg-thistle/30 flex items-center justify-center mb-2 overflow-hidden">
+          {resource.thumbnail_url ? (
+            <img src={resource.thumbnail_url} alt={resource.title} className="w-full h-full object-cover" />
+          ) : (
+            <Icon className="h-16 w-16 text-hub-lavender/50" />
+          )}
         </div>
 
         {/* Description */}
