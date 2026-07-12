@@ -24,6 +24,19 @@ export const useAdminUsers = (filters?: { search?: string; role?: string }) => {
   });
 };
 
+export const useAdminUserCount = () => {
+  return useQuery({
+    queryKey: ["admin-user-count"],
+    queryFn: async () => {
+      const { count, error } = await supabase
+        .from("profiles")
+        .select("*", { count: "exact", head: true });
+      if (error) throw error;
+      return count ?? 0;
+    },
+  });
+};
+
 export const useUserDownloads = (userId: string | undefined) => {
   return useQuery({
     queryKey: ["user-downloads", userId],

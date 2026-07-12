@@ -1,6 +1,6 @@
 import { useState } from "react";
 import AdminLayout from "@/components/admin/AdminLayout";
-import { useAdminUsers, useUserDownloads, useUserNotes } from "@/hooks/useAdminUsers";
+import { useAdminUsers, useUserDownloads, useUserNotes, useAdminUserCount } from "@/hooks/useAdminUsers";
 import { useLogAction } from "@/hooks/useAuditLog";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
@@ -38,6 +38,7 @@ const AdminUsers = () => {
   const [emailForm, setEmailForm] = useState({ subject: "", body: "" });
 
   const { data: users, isLoading } = useAdminUsers({ search, role: filterRole });
+  const { data: totalUsers } = useAdminUserCount();
   const { data: downloads } = useUserDownloads(selectedUser?.id);
   const { data: notes } = useUserNotes(selectedUser?.id);
   const { user } = useAuth();
@@ -116,7 +117,12 @@ const AdminUsers = () => {
   return (
     <AdminLayout>
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
-        <h1 className="text-2xl font-bold">Users</h1>
+        <div className="flex items-center gap-3">
+          <h1 className="text-2xl font-bold">Users</h1>
+          <span className="inline-flex items-center rounded-full bg-thistle/50 px-2.5 py-0.5 text-xs font-medium text-midnight">
+            {totalUsers?.toLocaleString() ?? "—"} total
+          </span>
+        </div>
         <Button variant="outline" onClick={exportCSV}>
           <Download className="h-4 w-4 mr-2" /> Export CSV
         </Button>
