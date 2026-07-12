@@ -1,0 +1,1 @@
+UPDATE public.blog_posts SET featured_image_url = 'https://www.empowereddld.com/__l5e/assets-v1/c28ed3ea-59cb-4504-8c5d-89bdb835be26/when-your-child-knows-more-v2.png' WHERE slug = 'when-your-child-knows-more-than-they-can-say';
