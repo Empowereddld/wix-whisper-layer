@@ -1,6 +1,6 @@
 import { useState } from "react";
 import AdminLayout from "@/components/admin/AdminLayout";
-import { useAdminUsers, useUserDownloads, useUserNotes } from "@/hooks/useAdminUsers";
+import { useAdminUsers, useUserDownloads, useUserNotes, useAdminUserCount } from "@/hooks/useAdminUsers";
 import { useLogAction } from "@/hooks/useAuditLog";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
