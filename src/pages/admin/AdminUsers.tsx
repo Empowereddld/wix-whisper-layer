@@ -117,7 +117,12 @@ const AdminUsers = () => {
   return (
     <AdminLayout>
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
-        <h1 className="text-2xl font-bold">Users</h1>
+        <div className="flex items-center gap-3">
+          <h1 className="text-2xl font-bold">Users</h1>
+          <span className="inline-flex items-center rounded-full bg-thistle/50 px-2.5 py-0.5 text-xs font-medium text-midnight">
+            {totalUsers?.toLocaleString() ?? "—"} total
+          </span>
+        </div>
         <Button variant="outline" onClick={exportCSV}>
           <Download className="h-4 w-4 mr-2" /> Export CSV
         </Button>
