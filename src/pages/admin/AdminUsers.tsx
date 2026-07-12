@@ -38,6 +38,7 @@ const AdminUsers = () => {
   const [emailForm, setEmailForm] = useState({ subject: "", body: "" });
 
   const { data: users, isLoading } = useAdminUsers({ search, role: filterRole });
+  const { data: totalUsers } = useAdminUserCount();
   const { data: downloads } = useUserDownloads(selectedUser?.id);
   const { data: notes } = useUserNotes(selectedUser?.id);
   const { user } = useAuth();
