@@ -1,6 +1,9 @@
-Add a total user count to the Admin Users page
+Yes, changing the Empowered DLD logo in the Hub header to navigate to `/` is the clearest course of action. It follows the universal web convention that the site logo takes users to the public marketing homepage, and it solves the current problem where users inside the resource library have no obvious way back to the main website.
 
-- Add a count next to the "Users" page title that shows the total number of Hub users (full unfiltered list).
-- Use the existing `profiles` table and query only for the count, separate from the filtered list, so the total stays stable while searching or filtering.
-- Display it as a small badge or muted text beside the title, matching the existing admin panel styling.
-- Files to modify: `src/pages/admin/AdminUsers.tsx`.
+Plan:
+1. In `src/components/hub/HubHeader.tsx`, change the logo button's `onClick={() => navigate("/hub")}` to `onClick={() => navigate("/")}` so it points to the marketing site homepage.
+2. Confirm the logo is implemented as a button/link and does not require additional `href` changes.
+3. (Optional) Add a "Resource Library" or "My Hub" item to the user dropdown menu so users can still return to the Hub dashboard from any page. If the user prefers minimal change, skip this step.
+4. Run a TypeScript/typecheck to ensure no broken routes.
+
+This is a small, low-risk change that immediately fixes the navigation dead-end while keeping the Hub's own pages accessible through their direct routes.
