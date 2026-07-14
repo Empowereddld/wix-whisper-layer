@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useAdminCheck } from "@/hooks/useAdminCheck";
 import { useNavigate } from "react-router-dom";
-import { LogOut, Settings, ChevronDown, Shield, Rocket } from "lucide-react";
+import { LogOut, Settings, ChevronDown, Shield, Rocket, Library } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -73,7 +73,7 @@ const HubHeader = ({ activeAudience = "", onAudienceChange }: HubHeaderProps) =>
         <div className="flex items-center justify-between h-14 gap-4">
           {/* Logo */}
           <button
-            onClick={() => navigate("/hub")}
+            onClick={() => navigate("/")}
             className="flex-shrink-0 -my-4"
           >
             <img src={empoweredLogoWhite} alt="Empowered DLD" className="h-24" />
@@ -115,6 +115,13 @@ const HubHeader = ({ activeAudience = "", onAudienceChange }: HubHeaderProps) =>
                   Admin Dashboard
                 </DropdownMenuItem>
               )}
+              <DropdownMenuItem
+                onClick={() => navigate("/hub")}
+                className="cursor-pointer"
+              >
+                <Library className="h-4 w-4 mr-2" />
+                Resource Library
+              </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={() => navigate("/hub/settings")}
                 className="cursor-pointer"
