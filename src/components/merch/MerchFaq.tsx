@@ -7,7 +7,7 @@ const faqs = [
   },
   {
     q: "How long does shipping take?",
-    a: "Most orders arrive within 5 to 10 business days. You will get tracking by email as soon as your order ships.",
+    a: "Most orders arrive within 5 to 10 business days. You will get a tracking number by email as soon as your order ships.",
   },
   {
     q: "Do you ship internationally?",
