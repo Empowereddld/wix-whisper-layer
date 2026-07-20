@@ -358,8 +358,8 @@ const MerchProductDetail = ({ product }: Props) => {
               <div className="flex items-start gap-3">
                 <Package className="h-5 w-5 text-muted-foreground mt-0.5" />
                 <div>
-                  <p className="text-[13px] font-semibold text-foreground">Printed on demand</p>
-                  <p className="text-[12px] text-muted-foreground">Made just for you, less waste.</p>
+                  <p className="text-[13px] font-semibold text-foreground">Printed locally</p>
+                  <p className="text-[12px] text-muted-foreground">By vendors near you.</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
