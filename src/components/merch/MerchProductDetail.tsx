@@ -273,7 +273,7 @@ const MerchProductDetail = ({ product }: Props) => {
               MERCH
             </p>
             <h1 className="text-[28px] md:text-[36px] lg:text-[40px] font-black text-foreground leading-[1.1] mb-3">
-              {product.title}
+              <MerchProductTitle handle={product.handle} title={product.title} />
             </h1>
             <p className="text-[24px] md:text-[28px] font-bold text-foreground mb-7">
               {formatShopifyPrice(
