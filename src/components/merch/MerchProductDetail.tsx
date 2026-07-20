@@ -14,6 +14,10 @@ import {
   type ShopifyProduct,
 } from "@/lib/shopify";
 import { toast } from "sonner";
+import {
+  getMerchDisplayTitle,
+  MerchProductTitle,
+} from "./MerchProductTitle";
 
 interface Props {
   product: ShopifyProduct["node"];
