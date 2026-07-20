@@ -10,10 +10,6 @@ const faqs = [
     a: "Most orders arrive within 5 to 10 business days. You will get a tracking number by email as soon as your order ships.",
   },
   {
-    q: "Do you ship internationally?",
-    a: "Yes. We ship worldwide. Duties and taxes for international orders are calculated at checkout where applicable.",
-  },
-  {
     q: "What is your return policy?",
     a: "Because every item is printed on demand, we do not accept change-of-mind returns. If your order arrives damaged or with a print defect, email us within 14 days and we will replace it at no cost.",
   },
