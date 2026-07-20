@@ -347,35 +347,50 @@ const MerchProductDetail = ({ product }: Props) => {
               </div>
             </div>
 
-            {/* Size Guide + Care Instructions */}
-            {(sizeGuide || careInstructions) && (
-              <Accordion type="single" collapsible className="mt-8 border-t border-border/50">
-                {sizeGuide && (
-                  <AccordionItem value="size-guide">
-                    <AccordionTrigger className="text-[13px] font-bold uppercase tracking-[0.15em]">
-                      Size Guide
-                    </AccordionTrigger>
-                    <AccordionContent>
-                      <div className="text-[14px] text-muted-foreground leading-[1.75] whitespace-pre-line">
-                        {sizeGuide}
-                      </div>
-                    </AccordionContent>
-                  </AccordionItem>
-                )}
-                {careInstructions && (
-                  <AccordionItem value="care-instructions">
-                    <AccordionTrigger className="text-[13px] font-bold uppercase tracking-[0.15em]">
-                      Care Instructions
-                    </AccordionTrigger>
-                    <AccordionContent>
-                      <div className="text-[14px] text-muted-foreground leading-[1.75] whitespace-pre-line">
-                        {careInstructions}
-                      </div>
-                    </AccordionContent>
-                  </AccordionItem>
-                )}
-              </Accordion>
-            )}
+            {/* Size Guide + Care Instructions + Shipping & Returns */}
+            <Accordion type="single" collapsible className="mt-8 border-t border-border/50">
+              {sizeGuide && (
+                <AccordionItem value="size-guide">
+                  <AccordionTrigger className="text-[13px] font-bold uppercase tracking-[0.15em]">
+                    Size Guide
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <FormattedText text={sizeGuide} />
+                  </AccordionContent>
+                </AccordionItem>
+              )}
+              {careInstructions && (
+                <AccordionItem value="care-instructions">
+                  <AccordionTrigger className="text-[13px] font-bold uppercase tracking-[0.15em]">
+                    Care Instructions
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <FormattedText text={careInstructions} />
+                  </AccordionContent>
+                </AccordionItem>
+              )}
+              <AccordionItem value="shipping-returns">
+                <AccordionTrigger className="text-[13px] font-bold uppercase tracking-[0.15em]">
+                  Shipping &amp; Returns
+                </AccordionTrigger>
+                <AccordionContent>
+                  <FormattedText
+                    text={`Every item is printed on demand and made just for you, which helps reduce waste.
+
+Production typically takes 2 to 5 business days before your order ships.
+
+Shipping times after dispatch:
+- North America: 3 to 7 business days
+- Europe: 5 to 10 business days
+- Rest of world: 7 to 14 business days
+
+Because each piece is made to order, we cannot accept returns for change of mind or incorrect size. Please review the Size Guide before ordering.
+
+If your item arrives damaged, defective, or incorrect, contact us within 14 days of delivery at hello@empowereddld.com with a photo and your order number and we will make it right.`}
+                  />
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
           </div>
         </div>
       </div>
