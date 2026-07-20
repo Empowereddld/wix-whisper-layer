@@ -16,8 +16,6 @@
 
 import "https://deno.land/std@0.224.0/dotenv/load.ts";
 import { assert, assertEquals } from "https://deno.land/std@0.224.0/assert/mod.ts";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-
 const SUPABASE_URL = Deno.env.get("VITE_SUPABASE_URL")!;
 const SUPABASE_ANON_KEY = Deno.env.get("VITE_SUPABASE_PUBLISHABLE_KEY")!;
 
@@ -25,25 +23,31 @@ assert(SUPABASE_URL, "VITE_SUPABASE_URL must be set");
 assert(SUPABASE_ANON_KEY, "VITE_SUPABASE_PUBLISHABLE_KEY must be set");
 
 Deno.test("resource_private_files is not readable by anon clients", async () => {
-  const anon = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-  const { data, error } = await anon
-    .from("resource_private_files")
-    .select("resource_id, storage_path")
-    .limit(5);
+  // Query PostgREST directly with the anon key. RLS must return either an
+  // error or an empty array — any leaked storage_path would defeat the
+  // entire private-file design.
+  const res = await fetch(
+    `${SUPABASE_URL}/rest/v1/resource_private_files?select=resource_id,storage_path&limit=5`,
+    {
+      headers: {
+        apikey: SUPABASE_ANON_KEY,
+        Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+      },
+    },
+  );
+  const body = await res.text();
 
-  // RLS must either error or return zero rows for anon. Any leaked
-  // storage_path here would defeat the entire private-file design.
-  if (error) {
-    // Permission denied is the expected happy path.
-    assert(
-      /permission denied|row-level security|not authorized/i.test(error.message),
-      `Unexpected error surface: ${error.message}`,
+  if (res.status === 200) {
+    const rows = JSON.parse(body);
+    assertEquals(
+      Array.isArray(rows) ? rows.length : -1,
+      0,
+      `resource_private_files must not return rows to anon. Got: ${body}`,
     );
   } else {
-    assertEquals(
-      data?.length ?? 0,
-      0,
-      "resource_private_files must not return rows to anon clients",
+    assert(
+      res.status === 401 || res.status === 403 || res.status === 404,
+      `Unexpected status ${res.status} for anon read: ${body}`,
     );
   }
 });
