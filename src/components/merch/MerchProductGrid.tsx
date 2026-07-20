@@ -72,7 +72,7 @@ const MerchProductGrid = () => {
                   </div>
                   <div className="px-6 pt-5 flex flex-col flex-1">
                     <h3 className="text-[18px] md:text-[20px] font-bold text-foreground leading-tight mb-1">
-                      {node.title}
+                      <MerchProductTitle handle={node.handle} title={node.title} />
                     </h3>
                     <p className="text-[13px] md:text-[14px] text-muted-foreground leading-relaxed mb-4 flex-1 line-clamp-3">
                       {node.description || "Shop DLD awareness merch."}
