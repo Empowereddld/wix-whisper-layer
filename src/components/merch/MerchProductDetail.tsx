@@ -302,7 +302,16 @@ const MerchProductDetail = ({ product }: Props) => {
             )}
 
             {/* Option pickers */}
-            {options.map((option) => (
+            {options
+              .filter(
+                (option) =>
+                  !(
+                    option.name.toLowerCase() === "title" &&
+                    option.values.length === 1 &&
+                    option.values[0]?.toLowerCase() === "default title"
+                  )
+              )
+              .map((option) => (
               <div key={option.name} className="mb-6">
                 <p className="text-[12px] font-bold uppercase tracking-[0.15em] text-foreground mb-3">
                   {option.name}
