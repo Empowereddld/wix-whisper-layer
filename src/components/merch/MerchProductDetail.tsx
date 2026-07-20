@@ -116,6 +116,24 @@ function FormattedText({ text }: { text: string }) {
   );
 }
 
+/**
+ * Per-product visible main description overrides, keyed by Shopify product handle.
+ * Use this when the Shopify description contains extra sections (size chart,
+ * care instructions) that we want to hide from the main copy area and only
+ * surface via the collapsible accordions below.
+ */
+const PRODUCT_DESCRIPTION_OVERRIDES: Record<string, string> = {
+  "pause-please-i-m-thinking-kids-t-shirt": `Some children need extra time to process language, organize their thoughts, and find the words they want to use. This kids' T-shirt shares that message in a simple, child-friendly way: Pause please… I'm thinking.
+
+Designed for everyday wear, DLD awareness, school events, therapy sessions, and advocacy days, this shirt is a gentle reminder that giving children time can help them show what they know.
+
+Details:
+- Small left-chest design
+- Available in White and Ash Grey
+- Kids crewneck fit
+- Soft, comfortable feel for everyday wear`,
+};
+
 const MerchProductDetail = ({ product }: Props) => {
   const navigate = useNavigate();
   const addItem = useMerchCartStore((state) => state.addItem);
