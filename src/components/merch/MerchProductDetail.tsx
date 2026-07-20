@@ -223,12 +223,12 @@ const MerchProductDetail = ({ product }: Props) => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14">
           {/* Gallery */}
           <div>
-            <div className="rounded-2xl overflow-hidden bg-muted flex items-center justify-center aspect-[4/5]">
+            <div className="rounded-2xl overflow-hidden bg-muted aspect-[4/5]">
               {activeImage ? (
                 <img
                   src={activeImage.url}
                   alt={activeImage.altText || product.title}
-                  className="w-full h-full object-contain"
+                  className="w-full h-full object-cover"
                 />
               ) : (
                 <div className="w-full h-full flex items-center justify-center text-muted-foreground text-[14px]">
