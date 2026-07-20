@@ -255,9 +255,9 @@ const MerchProductDetail = ({ product }: Props) => {
             </p>
 
             {intro && (
-              <p className="text-[14px] md:text-[15px] text-muted-foreground leading-[1.75] mb-7 whitespace-pre-line">
-                {intro}
-              </p>
+              <div className="mb-7">
+                <FormattedText text={intro} />
+              </div>
             )}
 
             {/* Option pickers */}
