@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/button";
-import heroImage from "@/assets/hero-girls.webp";
+import heroAsset from "@/assets/hero-tote-mom.png.asset.json";
 import hallwayBg from "@/assets/school-hallway-bg.webp";
+
+const heroImage = heroAsset.url;
 
 const HeroSection = () => {
   return (
