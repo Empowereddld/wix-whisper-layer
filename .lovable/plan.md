@@ -1,28 +1,43 @@
-## Task
-Remove the following text from the description shown under the **Description** tab on the resource detail page for *Supporting a Child with DLD: A Guide for Tutors*:
+## Goal
 
-> Who Is This For:
-> - Tutors supporting a child with DLD or language differences
-> - Parents sharing a quick, clear guide with their child's tutor
-> - Educators and support staff working one to one with students
-> - Anyone who helps a child learn and wants to understand DLD
+Clean up `/shop/merch/:handle` so it (1) shows a real multi-image gallery and (2) shows a short, focused description with size chart and care instructions tucked into collapsible sections.
 
-## What I found
-The text is stored in the `long_description` column of the `resources` table for the resource with ID `ca08f2dd-6e0c-42dc-8dbe-51e7b3b8739b`. The current value ends with that block appended after the main description.
+## 1. Multi-image gallery
 
-The separate **Who Is This For** tab is powered by the `great_for` array and will remain unchanged.
+Update `src/components/merch/MerchProductDetail.tsx` to render all images from `product.images.edges` instead of just `getFirstImage`.
 
-## Plan
-1. Update the `long_description` column for this resource, stripping the trailing `\n\nWho Is This For:...` block and leaving only the main description ending with `"What can I do to help?"`.
-2. Verify the change by re-querying the database.
+- Reuse the existing pattern from `src/components/hub/SampleGallery.tsx`: large main image on top, thumbnail strip underneath, click a thumbnail to swap the main image. Keep it visually consistent with the hub's gallery (rounded-2xl, `aspect-square` for merch since product mockups are square).
+- Add local state `activeImageIndex`; default to 0.
+- If only one image exists, hide the thumbnail strip.
+- Bump the Storefront query `images(first: 5)` to `images(first: 20)` in both `STOREFRONT_PRODUCTS_QUERY` and `STOREFRONT_PRODUCT_BY_HANDLE_QUERY` in `src/lib/shopify.ts` so Gelato's full mockup set comes through.
 
-## SQL to run
-```sql
-UPDATE resources
-SET long_description = 'Developmental Language Disorder (DLD) affects roughly 1 in 14 people, yet it often goes unnoticed in tutoring sessions where children are quietly struggling to understand language, follow instructions, or express what they know. This short, welcoming guide gives tutors a clear starting point.
+Note: Shopify's Storefront API `images` field returns product images (all media of type IMAGE). Gelato syncs mockups as product images, so this covers the "all product media" ask without needing the separate `media` field.
 
-Inside, you''ll find plain-language explanations of what DLD is, how it can show up during learning, and small, doable strategies that make a real difference: simpler instructions, extra processing time, visual supports, and ways to build a child''s confidence alongside their skills. It also offers a compassionate lens for understanding behaviour that might otherwise be misread. Designed to be easy to reference and share, it helps the adults around a child move from "What is DLD?" to "What can I do to help?"'
-WHERE id = 'ca08f2dd-6e0c-42dc-8dbe-51e7b3b8739b';
-```
+## 2. Split description into intro + Size Guide + Care Instructions
 
-No application code changes are required.
+The Shopify description for this product concatenates: intro copy → size chart → care instructions. We will not mutate the Shopify record. Instead, parse `product.description` on the client and split it into three sections.
+
+Approach in `MerchProductDetail.tsx`:
+
+- Add a small helper `splitProductDescription(raw: string)` that returns `{ intro, sizeGuide, careInstructions }`.
+- Split by common heading markers, case-insensitive: `Size Chart`, `Size Guide`, `Sizing`, `Care Instructions`, `Care Guide`, `Care`. Everything before the first matched heading is `intro`; content under `Size *` becomes `sizeGuide`; content under `Care *` becomes `careInstructions`.
+- Render:
+  - `intro` in the current description slot (whitespace preserved with `whitespace-pre-line`).
+  - Below the Add-to-Cart trust strip, add two shadcn `Accordion` (single, collapsible) items: **Size Guide** and **Care Instructions**, only rendered when their section is non-empty.
+- For this specific product, the user provided the canonical intro copy. The parser will already extract it correctly from the current Shopify description, so no hardcoded override is needed. If the parser ever fails to find a heading, we fall back to showing the full description as intro (current behavior), so nothing regresses.
+
+## 3. What is NOT changing
+
+- No Shopify data edits (per "do not publish yet" / keep as-is).
+- No changes to grid card, cart, or checkout flow.
+- No changes to routing or SEO.
+
+## Files touched
+
+- `src/lib/shopify.ts` — bump `images(first: 5)` → `images(first: 20)` in the two product queries.
+- `src/components/merch/MerchProductDetail.tsx` — gallery state + thumbnail strip; description parser; Size Guide / Care Instructions accordions.
+
+## Verification
+
+- Load `/shop/merch/pause-please-i-m-thinking-kids-t-shirt`, confirm: thumbnails render, clicking swaps the hero image, intro paragraph matches the copy you provided, Size Guide and Care Instructions appear as collapsed accordions with the remaining content inside.
+- Screenshot via Playwright at 1054px width to match your viewport.

@@ -1,17 +1,70 @@
 import { useState, useMemo } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ChevronLeft, Truck, Package, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { useMerchCartStore } from "@/stores/merchCartStore";
 import {
   formatShopifyPrice,
-  getFirstImage,
   type ShopifyProduct,
 } from "@/lib/shopify";
 import { toast } from "sonner";
 
 interface Props {
   product: ShopifyProduct["node"];
+}
+
+/**
+ * Split a raw Shopify product description into intro copy plus optional
+ * Size Guide / Care Instructions sections. Falls back to putting everything
+ * in `intro` when no matching headings are found.
+ */
+function splitProductDescription(raw: string): {
+  intro: string;
+  sizeGuide: string;
+  careInstructions: string;
+} {
+  const text = (raw || "").replace(/\r\n/g, "\n").trim();
+  if (!text) return { intro: "", sizeGuide: "", careInstructions: "" };
+
+  // Match a heading line for size or care sections. Headings are usually on
+  // their own line, may end with a colon, and are case-insensitive.
+  const headingRegex =
+    /^[ \t]*(size chart|size guide|sizing|size & fit|care instructions|care guide|care)\s*:?\s*$/gim;
+
+  type Match = { index: number; length: number; kind: "size" | "care" };
+  const matches: Match[] = [];
+  let m: RegExpExecArray | null;
+  while ((m = headingRegex.exec(text)) !== null) {
+    const label = m[1].toLowerCase();
+    const kind: "size" | "care" = label.startsWith("size") || label.startsWith("sizing")
+      ? "size"
+      : "care";
+    matches.push({ index: m.index, length: m[0].length, kind });
+  }
+
+  if (matches.length === 0) {
+    return { intro: text, sizeGuide: "", careInstructions: "" };
+  }
+
+  const intro = text.slice(0, matches[0].index).trim();
+  let sizeGuide = "";
+  let careInstructions = "";
+
+  matches.forEach((match, i) => {
+    const start = match.index + match.length;
+    const end = i + 1 < matches.length ? matches[i + 1].index : text.length;
+    const body = text.slice(start, end).trim();
+    if (match.kind === "size") sizeGuide = body;
+    else careInstructions = body;
+  });
+
+  return { intro, sizeGuide, careInstructions };
 }
 
 const MerchProductDetail = ({ product }: Props) => {
@@ -25,6 +78,14 @@ const MerchProductDetail = ({ product }: Props) => {
     () => product.variants.edges.map((e) => e.node),
     [product.variants.edges]
   );
+
+  const images = useMemo(
+    () => product.images.edges.map((e) => e.node).filter((n) => !!n?.url),
+    [product.images.edges]
+  );
+
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const activeImage = images[activeImageIndex] ?? images[0];
 
   const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>(() => {
     const initial: Record<string, string> = {};
@@ -44,7 +105,10 @@ const MerchProductDetail = ({ product }: Props) => {
     );
   }, [variants, selectedOptions]);
 
-  const firstImage = getFirstImage(product);
+  const { intro, sizeGuide, careInstructions } = useMemo(
+    () => splitProductDescription(product.description),
+    [product.description]
+  );
 
   const handleOptionChange = (optionName: string, value: string) => {
     setSelectedOptions((prev) => ({ ...prev, [optionName]: value }));
@@ -79,18 +143,49 @@ const MerchProductDetail = ({ product }: Props) => {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14">
           {/* Gallery */}
-          <div className="rounded-2xl overflow-hidden bg-muted">
-            {firstImage ? (
-              <img
-                src={firstImage}
-                alt={product.title}
-                width={1024}
-                height={1024}
-                className="w-full h-auto object-cover aspect-square"
-              />
-            ) : (
-              <div className="w-full aspect-square bg-muted flex items-center justify-center text-muted-foreground text-[14px]">
-                No image
+          <div>
+            <div className="rounded-2xl overflow-hidden bg-muted">
+              {activeImage ? (
+                <img
+                  src={activeImage.url}
+                  alt={activeImage.altText || product.title}
+                  width={1024}
+                  height={1024}
+                  className="w-full h-auto object-cover aspect-square"
+                />
+              ) : (
+                <div className="w-full aspect-square bg-muted flex items-center justify-center text-muted-foreground text-[14px]">
+                  No image
+                </div>
+              )}
+            </div>
+
+            {images.length > 1 && (
+              <div className="mt-4 grid grid-cols-5 gap-3">
+                {images.map((img, i) => {
+                  const active = i === activeImageIndex;
+                  return (
+                    <button
+                      key={img.url + i}
+                      type="button"
+                      onClick={() => setActiveImageIndex(i)}
+                      aria-label={`View image ${i + 1}`}
+                      aria-current={active}
+                      className={`relative rounded-lg overflow-hidden bg-muted aspect-square border-2 transition-colors ${
+                        active
+                          ? "border-foreground"
+                          : "border-transparent hover:border-foreground/30"
+                      }`}
+                    >
+                      <img
+                        src={img.url}
+                        alt={img.altText || `${product.title} thumbnail ${i + 1}`}
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                      />
+                    </button>
+                  );
+                })}
               </div>
             )}
           </div>
@@ -110,9 +205,11 @@ const MerchProductDetail = ({ product }: Props) => {
               )}
             </p>
 
-            <p className="text-[14px] md:text-[15px] text-muted-foreground leading-[1.75] mb-7">
-              {product.description}
-            </p>
+            {intro && (
+              <p className="text-[14px] md:text-[15px] text-muted-foreground leading-[1.75] mb-7 whitespace-pre-line">
+                {intro}
+              </p>
+            )}
 
             {/* Option pickers */}
             {options.map((option) => (
@@ -200,6 +297,36 @@ const MerchProductDetail = ({ product }: Props) => {
                 </div>
               </div>
             </div>
+
+            {/* Size Guide + Care Instructions */}
+            {(sizeGuide || careInstructions) && (
+              <Accordion type="single" collapsible className="mt-8 border-t border-border/50">
+                {sizeGuide && (
+                  <AccordionItem value="size-guide">
+                    <AccordionTrigger className="text-[13px] font-bold uppercase tracking-[0.15em]">
+                      Size Guide
+                    </AccordionTrigger>
+                    <AccordionContent>
+                      <div className="text-[14px] text-muted-foreground leading-[1.75] whitespace-pre-line">
+                        {sizeGuide}
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                )}
+                {careInstructions && (
+                  <AccordionItem value="care-instructions">
+                    <AccordionTrigger className="text-[13px] font-bold uppercase tracking-[0.15em]">
+                      Care Instructions
+                    </AccordionTrigger>
+                    <AccordionContent>
+                      <div className="text-[14px] text-muted-foreground leading-[1.75] whitespace-pre-line">
+                        {careInstructions}
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                )}
+              </Accordion>
+            )}
           </div>
         </div>
       </div>
