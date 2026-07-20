@@ -184,6 +184,17 @@ export function formatShopifyPrice(amount: string, currencyCode: string) {
   }).format(value);
 }
 
+// Per-handle overrides to pick a specific image (by URL substring match) as the
+// card thumbnail on the merch grid, instead of Shopify's first image.
+const CARD_IMAGE_OVERRIDES: Record<string, string> = {
+  "1-in-14-dld-awareness-tote-bag": "a747f53c-480c-4eb2-84a2-5df0a4d9c57a",
+};
+
 export function getFirstImage(product: ShopifyProduct["node"]) {
+  const override = CARD_IMAGE_OVERRIDES[product.handle];
+  if (override) {
+    const match = product.images.edges.find((e) => e.node.url.includes(override));
+    if (match) return match.node.url;
+  }
   return product.images.edges[0]?.node?.url ?? "";
 }
