@@ -67,6 +67,73 @@ function splitProductDescription(raw: string): {
   return { intro, sizeGuide, careInstructions };
 }
 
+/**
+ * Render a plain-text block as paragraphs + bullet lists.
+ * - Blank lines separate blocks.
+ * - Lines starting with "-", "*", "•" (optionally after whitespace) become bullets.
+ */
+function FormattedText({ text }: { text: string }) {
+  const trimmed = (text || "").replace(/\r\n/g, "\n").trim();
+  if (!trimmed) return null;
+  const blocks = trimmed.split(/\n\s*\n/);
+  const bulletRe = /^\s*[-*•]\s+/;
+
+  return (
+    <div className="space-y-4 text-[14px] md:text-[15px] text-muted-foreground leading-[1.75]">
+      {blocks.map((block, i) => {
+        const lines = block.split("\n").map((l) => l.trim()).filter(Boolean);
+        const allBullets = lines.length > 0 && lines.every((l) => bulletRe.test(l));
+        if (allBullets) {
+          return (
+            <ul key={i} className="list-disc pl-5 space-y-1.5 marker:text-deep-purple">
+              {lines.map((l, j) => (
+                <li key={j}>{l.replace(bulletRe, "")}</li>
+              ))}
+            </ul>
+          );
+        }
+        // Mixed block: check if it ends with bullets (e.g., "Details:\n- ...")
+        const firstBulletIdx = lines.findIndex((l) => bulletRe.test(l));
+        if (firstBulletIdx > 0) {
+          const heading = lines.slice(0, firstBulletIdx).join(" ");
+          const bullets = lines.slice(firstBulletIdx);
+          return (
+            <div key={i}>
+              <p className="mb-2">{heading}</p>
+              <ul className="list-disc pl-5 space-y-1.5 marker:text-deep-purple">
+                {bullets.map((l, j) => (
+                  <li key={j}>{l.replace(bulletRe, "")}</li>
+                ))}
+              </ul>
+            </div>
+          );
+        }
+        return (
+          <p key={i}>{lines.join(" ")}</p>
+        );
+      })}
+    </div>
+  );
+}
+
+/**
+ * Per-product visible main description overrides, keyed by Shopify product handle.
+ * Use this when the Shopify description contains extra sections (size chart,
+ * care instructions) that we want to hide from the main copy area and only
+ * surface via the collapsible accordions below.
+ */
+const PRODUCT_DESCRIPTION_OVERRIDES: Record<string, string> = {
+  "pause-please-i-m-thinking-kids-t-shirt": `Some children need extra time to process language, organize their thoughts, and find the words they want to use. This kids' T-shirt shares that message in a simple, child-friendly way: Pause please… I'm thinking.
+
+Designed for everyday wear, DLD awareness, school events, therapy sessions, and advocacy days, this shirt is a gentle reminder that giving children time can help them show what they know.
+
+Details:
+- Small left-chest design
+- Available in White and Ash Grey
+- Kids crewneck fit
+- Soft, comfortable feel for everyday wear`,
+};
+
 const MerchProductDetail = ({ product }: Props) => {
   const navigate = useNavigate();
   const addItem = useMerchCartStore((state) => state.addItem);
@@ -105,10 +172,18 @@ const MerchProductDetail = ({ product }: Props) => {
     );
   }, [variants, selectedOptions]);
 
-  const { intro, sizeGuide, careInstructions } = useMemo(
-    () => splitProductDescription(product.description),
-    [product.description]
-  );
+  const { intro, sizeGuide, careInstructions } = useMemo(() => {
+    const override = PRODUCT_DESCRIPTION_OVERRIDES[product.handle];
+    if (override) {
+      const parsed = splitProductDescription(product.description);
+      return {
+        intro: override,
+        sizeGuide: parsed.sizeGuide,
+        careInstructions: parsed.careInstructions,
+      };
+    }
+    return splitProductDescription(product.description);
+  }, [product.description, product.handle]);
 
   const handleOptionChange = (optionName: string, value: string) => {
     setSelectedOptions((prev) => ({ ...prev, [optionName]: value }));
@@ -206,9 +281,9 @@ const MerchProductDetail = ({ product }: Props) => {
             </p>
 
             {intro && (
-              <p className="text-[14px] md:text-[15px] text-muted-foreground leading-[1.75] mb-7 whitespace-pre-line">
-                {intro}
-              </p>
+              <div className="mb-7">
+                <FormattedText text={intro} />
+              </div>
             )}
 
             {/* Option pickers */}
@@ -298,35 +373,50 @@ const MerchProductDetail = ({ product }: Props) => {
               </div>
             </div>
 
-            {/* Size Guide + Care Instructions */}
-            {(sizeGuide || careInstructions) && (
-              <Accordion type="single" collapsible className="mt-8 border-t border-border/50">
-                {sizeGuide && (
-                  <AccordionItem value="size-guide">
-                    <AccordionTrigger className="text-[13px] font-bold uppercase tracking-[0.15em]">
-                      Size Guide
-                    </AccordionTrigger>
-                    <AccordionContent>
-                      <div className="text-[14px] text-muted-foreground leading-[1.75] whitespace-pre-line">
-                        {sizeGuide}
-                      </div>
-                    </AccordionContent>
-                  </AccordionItem>
-                )}
-                {careInstructions && (
-                  <AccordionItem value="care-instructions">
-                    <AccordionTrigger className="text-[13px] font-bold uppercase tracking-[0.15em]">
-                      Care Instructions
-                    </AccordionTrigger>
-                    <AccordionContent>
-                      <div className="text-[14px] text-muted-foreground leading-[1.75] whitespace-pre-line">
-                        {careInstructions}
-                      </div>
-                    </AccordionContent>
-                  </AccordionItem>
-                )}
-              </Accordion>
-            )}
+            {/* Size Guide + Care Instructions + Shipping & Returns */}
+            <Accordion type="single" collapsible className="mt-8 border-t border-border/50">
+              {sizeGuide && (
+                <AccordionItem value="size-guide">
+                  <AccordionTrigger className="text-[13px] font-bold uppercase tracking-[0.15em]">
+                    Size Guide
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <FormattedText text={sizeGuide} />
+                  </AccordionContent>
+                </AccordionItem>
+              )}
+              {careInstructions && (
+                <AccordionItem value="care-instructions">
+                  <AccordionTrigger className="text-[13px] font-bold uppercase tracking-[0.15em]">
+                    Care Instructions
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <FormattedText text={careInstructions} />
+                  </AccordionContent>
+                </AccordionItem>
+              )}
+              <AccordionItem value="shipping-returns">
+                <AccordionTrigger className="text-[13px] font-bold uppercase tracking-[0.15em]">
+                  Shipping &amp; Returns
+                </AccordionTrigger>
+                <AccordionContent>
+                  <FormattedText
+                    text={`Every item is printed on demand and made just for you, which helps reduce waste.
+
+Production typically takes 2 to 5 business days before your order ships.
+
+Shipping times after dispatch:
+- North America: 3 to 7 business days
+- Europe: 5 to 10 business days
+- Rest of world: 7 to 14 business days
+
+Because each piece is made to order, we cannot accept returns for change of mind or incorrect size. Please review the Size Guide before ordering.
+
+If your item arrives damaged, defective, or incorrect, contact us within 14 days of delivery at hello@empowereddld.com with a photo and your order number and we will make it right.`}
+                  />
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
           </div>
         </div>
       </div>
