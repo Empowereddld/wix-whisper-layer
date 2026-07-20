@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/button";
-import heroImage from "@/assets/hero-girls.webp";
+import heroAsset from "@/assets/hero-tote-mom.png.asset.json";
 import hallwayBg from "@/assets/school-hallway-bg.webp";
+
+const heroImage = heroAsset.url;
 
 const HeroSection = () => {
   return (
@@ -21,7 +23,7 @@ const HeroSection = () => {
           <div className="hidden md:flex md:relative md:w-auto z-0 items-end justify-start md:h-[calc(100vh-70px)] lg:h-[calc(100vh-80px)] overflow-hidden">
             <img
               src={heroImage}
-              alt="Two girls laughing together"
+              alt="Mother carrying a 1 in 14 DLD awareness tote bag with her young son"
               width={1620}
               height={1364}
               className="h-full w-auto max-w-none object-cover object-top scale-[0.60] lg:scale-[0.82] xl:scale-[0.94] origin-bottom-left -translate-x-[14%] lg:-translate-x-[12%] xl:-translate-x-[10%]"
@@ -58,7 +60,7 @@ const HeroSection = () => {
           <div className="md:hidden flex justify-end -mr-4 -mt-14 -mb-1">
             <img
               src={heroImage}
-              alt="Two girls laughing together"
+              alt="Mother carrying a 1 in 14 DLD awareness tote bag with her young son"
               width={1620}
               height={1364}
               className="w-[55%] h-auto object-contain"
