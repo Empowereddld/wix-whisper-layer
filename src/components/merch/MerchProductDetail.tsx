@@ -67,6 +67,55 @@ function splitProductDescription(raw: string): {
   return { intro, sizeGuide, careInstructions };
 }
 
+/**
+ * Render a plain-text block as paragraphs + bullet lists.
+ * - Blank lines separate blocks.
+ * - Lines starting with "-", "*", "•" (optionally after whitespace) become bullets.
+ */
+function FormattedText({ text }: { text: string }) {
+  const trimmed = (text || "").replace(/\r\n/g, "\n").trim();
+  if (!trimmed) return null;
+  const blocks = trimmed.split(/\n\s*\n/);
+  const bulletRe = /^\s*[-*•]\s+/;
+
+  return (
+    <div className="space-y-4 text-[14px] md:text-[15px] text-muted-foreground leading-[1.75]">
+      {blocks.map((block, i) => {
+        const lines = block.split("\n").map((l) => l.trim()).filter(Boolean);
+        const allBullets = lines.length > 0 && lines.every((l) => bulletRe.test(l));
+        if (allBullets) {
+          return (
+            <ul key={i} className="list-disc pl-5 space-y-1.5 marker:text-deep-purple">
+              {lines.map((l, j) => (
+                <li key={j}>{l.replace(bulletRe, "")}</li>
+              ))}
+            </ul>
+          );
+        }
+        // Mixed block: check if it ends with bullets (e.g., "Details:\n- ...")
+        const firstBulletIdx = lines.findIndex((l) => bulletRe.test(l));
+        if (firstBulletIdx > 0) {
+          const heading = lines.slice(0, firstBulletIdx).join(" ");
+          const bullets = lines.slice(firstBulletIdx);
+          return (
+            <div key={i}>
+              <p className="mb-2">{heading}</p>
+              <ul className="list-disc pl-5 space-y-1.5 marker:text-deep-purple">
+                {bullets.map((l, j) => (
+                  <li key={j}>{l.replace(bulletRe, "")}</li>
+                ))}
+              </ul>
+            </div>
+          );
+        }
+        return (
+          <p key={i}>{lines.join(" ")}</p>
+        );
+      })}
+    </div>
+  );
+}
+
 const MerchProductDetail = ({ product }: Props) => {
   const navigate = useNavigate();
   const addItem = useMerchCartStore((state) => state.addItem);
