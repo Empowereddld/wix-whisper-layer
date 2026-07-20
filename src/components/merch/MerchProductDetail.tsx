@@ -14,6 +14,10 @@ import {
   type ShopifyProduct,
 } from "@/lib/shopify";
 import { toast } from "sonner";
+import {
+  getMerchDisplayTitle,
+  MerchProductTitle,
+} from "./MerchProductTitle";
 
 interface Props {
   product: ShopifyProduct["node"];
@@ -200,7 +204,7 @@ const MerchProductDetail = ({ product }: Props) => {
       selectedOptions: selectedVariant.selectedOptions,
     });
     toast.success("Added to cart", {
-      description: `${product.title} (${selectedVariant.title})`,
+      description: `${getMerchDisplayTitle(product.handle, product.title)} (${selectedVariant.title})`,
     });
     openCart();
   };
@@ -269,7 +273,7 @@ const MerchProductDetail = ({ product }: Props) => {
               MERCH
             </p>
             <h1 className="text-[28px] md:text-[36px] lg:text-[40px] font-black text-foreground leading-[1.1] mb-3">
-              {product.title}
+              <MerchProductTitle handle={product.handle} title={product.title} />
             </h1>
             <p className="text-[24px] md:text-[28px] font-bold text-foreground mb-7">
               {formatShopifyPrice(
