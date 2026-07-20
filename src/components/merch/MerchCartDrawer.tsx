@@ -57,12 +57,12 @@ const MerchCartDrawer = () => {
                 >
                   <img
                     src={getFirstImage(item.product.node) || "/placeholder.svg"}
-                    alt={item.product.node.title}
+                    alt={getMerchDisplayTitle(item.product.node.handle, item.product.node.title)}
                     className="h-20 w-20 rounded-md object-cover flex-shrink-0 bg-white"
                   />
                   <div className="flex-1 min-w-0">
                     <p className="text-[14px] font-semibold text-foreground leading-tight">
-                      {item.product.node.title}
+                      {getMerchDisplayTitle(item.product.node.handle, item.product.node.title)}
                     </p>
                     <p className="text-[12px] text-muted-foreground mt-0.5">
                       {item.selectedOptions.map((o) => o.value).join(" • ")}
