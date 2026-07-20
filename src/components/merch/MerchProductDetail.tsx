@@ -165,8 +165,8 @@ const MerchProductDetail = ({ product }: Props) => {
   );
 
   const images = useMemo(
-    () => product.images.edges.map((e) => e.node).filter((n) => !!n?.url),
-    [product.images.edges]
+    () => getProductImages(product),
+    [product]
   );
 
   const [activeImageIndex, setActiveImageIndex] = useState(0);
