@@ -146,12 +146,8 @@ The design highlights a few important truths about DLD:
 
 With the message "1 in 14. Have you heard of DLD?", this tote can gently open the door for conversations with other parents, educators, and community members.
 
-Perfect for school drop-off, library trips, therapy materials, groceries, books, and everyday errands.
+Perfect for school drop-off, library trips, therapy materials, groceries, books, and everyday errands.`,
 
-Details:
-- Natural canvas
-- Roomy everyday size
-- Sturdy handles for daily use`,
 };
 
 
