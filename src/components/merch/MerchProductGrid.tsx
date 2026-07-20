@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 import { useShopifyProducts } from "@/hooks/useShopifyProducts";
 import { formatShopifyPrice, getFirstImage } from "@/lib/shopify";
+import { MerchProductTitle } from "./MerchProductTitle";
 
 const MerchProductGrid = () => {
   const { data: products, isLoading, error } = useShopifyProducts();
