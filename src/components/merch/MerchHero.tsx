@@ -13,7 +13,7 @@ const MerchHero = () => {
               Wear It. Share It.<br />Start the Conversation.
             </h1>
             <p className="text-[15px] md:text-[16px] text-white/80 leading-[1.7] max-w-[520px] mb-8">
-              Soft tees, ceramic mugs, and canvas totes that help more people learn what Developmental Language Disorder is. Every piece is a small act of awareness.
+              Soft tees, ceramic mugs, and canvas totes that help more people learn about Developmental Language Disorder. Every piece is a small act of awareness.
             </p>
             <a
               href="#shop"
