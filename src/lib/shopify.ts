@@ -184,17 +184,38 @@ export function formatShopifyPrice(amount: string, currencyCode: string) {
   }).format(value);
 }
 
-// Per-handle overrides to pick a specific image (by URL substring match) as the
-// card thumbnail on the merch grid, instead of Shopify's first image.
-const CARD_IMAGE_OVERRIDES: Record<string, string> = {
-  "1-in-14-dld-awareness-tote-bag": "a747f53c-480c-4eb2-84a2-5df0a4d9c57a",
+// Per-handle image controls. Filter out unwanted mockups by URL substring, and
+// optionally pin a specific image (by URL substring) to appear first in the
+// gallery + as the card thumbnail on the merch grid.
+const IMAGE_EXCLUDES: Record<string, string[]> = {
+  "1-in-14-dld-awareness-tote-bag": [
+    // Flat Gelato mockup — we prefer the lifestyle photos instead.
+    "02cb1f38-7b60-4c41-b1ac-38a3f02a4e99",
+  ],
 };
 
-export function getFirstImage(product: ShopifyProduct["node"]) {
-  const override = CARD_IMAGE_OVERRIDES[product.handle];
-  if (override) {
-    const match = product.images.edges.find((e) => e.node.url.includes(override));
-    if (match) return match.node.url;
+const PRIMARY_IMAGE_OVERRIDES: Record<string, string> = {
+  // Biracial mom + son lifestyle photo.
+  "1-in-14-dld-awareness-tote-bag": "f5d9b32c-faec-47ec-beb2-2c3f250cba9d",
+};
+
+export function getProductImages(product: ShopifyProduct["node"]) {
+  const excludes = IMAGE_EXCLUDES[product.handle] ?? [];
+  const filtered = product.images.edges
+    .map((e) => e.node)
+    .filter((n) => !!n?.url && !excludes.some((sub) => n.url.includes(sub)));
+
+  const primary = PRIMARY_IMAGE_OVERRIDES[product.handle];
+  if (primary) {
+    const idx = filtered.findIndex((n) => n.url.includes(primary));
+    if (idx > 0) {
+      const [pinned] = filtered.splice(idx, 1);
+      filtered.unshift(pinned);
+    }
   }
-  return product.images.edges[0]?.node?.url ?? "";
+  return filtered;
+}
+
+export function getFirstImage(product: ShopifyProduct["node"]) {
+  return getProductImages(product)[0]?.url ?? "";
 }

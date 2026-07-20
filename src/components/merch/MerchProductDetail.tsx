@@ -11,6 +11,7 @@ import {
 import { useMerchCartStore } from "@/stores/merchCartStore";
 import {
   formatShopifyPrice,
+  getProductImages,
   type ShopifyProduct,
 } from "@/lib/shopify";
 import { toast } from "sonner";
@@ -164,8 +165,8 @@ const MerchProductDetail = ({ product }: Props) => {
   );
 
   const images = useMemo(
-    () => product.images.edges.map((e) => e.node).filter((n) => !!n?.url),
-    [product.images.edges]
+    () => getProductImages(product),
+    [product]
   );
 
   const [activeImageIndex, setActiveImageIndex] = useState(0);
