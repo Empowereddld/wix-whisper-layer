@@ -11,6 +11,7 @@ import {
 import { useMerchCartStore } from "@/stores/merchCartStore";
 import {
   formatShopifyPrice,
+  getProductImages,
   type ShopifyProduct,
 } from "@/lib/shopify";
 import { toast } from "sonner";
