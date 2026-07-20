@@ -31,7 +31,7 @@ const ShopMerchProduct = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <SEOHead
-        title={`${product.title} | Empowered DLD Merch`}
+        title={`${getMerchDisplayTitle(product.handle, product.title)} | Empowered DLD Merch`}
         description={product.description}
         path={`/shop/merch/${product.handle}`}
         noindex
