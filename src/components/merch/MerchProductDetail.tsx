@@ -154,10 +154,18 @@ const MerchProductDetail = ({ product }: Props) => {
     );
   }, [variants, selectedOptions]);
 
-  const { intro, sizeGuide, careInstructions } = useMemo(
-    () => splitProductDescription(product.description),
-    [product.description]
-  );
+  const { intro, sizeGuide, careInstructions } = useMemo(() => {
+    const override = PRODUCT_DESCRIPTION_OVERRIDES[product.handle];
+    if (override) {
+      const parsed = splitProductDescription(product.description);
+      return {
+        intro: override,
+        sizeGuide: parsed.sizeGuide,
+        careInstructions: parsed.careInstructions,
+      };
+    }
+    return splitProductDescription(product.description);
+  }, [product.description, product.handle]);
 
   const handleOptionChange = (optionName: string, value: string) => {
     setSelectedOptions((prev) => ({ ...prev, [optionName]: value }));
