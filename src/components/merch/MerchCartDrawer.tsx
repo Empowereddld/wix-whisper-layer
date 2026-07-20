@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Minus, Plus, Trash2, ShoppingBag, ExternalLink, Loader2 } from "lucide-react";
 import { useMerchCartStore } from "@/stores/merchCartStore";
 import { formatShopifyPrice, getFirstImage } from "@/lib/shopify";
+import { getMerchDisplayTitle } from "./MerchProductTitle";
 
 const MerchCartDrawer = () => {
   const isOpen = useMerchCartStore((state) => state.isOpen);
