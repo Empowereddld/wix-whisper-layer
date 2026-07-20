@@ -136,7 +136,24 @@ Details:
 - Available in White and Ash Grey
 - Kids crewneck fit
 - Soft, comfortable feel for everyday wear`,
+  "1-in-14-dld-awareness-tote-bag": `Start meaningful conversations about DLD wherever you go. This natural canvas tote was created to help raise awareness of Developmental Language Disorder in a simple, everyday way.
+
+The design highlights a few important truths about DLD:
+- Lifelong
+- Smart
+- Neurodivergent
+- 7x more common than autism
+
+With the message "1 in 14. Have you heard of DLD?", this tote can gently open the door for conversations with other parents, educators, and community members.
+
+Perfect for school drop-off, library trips, therapy materials, groceries, books, and everyday errands.
+
+Details:
+- Natural canvas
+- Roomy everyday size
+- Sturdy handles for daily use`,
 };
+
 
 const MerchProductDetail = ({ product }: Props) => {
   const navigate = useNavigate();
