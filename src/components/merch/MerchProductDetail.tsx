@@ -204,7 +204,7 @@ const MerchProductDetail = ({ product }: Props) => {
       selectedOptions: selectedVariant.selectedOptions,
     });
     toast.success("Added to cart", {
-      description: `${product.title} (${selectedVariant.title})`,
+      description: `${getMerchDisplayTitle(product.handle, product.title)} (${selectedVariant.title})`,
     });
     openCart();
   };
