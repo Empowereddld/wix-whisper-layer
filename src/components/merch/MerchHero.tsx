@@ -1,4 +1,4 @@
-import merchHero from "@/assets/merch-hero.jpg";
+import merchHero from "@/assets/merch-hero-family.png.asset.json";
 
 const MerchHero = () => {
   return (
@@ -24,7 +24,7 @@ const MerchHero = () => {
           </div>
           <div className="rounded-2xl overflow-hidden shadow-2xl">
             <img
-              src={merchHero}
+              src={merchHero.url}
               alt="Empowered DLD merchandise: tee, mug, and tote bag"
               className="w-full h-auto object-cover aspect-[4/3]"
               width={1024}
