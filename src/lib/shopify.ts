@@ -50,7 +50,8 @@ export interface ShopifyProduct {
 }
 
 export const STOREFRONT_PRODUCTS_QUERY = `
-  query GetProducts($first: Int!, $query: String) {
+  query GetProducts($first: Int!, $query: String, $country: CountryCode!)
+  @inContext(country: $country) {
     products(first: $first, query: $query) {
       edges {
         node {
@@ -100,7 +101,8 @@ export const STOREFRONT_PRODUCTS_QUERY = `
 `;
 
 export const STOREFRONT_PRODUCT_BY_HANDLE_QUERY = `
-  query GetProductByHandle($handle: String!) {
+  query GetProductByHandle($handle: String!, $country: CountryCode!)
+  @inContext(country: $country) {
     productByHandle(handle: $handle) {
       id
       title
@@ -144,6 +146,7 @@ export const STOREFRONT_PRODUCT_BY_HANDLE_QUERY = `
     }
   }
 `;
+
 
 export async function storefrontApiRequest(query: string, variables: Record<string, unknown> = {}) {
   const response = await fetch(SHOPIFY_STOREFRONT_URL, {
