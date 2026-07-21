@@ -4,6 +4,8 @@ import {
   ShopifyProduct,
   storefrontApiRequest,
 } from "@/lib/shopify";
+import { useRegionStore } from "@/stores/regionStore";
+
 
 export interface CartItem {
   lineId: string | null;
@@ -41,7 +43,8 @@ const CART_QUERY = `
 `;
 
 const CART_CREATE_MUTATION = `
-  mutation cartCreate($input: CartInput!) {
+  mutation cartCreate($input: CartInput!, $country: CountryCode!)
+  @inContext(country: $country) {
     cartCreate(input: $input) {
       cart {
         id
@@ -52,6 +55,7 @@ const CART_CREATE_MUTATION = `
     }
   }
 `;
+
 
 const CART_LINES_ADD_MUTATION = `
   mutation cartLinesAdd($cartId: ID!, $lines: [CartLineInput!]!) {
@@ -101,10 +105,18 @@ function isCartNotFoundError(userErrors: Array<{ field: string[] | null; message
   );
 }
 
-async function createShopifyCart(item: CartItem): Promise<{ cartId: string; checkoutUrl: string; lineId: string } | null> {
+async function createShopifyCart(
+  item: CartItem,
+  countryCode: string
+): Promise<{ cartId: string; checkoutUrl: string; lineId: string } | null> {
   const data = await storefrontApiRequest(CART_CREATE_MUTATION, {
-    input: { lines: [{ quantity: item.quantity, merchandiseId: item.variantId }] },
+    input: {
+      lines: [{ quantity: item.quantity, merchandiseId: item.variantId }],
+      buyerIdentity: { countryCode },
+    },
+    country: countryCode,
   });
+
 
   if (data?.data?.cartCreate?.userErrors?.length > 0) {
     console.error("Cart creation failed:", data.data.cartCreate.userErrors);
@@ -199,7 +211,9 @@ export const useMerchCartStore = create<MerchCartStore>()(
         set({ isLoading: true });
         try {
           if (!cartId) {
-            const result = await createShopifyCart({ ...item, lineId: null });
+            const countryCode = useRegionStore.getState().countryCode;
+            const result = await createShopifyCart({ ...item, lineId: null }, countryCode);
+
             if (result) {
               set({
                 cartId: result.cartId,
