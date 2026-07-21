@@ -3,7 +3,9 @@ import { Mail } from "lucide-react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import RegionSelector from "@/components/RegionSelector";
 import logoWhite from "@/assets/empowered-logo-white.webp";
+
 
 const FacebookFilled = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
@@ -137,21 +139,25 @@ const Footer = () => {
 
         {/* Row 2 – Social icons (left) + Newsletter (right) */}
         <div className="flex flex-col lg:flex-row items-start lg:items-start justify-between gap-8">
-          {/* Social icons */}
-          <div className="flex items-center justify-center lg:justify-start gap-4">
-            {socialLinks.map(({ Icon, label, href }) => (
-              <a
-                key={label}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-primary-foreground/80 hover:text-primary-foreground transition-colors duration-200"
-                aria-label={label}
-              >
-                <Icon className="w-8 h-8" />
-              </a>
-            ))}
+          {/* Social icons + Region selector */}
+          <div className="flex flex-col gap-4 items-start">
+            <div className="flex items-center gap-4">
+              {socialLinks.map(({ Icon, label, href }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary-foreground/80 hover:text-primary-foreground transition-colors duration-200"
+                  aria-label={label}
+                >
+                  <Icon className="w-8 h-8" />
+                </a>
+              ))}
+            </div>
+            <RegionSelector variant="default" />
           </div>
+
 
           {/* Newsletter */}
           <form onSubmit={handleNewsletterSubmit} className="flex flex-col gap-4 w-full lg:w-auto">
