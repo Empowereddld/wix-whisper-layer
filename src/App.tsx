@@ -8,11 +8,23 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import ScrollToTop from "./components/ScrollToTop";
 import AnnouncementBar from "./components/AnnouncementBar";
 import { useCartSync } from "@/hooks/useCartSync";
+import { useRegionStore } from "@/stores/regionStore";
+import { detectBuyerCountry } from "@/lib/shopify";
 
 function CartSync() {
   useCartSync();
   return null;
 }
+
+function RegionDetect() {
+  useEffect(() => {
+    const { hasUserChosen, detectAndSetCountry } = useRegionStore.getState();
+    if (hasUserChosen) return;
+    detectBuyerCountry().then((code) => detectAndSetCountry(code));
+  }, []);
+  return null;
+}
+
 
 
 // Eagerly loaded (main public pages)
@@ -111,7 +123,9 @@ const App = () => (
         <AuthProvider>
           <ScrollToTop />
           <CartSync />
+          <RegionDetect />
           <AnnouncementBar />
+
 
           <Suspense fallback={<div className="min-h-screen" />}>
 
