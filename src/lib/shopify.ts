@@ -202,7 +202,7 @@ const PRIMARY_IMAGE_OVERRIDES: Record<string, string> = {
   // Biracial mom + son lifestyle photo.
   "1-in-14-dld-awareness-tote-bag": "f5d9b32c-faec-47ec-beb2-2c3f250cba9d",
   // Four kids outside holding bottles.
-  "my-ideas-are-worth-waiting-for-kids-water-bottle": "780bef8d-239f-47e4-a205-eafd0b97a9c7",
+  "my-ideas-are-worth-waiting-for-kids-water-bottle": "704d3178-0a25-411d-b239-9c33c4fd1562",
 };
 
 export function getProductImages(product: ShopifyProduct["node"]) {
