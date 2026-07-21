@@ -22,11 +22,11 @@ const MerchHero = () => {
               Shop the Collection
             </a>
           </div>
-          <div className="rounded-2xl overflow-hidden shadow-2xl aspect-[4/5] md:aspect-[16/10] lg:aspect-[3/2]">
+          <div className="rounded-2xl overflow-hidden shadow-2xl aspect-[4/3] md:aspect-[16/10] lg:aspect-[3/2]">
             <img
               src={merchHero.url}
               alt="Empowered DLD merchandise: tee, mug, and tote bag"
-              className="w-full h-full object-cover object-[center_30%]"
+              className="w-full h-full object-cover object-[70%_30%] md:object-[center_30%]"
               width={1536}
               height={1024}
             />
