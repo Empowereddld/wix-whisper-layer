@@ -16,9 +16,7 @@ const DISPLAY_TITLES: Record<string, React.ReactNode> = {
   ),
   "my-ideas-are-worth-waiting-for-kids-water-bottle": (
     <>
-      <span>My Ideas Are Worth Waiting For</span>
-      <br />
-      <span>Water Bottle</span>
+      <span>Water Bottle: My Ideas Are Worth Waiting For</span>
     </>
   ),
 };
@@ -31,7 +29,7 @@ export function getMerchDisplayTitle(handle: string, fallbackTitle: string): str
     return "1 in 14 DLD Awareness Tote Bag";
   }
   if (handle === "my-ideas-are-worth-waiting-for-kids-water-bottle") {
-    return "My Ideas Are Worth Waiting For Water Bottle";
+    return "Water Bottle: My Ideas Are Worth Waiting For";
   }
   return fallbackTitle;
 }
