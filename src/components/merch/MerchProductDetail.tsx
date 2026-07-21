@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import { ChevronLeft, Truck, Package, Loader2 } from "lucide-react";
+import { ChevronLeft, ChevronRight, Truck, Package, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Accordion,
