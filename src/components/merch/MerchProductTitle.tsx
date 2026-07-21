@@ -24,7 +24,7 @@ export function getMerchDisplayTitle(handle: string, fallbackTitle: string): str
     return "Kids T-Shirt: Pause please...I’m thinking";
   }
   if (handle === "1-in-14-dld-awareness-tote-bag") {
-    return "1 in 14 DLD Awareness Tote Bag";
+    return "Tote Bag: 1 in 14 DLD Awareness";
   }
   if (handle === "my-ideas-are-worth-waiting-for-kids-water-bottle") {
     return "Water Bottle: My Ideas Are Worth Waiting For";
