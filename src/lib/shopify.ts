@@ -179,6 +179,39 @@ export async function storefrontApiRequest(query: string, variables: Record<stri
   return data;
 }
 
+// EU/EEA country ISO codes that should map to our EUR market entry.
+const EU_ISO_CODES = new Set([
+  "AT","BE","BG","HR","CY","CZ","DK","EE","FI","FR","DE","GR","HU","IE","IT",
+  "LV","LT","LU","MT","NL","PL","PT","RO","SK","SI","ES","SE",
+  // EEA-adjacent that commonly want EUR display
+  "IS","LI","NO",
+]);
+
+type SupportedCountry = "CA" | "US" | "GB" | "IE" | "AU" | "NZ";
+
+const LOCALIZATION_QUERY = `
+  query { localization { country { isoCode } } }
+`;
+
+/**
+ * Ask Shopify (via Storefront API) which country the visitor is in based on
+ * their IP. Maps the ISO code to one of our supported market entries.
+ * Falls back to "US" if detection fails or the country isn't supported.
+ */
+export async function detectBuyerCountry(): Promise<SupportedCountry> {
+  try {
+    const data = await storefrontApiRequest(LOCALIZATION_QUERY);
+    const iso: string | undefined = data?.data?.localization?.country?.isoCode;
+    if (!iso) return "US";
+    if (iso === "CA" || iso === "US" || iso === "GB" || iso === "AU" || iso === "NZ") return iso;
+    if (EU_ISO_CODES.has(iso)) return "IE";
+    return "US";
+  } catch {
+    return "US";
+  }
+}
+
+
 export function formatShopifyPrice(amount: string, currencyCode: string) {
   const value = parseFloat(amount);
   return new Intl.NumberFormat("en-CA", {
