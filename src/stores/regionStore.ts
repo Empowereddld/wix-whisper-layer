@@ -20,16 +20,20 @@ export const COUNTRY_OPTIONS: CountryOption[] = [
 
 interface RegionStore {
   countryCode: CountryCode;
+  hasUserChosen: boolean;
   setCountry: (code: CountryCode) => void;
+  detectAndSetCountry: (code: CountryCode) => void;
 }
 
 export const useRegionStore = create<RegionStore>()(
   persist(
     (set, get) => ({
-      countryCode: "CA",
+      countryCode: "US",
+      hasUserChosen: false,
       setCountry: (code) => {
-        if (code === get().countryCode) return;
-        set({ countryCode: code });
+        const prev = get().countryCode;
+        set({ countryCode: code, hasUserChosen: true });
+        if (code === prev) return;
         // Clear the merch cart when currency changes — Shopify carts are locked
         // to a single currency, so we start fresh in the new region.
         // Lazy import to avoid circular dependency at module load.
@@ -38,11 +42,22 @@ export const useRegionStore = create<RegionStore>()(
           if (items.length > 0) clearCart();
         });
       },
+      detectAndSetCountry: (code) => {
+        if (get().hasUserChosen) return;
+        if (code === get().countryCode) return;
+        set({ countryCode: code });
+      },
     }),
-
     {
       name: "empowered-region",
       storage: createJSONStorage(() => localStorage),
+      // Migrate existing users: if they have a persisted countryCode from before
+      // this feature, treat it as an explicit choice so detection doesn't override it.
+      onRehydrateStorage: () => (state) => {
+        if (state && state.hasUserChosen === undefined) {
+          state.hasUserChosen = true;
+        }
+      },
     }
   )
 );
@@ -50,3 +65,4 @@ export const useRegionStore = create<RegionStore>()(
 export function getCountryOption(code: CountryCode): CountryOption {
   return COUNTRY_OPTIONS.find((c) => c.code === code) ?? COUNTRY_OPTIONS[0];
 }
+
