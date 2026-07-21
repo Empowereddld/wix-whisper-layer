@@ -41,7 +41,8 @@ const CART_QUERY = `
 `;
 
 const CART_CREATE_MUTATION = `
-  mutation cartCreate($input: CartInput!) {
+  mutation cartCreate($input: CartInput!, $country: CountryCode!)
+  @inContext(country: $country) {
     cartCreate(input: $input) {
       cart {
         id
@@ -52,6 +53,7 @@ const CART_CREATE_MUTATION = `
     }
   }
 `;
+
 
 const CART_LINES_ADD_MUTATION = `
   mutation cartLinesAdd($cartId: ID!, $lines: [CartLineInput!]!) {
