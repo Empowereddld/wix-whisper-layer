@@ -1,53 +1,21 @@
-# Geo-IP Auto-Detect Region on First Visit
+## Fix merch hero image cropping on desktop & tablet
 
-## Goal
-New visitors from Atlanta see USD, from London see GBP, from Sydney see AUD, etc., without touching the selector. Returning visitors keep whatever they picked.
+The current hero image uses `aspect-[4/3]` + `object-cover`, which forces a tall crop in every viewport and clips the boy on the right on desktop and tablet. Mobile is fine because the image fills full width.
 
-## How it works
-Shopify's Storefront API has a `localization` query that returns the buyer's country based on their IP address (Shopify does the geo lookup server-side; no third-party geo-IP service, no extra cost, no privacy config). We call it once on first visit and set the region default from the result.
+### Changes to `src/components/merch/MerchHero.tsx`
 
-## Behavior
+1. **Reshape the image frame to landscape at md+**
+   - Replace `aspect-[4/3]` with responsive ratios: `aspect-[4/5]` on mobile (portrait fits phones), `md:aspect-[16/10]` (tablet landscape), `lg:aspect-[3/2]` (desktop wider landscape). This makes the frame shorter and wider so less needs to be cropped.
 
-- **First-ever visit:** Call `localization.country.isoCode`. If it matches a market we support (US, GB, AU, NZ, CA, or any EU country → EUR), pre-select that region. Otherwise fall back to US (best-selling market, familiar currency for the widest audience). Selector still lets them switch.
-- **Returning visit:** Skip detection entirely — use their saved choice from localStorage.
-- **User has already used the selector:** Never overwrite their pick, even if their IP suggests a different country.
+2. **Give the image column more room on desktop**
+   - Change the lg grid from `lg:grid-cols-2` (50/50) to `lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]` so the image side gets ~58% of the row. Keeps the copy readable while giving the photo more landscape space.
 
-## Changes
+3. **Anchor the crop so the boy stays in frame**
+   - Add `object-[center_30%]` (or `object-center`) on the `<img>` so when any cropping does happen, it trims the top/bottom of the scene (sky, ground) rather than the boy on the right edge.
 
-1. **`src/stores/regionStore.ts`**
-   - Add a `hasUserChosen: boolean` flag (persisted). Flip to `true` inside `setCountry`.
-   - Change the default `countryCode` from `"CA"` to `"US"` as the fallback when detection fails.
-   - Add a `detectAndSetCountry()` action that no-ops if `hasUserChosen` is true.
+4. **No changes elsewhere** — image asset, copy, button, and mobile stacking behavior stay identical.
 
-2. **`src/lib/shopify.ts`**
-   - Add a `LOCALIZATION_QUERY`:
-     ```graphql
-     query { localization { country { isoCode } } }
-     ```
-   - Export a `detectBuyerCountry()` helper that runs the query and maps the ISO code to one of our supported `CountryCode` values (EU countries → `IE`, unsupported countries → `US`).
+### Verification
 
-3. **`src/App.tsx`** (or a small `useRegionDetect` hook mounted once)
-   - On mount, if `hasUserChosen` is false, call `detectBuyerCountry()` and pass the result to `regionStore.detectAndSetCountry()`.
-   - Fire-and-forget; no loading spinner. If it resolves after products already rendered in the fallback currency, the React Query keys refetch automatically (they already include `countryCode`).
-
-4. **`src/components/RegionSelector.tsx`**
-   - No visual change. The selector already writes through `setCountry`, which now also sets `hasUserChosen = true`, locking in their pick.
-
-## Edge cases handled
-
-- **Detection fails / offline:** Store stays on the fallback (`US`), user can still switch manually.
-- **User in an EU country (France, Germany, etc.):** Mapped to our `IE`/EUR market entry so they see euros.
-- **User already picked before this feature ships:** Their existing persisted `countryCode` is preserved. We treat any existing persisted region as `hasUserChosen = true` on first load after the update (one-time migration in the persist `onRehydrateStorage`).
-- **Country not in our supported list (e.g. Japan, Brazil):** Falls back to USD, which is the safest widely-understood currency.
-
-## Out of scope
-
-- No banner asking "You're in the US — switch to USD?" (adds friction; auto-switch is cleaner).
-- No server-side rendering of the detected country (this is a Vite SPA; detection happens client-side on first paint, refetch is fast).
-
-## Testing checklist
-
-- New incognito visit → prices should reflect the visitor's actual country's currency.
-- Switch to a different country via selector → refresh → stays on the picked country (detection skipped).
-- Clear localStorage → reload → detection runs again.
-- Existing users with a persisted `countryCode` (currently CA) → treated as "user chose CA," not overridden.
+- Preview at desktop (1280+), tablet (~768–1024), and mobile.
+- Confirm the boy on the right is fully visible in all three, the mother is centered, and the copy column still reads cleanly.

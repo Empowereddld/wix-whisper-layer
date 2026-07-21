@@ -4,7 +4,7 @@ const MerchHero = () => {
   return (
     <section className="bg-deep-purple py-16 md:py-24 lg:py-28">
       <div className="container px-6 md:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] gap-10 lg:gap-16 items-center">
           <div>
             <p className="text-[11px] md:text-[12px] font-bold uppercase tracking-[0.22em] text-white/60 mb-4">
               SHOP MERCH
@@ -22,13 +22,13 @@ const MerchHero = () => {
               Shop the Collection
             </a>
           </div>
-          <div className="rounded-2xl overflow-hidden shadow-2xl">
+          <div className="rounded-2xl overflow-hidden shadow-2xl aspect-[4/5] md:aspect-[16/10] lg:aspect-[3/2]">
             <img
               src={merchHero.url}
               alt="Empowered DLD merchandise: tee, mug, and tote bag"
-              className="w-full h-auto object-cover aspect-[4/3]"
-              width={1024}
-              height={768}
+              className="w-full h-full object-cover object-[center_30%]"
+              width={1536}
+              height={1024}
             />
           </div>
         </div>
