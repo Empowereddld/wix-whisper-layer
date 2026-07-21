@@ -103,10 +103,18 @@ function isCartNotFoundError(userErrors: Array<{ field: string[] | null; message
   );
 }
 
-async function createShopifyCart(item: CartItem): Promise<{ cartId: string; checkoutUrl: string; lineId: string } | null> {
+async function createShopifyCart(
+  item: CartItem,
+  countryCode: string
+): Promise<{ cartId: string; checkoutUrl: string; lineId: string } | null> {
   const data = await storefrontApiRequest(CART_CREATE_MUTATION, {
-    input: { lines: [{ quantity: item.quantity, merchandiseId: item.variantId }] },
+    input: {
+      lines: [{ quantity: item.quantity, merchandiseId: item.variantId }],
+      buyerIdentity: { countryCode },
+    },
+    country: countryCode,
   });
+
 
   if (data?.data?.cartCreate?.userErrors?.length > 0) {
     console.error("Cart creation failed:", data.data.cartCreate.userErrors);
