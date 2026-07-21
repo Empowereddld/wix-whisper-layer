@@ -148,7 +148,18 @@ The design highlights a few important truths about DLD:
 With the message "1 in 14. Have you heard of DLD?", this tote can gently open the door for conversations with other parents, educators, and community members.
 
 Perfect for school drop-off, library trips, therapy materials, groceries, books, and everyday errands.`,
+  "my-ideas-are-worth-waiting-for-kids-water-bottle": `A child-friendly water bottle with a powerful reminder: My ideas are worth waiting for.
 
+This 17oz stainless steel water bottle was created for children who may need extra time to process language, organize their thoughts, and share what they know. The design is bright, encouraging, and easy for kids to connect with. It is a gentle reminder that their ideas matter, even when words take a little longer.
+
+Perfect for school, therapy sessions, tutoring, camp, sports, and everyday use.
+
+Product details:
+- 17oz stainless steel water bottle
+- Double-wall insulation keeps drinks hot or cold for up to 6 hours
+- Leak-proof cap
+- Lightweight and easy to carry
+- Hand wash only, not dishwasher recommended`,
 };
 
 
