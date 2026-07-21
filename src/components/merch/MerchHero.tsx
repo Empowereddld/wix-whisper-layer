@@ -1,4 +1,4 @@
-import merchHero from "@/assets/merch-hero.jpg";
+import merchHero from "@/assets/merch-hero-family.png.asset.json";
 
 const MerchHero = () => {
   return (
