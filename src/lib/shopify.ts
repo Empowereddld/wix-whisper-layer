@@ -214,7 +214,7 @@ export async function detectBuyerCountry(): Promise<SupportedCountry> {
 
 export function formatShopifyPrice(amount: string, currencyCode: string) {
   const value = parseFloat(amount);
-  return new Intl.NumberFormat("en-CA", {
+  return new Intl.NumberFormat("en", {
     style: "currency",
     currency: currencyCode,
   }).format(value);
