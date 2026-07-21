@@ -26,7 +26,7 @@ const MerchHero = () => {
             <img
               src={merchHero.url}
               alt="Empowered DLD merchandise: tee, mug, and tote bag"
-              className="w-full h-full object-cover object-[65%_center] md:object-[60%_center] lg:object-[55%_center]"
+              className="w-full h-full object-cover object-[50%_center] md:object-[50%_center] lg:object-[50%_center]"
               width={1536}
               height={1024}
             />
