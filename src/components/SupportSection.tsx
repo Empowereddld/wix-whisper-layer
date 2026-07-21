@@ -63,9 +63,8 @@ const features = [
     icon: ShoppingCart,
     title: "DLD Awareness Merch",
     description: "T-shirts, water bottles, hats and more celebrating kids with DLD.",
-    cta: "COMING SOON",
-    href: "/shop",
-    comingSoon: true,
+    cta: "SHOP MERCH",
+    href: "/shop/merch",
   },
 ];
 

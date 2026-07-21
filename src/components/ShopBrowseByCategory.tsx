@@ -30,7 +30,6 @@ const categories = [
     image: shopMerchImg,
     cta: "Shop Merch",
     href: "/shop/merch",
-    comingSoon: true,
   },
 ];
 
