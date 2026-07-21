@@ -9,9 +9,7 @@ const DISPLAY_TITLES: Record<string, React.ReactNode> = {
   ),
   "1-in-14-dld-awareness-tote-bag": (
     <>
-      <span>1 in 14 DLD Awareness</span>
-      <br />
-      <span>Tote Bag</span>
+      <span>Tote Bag: 1 in 14 DLD Awareness</span>
     </>
   ),
   "my-ideas-are-worth-waiting-for-kids-water-bottle": (
