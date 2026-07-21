@@ -25,10 +25,21 @@ interface RegionStore {
 
 export const useRegionStore = create<RegionStore>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       countryCode: "CA",
-      setCountry: (code) => set({ countryCode: code }),
+      setCountry: (code) => {
+        if (code === get().countryCode) return;
+        set({ countryCode: code });
+        // Clear the merch cart when currency changes — Shopify carts are locked
+        // to a single currency, so we start fresh in the new region.
+        // Lazy import to avoid circular dependency at module load.
+        import("./merchCartStore").then(({ useMerchCartStore }) => {
+          const { items, clearCart } = useMerchCartStore.getState();
+          if (items.length > 0) clearCart();
+        });
+      },
     }),
+
     {
       name: "empowered-region",
       storage: createJSONStorage(() => localStorage),
