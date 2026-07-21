@@ -14,6 +14,13 @@ const DISPLAY_TITLES: Record<string, React.ReactNode> = {
       <span>Tote Bag</span>
     </>
   ),
+  "my-ideas-are-worth-waiting-for-kids-water-bottle": (
+    <>
+      <span>My Ideas Are Worth Waiting For</span>
+      <br />
+      <span>Water Bottle</span>
+    </>
+  ),
 };
 
 export function getMerchDisplayTitle(handle: string, fallbackTitle: string): string {
@@ -22,6 +29,9 @@ export function getMerchDisplayTitle(handle: string, fallbackTitle: string): str
   }
   if (handle === "1-in-14-dld-awareness-tote-bag") {
     return "1 in 14 DLD Awareness Tote Bag";
+  }
+  if (handle === "my-ideas-are-worth-waiting-for-kids-water-bottle") {
+    return "My Ideas Are Worth Waiting For Water Bottle";
   }
   return fallbackTitle;
 }
