@@ -4,6 +4,8 @@ import {
   ShopifyProduct,
   storefrontApiRequest,
 } from "@/lib/shopify";
+import { useRegionStore } from "@/stores/regionStore";
+
 
 export interface CartItem {
   lineId: string | null;
@@ -209,7 +211,9 @@ export const useMerchCartStore = create<MerchCartStore>()(
         set({ isLoading: true });
         try {
           if (!cartId) {
-            const result = await createShopifyCart({ ...item, lineId: null });
+            const countryCode = useRegionStore.getState().countryCode;
+            const result = await createShopifyCart({ ...item, lineId: null }, countryCode);
+
             if (result) {
               set({
                 cartId: result.cartId,
