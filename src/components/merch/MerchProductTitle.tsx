@@ -4,7 +4,7 @@ const DISPLAY_TITLES: Record<string, React.ReactNode> = {
   "pause-please-i-m-thinking-kids-t-shirt": (
     <>
       <span>Kids T-Shirt: </span>
-      <span className="italic">Pause please...I’m thinking.</span>
+      <span className="italic">Pause please...I’m thinking</span>
     </>
   ),
   "1-in-14-dld-awareness-tote-bag": (
@@ -25,7 +25,7 @@ const DISPLAY_TITLES: Record<string, React.ReactNode> = {
 
 export function getMerchDisplayTitle(handle: string, fallbackTitle: string): string {
   if (handle === "pause-please-i-m-thinking-kids-t-shirt") {
-    return "Kids T-Shirt: Pause please...I’m thinking.";
+    return "Kids T-Shirt: Pause please...I’m thinking";
   }
   if (handle === "1-in-14-dld-awareness-tote-bag") {
     return "1 in 14 DLD Awareness Tote Bag";
