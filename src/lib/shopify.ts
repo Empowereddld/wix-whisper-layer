@@ -192,11 +192,17 @@ const IMAGE_EXCLUDES: Record<string, string[]> = {
     // Flat Gelato mockup — we prefer the lifestyle photos instead.
     "02cb1f38-7b60-4c41-b1ac-38a3f02a4e99",
   ],
+  "my-ideas-are-worth-waiting-for-kids-water-bottle": [
+    // Plain flat Gelato mockup (no lifestyle context).
+    "833e3151-1a61-4bd5-b703-5d043bddd72b",
+  ],
 };
 
 const PRIMARY_IMAGE_OVERRIDES: Record<string, string> = {
   // Biracial mom + son lifestyle photo.
   "1-in-14-dld-awareness-tote-bag": "f5d9b32c-faec-47ec-beb2-2c3f250cba9d",
+  // Four kids outside holding bottles.
+  "my-ideas-are-worth-waiting-for-kids-water-bottle": "780bef8d-239f-47e4-a205-eafd0b97a9c7",
 };
 
 export function getProductImages(product: ShopifyProduct["node"]) {
