@@ -30,7 +30,6 @@ const categories = [
     image: shopMerchImg,
     cta: "Shop Merch",
     href: "/shop/merch",
-    comingSoon: true,
   },
 ];
 
@@ -62,11 +61,6 @@ const ShopBrowseByCategory = () => {
                   alt={cat.title}
                   className="w-full h-full object-cover"
                 />
-                {cat.comingSoon && (
-                  <span className="absolute top-3 right-3 bg-destructive text-destructive-foreground text-[10px] font-bold uppercase tracking-wide px-3 py-1.5 rounded-full rotate-[12deg]">
-                    Coming Soon
-                  </span>
-                )}
               </div>
 
               {/* Text */}
@@ -82,14 +76,12 @@ const ShopBrowseByCategory = () => {
                 </p>
 
                 {/* CTA */}
-                {!cat.comingSoon && (
-                  <Link
-                    to={cat.href}
-                    className="inline-flex items-center justify-center h-11 px-7 bg-foreground text-background text-[13px] font-semibold tracking-[0.04em] rounded-md hover:opacity-90 transition-opacity duration-200 w-fit"
-                  >
-                    {cat.cta}
-                  </Link>
-                )}
+                <Link
+                  to={cat.href}
+                  className="inline-flex items-center justify-center h-11 px-7 bg-foreground text-background text-[13px] font-semibold tracking-[0.04em] rounded-md hover:opacity-90 transition-opacity duration-200 w-fit"
+                >
+                  {cat.cta}
+                </Link>
               </div>
             </div>
           ))}

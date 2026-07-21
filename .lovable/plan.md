@@ -1,21 +1,18 @@
-## Fix merch hero image cropping on desktop & tablet
+## Goal
+Make the DLD Awareness Merch card link to the live `/shop/merch` page and add "Merch" to the Shop dropdown in the header.
 
-The current hero image uses `aspect-[4/3]` + `object-cover`, which forces a tall crop in every viewport and clips the boy on the right on desktop and tablet. Mobile is fine because the image fills full width.
+## Changes
 
-### Changes to `src/components/merch/MerchHero.tsx`
+1. **`src/components/SupportSection.tsx`** (homepage "What We Offer" card)
+   - Change CTA from `"COMING SOON"` to `"SHOP MERCH"`.
+   - Update `href` from `/shop` to `/shop/merch`.
+   - Remove `comingSoon: true` so it renders as an active link.
 
-1. **Reshape the image frame to landscape at md+**
-   - Replace `aspect-[4/3]` with responsive ratios: `aspect-[4/5]` on mobile (portrait fits phones), `md:aspect-[16/10]` (tablet landscape), `lg:aspect-[3/2]` (desktop wider landscape). This makes the frame shorter and wider so less needs to be cropped.
+2. **`src/components/ShopBrowseByCategory.tsx`** (Shop page category grid)
+   - Remove `comingSoon: true` on the Merch category so the "Coming Soon" badge is hidden and the card is fully clickable.
 
-2. **Give the image column more room on desktop**
-   - Change the lg grid from `lg:grid-cols-2` (50/50) to `lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]` so the image side gets ~58% of the row. Keeps the copy readable while giving the photo more landscape space.
+3. **`src/components/Header.tsx`** (Shop dropdown)
+   - Add `{ label: "Merch", href: "/shop/merch" }` to `shopLinks`, placed after "Bulk Orders" and before "Educational App". Applies to both desktop and mobile menus (same array).
 
-3. **Anchor the crop so the boy stays in frame**
-   - Add `object-[center_30%]` (or `object-center`) on the `<img>` so when any cropping does happen, it trims the top/bottom of the scene (sky, ground) rather than the boy on the right edge.
-
-4. **No changes elsewhere** — image asset, copy, button, and mobile stacking behavior stay identical.
-
-### Verification
-
-- Preview at desktop (1280+), tablet (~768–1024), and mobile.
-- Confirm the boy on the right is fully visible in all three, the mother is centered, and the copy column still reads cleanly.
+## Out of scope
+No other copy changes, no changes to `/shop/merch` itself, no route or business-logic changes.
