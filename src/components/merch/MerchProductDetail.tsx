@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import { ChevronLeft, Truck, Package, Loader2 } from "lucide-react";
+import { ChevronLeft, ChevronRight, Truck, Package, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Accordion,
@@ -248,7 +248,7 @@ const MerchProductDetail = ({ product }: Props) => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14">
           {/* Gallery */}
           <div>
-            <div className="rounded-2xl overflow-hidden bg-muted aspect-[4/5]">
+            <div className="relative rounded-2xl overflow-hidden bg-muted aspect-[4/5] group">
               {activeImage ? (
                 <img
                   src={activeImage.url}
@@ -259,6 +259,31 @@ const MerchProductDetail = ({ product }: Props) => {
                 <div className="w-full h-full flex items-center justify-center text-muted-foreground text-[14px]">
                   No image
                 </div>
+              )}
+
+              {images.length > 1 && (
+                <>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setActiveImageIndex((i) => (i - 1 + images.length) % images.length)
+                    }
+                    aria-label="Previous image"
+                    className="absolute left-3 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-background/90 hover:bg-background text-foreground shadow-md flex items-center justify-center transition-opacity opacity-80 hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-foreground/40"
+                  >
+                    <ChevronLeft className="h-5 w-5" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setActiveImageIndex((i) => (i + 1) % images.length)
+                    }
+                    aria-label="Next image"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-background/90 hover:bg-background text-foreground shadow-md flex items-center justify-center transition-opacity opacity-80 hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-foreground/40"
+                  >
+                    <ChevronRight className="h-5 w-5" />
+                  </button>
+                </>
               )}
             </div>
 
