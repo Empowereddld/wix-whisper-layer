@@ -25,7 +25,7 @@ const MerchHero = () => {
           <div className="rounded-2xl overflow-hidden shadow-2xl aspect-[6/5] bg-deep-purple">
             <img
               src={merchHero.url}
-              alt="Empowered DLD merchandise: tee, mug, and tote bag"
+              alt="Empowered DLD merchandise: tee, water bottle, and tote bag"
               className="w-full h-full object-cover object-right"
               width={1672}
               height={941}
