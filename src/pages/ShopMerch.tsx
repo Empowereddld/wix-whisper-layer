@@ -13,8 +13,8 @@ const ShopMerch = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <SEOHead
-        title="Shop Merch | Empowered DLD"
-        description="DLD awareness merch: tees, mugs, and totes. Printed on demand and shipped worldwide."
+        title="Shop DLD Merch: Tees, Water Bottles & Totes | Empowered DLD"
+        description="Shop DLD awareness merch: soft tees, stainless steel water bottles, and canvas totes. Printed on demand and shipped worldwide."
         path="/shop/merch"
         noindex
       />
