@@ -232,6 +232,14 @@ const IMAGE_EXCLUDES: Record<string, string[]> = {
     // Plain flat Gelato mockup (no lifestyle context).
     "833e3151-1a61-4bd5-b703-5d043bddd72b",
   ],
+  "pause-please-i-m-thinking-kids-t-shirt": [
+    // Close-crop girl in pink shorts (awkward crop in gallery).
+    "eebc5468-7dea-4d73-9e42-5bb5a6221fdb",
+    // Boy + girl walking with backpacks lifestyle mockup.
+    "c02838c6-0583-4574-9981-bd85b592a491",
+    // Flat Gildan tee mockup on black background.
+    "f80a38ab-57b6-4c76-a581-111d9bd8c48a",
+  ],
 };
 
 const PRIMARY_IMAGE_OVERRIDES: Record<string, string> = {
