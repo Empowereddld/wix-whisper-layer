@@ -80,6 +80,7 @@ Deno.serve(async (req) => {
         const { error: sendError } = await supabase.functions.invoke(
           "send-waitlist-email",
           {
+            headers: { "x-cron-secret": cronSecret },
             body: {
               template: "email2_points_tiers",
               to: user.email,
