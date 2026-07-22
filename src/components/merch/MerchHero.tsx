@@ -13,7 +13,7 @@ const MerchHero = () => {
               Wear It. Share It.<br />Start the Conversation.
             </h1>
             <p className="text-[15px] md:text-[16px] text-white/80 leading-[1.7] max-w-[520px] mb-8">
-              Soft tees, ceramic mugs, and canvas totes that help more people learn about Developmental Language Disorder. Every piece helps raise awareness.
+              Soft tees, stainless steel water bottles, and canvas totes that help more people learn about Developmental Language Disorder. Every piece helps raise awareness.
             </p>
             <a
               href="#shop"
@@ -25,7 +25,7 @@ const MerchHero = () => {
           <div className="rounded-2xl overflow-hidden shadow-2xl aspect-[6/5] bg-deep-purple">
             <img
               src={merchHero.url}
-              alt="Empowered DLD merchandise: tee, mug, and tote bag"
+              alt="Empowered DLD merchandise: tee, water bottle, and tote bag"
               className="w-full h-full object-cover object-right"
               width={1672}
               height={941}
