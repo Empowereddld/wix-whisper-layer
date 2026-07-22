@@ -214,10 +214,17 @@ export async function detectBuyerCountry(): Promise<SupportedCountry> {
 
 export function formatShopifyPrice(amount: string, currencyCode: string) {
   const value = parseFloat(amount);
-  return new Intl.NumberFormat("en", {
+  const formatted = new Intl.NumberFormat("en", {
     style: "currency",
     currency: currencyCode,
   }).format(value);
+
+  // Explicitly label US dollars so visitors see "USD $22.00".
+  if (currencyCode === "USD") {
+    return `USD ${formatted}`;
+  }
+
+  return formatted;
 }
 
 // Per-handle image controls. Filter out unwanted mockups by URL substring, and
