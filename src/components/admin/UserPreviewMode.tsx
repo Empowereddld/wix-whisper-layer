@@ -42,7 +42,7 @@ import {
   SOCIAL_LINKS,
 } from "@/lib/waitlist-constants";
 import RewardsInventory from "@/components/waitlist/RewardsInventory";
-import storyPreviewBg from "@/assets/story-preview-bg.png";
+import storyPreviewBg from "@/assets/story-preview-bg.webp";
 
 interface UserPreviewModeProps {
   onClose: () => void;
