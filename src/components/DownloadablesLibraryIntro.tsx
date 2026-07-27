@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { useScrollFadeIn } from "@/hooks/useScrollFadeIn";
-import resourceGif from "@/assets/resource-library-preview.gif";
+import resourcePreview from "@/assets/resource-library-preview.mp4.asset.json";
 
 const DownloadablesLibraryIntro = () => {
   const fade = useScrollFadeIn();
@@ -15,11 +15,15 @@ const DownloadablesLibraryIntro = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
           {/* Left – image (50%) */}
           <div className="rounded-2xl overflow-hidden shadow-[var(--shadow-elevated)]">
-            <img
-              src={resourceGif}
-              alt="Preview of DLD resource library materials"
+            <video
+              src={resourcePreview.url}
+              aria-label="Preview of DLD resource library materials"
               className="w-full object-cover aspect-[4/3]"
-              loading="lazy"
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="metadata"
             />
           </div>
 
