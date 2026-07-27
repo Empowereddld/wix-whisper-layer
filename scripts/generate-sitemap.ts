@@ -35,6 +35,7 @@ const staticEntries: SitemapEntry[] = [
   { path: "/resources/language-impact-checklist", changefreq: "monthly", priority: "0.7" },
   { path: "/shop", changefreq: "weekly", priority: "0.8" },
   { path: "/shop/books", changefreq: "monthly", priority: "0.8" },
+  { path: "/shop/merch", changefreq: "weekly", priority: "0.8" },
   { path: "/shop/bulk-orders", changefreq: "monthly", priority: "0.7" },
   { path: "/shop/educational-app", changefreq: "monthly", priority: "0.7" },
   { path: "/work-with-us", changefreq: "monthly", priority: "0.7" },
