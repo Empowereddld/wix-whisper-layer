@@ -48,7 +48,7 @@ const DownloadablesLibraryIntro = () => {
               <ArrowRight className="h-4 w-4" />
             </Link>
 
-            <p className="text-[13px] text-muted-foreground/70 mt-2">
+            <p className="text-[13px] text-muted-foreground mt-2">
               Trusted by 4,000+ families and professionals in 15+ countries
             </p>
           </div>

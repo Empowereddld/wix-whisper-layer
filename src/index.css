@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=DM+Serif+Display&display=swap');
+/* Fonts are loaded via <link> in index.html so they are not render-blocking behind the CSS bundle. */
+
 
 @tailwind base;
 @tailwind components;
@@ -65,7 +66,7 @@
     --stone-ui: 213 19% 72%;
     --coral: 4 77% 67%;
     --pale-yellow: 48 80% 92%;
-    --golden: 177 84% 36%;
+    --golden: 177 84% 26%;
   }
 
   .dark {

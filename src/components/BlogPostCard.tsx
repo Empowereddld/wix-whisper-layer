@@ -42,7 +42,7 @@ const BlogPostCard = ({ slug, title, excerpt, featuredImageUrl, categories, publ
 
         <div className="mt-auto">
           {publishedAt && (
-            <time className="text-xs text-muted-foreground/70">
+            <time className="text-xs text-muted-foreground">
               {format(new Date(publishedAt), "MMMM d, yyyy")}
             </time>
           )}

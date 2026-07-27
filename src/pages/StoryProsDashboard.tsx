@@ -798,9 +798,9 @@ const StoryProsDashboard = () => {
                 <Sparkles className="h-3.5 w-3.5 text-primary" />
                 Preview when shared
                 {sharePreviewOpen ? (
-                  <span aria-hidden className="text-muted-foreground/70">−</span>
+                  <span aria-hidden className="text-muted-foreground">−</span>
                 ) : (
-                  <span aria-hidden className="text-muted-foreground/70">+</span>
+                  <span aria-hidden className="text-muted-foreground">+</span>
                 )}
               </button>
               {sharePreviewOpen && (

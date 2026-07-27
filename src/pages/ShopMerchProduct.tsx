@@ -34,7 +34,7 @@ const ShopMerchProduct = () => {
         title={`${getMerchDisplayTitle(product.handle, product.title)} | Empowered DLD Merch`}
         description={product.description}
         path={`/shop/merch/${product.handle}`}
-        noindex
+        type="product"
       />
       <Header />
       <main className="flex-1">

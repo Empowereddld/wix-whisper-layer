@@ -60,6 +60,26 @@ const BlogPost = () => {
 
   const parsed = useMemo(() => parseFAQ(post?.body || ""), [post?.body]);
 
+  // Only emit FAQPage schema when the page actually renders a visible FAQ accordion.
+  const stripMd = (s: string) =>
+    s
+      .replace(/!\[[^\]]*\]\([^)]*\)/g, "")
+      .replace(/\[([^\]]*)\]\([^)]*\)/g, "$1")
+      .replace(/[*_`>#]/g, "")
+      .replace(/\s+/g, " ")
+      .trim();
+
+  const faqJsonLd = parsed.faqs.length > 0 ? {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: parsed.faqs.map((f) => ({
+      "@type": "Question",
+      name: stripMd(f.question),
+      acceptedAnswer: { "@type": "Answer", text: stripMd(f.answer) },
+    })),
+  } : null;
+
+
 
 
   const articleJsonLd = post ? {
@@ -120,6 +140,11 @@ const BlogPost = () => {
                 {articleJsonLd && (
                   <script type="application/ld+json">
                     {JSON.stringify(articleJsonLd)}
+                  </script>
+                )}
+                {faqJsonLd && (
+                  <script type="application/ld+json">
+                    {JSON.stringify(faqJsonLd)}
                   </script>
                 )}
                 <script type="application/ld+json">
