@@ -17,6 +17,7 @@ import {
 } from "@/lib/shopify";
 import { toast } from "sonner";
 import {
+  getMerchCategory,
   getMerchDisplayTitle,
   MerchProductTitle,
 } from "./MerchProductTitle";
