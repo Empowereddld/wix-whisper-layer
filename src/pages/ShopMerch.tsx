@@ -16,7 +16,6 @@ const ShopMerch = () => {
         title="Shop DLD Merch: Tees, Water Bottles & Totes | Empowered DLD"
         description="Shop DLD awareness merch: soft tees, stainless steel water bottles, and canvas totes. Printed on demand and shipped worldwide."
         path="/shop/merch"
-        noindex
       />
       <Header />
       <main className="flex-1">
