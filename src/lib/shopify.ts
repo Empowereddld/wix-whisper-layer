@@ -245,6 +245,10 @@ const IMAGE_EXCLUDES: Record<string, string[]> = {
     // Flat Gildan tee mockup on black background.
     "f80a38ab-57b6-4c76-a581-111d9bd8c48a",
   ],
+  "tote-bag-1-in-14-dld-awareness-tote-bag": [
+    // Plain flat Gelato tote mockup (no lifestyle context).
+    "2780088c-4f01-4ca9-9eb7-1617ee594932",
+  ],
 };
 
 const PRIMARY_IMAGE_OVERRIDES: Record<string, string> = {
