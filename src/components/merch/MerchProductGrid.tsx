@@ -71,6 +71,9 @@ const MerchProductGrid = () => {
                     )}
                   </div>
                   <div className="px-6 pt-5 flex flex-col flex-1">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-muted-foreground mb-1.5">
+                      {getMerchCategory(node.handle)}
+                    </p>
                     <h3 className="text-[18px] md:text-[20px] font-bold text-foreground leading-tight mb-1">
                       <MerchProductTitle handle={node.handle} title={node.title} />
                     </h3>
