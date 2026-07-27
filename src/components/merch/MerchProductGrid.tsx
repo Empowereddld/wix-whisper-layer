@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 import { useShopifyProducts } from "@/hooks/useShopifyProducts";
-import { formatShopifyPrice, getFirstImage } from "@/lib/shopify";
+import { formatShopifyPrice, getFirstImage, shopifyImageUrl } from "@/lib/shopify";
 import { MerchProductTitle } from "./MerchProductTitle";
 
 const MerchProductGrid = () => {
@@ -57,11 +57,11 @@ const MerchProductGrid = () => {
                   <div className="relative aspect-square overflow-hidden bg-white">
                     {image ? (
                       <img
-                        src={image}
+                        src={shopifyImageUrl(image, 700)}
                         alt={node.title}
                         loading="lazy"
-                        width={1024}
-                        height={1024}
+                        width={700}
+                        height={700}
                         className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-300"
                       />
                     ) : (

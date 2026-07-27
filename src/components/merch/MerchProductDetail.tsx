@@ -12,6 +12,7 @@ import { useMerchCartStore } from "@/stores/merchCartStore";
 import {
   formatShopifyPrice,
   getProductImages,
+  shopifyImageUrl,
   type ShopifyProduct,
 } from "@/lib/shopify";
 import { toast } from "sonner";
@@ -269,9 +270,12 @@ const MerchProductDetail = ({ product }: Props) => {
             <div className="relative rounded-2xl overflow-hidden bg-muted aspect-[4/5] group">
               {activeImage ? (
                 <img
-                  src={activeImage.url}
+                  src={shopifyImageUrl(activeImage.url, 900)}
                   alt={activeImage.altText || product.title}
                   className="w-full h-full object-cover"
+                  width={900}
+                  height={1125}
+                  fetchPriority="high"
                 />
               ) : (
                 <div className="w-full h-full flex items-center justify-center text-muted-foreground text-[14px]">
@@ -323,7 +327,7 @@ const MerchProductDetail = ({ product }: Props) => {
                       }`}
                     >
                       <img
-                        src={img.url}
+                        src={shopifyImageUrl(img.url, 200)}
                         alt={img.altText || `${product.title} thumbnail ${i + 1}`}
                         className="w-full h-full object-cover"
                         loading="lazy"

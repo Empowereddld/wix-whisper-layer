@@ -291,3 +291,16 @@ export function getProductImages(product: ShopifyProduct["node"]) {
 export function getFirstImage(product: ShopifyProduct["node"]) {
   return getProductImages(product)[0]?.url ?? "";
 }
+
+/**
+ * Ask the Shopify CDN for a resized/WebP version of a product image so we
+ * download only what we display instead of the full-resolution original.
+ * Non-Shopify URLs (site-hosted assets) are returned untouched.
+ */
+export function shopifyImageUrl(url: string, width: number) {
+  if (!url || !url.includes("cdn.shopify.com")) return url;
+  const [base, query = ""] = url.split("?");
+  const params = new URLSearchParams(query);
+  params.set("width", String(width));
+  return `${base}?${params.toString()}`;
+}
