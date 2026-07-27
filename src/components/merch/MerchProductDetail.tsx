@@ -148,6 +148,24 @@ The design highlights a few important truths about DLD:
 With the message "1 in 14. Have you heard of DLD?", this tote can gently open the door for conversations with other parents, educators, and community members.
 
 Perfect for school drop-off, library trips, therapy materials, groceries, books, and everyday errands.`,
+  "tote-bag-1-in-14-dld-awareness-tote-bag": `Start meaningful conversations about DLD wherever you go. This natural canvas tote was created to help raise awareness of Developmental Language Disorder in a simple, everyday way.
+
+The design highlights a few important truths about DLD:
+- Lifelong
+- Smart
+- Neurodivergent
+- 7x more common than autism
+
+With the message "1 in 14. Have you heard of DLD?", this tote can gently open the door for conversations with other parents, educators, and community members.
+
+Perfect for school drop-off, library trips, therapy materials, groceries, books, and everyday errands.
+
+Care instructions:
+- Machine wash warm (max 40C or 105F), inside out with similar colors
+- Tumble dry low
+- Only non-chlorine bleach
+- Do not dry clean
+- Do not iron`,
   "my-ideas-are-worth-waiting-for-kids-water-bottle": `A child-friendly water bottle with a powerful reminder: My ideas are worth waiting for.
 
 This 17oz stainless steel water bottle was created for children who may need extra time to process language, organize their thoughts, and share what they know. The design is bright, encouraging, and easy for kids to connect with. It is a gentle reminder that their ideas matter, even when words take a little longer.
