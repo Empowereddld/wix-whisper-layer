@@ -27,7 +27,7 @@ const TrustSection = () => {
 
           {/* Column 1 – Text (spans wide on lg) */}
           <div className="flex flex-col">
-            <p className="text-[13px] md:text-[14px] font-semibold uppercase tracking-[0.2em] text-primary mb-3 opacity-80">
+            <p className="text-[13px] md:text-[14px] font-semibold uppercase tracking-[0.2em] text-primary mb-3">
               Why Empowered DLD?
             </p>
             <h2 className="text-[26px] md:text-[30px] font-bold text-foreground mb-3.5 leading-[1.08]">

@@ -50,7 +50,7 @@ const TestimonialBand = () => {
                   "{t.quote}"
                 </blockquote>
                 <p className="font-semibold text-[13px] tracking-wide">{t.author}</p>
-                <p className="text-[11px] text-primary-foreground/40 mt-0.5">{t.role}</p>
+                <p className="text-[11px] text-primary-foreground/80 mt-0.5">{t.role}</p>
               </div>
             ))}
           </div>

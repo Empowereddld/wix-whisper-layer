@@ -30,7 +30,7 @@ const HowCommonSection = () => {
             <p className="text-[14px] md:text-[15px] text-muted-foreground leading-[1.8]">
               Because many educators, families, and even professionals have never heard the term, children with language difficulties are often misunderstood or do not receive the support they need.
             </p>
-            <p className="text-[12px] text-muted-foreground/70 leading-[1.5] pt-2">
+            <p className="text-[12px] text-muted-foreground leading-[1.5] pt-2">
               Source: Norbury et al. (2016). The impact of nonverbal ability on prevalence and clinical presentation of language disorder. <em>Journal of Child Psychology and Psychiatry</em>, 57(11).
             </p>
           </div>
