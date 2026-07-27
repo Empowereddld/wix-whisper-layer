@@ -1,4 +1,6 @@
 import { toast } from "sonner";
+import toteFlatlay from "@/assets/tote-flatlay-desk.png.asset.json";
+
 
 export const SHOPIFY_API_VERSION = "2025-07";
 export const SHOPIFY_STORE_PERMANENT_DOMAIN = "wix-whisper-layer-8yzs2.myshopify.com";
