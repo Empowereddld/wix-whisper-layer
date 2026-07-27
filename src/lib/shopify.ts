@@ -268,11 +268,30 @@ const EXTRA_IMAGES: Record<string, Array<{ url: string; altText: string | null }
   ],
 };
 
+/**
+ * Shopify sometimes stores the same photo twice (e.g. "abc.png" and
+ * "abc_1234-5678.png"). Collapse those to one entry by keying on the leading
+ * UUID of the filename.
+ */
+function imageDedupeKey(url: string) {
+  const file = url.split("?")[0].split("/").pop() ?? url;
+  const base = file.replace(/\.[a-z0-9]+$/i, "");
+  return base.split("_")[0];
+}
+
 export function getProductImages(product: ShopifyProduct["node"]) {
   const excludes = IMAGE_EXCLUDES[product.handle] ?? [];
+  const seen = new Set<string>();
   const filtered = product.images.edges
     .map((e) => e.node)
-    .filter((n) => !!n?.url && !excludes.some((sub) => n.url.includes(sub)));
+    .filter((n) => !!n?.url && !excludes.some((sub) => n.url.includes(sub)))
+    .filter((n) => {
+      const key = imageDedupeKey(n.url);
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+
 
   filtered.push(...(EXTRA_IMAGES[product.handle] ?? []));
 
