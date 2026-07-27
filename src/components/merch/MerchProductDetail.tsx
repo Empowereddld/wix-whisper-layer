@@ -17,6 +17,7 @@ import {
 } from "@/lib/shopify";
 import { toast } from "sonner";
 import {
+  getMerchCategory,
   getMerchDisplayTitle,
   MerchProductTitle,
 } from "./MerchProductTitle";
@@ -342,7 +343,7 @@ const MerchProductDetail = ({ product }: Props) => {
           {/* Info */}
           <div>
             <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-muted-foreground mb-3">
-              MERCH
+              {getMerchCategory(product.handle)}
             </p>
             <h1 className="text-[28px] md:text-[36px] lg:text-[40px] font-black text-foreground leading-[1.1] mb-3">
               <MerchProductTitle handle={product.handle} title={product.title} />
