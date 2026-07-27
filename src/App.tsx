@@ -27,24 +27,26 @@ function RegionDetect() {
 
 
 
-// Eagerly loaded (main public pages)
+// Eagerly loaded (landing page only, for fastest first paint)
 import Index from "./pages/Index";
-import WhoWeServe from "./pages/WhoWeServe";
-import ForParents from "./pages/ForParents";
-import ForTherapists from "./pages/ForTherapists";
-import ForEducators from "./pages/ForEducators";
-import ForOrganizations from "./pages/ForOrganizations";
-import Resources from "./pages/Resources";
-import Shop from "./pages/Shop";
-import Books from "./pages/Books";
-import BulkOrders from "./pages/BulkOrders";
-import ShopMerch from "./pages/ShopMerch";
-import ShopMerchProduct from "./pages/ShopMerchProduct";
-import WorkWithUs from "./pages/WorkWithUs";
-import AboutDLD from "./pages/AboutDLD";
-import WhyEmpoweredDLD from "./pages/WhyEmpoweredDLD";
-import ContactUs from "./pages/ContactUs";
 import NotFound from "./pages/NotFound";
+
+// Lazy-loaded: main public pages
+const WhoWeServe = lazy(() => import("./pages/WhoWeServe"));
+const ForParents = lazy(() => import("./pages/ForParents"));
+const ForTherapists = lazy(() => import("./pages/ForTherapists"));
+const ForEducators = lazy(() => import("./pages/ForEducators"));
+const ForOrganizations = lazy(() => import("./pages/ForOrganizations"));
+const Resources = lazy(() => import("./pages/Resources"));
+const Shop = lazy(() => import("./pages/Shop"));
+const Books = lazy(() => import("./pages/Books"));
+const BulkOrders = lazy(() => import("./pages/BulkOrders"));
+const ShopMerch = lazy(() => import("./pages/ShopMerch"));
+const ShopMerchProduct = lazy(() => import("./pages/ShopMerchProduct"));
+const WorkWithUs = lazy(() => import("./pages/WorkWithUs"));
+const AboutDLD = lazy(() => import("./pages/AboutDLD"));
+const WhyEmpoweredDLD = lazy(() => import("./pages/WhyEmpoweredDLD"));
+const ContactUs = lazy(() => import("./pages/ContactUs"));
 
 // Lazy-loaded: Blog
 const Blog = lazy(() => import("./pages/Blog"));

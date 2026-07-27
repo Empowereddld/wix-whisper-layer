@@ -2,9 +2,9 @@ import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Lock, ArrowRight, FileText, Image, BookOpen, Package, BarChart3, Check } from "lucide-react";
 import hallwayBg from "@/assets/school-hallway-bg.webp";
-import graphicOrganizersPreview from "@/assets/resource-graphic-organizers-preview.png";
-import checklistPreview from "@/assets/resource-checklist-preview.png";
-import emailTemplatesPreview from "@/assets/resource-email-templates-preview.png";
+import graphicOrganizersPreview from "@/assets/resource-graphic-organizers-preview.webp";
+import checklistPreview from "@/assets/resource-checklist-preview.webp";
+import emailTemplatesPreview from "@/assets/resource-email-templates-preview.webp";
 import { Button } from "@/components/ui/button";
 
 import {

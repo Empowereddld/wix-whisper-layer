@@ -1,5 +1,5 @@
 import { ExternalLink } from "lucide-react";
-import booksImg from "@/assets/resource-books-collection.png";
+import booksImg from "@/assets/resource-books-collection.webp";
 
 const ResourceBooksSection = () => {
   return (

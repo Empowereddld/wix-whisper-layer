@@ -62,8 +62,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import storyPreviewBg from "@/assets/story-preview-bg.png";
-import storypros from "@/assets/storybuilders-hero.png";
+import storyPreviewBg from "@/assets/story-preview-bg.webp";
+import storypros from "@/assets/storybuilders-hero.webp";
 import shareCardImage from "@/assets/storypros-share-card.jpg";
 
 const StoryProsDashboard = () => {
