@@ -236,6 +236,9 @@ const IMAGE_EXCLUDES: Record<string, string[]> = {
   "my-ideas-are-worth-waiting-for-kids-water-bottle": [
     // Plain flat Gelato mockup (no lifestyle context).
     "833e3151-1a61-4bd5-b703-5d043bddd72b",
+    // Plain white-background studio shots (older render, missing the logo).
+    "483741e2-fb7c-4050-8403-398cd7894bb8",
+    "057946b2-fb2d-4b4f-9930-13b4190fc58d",
   ],
   "pause-please-i-m-thinking-kids-t-shirt": [
     // Grey/heather tee with pink shorts (duplicate of white-tee lifestyle shot).
