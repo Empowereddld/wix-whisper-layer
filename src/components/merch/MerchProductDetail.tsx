@@ -275,7 +275,7 @@ const MerchProductDetail = ({ product }: Props) => {
                   className="w-full h-full object-cover"
                   width={900}
                   height={1125}
-                  fetchpriority="high"
+                  fetchPriority="high"
                 />
               ) : (
                 <div className="w-full h-full flex items-center justify-center text-muted-foreground text-[14px]">
