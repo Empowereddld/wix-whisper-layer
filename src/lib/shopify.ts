@@ -252,11 +252,24 @@ const PRIMARY_IMAGE_OVERRIDES: Record<string, string> = {
   "tote-bag-1-in-14-dld-awareness-tote-bag": "59c361df-9c61-4212-8ea1-691a7d2a10b9",
 };
 
+// Extra site-hosted mockups appended to a product's Shopify gallery.
+const EXTRA_IMAGES: Record<string, Array<{ url: string; altText: string | null }>> = {
+  "tote-bag-1-in-14-dld-awareness-tote-bag": [
+    {
+      url: toteFlatlay.url,
+      altText: "1 in 14 DLD awareness tote bag styled on a desk with a book and coffee",
+    },
+  ],
+};
+
 export function getProductImages(product: ShopifyProduct["node"]) {
   const excludes = IMAGE_EXCLUDES[product.handle] ?? [];
   const filtered = product.images.edges
     .map((e) => e.node)
     .filter((n) => !!n?.url && !excludes.some((sub) => n.url.includes(sub)));
+
+  filtered.push(...(EXTRA_IMAGES[product.handle] ?? []));
+
 
   const primary = PRIMARY_IMAGE_OVERRIDES[product.handle];
   if (primary) {
