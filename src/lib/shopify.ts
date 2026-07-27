@@ -248,6 +248,8 @@ const IMAGE_EXCLUDES: Record<string, string[]> = {
 const PRIMARY_IMAGE_OVERRIDES: Record<string, string> = {
   // Four kids outside holding bottles.
   "my-ideas-are-worth-waiting-for-kids-water-bottle": "704d3178-0a25-411d-b239-9c33c4fd1562",
+  // Woman outside elementary school carrying the tote.
+  "tote-bag-1-in-14-dld-awareness-tote-bag": "59c361df-9c61-4212-8ea1-691a7d2a10b9",
 };
 
 export function getProductImages(product: ShopifyProduct["node"]) {
