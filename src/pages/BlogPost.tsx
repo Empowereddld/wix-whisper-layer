@@ -142,6 +142,11 @@ const BlogPost = () => {
                     {JSON.stringify(articleJsonLd)}
                   </script>
                 )}
+                {faqJsonLd && (
+                  <script type="application/ld+json">
+                    {JSON.stringify(faqJsonLd)}
+                  </script>
+                )}
                 <script type="application/ld+json">
                   {JSON.stringify({
                     "@context": "https://schema.org",
