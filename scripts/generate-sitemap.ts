@@ -83,6 +83,43 @@ async function fetchBlogEntries(): Promise<SitemapEntry[]> {
   }
 }
 
+// Real published merch product URLs (never the dynamic /shop/merch/:handle placeholder).
+const SHOPIFY_STOREFRONT_URL =
+  "https://wix-whisper-layer-8yzs2.myshopify.com/api/2025-07/graphql.json";
+const SHOPIFY_STOREFRONT_TOKEN = "9a650bbe2ebffac0c2d96cacb8963043";
+
+async function fetchMerchEntries(): Promise<SitemapEntry[]> {
+  try {
+    const res = await fetch(SHOPIFY_STOREFRONT_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Shopify-Storefront-Access-Token": SHOPIFY_STOREFRONT_TOKEN,
+      },
+      body: JSON.stringify({
+        query: `{ products(first: 100) { edges { node { handle updatedAt } } } }`,
+      }),
+    });
+    if (!res.ok) {
+      console.warn(`[sitemap] Shopify fetch failed: ${res.status}`);
+      return [];
+    }
+    const json = (await res.json()) as {
+      data?: { products?: { edges?: Array<{ node: { handle: string; updatedAt: string } }> } };
+    };
+    const edges = json.data?.products?.edges ?? [];
+    return edges.map((e) => ({
+      path: `/shop/merch/${e.node.handle}`,
+      lastmod: (e.node.updatedAt || "").split("T")[0] || today,
+      changefreq: "weekly" as const,
+      priority: "0.6",
+    }));
+  } catch (err) {
+    console.warn(`[sitemap] Shopify fetch error: ${(err as Error).message}`);
+    return [];
+  }
+}
+
 function generateSitemap(entries: SitemapEntry[]) {
   const urls = entries.map((e) =>
     [
@@ -106,8 +143,10 @@ function generateSitemap(entries: SitemapEntry[]) {
 }
 
 (async () => {
-  const blogEntries = await fetchBlogEntries();
-  const entries = [...staticEntries, ...blogEntries];
+  const [blogEntries, merchEntries] = await Promise.all([fetchBlogEntries(), fetchMerchEntries()]);
+  const entries = [...staticEntries, ...blogEntries, ...merchEntries];
   writeFileSync(resolve("public/sitemap.xml"), generateSitemap(entries));
-  console.log(`[sitemap] Wrote ${entries.length} entries (${blogEntries.length} blog posts).`);
+  console.log(
+    `[sitemap] Wrote ${entries.length} entries (${blogEntries.length} blog posts, ${merchEntries.length} merch products).`
+  );
 })();
