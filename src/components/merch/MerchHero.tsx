@@ -29,6 +29,7 @@ const MerchHero = () => {
               className="w-full h-full object-cover object-right"
               width={1672}
               height={941}
+              fetchPriority="high"
             />
           </div>
         </div>
