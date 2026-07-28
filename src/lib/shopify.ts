@@ -239,6 +239,7 @@ const IMAGE_EXCLUDES: Record<string, string[]> = {
     // Plain white-background studio shots (older render, missing the logo).
     "483741e2-fb7c-4050-8403-398cd7894bb8",
     "057946b2-fb2d-4b4f-9930-13b4190fc58d",
+    "49ff3f20-d352-45a0-90c1-391433058cc0",
   ],
   "pause-please-i-m-thinking-kids-t-shirt": [
     // Grey/heather tee with pink shorts (duplicate of white-tee lifestyle shot).
