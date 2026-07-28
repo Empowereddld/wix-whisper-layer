@@ -13,7 +13,13 @@ const NotFound = () => {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      <SEOHead title="Page Not Found — Empowered DLD" description="The page you're looking for doesn't exist." path={location.pathname} />
+      <SEOHead
+        title="Page Not Found — Empowered DLD"
+        description="The page you're looking for doesn't exist."
+        path={location.pathname}
+        noindex
+        noCanonical
+      />
       <Header />
       <main className="flex-1 flex items-center justify-center py-20">
         <div className="text-center px-6">
