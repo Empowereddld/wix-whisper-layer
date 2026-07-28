@@ -42,9 +42,9 @@ const staticEntries: SitemapEntry[] = [
   { path: "/contact", changefreq: "monthly", priority: "0.6" },
   { path: "/storypros", changefreq: "weekly", priority: "0.7" },
   { path: "/storypros/supporters", changefreq: "weekly", priority: "0.5" },
-  { path: "/privacy-policy", changefreq: "yearly", priority: "0.3" },
-  { path: "/terms-and-conditions", changefreq: "yearly", priority: "0.3" },
-  { path: "/disclaimer", changefreq: "yearly", priority: "0.3" },
+  // /privacy-policy, /terms-and-conditions and /disclaimer are intentionally
+  // noindex, so they must NOT be submitted here — submitting a noindex page
+  // sends Google conflicting signals and shows up as a coverage error.
 ];
 
 async function fetchBlogEntries(): Promise<SitemapEntry[]> {
