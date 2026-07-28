@@ -6,8 +6,13 @@ import { resolve } from "path";
 
 const BASE_URL = "https://www.empowereddld.com";
 
-const SUPABASE_URL = process.env.VITE_SUPABASE_URL || "";
-const SUPABASE_ANON_KEY = process.env.VITE_SUPABASE_PUBLISHABLE_KEY || "";
+// These are public (publishable) values, safe to inline. The build environment
+// does not always expose the VITE_* vars to prebuild scripts, so fall back to
+// the same defaults vite.config.ts uses instead of failing the build.
+const SUPABASE_URL = process.env.VITE_SUPABASE_URL || "https://haafpznzuazanylcelse.supabase.co";
+const SUPABASE_ANON_KEY =
+  process.env.VITE_SUPABASE_PUBLISHABLE_KEY ||
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhhYWZwem56dWF6YW55bGNlbHNlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIyNDk2MTYsImV4cCI6MjA4NzgyNTYxNn0.Fx2Fxcu1zGUXUVQ6lngLrhlA_uVyvLr1PmPjjsS4Cw0";
 
 interface SitemapEntry {
   path: string;
