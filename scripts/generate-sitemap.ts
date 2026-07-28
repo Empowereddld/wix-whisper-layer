@@ -157,4 +157,9 @@ function generateSitemap(entries: SitemapEntry[]) {
   console.log(
     `[sitemap] Wrote ${entries.length} entries (${blogEntries.length} blog posts, ${merchEntries.length} merch products).`
   );
-})();
+})().catch((err) => {
+  // Fail the build loudly rather than publishing a silently incomplete sitemap.
+  console.error(`[sitemap] FAILED: ${(err as Error).message}`);
+  process.exit(1);
+});
+
