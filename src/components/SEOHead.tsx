@@ -43,7 +43,7 @@ const SEOHead = ({ title, description, path, ogImage, type = "website", jsonLd, 
     <Helmet>
       <title>{title}</title>
       <meta name="description" content={description} />
-      <link rel="canonical" href={canonicalUrl} />
+      {!noCanonical && <link rel="canonical" href={canonicalUrl} />}
       {noindex && <meta name="robots" content="noindex, nofollow" />}
 
       <meta property="og:title" content={title} />
