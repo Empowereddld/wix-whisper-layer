@@ -16,9 +16,15 @@ interface SEOHeadProps {
   jsonLd?: Record<string, unknown>;
   breadcrumbs?: BreadcrumbItem[];
   noindex?: boolean;
+  /**
+   * Suppress the self-referencing canonical tag. Used by the 404 page: a dead
+   * URL must never declare itself canonical, or Google records it as a Soft 404
+   * instead of dropping it.
+   */
+  noCanonical?: boolean;
 }
 
-const SEOHead = ({ title, description, path, ogImage, type = "website", jsonLd, breadcrumbs, noindex }: SEOHeadProps) => {
+const SEOHead = ({ title, description, path, ogImage, type = "website", jsonLd, breadcrumbs, noindex, noCanonical }: SEOHeadProps) => {
   const canonicalUrl = `${BASE_URL}${path}`;
   const defaultOgImage = "https://www.empowereddld.com/og-empowered-dld.png";
 
