@@ -42,46 +42,54 @@ const staticEntries: SitemapEntry[] = [
   { path: "/contact", changefreq: "monthly", priority: "0.6" },
   { path: "/storypros", changefreq: "weekly", priority: "0.7" },
   { path: "/storypros/supporters", changefreq: "weekly", priority: "0.5" },
-  { path: "/privacy-policy", changefreq: "yearly", priority: "0.3" },
-  { path: "/terms-and-conditions", changefreq: "yearly", priority: "0.3" },
-  { path: "/disclaimer", changefreq: "yearly", priority: "0.3" },
+  // /privacy-policy, /terms-and-conditions and /disclaimer are intentionally
+  // noindex, so they must NOT be submitted here — submitting a noindex page
+  // sends Google conflicting signals and shows up as a coverage error.
 ];
 
 async function fetchBlogEntries(): Promise<SitemapEntry[]> {
   if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
-    console.warn("[sitemap] Supabase env vars missing; skipping blog posts.");
-    return [];
-  }
-  try {
-    const res = await fetch(
-      `${SUPABASE_URL}/rest/v1/blog_posts?select=slug,updated_at,published_at&status=eq.published`,
-      {
-        headers: {
-          apikey: SUPABASE_ANON_KEY,
-          Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
-        },
-      }
+    throw new Error(
+      "Supabase env vars missing (VITE_SUPABASE_URL / VITE_SUPABASE_PUBLISHABLE_KEY). " +
+        "Refusing to write a sitemap with no blog posts."
     );
-    if (!res.ok) {
-      console.warn(`[sitemap] Blog fetch failed: ${res.status}`);
-      return [];
-    }
-    const rows = (await res.json()) as Array<{
-      slug: string;
-      updated_at: string | null;
-      published_at: string | null;
-    }>;
-    return rows.map((row) => ({
-      path: `/resources/blog/${row.slug}`,
-      lastmod: (row.updated_at || row.published_at || "").split("T")[0] || today,
-      changefreq: "monthly" as const,
-      priority: "0.7",
-    }));
-  } catch (err) {
-    console.warn(`[sitemap] Blog fetch error: ${(err as Error).message}`);
-    return [];
   }
+
+  const res = await fetch(
+    `${SUPABASE_URL}/rest/v1/blog_posts?select=slug,updated_at,published_at&status=eq.published`,
+    {
+      headers: {
+        apikey: SUPABASE_ANON_KEY,
+        Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+      },
+    }
+  );
+
+  if (!res.ok) {
+    throw new Error(`Blog fetch failed with HTTP ${res.status}: ${await res.text()}`);
+  }
+
+  const rows = (await res.json()) as Array<{
+    slug: string;
+    updated_at: string | null;
+    published_at: string | null;
+  }>;
+
+  // A zero-post result is always a bug, never a valid state: the site has
+  // published posts. Failing here surfaces the problem at build time instead of
+  // silently shipping a sitemap that omits every blog post.
+  if (rows.length === 0) {
+    throw new Error("Blog fetch returned 0 published posts. Refusing to write an incomplete sitemap.");
+  }
+
+  return rows.map((row) => ({
+    path: `/resources/blog/${row.slug}`,
+    lastmod: (row.updated_at || row.published_at || "").split("T")[0] || today,
+    changefreq: "monthly" as const,
+    priority: "0.7",
+  }));
 }
+
 
 // Real published merch product URLs (never the dynamic /shop/merch/:handle placeholder).
 const SHOPIFY_STOREFRONT_URL =
@@ -149,4 +157,9 @@ function generateSitemap(entries: SitemapEntry[]) {
   console.log(
     `[sitemap] Wrote ${entries.length} entries (${blogEntries.length} blog posts, ${merchEntries.length} merch products).`
   );
-})();
+})().catch((err) => {
+  // Fail the build loudly rather than publishing a silently incomplete sitemap.
+  console.error(`[sitemap] FAILED: ${(err as Error).message}`);
+  process.exit(1);
+});
+

@@ -116,21 +116,6 @@
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://www.empowereddld.com/privacy-policy</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-  </url>
-  <url>
-    <loc>https://www.empowereddld.com/terms-and-conditions</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-  </url>
-  <url>
-    <loc>https://www.empowereddld.com/disclaimer</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-  </url>
-  <url>
     <loc>https://www.empowereddld.com/resources/blog/top-3-books-supporting-kids-dld</loc>
     <lastmod>2026-03-12</lastmod>
     <changefreq>monthly</changefreq>
