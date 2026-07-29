@@ -487,18 +487,11 @@ const MerchProductDetail = ({ product }: Props) => {
                 </AccordionTrigger>
                 <AccordionContent>
                   <FormattedText
-                    text={`Every item is printed on demand and made just for you, which helps reduce waste.
+                    text={`Shipping times vary depending on your location and the product ordered.
 
-Production typically takes 2 to 5 business days before your order ships.
+Because our items are made to order, we do not accept returns or exchanges for change of mind, incorrect size, or customer ordering errors.
 
-Shipping times after dispatch:
-- North America: 3 to 7 business days
-- Europe: 5 to 10 business days
-- Rest of world: 7 to 14 business days
-
-Because each piece is made to order, we cannot accept returns for change of mind or incorrect size. Please review the Size Guide before ordering.
-
-If your item arrives damaged, defective, or incorrect, contact us within 14 days of delivery at hello@empowereddld.com with a photo and your order number and we will make it right.`}
+If your item arrives damaged, defective, or incorrect, contact us at hello@empowereddld.com with your order number and a photo, and we'll help make it right.`}
                   />
                 </AccordionContent>
               </AccordionItem>

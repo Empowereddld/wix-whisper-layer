@@ -7,11 +7,11 @@ const faqs = [
   },
   {
     q: "How long does shipping take?",
-    a: "Most orders arrive within 5 to 10 business days. You will get a tracking number by email as soon as your order ships.",
+    a: "Shipping times vary depending on your location and the product ordered. Once your order is dispatched, most items arrive within 5 to 10 business days. You'll receive a tracking number by email as soon as your order ships.",
   },
   {
     q: "What is your return policy?",
-    a: "Because every item is printed on demand, we do not accept change-of-mind returns. If your order arrives damaged or with a print defect, email us within 14 days and we will replace it at no cost.",
+    a: "Because our items are made to order, we do not accept returns or exchanges for change of mind, incorrect size, or customer ordering errors. If your item arrives damaged, defective, or incorrect, contact us at hello@empowereddld.com with your order number and a photo, and we'll help make it right.",
   },
   {
     q: "Where does the money go?",
