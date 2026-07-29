@@ -486,12 +486,12 @@ const MerchProductDetail = ({ product }: Props) => {
                   Shipping &amp; Returns
                 </AccordionTrigger>
                 <AccordionContent>
-                  <FormattedText
-                    text={`Shipping times vary depending on your location and the product ordered.
+                <FormattedText
+                    text={`Shipping times vary based on your location and the item ordered.
 
-Because our items are made to order, we do not accept returns or exchanges for change of mind, incorrect size, or customer ordering errors.
+Because our products are made to order, we are unable to accept returns or exchanges for change of mind, incorrect size, or customer ordering errors.
 
-If your item arrives damaged, defective, or incorrect, contact us at hello@empowereddld.com with your order number and a photo, and we'll help make it right.`}
+If your item arrives damaged, defective, or incorrect, please email hello@empowereddld.com with your order number and a photo of the issue, and we will be happy to help resolve it.`}
                   />
                 </AccordionContent>
               </AccordionItem>
