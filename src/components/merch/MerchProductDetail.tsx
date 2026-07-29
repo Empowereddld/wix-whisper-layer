@@ -169,17 +169,19 @@ Care instructions:
 - Do not dry clean
 - Do not iron`,
   "my-ideas-are-worth-waiting-for-kids-water-bottle": `A child-friendly water bottle with a powerful reminder: My ideas are worth waiting for.
-
-This 17oz stainless steel water bottle was created for children who may need extra time to process language, organize their thoughts, and share what they know. The design is bright, encouraging, and easy for kids to connect with. It is a gentle reminder that their ideas matter, even when words take a little longer.
-
-Perfect for school, therapy sessions, tutoring, camp, sports, and everyday use.
-
-Product details:
-- 17oz stainless steel water bottle
-- Double-wall insulation keeps drinks hot or cold for up to 6 hours
-- Leak-proof cap
-- Lightweight and easy to carry
-- Hand wash only, not dishwasher recommended`,
+ 
+ This 17oz stainless steel water bottle was created for children who may need extra time to process language, organize their thoughts, and share what they know. The design is bright, encouraging, and easy for kids to connect with. It is a gentle reminder that their ideas matter, even when words take a little longer.
+ 
+ Perfect for school, therapy sessions, tutoring, camp, sports, and everyday use.
+ 
+ Product details:
+ - 17oz stainless steel water bottle
+ - Double-wall insulation
+ - Keeps drinks hot or cold for up to 6 hours
+ - Leak-proof cap
+ - Lightweight and easy to carry
+ - Hand wash only
+ - Not dishwasher recommended`,
 };
 
 
