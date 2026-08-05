@@ -129,7 +129,7 @@ function FormattedText({ text }: { text: string }) {
  * care instructions) that we want to hide from the main copy area and only
  * surface via the collapsible accordions below.
  */
-const PRODUCT_DESCRIPTION_OVERRIDES: Record<string, string> = {
+export const PRODUCT_DESCRIPTION_OVERRIDES: Record<string, string> = {
   "pause-please-i-m-thinking-kids-t-shirt": `Some children need extra time to process language, organize their thoughts, and find the words they want to use. This kids T-shirt shares that message in a simple, child-friendly way: Pause please… I'm thinking.
 
 Designed for everyday wear, DLD awareness, school events, therapy sessions, and advocacy days, this shirt is a gentle reminder that giving children time can help them show what they know.
@@ -168,9 +168,7 @@ Care instructions:
 - Only non-chlorine bleach
 - Do not dry clean
 - Do not iron`,
-  "my-ideas-are-worth-waiting-for-kids-water-bottle": `A child-friendly water bottle with a powerful reminder: My ideas are worth waiting for.
- 
- This 17oz stainless steel water bottle was created for children who may need extra time to process language, organize their thoughts, and share what they know. The design is bright, encouraging, and easy for kids to connect with. It is a gentle reminder that their ideas matter, even when words take a little longer.
+  "my-ideas-are-worth-waiting-for-kids-water-bottle": `A child-friendly water bottle with a powerful reminder: My ideas are worth waiting for. This 17oz stainless steel water bottle was created for children who may need extra time to process language, organize their thoughts, and share what they know. The design is bright, encouraging, and easy for kids to connect with. It is a gentle reminder that their ideas matter, even when words take a little longer.
  
  Perfect for school, therapy sessions, tutoring, camp, sports, and everyday use.
  

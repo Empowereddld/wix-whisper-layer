@@ -3,6 +3,7 @@ import { Loader2 } from "lucide-react";
 import { useShopifyProducts } from "@/hooks/useShopifyProducts";
 import { formatShopifyPrice, getFirstImage, shopifyImageUrl } from "@/lib/shopify";
 import { MerchProductTitle, getMerchCategory } from "./MerchProductTitle";
+import { PRODUCT_DESCRIPTION_OVERRIDES } from "./MerchProductDetail";
 
 const MerchProductGrid = () => {
   const { data: products, isLoading, error } = useShopifyProducts();
@@ -78,7 +79,7 @@ const MerchProductGrid = () => {
                       <MerchProductTitle handle={node.handle} title={node.title} />
                     </h3>
                     <p className="text-[13px] md:text-[14px] text-muted-foreground leading-relaxed mb-4 flex-1 line-clamp-3">
-                      {node.description || "Shop DLD awareness merch."}
+                      {(PRODUCT_DESCRIPTION_OVERRIDES[node.handle] || node.description || "Shop DLD awareness merch.").replace(/\s+/g, ' ').trim()}
                     </p>
                     <p className="text-[16px] md:text-[17px] font-bold text-foreground">
                       {formatShopifyPrice(
