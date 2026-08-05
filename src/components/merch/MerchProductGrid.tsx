@@ -3,6 +3,7 @@ import { Loader2 } from "lucide-react";
 import { useShopifyProducts } from "@/hooks/useShopifyProducts";
 import { formatShopifyPrice, getFirstImage, shopifyImageUrl } from "@/lib/shopify";
 import { MerchProductTitle, getMerchCategory } from "./MerchProductTitle";
+import { PRODUCT_DESCRIPTION_OVERRIDES } from "./MerchProductDetail";
 
 const MerchProductGrid = () => {
   const { data: products, isLoading, error } = useShopifyProducts();
