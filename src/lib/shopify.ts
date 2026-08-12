@@ -257,9 +257,9 @@ const IMAGE_EXCLUDES: Record<string, string[]> = {
 
 const PRIMARY_IMAGE_OVERRIDES: Record<string, string> = {
   // Four kids outside school, girl holding the bottle.
-  "my-ideas-are-worth-waiting-for-kids-water-bottle": "e7350088-96a6-4ee8-9be3-6eb99e15e4bc",
+  "my-ideas-are-worth-waiting-for-kids-water-bottle": "4d0449c9-71ad-4008-9d6f-e67c15c6166a",
   // Woman outside elementary school carrying the tote.
-  "tote-bag-1-in-14-dld-awareness-tote-bag": "59c361df-9c61-4212-8ea1-691a7d2a10b9",
+  "tote-bag-1-in-14-dld-awareness-tote-bag": "d4b73496-40da-407d-9a40-95a4dbbe3ff6",
 };
 
 // Extra site-hosted mockups appended to a product's Shopify gallery.
