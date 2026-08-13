@@ -246,7 +246,7 @@ const IMAGE_EXCLUDES: Record<string, string[]> = {
   "pause-please-i-m-thinking-kids-t-shirt": [
     // Grey/heather tee with pink shorts (duplicate of white-tee lifestyle shot).
     "14b5c0a6-3a9e-47bb-aee9-0116c36e8161",
-    "94c2d6fe-eb86-4b45-8baa-89a92a13ca82",
+    "55c3df09-ccb1-42d3-bdf2-12e32d98382e",
     // Boy + girl walking with backpacks lifestyle mockup.
     "c02838c6-0583-4574-9981-bd85b592a491",
     // Flat Gildan tee mockup on black background.
