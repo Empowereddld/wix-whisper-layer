@@ -240,10 +240,13 @@ const IMAGE_EXCLUDES: Record<string, string[]> = {
     "483741e2-fb7c-4050-8403-398cd7894bb8",
     "057946b2-fb2d-4b4f-9930-13b4190fc58d",
     "49ff3f20-d352-45a0-90c1-391433058cc0",
+    // Plain white-background bottle render after the Gelato re-sync.
+    "d43e474c-97ff-4707-a09a-4c158b2bb256",
   ],
   "pause-please-i-m-thinking-kids-t-shirt": [
     // Grey/heather tee with pink shorts (duplicate of white-tee lifestyle shot).
     "14b5c0a6-3a9e-47bb-aee9-0116c36e8161",
+    "94c2d6fe-eb86-4b45-8baa-89a92a13ca82",
     // Boy + girl walking with backpacks lifestyle mockup.
     "c02838c6-0583-4574-9981-bd85b592a491",
     // Flat Gildan tee mockup on black background.
@@ -252,6 +255,7 @@ const IMAGE_EXCLUDES: Record<string, string[]> = {
   "tote-bag-1-in-14-dld-awareness-tote-bag": [
     // Plain flat Gelato tote mockup (no lifestyle context).
     "2780088c-4f01-4ca9-9eb7-1617ee594932",
+    "d3c890cc-bed0-470e-a709-cc0b14bd26f7",
   ],
 };
 
