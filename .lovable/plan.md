@@ -1,7 +1,10 @@
-# Auto-sync email signups to EmailOctopus
+# Auto-sync email signups to EmailOctopus (plus a full email export)
 
 ## Goal
 Every new email signup on the site (Story Pros waitlist, Resource Hub accounts, newsletter and workshop forms) is automatically added to the user's EmailOctopus list, so the newsletter audience stays up to date with no manual exports.
+
+## First: the spreadsheet you just asked for
+Step one of the build is an Excel file with every name and email we hold today, de-duplicated, one row per person: Name, Email, Where they came from, Email confirmed (Yes/No), First signed up. Sources: Story Pros waitlist, Resource Hub accounts, footer newsletter, Parent Workshop waitlist, contact form, organization lead forms. Saved to your Files so you can download it right away. (Files can't be created while we're still planning, so approving this plan is what lets me generate it.)
 
 ## What you (the user) need to do
 1. Create the EmailOctopus account (free plan covers 2,500 contacts).
