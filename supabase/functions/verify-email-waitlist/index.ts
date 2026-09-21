@@ -369,6 +369,26 @@ Deno.serve(async (req) => {
       }
     }
 
+    // Add the now-confirmed address to the newsletter list (never blocks verification).
+    try {
+      const fullName = ((result.out_name as string | undefined) || "").trim();
+      await fetch(`${supabaseUrl}/functions/v1/emailoctopus-subscribe`, {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${serviceKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: result.out_email ?? user.email,
+          tag: "story-pros",
+          first_name: fullName.split(" ")[0] || "",
+          last_name: fullName.split(" ").slice(1).join(" "),
+        }),
+      });
+    } catch (eoErr) {
+      console.error("EmailOctopus sync failed:", eoErr);
+    }
+
     return new Response(null, {
       status: 302,
       headers: {
