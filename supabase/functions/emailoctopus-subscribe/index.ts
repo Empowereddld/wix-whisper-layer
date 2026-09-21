@@ -9,7 +9,7 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-const ALLOWED_TAGS = new Set(["story-pros", "resource-hub", "newsletter", "workshop", "educational-app", "contact", "lead"]);
+const ALLOWED_TAGS = new Set(["story-pros", "resource-hub", "newsletter", "workshop", "educational-app", "contact", "lead", "legacy-list"]);
 const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[A-Za-z]{2,}$/;
 
 function json(body: unknown, status = 200) {
