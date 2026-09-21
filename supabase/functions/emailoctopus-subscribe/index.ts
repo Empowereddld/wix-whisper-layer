@@ -64,7 +64,7 @@ Deno.serve(async (req) => {
     body: JSON.stringify({
       email_address: email,
       fields,
-      tags: { [tagRaw]: true },
+      tags: [tagRaw],
       status: "subscribed",
     }),
   });
