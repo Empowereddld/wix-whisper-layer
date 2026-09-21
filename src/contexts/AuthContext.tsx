@@ -1,6 +1,26 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { Session, User } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
+import { syncToEmailOctopus } from "@/lib/emailoctopus";
+
+// Adds a confirmed hub account to the newsletter list once per browser/user.
+const syncHubUserToEmailOctopus = (user: User) => {
+  if (!user.email || !user.email_confirmed_at) return;
+  const key = `eo_synced_${user.id}`;
+  try {
+    if (localStorage.getItem(key)) return;
+    localStorage.setItem(key, "1");
+  } catch {
+    // private mode: still attempt the sync (the function is idempotent)
+  }
+  const meta = (user.user_metadata ?? {}) as { first_name?: string; last_name?: string };
+  syncToEmailOctopus({
+    email: user.email,
+    tag: "resource-hub",
+    firstName: meta.first_name,
+    lastName: meta.last_name,
+  });
+};
 
 interface Profile {
   id: string;
