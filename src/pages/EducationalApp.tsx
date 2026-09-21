@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { syncToEmailOctopus } from "@/lib/emailoctopus";
 import { BookOpen, Sparkles, Brain, Users, ArrowRight } from "lucide-react";
 
 const features = [
@@ -63,6 +64,12 @@ const EducationalApp = () => {
         toast({ title: "Something went wrong", description: "Please try again later.", variant: "destructive" });
       }
     } else {
+      syncToEmailOctopus({
+        email: email.trim(),
+        tag: "educational-app",
+        firstName: name.trim().split(" ")[0],
+        lastName: name.trim().split(" ").slice(1).join(" "),
+      });
       setSubmitted(true);
       toast({ title: "You're on the list! 🎉", description: "We'll notify you as soon as the app launches." });
     }
