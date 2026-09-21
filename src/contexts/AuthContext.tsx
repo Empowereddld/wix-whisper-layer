@@ -86,6 +86,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setUser(session?.user ?? null);
         if (session?.user) {
           setTimeout(() => fetchProfile(session.user.id), 0);
+          setTimeout(() => syncHubUserToEmailOctopus(session.user), 0);
         } else {
           setProfile(null);
         }
