@@ -77,7 +77,9 @@ Deno.serve(async (req) => {
 
   // Already on the list: update tags/fields instead (idempotent path).
   if (create.status === 409 || createBody.includes("MEMBER_EXISTS_WITH_EMAIL_ADDRESS") || createBody.includes("already")) {
-    const update = await fetch(`${base}/${encodeURIComponent(email)}`, {
+    // EmailOctopus identifies an existing contact by the MD5 hash of the lowercase email.
+    const contactId = createHash("md5").update(email).digest("hex");
+    const update = await fetch(`${base}/${contactId}`, {
       method: "PUT",
       headers,
       body: JSON.stringify({ fields, tags: { [tagRaw]: true } }),
