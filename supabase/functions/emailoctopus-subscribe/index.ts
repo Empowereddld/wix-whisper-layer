@@ -50,15 +50,29 @@ Deno.serve(async (req) => {
     return json({ error: "Unknown source tag" }, 400);
   }
 
-  const fields: Record<string, string> = {};
-  if (firstName) fields.FirstName = firstName;
-  if (lastName) fields.LastName = lastName;
-
   const base = `https://api.emailoctopus.com/lists/${encodeURIComponent(listId)}/contacts`;
   const headers = {
     "Content-Type": "application/json",
     Authorization: `Bearer ${apiKey}`,
   };
+
+  // Removal path: mark a contact unsubscribed (used for manual list cleaning).
+  if (payload.action === "unsubscribe") {
+    const contactId = createHash("md5").update(email).digest("hex");
+    const res = await fetch(`${base}/${contactId}`, {
+      method: "PUT",
+      headers,
+      body: JSON.stringify({ status: "unsubscribed" }),
+    });
+    if (res.ok) return json({ success: true, unsubscribed: true });
+    const body = await res.text();
+    console.error(`emailoctopus-subscribe unsubscribe failed [${res.status}]: ${body}`);
+    return json({ error: "EmailOctopus unsubscribe failed", status: res.status }, res.status);
+  }
+
+  const fields: Record<string, string> = {};
+  if (firstName) fields.FirstName = firstName;
+  if (lastName) fields.LastName = lastName;
 
   const create = await fetch(base, {
     method: "POST",
