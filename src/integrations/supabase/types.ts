@@ -1000,6 +1000,27 @@ export type Database = {
         }
         Relationships: []
       }
+      tmp_email_export: {
+        Row: {
+          conf: boolean | null
+          created_at: string | null
+          em: string | null
+          nm: string | null
+        }
+        Insert: {
+          conf?: boolean | null
+          created_at?: string | null
+          em?: string | null
+          nm?: string | null
+        }
+        Update: {
+          conf?: boolean | null
+          created_at?: string | null
+          em?: string | null
+          nm?: string | null
+        }
+        Relationships: []
+      }
       user_downloads: {
         Row: {
           downloaded_at: string
