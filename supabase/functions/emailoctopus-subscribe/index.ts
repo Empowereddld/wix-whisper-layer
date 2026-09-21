@@ -74,12 +74,6 @@ Deno.serve(async (req) => {
   if (firstName) fields.FirstName = firstName;
   if (lastName) fields.LastName = lastName;
 
-  const base = `https://api.emailoctopus.com/lists/${encodeURIComponent(listId)}/contacts`;
-  const headers = {
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${apiKey}`,
-  };
-
   const create = await fetch(base, {
     method: "POST",
     headers,
