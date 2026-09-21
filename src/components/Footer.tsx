@@ -3,6 +3,7 @@ import { Mail } from "lucide-react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { syncToEmailOctopus } from "@/lib/emailoctopus";
 import RegionSelector from "@/components/RegionSelector";
 import logoWhite from "@/assets/empowered-logo-white.webp";
 

@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
+import { syncToEmailOctopus } from "@/lib/emailoctopus";
 import workshopBg from "@/assets/workshop-bg.webp";
 
 const contactSchema = z.object({
