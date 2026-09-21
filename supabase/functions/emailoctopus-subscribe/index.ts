@@ -2,6 +2,8 @@
 // Idempotent: an existing email is updated with the new tag instead of erroring.
 // Never blocks a signup: callers treat this as fire-and-forget.
 
+import { createHash } from "node:crypto";
+
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
