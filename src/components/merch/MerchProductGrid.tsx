@@ -6,7 +6,7 @@ import { MerchProductTitle, getMerchCategory } from "./MerchProductTitle";
 import { PRODUCT_DESCRIPTION_OVERRIDES } from "./MerchProductDetail";
 
 const MerchProductGrid = () => {
-  const { data: products, isLoading, error } = useShopifyProducts();
+  const { data: products, isLoading, error, refetch } = useShopifyProducts();
 
   return (
     <section id="shop" className="py-16 md:py-24 bg-background">
@@ -28,8 +28,16 @@ const MerchProductGrid = () => {
 
         {error && !isLoading && (
           <div className="text-center py-16">
-            <p className="text-[15px] font-semibold text-foreground mb-2">Could not load products</p>
-            <p className="text-[13px] text-muted-foreground">{error.message}</p>
+            <p className="text-[15px] font-semibold text-foreground mb-2">We couldn't load the merch just now</p>
+            <p className="text-[13px] text-muted-foreground mb-5">
+              Please check your connection, or pause any ad or privacy blocker for this site, then try again.
+            </p>
+            <button
+              onClick={() => refetch()}
+              className="inline-flex items-center justify-center h-11 px-7 bg-foreground text-background text-[13px] font-semibold tracking-[0.04em] rounded-md hover:opacity-90 transition-opacity"
+            >
+              Try again
+            </button>
           </div>
         )}
 

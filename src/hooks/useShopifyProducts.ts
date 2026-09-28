@@ -18,5 +18,8 @@ export const useShopifyProducts = () => {
       return (data?.data?.products?.edges ?? []) as ShopifyProduct[];
     },
     staleTime: 1000 * 60 * 5,
+    retry: 4,
+    retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 8000),
+    refetchOnReconnect: true,
   });
 };
