@@ -267,6 +267,35 @@ Deno.serve(async (req) => {
     }
 
     if (existing) {
+      // Repeat signup with the newsletter box checked: record affirmative
+      // consent and add the newsletter tag (existing tags preserved, and the
+      // subscribe function never resubscribes an unsubscribed contact).
+      if (wantsNewsletter) {
+        try {
+          await supabase.from("newsletter_consents").insert({
+            waitlist_id: existing.id,
+            email: normalizedEmail,
+            consented: true,
+            source: "story-pros-waitlist",
+            wording_version: CONSENT_WORDING_VERSION,
+            checkbox_text: CONSENT_CHECKBOX_TEXT,
+            helper_text: CONSENT_HELPER_TEXT,
+          });
+          await fetch(`${supabaseUrl}/functions/v1/emailoctopus-subscribe`, {
+            method: "POST",
+            headers: {
+              "Authorization": `Bearer ${serviceKey}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              email: normalizedEmail,
+              tags: ["story-pros", "newsletter"],
+            }),
+          });
+        } catch (e) {
+          console.error("Repeat-signup newsletter consent sync failed:", e);
+        }
+      }
       const { data: totalCount } = await supabase.rpc("get_storybuilders_waitlist_count");
       return new Response(
         JSON.stringify({
@@ -385,6 +414,23 @@ Deno.serve(async (req) => {
     await supabase
       .from("waitlist_verification_tokens")
       .insert({ waitlist_id: newEntry.id, token: verificationToken });
+
+    // Record the newsletter consent choice (yes or no) for the audit trail.
+    // A `false` row only means "no opt-in at this moment" — it never revokes
+    // an earlier affirmative record.
+    try {
+      await supabase.from("newsletter_consents").insert({
+        waitlist_id: newEntry.id,
+        email: normalizedEmail,
+        consented: wantsNewsletter,
+        source: "story-pros-waitlist",
+        wording_version: CONSENT_WORDING_VERSION,
+        checkbox_text: CONSENT_CHECKBOX_TEXT,
+        helper_text: CONSENT_HELPER_TEXT,
+      });
+    } catch (e) {
+      console.error("Failed to record newsletter consent:", e);
+    }
 
     // Note: fraud check result is informational only (no DB columns yet)
     if (fraudCheck.flagged) {
