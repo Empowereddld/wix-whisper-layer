@@ -1,10 +1,10 @@
 # Roadmap
 
-## EmailOctopus integration updates (in progress)
-1. Footer newsletter: treat duplicate emails as success, still sync the `newsletter` tag. No list/tag renames.
-2. Google sign-in: use Google's name for FirstName/LastName only when our own fields are blank. Never overwrite a non-blank name.
-3. Move Resource Library sync server-side: sync confirmed accounts to EmailOctopus without depending on the browser, tag `resource-hub`. Includes one-time backfill of existing confirmed users.
-4. Consent wording report delivered in plan; no wording changes (user deferred).
+## EmailOctopus integration updates — DONE (2026-10-01)
+1. Footer newsletter: duplicate emails now treated as success, `newsletter` tag still synced (src/components/Footer.tsx).
+2. Google sign-in name fallback in src/contexts/AuthContext.tsx (only when our fields are blank).
+3. Server-side Resource Library sync: sync-hub-emailoctopus edge function, hourly cron, emailoctopus_synced_users table. Backfill completed: 150/150 confirmed accounts synced.
+4. Consent wording report delivered; no wording changes (user deferred).
 
 ## Standing
 - Never change list or tag names in EmailOctopus.
