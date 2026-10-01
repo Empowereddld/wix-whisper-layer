@@ -199,7 +199,13 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const { name, email, ref, is_speech_professional, role, role_other } = await req.json();
+    const { name, email, ref, is_speech_professional, role, role_other, newsletter_consent } = await req.json();
+    const wantsNewsletter = newsletter_consent === true;
+
+    // Exact wording shown to the user at signup time (audit trail).
+    const CONSENT_WORDING_VERSION = "newsletter-consent-v1";
+    const CONSENT_CHECKBOX_TEXT = "Yes, I'd like practical DLD resources, Empowered DLD updates, and occasional Story Pros news by email.";
+    const CONSENT_HELPER_TEXT = "Optional. You'll stay on the Story Pros waitlist whether or not you choose this. You can unsubscribe at any time.";
 
     if (!name || !email) {
       return new Response(JSON.stringify({ error: "Name and email are required" }), {
