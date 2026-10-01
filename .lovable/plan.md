@@ -1,84 +1,62 @@
-# Optional newsletter consent for Resource Library and Story Pros
+# One-time newsletter opt-in for existing members
 
-This separates access and waitlist participation from optional newsletter consent. Both boxes start unchecked. Not checking either box will never block account creation, Resource Library access, or joining Story Pros.
+Existing Resource Library users and Story Pros waitlist members who have never made a newsletter choice see one optional, unchecked prompt, once. No emails are sent to ask. Access never depends on it.
 
-## Proposed wording
+## Who sees it
 
-### Resource Library account signup
+A person sees the prompt only if all of these are true:
+- they have no newsletter consent record at all (neither yes nor no)
+- they do not already carry the `newsletter` tag in EmailOctopus
+- they have not dismissed or answered it before
 
-Place this optional checkbox near the end of the Resource Library onboarding step, above **Take me to the Resource Library**. This location works consistently for email, Google, and Apple signups after the account is confirmed.
+Once any choice is recorded (checked or unchecked), they never see it again.
 
-**Checkbox, unchecked by default**
+## Resource Library flow
 
-> Yes, I'd like practical DLD tips, new resources, and occasional updates from Empowered DLD by email.
+**Where:** a small pop-up window that opens over the Resource Library home page (`/hub`) right after an existing user signs in. New users never see it, because they already answer the same question during onboarding.
 
-**Short text below it**
+**Content (exact):**
+- Heading: "Would you like to stay connected?"
+- Checkbox, unchecked: "Yes, I'd like practical DLD tips, new resources, and occasional updates from Empowered DLD by email."
+- Helper: "Optional. You can unsubscribe at any time. Your Resource Library access is not affected."
+- One button: "Continue to the Resource Library"
 
-> Optional. You can unsubscribe at any time. Your Resource Library access is not affected.
+**What happens:**
+- Checked: affirmative consent saved (timestamp, source `resource-library-existing-prompt`, wording version `newsletter-consent-v1`, exact text). `newsletter` tag added in EmailOctopus alongside `resource-hub` and any other tags. Status untouched.
+- Unchecked, or the window is closed with the X / Escape: a "shown, did not opt in" record is saved. No tag changes. Earlier yes records are never affected.
 
-### Story Pros waitlist signup
+## Story Pros flow
 
-Place this optional checkbox below the role field and above **Join Now**.
+Story Pros members don't have passwords. The site recognises them on the device where they joined or after the "Find my dashboard" link. That is the only identifiable session, so the prompt appears there.
 
-**Checkbox, unchecked by default**
+**Where:** a card at the top of the Story Pros dashboard (`/storypros/dashboard`), above their points. It does not block the page; they can keep using the dashboard without answering. The card isn't shown on the public Story Pros page, since visitors there can't be identified reliably.
 
-> Yes, send me Empowered DLD's newsletter with practical DLD resources, news, and occasional Story Pros updates.
+**Content (exact):**
+- Heading: "Want to hear more from Empowered DLD?"
+- Checkbox, unchecked: "Yes, I'd like practical DLD resources, Empowered DLD updates, and occasional Story Pros news by email."
+- Helper: "Optional. You'll stay on the Story Pros waitlist whether or not you choose this. You can unsubscribe at any time."
+- Buttons: "Save my choice" and "No thanks"
 
-**Short text below it**
+**What happens:**
+- Checked + Save: affirmative consent saved (source `story-pros-existing-prompt`). `newsletter` tag added; `story-pros` and other tags kept. Status untouched.
+- "No thanks", or Save with the box unchecked: a "did not opt in" record is saved. No tag changes.
+- If they leave without choosing anything, nothing is saved and the card shows again next visit. It stays easy to ignore.
 
-> Optional. You'll stay on the Story Pros waitlist whether or not you choose this. You can unsubscribe at any time.
+## Safeguards
 
-## Consent record
+- No emails sent to ask for consent.
+- Boxes are never pre-checked; access never depends on them.
+- Unsubscribed EmailOctopus contacts stay unsubscribed (updates never send status). If a person is unsubscribed in EmailOctopus, we treat them as "already decided" and don't show the prompt.
+- No list or tag names change.
+- A "no" record never revokes or overrides a "yes".
+- Unverified Story Pros entries don't see the card until they're verified.
 
-Add a dedicated, append-only consent record in the database rather than relying only on an EmailOctopus tag. Record both yes and no choices so there is a clear audit trail.
+## Technical details
 
-Store:
-
-- the Resource Library account ID or Story Pros waitlist entry ID
-- normalized email address
-- consent choice (`true` or `false`)
-- server-recorded timestamp
-- signup source (`resource-library` or `story-pros-waitlist`)
-- wording version, initially `newsletter-consent-v1`
-- the exact checkbox wording shown
-- the exact explanatory text shown
-
-Only trusted server-side code should write or read these records. A later checked submission may add consent. An unchecked submission must never be treated as an unsubscribe or erase earlier affirmative consent.
-
-## EmailOctopus behaviour
-
-Keep the current EmailOctopus list and all current tag names unchanged.
-
-### Resource Library
-
-- After email confirmation, continue adding the existing `resource-hub` tag.
-- If newsletter consent is checked, also add the existing `newsletter` tag.
-- If unchecked, send only the existing `resource-hub` tag.
-- Send EmailAddress, FirstName, and LastName using the current name fallback rules.
-
-### Story Pros
-
-- After waitlist email verification, continue adding the existing `story-pros` tag.
-- If newsletter consent is checked, also add the existing `newsletter` tag.
-- If unchecked, send only the existing `story-pros` tag.
-- Send EmailAddress, FirstName, and LastName using the current full-name split.
-
-For an address already in EmailOctopus, use the current update behaviour to add only the applicable tag or tags without removing existing tags. Do not send a status during updates, so a previously unsubscribed contact remains unsubscribed. The newsletter tag records the website choice but must not override EmailOctopus's unsubscribe status.
-
-## Implementation plan
-
-1. Add the consent checkbox to Resource Library onboarding and Story Pros signup, with independent state defaulting to unchecked.
-2. Add the consent record structure, permissions, and server-only access rules.
-3. Save Resource Library consent from the authenticated onboarding step. Skipping onboarding records no newsletter consent and still opens the library.
-4. Pass the Story Pros choice to the existing signup function and store it with the waitlist entry. Handle repeat signups safely: a new checked choice may add consent, while an unchecked choice never revokes earlier consent.
-5. Update the confirmed-account and verified-waitlist sync paths to always send their existing source tag, and send `newsletter` only when affirmative consent is recorded.
-6. Keep newsletter campaigns limited to contacts carrying the `newsletter` tag. Existing source tags remain available for the current account and waitlist communications.
-7. Test email, Google, and Apple Resource Library signup paths; new and duplicate Story Pros entries; checked and unchecked choices; existing multi-tag contacts; and a previously unsubscribed EmailOctopus contact.
-
-## Scope safeguards
-
-- No list or tag renaming.
-- No required marketing consent.
-- No changes to the separate footer newsletter form.
-- No backfill that assumes consent for existing Resource Library or Story Pros contacts.
-- No code, database, or EmailOctopus changes until this plan is approved.
+- New server function `newsletter-prompt` with two actions:
+  - `status`: for a signed-in hub user (JWT) or a Story Pros referral code, returns `show: true/false`. It checks `newsletter_consents` for any row, then checks the EmailOctopus contact (MD5 lookup) for the `newsletter` tag or an unsubscribed status. It fails closed (no prompt) if EmailOctopus can't be reached.
+  - `record`: inserts the consent row server-side with the fixed wording constants. If the box is checked, it calls `emailoctopus-subscribe` with tags `["resource-hub","newsletter"]` or `["story-pros","newsletter"]`. Story Pros calls are tied to the waitlist row looked up by referral code and must be verified and not deleted.
+- New sources are added to the consent records; no table changes are needed.
+- Hub: a new `NewsletterPromptDialog` on `HubDashboard`, gated on the profile having completed onboarding.
+- Story Pros: a new `NewsletterPromptCard` in `StoryProsDashboard`.
+- Tests: hub user with/without record, with an existing newsletter tag, unsubscribed contact; Story Pros checked / no thanks / ignored; repeat visits don't re-prompt.
