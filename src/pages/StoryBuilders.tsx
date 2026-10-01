@@ -640,6 +640,17 @@ const StoryBuilders = () => {
                         className="h-12 bg-white/10 border-white/20 text-white placeholder:text-white/50 rounded-md focus-visible:ring-primary"
                       />
                     )}
+                    <label className="flex items-start gap-2.5 cursor-pointer text-left">
+                      <Checkbox
+                        checked={newsletterConsent}
+                        onCheckedChange={(v) => setNewsletterConsent(v === true)}
+                        className="mt-0.5 border-white/40 data-[state=checked]:bg-primary data-[state=checked]:border-primary"
+                      />
+                      <span className="text-[13px] text-white/80 leading-[1.5]">
+                        {NEWSLETTER_CHECKBOX_TEXT}
+                        <span className="block text-white/50 mt-0.5">{NEWSLETTER_HELPER_TEXT}</span>
+                      </span>
+                    </label>
                     <Button
                       type="submit"
                       disabled={wl.loading}
