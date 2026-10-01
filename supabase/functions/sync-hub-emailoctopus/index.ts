@@ -96,10 +96,26 @@ Deno.serve(async (req) => {
 
   const toSync = confirmed.filter((u) => !alreadySynced.has(u.id));
 
+  // Look up affirmative newsletter consent for the users we're about to sync.
+  const consentedIds = new Set<string>();
+  const toSyncIds = toSync.map((u) => u.id);
+  for (let i = 0; i < toSyncIds.length; i += 500) {
+    const { data } = await admin
+      .from("newsletter_consents")
+      .select("user_id")
+      .eq("consented", true)
+      .in("user_id", toSyncIds.slice(i, i + 500));
+    for (const row of data ?? []) {
+      if (row.user_id) consentedIds.add(row.user_id);
+    }
+  }
+
   let synced = 0;
   const failures: Array<{ email: string; error: string }> = [];
   for (const u of toSync) {
     try {
+      const tags = ["resource-hub"];
+      if (consentedIds.has(u.id)) tags.push("newsletter");
       const res = await fetch(`${supabaseUrl}/functions/v1/emailoctopus-subscribe`, {
         method: "POST",
         headers: {
@@ -108,7 +124,7 @@ Deno.serve(async (req) => {
         },
         body: JSON.stringify({
           email: u.email,
-          tag: "resource-hub",
+          tags,
           first_name: u.first_name,
           last_name: u.last_name,
         }),
