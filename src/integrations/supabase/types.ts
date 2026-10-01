@@ -355,6 +355,21 @@ export type Database = {
         }
         Relationships: []
       }
+      emailoctopus_synced_users: {
+        Row: {
+          synced_at: string
+          user_id: string
+        }
+        Insert: {
+          synced_at?: string
+          user_id: string
+        }
+        Update: {
+          synced_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       founder_claims: {
         Row: {
           additional_notes: string | null

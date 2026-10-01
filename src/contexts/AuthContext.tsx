@@ -13,12 +13,31 @@ const syncHubUserToEmailOctopus = (user: User) => {
   } catch {
     // private mode: still attempt the sync (the function is idempotent)
   }
-  const meta = (user.user_metadata ?? {}) as { first_name?: string; last_name?: string };
+  const meta = (user.user_metadata ?? {}) as {
+    first_name?: string;
+    last_name?: string;
+    full_name?: string;
+    given_name?: string;
+    family_name?: string;
+  };
+  // Fall back to the name Google provides only when our own fields are blank.
+  // A non-blank name the user typed is never overwritten.
+  let firstName = meta.first_name?.trim() || "";
+  let lastName = meta.last_name?.trim() || "";
+  if (!firstName && !lastName) {
+    firstName = meta.given_name?.trim() || "";
+    lastName = meta.family_name?.trim() || "";
+    if (!firstName && meta.full_name) {
+      const parts = meta.full_name.trim().split(/\s+/);
+      firstName = parts[0] || "";
+      lastName = parts.slice(1).join(" ");
+    }
+  }
   syncToEmailOctopus({
     email: user.email,
     tag: "resource-hub",
-    firstName: meta.first_name,
-    lastName: meta.last_name,
+    firstName,
+    lastName,
   });
 };
 
