@@ -15,6 +15,7 @@ import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ROLE_OPTIONS, ROLE_OTHER_MAX_LENGTH } from "@/lib/storypros-roles";
 import { useScrollFadeIn } from "@/hooks/useScrollFadeIn";
@@ -461,12 +462,16 @@ const WelcomeBackCard = ({ wl }: { wl: WlHook }) => {
 };
 
 
+const NEWSLETTER_CHECKBOX_TEXT = "Yes, I'd like practical DLD resources, Empowered DLD updates, and occasional Story Pros news by email.";
+const NEWSLETTER_HELPER_TEXT = "Optional. You'll stay on the Story Pros waitlist whether or not you choose this. You can unsubscribe at any time.";
+
 const StoryBuilders = () => {
   const formRef = useRef<HTMLDivElement>(null);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [role, setRole] = useState<string>("");
   const [roleOther, setRoleOther] = useState("");
+  const [newsletterConsent, setNewsletterConsent] = useState(false);
   const [copied, setCopied] = useState(false);
   const wl = useStorybuildersWaitlist();
 
@@ -491,6 +496,7 @@ const StoryBuilders = () => {
     const result = await wl.joinWaitlist(name, email, {
       role,
       roleOther: role === "other" ? trimmedOther.slice(0, 60) : null,
+      newsletterConsent,
     });
     if (result) {
       if (result.already_joined) {
