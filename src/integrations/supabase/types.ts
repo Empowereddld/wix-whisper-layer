@@ -466,6 +466,53 @@ export type Database = {
         }
         Relationships: []
       }
+      newsletter_consents: {
+        Row: {
+          checkbox_text: string
+          consented: boolean
+          created_at: string
+          email: string
+          helper_text: string | null
+          id: string
+          source: string
+          user_id: string | null
+          waitlist_id: string | null
+          wording_version: string
+        }
+        Insert: {
+          checkbox_text: string
+          consented: boolean
+          created_at?: string
+          email: string
+          helper_text?: string | null
+          id?: string
+          source: string
+          user_id?: string | null
+          waitlist_id?: string | null
+          wording_version: string
+        }
+        Update: {
+          checkbox_text?: string
+          consented?: boolean
+          created_at?: string
+          email?: string
+          helper_text?: string | null
+          id?: string
+          source?: string
+          user_id?: string | null
+          waitlist_id?: string | null
+          wording_version?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "newsletter_consents_waitlist_id_fkey"
+            columns: ["waitlist_id"]
+            isOneToOne: false
+            referencedRelation: "storybuilders_waitlist"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       orders: {
         Row: {
           amount: number | null

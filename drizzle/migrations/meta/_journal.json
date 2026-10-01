@@ -8,6 +8,13 @@
       "when": 1790863911167,
       "tag": "0000_create_emailoctopus_synced_users",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1790876914923,
+      "tag": "0001_create_newsletter_consents",
+      "breakpoints": true
     }
   ]
 }
