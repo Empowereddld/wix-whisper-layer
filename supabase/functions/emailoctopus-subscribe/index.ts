@@ -91,7 +91,7 @@ Deno.serve(async (req) => {
     body: JSON.stringify({
       email_address: email,
       fields,
-      tags: [tagRaw],
+      tags: uniqueTags,
       status: "subscribed",
     }),
   });
@@ -109,7 +109,10 @@ Deno.serve(async (req) => {
     const update = await fetch(`${base}/${contactId}`, {
       method: "PUT",
       headers,
-      body: JSON.stringify({ fields, tags: { [tagRaw]: true } }),
+      body: JSON.stringify({
+        fields,
+        tags: Object.fromEntries(uniqueTags.map((t) => [t, true])),
+      }),
     });
 
     if (update.ok) {
