@@ -20,6 +20,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
 import { useSearchParams } from "react-router-dom";
+import { HubNewsletterPrompt } from "@/components/NewsletterPrompt";
 
 const AUDIENCE_PILLS = [
   { label: "All", value: "" },
@@ -272,6 +273,7 @@ const HubDashboard = () => {
       >
         <Plus className="h-5 w-5" />
       </button>
+      <HubNewsletterPrompt userId={user?.id} />
     </HubLayout>
   );
 };

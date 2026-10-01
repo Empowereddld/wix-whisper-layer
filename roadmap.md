@@ -18,3 +18,8 @@
 - [x] EmailOctopus: multi-tag support; newsletter tag only on affirmative consent
 - [x] verify-email-waitlist + sync-hub-emailoctopus read consent before tagging
 - [ ] Test all paths; no list/tag renames; never resubscribe unsubscribed
+
+## Existing-member newsletter prompt (approved 2026-10-01)
+- [x] Hub dialog (X/Escape saves nothing; Continue unchecked = decline)
+- [x] Story Pros dashboard card (ignored = re-show at most every 14 days)
+- [x] newsletter-prompt server function

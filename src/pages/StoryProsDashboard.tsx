@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Navigate, Link } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
+import { StoryProsNewsletterPrompt } from "@/components/NewsletterPrompt";
 import { motion } from "motion/react";
 import {
   Copy,
@@ -667,6 +668,8 @@ const StoryProsDashboard = () => {
           </div>
         </motion.div>
       )}
+
+      {wl.emailVerified && <StoryProsNewsletterPrompt referralCode={wl.referralCode} />}
 
       {/* Complete-your-profile card: shown only after email verified, until profile saved */}
       {wl.emailVerified && !wl.profileCompleted && (
