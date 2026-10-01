@@ -39,14 +39,25 @@ Deno.serve(async (req) => {
   }
 
   const email = typeof payload.email === "string" ? payload.email.trim().toLowerCase() : "";
-  const tagRaw = typeof payload.tag === "string" ? payload.tag.trim() : "";
   const firstName = typeof payload.first_name === "string" ? payload.first_name.trim().slice(0, 100) : "";
   const lastName = typeof payload.last_name === "string" ? payload.last_name.trim().slice(0, 100) : "";
+
+  // Accept either a single `tag` or a `tags` array; all must be known tags.
+  const tags: string[] = [];
+  if (Array.isArray(payload.tags)) {
+    for (const t of payload.tags) {
+      if (typeof t === "string" && t.trim()) tags.push(t.trim());
+    }
+  }
+  if (typeof payload.tag === "string" && payload.tag.trim()) {
+    tags.push(payload.tag.trim());
+  }
+  const uniqueTags = [...new Set(tags)];
 
   if (!EMAIL_RE.test(email) || email.length > 254) {
     return json({ error: "A valid email address is required" }, 400);
   }
-  if (!ALLOWED_TAGS.has(tagRaw)) {
+  if (uniqueTags.length === 0 || uniqueTags.some((t) => !ALLOWED_TAGS.has(t))) {
     return json({ error: "Unknown source tag" }, 400);
   }
 
@@ -80,7 +91,7 @@ Deno.serve(async (req) => {
     body: JSON.stringify({
       email_address: email,
       fields,
-      tags: [tagRaw],
+      tags: uniqueTags,
       status: "subscribed",
     }),
   });
@@ -98,7 +109,10 @@ Deno.serve(async (req) => {
     const update = await fetch(`${base}/${contactId}`, {
       method: "PUT",
       headers,
-      body: JSON.stringify({ fields, tags: { [tagRaw]: true } }),
+      body: JSON.stringify({
+        fields,
+        tags: Object.fromEntries(uniqueTags.map((t) => [t, true])),
+      }),
     });
 
     if (update.ok) {

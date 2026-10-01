@@ -31,6 +31,9 @@ const interestOptions = [
   "I'm exploring and not sure where to start",
 ];
 
+const NEWSLETTER_CHECKBOX_TEXT = "Yes, I'd like practical DLD tips, new resources, and occasional updates from Empowered DLD by email.";
+const NEWSLETTER_HELPER_TEXT = "Optional. You can unsubscribe at any time. Your Resource Library access is not affected.";
+
 const SignupRole = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -38,6 +41,7 @@ const SignupRole = () => {
   const [selectedRole, setSelectedRole] = useState<Role | undefined>(undefined);
   const [interests, setInterests] = useState<string[]>([]);
   const [resourceWish, setResourceWish] = useState("");
+  const [newsletterConsent, setNewsletterConsent] = useState(false);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -81,6 +85,37 @@ const SignupRole = () => {
     if (error) {
       toast({ title: "Failed to save your info. Please try again.", variant: "destructive" });
       return;
+    }
+
+    // Record the newsletter consent choice (yes or no) for the audit trail.
+    // A `false` row only means "no opt-in at this moment" — it never revokes
+    // an earlier affirmative record. Fire-and-forget: never block onboarding.
+    if (user.email) {
+      supabase.from("newsletter_consents").insert({
+        user_id: user.id,
+        email: user.email.toLowerCase().trim(),
+        consented: newsletterConsent,
+        source: "resource-library",
+        wording_version: "newsletter-consent-v1",
+        checkbox_text: NEWSLETTER_CHECKBOX_TEXT,
+        helper_text: NEWSLETTER_HELPER_TEXT,
+      }).then(({ error: consentError }) => {
+        if (consentError) console.warn("Consent record failed:", consentError);
+      });
+
+      // If they opted in, add the newsletter tag right away (the hourly
+      // server sync skips users the browser fast-path already synced).
+      if (newsletterConsent) {
+        const meta = (user.user_metadata ?? {}) as Record<string, string>;
+        supabase.functions.invoke("emailoctopus-subscribe", {
+          body: {
+            email: user.email.toLowerCase().trim(),
+            tags: ["resource-hub", "newsletter"],
+            first_name: profile?.first_name || meta.first_name || "",
+            last_name: profile?.last_name || meta.last_name || "",
+          },
+        }).catch((e) => console.warn("Newsletter tag sync failed:", e));
+      }
     }
 
     // Refresh profile in AuthContext so ProtectedRoute sees updated interests
@@ -178,6 +213,19 @@ const SignupRole = () => {
               maxLength={500}
             />
           </div>
+
+          {/* Optional newsletter consent */}
+          <label className="flex items-start gap-2.5 cursor-pointer group">
+            <Checkbox
+              checked={newsletterConsent}
+              onCheckedChange={(v) => setNewsletterConsent(v === true)}
+              className="mt-0.5 border-thistle data-[state=checked]:bg-midnight data-[state=checked]:border-midnight"
+            />
+            <span className="text-sm text-foreground leading-[1.5] group-hover:text-midnight transition-colors">
+              {NEWSLETTER_CHECKBOX_TEXT}
+              <span className="block text-xs text-stone-ui mt-0.5">{NEWSLETTER_HELPER_TEXT}</span>
+            </span>
+          </label>
 
           {/* Submit */}
           <div className="space-y-3">

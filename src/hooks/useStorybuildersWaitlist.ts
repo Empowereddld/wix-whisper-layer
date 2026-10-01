@@ -410,7 +410,7 @@ export function useStorybuildersWaitlist() {
     async (
       name: string,
       email: string,
-      opts?: { role?: string | null; roleOther?: string | null }
+      opts?: { role?: string | null; roleOther?: string | null; newsletterConsent?: boolean }
     ): Promise<JoinWaitlistResponse | null> => {
       setState((s) => ({ ...s, loading: true, error: null }));
       try {
@@ -418,7 +418,7 @@ export function useStorybuildersWaitlist() {
         const role = opts?.role ?? null;
         const roleOther = opts?.roleOther ?? null;
         const { data, error } = await supabase.functions.invoke("storybuilders-signup", {
-          body: { name, email, ref, role, role_other: roleOther },
+          body: { name, email, ref, role, role_other: roleOther, newsletter_consent: opts?.newsletterConsent === true },
         });
 
         if (error) throw new Error(error.message || "Failed to join");

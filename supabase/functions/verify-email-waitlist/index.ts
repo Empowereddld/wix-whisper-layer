@@ -372,6 +372,15 @@ Deno.serve(async (req) => {
     // Add the now-confirmed address to the newsletter list (never blocks verification).
     try {
       const fullName = ((result.out_name as string | undefined) || "").trim();
+      // Add the newsletter tag only when an affirmative consent record exists.
+      const { data: consentRows } = await supabase
+        .from("newsletter_consents")
+        .select("id")
+        .eq("waitlist_id", user.id)
+        .eq("consented", true)
+        .limit(1);
+      const tags = ["story-pros"];
+      if (consentRows && consentRows.length > 0) tags.push("newsletter");
       await fetch(`${supabaseUrl}/functions/v1/emailoctopus-subscribe`, {
         method: "POST",
         headers: {
@@ -380,7 +389,7 @@ Deno.serve(async (req) => {
         },
         body: JSON.stringify({
           email: result.out_email ?? user.email,
-          tag: "story-pros",
+          tags,
           first_name: fullName.split(" ")[0] || "",
           last_name: fullName.split(" ").slice(1).join(" "),
         }),
