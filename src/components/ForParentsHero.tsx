@@ -16,7 +16,7 @@ const ForParentsHero = () => {
               Does Your Child Struggle to Express Themself?
             </h1>
             <p className="text-[13px] md:text-[14px] lg:text-[15px] text-muted-foreground leading-[1.7] mb-6 md:mb-8 max-w-[500px]">
-              Join 4,000+ parents learning about language challenges, gaining practical strategies, and discovering they're not alone.
+              Join 5,000+ parents learning about language challenges, gaining practical strategies, and discovering they're not alone.
             </p>
             <a
               href="https://www.facebook.com/share/g/1GCdxhWtfB/"

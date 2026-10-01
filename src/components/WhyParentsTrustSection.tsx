@@ -4,7 +4,7 @@ import familyDinner from "@/assets/family-dinner-new.webp";
 const trustPoints = [
   {
     title: "You're not figuring this out alone",
-    description: "Join 4,000+ parents in our supportive community. Learn from each other and from experts who understand DLD",
+    description: "Join 5,000+ parents in our supportive community. Learn from each other and from experts who understand DLD",
   },
   {
     title: "Created by a teacher and an SLP",

@@ -26,7 +26,7 @@ const DownloadablesSignupCTA = () => {
               Create an account and get instant, lifetime access to our full
               resource library.
               <span className="block mt-1 text-background/50 text-sm">
-                Trusted by 4,000+ families and professionals.
+                Trusted by 5,000+ families and professionals.
               </span>
             </p>
           </div>

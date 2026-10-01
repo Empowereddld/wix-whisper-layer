@@ -33,7 +33,7 @@ const features = [
   {
     icon: Users,
     title: "Join Our Community",
-    description: "Connect with 4,000+ families, educators, and SLPs in our supportive Facebook group.",
+    description: "Connect with 5,000+ families, educators, and SLPs in our supportive Facebook group.",
     cta: "JOIN TODAY",
     href: "https://www.facebook.com/share/g/1GCdxhWtfB/",
     external: true,
