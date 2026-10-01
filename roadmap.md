@@ -10,3 +10,11 @@
 - Never change list or tag names in EmailOctopus.
 - Never resubscribe contacts who unsubscribed in EmailOctopus.
 - Announcement bar wording is locked.
+
+## Newsletter consent flow (approved 2026-10-01)
+- [ ] Add newsletter_consents table (append-only audit, service-only)
+- [ ] Story Pros checkbox (new approved wording) + signup fn consent handling
+- [ ] Resource Library checkbox on /signup/role + consent save
+- [ ] EmailOctopus: multi-tag support; newsletter tag only on affirmative consent
+- [ ] verify-email-waitlist + sync-hub-emailoctopus read consent before tagging
+- [ ] Test all paths; no list/tag renames; never resubscribe unsubscribed
