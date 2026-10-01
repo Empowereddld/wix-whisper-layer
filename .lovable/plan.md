@@ -1,36 +1,84 @@
-# EmailOctopus integration updates
+# Optional newsletter consent for Resource Library and Story Pros
 
-Four changes, plus a consent-wording report. List and tag names stay exactly as they are. No one who unsubscribed in EmailOctopus is ever re-subscribed (the sync already never sends a status on updates, and that stays).
+This separates access and waitlist participation from optional newsletter consent. Both boxes start unchecked. Not checking either box will never block account creation, Resource Library access, or joining Story Pros.
 
-## 1. Footer newsletter: duplicate emails no longer error
+## Proposed wording
 
-Today, if an email already exists in our website database, the footer shows "Something went wrong" and EmailOctopus is never called.
+### Resource Library account signup
 
-Change `src/components/Footer.tsx` so a duplicate is treated as success: show the same "Welcome to the community!" message and still run the EmailOctopus sync, which adds the `newsletter` tag to the existing contact without touching their other tags. The welcome email is only sent for genuinely new signups, so repeat submitters don't get it twice.
+Place this optional checkbox near the end of the Resource Library onboarding step, above **Take me to the Resource Library**. This location works consistently for email, Google, and Apple signups after the account is confirmed.
 
-## 2. Google sign-in names for Resource Library users
+**Checkbox, unchecked by default**
 
-Google does provide a name in the sign-in profile (`full_name`, and often separate given/family names). In `src/contexts/AuthContext.tsx`, when syncing a confirmed account, fall back to Google's name only when our own first/last name fields are blank. A non-blank name the user typed is never overwritten. Splitting rule: first word becomes FirstName, the rest becomes LastName.
+> Yes, I'd like practical DLD tips, new resources, and occasional updates from Empowered DLD by email.
 
-## 3. Move Resource Library syncing server-side
+**Short text below it**
 
-Today the sync runs in the visitor's browser, so anyone who confirms their account but never returns signed in is missed.
+> Optional. You can unsubscribe at any time. Your Resource Library access is not affected.
 
-New scheduled job (a server function that runs every 15 minutes): find accounts whose email became confirmed since the last run, and sync each to EmailOctopus with the `resource-hub` tag. A small tracking table records who has been synced so nobody is sent twice, and a one-time backfill covers everyone already confirmed. The existing browser-side sync stays as a fast path; the server job is the safety net, and both are safe to run for the same person.
+### Story Pros waitlist signup
 
-## 4. Consent wording report (no changes)
+Place this optional checkbox below the role field and above **Join Now**.
 
-Exact wording users see today, and whether it discloses marketing emails:
+**Checkbox, unchecked by default**
 
-- **Resource Library account** (`/hub/signup`): heading "Create Your Free Account", subheading "Sign up once. Access everything.", button "Create Account". No mention of newsletters or marketing emails, and no consent checkbox.
-- **Newsletter footer form**: heading "Subscribe to Our Newsletter", fields "Email" and "Name", button "Subscribe". This clearly implies newsletter emails, but there is no explicit consent statement or checkbox.
-- **Story Pros waitlist**: "Join the Story Pros Launch Team...", fields "Name", "Email", "I am a...", button "Join First to Get Your Link". Says nothing about receiving emails, and has no consent checkbox.
+> Yes, send me Empowered DLD's newsletter with practical DLD resources, news, and occasional Story Pros updates.
 
-So: only the footer form clearly signals marketing emails, and none of the three has an explicit consent checkbox. Wording changes are out of scope here; I'll propose options separately if you want them.
+**Short text below it**
 
-## Technical details
+> Optional. You'll stay on the Story Pros waitlist whether or not you choose this. You can unsubscribe at any time.
 
-- Footer: catch the unique-violation (23505) from the `waitlist` insert and treat it as success; still call `syncToEmailOctopus` with tag `newsletter`.
-- AuthContext: read `full_name` / `given_name` / `family_name` from `user.user_metadata` (Google populates these) as a fallback only.
-- Server sync: new edge function `sync-hub-emailoctopus` on a 15-minute schedule. It lists `auth.users` with the service key, filters `email_confirmed_at` newer than the last run, and posts to `emailoctopus-subscribe` (tag `resource-hub`). New table `emailoctopus_synced_users` (user_id, synced_at) with RLS enabled, service-role-only access, plus the required GRANTs. One-time backfill run for existing confirmed users.
-- No changes to list ID, tag names, or the duplicate-handling logic in `emailoctopus-subscribe`.
+## Consent record
+
+Add a dedicated, append-only consent record in the database rather than relying only on an EmailOctopus tag. Record both yes and no choices so there is a clear audit trail.
+
+Store:
+
+- the Resource Library account ID or Story Pros waitlist entry ID
+- normalized email address
+- consent choice (`true` or `false`)
+- server-recorded timestamp
+- signup source (`resource-library` or `story-pros-waitlist`)
+- wording version, initially `newsletter-consent-v1`
+- the exact checkbox wording shown
+- the exact explanatory text shown
+
+Only trusted server-side code should write or read these records. A later checked submission may add consent. An unchecked submission must never be treated as an unsubscribe or erase earlier affirmative consent.
+
+## EmailOctopus behaviour
+
+Keep the current EmailOctopus list and all current tag names unchanged.
+
+### Resource Library
+
+- After email confirmation, continue adding the existing `resource-hub` tag.
+- If newsletter consent is checked, also add the existing `newsletter` tag.
+- If unchecked, send only the existing `resource-hub` tag.
+- Send EmailAddress, FirstName, and LastName using the current name fallback rules.
+
+### Story Pros
+
+- After waitlist email verification, continue adding the existing `story-pros` tag.
+- If newsletter consent is checked, also add the existing `newsletter` tag.
+- If unchecked, send only the existing `story-pros` tag.
+- Send EmailAddress, FirstName, and LastName using the current full-name split.
+
+For an address already in EmailOctopus, use the current update behaviour to add only the applicable tag or tags without removing existing tags. Do not send a status during updates, so a previously unsubscribed contact remains unsubscribed. The newsletter tag records the website choice but must not override EmailOctopus's unsubscribe status.
+
+## Implementation plan
+
+1. Add the consent checkbox to Resource Library onboarding and Story Pros signup, with independent state defaulting to unchecked.
+2. Add the consent record structure, permissions, and server-only access rules.
+3. Save Resource Library consent from the authenticated onboarding step. Skipping onboarding records no newsletter consent and still opens the library.
+4. Pass the Story Pros choice to the existing signup function and store it with the waitlist entry. Handle repeat signups safely: a new checked choice may add consent, while an unchecked choice never revokes earlier consent.
+5. Update the confirmed-account and verified-waitlist sync paths to always send their existing source tag, and send `newsletter` only when affirmative consent is recorded.
+6. Keep newsletter campaigns limited to contacts carrying the `newsletter` tag. Existing source tags remain available for the current account and waitlist communications.
+7. Test email, Google, and Apple Resource Library signup paths; new and duplicate Story Pros entries; checked and unchecked choices; existing multi-tag contacts; and a previously unsubscribed EmailOctopus contact.
+
+## Scope safeguards
+
+- No list or tag renaming.
+- No required marketing consent.
+- No changes to the separate footer newsletter form.
+- No backfill that assumes consent for existing Resource Library or Story Pros contacts.
+- No code, database, or EmailOctopus changes until this plan is approved.
