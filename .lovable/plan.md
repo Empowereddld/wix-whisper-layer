@@ -1,53 +1,36 @@
-# EmailOctopus integration audit (report only, no changes)
+# EmailOctopus integration updates
 
-Approving this plan changes nothing. It is a read-only report. Any fixes listed at the end need your separate go-ahead.
+Four changes, plus a consent-wording report. List and tag names stay exactly as they are. No one who unsubscribed in EmailOctopus is ever re-subscribed (the sync already never sends a status on updates, and that stays).
 
-## Shared behaviour (all three sources)
+## 1. Footer newsletter: duplicate emails no longer error
 
-Every signup goes through one sender that talks to EmailOctopus.
+Today, if an email already exists in our website database, the footer shows "Something went wrong" and EmailOctopus is never called.
 
-- **List:** one list for everyone, the list ID you saved in settings. The code never chooses a list, so all three sources land on the same list. I can't read the list's name from here. Check it in EmailOctopus under Lists.
-- **Status on a new contact:** SUBSCRIBED. Nothing is ever created as PENDING.
-- **Fields sent:** EmailAddress (trimmed and lowercased), FirstName and LastName. A name field is left out if it's blank, so an existing name is never wiped.
-- **If the email already exists (your Jane example):** EmailOctopus rejects the create with MEMBER_EXISTS_WITH_EMAIL_ADDRESS, or with a 409 or an "already" message. The sender catches that and updates the existing contact instead. It adds the new tag as `{tag: true}`, which **adds it without removing any tags Jane already has**. So Jane stays one subscriber with both tags. This path was tested when the integration was built.
-- **Existing contact's status:** the update never sends a status. Someone who unsubscribed stays unsubscribed and is not re-subscribed.
-- **Names on update:** a new non-blank FirstName or LastName replaces the stored one.
-- **Failures:** any error is logged and ignored. It never blocks the signup, but you also won't get an alert when a sync fails.
+Change `src/components/Footer.tsx` so a duplicate is treated as success: show the same "Welcome to the community!" message and still run the EmailOctopus sync, which adds the `newsletter` tag to the existing contact without touching their other tags. The welcome email is only sent for genuinely new signups, so repeat submitters don't get it twice.
 
-## 1. Resource Library account
+## 2. Google sign-in names for Resource Library users
 
-- **When:** when a signed-in session appears with a **confirmed** email, meaning after they click the confirmation link or sign in with Google. It runs once per person per browser.
-- **Tag:** `resource-hub`
-- **Names:** first_name and last_name from the account. Email signup only asks for a first name, so LastName is usually blank. Google signups don't store first_name the same way, so **Google users may sync with no name at all**.
-- **Caveat:** this runs in the visitor's browser. If someone confirms their account but never comes back to the site signed in, they are never synced.
+Google does provide a name in the sign-in profile (`full_name`, and often separate given/family names). In `src/contexts/AuthContext.tsx`, when syncing a confirmed account, fall back to Google's name only when our own first/last name fields are blank. A non-blank name the user typed is never overwritten. Splitting rule: first word becomes FirstName, the rest becomes LastName.
 
-## 2. Newsletter form (footer)
+## 3. Move Resource Library syncing server-side
 
-There's no separate newsletter popup in the code. The footer form is the only one.
+Today the sync runs in the visitor's browser, so anyone who confirms their account but never returns signed in is missed.
 
-- **When:** right after the form is saved on our side. There's no double opt-in.
-- **Tag:** `newsletter`
-- **Names:** the first word of "Name" becomes FirstName and the rest becomes LastName.
-- **Caveat:** if that email already submitted any of our website forms (the footer, the workshop form or the app waitlist all share one table), our own save fails first. The person sees "Something went wrong" and **EmailOctopus is never called**. So in this case the `newsletter` tag is silently not added. This is the one place your Jane scenario can fail.
+New scheduled job (a server function that runs every 15 minutes): find accounts whose email became confirmed since the last run, and sync each to EmailOctopus with the `resource-hub` tag. A small tracking table records who has been synced so nobody is sent twice, and a one-time backfill covers everyone already confirmed. The existing browser-side sync stays as a fast path; the server job is the safety net, and both are safe to run for the same person.
 
-## 3. Story Pros waitlist
+## 4. Consent wording report (no changes)
 
-- **When:** only after they click the verification link. This runs on the server, not in the browser.
-- **Tag:** `story-pros`
-- **Names:** split from the full name they typed (first word becomes FirstName, the rest becomes LastName).
-- **Duplicates:** handled the shared way above, so the tag is added to the existing contact.
+Exact wording users see today, and whether it discloses marketing emails:
 
-## Other sources, for completeness
+- **Resource Library account** (`/hub/signup`): heading "Create Your Free Account", subheading "Sign up once. Access everything.", button "Create Account". No mention of newsletters or marketing emails, and no consent checkbox.
+- **Newsletter footer form**: heading "Subscribe to Our Newsletter", fields "Email" and "Name", button "Subscribe". This clearly implies newsletter emails, but there is no explicit consent statement or checkbox.
+- **Story Pros waitlist**: "Join the Story Pros Launch Team...", fields "Name", "Email", "I am a...", button "Join First to Get Your Link". Says nothing about receiving emails, and has no consent checkbox.
 
-- Workshop form: tag `workshop`
-- App waitlist: tag `educational-app` (it already handles "already on our list" correctly and skips the sync)
-- Contact form: tag `contact`
-- Old imported list: tag `legacy-list`
+So: only the footer form clearly signals marketing emails, and none of the three has an explicit consent checkbox. Wording changes are out of scope here; I'll propose options separately if you want them.
 
-## Gaps worth knowing (not fixing unless you ask)
+## Technical details
 
-1. **Tag names differ from your examples.** The live tags are `resource-hub` and `story-pros`, not `resource-library` and `story-pros-waitlist`. Renaming them would split your existing segments.
-2. **Footer duplicates:** the newsletter tag is skipped and the visitor sees a misleading error.
-3. **Google sign-ups** may arrive in EmailOctopus without a first name.
-4. **Resource Library sync depends on the browser.** It's missed if the person never returns signed in.
-5. **Silent failures:** there's no alert when a sync fails.
+- Footer: catch the unique-violation (23505) from the `waitlist` insert and treat it as success; still call `syncToEmailOctopus` with tag `newsletter`.
+- AuthContext: read `full_name` / `given_name` / `family_name` from `user.user_metadata` (Google populates these) as a fallback only.
+- Server sync: new edge function `sync-hub-emailoctopus` on a 15-minute schedule. It lists `auth.users` with the service key, filters `email_confirmed_at` newer than the last run, and posts to `emailoctopus-subscribe` (tag `resource-hub`). New table `emailoctopus_synced_users` (user_id, synced_at) with RLS enabled, service-role-only access, plus the required GRANTs. One-time backfill run for existing confirmed users.
+- No changes to list ID, tag names, or the duplicate-handling logic in `emailoctopus-subscribe`.
