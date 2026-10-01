@@ -1,5 +1,5 @@
 const stats = [
-  { value: "4000", suffix: "+", label: "Community members worldwide" },
+  { value: "5000", suffix: "+", label: "Community members worldwide" },
   { value: "15", suffix: "+", label: "Countries using our resources" },
   { value: "7", suffix: "", label: "Languages available" },
   { value: "1 in 14", suffix: "", label: "Children affected by DLD" },

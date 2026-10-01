@@ -49,7 +49,7 @@ const DownloadablesLibraryIntro = () => {
             </Link>
 
             <p className="text-[13px] text-muted-foreground mt-2">
-              Trusted by 4,000+ families and professionals in 15+ countries
+              Trusted by 5,000+ families and professionals in 15+ countries
             </p>
           </div>
         </div>
