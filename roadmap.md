@@ -20,6 +20,6 @@
 - [ ] Test all paths; no list/tag renames; never resubscribe unsubscribed
 
 ## Existing-member newsletter prompt (approved 2026-10-01)
-- [ ] Hub dialog (X/Escape saves nothing; Continue unchecked = decline)
-- [ ] Story Pros dashboard card (ignored = re-show at most every 14 days)
-- [ ] newsletter-prompt server function
+- [x] Hub dialog (X/Escape saves nothing; Continue unchecked = decline)
+- [x] Story Pros dashboard card (ignored = re-show at most every 14 days)
+- [x] newsletter-prompt server function
