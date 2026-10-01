@@ -102,6 +102,20 @@ const SignupRole = () => {
       }).then(({ error: consentError }) => {
         if (consentError) console.warn("Consent record failed:", consentError);
       });
+
+      // If they opted in, add the newsletter tag right away (the hourly
+      // server sync skips users the browser fast-path already synced).
+      if (newsletterConsent) {
+        const meta = (user.user_metadata ?? {}) as Record<string, string>;
+        supabase.functions.invoke("emailoctopus-subscribe", {
+          body: {
+            email: user.email.toLowerCase().trim(),
+            tags: ["resource-hub", "newsletter"],
+            first_name: profile?.first_name || meta.first_name || "",
+            last_name: profile?.last_name || meta.last_name || "",
+          },
+        }).catch((e) => console.warn("Newsletter tag sync failed:", e));
+      }
     }
 
     // Refresh profile in AuthContext so ProtectedRoute sees updated interests
