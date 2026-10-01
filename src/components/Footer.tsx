@@ -64,17 +64,23 @@ const Footer = () => {
 
     setIsSubmitting(false);
 
-    if (error) {
+    // 23505 = unique_violation: this email already submitted one of our forms.
+    // Treat it as success and still sync so the newsletter tag gets added.
+    const isDuplicate = (error as { code?: string } | null)?.code === "23505";
+
+    if (error && !isDuplicate) {
       toast({ title: "Something went wrong", description: "Please try again later.", variant: "destructive" });
     } else {
-      // Fire-and-forget welcome email (server renders from template registry)
-      supabase.functions.invoke("send-email", {
-        body: {
-          template: "newsletter_welcome",
-          to: email.trim(),
-          data: { name: name.trim() },
-        },
-      }).catch((e) => console.warn("Welcome email failed:", e));
+      if (!isDuplicate) {
+        // Fire-and-forget welcome email (server renders from template registry)
+        supabase.functions.invoke("send-email", {
+          body: {
+            template: "newsletter_welcome",
+            to: email.trim(),
+            data: { name: name.trim() },
+          },
+        }).catch((e) => console.warn("Welcome email failed:", e));
+      }
 
       syncToEmailOctopus({
         email: email.trim(),
