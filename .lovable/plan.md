@@ -1,62 +1,24 @@
-# One-time newsletter opt-in for existing members
+# Website feedback and a plan to get your first steady sales
 
-Existing Resource Library users and Story Pros waitlist members who have never made a newsletter choice see one optional, unchecked prompt, once. No emails are sent to ask. Access never depends on it.
+## Where things stand
+- You have real interest: about 2,666 email contacts and 300+ recent website signups (Story Pros and Resource Library).
+- Sales so far: 3 paid resources ($5.99 Graphic Organizers). No merch sales seen yet.
+- The biggest gap: those 2,666 people have never been emailed about what you sell. Most people need several reminders before they buy.
+- Much of the site leads people to free signups (hub, waitlist) rather than to something they can buy.
 
-## Who sees it
+## Recommended steps (in order)
+1. **Send the "we're back" email** to the old list (already drafted). This warms up 2,600+ people and costs nothing.
+2. **Monthly newsletter with one clear offer each time**, for example: the Graphic Organizers pack (your proven seller), a book, or a merch item for DLD Awareness Day (October).
+3. **Read your visitor numbers** to see which pages people visit and where they leave, then fix the weakest step (for example, the Resource Library card to checkout).
+4. **Make paid items easier to find**: add a "Most popular" section featuring the Graphic Organizers on the home page and Resource Library, with price and a buy button.
+5. **Small bundle offer**: group 2–3 resources at a lower combined price to raise the value of each sale.
+6. **DLD Awareness Day push** (this month): a short post in your parent Facebook group and a newsletter featuring the awareness merch.
 
-A person sees the prompt only if all of these are true:
-- they have no newsletter consent record at all (neither yes nor no)
-- they do not already carry the `newsletter` tag in EmailOctopus
-- they have not dismissed or answered it before
-
-Once any choice is recorded (checked or unchecked), they never see it again.
-
-## Resource Library flow
-
-**Where:** a small pop-up window that opens over the Resource Library home page (`/hub`) right after an existing user signs in. New users never see it, because they already answer the same question during onboarding.
-
-**Content (exact):**
-- Heading: "Would you like to stay connected?"
-- Checkbox, unchecked: "Yes, I'd like practical DLD tips, new resources, and occasional updates from Empowered DLD by email."
-- Helper: "Optional. You can unsubscribe at any time. Your Resource Library access is not affected."
-- One button: "Continue to the Resource Library"
-
-**What happens:**
-- Checked: affirmative consent saved (timestamp, source `resource-library-existing-prompt`, wording version `newsletter-consent-v1`, exact text). `newsletter` tag added in EmailOctopus alongside `resource-hub` and any other tags. Status untouched.
-- Unchecked, or the window is closed with the X / Escape: a "shown, did not opt in" record is saved. No tag changes. Earlier yes records are never affected.
-
-## Story Pros flow
-
-Story Pros members don't have passwords. The site recognises them on the device where they joined or after the "Find my dashboard" link. That is the only identifiable session, so the prompt appears there.
-
-**Where:** a card at the top of the Story Pros dashboard (`/storypros/dashboard`), above their points. It does not block the page; they can keep using the dashboard without answering. The card isn't shown on the public Story Pros page, since visitors there can't be identified reliably.
-
-**Content (exact):**
-- Heading: "Want to hear more from Empowered DLD?"
-- Checkbox, unchecked: "Yes, I'd like practical DLD resources, Empowered DLD updates, and occasional Story Pros news by email."
-- Helper: "Optional. You'll stay on the Story Pros waitlist whether or not you choose this. You can unsubscribe at any time."
-- Buttons: "Save my choice" and "No thanks"
-
-**What happens:**
-- Checked + Save: affirmative consent saved (source `story-pros-existing-prompt`). `newsletter` tag added; `story-pros` and other tags kept. Status untouched.
-- "No thanks", or Save with the box unchecked: a "did not opt in" record is saved. No tag changes.
-- If they leave without choosing anything, nothing is saved and the card shows again next visit. It stays easy to ignore.
-
-## Safeguards
-
-- No emails sent to ask for consent.
-- Boxes are never pre-checked; access never depends on them.
-- Unsubscribed EmailOctopus contacts stay unsubscribed (updates never send status). If a person is unsubscribed in EmailOctopus, we treat them as "already decided" and don't show the prompt.
-- No list or tag names change.
-- A "no" record never revokes or overrides a "yes".
-- Unverified Story Pros entries don't see the card until they're verified.
+## What you need to do outside the website
+- Send the emails in EmailOctopus (I can write each one).
+- Post in your Facebook group / social profiles (I can draft posts).
 
 ## Technical details
-
-- New server function `newsletter-prompt` with two actions:
-  - `status`: for a signed-in hub user (JWT) or a Story Pros referral code, returns `show: true/false`. It checks `newsletter_consents` for any row, then checks the EmailOctopus contact (MD5 lookup) for the `newsletter` tag or an unsubscribed status. It fails closed (no prompt) if EmailOctopus can't be reached.
-  - `record`: inserts the consent row server-side with the fixed wording constants. If the box is checked, it calls `emailoctopus-subscribe` with tags `["resource-hub","newsletter"]` or `["story-pros","newsletter"]`. Story Pros calls are tied to the waitlist row looked up by referral code and must be verified and not deleted.
-- New sources are added to the consent records; no table changes are needed.
-- Hub: a new `NewsletterPromptDialog` on `HubDashboard`, gated on the profile having completed onboarding.
-- Story Pros: a new `NewsletterPromptCard` in `StoryProsDashboard`.
-- Tests: hub user with/without record, with an existing newsletter tag, unsubscribed contact; Story Pros checked / no thanks / ignored; repeat visits don't re-prompt.
+- Step 3 uses the project's built-in visitor statistics; no changes needed.
+- Step 4 adds a featured-products section to the home and Resource Library pages using existing product data.
+- Step 5 adds a bundle product in the existing Stripe product setup.
