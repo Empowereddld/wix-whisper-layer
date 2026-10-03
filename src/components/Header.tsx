@@ -75,7 +75,7 @@ const Header = () => {
           <img src={logoImage} alt="Empowered DLD" className="h-[32px] lg:h-[38px] w-auto" />
         </Link>
 
-        <nav className="hidden lg:flex items-center gap-6 xl:gap-8" ref={dropdownRef}>
+        <nav className="hidden xl:flex items-center gap-6" ref={dropdownRef}>
           {navLinks.map((link) =>
             link.children ? (
               <div key={link.label} className="relative flex items-center">
@@ -139,7 +139,7 @@ const Header = () => {
               >
                 Log in
               </Link>
-              <Button asChild size="default" className="rounded-md h-10 px-5 xl:px-7 text-[12px] font-semibold tracking-[0.08em] bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 whitespace-nowrap">
+              <Button asChild size="default" className="rounded-md h-10 px-5 text-[12px] font-semibold tracking-[0.08em] bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 whitespace-nowrap">
                 <Link to={signupHref}>JOIN THE LIBRARY</Link>
               </Button>
             </div>
@@ -147,7 +147,7 @@ const Header = () => {
         </nav>
 
         <button
-          className="lg:hidden p-2 min-w-[44px] min-h-[44px] flex items-center justify-center"
+          className="xl:hidden p-2 min-w-[44px] min-h-[44px] flex items-center justify-center"
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label={mobileOpen ? "Close menu" : "Open menu"}
         >
@@ -156,7 +156,7 @@ const Header = () => {
       </div>
 
       {mobileOpen && (
-        <nav className="lg:hidden bg-background border-b border-border/30 px-6 pb-6 pt-4 flex flex-col gap-4 max-h-[75vh] overflow-y-auto shadow-[var(--shadow-elevated)]">
+        <nav className="xl:hidden bg-background border-b border-border/30 px-6 pb-6 pt-4 flex flex-col gap-4 max-h-[75vh] overflow-y-auto shadow-[var(--shadow-elevated)]">
           {mobileNavLinks.map((link) =>
             link.children ? (
               <div key={link.label}>
