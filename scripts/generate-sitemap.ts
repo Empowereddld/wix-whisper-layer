@@ -21,8 +21,6 @@ interface SitemapEntry {
   priority?: string;
 }
 
-const today = new Date().toISOString().split("T")[0];
-
 const staticEntries: SitemapEntry[] = [
   { path: "/", changefreq: "weekly", priority: "1.0" },
   { path: "/who-we-serve", changefreq: "monthly", priority: "0.9" },
@@ -38,6 +36,7 @@ const staticEntries: SitemapEntry[] = [
   { path: "/resources/free-course", changefreq: "monthly", priority: "0.8" },
   { path: "/resources/downloadables", changefreq: "monthly", priority: "0.8" },
   { path: "/resources/language-impact-checklist", changefreq: "monthly", priority: "0.7" },
+  { path: "/music", changefreq: "monthly", priority: "0.8" },
   { path: "/shop", changefreq: "weekly", priority: "0.8" },
   { path: "/shop/books", changefreq: "monthly", priority: "0.8" },
   { path: "/shop/merch", changefreq: "weekly", priority: "0.8" },
@@ -89,7 +88,7 @@ async function fetchBlogEntries(): Promise<SitemapEntry[]> {
 
   return rows.map((row) => ({
     path: `/resources/blog/${row.slug}`,
-    lastmod: (row.updated_at || row.published_at || "").split("T")[0] || today,
+    lastmod: (row.updated_at || row.published_at || "").split("T")[0] || undefined,
     changefreq: "monthly" as const,
     priority: "0.7",
   }));
@@ -123,7 +122,7 @@ async function fetchMerchEntries(): Promise<SitemapEntry[]> {
     const edges = json.data?.products?.edges ?? [];
     return edges.map((e) => ({
       path: `/shop/merch/${e.node.handle}`,
-      lastmod: (e.node.updatedAt || "").split("T")[0] || today,
+      lastmod: (e.node.updatedAt || "").split("T")[0] || undefined,
       changefreq: "weekly" as const,
       priority: "0.6",
     }));
