@@ -23,3 +23,9 @@
 - [x] Hub dialog (X/Escape saves nothing; Continue unchecked = decline)
 - [x] Story Pros dashboard card (ignored = re-show at most every 14 days)
 - [x] newsletter-prompt server function
+
+## Empowered DLD music (approved 2026-10-03)
+- [ ] Add permanent, expandable `/music` page with the approved song copy and streaming smart link
+- [ ] Add `/music` metadata, lazy route, and sitemap entry
+- [ ] Add home-page-only delayed popup for October 3–31 with a 7-day dismissal cooldown
+- [ ] Verify popup behavior, desktop/mobile music page, metadata, sitemap, and build
