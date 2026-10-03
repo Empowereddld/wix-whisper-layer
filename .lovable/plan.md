@@ -1,42 +1,38 @@
-# "What Is DLD?" song: music page + delayed popup (DLD Awareness campaign)
+# "What Is DLD?" music page + Awareness Month popup
 
 ## What we're building
 
-The new release "What Is DLD?" (3:54, distributed via LANDR, listed on Spotify, Apple Music, YouTube Music, Amazon Music and TIDAL) currently has no home on the website. We add a permanent music page and a gentle, time-limited popup on the home page to promote it around DLD Awareness Day.
+Per the uploaded spec: a permanent music section (page at `/music`) and a temporary home-page popup promoting the song "What Is DLD?" during DLD Awareness Month (October 3–31, 2026). The visitor sees Empowered DLD branding and streaming options only; LANDR is never mentioned in public-facing copy.
 
-Two pieces:
+## 1. Music page at `/music` (permanent, multi-song)
 
-1. **A music page** at `/music` — permanent home for the song.
-2. **A delayed popup** on the home page only — awareness campaign, shown at most once per visitor.
+Built as the long-term home for Empowered DLD music, structured so more songs can be added later.
 
-Note: it is a single, not an album, so wording on the site will say "song" / "new single".
+- **Cover art**: downloaded from the release artwork found on the smart link page, converted to WebP for web performance, imported as a project asset.
+- **Hero section**: heading "What Is DLD?", artist Empowered DLD, short line "A child-friendly song created to help children and families understand Developmental Language Disorder." Main button "Listen to the song" opens the existing streaming smart link (`https://release.landr.com/what-is-dld`, referenced in code as the streaming smart link, no LANDR branding shown).
+- **Why we made this song**: uses the supplied draft copy verbatim ("Children with DLD often grow up knowing that some things feel harder...").
+- **Use it to start a conversation**: prompt "Listen together, then ask your child: What helps your brain when language feels hard?"
+- **Help someone learn about DLD**: "Share What Is DLD? with a teacher, family member, friend, or someone who works with children."
+- **Explore more from Empowered DLD**: "Meet Dan & Daria in the books" → `/shop/books`; "Find free DLD resources for families" → `/hub`.
+- Space below the featured song reserved for future songs.
 
-## 1. Music page (`/music`)
+## 2. SEO and site structure
 
-- Cover art: downloaded from the release artwork (`imagestore.ffm.to` PNG found on the LANDR page), converted to WebP for performance, imported as a project asset.
-- Content:
-  - Page hero: song title "What Is DLD?", artist Empowered DLD.
-  - Short story section: why the song exists, what it stands for (drafted in the Empowered DLD voice; user can adjust copy after seeing it).
-  - **Listen button → `https://release.landr.com/what-is-dld`** (this link never breaks and routes to all streaming services).
-  - Secondary links: back to `/shop/books` (book series) and `/hub` (resource library), so music visitors discover the site.
-  - Optional placeholder slots for direct Spotify/Apple Music links, filled with the LANDR link until the user pastes the direct URLs.
-- Route added in `src/App.tsx`, lazy-loaded, with `SEOHead` (indexable: title "What Is DLD? | The Song – Empowered DLD" + description), added to `scripts/generate-sitemap.ts` so it lands in the sitemap.
+- `/music` as a proper lazy-loaded route in `src/App.tsx`, indexable.
+- `SEOHead` with exactly: title "What Is DLD? | Music from Empowered DLD", meta description "Listen to What Is DLD?, a child-friendly song from Empowered DLD created to help children and families understand Developmental Language Disorder."
+- Added to `scripts/generate-sitemap.ts` so `/music` appears in the sitemap.
 
-## 2. Delayed popup (home page only)
+## 3. Home-page popup (`src/components/SongPromoPopup.tsx`)
 
-New component `src/components/SongPromoPopup.tsx`:
+- Home page only; never on checkout, signup, account, or any other page.
+- Appears after ~15 seconds; shows the song cover art; easy to dismiss via X, Escape, or clicking outside; mobile-friendly with accessible touch targets.
+- Copy as supplied: heading "A song for DLD Awareness Month 💜💛", body "What Is DLD? helps children and families understand DLD in a way they can hear, remember, and share.", button "Listen to the song" → `/music`.
+- Frequency: dismissed once = not shown again for 7 days; cooldown stored in the browser (localStorage).
+- Campaign window: October 3, 2026 through October 31, 2026, kept as easy-to-update date constants so the pattern is reusable. Outside those dates it renders nothing.
 
-- Appears **after ~15 seconds on the home page** (not on landing), using the existing shadcn `Dialog` (same pattern as `NewsletterPrompt`).
-- Shows the cover art thumbnail, one line about the song, a **"Listen to the song"** button → `/music`, and a clear dismiss (X / Escape / click outside).
-- **At most once per visitor**: on dismiss, writes `localStorage` key `song_promo_dismissed` and never shows again while the campaign runs.
-- **Campaign window only**: constants `CAMPAIGN_START` and `CAMPAIGN_END` in the component, set to **Oct 3 – Oct 31, 2026** (covers DLD Awareness Day). Outside the window the popup renders nothing, so it can be easily reused next year by changing two dates.
-- Never appears on other pages, never blocks checkout or signup flows, 44px touch targets, mobile-friendly.
+## 4. Untouched
 
-## 3. What stays untouched
-
-- The gold Story Pros announcement bar and its locked wording.
-- The newsletter consent flow and newsletter prompts.
-- No changes to EmailOctopus, lists or tags.
+- Gold Story Pros announcement bar and wording; newsletter consent flow; newsletter prompts; EmailOctopus setup, lists and tags; checkout and signup flows; no unrelated redesign.
 
 ## Files touched
 
@@ -49,6 +45,4 @@ New component `src/components/SongPromoPopup.tsx`:
 
 ## Verification
 
-- Playwright check: popup does not appear immediately, appears after the delay, dismiss sticks on reload, dismiss (X) works, and the Listen button routes to `/music`.
-- Music page loads with correct title/meta and sitemap entry.
-- Build log clean; popup renders nothing after the campaign end date (test by temporarily shifting the constant).
+- Playwright: popup not immediate, appears after delay, X/Escape/outside dismiss works, dismissal holds for 7 days on reload, home page only, Listen button routes to `/music`; music page loads on desktop and mobile with correct title and meta; popup renders nothing after October 31, 2026 (tested by shifting the constant); sitemap includes `/music`; build clean.
