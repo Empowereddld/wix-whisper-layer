@@ -16,6 +16,9 @@ const CAMPAIGN_END = new Date("2026-11-01T00:00:00-04:00").getTime();
 const POPUP_DELAY_MS = 15_000;
 const DISMISSAL_COOLDOWN_MS = 7 * 24 * 60 * 60 * 1000;
 const STORAGE_KEY = "what-is-dld-song-promo-dismissed-at";
+const COVER_ARTWORK_URL = import.meta.env.DEV
+  ? new URL(coverArtwork.url, "https://id-preview--51a660d5-acfd-48f5-86f4-38b3ac526ca2.lovable.app").toString()
+  : coverArtwork.url;
 
 const isCampaignActive = (now: number) => now >= CAMPAIGN_START && now < CAMPAIGN_END;
 
@@ -51,7 +54,7 @@ const SongPromoPopup = () => {
       <DialogContent className="max-h-[90vh] w-[calc(100%-2rem)] max-w-[720px] overflow-y-auto p-0 [&>button]:right-3 [&>button]:top-3 [&>button]:flex [&>button]:h-11 [&>button]:w-11 [&>button]:items-center [&>button]:justify-center [&>button]:bg-background [&>button]:opacity-100 sm:w-full">
         <div className="grid sm:grid-cols-[240px_1fr]">
           <img
-            src={coverArtwork.url}
+            src={COVER_ARTWORK_URL}
             alt="What Is DLD? song cover by Empowered DLD"
             width={1080}
             height={1080}

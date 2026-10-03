@@ -7,6 +7,9 @@ import { Button } from "@/components/ui/button";
 import coverArtwork from "@/assets/what-is-dld-cover.webp.asset.json";
 
 const STREAMING_SMART_LINK = "https://release.landr.com/what-is-dld";
+const COVER_ARTWORK_URL = import.meta.env.DEV
+  ? new URL(coverArtwork.url, "https://id-preview--51a660d5-acfd-48f5-86f4-38b3ac526ca2.lovable.app").toString()
+  : coverArtwork.url;
 
 const Music = () => {
   return (
@@ -28,7 +31,7 @@ const Music = () => {
             <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-16">
               <div className="mx-auto w-full max-w-[520px] lg:mx-0">
                 <img
-                  src={coverArtwork.url}
+                  src={COVER_ARTWORK_URL}
                   alt="What Is DLD? song cover by Empowered DLD"
                   width={1080}
                   height={1080}
