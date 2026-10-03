@@ -9,7 +9,7 @@ Per the uploaded spec: a permanent music section (page at `/music`) and a tempor
 Built as the long-term home for Empowered DLD music, structured so more songs can be added later.
 
 - **Cover art**: downloaded from the release artwork found on the smart link page, converted to WebP for web performance, imported as a project asset.
-- **Hero section**: heading "What Is DLD?", artist Empowered DLD, short line "A child-friendly song created to help children and families understand Developmental Language Disorder." Main button "Listen to the song" opens the existing streaming smart link (`https://release.landr.com/what-is-dld`, referenced in code as the streaming smart link, no LANDR branding shown).
+- **Hero section**: heading "What Is DLD?", artist Empowered DLD, short line "A child-friendly song created to help children understand DLD and learn what can help." Main button "Listen to the song" opens the existing streaming smart link (`https://release.landr.com/what-is-dld`, referenced in code as the streaming smart link, no LANDR branding shown).
 - **Why we made this song**: uses the supplied draft copy verbatim ("Children with DLD often grow up knowing that some things feel harder...").
 - **Use it to start a conversation**: prompt "Listen together, then ask your child: What helps your brain when language feels hard?"
 - **Help someone learn about DLD**: "Share What Is DLD? with a teacher, family member, friend, or someone who works with children."
