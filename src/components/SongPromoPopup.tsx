@@ -56,8 +56,8 @@ const SongPromoPopup = () => {
           <img
             src={COVER_ARTWORK_URL}
             alt="What Is DLD? song cover by Empowered DLD"
-            width={1080}
-            height={1080}
+            width={1024}
+            height={1024}
             className="aspect-[16/9] h-full w-full object-cover sm:aspect-square"
           />
           <div className="flex flex-col justify-center p-6 sm:p-8">
