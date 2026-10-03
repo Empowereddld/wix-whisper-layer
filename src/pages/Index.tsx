@@ -11,6 +11,7 @@ import ContactSection from "@/components/ContactSection";
 import ResourceLibraryCTA from "@/components/ResourceLibraryCTA";
 import Footer from "@/components/Footer";
 import SEOHead from "@/components/SEOHead";
+import SongPromoPopup from "@/components/SongPromoPopup";
 
 const organizationJsonLd = {
   "@context": "https://schema.org",
@@ -35,6 +36,7 @@ const Index = () => {
         path="/"
         jsonLd={organizationJsonLd}
       />
+      <SongPromoPopup />
       <Header />
       <main>
         <HeroSection />
