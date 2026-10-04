@@ -55,35 +55,35 @@ const SongPromoPopup = () => {
 
   return (
     <Dialog open={open} onOpenChange={(nextOpen) => !nextOpen && dismiss()}>
-      <DialogContent className="max-h-[90vh] w-[calc(100%-2rem)] max-w-[720px] overflow-y-auto p-0 [&>button]:right-3 [&>button]:top-3 [&>button]:flex [&>button]:h-11 [&>button]:w-11 [&>button]:items-center [&>button]:justify-center [&>button]:bg-background [&>button]:opacity-100 sm:w-full">
-        <div className="grid sm:grid-cols-[240px_1fr]">
+      <DialogContent className="max-h-[92dvh] w-[calc(100%-1.5rem)] max-w-[720px] overflow-y-auto p-0 [&>button]:right-3 [&>button]:top-3 [&>button]:flex [&>button]:h-10 [&>button]:w-10 [&>button]:items-center [&>button]:justify-center [&>button]:border [&>button]:border-primary [&>button]:bg-background [&>button]:opacity-100 sm:w-full">
+        <div className="grid grid-rows-[auto_auto] sm:grid-cols-[240px_1fr] sm:grid-rows-1">
           <img
             src={COVER_ARTWORK_URL}
             alt="What Is DLD? song cover by Empowered DLD"
             width={1024}
             height={1024}
-            className="aspect-[16/9] h-full w-full object-cover sm:aspect-square"
+            className="aspect-[16/9] w-full object-cover object-[center_32%] sm:aspect-auto sm:h-full sm:object-center"
             loading="eager"
             decoding="async"
             fetchPriority="high"
           />
-          <div className="flex flex-col justify-center p-6 sm:p-8">
+          <div className="flex flex-col justify-center bg-background px-5 pb-5 pt-5 sm:p-8">
             <DialogHeader className="text-left">
-              <p className="mb-1 text-sm font-bold uppercase text-primary">New from Empowered DLD</p>
-              <DialogTitle className="text-2xl font-bold leading-tight text-foreground sm:text-3xl">
+              <p className="mb-1 text-xs font-bold uppercase text-primary sm:text-sm">New from Empowered DLD</p>
+              <DialogTitle className="text-[22px] font-bold leading-tight text-foreground sm:text-3xl">
                 A song for DLD Awareness Month{" "}
                 <span className="align-middle text-lg font-semibold opacity-75 sm:text-xl" aria-hidden="true">
                   💜
                 </span>
               </DialogTitle>
-              <DialogDescription className="pt-3 text-[15px] leading-relaxed text-foreground/75">
+              <DialogDescription className="pt-2 text-sm leading-relaxed text-foreground/75 sm:pt-3 sm:text-[15px]">
                 <em>What Is DLD?</em> helps children and families understand DLD in a way they can hear, remember, and share.
               </DialogDescription>
             </DialogHeader>
             <Button
               asChild
               size="lg"
-              className="mt-6 min-h-[48px] w-full sm:w-fit"
+              className="mt-5 min-h-[48px] w-full sm:mt-6 sm:w-fit"
               onClick={() => {
                 trackStreamingClick("song-popup");
                 dismiss();
