@@ -43,7 +43,7 @@ const Music = () => {
               What Is DLD?
             </h1>
             <p className="text-[14px] md:text-[16px] text-white/80 leading-[1.7] max-w-[620px]">
-              A child-friendly song created to help children understand DLD 
+              A child-friendly song created to help children understand DLD  
 and learn what can help.
             </p>
             <a
