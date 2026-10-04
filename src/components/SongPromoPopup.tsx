@@ -36,6 +36,9 @@ const SongPromoPopup = () => {
       // Storage may be unavailable in strict privacy modes; the campaign can still show.
     }
 
+    const artwork = new Image();
+    artwork.src = COVER_ARTWORK_URL;
+
     const timer = window.setTimeout(() => setOpen(true), POPUP_DELAY_MS);
     return () => window.clearTimeout(timer);
   }, []);
@@ -59,6 +62,9 @@ const SongPromoPopup = () => {
             width={1024}
             height={1024}
             className="aspect-[16/9] h-full w-full object-cover sm:aspect-square"
+            loading="eager"
+            decoding="async"
+            fetchPriority="high"
           />
           <div className="flex flex-col justify-center p-6 sm:p-8">
             <DialogHeader className="text-left">
