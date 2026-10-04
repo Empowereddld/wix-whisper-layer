@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SEOHead from "@/components/SEOHead";
+import { trackStreamingClick } from "@/lib/streaming-clicks";
 import coverArtwork from "@/assets/what-is-dld-cover.webp.asset.json";
 
 const STREAMING_SMART_LINK = "https://release.landr.com/what-is-dld";
