@@ -70,7 +70,10 @@ const SongPromoPopup = () => {
             <DialogHeader className="text-left">
               <p className="mb-1 text-sm font-bold uppercase text-primary">New from Empowered DLD</p>
               <DialogTitle className="text-2xl font-bold leading-tight text-foreground sm:text-3xl">
-                A song for DLD Awareness Month 💜💛
+                A song for DLD Awareness Month{" "}
+                <span className="align-middle text-lg font-semibold opacity-75 sm:text-xl" aria-hidden="true">
+                  💜💛
+                </span>
               </DialogTitle>
               <DialogDescription className="pt-3 text-[15px] leading-relaxed text-foreground/75">
                 <em>What Is DLD?</em> helps children and families understand DLD in a way they can hear, remember, and share.
