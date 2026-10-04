@@ -13,7 +13,7 @@ import coverArtwork from "@/assets/what-is-dld-cover.webp.asset.json";
 
 const CAMPAIGN_START = new Date("2026-10-03T00:00:00-04:00").getTime();
 const CAMPAIGN_END = new Date("2026-11-01T00:00:00-04:00").getTime();
-const POPUP_DELAY_MS = 15_000;
+const POPUP_DELAY_MS = 1_000; // TEMP PREVIEW: normally 15_000
 const DISMISSAL_COOLDOWN_MS = 7 * 24 * 60 * 60 * 1000;
 const STORAGE_KEY = "what-is-dld-song-promo-dismissed-at";
 const COVER_ARTWORK_URL = import.meta.env.DEV
@@ -30,8 +30,9 @@ const SongPromoPopup = () => {
     if (!isCampaignActive(now)) return;
 
     try {
-      const dismissedAt = Number(localStorage.getItem(STORAGE_KEY) || 0);
-      if (dismissedAt && now - dismissedAt < DISMISSAL_COOLDOWN_MS) return;
+      // TEMP PREVIEW: cooldown bypassed so the popup shows on every load
+      // const dismissedAt = Number(localStorage.getItem(STORAGE_KEY) || 0);
+      // if (dismissedAt && now - dismissedAt < DISMISSAL_COOLDOWN_MS) return;
     } catch {
       // Storage may be unavailable in strict privacy modes; the campaign can still show.
     }
