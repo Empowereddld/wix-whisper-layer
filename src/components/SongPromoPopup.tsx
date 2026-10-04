@@ -80,7 +80,15 @@ const SongPromoPopup = () => {
                 <em>What Is DLD?</em> helps children and families understand DLD in a way they can hear, remember, and share.
               </DialogDescription>
             </DialogHeader>
-            <Button asChild size="lg" className="mt-6 min-h-[48px] w-full sm:w-fit" onClick={dismiss}>
+            <Button
+              asChild
+              size="lg"
+              className="mt-6 min-h-[48px] w-full sm:w-fit"
+              onClick={() => {
+                trackStreamingClick("song-popup");
+                dismiss();
+              }}
+            >
               <Link to="/music">
                 <Headphones className="mr-2 h-5 w-5" aria-hidden="true" />
                 Listen to the song
