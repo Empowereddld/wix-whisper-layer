@@ -23,7 +23,7 @@ const organizationJsonLd = {
   sameAs: [
     "https://www.facebook.com/share/g/1GCdxhWtfB/",
     "https://www.instagram.com/empowered.dld/",
-    "https://www.youtube.com/@EmpoweredDLDParenting"
+    "https://www.youtube.com/@empowereddld"
   ]
 };
 
