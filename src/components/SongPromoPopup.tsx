@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Headphones } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { trackStreamingClick } from "@/lib/streaming-clicks";
 import {
   Dialog,
   DialogContent,
