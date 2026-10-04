@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SEOHead from "@/components/SEOHead";
+import { trackStreamingClick } from "@/lib/streaming-clicks";
 import coverArtwork from "@/assets/what-is-dld-cover.webp.asset.json";
 
 const STREAMING_SMART_LINK = "https://release.landr.com/what-is-dld";
@@ -50,6 +51,7 @@ and learn what can help.
               href={STREAMING_SMART_LINK}
               target="_blank"
               rel="noreferrer"
+              onClick={() => trackStreamingClick("music-page")}
               className="inline-flex items-center gap-2 h-12 px-8 bg-white text-deep-purple text-[13px] font-bold tracking-[0.04em] rounded-md hover:bg-white/90 transition-all duration-200 mt-2"
             >
               <Headphones className="w-4 h-4" aria-hidden="true" />

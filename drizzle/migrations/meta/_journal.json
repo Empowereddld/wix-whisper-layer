@@ -15,6 +15,13 @@
       "when": 1790876914923,
       "tag": "0001_create_newsletter_consents",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1791073650823,
+      "tag": "0002_streaming_link_clicks",
+      "breakpoints": true
     }
   ]
 }

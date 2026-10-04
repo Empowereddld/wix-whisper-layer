@@ -1041,6 +1041,24 @@ export type Database = {
         }
         Relationships: []
       }
+      streaming_link_clicks: {
+        Row: {
+          created_at: string
+          id: string
+          source: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          source: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          source?: string
+        }
+        Relationships: []
+      }
       suppressed_emails: {
         Row: {
           created_at: string
