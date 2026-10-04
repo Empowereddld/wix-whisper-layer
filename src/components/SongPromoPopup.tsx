@@ -73,7 +73,7 @@ const SongPromoPopup = () => {
               <DialogTitle className="text-2xl font-bold leading-tight text-foreground sm:text-3xl">
                 A song for DLD Awareness Month{" "}
                 <span className="align-middle text-lg font-semibold opacity-75 sm:text-xl" aria-hidden="true">
-                  💜💛
+                  💜
                 </span>
               </DialogTitle>
               <DialogDescription className="pt-3 text-[15px] leading-relaxed text-foreground/75">
