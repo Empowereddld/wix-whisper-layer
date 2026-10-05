@@ -12,7 +12,7 @@ const BooksFaqSection = () => (
           {BOOKS_FAQ.map((faq, i) => (
             <AccordionItem key={i} value={`books-faq-${i}`} className="border-border">
               <AccordionTrigger className="text-[15px] md:text-[16px] font-bold text-foreground text-left py-5 hover:no-underline">
-                <h3 className="m-0 text-inherit font-inherit">{faq.question}</h3>
+                {faq.question}
               </AccordionTrigger>
               <AccordionContent className="text-[14px] text-muted-foreground leading-[1.8] pb-5">
                 {faq.answer}
