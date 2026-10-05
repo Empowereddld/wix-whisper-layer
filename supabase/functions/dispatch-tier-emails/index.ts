@@ -17,6 +17,21 @@ const corsHeaders = {
 const FOUNDER_SLOT_CAP = 20;
 const BASE_URL = "https://empowereddld.com";
 
+// Signed Founder claim token: "<waitlist_id>.<hmac>". Must match claim-founder-package.
+async function signClaimToken(id: string): Promise<string> {
+  const key = await crypto.subtle.importKey(
+    "raw",
+    new TextEncoder().encode(Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!),
+    { name: "HMAC", hash: "SHA-256" },
+    false,
+    ["sign"],
+  );
+  const sig = await crypto.subtle.sign("HMAC", key, new TextEncoder().encode(`founder-claim:${id}`));
+  const b64 = btoa(String.fromCharCode(...new Uint8Array(sig)))
+    .replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+  return `${id}.${b64}`;
+}
+
 // EF guide download link surfaced in Email 3 (Tier 2 reward).
 const EF_GUIDE_URL =
   "https://haafpznzuazanylcelse.supabase.co/storage/v1/object/public/resources/storypros/executive-function-skills-guide.pdf";
@@ -140,7 +155,7 @@ Deno.serve(async (req) => {
 
           const claimUrl =
             template === "email7_tier6_founder"
-              ? `${BASE_URL}/storypros/claim-founder?token=${u.id}`
+              ? `${BASE_URL}/storypros/claim-founder?token=${encodeURIComponent(await signClaimToken(u.id))}`
               : undefined;
 
           const { error: sendError } = await supabase.functions.invoke("send-waitlist-email", {
