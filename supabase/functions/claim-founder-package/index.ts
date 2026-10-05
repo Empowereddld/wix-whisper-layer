@@ -22,6 +22,28 @@ const isUuid = (s: unknown): s is string =>
   typeof s === "string" &&
   /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(s);
 
+// Verifies a signed claim token "<waitlist_id>.<hmac>" (issued in the Founder
+// email by dispatch-tier-emails). Returns the waitlist id, or null if invalid.
+async function verifyClaimToken(raw: unknown): Promise<string | null> {
+  if (typeof raw !== "string") return null;
+  const [id, sig] = raw.split(".");
+  if (!isUuid(id) || !sig) return null;
+  const key = await crypto.subtle.importKey(
+    "raw",
+    new TextEncoder().encode(Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!),
+    { name: "HMAC", hash: "SHA-256" },
+    false,
+    ["sign"],
+  );
+  const mac = await crypto.subtle.sign("HMAC", key, new TextEncoder().encode(`founder-claim:${id}`));
+  const expected = btoa(String.fromCharCode(...new Uint8Array(mac)))
+    .replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+  if (expected.length !== sig.length) return null;
+  let diff = 0;
+  for (let i = 0; i < expected.length; i++) diff |= expected.charCodeAt(i) ^ sig.charCodeAt(i);
+  return diff === 0 ? id : null;
+}
+
 const trimStr = (v: unknown, max = 500) => {
   if (typeof v !== "string") return "";
   return v.trim().slice(0, max);
