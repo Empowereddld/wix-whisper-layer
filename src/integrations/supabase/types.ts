@@ -262,6 +262,27 @@ export type Database = {
         }
         Relationships: []
       }
+      email_rate_limits: {
+        Row: {
+          bucket: string
+          created_at: string
+          id: number
+          key_hash: string
+        }
+        Insert: {
+          bucket: string
+          created_at?: string
+          id?: number
+          key_hash: string
+        }
+        Update: {
+          bucket?: string
+          created_at?: string
+          id?: number
+          key_hash?: string
+        }
+        Relationships: []
+      }
       email_send_log: {
         Row: {
           clicked_at: string | null
