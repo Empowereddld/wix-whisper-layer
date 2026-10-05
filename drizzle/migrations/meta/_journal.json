@@ -22,6 +22,13 @@
       "when": 1791073650823,
       "tag": "0002_streaming_link_clicks",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1791237171497,
+      "tag": "0003_email_rate_limits",
+      "breakpoints": true
     }
   ]
 }

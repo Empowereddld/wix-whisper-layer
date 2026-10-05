@@ -6,6 +6,7 @@
 // It always returns the same generic shape regardless of match, and rate-limits
 // by IP so attackers can't grind it for enumeration.
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { allow, clientIp } from "../_shared/rateLimit.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -23,12 +24,6 @@ const GENERIC_OK = {
   found: true,
   message: "If that email is on our waitlist, we just sent you a link.",
 };
-
-function clientIp(req: Request): string {
-  const fwd = req.headers.get("x-forwarded-for") || "";
-  const first = fwd.split(",")[0]?.trim();
-  return first || req.headers.get("cf-connecting-ip") || req.headers.get("x-real-ip") || "unknown";
-}
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -54,26 +49,13 @@ Deno.serve(async (req) => {
     const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const supabase = createClient(supabaseUrl, serviceKey);
 
-    // Rate limit by IP. Count attempts in the rolling window.
-    const ip = clientIp(req);
-    const windowStart = new Date(Date.now() - RATE_LIMIT_WINDOW_MIN * 60_000).toISOString();
-    const { count } = await supabase
-      .from("waitlist_recovery_attempts")
-      .select("id", { count: "exact", head: true })
-      .eq("ip_address", ip)
-      .gte("attempted_at", windowStart);
-
-    // Log this attempt regardless (so repeated probing keeps tripping the limit).
-    await supabase
-      .from("waitlist_recovery_attempts")
-      .insert({ ip_address: ip })
-      .then(() => {}, (e) => console.warn("recovery_attempts insert failed:", e));
-
-    if ((count ?? 0) >= RATE_LIMIT_MAX) {
-      // Don't send email, but still respond identically. The user sees the
-      // same UI either way; abusive scripts get no signal.
-      return okResponse();
-    }
+    // Rate limit by hashed IP and hashed email (no raw identifiers stored).
+    const allowed = await allow(supabase, [
+      { bucket: "find-dashboard:ip", id: clientIp(req), max: RATE_LIMIT_MAX, windowMin: RATE_LIMIT_WINDOW_MIN },
+      { bucket: "find-dashboard:email", id: email || "none", max: 3, windowMin: 60 * 24 },
+    ]);
+    // Same response either way so abusive scripts get no signal.
+    if (!allowed) return okResponse();
 
     if (!emailLooksValid) return okResponse();
 

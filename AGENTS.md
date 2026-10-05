@@ -1,3 +1,4 @@
 # Project architecture rules
 
-- Keep long-term music releases on the expandable `/music` page and isolate temporary promotions in dated home-page campaign components, so future songs do not require restructuring permanent content.
+- Keep long-term music releases on the expandable `/music` page and isolate temporary promotions in dated home-page campaign components, so future songs do not require restructuring permanent content.- Public email-sending functions rate limit through `supabase/functions/_shared/rateLimit.ts` (keyed hashes only, 2-day purge job), so no raw IPs or emails are stored.
+- Public `send-email` templates must match a just-saved form row and render from stored values; privileged callers prove identity with CRON_SECRET, the exact service key, or a verified admin session, never decoded token claims.
