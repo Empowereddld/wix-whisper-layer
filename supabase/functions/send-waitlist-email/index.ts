@@ -1186,7 +1186,9 @@ function getEmailTemplate(
 // (tier emails, founder scarcity, verification reminders, etc.) must be
 // invoked by trusted cron jobs / internal edge functions (x-cron-secret) or
 // by an admin user (JWT with admin role).
-const PUBLIC_TEMPLATES = new Set(["invite"]);
+// No templates are public. The old "invite" template had no content and its
+// form is not used anywhere on the site, so it was removed (security fix).
+const PUBLIC_TEMPLATES = new Set<string>();
 
 async function isPrivilegedWaitlistCall(req: Request): Promise<boolean> {
   const cronSecret = Deno.env.get("CRON_SECRET");
@@ -1196,18 +1198,10 @@ async function isPrivilegedWaitlistCall(req: Request): Promise<boolean> {
   const token = auth.startsWith("Bearer ") ? auth.slice(7) : "";
   if (!token) return false;
 
-  // Direct service-role match (works for both legacy JWT and new sb_secret_* keys).
+  // Exact server-key match only. Tokens are never trusted based on decoded,
+  // unverified claims.
   const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || "";
   if (serviceKey && token === serviceKey) return true;
-
-  // Legacy service-role JWT decode (kept for backward compatibility).
-  try {
-    const parts = token.split(".");
-    if (parts.length === 3) {
-      const payload = JSON.parse(atob(parts[1].replace(/-/g, "+").replace(/_/g, "/")));
-      if (payload?.role === "service_role") return true;
-    }
-  } catch { /* fall through to admin check */ }
 
   // Otherwise check admin role for the authenticated user.
   try {
