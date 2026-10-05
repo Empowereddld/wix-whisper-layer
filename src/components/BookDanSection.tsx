@@ -9,7 +9,7 @@ const BookDanSection = () => {
           <div className="lg:w-[38%] flex-shrink-0">
             <img
               src={bookDan}
-              alt="Dan and the Paper Airplane book cover"
+              alt="Cover of Dan and the Paper Airplane, a children's book about DLD"
               className="w-full h-auto object-contain rounded-xl"
             />
           </div>

@@ -9,7 +9,7 @@ const BookMakeFriendsSection = () => {
           <div className="lg:w-[38%] flex-shrink-0">
             <img
               src={bookMakeFriends}
-              alt="Dan & Daria Make Friends book cover"
+              alt="Cover of Dan & Daria Make Friends, a children's book about DLD and friendship"
               className="w-full h-auto object-contain rounded-xl"
             />
           </div>
@@ -17,7 +17,7 @@ const BookMakeFriendsSection = () => {
           {/* Text */}
           <div className="flex-1 flex flex-col justify-center py-4 lg:py-8">
             <p className="text-[11px] md:text-[12px] font-semibold text-foreground tracking-wide mb-2">
-              <span className="font-bold">Book 3:</span> A story about friendship, self-advocacy, and being brave
+              <span className="font-bold">Book 2:</span> A story about friendship, self-advocacy, and being brave
             </p>
             <h2 className="text-[22px] md:text-[28px] lg:text-[32px] font-black text-foreground leading-[1.12] mb-3">
               Dan & Daria Make Friends

@@ -8,7 +8,7 @@ const BookBirthdayPartySection = () => {
           {/* Text */}
           <div className="flex-1 flex flex-col justify-center py-4 lg:py-8">
             <p className="text-[11px] md:text-[12px] font-semibold text-foreground tracking-wide mb-2">
-              <span className="font-bold">Book 4:</span> Explores what DLD looks like in a social setting
+              <span className="font-bold">Book 3:</span> Explores what DLD looks like in a social setting
             </p>
             <h2 className="text-[22px] md:text-[28px] lg:text-[32px] font-black text-foreground leading-[1.12] mb-3">
               Dan and Daria Go to a Birthday Party
@@ -46,7 +46,7 @@ const BookBirthdayPartySection = () => {
           <div className="lg:w-[38%] flex-shrink-0">
             <img
               src={bookBirthdayParty}
-              alt="Dan and Daria Go to a Birthday Party book cover"
+              alt="Cover of Dan and Daria Go to a Birthday Party, a children's book about DLD"
               className="w-full h-auto object-contain rounded-xl"
             />
           </div>
