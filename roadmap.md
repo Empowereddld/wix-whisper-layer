@@ -31,3 +31,12 @@
 - [x] Verify popup behavior, desktop/mobile music page, metadata, sitemap, and build
 
 - [paused] Set up Google Analytics to track "Listen to What Is DLD?" clicks — waiting on user (husband to help). Existing streaming_link_clicks counter already tracks listens in the meantime.
+
+## Critical security fixes (approved 2026-10-05, one batch at a time)
+- [x] Batch 1: A1/A2 + C1 + A6 + rate limits on public email functions (hashed IDs, 2-day retention)
+- [ ] Fix internal callers that use functions.invoke (tier, nudge, scarcity, inactivity, profile emails) — blocked since July; waiting on user OK because 13 queued tier emails will send
+- [ ] Batch 2: A5 founder claims (signed link only, minimal status, confirm before replacing a submission)
+- [ ] Batch 3: A4 + A3 + B1 (dashboard token with fixed expiry and absolute max lifetime)
+- [ ] Batch 4: B2 + B3 (report first: existing unsubscribe links use ?email= with no signed token)
+- [ ] Review function + outbound email logs for past abuse; then delete old waitlist_recovery_attempts rows
+- [ ] Retry deep scan
