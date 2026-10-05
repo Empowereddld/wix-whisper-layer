@@ -1,97 +1,51 @@
-# Critical security findings: review and fix plan
+# Critical security fixes: batched plan (based on saved deep scan)
 
-## Step 0: Fresh deep scan (you start this)
-I can't start the Deep Security Scan myself. Only the "Run deep scan" button in the Security panel does that. Please tap it (it takes about 7 minutes). The report below comes from the latest saved deep scan, which is 10 days old. Once the new scan finishes, I'll compare against this list before fixing anything. A new scan may add findings or drop some.
+The fresh deep scan keeps failing, so this uses the saved Critical findings. I re-checked the current code today. **All 10 are still present.** One extra problem turned up (see A5).
 
-The saved scan has **10 Critical findings**: 6 abusable endpoints, 3 access control, 1 account security. It has **no Critical findings** under "Exposed personal & sensitive data" or "Unsafe input & injection" (those groups only have Warnings and Info). All 10 are backend functions anyone can reach without signing in, so **they are all reachable on the live site**. Your sign-in walls don't protect them.
+## Re-check results (current code)
+- **A1/A2** `send-waitlist-email`: the "invite" template is still public and sends to any typed-in address. No rate limit.
+- **C1** same function: still trusts any token that *says* "service_role" without checking its signature.
+- **A6** `send-email`: public template mode still lets the caller choose the recipient. Callers: contact form, organizations lead form, footer, signup role page, admin emails page. No rate limit.
+- **A5** `claim-founder-package`: still accepts a plain waitlist ID and returns the full saved address and phone. **New problem:** the earlier fix added signed links to the Founder email, but the claim function still only accepts plain IDs, so a real signed link would be rejected. No Founders exist yet, so no one is affected today.
+- **A4** `storybuilders-signup`: re-entering an existing email still returns that person's referral code and points.
+- **A3** `lookup-storypros-by-ref`: lookup by referral code still returns email, child age, hopes and other details.
+- **B1** `update-waitlist-profile`: edits by referral code alone, with no proof of ownership.
+- **B2** `email-unsubscribe`: still accepts any typed-in email.
+- **B3** `emailoctopus-subscribe`: public "unsubscribe" action still exists.
 
----
+## How every batch runs
+Before: note a rollback point (the version before the batch, restorable from History), and re-read the affected functions and the pages that call them.
+After: redeploy only those functions, test allowed and refused calls, run the real user flow, confirm login, signup, password reset, Resource Library and admin still work, then report to you. **I stop and wait for your OK before the next batch.**
 
-## Group A: Unauthenticated & abusable endpoints (6)
+## Batch 1: email abuse (A1/A2 + C1 + A6)
+- C1: remove the "decode without checking" shortcut. Trusted callers must use the scheduler secret, the exact server key, or a real admin sign-in. Check every scheduler and internal caller sends one of these.
+- A1/A2: the invite needs the sender's referral code and goes only to a friend address that passes checks. Limits: a few per sender per day, per friend address, and per visitor network, plus a site-wide hourly cap. The page cannot set the subject or body.
+- A6: public templates go only to the address saved in that same form submission (contact, lead, footer, signup), with the content built on the server. Custom and bulk sends need admin sign-in.
+- Rate limiting on **every** public email-sending function: `send-waitlist-email`, `send-email`, `resend-verification-waitlist`, `find-storypros-dashboard` and the Founder confirmation. Limits per visitor network and per recipient, kept in a small server-only log table.
+- Tests: forged token refused, made-up recipient refused, the limit triggers after repeat calls; a real invite, contact form, lead form, footer signup and admin test send all still work, and a scheduled tier email still sends.
 
-**A1 + A2. Waitlist email function sends "invite" emails to any address**
-- Where: `send-waitlist-email` function, `invite` template path (skips the privileged-caller check)
-- Plain language: anyone can make the function send a branded Story Pros email from hello@mail.empowereddld.com to any address.
-- Attacker could: send spam under your name, damage your sending domain's reputation, and use up your Resend quota.
-- Fix: require the visitor's own referral code and send only to the email saved for that code, never a typed-in address. Limit how often each code can send invites.
-- Could affect: the Story Pros "invite a friend" button only. Signup, verification and tier emails are unaffected.
-- Test: try a direct call with a made-up recipient (should be rejected), then do a real invite from the dashboard (should work).
+## Batch 2: Founder claims (A5)
+- Accept only the signed link from the Founder email (this also fixes the mismatch above). Refuse plain IDs.
+- After a claim exists, return only minimal status: submitted yes/no, date, slot number and first name. **Never return the saved address, phone or notes.** Editing becomes "submit your details again", which replaces the old record.
+- Tests: plain ID refused, tampered link refused, valid link loads and saves, the response has no address or phone.
 
-**A3. Story Pros lookup by referral code returns personal details**
-- Where: `lookup-storypros-by-ref` function, which reads `storybuilders_waitlist`
-- Plain language: anyone who has or guesses a referral code (codes appear in shared links) gets back the email, name, child age and "hopes" answers.
-- Attacker could: collect personal info from any shared referral link.
-- Fix: return only what the page needs (first name, points and tier) and never the email, child age or hopes. Check what the dashboard actually uses first.
-- Could affect: Story Pros dashboard recovery and the `?ref=` link loading. Existing users keep their access.
-- Test: call the function with a code and confirm no email or child info comes back. Open the dashboard through a ref link and confirm it still loads.
+## Batch 3: Story Pros identity (A4 + A3 + B1)
+- New rule: **a referral code is never proof of ownership.** Dashboard access uses a server-signed, expiring dashboard token, issued only after email verification or the "Find my dashboard" email link. Kept in the browser and renewed on use.
+- A4: an existing email at signup gets a neutral "check your email" message plus a dashboard link sent by email. The code is never shown.
+- A3: lookup by referral code returns only public share info (first name). Full dashboard data needs the dashboard token.
+- B1: profile edits need the dashboard token, only profile fields can change, and points are never set by the caller.
+- Existing members: anyone without a token is asked to use "Find my dashboard" once. Tests cover a new signup, a repeat signup, verify, recovery, profile edit, a code-only call (refused) and an expired token (refused).
 
-**A4. Story Pros signup reveals existing members' referral code and points**
-- Where: `storybuilders-signup` function, duplicate-email path
-- Plain language: entering someone else's email returns their referral code. That code then unlocks A3, A6 and C1.
-- Attacker could: take over someone's waitlist dashboard identity just by knowing their email.
-- Fix: when the email already exists, show a neutral "check your email" message and email the dashboard link to that address. Never return the code on screen.
-- Could affect: Story Pros signup for people who are already on the list. They'll get their link by email instead of being sent straight in. New signups are unchanged.
-- Test: sign up again with an existing email (no code shown, recovery email arrives). Do a fresh signup (works as it does today).
+## Batch 4: mailing list (B2 + B3)
+- B2: unsubscribe works only with the signed token in email links. I'll check that existing email links carry tokens so old links keep working.
+- B3: remove the public unsubscribe action. Subscribe and tagging stay as they are.
+- Tests: typed-in address refused, real unsubscribe link works, footer signup still adds the newsletter tag.
 
-**A5. Founder claim form exposes shipping address and phone**
-- Where: `claim-founder-package` function (GET), table `founder_claims`
-- Plain language: anyone with a person's waitlist ID can read their saved shipping address and phone number.
-- Attacker could: read home addresses of Tier 6 founders.
-- Fix: require a signed, time-limited claim link (or the verified waitlist session), and never return the full saved address. Show only "already submitted".
-- Could affect: Tier 6 founder claim emails and links. Existing links may need to be re-sent.
-- Test: plain-ID request gets refused, a valid signed link loads, and a submission saves.
-
-**A6. General email function sends custom content to any recipient**
-- Where: `send-email` function (for example the `contact_user_confirmation` template)
-- Plain language: anyone can choose the recipient and the message text, then send it through your email account.
-- Attacker could: send phishing emails that look like they come from Empowered DLD.
-- Fix: confirmation templates go only to the address just saved in the contact form, and the message is built on the server, not from the request. Admin-only templates require an admin sign-in.
-- Could affect: contact and lead form confirmation emails. Login and password reset emails come from a separate system and are not touched.
-- Test: a direct call with a made-up recipient or text is rejected, and submitting the real contact form still sends the confirmation.
-
-## Group B: Access control & authorization (3)
-
-**B1. Anyone can edit another waitlist profile and points**
-- Where: `update-waitlist-profile` function, which updates `storybuilders_waitlist` by referral code
-- Attacker could: change someone's name, details or points, or boost their own points to unlock rewards.
-- Fix: require proof of ownership (a verified dashboard token, not just the code), allow only profile fields, and never allow points changes.
-- Could affect: Story Pros dashboard profile editing.
-- Test: editing with only a code is refused, and editing from a real dashboard session works.
-
-**B2. Anyone can block all emails to another person**
-- Where: `email-unsubscribe` function, which writes to `suppressed_emails`
-- Attacker could: stop every email (including Story Pros and confirmations) from reaching any address.
-- Fix: accept only the signed unsubscribe token from the email link, not a typed-in address.
-- Could affect: unsubscribe links in emails already sent, if they don't carry a token. I'll check first and keep old links working.
-- Test: typed-in address is refused, and a real unsubscribe link still works.
-
-**B3. Anyone can unsubscribe any address from the newsletter**
-- Where: `emailoctopus-subscribe` function, "unsubscribe" action
-- Attacker could: quietly remove your subscribers from EmailOctopus.
-- Fix: remove the public unsubscribe action. EmailOctopus's own unsubscribe link handles this. Subscribe and tagging stay as they are.
-- Could affect: nothing that people use. Footer, Resource Library and Story Pros syncing are unchanged.
-- Test: the unsubscribe action gets refused, and a footer signup still adds the newsletter tag.
-
-## Group C: Authentication & account security (1)
-
-**C1. Fake "admin" tokens accepted by the waitlist email function**
-- Where: `send-waitlist-email`, the check that decides whether a call comes from the system
-- Plain language: the function trusts a token's claim of "I'm the system" without checking its signature, so anyone can forge one.
-- Attacker could: send any privileged Story Pros email to anyone.
-- Fix: verify the token properly, or compare against a server-only secret (`CRON_SECRET` already exists).
-- Could affect: scheduled reminder and tier emails if the scheduler's header doesn't match. I'll update the caller in the same change.
-- Test: a forged token is refused, then trigger a scheduled email run and confirm emails still send.
-
----
-
-## Proposed fix order (one group at a time, re-scan after each)
-1. **Batch 1, email abuse:** A1/A2 + C1 + A6. Same functions, highest abuse risk, lowest risk to users.
-2. **Batch 2, mailing list:** B2 + B3.
-3. **Batch 3, Story Pros identity:** A4 + A3 + B1. These depend on each other and need careful dashboard testing.
-4. **Batch 4, founder claims:** A5.
-
-None of these batches changes login, signup, password reset, Resource Library access or admin sign-in. Batch 3 changes how returning Story Pros members get back to their dashboard.
+## After all batches
+- Review recent function logs and outbound email logs for past abuse: unusual invite volume, unknown recipients, forbidden-call warnings, suppression spikes. Report findings. Rotate credentials only if the evidence calls for it.
+- Retry the deep scan, then mark the confirmed findings as fixed.
 
 ## Technical notes
-- Before each batch, re-read the function code to confirm the scanner's line references, and check the related front-end callers.
-- After each batch: redeploy the affected functions, run direct calls (good and bad), click through the real flow, then you re-run the deep scan and I mark findings as fixed.
+- Rate limit store: new table, service-role only (grants plus RLS with no client policies), keyed by function, IP hash and recipient, with a time window.
+- Dashboard token: HMAC over waitlist id + expiry using a new server secret, checked in lookup, update-profile and invite.
+- Founder token: reuse the existing `verifyClaimToken`.
