@@ -62,7 +62,8 @@ const SongPromoPopup = () => {
             alt="What Is DLD? song cover by Empowered DLD"
             width={1024}
             height={1024}
-            className="aspect-square w-full object-cover object-center"
+            className="aspect-square w-full object-cover object-center sm:aspect-auto sm:h-full"
+
 
             loading="eager"
             decoding="async"
