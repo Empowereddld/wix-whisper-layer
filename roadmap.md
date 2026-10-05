@@ -29,3 +29,5 @@
 - [x] Add `/music` metadata, lazy route, and sitemap entry
 - [x] Add home-page-only delayed popup for October 3–31 with a 7-day dismissal cooldown
 - [x] Verify popup behavior, desktop/mobile music page, metadata, sitemap, and build
+
+- [paused] Set up Google Analytics to track "Listen to What Is DLD?" clicks — waiting on user (husband to help). Existing streaming_link_clicks counter already tracks listens in the meantime.
