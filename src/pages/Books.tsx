@@ -9,96 +9,117 @@ import BookBirthdayPartySection from "@/components/BookBirthdayPartySection";
 import BookTheatreExchangeSection from "@/components/BookTheatreExchangeSection";
 import WhoAreTheseBooksForSection from "@/components/WhoAreTheseBooksForSection";
 import ChoosePathCTA from "@/components/ChoosePathCTA";
-import SEOHead from "@/components/SEOHead";
+import SEOHead, { BASE_URL } from "@/components/SEOHead";
+import BooksIntro from "@/components/books/BooksIntro";
+import BooksGroupHeading from "@/components/books/BooksGroupHeading";
+import BooksFaqSection from "@/components/books/BooksFaqSection";
+import ContinueExploringSection from "@/components/books/ContinueExploringSection";
+import { BOOKS_FAQ } from "@/components/books/booksFaq";
+import coverDan from "@/assets/book-dan-paper-airplane.webp";
+import coverGuide from "@/assets/book-parent-guidebook.webp";
+import coverFriends from "@/assets/book-dan-daria-make-friends.webp";
+import coverParty from "@/assets/book-birthday-party-cover.webp";
+import coverTheatre from "@/assets/book-theatre-exchange-cover.webp";
 
-const BOOKS_ITEM_LIST_JSON_LD = {
+const PAGE_URL = `${BASE_URL}/shop/books`;
+const ORG_ID = `${BASE_URL}/#organization`;
+const abs = (src: string) => (src.startsWith("http") ? src : `${BASE_URL}${src}`);
+
+const AUTHORS = [
+  {
+    "@type": "Person",
+    "@id": `${BASE_URL}/#jinean-whitley`,
+    name: "Jinean Whitley",
+    honorificSuffix: "M.Sc.A.",
+    jobTitle: "Speech-Language Pathologist",
+    worksFor: { "@id": ORG_ID },
+  },
+  {
+    "@type": "Person",
+    "@id": `${BASE_URL}/#camesha-russell`,
+    name: "Camesha Russell",
+    jobTitle: "Educator",
+    worksFor: { "@id": ORG_ID },
+  },
+];
+const authorRefs = AUTHORS.map((a) => ({ "@id": a["@id"] }));
+
+const BOOKS = [
+  { id: "dan-and-the-paper-airplane", name: "Dan and the Paper Airplane", image: coverDan, position: 1,
+    description: "A picture book that helps children recognize language challenges and experience what it feels like to live with DLD.",
+    inLanguage: ["en", "fr", "es", "cs", "cy", "fa"] },
+  { id: "dan-and-daria-make-friends", name: "Dan & Daria Make Friends", image: coverFriends, position: 2,
+    description: "A story about friendship, self-advocacy, and being brave for children with Developmental Language Disorder.",
+    inLanguage: ["en", "fr", "cy"] },
+  { id: "dan-and-daria-birthday-party", name: "Dan and Daria Go to a Birthday Party", image: coverParty, position: 3,
+    description: "Explores what DLD looks like in social settings and helps children find their voice through the Pause Button strategy.",
+    inLanguage: "en" },
+  { id: "dan-and-daria-theatre-exchange", name: "Dan & Daria and The Theatre Exchange", image: coverTheatre, position: 4,
+    description: "A story about being brave when words are hard, exploring anxiety, self-advocacy, and finding people who understand DLD.",
+    inLanguage: "en" },
+];
+
+const bookEntity = (b: { id: string; name: string; image: string; description: string; inLanguage: string | string[] }, extra: Record<string, unknown> = {}) => ({
+  "@type": "Book",
+  "@id": `${PAGE_URL}#${b.id}`,
+  name: b.name,
+  description: b.description,
+  image: abs(b.image),
+  url: "https://mybook.to/nwINcA",
+  bookFormat: "https://schema.org/Paperback",
+  inLanguage: b.inLanguage,
+  author: authorRefs,
+  publisher: { "@id": ORG_ID },
+  ...extra,
+});
+
+const SERIES_ID = `${PAGE_URL}#series`;
+
+const BOOKS_JSON_LD = {
   "@context": "https://schema.org",
-  "@type": "ItemList",
-  name: "Living Life with DLD Book Series",
-  description:
-    "A five-book series that helps children understand Developmental Language Disorder (DLD), feel confident, and know they are not alone.",
-  itemListOrder: "https://schema.org/ItemListOrderAscending",
-  numberOfItems: 5,
-  itemListElement: [
+  "@graph": [
     {
-      "@type": "ListItem",
-      position: 1,
-      item: {
-        "@type": "Book",
-        name: "Dan and the Paper Airplane",
-        bookFormat: "https://schema.org/Paperback",
-        inLanguage: "en",
-        author: { "@type": "Person", name: "Camesha Russell" },
-        publisher: { "@type": "Organization", name: "Empowered DLD" },
-        description:
-          "A picture book that helps children recognize language challenges and experience what it feels like to live with DLD.",
-        url: "https://mybook.to/nwINcA",
-        image: "https://www.empowereddld.com/og-empowered-dld.png",
-      },
+      "@type": "Organization",
+      "@id": ORG_ID,
+      name: "Empowered DLD",
+      url: BASE_URL,
+      logo: `${BASE_URL}/og-empowered-dld.png`,
+      founder: authorRefs,
     },
+    ...AUTHORS,
     {
-      "@type": "ListItem",
-      position: 2,
-      item: {
-        "@type": "Book",
+      "@type": "BookSeries",
+      "@id": SERIES_ID,
+      name: "Living Life with DLD",
+      description: "A series of children's books about Developmental Language Disorder (DLD).",
+      author: authorRefs,
+      publisher: { "@id": ORG_ID },
+    },
+    ...BOOKS.map((b) => bookEntity(b, { isPartOf: { "@id": SERIES_ID }, position: b.position })),
+    bookEntity(
+      {
+        id: "parent-guidebook",
         name: "Dan and the Paper Airplane: Parent Guidebook",
-        bookFormat: "https://schema.org/Paperback",
+        image: coverGuide,
+        description: "A practical companion for parents with conversation prompts, strategies, and confidence-building activities to use alongside Dan and the Paper Airplane.",
         inLanguage: "en",
-        author: { "@type": "Person", name: "Camesha Russell" },
-        publisher: { "@type": "Organization", name: "Empowered DLD" },
-        description:
-          "A practical companion for parents with conversation prompts, strategies, and confidence-building activities for children with DLD.",
-        url: "https://mybook.to/nwINcA",
-        image: "https://www.empowereddld.com/og-empowered-dld.png",
       },
+      { audience: { "@type": "Audience", audienceType: "Parents" } },
+    ),
+    {
+      "@type": "ItemList",
+      name: "Living Life with DLD Storybooks",
+      itemListOrder: "https://schema.org/ItemListOrderAscending",
+      numberOfItems: BOOKS.length,
+      itemListElement: BOOKS.map((b) => ({ "@type": "ListItem", position: b.position, item: { "@id": `${PAGE_URL}#${b.id}` } })),
     },
     {
-      "@type": "ListItem",
-      position: 3,
-      item: {
-        "@type": "Book",
-        name: "Dan & Daria Make Friends",
-        bookFormat: "https://schema.org/Paperback",
-        inLanguage: "en",
-        author: { "@type": "Person", name: "Camesha Russell" },
-        publisher: { "@type": "Organization", name: "Empowered DLD" },
-        description:
-          "A story about friendship, self-advocacy, and being brave for children with Developmental Language Disorder.",
-        url: "https://mybook.to/nwINcA",
-        image: "https://www.empowereddld.com/og-empowered-dld.png",
-      },
-    },
-    {
-      "@type": "ListItem",
-      position: 4,
-      item: {
-        "@type": "Book",
-        name: "Dan and Daria Go to a Birthday Party",
-        bookFormat: "https://schema.org/Paperback",
-        inLanguage: "en",
-        author: { "@type": "Person", name: "Camesha Russell" },
-        publisher: { "@type": "Organization", name: "Empowered DLD" },
-        description:
-          "Explores what DLD looks like in social settings and helps children find their voice through the Pause Button strategy.",
-        url: "https://mybook.to/nwINcA",
-        image: "https://www.empowereddld.com/og-empowered-dld.png",
-      },
-    },
-    {
-      "@type": "ListItem",
-      position: 5,
-      item: {
-        "@type": "Book",
-        name: "Dan & Daria and The Theatre Exchange",
-        bookFormat: "https://schema.org/Paperback",
-        inLanguage: "en",
-        author: { "@type": "Person", name: "Camesha Russell" },
-        publisher: { "@type": "Organization", name: "Empowered DLD" },
-        description:
-          "A story about being brave when words are hard, exploring anxiety, self-advocacy, and finding people who understand DLD.",
-        url: "https://mybook.to/nwINcA",
-        image: "https://www.empowereddld.com/og-empowered-dld.png",
-      },
+      "@type": "FAQPage",
+      mainEntity: BOOKS_FAQ.map((f) => ({
+        "@type": "Question",
+        name: f.question,
+        acceptedAnswer: { "@type": "Answer", text: f.answer },
+      })),
     },
   ],
 };
@@ -107,10 +128,10 @@ const Books = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <SEOHead
-        title="Living Life with DLD Book Series | Empowered DLD"
-        description="The Living Life with DLD book series helps children understand DLD, feel confident, and know they are not alone. A warm entry point for every family."
+        title="DLD Books for Children | Living Life with DLD"
+        description="Explore the Living Life with DLD children's book series from Empowered DLD. Relatable stories about communication, friendship, school, self-advocacy, and everyday life with Developmental Language Disorder."
         path="/shop/books"
-        jsonLd={BOOKS_ITEM_LIST_JSON_LD}
+        jsonLd={BOOKS_JSON_LD}
         breadcrumbs={[
           { name: "Home", path: "/" },
           { name: "Shop", path: "/shop" },
@@ -120,13 +141,18 @@ const Books = () => {
       <Header />
       <main className="flex-1">
         <BooksHero />
+        <BooksIntro />
         <MoreThanAStorySection />
+        <BooksGroupHeading title="Living Life with DLD Storybooks" />
         <BookDanSection />
-        <BookGuidebookSection />
         <BookMakeFriendsSection />
         <BookBirthdayPartySection />
         <BookTheatreExchangeSection />
+        <BooksGroupHeading title="Parent Companion Guide" />
+        <BookGuidebookSection />
         <WhoAreTheseBooksForSection />
+        <BooksFaqSection />
+        <ContinueExploringSection />
         <ChoosePathCTA />
       </main>
       <Footer />

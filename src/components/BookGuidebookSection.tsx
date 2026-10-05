@@ -2,13 +2,13 @@ import bookGuidebook from "@/assets/book-parent-guidebook.webp";
 
 const BookGuidebookSection = () => {
   return (
-    <section className="py-6 md:py-10">
+    <section id="parent-guide" className="py-6 md:py-10 scroll-mt-24">
       <div className="max-w-[1100px] mx-auto px-6 md:px-10">
         <div className="flex flex-col-reverse lg:flex-row items-start gap-8 lg:gap-12">
           {/* Text */}
           <div className="flex-1 flex flex-col justify-center py-4 lg:py-8">
             <p className="text-[11px] md:text-[12px] font-semibold text-foreground tracking-wide mb-2">
-              <span className="font-bold">Book 2:</span> A practical companion for support at home
+              <span className="font-bold">Companion guide:</span> A practical companion for support at home
             </p>
             <h2 className="text-[22px] md:text-[28px] lg:text-[32px] font-black text-foreground leading-[1.12] mb-3">
               Dan and the Paper Airplane: Parent Guidebook
@@ -39,7 +39,7 @@ const BookGuidebookSection = () => {
           <div className="lg:w-[38%] flex-shrink-0">
             <img
               src={bookGuidebook}
-              alt="Discussing DLD with Your Child – Parent Guidebook cover"
+              alt="Cover of Discussing DLD with Your Child, the parent guidebook for Dan and the Paper Airplane"
               className="w-full h-auto object-contain rounded-xl"
             />
           </div>

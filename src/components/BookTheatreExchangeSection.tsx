@@ -9,7 +9,7 @@ const BookTheatreExchangeSection = () => {
           <div className="lg:w-[38%] flex-shrink-0">
             <img
               src={bookTheatreExchange}
-              alt="Dan & Daria and The Theatre Exchange book cover"
+              alt="Cover of Dan & Daria and The Theatre Exchange, a children's book about DLD"
               className="w-full h-auto object-contain rounded-xl"
             />
           </div>
@@ -17,7 +17,7 @@ const BookTheatreExchangeSection = () => {
           {/* Text */}
           <div className="flex-1 flex flex-col justify-center py-4 lg:py-8">
             <p className="text-[11px] md:text-[12px] font-semibold text-foreground tracking-wide mb-2">
-              <span className="font-bold">Book 5:</span> A story about being brave when words are hard
+              <span className="font-bold">Book 4:</span> A story about being brave when words are hard
             </p>
             <h2 className="text-[22px] md:text-[28px] lg:text-[32px] font-black text-foreground leading-[1.12] mb-3">
               Dan & Daria and The Theatre Exchange

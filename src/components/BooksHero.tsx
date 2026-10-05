@@ -10,9 +10,12 @@ const BooksHero = () => {
             <span className="inline-block bg-deep-purple text-deep-purple-foreground text-[12px] md:text-[14px] lg:text-[16px] font-bold uppercase tracking-[0.14em] px-6 md:px-8 py-2 md:py-2.5 rounded-sm mb-4 md:mb-6">
               Books
             </span>
-            <h1 className="text-[30px] md:text-[36px] lg:text-[48px] font-black text-foreground leading-[1.12] mb-4 md:mb-5 max-w-[500px]">
-              The Living Life with DLD Book Series
+            <h1 className="text-[30px] md:text-[36px] lg:text-[48px] font-black text-foreground leading-[1.12] mb-3 max-w-[540px]">
+              Children's Books About Developmental Language Disorder (DLD)
             </h1>
+            <p className="text-[16px] md:text-[18px] lg:text-[20px] font-bold text-primary leading-[1.3] mb-4 md:mb-5 max-w-[500px]">
+              The Living Life with DLD Book Series
+            </p>
             <p className="text-[13px] md:text-[14px] lg:text-[15px] text-muted-foreground leading-[1.7] mb-6 md:mb-8 max-w-[500px]">
               Meet Dan, Daria, Ming, and Millen. Four characters. Four stories. One mission: helping children with DLD feel understood, represented, and empowered.
             </p>
