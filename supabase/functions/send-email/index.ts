@@ -17,6 +17,95 @@
 // Filters recipients against the suppressed_emails list before sending.
 
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
+import { allow, clientIp } from "../_shared/rateLimit.ts";
+
+const SUBMISSION_WINDOW_MIN = 15;
+
+function likeEscape(s: string) {
+  return s.replace(/[\\%_]/g, (c) => `\\${c}`);
+}
+
+type Resolved =
+  | { ok: true; to: string; data: Record<string, unknown> }
+  | { ok: false; status: number; error: string };
+
+// Checks that a public template matches a form submission saved in the last
+// few minutes, and returns the stored values to render with. Also rate limits
+// by hashed visitor network and hashed recipient.
+async function resolvePublicTemplate(
+  req: Request,
+  template: string,
+  callerTo: string,
+  data: Record<string, unknown>,
+): Promise<Resolved> {
+  const admin = createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!);
+  const since = new Date(Date.now() - SUBMISSION_WINDOW_MIN * 60_000).toISOString();
+  const notFound: Resolved = { ok: false, status: 403, error: "No matching recent submission" };
+
+  let to = callerTo.trim().toLowerCase();
+  let out: Record<string, unknown> = {};
+
+  // Which address the submission must match.
+  const subjectEmail = template === "contact_internal_notification"
+    ? String(data.email ?? "").trim().toLowerCase()
+    : to;
+  if (template !== "hub_welcome" && (!subjectEmail || subjectEmail.length > 320 || !subjectEmail.includes("@"))) {
+    return { ok: false, status: 400, error: "Valid email required" };
+  }
+
+  const latest = async (table: string, cols: string) => {
+    const { data: rows } = await admin.from(table).select(cols)
+      .ilike("email", likeEscape(subjectEmail)).gte("created_at", since)
+      .order("created_at", { ascending: false }).limit(1);
+    return (rows && rows[0]) as Record<string, any> | undefined;
+  };
+
+  switch (template) {
+    case "contact_user_confirmation":
+    case "contact_internal_notification": {
+      const row = await latest("contact_submissions", "first_name, last_name, email, company_name, position, questions");
+      if (!row) return notFound;
+      out = {
+        firstName: row.first_name, lastName: row.last_name ?? "", email: row.email,
+        companyName: row.company_name, position: row.position ?? "", questions: row.questions,
+      };
+      break;
+    }
+    case "newsletter_welcome": {
+      const row = await latest("waitlist", "name");
+      if (!row) return notFound;
+      out = { name: row.name };
+      break;
+    }
+    case "org_lead_confirmation": {
+      const row = await latest("lead_captures", "name, organization_name");
+      if (!row) return notFound;
+      out = { name: row.name, orgName: row.organization_name ?? "" };
+      break;
+    }
+    case "hub_welcome": {
+      const auth = req.headers.get("authorization") || "";
+      const token = auth.startsWith("Bearer ") ? auth.slice(7) : "";
+      const { data: u } = token ? await admin.auth.getUser(token) : { data: null as any };
+      const user = u?.user;
+      if (!user?.email) return { ok: false, status: 401, error: "Sign in required" };
+      to = user.email.toLowerCase();
+      const { data: prof } = await admin.from("profiles").select("first_name").eq("id", user.id).maybeSingle();
+      out = { firstName: prof?.first_name || to.split("@")[0] };
+      break;
+    }
+    default:
+      return { ok: false, status: 400, error: "Unknown template" };
+  }
+
+  const ok = await allow(admin, [
+    { bucket: "send-email:ip", id: clientIp(req), max: 20, windowMin: 60 },
+    { bucket: `send-email:${template}:to`, id: template === "contact_internal_notification" ? subjectEmail : to, max: 3, windowMin: 60 * 24 },
+  ]);
+  if (!ok) return { ok: false, status: 429, error: "Too many requests. Please try again later." };
+
+  return { ok: true, to, data: out };
+}
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -261,7 +350,16 @@ Deno.serve(async (req) => {
           headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
       }
-      const rendered = tpl(payload.data || {}, callerTo);
+      // Public templates only send for a real, just-saved form submission,
+      // using the stored values (never caller-supplied text or recipients).
+      const verified = await resolvePublicTemplate(req, payload.template, callerTo, payload.data || {});
+      if (!verified.ok) {
+        return new Response(JSON.stringify({ error: verified.error }), {
+          status: verified.status,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      const rendered = tpl(verified.data, verified.to);
 
       // In template mode, server is source of truth. Caller-supplied subject,
       // html, from, bypass_suppression, include_unsubscribe are IGNORED.
