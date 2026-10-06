@@ -11,35 +11,25 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
+  AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { countries } from "@/lib/countries";
 import SEOHead from "@/components/SEOHead";
-
-type Submission = {
-  recipient_name: string | null;
-  shipping_street: string | null;
-  shipping_street2: string | null;
-  shipping_city: string | null;
-  shipping_region: string | null;
-  shipping_postal_code: string | null;
-  shipping_country: string | null;
-  shipping_phone: string | null;
-  inscription_to: string | null;
-  inscription_note: string | null;
-  additional_notes: string | null;
-};
 
 type Status =
   | { state: "loading" }
   | { state: "invalid"; message: string }
   | {
       state: "ready";
-      name: string;
+      firstName: string;
       email: string;
       slot: number;
       alreadyClaimed: boolean;
-      submission: Submission | null;
+      submittedAt: string | null;
     }
   | { state: "submitted"; updated: boolean; email: string };
 
@@ -83,7 +73,9 @@ export default function ClaimFounder() {
         const data = await res.json();
         if (!data.ok) {
           const msg =
-            data.error === "not_eligible"
+            data.error === "expired_token"
+              ? "This Founder link has expired. Please reply to your Founder email and we'll send you a fresh link."
+              : data.error === "not_eligible"
               ? "This link isn't eligible for a Founder claim. The 20 Founder slots may already be filled, or you haven't reached Tier 6 yet."
               : data.error === "not_found"
                 ? "We couldn't find a Founder slot tied to this link."
@@ -91,30 +83,15 @@ export default function ClaimFounder() {
           setStatus({ state: "invalid", message: msg });
           return;
         }
-        const sub: Submission | null = data.user.submission ?? null;
-        if (sub) {
-          setRecipientName(sub.recipient_name ?? "");
-          setStreet(sub.shipping_street ?? "");
-          setStreet2(sub.shipping_street2 ?? "");
-          setCity(sub.shipping_city ?? "");
-          setRegion(sub.shipping_region ?? "");
-          setPostal(sub.shipping_postal_code ?? "");
-          setCountry(sub.shipping_country ?? "");
-          setPhone(sub.shipping_phone ?? "");
-          setInscriptionTo(sub.inscription_to ?? "");
-          setInscriptionNote(sub.inscription_note ?? "");
-          setNotes(sub.additional_notes ?? "");
-        } else {
-          setRecipientName(data.user.name || "");
-          setInscriptionTo(data.user.name?.split(" ")[0] || "");
-        }
+        const first = data.user.first_name || "";
+        setInscriptionTo(first);
         setStatus({
           state: "ready",
-          name: data.user.name,
-          email: data.user.email,
+          firstName: first,
+          email: data.user.masked_email || "the email on file",
           slot: data.user.founder_slot_number,
           alreadyClaimed: data.user.already_claimed,
-          submission: sub,
+          submittedAt: data.user.submitted_at ?? null,
         });
       } catch (e) {
         setStatus({
@@ -125,8 +102,19 @@ export default function ClaimFounder() {
     })();
   }, [token]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const [confirmOpen, setConfirmOpen] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (status.state !== "ready") return;
+    if (status.alreadyClaimed) {
+      setConfirmOpen(true);
+      return;
+    }
+    void save(false);
+  };
+
+  const save = async (confirmReplace: boolean) => {
     if (status.state !== "ready") return;
     setSubmitting(true);
     try {
@@ -135,6 +123,7 @@ export default function ClaimFounder() {
         {
           body: {
             token,
+            confirm_replace: confirmReplace,
             recipient_name: recipientName,
             shipping_street: street,
             shipping_street2: street2,
@@ -243,7 +232,7 @@ export default function ClaimFounder() {
                   </h1>
                   <p className="text-[14px] md:text-[15px] text-muted-foreground leading-[1.7]">
                     {isEdit
-                      ? "Make any changes to your shipping address or book inscription. Your updates save instantly."
+                      ? `We already have your details${status.submittedAt ? ` from ${new Date(status.submittedAt).toLocaleDateString()}` : ""}. For your privacy we don't show them here. To change anything, fill in the form again and it will replace what we have.`
                       : "Tell us where to ship your signed Dan & Daria book and how you'd like it inscribed. Takes about 60 seconds."}
                   </p>
                 </div>
@@ -321,12 +310,28 @@ export default function ClaimFounder() {
                   <Button type="submit" disabled={submitting} className="w-full h-12 text-[12px] font-bold uppercase tracking-[0.12em]">
                     {submitting
                       ? (isEdit ? "Saving changes…" : "Locking it in…")
-                      : (isEdit ? "Save my updates" : "Submit my Founder details")}
+                      : (isEdit ? "Replace my details" : "Submit my Founder details")}
                   </Button>
                   <p className="text-[11px] text-muted-foreground text-center leading-[1.6]">
                     A confirmation will be emailed to {status.email}.
                   </p>
                 </form>
+                <AlertDialog open={confirmOpen} onOpenChange={setConfirmOpen}>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>Replace your saved details?</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        This will replace the shipping address and inscription we already have for Founder slot #{status.slot}. Your old details can't be brought back.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Keep my old details</AlertDialogCancel>
+                      <AlertDialogAction onClick={() => { setConfirmOpen(false); void save(true); }}>
+                        Yes, replace them
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
               </>
             )}
           </div>
