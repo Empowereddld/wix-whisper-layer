@@ -1,4 +1,5 @@
 import { useEffect, useState, useCallback, useMemo } from "react";
+import { downloadSafeCsv } from "@/lib/safeCsv";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -132,15 +133,7 @@ export default function FounderClaimsPanel() {
       r.submitted_at,
       r.updated_at,
     ]);
-    const csv = [headers, ...rowsCsv]
-      .map((row) =>
-        row.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(","),
-      )
-      .join("\n");
-    const a = document.createElement("a");
-    a.href = "data:text/csv;charset=utf-8," + encodeURIComponent(csv);
-    a.download = `founder-claims-${Date.now()}.csv`;
-    a.click();
+    downloadSafeCsv(`founder-claims-${Date.now()}.csv`, [headers, ...rowsCsv]);
   };
 
   if (loading) {

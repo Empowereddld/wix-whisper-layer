@@ -1,4 +1,5 @@
 import AdminLayout from "@/components/admin/AdminLayout";
+import { downloadSafeCsv } from "@/lib/safeCsv";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/components/ui/table";
@@ -90,11 +91,10 @@ const AdminPurchases = () => {
 
   const exportCSV = () => {
     if (!data?.rows.length) return;
-    const header = "Purchase ID,Customer,Product,Amount,Status,Date\n";
-    const csv = data.rows.map((r) => `${r.id},${r.customer_name},${r.product_title},${formatPrice(r.amount_paid)},${r.status},${format(new Date(r.purchased_at), "yyyy-MM-dd")}`).join("\n");
-    const blob = new Blob([header + csv], { type: "text/csv" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a"); a.href = url; a.download = "purchases.csv"; a.click();
+    downloadSafeCsv("purchases.csv", [
+      ["Purchase ID", "Customer", "Product", "Amount", "Status", "Date"],
+      ...data.rows.map((r) => [r.id, r.customer_name, r.product_title, formatPrice(r.amount_paid), r.status, format(new Date(r.purchased_at), "yyyy-MM-dd")]),
+    ]);
   };
 
   const maxDayRevenue = data ? Math.max(...data.last7Days.map((d) => d.revenue), 1) : 1;

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { downloadSafeCsv } from "@/lib/safeCsv";
 import AdminLayout from "@/components/admin/AdminLayout";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -68,13 +69,7 @@ const AdminWaitlist = () => {
       e.notes || "",
       format(new Date(e.created_at), "yyyy-MM-dd"),
     ]);
-    const csv = [headers, ...rows].map((r) => r.map((c) => `"${c}"`).join(",")).join("\n");
-    const blob = new Blob([csv], { type: "text/csv" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `waitlist-${format(new Date(), "yyyy-MM-dd")}.csv`;
-    a.click();
+    downloadSafeCsv(`waitlist-${format(new Date(), "yyyy-MM-dd")}.csv`, [headers, ...rows]);
   };
 
   const toggleSelect = (id: string) => {

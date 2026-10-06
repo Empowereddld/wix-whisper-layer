@@ -1,4 +1,5 @@
 import AdminLayout from "@/components/admin/AdminLayout";
+import { downloadSafeCsv } from "@/lib/safeCsv";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -88,13 +89,7 @@ const AdminReferrals = () => {
       r.count,
       format(new Date(r.last_referral), "yyyy-MM-dd"),
     ]);
-    const csv = [headers, ...rows].map((r) => r.join(",")).join("\n");
-    const blob = new Blob([csv], { type: "text/csv" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `referrals-${format(new Date(), "yyyy-MM-dd")}.csv`;
-    a.click();
+    downloadSafeCsv(`referrals-${format(new Date(), "yyyy-MM-dd")}.csv`, [headers, ...rows]);
   };
 
   const topReferrers = referrers?.slice(0, 3) || [];

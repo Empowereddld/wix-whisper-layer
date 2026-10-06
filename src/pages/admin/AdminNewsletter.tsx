@@ -1,4 +1,5 @@
 import AdminLayout from "@/components/admin/AdminLayout";
+import { downloadSafeCsv } from "@/lib/safeCsv";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import {
@@ -24,17 +25,10 @@ const AdminNewsletter = () => {
 
   const exportCsv = () => {
     if (!subscribers?.length) return;
-    const header = "Name,Email,Date\n";
-    const rows = subscribers.map(s =>
-      `"${s.name}","${s.email}","${format(new Date(s.created_at), "yyyy-MM-dd")}"`
-    ).join("\n");
-    const blob = new Blob([header + rows], { type: "text/csv" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "newsletter-subscribers.csv";
-    a.click();
-    URL.revokeObjectURL(url);
+    downloadSafeCsv("newsletter-subscribers.csv", [
+      ["Name", "Email", "Date"],
+      ...subscribers.map((s) => [s.name, s.email, format(new Date(s.created_at), "yyyy-MM-dd")]),
+    ]);
   };
 
   return (

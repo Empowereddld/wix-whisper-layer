@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { downloadSafeCsv } from "@/lib/safeCsv";
 import AdminLayout from "@/components/admin/AdminLayout";
 import { useAdminUsers, useUserDownloads, useUserNotes, useAdminUserCount } from "@/hooks/useAdminUsers";
 import { useLogAction } from "@/hooks/useAuditLog";
@@ -72,13 +73,7 @@ const AdminUsers = () => {
       format(new Date(u.created_at), "yyyy-MM-dd"),
       u.referred_by || "",
     ]);
-    const csv = [headers, ...rows].map((r) => r.join(",")).join("\n");
-    const blob = new Blob([csv], { type: "text/csv" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `users-${format(new Date(), "yyyy-MM-dd")}.csv`;
-    a.click();
+    downloadSafeCsv(`users-${format(new Date(), "yyyy-MM-dd")}.csv`, [headers, ...rows]);
   };
 
   const toggleSelect = (id: string) => {
