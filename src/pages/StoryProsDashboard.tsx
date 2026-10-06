@@ -122,10 +122,12 @@ const StoryProsDashboard = () => {
     const handleRecoveryRef = async () => {
       if (typeof window === "undefined") return;
       const params = new URLSearchParams(window.location.search);
+      const dt = params.get("dt");
       const ref = params.get("ref");
-      if (!ref) return;
+      if (!dt && !ref) return;
 
-      // Strip ?ref=… from the URL so refreshes don't re-trigger this.
+      // Strip ?dt= / ?ref= from the URL so refreshes don't re-trigger this.
+      params.delete("dt");
       params.delete("ref");
       const newSearch = params.toString();
       window.history.replaceState(
@@ -134,10 +136,18 @@ const StoryProsDashboard = () => {
         window.location.pathname + (newSearch ? `?${newSearch}` : "")
       );
 
+      // A referral code alone is never proof of ownership. Old ?ref= links
+      // (or a ref while not signed in here) go through "Find my dashboard".
+      if (!dt) {
+        const saved = localStorage.getItem("sb_waitlist_state");
+        if (!saved) setRecoveryInvalid(true);
+        return;
+      }
+
       setAuthHydrating(true);
       const { data: lookup } = await supabase.functions.invoke(
         "lookup-storypros-by-ref",
-        { body: { ref } }
+        { body: { dashboard_token: dt } }
       );
       if (cancelled) return;
 
@@ -155,6 +165,7 @@ const StoryProsDashboard = () => {
           name: data.name,
           email: data.email,
           referralCode: data.referral_code,
+          dashboardToken: lookup.dashboard_token,
         })
       );
       // Hard reload so the hook re-initializes from localStorage. Calling
@@ -191,7 +202,7 @@ const StoryProsDashboard = () => {
       );
       const data = lookup?.found ? lookup.user : null;
       if (cancelled) return;
-      if (data?.referral_code) {
+      if (data?.referral_code && lookup?.dashboard_token) {
         localStorage.setItem(
           "sb_waitlist_state",
           JSON.stringify({
@@ -199,6 +210,7 @@ const StoryProsDashboard = () => {
             name: data.name,
             email: data.email,
             referralCode: data.referral_code,
+            dashboardToken: lookup.dashboard_token,
           })
         );
         // Hard reload so the hook re-initializes from localStorage.
@@ -1301,6 +1313,7 @@ const StoryProsDashboard = () => {
         open={editProfileOpen}
         onOpenChange={setEditProfileOpen}
         referralCode={wl.referralCode}
+        dashboardToken={wl.dashboardToken}
         initial={{
           childAge: wl.childAge,
           hopes: wl.hopes,

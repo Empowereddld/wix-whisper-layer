@@ -33,6 +33,8 @@ interface Props {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   referralCode: string;
+  /** Member's signed dashboard pass. Admins omit it and use their admin sign-in. */
+  dashboardToken?: string;
   initial: EditProfileInitial;
   onSaved?: () => void;
   /** Tweaks copy when an admin is editing on behalf of a user. */
@@ -43,6 +45,7 @@ const EditProfileDialog = ({
   open,
   onOpenChange,
   referralCode,
+  dashboardToken,
   initial,
   onSaved,
   adminMode = false,
@@ -89,7 +92,7 @@ const EditProfileDialog = ({
         "update-waitlist-profile",
         {
           body: {
-            referral_code: referralCode,
+            ...(dashboardToken ? { dashboard_token: dashboardToken } : { referral_code: referralCode }),
             child_age: Number(childAge),
             hopes,
             hopes_other: hopes.includes("other") ? hopesOther.trim() : null,

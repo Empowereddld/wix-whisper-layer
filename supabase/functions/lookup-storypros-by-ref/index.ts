@@ -1,8 +1,10 @@
 // Public lookup of a storybuilders_waitlist row.
 //
-// Two modes:
-//   - ref:   public referral-code lookup. Referral codes are share-link tokens
-//            (not enumerable), so this stays unauthenticated.
+// Modes:
+//   - ref:   public referral-code lookup. Returns ONLY the first name (share-safe).
+//            A referral code is never proof of ownership.
+//   - dashboard_token: full dashboard data for the token owner; returns a
+//            renewed token (capped by the absolute lifetime).
 //   - email: PII lookup. Requires a valid Supabase JWT AND the requested email
 //            must match the authenticated user's email. Prevents email
 //            enumeration of waitlist members.
@@ -13,6 +15,9 @@
 // Returns ONLY a safe subset of columns — never includes verification_token,
 // deleted_by, deleted_reason, or any internal admin fields.
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import {
+  issueDashboardToken, renewDashboardToken, verifyDashboardToken,
+} from "../_shared/dashboardToken.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -57,10 +62,45 @@ Deno.serve(async (req) => {
   try {
     const body = await req.json().catch(() => ({}));
     const ref = typeof body?.ref === "string" ? body.ref.trim() : "";
+    const dashboardToken = typeof body?.dashboard_token === "string" ? body.dashboard_token : "";
     const email =
       typeof body?.email === "string" ? body.email.trim().toLowerCase() : "";
 
-    if (!ref && !email) {
+    const supabaseUrlEarly = Deno.env.get("SUPABASE_URL")!;
+    const svc = createClient(supabaseUrlEarly, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!);
+
+    // Public referral-code lookup: share-safe info only. A referral code is
+    // never proof of ownership, so no private fields are returned here.
+    if (ref && !dashboardToken) {
+      const { data: pub } = await svc
+        .from("storybuilders_waitlist")
+        .select("name")
+        .eq("referral_code", ref)
+        .is("deleted_at", null)
+        .maybeSingle();
+      return new Response(
+        JSON.stringify(
+          pub ? { found: true, user: { first_name: (pub.name || "").split(" ")[0] } } : { found: false },
+        ),
+        { headers: { ...corsHeaders, "Content-Type": "application/json" } },
+      );
+    }
+
+    let tokenId: string | null = null;
+    let renewed: string | null = null;
+    if (dashboardToken) {
+      const v = await verifyDashboardToken(dashboardToken);
+      if ("error" in v) {
+        return new Response(JSON.stringify({ found: false, error: v.error }), {
+          status: 401,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      tokenId = v.id;
+      renewed = await renewDashboardToken(v);
+    }
+
+    if (!tokenId && !email) {
       return new Response(
         JSON.stringify({ error: "ref or email required" }),
         {
@@ -75,7 +115,7 @@ Deno.serve(async (req) => {
 
     // Email lookup is PII-sensitive: require an authenticated session and
     // verify the requested email matches the caller's own auth email.
-    if (email && !ref) {
+    if (!tokenId && email) {
       const authHeader = req.headers.get("Authorization") ?? "";
       const token = authHeader.startsWith("Bearer ")
         ? authHeader.slice(7)
@@ -109,9 +149,9 @@ Deno.serve(async (req) => {
 
     const supabase = createClient(supabaseUrl, serviceKey);
 
-    let query = supabase.from("storybuilders_waitlist").select(SAFE_COLUMNS);
-    if (ref) {
-      query = query.eq("referral_code", ref);
+    let query = supabase.from("storybuilders_waitlist").select(`id, ${SAFE_COLUMNS}`);
+    if (tokenId) {
+      query = query.eq("id", tokenId);
     } else {
       query = query.eq("email", email);
     }
@@ -152,10 +192,13 @@ Deno.serve(async (req) => {
       .select("id", { count: "exact", head: true })
       .is("deleted_at", null);
 
+    const { id: rowId, ...userOut } = data as any;
+    const outToken = renewed ?? (await issueDashboardToken(rowId));
     return new Response(
       JSON.stringify({
         found: true,
-        user: data,
+        user: userOut,
+        dashboard_token: outToken,
         queue_position,
         total_count: totalCount ?? null,
       }),

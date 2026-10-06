@@ -1,4 +1,39 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { issueDashboardToken } from "../_shared/dashboardToken.ts";
+import { allow, clientIp } from "../_shared/rateLimit.ts";
+
+// Repeat signup with an existing email: never reveal the referral code or
+// points on screen. Email a dashboard link to the address on file instead.
+async function neutralExistingResponse(
+  supabase: any, supabaseUrl: string, serviceKey: string, req: Request,
+  row: { id: string; name?: string | null; email?: string | null },
+) {
+  try {
+    const ok = await allow(supabase, [
+      { bucket: "signup-existing:ip", id: clientIp(req), max: 5, windowMin: 60 },
+      { bucket: "signup-existing:email", id: row.email || row.id, max: 3, windowMin: 60 * 24 },
+    ]);
+    if (ok && row.email) {
+      const link = `https://www.empowereddld.com/storypros/dashboard?dt=${encodeURIComponent(await issueDashboardToken(row.id))}`;
+      await fetch(`${supabaseUrl}/functions/v1/send-waitlist-email`, {
+        method: "POST",
+        headers: { "Authorization": `Bearer ${serviceKey}`, "Content-Type": "application/json" },
+        body: JSON.stringify({
+          template: "dashboard_recovery",
+          to: row.email,
+          data: { name: (row.name || "").split(" ")[0] || "there", dashboard_link: link },
+        }),
+      });
+    }
+  } catch (e) {
+    console.error("Existing-signup dashboard email failed:", e);
+  }
+  const { data: totalCount } = await supabase.rpc("get_storybuilders_waitlist_count");
+  return new Response(
+    JSON.stringify({ already_joined: true, check_email: true, total_count: totalCount ?? 0 }),
+    { headers: { ...corsHeaders, "Content-Type": "application/json" } },
+  );
+}
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -255,7 +290,7 @@ Deno.serve(async (req) => {
     // which previously caused the function to fall through to INSERT and 500.
     const { data: existing, error: existingErr } = await supabase
       .from("storybuilders_waitlist")
-      .select("id, referral_code, invite_count, points, email_verified")
+      .select("id, name, email, referral_code, invite_count, points, email_verified")
       .eq("email", normalizedEmail)
       .is("deleted_at", null)
       .order("created_at", { ascending: false })
@@ -296,17 +331,7 @@ Deno.serve(async (req) => {
           console.error("Repeat-signup newsletter consent sync failed:", e);
         }
       }
-      const { data: totalCount } = await supabase.rpc("get_storybuilders_waitlist_count");
-      return new Response(
-        JSON.stringify({
-          already_joined: true,
-          referral_code: existing.referral_code,
-          invite_count: existing.invite_count,
-          points: existing.points,
-          total_count: totalCount ?? 0,
-        }),
-        { headers: { ...corsHeaders, "Content-Type": "application/json" } }
-      );
+      return await neutralExistingResponse(supabase, supabaseUrl, serviceKey, req, existing);
     }
 
     // Generate unique referral code
@@ -380,7 +405,7 @@ Deno.serve(async (req) => {
       if ((insertError as any).code === "23505") {
         const { data: raceRow } = await supabase
           .from("storybuilders_waitlist")
-          .select("referral_code, invite_count, points")
+          .select("id, name, email")
           .eq("email", normalizedEmail)
           .is("deleted_at", null)
           .order("created_at", { ascending: false })
@@ -388,17 +413,7 @@ Deno.serve(async (req) => {
           .maybeSingle();
 
         if (raceRow) {
-          const { data: totalCount } = await supabase.rpc("get_storybuilders_waitlist_count");
-          return new Response(
-            JSON.stringify({
-              already_joined: true,
-              referral_code: raceRow.referral_code,
-              invite_count: raceRow.invite_count ?? 0,
-              points: raceRow.points,
-              total_count: totalCount ?? 0,
-            }),
-            { headers: { ...corsHeaders, "Content-Type": "application/json" } }
-          );
+          return await neutralExistingResponse(supabase, supabaseUrl, serviceKey, req, raceRow);
         }
       }
 
@@ -514,6 +529,7 @@ Deno.serve(async (req) => {
     return new Response(
       JSON.stringify({
         already_joined: false,
+        dashboard_token: await issueDashboardToken(newEntry.id),
         referral_code: newEntry.referral_code,
         invite_count: newEntry.invite_count ?? 0,
         points: newEntry.points,

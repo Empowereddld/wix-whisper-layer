@@ -41,13 +41,13 @@ const VerifySuccess = () => {
   }, [searchParams]);
 
   const firstName = name ? name.split(" ")[0] : "there";
-  const ref = searchParams.get("ref");
+  const dt = searchParams.get("dt");
   // Happy path: hand the dashboard the ref code so it can hydrate localStorage
   // on a fresh device. Fallback: if no ref (older verify links, missing code),
   // send them to /storypros with the "Find my dashboard" dialog auto-opened so
   // they can recover by email instead of hitting a silent redirect loop.
-  const dashboardHref = ref
-    ? `/storypros/dashboard?ref=${encodeURIComponent(ref)}`
+  const dashboardHref = dt
+    ? `/storypros/dashboard?dt=${encodeURIComponent(dt)}`
     : "/storypros?find=1";
 
   return (

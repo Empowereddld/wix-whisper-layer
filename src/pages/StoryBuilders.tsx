@@ -500,7 +500,7 @@ const StoryBuilders = () => {
     });
     if (result) {
       if (result.already_joined) {
-        toast.success("You're already on the list! Welcome back.");
+        toast.success("You're already on the list. Check your email for a link to your dashboard.");
       } else {
         toast.success("You're in! Welcome, founding member.");
       }

@@ -30,6 +30,10 @@ export interface WaitlistState {
   name: string;
   email: string;
   referralCode: string;
+  /** Server-signed, expiring dashboard pass. The ONLY proof of ownership. */
+  dashboardToken: string;
+  /** Set when a repeat signup was told to check email for their dashboard link. */
+  checkEmail?: boolean;
   inviteCount: number;
   totalCount: number;
   points: number;
@@ -81,6 +85,7 @@ export function useStorybuildersWaitlist() {
     name: "",
     email: "",
     referralCode: "",
+    dashboardToken: "",
     inviteCount: 0,
     totalCount: 0,
     points: 0,
@@ -124,14 +129,20 @@ export function useStorybuildersWaitlist() {
             notifications: [],
           }));
 
-          if (parsed.referralCode) {
+          if (parsed.dashboardToken) {
             try {
-              await refreshStatsInternal(parsed.referralCode);
+              await refreshStatsInternal(parsed.dashboardToken);
             } finally {
               setState((s) => ({ ...s, statsHydrated: true }));
             }
           } else {
-            setState((s) => ({ ...s, statsHydrated: true }));
+            // Legacy state with only a referral code: a code is not proof of
+            // ownership, so drop it and ask the member to use "Find my dashboard".
+            localStorage.removeItem(STORAGE_KEY);
+            setState((s) => ({
+              ...s, joined: false, name: "", email: "", referralCode: "",
+              dashboardToken: "", loading: false, statsHydrated: true,
+            }));
           }
         } catch (err) {
           console.error("Failed to parse stored state:", err);
@@ -178,12 +189,14 @@ export function useStorybuildersWaitlist() {
   // tab suspension). Uses a ref to refreshStatsInternal so we can declare
   // this effect before the function (avoids TDZ issues).
   const refreshStatsInternalRef = useRef<((code: string) => Promise<void>) | null>(null);
+  const tokenRef = useRef("");
+  tokenRef.current = state.dashboardToken;
   useEffect(() => {
     const code = state.referralCode;
-    if (!code) return;
+    if (!code || !state.dashboardToken) return;
 
-    const run = (c: string) => {
-      refreshStatsInternalRef.current?.(c);
+    const run = (_c: string) => {
+      if (tokenRef.current) refreshStatsInternalRef.current?.(tokenRef.current);
     };
 
     const userChannel = supabase
@@ -211,7 +224,8 @@ export function useStorybuildersWaitlist() {
       document.removeEventListener("visibilitychange", handleVisible);
       window.removeEventListener("focus", handleVisible);
     };
-  }, [state.referralCode]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.referralCode, !!state.dashboardToken]);
 
   const getRefFromUrl = useCallback((): string | undefined => {
     if (typeof window === "undefined") return undefined;
@@ -267,7 +281,7 @@ export function useStorybuildersWaitlist() {
     }
   }, []);
 
-  const refreshStatsInternal = useCallback(async (referralCode: string) => {
+  const refreshStatsInternal = useCallback(async (dashboardToken: string) => {
     setState((s) => ({ ...s, loading: true }));
     try {
       // Use the public lookup edge function so this works for both
@@ -275,12 +289,19 @@ export function useStorybuildersWaitlist() {
       // allows admins to SELECT directly).
       const { data: lookup, error } = await supabase.functions.invoke(
         "lookup-storypros-by-ref",
-        { body: { ref: referralCode } }
+        { body: { dashboard_token: dashboardToken } }
       );
 
       if (error || !lookup?.found || !lookup?.user) {
-        throw new Error("User not found");
+        // Expired or invalid pass: sign this device out of the dashboard.
+        try { localStorage.removeItem(STORAGE_KEY); } catch {}
+        setState((s) => ({
+          ...s, joined: false, name: "", email: "", referralCode: "",
+          dashboardToken: "", loading: false,
+        }));
+        return;
       }
+      const newToken: string = lookup.dashboard_token || dashboardToken;
 
       const userData = lookup.user;
       const totalData = lookup.total_count;
@@ -313,6 +334,7 @@ export function useStorybuildersWaitlist() {
           email: ud.email || s.email,
           joined: true,
           referralCode: ud.referral_code || s.referralCode,
+          dashboardToken: newToken,
           inviteCount: incomingInvites,
           totalCount: totalData || s.totalCount,
           queuePosition: queuePosition ?? s.queuePosition,
@@ -355,6 +377,7 @@ export function useStorybuildersWaitlist() {
             name: ud.name || prev.name,
             email: ud.email || prev.email,
             referralCode: ud.referral_code || prev.referralCode,
+            dashboardToken: newToken,
             inviteCount: ud.invite_count || 0,
             points: userPoints,
             currentTier: getTierForPoints(userPoints),
@@ -368,7 +391,7 @@ export function useStorybuildersWaitlist() {
       if (crossedTier) {
         // Fire-and-forget; don't block the UI on email delivery.
         supabase.functions
-          .invoke("dispatch-tier-emails", { body: { referral_code: referralCode } })
+          .invoke("dispatch-tier-emails", { body: { referral_code: ud.referral_code } })
           .catch((e) => console.warn("Instant tier dispatch failed (will retry on cron):", e));
       }
 
@@ -401,10 +424,10 @@ export function useStorybuildersWaitlist() {
   }, [refreshStatsInternal]);
 
   const refreshStats = useCallback(async () => {
-    if (state.referralCode) {
-      await refreshStatsInternal(state.referralCode);
+    if (state.dashboardToken) {
+      await refreshStatsInternal(state.dashboardToken);
     }
-  }, [state.referralCode, refreshStatsInternal]);
+  }, [state.dashboardToken, refreshStatsInternal]);
 
   const joinWaitlist = useCallback(
     async (
@@ -423,13 +446,24 @@ export function useStorybuildersWaitlist() {
 
         if (error) throw new Error(error.message || "Failed to join");
 
-        const result = data as JoinWaitlistResponse;
+        const result = data as JoinWaitlistResponse & { check_email?: boolean; dashboard_token?: string };
+
+        if (result.already_joined || result.check_email) {
+          // Never reveal an existing member's code or points on screen.
+          setState((s) => ({
+            ...s, loading: false, checkEmail: true,
+            error: "You're already on the Launch Team. We've emailed you a link to your dashboard.",
+            totalCount: result.total_count || s.totalCount,
+          }));
+          return result;
+        }
 
         const newState: Partial<WaitlistState> = {
           joined: true,
           name,
           email,
           referralCode: result.referral_code,
+          dashboardToken: result.dashboard_token || "",
           inviteCount: result.invite_count,
           points: result.points || 0,
           currentTier: result.current_tier || getTierForPoints(result.points || 0),
@@ -441,9 +475,6 @@ export function useStorybuildersWaitlist() {
           loading: false,
         };
 
-        if (result.already_joined) {
-          newState.error = "Welcome back! You're already on the Launch Team.";
-        }
 
         setState((s) => ({ ...s, ...newState }));
 
@@ -454,6 +485,7 @@ export function useStorybuildersWaitlist() {
             name,
             email,
             referralCode: result.referral_code,
+            dashboardToken: result.dashboard_token || "",
             inviteCount: result.invite_count,
             points: newState.points,
             currentTier: newState.currentTier,
@@ -489,7 +521,7 @@ export function useStorybuildersWaitlist() {
       try {
         const { data, error } = await supabase.functions.invoke("update-waitlist-profile", {
           body: {
-            referral_code: state.referralCode,
+            dashboard_token: state.dashboardToken,
             name: updates.name,
             is_speech_professional: updates.isSpeechProfessional,
             role: updates.role,
@@ -541,7 +573,7 @@ export function useStorybuildersWaitlist() {
         return { success: false, error: msg };
       }
     },
-    [state.referralCode]
+    [state.referralCode, state.dashboardToken]
   );
 
   const updateRole = useCallback(
@@ -567,7 +599,7 @@ export function useStorybuildersWaitlist() {
       try {
         const { data, error } = await supabase.functions.invoke("update-waitlist-profile", {
           body: {
-            referral_code: state.referralCode,
+            dashboard_token: state.dashboardToken,
             child_age: input.childAge,
             hopes: input.hopes,
             hopes_other: input.hopesOther,
@@ -585,7 +617,7 @@ export function useStorybuildersWaitlist() {
           addNotification("error", errMsg);
           return { success: false, error: errMsg };
         }
-        await refreshStatsInternal(state.referralCode);
+        await refreshStatsInternal(state.dashboardToken);
         addNotification("success", "Profile complete! +10 points");
         return { success: true };
       } catch (err) {
@@ -594,7 +626,7 @@ export function useStorybuildersWaitlist() {
         return { success: false, error: msg };
       }
     },
-    [state.referralCode, refreshStatsInternal]
+    [state.referralCode, state.dashboardToken, refreshStatsInternal]
   );
 
   const trackShare = useCallback(
@@ -613,7 +645,7 @@ export function useStorybuildersWaitlist() {
           addNotification("info", "Daily share cap reached. Come back tomorrow!");
         } else if (data?.points_awarded > 0) {
           addNotification("success", `Shared on ${platform}! +${data.points_awarded} pts`);
-          await refreshStatsInternal(state.referralCode);
+          await refreshStatsInternal(state.dashboardToken);
         }
         return true;
       } catch (err) {
@@ -621,7 +653,7 @@ export function useStorybuildersWaitlist() {
         return false;
       }
     },
-    [state.referralCode, refreshStatsInternal]
+    [state.referralCode, state.dashboardToken, refreshStatsInternal]
   );
 
   const trackClick = useCallback(async (): Promise<boolean> => {
@@ -635,7 +667,7 @@ export function useStorybuildersWaitlist() {
       console.error("Failed to track click:", err);
       return false;
     }
-  }, [state.referralCode]);
+  }, [state.referralCode, state.dashboardToken]);
 
   const claimSocialFollow = useCallback(
     async (platform: "instagram" | "facebook" | "youtube"): Promise<boolean> => {
@@ -654,7 +686,7 @@ export function useStorybuildersWaitlist() {
         if (error) throw error;
         if (data?.success && !data?.already_claimed) {
           addNotification("success", `+${data.points_awarded} pts for following on ${platform}!`);
-          await refreshStatsInternal(state.referralCode);
+          await refreshStatsInternal(state.dashboardToken);
           return true;
         }
         if (data?.already_claimed) {
@@ -667,7 +699,7 @@ export function useStorybuildersWaitlist() {
         return false;
       }
     },
-    [state.referralCode, state.socialClaims, refreshStatsInternal]
+    [state.referralCode, state.dashboardToken, state.socialClaims, refreshStatsInternal]
   );
 
   // Tier reward URLs / side-effects when claimed.
@@ -717,7 +749,7 @@ export function useStorybuildersWaitlist() {
         const url = REWARD_URLS[rewardId];
         if (url) window.open(url, "_blank", "noopener,noreferrer");
         addNotification("success", "Reward claimed!");
-        await refreshStatsInternal(state.referralCode);
+        await refreshStatsInternal(state.dashboardToken);
         return true;
       } catch (err) {
         console.error("Failed to claim reward:", err);
@@ -725,7 +757,7 @@ export function useStorybuildersWaitlist() {
         return false;
       }
     },
-    [state.referralCode, state.emailVerified, state.rewardsClaimed, refreshStatsInternal]
+    [state.referralCode, state.dashboardToken, state.emailVerified, state.rewardsClaimed, refreshStatsInternal]
   );
 
   const resendVerification = useCallback(async (): Promise<boolean> => {
@@ -751,7 +783,7 @@ export function useStorybuildersWaitlist() {
       addNotification("error", msg);
       return false;
     }
-  }, [state.referralCode]);
+  }, [state.referralCode, state.dashboardToken]);
 
   const submitSuggestion = useCallback(
     async (text: string, category: string): Promise<{ success: boolean; message: string }> => {
@@ -774,10 +806,10 @@ export function useStorybuildersWaitlist() {
         return { success: false, message: row?.message || "Failed" };
       }
       addNotification("success", `Suggestion submitted! +${REPEATABLE_POINTS.SUGGESTION} pts`);
-      if (state.referralCode) await refreshStatsInternal(state.referralCode);
+      if (state.referralCode) await refreshStatsInternal(state.dashboardToken);
       return { success: true, message: "Submitted" };
     },
-    [state.referralCode, refreshStatsInternal]
+    [state.referralCode, state.dashboardToken, refreshStatsInternal]
   );
 
   const voteSuggestion = useCallback(
@@ -801,7 +833,7 @@ export function useStorybuildersWaitlist() {
       addNotification("success", "Vote recorded");
       return { success: true, message: "Voted" };
     },
-    [state.referralCode]
+    [state.referralCode, state.dashboardToken]
   );
 
   const fetchLeaderboard = useCallback(async (limit = 10) => {
@@ -944,6 +976,7 @@ export function useStorybuildersWaitlist() {
       name: "",
       email: "",
       referralCode: "",
+      dashboardToken: "",
       inviteCount: 0,
       totalCount: state.totalCount,
       points: 0,

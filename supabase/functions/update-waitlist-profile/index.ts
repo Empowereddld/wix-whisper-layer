@@ -1,9 +1,30 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { verifyDashboardToken } from "../_shared/dashboardToken.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
+
+async function verifiedAdminRow(req: Request, referralCode: unknown): Promise<string | null> {
+  if (typeof referralCode !== "string" || !referralCode) return null;
+  const auth = req.headers.get("Authorization") ?? "";
+  const jwt = auth.startsWith("Bearer ") ? auth.slice(7) : "";
+  if (!jwt) return null;
+  const url = Deno.env.get("SUPABASE_URL")!;
+  const anon = createClient(url, Deno.env.get("SUPABASE_ANON_KEY")!, {
+    global: { headers: { Authorization: `Bearer ${jwt}` } },
+  });
+  const { data: u } = await anon.auth.getUser();
+  if (!u?.user) return null;
+  const svc = createClient(url, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!);
+  const { data: isAdmin } = await svc.rpc("has_role", { _user_id: u.user.id, _role: "admin" });
+  if (isAdmin !== true) return null;
+  const { data: row } = await svc
+    .from("storybuilders_waitlist").select("id")
+    .eq("referral_code", referralCode).is("deleted_at", null).maybeSingle();
+  return row?.id ?? null;
+}
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -13,7 +34,7 @@ Deno.serve(async (req) => {
   try {
     const body = await req.json().catch(() => ({}));
     const {
-      referral_code,
+      dashboard_token,
       name,
       is_speech_professional,
       role,
@@ -24,7 +45,7 @@ Deno.serve(async (req) => {
       hear_about,
       complete_profile,
     } = body as {
-      referral_code?: string;
+      dashboard_token?: string;
       name?: string;
       is_speech_professional?: boolean;
       role?: string;
@@ -36,11 +57,28 @@ Deno.serve(async (req) => {
       complete_profile?: boolean;
     };
 
-    if (!referral_code || typeof referral_code !== "string") {
-      return new Response(
-        JSON.stringify({ error: "referral_code is required" }),
-        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
-      );
+    // Ownership is proven ONLY by a server-signed dashboard token. Points,
+    // tiers, referral totals and rewards are never accepted from the caller.
+    // Admins (verified session + admin role) may edit on a member's behalf.
+    let waitlistId: string;
+    if (typeof dashboard_token === "string" && dashboard_token) {
+      const verified = await verifyDashboardToken(dashboard_token);
+      if ("error" in verified) {
+        return new Response(
+          JSON.stringify({ error: verified.error }),
+          { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+      waitlistId = verified.id;
+    } else {
+      const adminId = await verifiedAdminRow(req, (body as any)?.referral_code);
+      if (!adminId) {
+        return new Response(
+          JSON.stringify({ error: "invalid_token" }),
+          { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+      waitlistId = adminId;
     }
 
     const updates: Record<string, unknown> = {};
@@ -201,7 +239,7 @@ Deno.serve(async (req) => {
       const { data: existing } = await supabase
         .from("storybuilders_waitlist")
         .select("points, profile_completed_at, child_age, hopes, hear_about")
-        .eq("referral_code", referral_code)
+        .eq("id", waitlistId)
         .is("deleted_at", null)
         .maybeSingle();
 
@@ -234,7 +272,7 @@ Deno.serve(async (req) => {
       const { data: prior } = await supabase
         .from("storybuilders_waitlist")
         .select("is_speech_professional, speech_professional_verified")
-        .eq("referral_code", referral_code)
+        .eq("id", waitlistId)
         .is("deleted_at", null)
         .maybeSingle();
       priorIsSlp = prior?.is_speech_professional ?? null;
@@ -243,7 +281,7 @@ Deno.serve(async (req) => {
     const { data, error } = await supabase
       .from("storybuilders_waitlist")
       .update(updates)
-      .eq("referral_code", referral_code)
+      .eq("id", waitlistId)
       .is("deleted_at", null)
       .select("id, name, email, referral_code, is_speech_professional, speech_professional_verified, role, role_other, child_age, hopes, hopes_other, hear_about, profile_completed_at, points")
       .maybeSingle();
