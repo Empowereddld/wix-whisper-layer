@@ -681,7 +681,7 @@ export function useStorybuildersWaitlist() {
       }
       try {
         const { data, error } = await supabase.functions.invoke("claim-social-follow", {
-          body: { referral_code: state.referralCode, platform },
+          body: { dashboard_token: state.dashboardToken, platform },
         });
         if (error) throw error;
         if (data?.success && !data?.already_claimed) {
@@ -727,12 +727,11 @@ export function useStorybuildersWaitlist() {
         return true;
       }
       try {
-        const { data, error } = await supabase.rpc("claim_waitlist_reward", {
-          p_referral_code: state.referralCode,
-          p_reward_id: rewardId,
+        const { data, error } = await supabase.functions.invoke("storypros-member-action", {
+          body: { dashboard_token: state.dashboardToken, action: "claim_reward", reward_id: rewardId },
         });
         if (error) throw error;
-        const row = (data as any)?.[0];
+        const row = data as any;
         if (!row?.success) {
           addNotification("error", row?.message || "Could not claim reward");
           return false;
@@ -767,7 +766,7 @@ export function useStorybuildersWaitlist() {
     }
     try {
       const { data, error } = await supabase.functions.invoke("resend-verification-waitlist", {
-        body: { referral_code: state.referralCode },
+        body: { dashboard_token: state.dashboardToken },
       });
       if (error) throw error;
       if ((data as any)?.already_verified) {
@@ -790,17 +789,14 @@ export function useStorybuildersWaitlist() {
       if (!state.referralCode) {
         return { success: false, message: "Join the waitlist first" };
       }
-      const { data, error } = await supabase.rpc("submit_waitlist_suggestion", {
-        p_referral_code: state.referralCode,
-        p_text: text,
-        p_category: category,
-        p_points: REPEATABLE_POINTS.SUGGESTION,
+      const { data, error } = await supabase.functions.invoke("storypros-member-action", {
+        body: { dashboard_token: state.dashboardToken, action: "submit_suggestion", text, category },
       });
       if (error) {
         addNotification("error", "Could not submit suggestion");
         return { success: false, message: error.message };
       }
-      const row = (data as any)?.[0];
+      const row = data as any;
       if (!row?.success) {
         addNotification("error", row?.message || "Could not submit");
         return { success: false, message: row?.message || "Failed" };
@@ -817,15 +813,14 @@ export function useStorybuildersWaitlist() {
       if (!state.referralCode) {
         return { success: false, message: "Join the waitlist first" };
       }
-      const { data, error } = await supabase.rpc("vote_waitlist_suggestion", {
-        p_referral_code: state.referralCode,
-        p_suggestion_id: suggestionId,
+      const { data, error } = await supabase.functions.invoke("storypros-member-action", {
+        body: { dashboard_token: state.dashboardToken, action: "vote_suggestion", suggestion_id: suggestionId },
       });
       if (error) {
         addNotification("error", "Could not register vote");
         return { success: false, message: error.message };
       }
-      const row = (data as any)?.[0];
+      const row = data as any;
       if (!row?.success) {
         addNotification("info", row?.message || "Already voted");
         return { success: false, message: row?.message || "Failed" };

@@ -58,6 +58,7 @@ interface Suggestion {
 interface SuggestionBoxProps {
   currentTier: number;
   referralCode: string | null;
+  dashboardToken?: string | null;
   submitSuggestion: (
     text: string,
     category: string
@@ -72,6 +73,7 @@ const TIER_4_THRESHOLD = TIER_THRESHOLDS[3] ?? 130;
 const SuggestionBox = ({
   currentTier,
   referralCode,
+  dashboardToken,
   submitSuggestion,
   voteSuggestion,
 }: SuggestionBoxProps) => {
@@ -97,15 +99,12 @@ const SuggestionBox = ({
   }, []);
 
   const loadVoted = useCallback(async () => {
-    if (!referralCode) return;
-    const { data } = await supabase.rpc("get_user_voted_suggestions", {
-      p_referral_code: referralCode,
+    if (!referralCode || !dashboardToken) return;
+    const { data } = await supabase.functions.invoke("storypros-member-action", {
+      body: { dashboard_token: dashboardToken, action: "voted_suggestions" },
     });
-    const ids = ((data as { suggestion_id: string }[]) || []).map(
-      (r) => r.suggestion_id
-    );
-    setVotedIds(new Set(ids));
-  }, [referralCode]);
+    setVotedIds(new Set(((data as { ids?: string[] })?.ids) || []));
+  }, [referralCode, dashboardToken]);
 
   useEffect(() => {
     if (!unlocked) return;

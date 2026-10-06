@@ -1,4 +1,5 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { verifyDashboardToken } from "../_shared/dashboardToken.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -17,11 +18,12 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const { referral_code, platform } = await req.json();
-
-    if (!referral_code || typeof referral_code !== "string") {
-      return new Response(JSON.stringify({ error: "referral_code is required" }), {
-        status: 400,
+    // Points are fixed server-side (PLATFORM_POINTS); ownership needs the dashboard pass.
+    const { dashboard_token, platform } = await req.json();
+    const v = await verifyDashboardToken(dashboard_token);
+    if ("error" in v) {
+      return new Response(JSON.stringify({ error: v.error }), {
+        status: 401,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
@@ -39,8 +41,18 @@ Deno.serve(async (req) => {
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
     );
 
+    const { data: member } = await supabase
+      .from("storybuilders_waitlist").select("referral_code")
+      .eq("id", v.id).is("deleted_at", null).maybeSingle();
+    if (!member?.referral_code) {
+      return new Response(JSON.stringify({ error: "not_found" }), {
+        status: 404,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
     const { data, error } = await supabase.rpc("claim_social_follow", {
-      p_referral_code: referral_code,
+      p_referral_code: member.referral_code,
       p_platform: normalizedPlatform,
       p_points: PLATFORM_POINTS[normalizedPlatform],
     });
