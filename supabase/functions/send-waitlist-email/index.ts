@@ -1,5 +1,5 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-import { unsubscribeUrl } from "../_shared/unsubscribeToken.ts";
+import { unsubscribeUrl as signUnsubUrl } from "../_shared/unsubscribeToken.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -1255,7 +1255,7 @@ Deno.serve(async (req) => {
       }
     }
 
-    const signedUnsub = to ? await unsubscribeUrl(SITE_BASE, String(to)) : "";
+    const signedUnsub = to ? await signUnsubUrl(SITE_BASE, String(to)) : "";
     const { subject, html } = getEmailTemplate(template, data, to, signedUnsub);
 
     // Generate a plain-text alternative from the HTML. Including a text/plain
