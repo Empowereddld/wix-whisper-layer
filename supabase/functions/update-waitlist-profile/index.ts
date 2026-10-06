@@ -6,6 +6,26 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
+async function verifiedAdminRow(req: Request, referralCode: unknown): Promise<string | null> {
+  if (typeof referralCode !== "string" || !referralCode) return null;
+  const auth = req.headers.get("Authorization") ?? "";
+  const jwt = auth.startsWith("Bearer ") ? auth.slice(7) : "";
+  if (!jwt) return null;
+  const url = Deno.env.get("SUPABASE_URL")!;
+  const anon = createClient(url, Deno.env.get("SUPABASE_ANON_KEY")!, {
+    global: { headers: { Authorization: `Bearer ${jwt}` } },
+  });
+  const { data: u } = await anon.auth.getUser();
+  if (!u?.user) return null;
+  const svc = createClient(url, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!);
+  const { data: isAdmin } = await svc.rpc("has_role", { _user_id: u.user.id, _role: "admin" });
+  if (isAdmin !== true) return null;
+  const { data: row } = await svc
+    .from("storybuilders_waitlist").select("id")
+    .eq("referral_code", referralCode).is("deleted_at", null).maybeSingle();
+  return row?.id ?? null;
+}
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -39,14 +59,27 @@ Deno.serve(async (req) => {
 
     // Ownership is proven ONLY by a server-signed dashboard token. Points,
     // tiers, referral totals and rewards are never accepted from the caller.
-    const verified = await verifyDashboardToken(dashboard_token);
-    if ("error" in verified) {
-      return new Response(
-        JSON.stringify({ error: verified.error }),
-        { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } }
-      );
+    // Admins (verified session + admin role) may edit on a member's behalf.
+    let waitlistId: string;
+    if (typeof dashboard_token === "string" && dashboard_token) {
+      const verified = await verifyDashboardToken(dashboard_token);
+      if ("error" in verified) {
+        return new Response(
+          JSON.stringify({ error: verified.error }),
+          { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+      waitlistId = verified.id;
+    } else {
+      const adminId = await verifiedAdminRow(req, (body as any)?.referral_code);
+      if (!adminId) {
+        return new Response(
+          JSON.stringify({ error: "invalid_token" }),
+          { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+      waitlistId = adminId;
     }
-    const waitlistId = verified.id;
 
     const updates: Record<string, unknown> = {};
 
