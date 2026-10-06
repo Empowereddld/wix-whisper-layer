@@ -222,7 +222,7 @@ export function useStorybuildersWaitlist() {
       document.removeEventListener("visibilitychange", handleVisible);
       window.removeEventListener("focus", handleVisible);
     };
-  }, [state.referralCode]);
+  }, [state.referralCode, state.dashboardToken]);
 
   const getRefFromUrl = useCallback((): string | undefined => {
     if (typeof window === "undefined") return undefined;
@@ -570,7 +570,7 @@ export function useStorybuildersWaitlist() {
         return { success: false, error: msg };
       }
     },
-    [state.referralCode]
+    [state.referralCode, state.dashboardToken]
   );
 
   const updateRole = useCallback(
@@ -623,7 +623,7 @@ export function useStorybuildersWaitlist() {
         return { success: false, error: msg };
       }
     },
-    [state.referralCode, refreshStatsInternal]
+    [state.referralCode, state.dashboardToken, refreshStatsInternal]
   );
 
   const trackShare = useCallback(
@@ -650,7 +650,7 @@ export function useStorybuildersWaitlist() {
         return false;
       }
     },
-    [state.referralCode, refreshStatsInternal]
+    [state.referralCode, state.dashboardToken, refreshStatsInternal]
   );
 
   const trackClick = useCallback(async (): Promise<boolean> => {
@@ -664,7 +664,7 @@ export function useStorybuildersWaitlist() {
       console.error("Failed to track click:", err);
       return false;
     }
-  }, [state.referralCode]);
+  }, [state.referralCode, state.dashboardToken]);
 
   const claimSocialFollow = useCallback(
     async (platform: "instagram" | "facebook" | "youtube"): Promise<boolean> => {
@@ -696,7 +696,7 @@ export function useStorybuildersWaitlist() {
         return false;
       }
     },
-    [state.referralCode, state.socialClaims, refreshStatsInternal]
+    [state.referralCode, state.dashboardToken, state.socialClaims, refreshStatsInternal]
   );
 
   // Tier reward URLs / side-effects when claimed.
@@ -754,7 +754,7 @@ export function useStorybuildersWaitlist() {
         return false;
       }
     },
-    [state.referralCode, state.emailVerified, state.rewardsClaimed, refreshStatsInternal]
+    [state.referralCode, state.dashboardToken, state.emailVerified, state.rewardsClaimed, refreshStatsInternal]
   );
 
   const resendVerification = useCallback(async (): Promise<boolean> => {
@@ -780,7 +780,7 @@ export function useStorybuildersWaitlist() {
       addNotification("error", msg);
       return false;
     }
-  }, [state.referralCode]);
+  }, [state.referralCode, state.dashboardToken]);
 
   const submitSuggestion = useCallback(
     async (text: string, category: string): Promise<{ success: boolean; message: string }> => {
@@ -806,7 +806,7 @@ export function useStorybuildersWaitlist() {
       if (state.referralCode) await refreshStatsInternal(state.dashboardToken);
       return { success: true, message: "Submitted" };
     },
-    [state.referralCode, refreshStatsInternal]
+    [state.referralCode, state.dashboardToken, refreshStatsInternal]
   );
 
   const voteSuggestion = useCallback(
@@ -830,7 +830,7 @@ export function useStorybuildersWaitlist() {
       addNotification("success", "Vote recorded");
       return { success: true, message: "Voted" };
     },
-    [state.referralCode]
+    [state.referralCode, state.dashboardToken]
   );
 
   const fetchLeaderboard = useCallback(async (limit = 10) => {
