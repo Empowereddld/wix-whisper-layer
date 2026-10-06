@@ -1,4 +1,5 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { unsubscribeUrl } from "../_shared/unsubscribeToken.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -38,7 +39,8 @@ const LOGO_URL = `${SITE_BASE}/email-assets/logo-storypros.png`;
 function getEmailTemplate(
   template: string,
   data: EmailData["data"] = {},
-  recipientEmail: string = ""
+  recipientEmail: string = "",
+  signedUnsubUrl: string = ""
 ): { subject: string; html: string } {
   const brandColor = "#5B2D8E";
   const brandColorDeep = "#3F1B6B";
@@ -169,9 +171,7 @@ function getEmailTemplate(
     </div>
   `;
 
-  const unsubscribeUrl = recipientEmail
-    ? `${SITE_BASE}/unsubscribe?email=${encodeURIComponent(recipientEmail)}`
-    : `${SITE_BASE}/unsubscribe`;
+  const unsubscribeUrl = signedUnsubUrl || `${SITE_BASE}/unsubscribe`;
   const footerBlock = `
     <div style="${footerStyles}">
       <img src="${LOGO_URL}" alt="Story Pros" width="96" style="display: inline-block; max-width: 96px; height: auto; opacity: 0.9; margin-bottom: 12px; border: 0;" />
@@ -1255,7 +1255,8 @@ Deno.serve(async (req) => {
       }
     }
 
-    const { subject, html } = getEmailTemplate(template, data, to);
+    const signedUnsub = to ? await unsubscribeUrl(SITE_BASE, String(to)) : "";
+    const { subject, html } = getEmailTemplate(template, data, to, signedUnsub);
 
     // Generate a plain-text alternative from the HTML. Including a text/plain
     // part alongside text/html significantly improves deliverability and makes
