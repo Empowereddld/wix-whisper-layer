@@ -1,4 +1,5 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { issueDashboardToken } from "../_shared/dashboardToken.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -402,7 +403,7 @@ Deno.serve(async (req) => {
       status: 302,
       headers: {
         "Access-Control-Allow-Origin": "*",
-        "Location": `https://empowereddld.com/storypros/verified?name=${encodeURIComponent((result.out_name as string | undefined) || "")}&points=15&ref=${encodeURIComponent((result.out_referral_code as string | undefined) || "")}`,
+        "Location": `https://empowereddld.com/storypros/verified?name=${encodeURIComponent((result.out_name as string | undefined) || "")}&points=15&dt=${encodeURIComponent(await issueDashboardToken(user.id))}`,
         "Cache-Control": "no-store",
       },
     });

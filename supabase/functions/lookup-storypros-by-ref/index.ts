@@ -1,8 +1,10 @@
 // Public lookup of a storybuilders_waitlist row.
 //
-// Two modes:
-//   - ref:   public referral-code lookup. Referral codes are share-link tokens
-//            (not enumerable), so this stays unauthenticated.
+// Modes:
+//   - ref:   public referral-code lookup. Returns ONLY the first name (share-safe).
+//            A referral code is never proof of ownership.
+//   - dashboard_token: full dashboard data for the token owner; returns a
+//            renewed token (capped by the absolute lifetime).
 //   - email: PII lookup. Requires a valid Supabase JWT AND the requested email
 //            must match the authenticated user's email. Prevents email
 //            enumeration of waitlist members.

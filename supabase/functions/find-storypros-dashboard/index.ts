@@ -7,6 +7,7 @@
 // by IP so attackers can't grind it for enumeration.
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { allow, clientIp } from "../_shared/rateLimit.ts";
+import { issueDashboardToken } from "../_shared/dashboardToken.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -71,7 +72,7 @@ Deno.serve(async (req) => {
       return okResponse();
     }
 
-    const dashboardLink = `${SITE_BASE}/storypros/dashboard?ref=${encodeURIComponent(user.referral_code)}`;
+    const dashboardLink = `${SITE_BASE}/storypros/dashboard?dt=${encodeURIComponent(await issueDashboardToken(user.id))}`;
     const firstName = (user.name || "").split(" ")[0] || "there";
 
     await fetch(`${supabaseUrl}/functions/v1/send-waitlist-email`, {
