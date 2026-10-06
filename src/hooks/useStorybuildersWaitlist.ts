@@ -976,6 +976,7 @@ export function useStorybuildersWaitlist() {
       name: "",
       email: "",
       referralCode: "",
+      dashboardToken: "",
       inviteCount: 0,
       totalCount: state.totalCount,
       points: 0,
