@@ -17,8 +17,11 @@ const corsHeaders = {
 const FOUNDER_SLOT_CAP = 20;
 const BASE_URL = "https://empowereddld.com";
 
-// Signed Founder claim token: "<waitlist_id>.<hmac>". Must match claim-founder-package.
+// Signed, expiring Founder claim token: "<waitlist_id>.<exp>.<hmac>".
+// Must match claim-founder-package. Valid for 90 days from the email send.
+const CLAIM_TOKEN_TTL_SECONDS = 90 * 24 * 60 * 60;
 async function signClaimToken(id: string): Promise<string> {
+  const exp = String(Math.floor(Date.now() / 1000) + CLAIM_TOKEN_TTL_SECONDS);
   const key = await crypto.subtle.importKey(
     "raw",
     new TextEncoder().encode(Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!),
@@ -26,10 +29,10 @@ async function signClaimToken(id: string): Promise<string> {
     false,
     ["sign"],
   );
-  const sig = await crypto.subtle.sign("HMAC", key, new TextEncoder().encode(`founder-claim:${id}`));
+  const sig = await crypto.subtle.sign("HMAC", key, new TextEncoder().encode(`founder-claim:v2:${id}:${exp}`));
   const b64 = btoa(String.fromCharCode(...new Uint8Array(sig)))
     .replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
-  return `${id}.${b64}`;
+  return `${id}.${exp}.${b64}`;
 }
 
 // EF guide download link surfaced in Email 3 (Tier 2 reward).
