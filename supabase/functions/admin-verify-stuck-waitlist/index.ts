@@ -13,6 +13,7 @@
 //
 // Auth: caller must present a valid Bearer JWT for a user with the admin role.
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { awardReferralAfterVerify } from "../_shared/referralAward.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -120,6 +121,7 @@ Deno.serve(async (req) => {
         if (result?.out_already_verified) {
           alreadyVerified++;
         } else if (result?.out_verified_now) {
+          await awardReferralAfterVerify(supabase, u.id);
           verified++;
 
           // Welcome dispatch (atomic claim)

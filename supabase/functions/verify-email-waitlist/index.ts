@@ -1,5 +1,6 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { issueDashboardToken } from "../_shared/dashboardToken.ts";
+import { awardReferralAfterVerify } from "../_shared/referralAward.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -313,6 +314,9 @@ Deno.serve(async (req) => {
         .update({ used_at: new Date().toISOString() })
         .eq("id", tokenRowId);
     }
+
+    // Idempotent: awards the referrer at most once, only for a verified member.
+    await awardReferralAfterVerify(supabase, user.id);
 
     if (!result?.out_verified_now) {
       return new Response(null, {
