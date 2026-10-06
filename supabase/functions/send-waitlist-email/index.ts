@@ -1,4 +1,5 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { escapeHtml as escHtml } from "../_shared/html.ts";
 import { unsubscribeUrl as signUnsubUrl } from "../_shared/unsubscribeToken.ts";
 
 const corsHeaders = {
@@ -42,6 +43,12 @@ function getEmailTemplate(
   recipientEmail: string = "",
   signedUnsubUrl: string = ""
 ): { subject: string; html: string } {
+  // Person-supplied text is escaped before it reaches any template.
+  data = { ...data };
+  for (const k of ["name", "first_name", "referred_name", "claimant_email", "role_label", "referral_code", "claimed_at"] as const) {
+    const d = data as Record<string, unknown>;
+    if (typeof d[k] === "string") d[k] = escHtml(d[k]);
+  }
   const brandColor = "#5B2D8E";
   const brandColorDeep = "#3F1B6B";
   const brandAccent = "#FBBF24";

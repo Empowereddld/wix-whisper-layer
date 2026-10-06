@@ -4,6 +4,7 @@
 // purchases, leads, contact form submissions, and top resources.
 
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
+import { escapeHtml as escHtml } from "../_shared/html.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -154,7 +155,7 @@ Deno.serve(async (req) => {
         .in("id", topIds.map(([id]) => id));
       const titleMap = new Map((resRows ?? []).map((r: any) => [r.id, r.title]));
       topResourcesHtml = topIds
-        .map(([id, n]) => `<li><strong>${n}×</strong> &nbsp; ${titleMap.get(id) ?? "(unknown)"}</li>`)
+        .map(([id, n]) => `<li><strong>${n}×</strong> &nbsp; ${escHtml(titleMap.get(id) ?? "(unknown)")}</li>`)
         .join("");
     }
 
@@ -167,7 +168,7 @@ Deno.serve(async (req) => {
       .order("invite_count", { ascending: false })
       .limit(5);
     const topRefHtml = (refRows ?? []).length
-      ? (refRows ?? []).map((r: any) => `<li><strong>${r.invite_count}</strong> invites · ${r.name} (${r.points} pts)</li>`).join("")
+      ? (refRows ?? []).map((r: any) => `<li><strong>${r.invite_count}</strong> invites · ${escHtml(r.name)} (${r.points} pts)</li>`).join("")
       : "<li style='color:#888'>No referrals yet</li>";
 
     // Recent waitlist signups (last 7d, sample 5)
@@ -179,7 +180,7 @@ Deno.serve(async (req) => {
       .order("created_at", { ascending: false })
       .limit(5);
     const recentHtml = (recentSignups ?? []).length
-      ? (recentSignups ?? []).map((s: any) => `<li>${s.name} ${s.referred_by_code ? `<span style="color:#888;font-size:12px">(via ${s.referred_by_code})</span>` : ""}</li>`).join("")
+      ? (recentSignups ?? []).map((s: any) => `<li>${escHtml(s.name)} ${s.referred_by_code ? `<span style="color:#888;font-size:12px">(via ${escHtml(s.referred_by_code)})</span>` : ""}</li>`).join("")
       : "<li style='color:#888'>No new signups this week</li>";
 
     // Build HTML

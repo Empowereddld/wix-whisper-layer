@@ -15,6 +15,7 @@
 // Triggered by pg_cron hourly. Requires x-cron-secret.
 
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
+import { escapeHtml as escHtml } from "../_shared/html.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -212,7 +213,7 @@ Deno.serve(async (req) => {
         <td style="padding:8px;border:1px solid #ddd;vertical-align:top;"><strong>${r.label}</strong><br/>
           <span style="color:#666;font-size:12px;">${r.id}</span></td>
         <td style="padding:8px;border:1px solid #ddd;vertical-align:top;">${r.count}</td>
-        <td style="padding:8px;border:1px solid #ddd;vertical-align:top;">${r.detail}<br/>
+        <td style="padding:8px;border:1px solid #ddd;vertical-align:top;">${escHtml(r.detail)}<br/>
           <em style="color:#444;">${r.suggestedAction}</em></td>
       </tr>`).join("");
     const html = `
@@ -227,7 +228,7 @@ Deno.serve(async (req) => {
         <tbody>${rows}</tbody>
       </table>
       <p style="color:#666;font-size:12px;margin-top:16px;">
-        Gate probe: ${gateStatus} — <code>${gateBody}</code>
+        Gate probe: ${gateStatus} — <code>${escHtml(gateBody)}</code>
       </p>`;
 
     try {
