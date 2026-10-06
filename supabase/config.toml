@@ -67,3 +67,6 @@ verify_jwt = false
 
 [functions.process-email-queue]
 verify_jwt = true
+
+[functions.tmp-5b-test-helper]
+verify_jwt = false
