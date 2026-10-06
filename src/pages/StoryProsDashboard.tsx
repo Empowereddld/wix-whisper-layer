@@ -940,6 +940,7 @@ const StoryProsDashboard = () => {
             <SuggestionBox
               currentTier={currentTier}
               referralCode={wl.referralCode}
+              dashboardToken={wl.dashboardToken}
               submitSuggestion={wl.submitSuggestion}
               voteSuggestion={wl.voteSuggestion}
             />
