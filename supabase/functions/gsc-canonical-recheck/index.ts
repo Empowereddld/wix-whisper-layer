@@ -2,6 +2,7 @@
 // Inspects key URLs and emails a summary showing Google's declared canonical
 // per URL, flagging any that still resolve to the www variant.
 // Triggered by pg_cron (weekly). Requires x-cron-secret header.
+import { escapeHtml as escHtml } from "../_shared/html.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -99,17 +100,17 @@ Deno.serve(async (req) => {
     const rows = results
       .map((r: any) => {
         if (r.error) {
-          return `<tr><td style="padding:8px;border-bottom:1px solid #eee;">${r.inspectionUrl}</td>
-            <td colspan="3" style="padding:8px;border-bottom:1px solid #eee;color:#b3261e;">${r.error}</td></tr>`;
+          return `<tr><td style="padding:8px;border-bottom:1px solid #eee;">${escHtml(r.inspectionUrl)}</td>
+            <td colspan="3" style="padding:8px;border-bottom:1px solid #eee;color:#b3261e;">${escHtml(r.error)}</td></tr>`;
         }
         const isWww = r.googleCanonical?.includes("www.");
         const badge = isWww
           ? `<span style="color:#b3261e;font-weight:600;">www ⚠</span>`
           : `<span style="color:#1a7f4e;font-weight:600;">non-www ✓</span>`;
         return `<tr>
-          <td style="padding:8px;border-bottom:1px solid #eee;font-size:13px;">${r.inspectionUrl}</td>
-          <td style="padding:8px;border-bottom:1px solid #eee;font-size:13px;">${r.verdict}</td>
-          <td style="padding:8px;border-bottom:1px solid #eee;font-size:12px;color:#555;">${r.googleCanonical || "—"}</td>
+          <td style="padding:8px;border-bottom:1px solid #eee;font-size:13px;">${escHtml(r.inspectionUrl)}</td>
+          <td style="padding:8px;border-bottom:1px solid #eee;font-size:13px;">${escHtml(r.verdict)}</td>
+          <td style="padding:8px;border-bottom:1px solid #eee;font-size:12px;color:#555;">${escHtml(r.googleCanonical || "—")}</td>
           <td style="padding:8px;border-bottom:1px solid #eee;text-align:right;">${badge}</td>
         </tr>`;
       })
