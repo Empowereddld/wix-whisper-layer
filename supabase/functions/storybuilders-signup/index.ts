@@ -1,4 +1,5 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { escapeHtml as escHtml } from "../_shared/html.ts";
 import { issueDashboardToken } from "../_shared/dashboardToken.ts";
 import { allow, clientIp } from "../_shared/rateLimit.ts";
 
@@ -105,9 +106,9 @@ async function alertSignupEmailFailure(
         to: "hello@empowereddld.com",
         subject: "🚨 Story Pros signup email failed",
         html: `<p><strong>A signup could not receive its verification email.</strong></p>
-          <p><strong>Name:</strong> ${name}</p>
-          <p><strong>Email:</strong> ${email}</p>
-          <p><strong>Error:</strong> ${errorMessage}</p>`,
+          <p><strong>Name:</strong> ${escHtml(name)}</p>
+          <p><strong>Email:</strong> ${escHtml(email)}</p>
+          <p><strong>Error:</strong> ${escHtml(errorMessage)}</p>`,
         text: `A Story Pros signup could not receive its verification email.\n\nName: ${name}\nEmail: ${email}\nError: ${errorMessage}`,
       }),
     });

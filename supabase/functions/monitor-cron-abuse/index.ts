@@ -2,6 +2,7 @@
 // cron-only edge functions. If failures in the last hour exceed THRESHOLD,
 // emails all admins. Idempotent per hour-window via cron_abuse_alerts.
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { escapeHtml as escHtml } from "../_shared/html.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -73,13 +74,13 @@ Deno.serve(async (req) => {
 
     const fnRows = Object.entries(byFn)
       .sort((a, b) => b[1] - a[1])
-      .map(([fn, n]) => `<tr><td style="padding:6px 12px;border-bottom:1px solid #eee;">${fn}</td><td style="padding:6px 12px;border-bottom:1px solid #eee;text-align:right;"><b>${n}</b></td></tr>`)
+      .map(([fn, n]) => `<tr><td style="padding:6px 12px;border-bottom:1px solid #eee;">${escHtml(fn)}</td><td style="padding:6px 12px;border-bottom:1px solid #eee;text-align:right;"><b>${n}</b></td></tr>`)
       .join("");
 
     const ipRows = Object.entries(byIp)
       .sort((a, b) => b[1] - a[1])
       .slice(0, 10)
-      .map(([ip, n]) => `<tr><td style="padding:6px 12px;border-bottom:1px solid #eee;font-family:monospace;font-size:13px;">${ip}</td><td style="padding:6px 12px;border-bottom:1px solid #eee;text-align:right;"><b>${n}</b></td></tr>`)
+      .map(([ip, n]) => `<tr><td style="padding:6px 12px;border-bottom:1px solid #eee;font-family:monospace;font-size:13px;">${escHtml(ip)}</td><td style="padding:6px 12px;border-bottom:1px solid #eee;text-align:right;"><b>${n}</b></td></tr>`)
       .join("");
 
     const html = `

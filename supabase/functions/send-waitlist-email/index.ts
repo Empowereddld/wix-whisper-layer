@@ -1,4 +1,5 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { escapeHtml as escHtml } from "../_shared/html.ts";
 import { unsubscribeUrl as signUnsubUrl } from "../_shared/unsubscribeToken.ts";
 
 const corsHeaders = {
@@ -36,12 +37,32 @@ const DEFAULT_VIDEO = `https://youtu.be/S4ke41x89s0`;
 const DEFAULT_GUIDE = `${SITE_BASE}/hub/resource/d9836a63-003e-44bc-9da4-a27d6d478d1a`;
 const LOGO_URL = `${SITE_BASE}/email-assets/logo-storypros.png`;
 
+// Subjects are plain text: undo the HTML escaping applied to person-supplied fields.
 function getEmailTemplate(
   template: string,
   data: EmailData["data"] = {},
   recipientEmail: string = "",
   signedUnsubUrl: string = ""
 ): { subject: string; html: string } {
+  const r = renderEmailTemplate(template, data, recipientEmail, signedUnsubUrl);
+  const subject = r.subject
+    .replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'").replace(/&amp;/g, "&");
+  return { ...r, subject };
+}
+
+function renderEmailTemplate(
+  template: string,
+  data: EmailData["data"] = {},
+  recipientEmail: string = "",
+  signedUnsubUrl: string = ""
+): { subject: string; html: string } {
+  // Person-supplied text is escaped before it reaches any template.
+  data = { ...data };
+  for (const k of ["name", "first_name", "referred_name", "claimant_email", "role_label", "referral_code", "claimed_at"] as const) {
+    const d = data as Record<string, unknown>;
+    if (typeof d[k] === "string") d[k] = escHtml(d[k]);
+  }
   const brandColor = "#5B2D8E";
   const brandColorDeep = "#3F1B6B";
   const brandAccent = "#FBBF24";

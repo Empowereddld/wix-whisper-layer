@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
+import { downloadSafeCsv } from "@/lib/safeCsv";
 import { supabase } from "@/integrations/supabase/client";
 import AdminLayout from "@/components/admin/AdminLayout";
 import {
@@ -221,7 +222,7 @@ const AdminStoryBuilders = () => {
   const handleExportCSV = useCallback(() => {
     if (users.length === 0) return;
 
-    const csv = [
+    const rows = [
       ["Name", "Email", "Referral Code", "Referrals", "Joined"],
       ...users.map((u) => [
         u.name,
@@ -230,17 +231,8 @@ const AdminStoryBuilders = () => {
         u.invite_count,
         format(new Date(u.created_at), "MMM dd, yyyy"),
       ]),
-    ]
-      .map((row) => row.map((cell) => `"${cell}"`).join(","))
-      .join("\n");
-
-    const element = document.createElement("a");
-    element.setAttribute("href", "data:text/csv;charset=utf-8," + encodeURIComponent(csv));
-    element.setAttribute("download", `story-pros-waitlist-${Date.now()}.csv`);
-    element.style.display = "none";
-    document.body.appendChild(element);
-    element.click();
-    document.body.removeChild(element);
+    ];
+    downloadSafeCsv(`story-pros-waitlist-${Date.now()}.csv`, rows);
   }, [users]);
 
   const filteredUsers = useMemo(() => {
