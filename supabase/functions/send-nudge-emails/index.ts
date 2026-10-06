@@ -68,6 +68,7 @@ Deno.serve(async (req) => {
       .select("id, name, email, points, referral_code, nudge_sent_for_tier, last_points_earned_at")
       .eq("email_verified", true)
       .is("deleted_at", null)
+      .is("automated_email_hold_at", null)
       .lt("points", 500)
       .lte("last_points_earned_at", cutoff)
       .limit(BATCH_LIMIT);
@@ -99,6 +100,7 @@ Deno.serve(async (req) => {
 
         const firstName = u.name?.split(" ")[0] || "friend";
         const { error: sendError } = await supabase.functions.invoke("send-waitlist-email", {
+          headers: { "x-cron-secret": cronSecret },
           body: {
             template: "nudge",
             to: u.email,

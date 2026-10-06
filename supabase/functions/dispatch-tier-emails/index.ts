@@ -108,6 +108,7 @@ Deno.serve(async (req) => {
       )
       .eq("email_verified", true)
       .is("deleted_at", null)
+      .is("automated_email_hold_at", null)
       .gte("points", 35)
       .order("points", { ascending: false })
       .limit(200);
@@ -159,6 +160,7 @@ Deno.serve(async (req) => {
               : undefined;
 
           const { error: sendError } = await supabase.functions.invoke("send-waitlist-email", {
+          headers: { "x-cron-secret": cronSecret },
             body: {
               template,
               to: u.email,
@@ -191,6 +193,7 @@ Deno.serve(async (req) => {
           const t = TIERS[i];
           if (u.points >= t.threshold && !u[t.sentColumn]) {
             const { error: sendError } = await supabase.functions.invoke("send-waitlist-email", {
+          headers: { "x-cron-secret": cronSecret },
               body: {
                 template: t.template,
                 to: u.email,

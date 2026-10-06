@@ -81,6 +81,7 @@ Deno.serve(async (req) => {
       .select("id, name, email, points, referral_code")
       .eq("email_verified", true)
       .is("deleted_at", null)
+      .is("automated_email_hold_at", null)
       .is("founder_scarcity_sent_at", null)
       .lt("points", 500)
       .limit(BATCH_LIMIT);
@@ -94,6 +95,7 @@ Deno.serve(async (req) => {
       try {
         const firstName = u.name?.split(" ")[0] || "friend";
         const { error: sendError } = await supabase.functions.invoke("send-waitlist-email", {
+          headers: { "x-cron-secret": cronSecret },
           body: {
             template: "founder_scarcity",
             to: u.email,
