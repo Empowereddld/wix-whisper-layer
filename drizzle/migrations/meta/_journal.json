@@ -43,6 +43,13 @@
       "when": 1791302497011,
       "tag": "0005_migration",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1791315707817,
+      "tag": "0006_purchases_fulfillment_uniqueness",
+      "breakpoints": true
     }
   ]
 }
