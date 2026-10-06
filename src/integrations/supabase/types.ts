@@ -710,6 +710,42 @@ export type Database = {
           },
         ]
       }
+      referral_awards: {
+        Row: {
+          created_at: string
+          points_awarded: number | null
+          referred_id: string
+          referrer_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          points_awarded?: number | null
+          referred_id: string
+          referrer_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          points_awarded?: number | null
+          referred_id?: string
+          referrer_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "referral_awards_referred_id_fkey"
+            columns: ["referred_id"]
+            isOneToOne: true
+            referencedRelation: "storybuilders_waitlist"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "referral_awards_referrer_id_fkey"
+            columns: ["referrer_id"]
+            isOneToOne: false
+            referencedRelation: "storybuilders_waitlist"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       referral_clicks: {
         Row: {
           click_date: string
@@ -1451,6 +1487,16 @@ export type Database = {
           new_invite_count: number
           new_points: number
           success: boolean
+        }[]
+      }
+      award_referral_for_member: {
+        Args: { p_member_id: string }
+        Returns: {
+          awarded: boolean
+          member_name: string
+          referrer_email: string
+          referrer_name: string
+          referrer_new_points: number
         }[]
       }
       award_slp_referral_bonus: {
