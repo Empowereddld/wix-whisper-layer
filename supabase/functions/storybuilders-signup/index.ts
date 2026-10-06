@@ -489,40 +489,8 @@ Deno.serve(async (req) => {
       );
     }
 
-    // Handle referral
-    if (ref) {
-      const { data: referrer } = await supabase
-        .from("storybuilders_waitlist")
-        .select("email, name, points, referral_code")
-        .eq("referral_code", ref)
-        .single();
-
-      if (referrer) {
-        // Atomic award: 25 pts + 10 first-referral bonus + invite increment (single RPC)
-        const { data: awardResult } = await supabase.rpc("award_referral", {
-          p_referrer_code: ref,
-          p_referral_points: 25,
-          p_first_bonus: 10,
-        });
-
-        let awardedPoints = (awardResult as any)?.[0]?.new_points ?? (referrer.points ?? 0) + 25;
-
-        // SLP referrer top-up: if the new signup self-IDs as SLP, add the +25
-        // delta on top of the base referral so the referrer ends up with the
-        // full SLP_REFERRAL_TOTAL of 50 for this referral.
-        if (isSpeechPro) {
-          const SLP_REFERRAL_BONUS = 25;
-          const { data: slpResult } = await supabase.rpc("award_slp_referral_bonus", {
-            p_referrer_code: ref,
-            p_bonus: SLP_REFERRAL_BONUS,
-          });
-          awardedPoints = (slpResult as any)?.[0]?.new_points ?? awardedPoints;
-        }
-
-        // Send referral notification email
-        await notifyReferrer(supabaseUrl, referrer.email, referrer.name, name, awardedPoints);
-      }
-    }
+    // Referral points are NOT awarded at signup. They are awarded once, after this
+    // member verifies their email (see _shared/referralAward.ts).
 
     const { data: totalCount } = await supabase.rpc("get_storybuilders_waitlist_count");
 

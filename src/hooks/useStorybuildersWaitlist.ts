@@ -631,13 +631,13 @@ export function useStorybuildersWaitlist() {
 
   const trackShare = useCallback(
     async (platform: string): Promise<boolean> => {
-      if (!state.referralCode) {
+      if (!state.dashboardToken) {
         addNotification("error", "You must join the waitlist first");
         return false;
       }
       try {
         const { data, error } = await supabase.functions.invoke("track-share", {
-          body: { referral_code: state.referralCode, platform },
+          body: { dashboard_token: state.dashboardToken, platform },
         });
         if (error) throw error;
 
