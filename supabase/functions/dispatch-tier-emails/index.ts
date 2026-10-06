@@ -183,40 +183,39 @@ Deno.serve(async (req) => {
           continue;
         }
 
-        // --- Tiers 2-5: send the LOWEST unsent tier the user qualifies for --
-        // Send only ONE tier email per cron tick. Cron runs every 5 minutes,
-        // so a user who jumped 0 → 250 pts will receive Email 3, then 5 min
-        // later Email 4, then 5 min later Email 5. This prevents inbox
-        // flooding and keeps each unlock email in proper context.
+        // --- Tiers 2-5: send ONLY the HIGHEST tier the user currently qualifies
+        // for. Any lower unsent tiers are marked done without sending, so a
+        // backlog never produces several tier emails in sequence.
         let dispatched = false;
+        let highest = -1;
         for (let i = 0; i < TIERS.length; i++) {
-          const t = TIERS[i];
-          if (u.points >= t.threshold && !u[t.sentColumn]) {
-            const { error: sendError } = await supabase.functions.invoke("send-waitlist-email", {
-          headers: { "x-cron-secret": cronSecret },
-              body: {
-                template: t.template,
-                to: u.email,
-                data: {
-                  name: firstName,
-                  referral_link: referralLink,
-                  points_to_next: t.pointsToNext,
-                  guide_download_url: t.template === "email3_tier2" ? EF_GUIDE_URL : undefined,
-                },
+          if (u.points >= TIERS[i].threshold) highest = i;
+        }
+        if (highest >= 0 && !u[TIERS[highest].sentColumn]) {
+          const t = TIERS[highest];
+          const { error: sendError } = await supabase.functions.invoke("send-waitlist-email", {
+            headers: { "x-cron-secret": cronSecret },
+            body: {
+              template: t.template,
+              to: u.email,
+              data: {
+                name: firstName,
+                referral_link: referralLink,
+                points_to_next: t.pointsToNext,
+                guide_download_url: t.template === "email3_tier2" ? EF_GUIDE_URL : undefined,
               },
-            });
-            if (sendError) throw sendError;
+            },
+          });
+          if (sendError) throw sendError;
 
-            // Mark ONLY this tier as sent. Next cron tick (5 min later) will
-            // pick up the next unsent tier the user qualifies for.
-            await supabase
-              .from("storybuilders_waitlist")
-              .update({ [t.sentColumn]: new Date().toISOString() })
-              .eq("id", u.id);
-            sent++;
-            dispatched = true;
-            break;
+          const now = new Date().toISOString();
+          const updates: Record<string, string> = {};
+          for (let i = 0; i <= highest; i++) {
+            if (!u[TIERS[i].sentColumn]) updates[TIERS[i].sentColumn] = now;
           }
+          await supabase.from("storybuilders_waitlist").update(updates).eq("id", u.id);
+          sent++;
+          dispatched = true;
         }
         if (!dispatched) skipped.push(u.email);
       } catch (e) {
