@@ -189,12 +189,14 @@ export function useStorybuildersWaitlist() {
   // tab suspension). Uses a ref to refreshStatsInternal so we can declare
   // this effect before the function (avoids TDZ issues).
   const refreshStatsInternalRef = useRef<((code: string) => Promise<void>) | null>(null);
+  const tokenRef = useRef("");
+  tokenRef.current = state.dashboardToken;
   useEffect(() => {
     const code = state.referralCode;
-    if (!code) return;
+    if (!code || !state.dashboardToken) return;
 
-    const run = (c: string) => {
-      refreshStatsInternalRef.current?.(c);
+    const run = (_c: string) => {
+      if (tokenRef.current) refreshStatsInternalRef.current?.(tokenRef.current);
     };
 
     const userChannel = supabase
@@ -222,7 +224,8 @@ export function useStorybuildersWaitlist() {
       document.removeEventListener("visibilitychange", handleVisible);
       window.removeEventListener("focus", handleVisible);
     };
-  }, [state.referralCode, state.dashboardToken]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.referralCode, !!state.dashboardToken]);
 
   const getRefFromUrl = useCallback((): string | undefined => {
     if (typeof window === "undefined") return undefined;
