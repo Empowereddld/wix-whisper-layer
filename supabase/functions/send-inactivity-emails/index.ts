@@ -66,6 +66,7 @@ Deno.serve(async (req) => {
       .select("id, name, email, points, referral_code")
       .eq("email_verified", true)
       .is("deleted_at", null)
+      .is("automated_email_hold_at", null)
       .is("inactivity_email_sent_at", null)
       .lte("points", VERIFY_BONUS_POINTS)
       .lte("verified_at", cutoff)
@@ -80,6 +81,7 @@ Deno.serve(async (req) => {
       try {
         const firstName = u.name?.split(" ")[0] || "friend";
         const { error: sendError } = await supabase.functions.invoke("send-waitlist-email", {
+          headers: { "x-cron-secret": cronSecret },
           body: {
             template: "inactivity_reengagement",
             to: u.email,
