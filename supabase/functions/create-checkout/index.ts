@@ -125,6 +125,7 @@ Deno.serve(async (req) => {
     const session = await stripe.checkout.sessions.create({
       customer: customerId,
       customer_email: customerId ? undefined : user.email,
+      client_reference_id: user.id,
       line_items: [{ price: stripePriceId, quantity: 1 }],
       mode: "payment",
       payment_intent_data: {
