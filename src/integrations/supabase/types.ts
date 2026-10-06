@@ -905,6 +905,7 @@ export type Database = {
       }
       storybuilders_waitlist: {
         Row: {
+          automated_email_hold_at: string | null
           child_age: number | null
           click_count: number
           clicks_today: number
@@ -957,6 +958,7 @@ export type Database = {
           welcome_sent_at: string | null
         }
         Insert: {
+          automated_email_hold_at?: string | null
           child_age?: number | null
           click_count?: number
           clicks_today?: number
@@ -1009,6 +1011,7 @@ export type Database = {
           welcome_sent_at?: string | null
         }
         Update: {
+          automated_email_hold_at?: string | null
           child_age?: number | null
           click_count?: number
           clicks_today?: number

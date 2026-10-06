@@ -29,6 +29,13 @@
       "when": 1791237171497,
       "tag": "0003_email_rate_limits",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1791256110996,
+      "tag": "0004_hold_missed_automated_emails",
+      "breakpoints": true
     }
   ]
 }
