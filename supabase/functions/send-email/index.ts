@@ -18,6 +18,7 @@
 
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
 import { allow, clientIp } from "../_shared/rateLimit.ts";
+import { unsubscribeUrl } from "../_shared/unsubscribeToken.ts";
 
 const SUBMISSION_WINDOW_MIN = 15;
 
@@ -167,8 +168,8 @@ function defaultWrap(subject: string, bodyHtml: string, unsubscribeFooter: strin
     </div></body></html>`;
 }
 
-function unsubFooter(email: string) {
-  const url = `${SITE_URL}/unsubscribe?email=${encodeURIComponent(email)}`;
+async function unsubFooter(email: string) {
+  const url = await unsubscribeUrl(SITE_URL, email);
   return `<p style="text-align:center;color:#aaa;font-size:11px;margin-top:8px;">
     Don't want these emails? <a href="${url}" style="color:#aaa;text-decoration:underline;">Unsubscribe</a>
   </p>`;
@@ -437,7 +438,7 @@ Deno.serve(async (req) => {
     const results: any[] = [];
     for (const chunk of chunks) {
       const recipientForFooter = chunk[0];
-      const footer = resolvedIncludeUnsubscribe ? unsubFooter(recipientForFooter) : "";
+      const footer = resolvedIncludeUnsubscribe ? await unsubFooter(recipientForFooter) : "";
       const finalHtml = resolvedHtml
         ? resolvedIncludeUnsubscribe ? appendFooterToHtml(resolvedHtml, footer) : resolvedHtml
         : defaultWrap(resolvedSubject!, `<p>${escapeHtml(payload.text!)}</p>`, footer);

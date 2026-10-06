@@ -67,18 +67,10 @@ Deno.serve(async (req) => {
     Authorization: `Bearer ${apiKey}`,
   };
 
-  // Removal path: mark a contact unsubscribed (used for manual list cleaning).
-  if (payload.action === "unsubscribe") {
-    const contactId = createHash("md5").update(email).digest("hex");
-    const res = await fetch(`${base}/${contactId}`, {
-      method: "PUT",
-      headers,
-      body: JSON.stringify({ status: "unsubscribed" }),
-    });
-    if (res.ok) return json({ success: true, unsubscribed: true });
-    const body = await res.text();
-    console.error(`emailoctopus-subscribe unsubscribe failed [${res.status}]: ${body}`);
-    return json({ error: "EmailOctopus unsubscribe failed", status: res.status }, res.status);
+  // Public unsubscribe action removed: this endpoint is public, so it must
+  // never change a contact's status. Unsubscribes happen via EmailOctopus's own links.
+  if (payload.action !== undefined) {
+    return json({ error: "Unsupported action" }, 400);
   }
 
   const fields: Record<string, string> = {};
