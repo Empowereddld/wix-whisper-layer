@@ -681,8 +681,7 @@ const StoryProsDashboard = () => {
         </motion.div>
       )}
 
-      {wl.emailVerified && <StoryProsNewsletterPrompt referralCode={wl.referralCode}
-        dashboardToken={wl.dashboardToken} />}
+      {wl.emailVerified && <StoryProsNewsletterPrompt referralCode={wl.referralCode} />}
 
       {/* Complete-your-profile card: shown only after email verified, until profile saved */}
       {wl.emailVerified && !wl.profileCompleted && (
@@ -1314,6 +1313,7 @@ const StoryProsDashboard = () => {
         open={editProfileOpen}
         onOpenChange={setEditProfileOpen}
         referralCode={wl.referralCode}
+        dashboardToken={wl.dashboardToken}
         initial={{
           childAge: wl.childAge,
           hopes: wl.hopes,
