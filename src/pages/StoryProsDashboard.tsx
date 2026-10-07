@@ -681,7 +681,7 @@ const StoryProsDashboard = () => {
         </motion.div>
       )}
 
-      {wl.emailVerified && <StoryProsNewsletterPrompt referralCode={wl.referralCode} />}
+      {wl.emailVerified && <StoryProsNewsletterPrompt referralCode={wl.referralCode} dashboardToken={wl.dashboardToken} />}
 
       {/* Complete-your-profile card: shown only after email verified, until profile saved */}
       {wl.emailVerified && !wl.profileCompleted && (
