@@ -31,7 +31,7 @@ Deno.serve(async (req) => {
   const { data: done } = await sb.from("email_send_log").select("recipient_email")
     .gte("created_at", "2026-10-07T11:56:00Z");
   const already = new Set((done || []).map((d: any) => String(d.recipient_email).toLowerCase()));
-  list = list.filter((r: any) => !already.has(String(r.email).toLowerCase()));
+  list = list.filter((r: any) => !already.has(String(r.email).toLowerCase())).slice(0, 20);
   const links = await Promise.all(list.map(async (r: any) =>
     `${url}/functions/v1/storypros-reward-download?t=${encodeURIComponent(await issueRewardLinkToken(r.id))}`));
   const summary = {
