@@ -8,3 +8,5 @@
 - Story Pros points change only through service-role SECURITY DEFINER functions called by edge functions; referral points are awarded once per referred member after verification via `award_referral_for_member` (referral_awards primary key), so browsers can never award or repeat points.
 - Admin CSV exports go only through `src/lib/safeCsv.ts` (formula-prefix escaping, quoted cells) and person-supplied text in edge-function email HTML goes through `_shared/html.ts` escapeHtml, so spreadsheets and staff emails never execute user input.
 - The Story Pros Tier 2 guide lives only in the private bucket and is released by `_shared/rewardFile.ts` (signed email link or dashboard pass, verified 35+ points, 5-minute link), so reward files never sit at a public URL.
+
+- `emailoctopus-subscribe` trusts only the exact service key/CRON_SECRET for chosen tags; browser calls send `{source}` and get fixed server-side tags, form sources must match a just-saved row and `hub` uses the caller's own confirmed email, so the public can never subscribe arbitrary addresses or tags.
