@@ -122,7 +122,7 @@ Deno.serve(async (req) => {
 
         sent1++;
       } catch (e) {
-        console.error(`Reminder 1 failed for ${u.email}:`, e);
+        console.error(`Reminder 1 failed for member ${u.id}:`, e);
         failed++;
       }
     }
@@ -178,7 +178,7 @@ Deno.serve(async (req) => {
 
         sent2++;
       } catch (e) {
-        console.error(`Reminder 2 failed for ${u.email}:`, e);
+        console.error(`Reminder 2 failed for member ${u.id}:`, e);
         failed++;
       }
     }

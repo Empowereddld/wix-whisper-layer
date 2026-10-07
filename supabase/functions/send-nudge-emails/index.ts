@@ -115,7 +115,7 @@ Deno.serve(async (req) => {
           .eq("id", u.id);
         sent++;
       } catch (e) {
-        console.error(`Nudge failed for ${u.email}:`, e);
+        console.error(`Nudge failed for member ${u.id}:`, e);
         failed++;
       }
     }
