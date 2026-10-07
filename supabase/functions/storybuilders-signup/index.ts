@@ -201,36 +201,13 @@ async function checkFraud(
   }
 }
 
-const SIGNUP_RATE_LIMIT = 5; // 5 signups per hour per IP
-
-async function checkSignupRateLimit(
-  supabase: any,
-  ipAddress: string
-): Promise<{ allowed: boolean; remaining: number }> {
-  try {
-    const oneHourAgo = new Date(Date.now() - 3600000).toISOString();
-    const { count, error } = await supabase
-      .from("waitlist_events")
-      .select("*", { count: "exact", head: true })
-      .eq("metadata->>ip_address", ipAddress)
-      .eq("event_type", "signup")
-      .gte("created_at", oneHourAgo);
-
-    if (error) {
-      console.warn("Rate limit check error (allowing by default):", error);
-      return { allowed: true, remaining: SIGNUP_RATE_LIMIT };
-    }
-
-    const requests = count || 0;
-    const allowed = requests < SIGNUP_RATE_LIMIT;
-    const remaining = Math.max(0, SIGNUP_RATE_LIMIT - requests);
-
-    return { allowed, remaining };
-  } catch (error) {
-    console.warn("Rate limit check failed (allowing by default):", error);
-    return { allowed: true, remaining: SIGNUP_RATE_LIMIT };
-  }
-}
+// New-signup limits per network, keyed by a hashed server-seen address
+// (never stored raw, purged after 2 days). Sized so a household, classroom
+// or clinic can sign up several people while scripted bursts are stopped.
+const SIGNUP_NET_LIMITS = (ip: string) => [
+  { bucket: "signup-new:ip:15m", id: ip, max: 8, windowMin: 15 },
+  { bucket: "signup-new:ip:24h", id: ip, max: 30, windowMin: 60 * 24 },
+];
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -352,18 +329,14 @@ Deno.serve(async (req) => {
       attempts++;
     }
 
-    // Get IP address from headers
-    const ipAddress = req.headers.get("x-forwarded-for")?.split(",")[0].trim() ||
-                      req.headers.get("cf-connecting-ip") ||
-                      "unknown";
+    // Server-seen network address only; browser-supplied values are ignored.
+    const ipAddress = clientIp(req);
 
-    // Check rate limit (5 signups per hour per IP)
-    const rateLimit = await checkSignupRateLimit(supabase, ipAddress);
-    if (!rateLimit.allowed) {
+    // Network limit runs before anything is saved or emailed.
+    if (!(await allow(supabase, SIGNUP_NET_LIMITS(ipAddress)))) {
       return new Response(
         JSON.stringify({
           error: "Too many signup attempts. Please try again later.",
-          remaining: rateLimit.remaining,
         }),
         {
           status: 429,

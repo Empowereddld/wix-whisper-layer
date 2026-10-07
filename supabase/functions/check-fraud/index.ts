@@ -49,71 +49,12 @@ const DISPOSABLE_EMAIL_DOMAINS = new Set([
 
 interface FraudCheckRequest {
   email: string;
-  ip_address: string;
 }
 
 interface FraudCheckResponse {
   flagged: boolean;
   reasons: string[];
   risk_score: number;
-}
-
-async function checkIPRateLimit(
-  supabase: any,
-  ipAddress: string
-): Promise<{ count: number; exceedsLimit: boolean }> {
-  const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
-
-  const { data, error } = await supabase
-    .from("storybuilders_waitlist")
-    .select("id")
-    .eq("ip_address", ipAddress)
-    .gte("created_at", oneDayAgo);
-
-  if (error) {
-    console.error("Rate limit check error:", error);
-    return { count: 0, exceedsLimit: false };
-  }
-
-  const count = data?.length ?? 0;
-  const MAX_SIGNUPS_PER_IP_PER_DAY = 5;
-
-  return {
-    count,
-    exceedsLimit: count >= MAX_SIGNUPS_PER_IP_PER_DAY,
-  };
-}
-
-// Bounded, injection-safe check for sequential addresses (e.g. kid1@, kid2@)
-// from the same IP. The input is length-capped and validated with a simple
-// non-backtracking pattern, LIKE wildcards are escaped, and the lookup is a
-// lookup is scoped to one IP address.
-const SIMPLE_EMAIL_RE = /^[^\s@]{1,64}@[^\s@]{1,190}$/;
-async function checkEmailPatterns(
-  supabase: any,
-  email: string,
-  ipAddress: string
-): Promise<boolean> {
-  if (email.length > 254 || !SIMPLE_EMAIL_RE.test(email)) return false;
-  const local = email.slice(0, email.indexOf("@"));
-  let end = local.length;
-  while (end > 0 && local.charCodeAt(end - 1) >= 48 && local.charCodeAt(end - 1) <= 57) end--;
-  if (end === local.length || end === 0) return false; // no trailing digits, or digits only
-  const base = local.slice(0, end).slice(0, 64).replace(/[\\%_]/g, (c) => "\\" + c);
-
-  const { count, error } = await supabase
-    .from("storybuilders_waitlist")
-    .select("id", { count: "exact", head: true })
-    .eq("ip_address", ipAddress)
-    .ilike("email", `%${base}%`)
-    .limit(10);
-
-  if (error) {
-    console.error("Email pattern check error:", error.message);
-    return false;
-  }
-  // If there are 3+ similar emails from same IP, flag it
-  return (count ?? 0) >= 3;
 }
 
 async function checkSelfReferral(
@@ -166,15 +107,14 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const { email, ip_address, referred_by_code } = (await req.json()) as FraudCheckRequest & {
+    const { email, referred_by_code } = (await req.json()) as FraudCheckRequest & {
       referred_by_code?: string;
     };
 
-    if (typeof email !== "string" || typeof ip_address !== "string" || !email || !ip_address ||
-        email.length > 254 || ip_address.length > 64 ||
+    if (typeof email !== "string" || !email || email.length > 254 ||
         (referred_by_code != null && (typeof referred_by_code !== "string" || referred_by_code.length > 32))) {
       return new Response(
-        JSON.stringify({ error: "email and ip_address are required" }),
+        JSON.stringify({ error: "valid email is required" }),
         {
           status: 400,
           headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -202,36 +142,12 @@ Deno.serve(async (req) => {
       riskScore += 40;
     }
 
-    // Check 3: IP rate limiting
-    const rateLimit = await checkIPRateLimit(supabase, ip_address);
-    if (rateLimit.exceedsLimit) {
-      reasons.push(`IP address exceeded limit (${rateLimit.count} signups in 24h)`);
-      riskScore += 50;
-    }
-
-    // Check 4: Email pattern detection
-    if (await checkEmailPatterns(supabase, normalizedEmail, ip_address)) {
-      reasons.push("Sequential email pattern from same IP");
-      riskScore += 35;
-    }
+    // Network rate limiting now happens in storybuilders-signup (hashed,
+    // server-seen address) before a row is saved, so it is not repeated here.
 
     const flagged = riskScore >= 30; // Flag if risk score is 30 or higher
 
-    // Log fraud attempt to database
-    if (flagged) {
-      try {
-        await supabase.from("waitlist_fraud_log").insert({
-          email: normalizedEmail,
-          ip_address,
-          risk_score: riskScore,
-          fraud_reasons: reasons, // Array of reason strings
-          user_agent: req.headers.get("user-agent"),
-        });
-      } catch (logError) {
-        console.error("Failed to log fraud attempt:", logError);
-        // Don't fail the request if logging fails
-      }
-    }
+    // Flagged results are logged (masked) by storybuilders-signup.
 
     const response: FraudCheckResponse = {
       flagged,
