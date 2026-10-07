@@ -119,7 +119,21 @@ Deno.serve(async (req) => {
     const customers = await stripe.customers.list({ email: user.email, limit: 1 });
     const customerId = customers.data.length > 0 ? customers.data[0].id : undefined;
 
-    const origin = req.headers.get("origin") || "https://wix-whisper-layer.lovable.app";
+    // Return links use only known Empowered DLD sites; anything else falls back to the main domain.
+    const ALLOWED_ORIGINS = new Set([
+      "https://www.empowereddld.com",
+      "https://empowereddld.com",
+      "https://wix-whisper-layer.lovable.app",
+      "https://id-preview--51a660d5-acfd-48f5-86f4-38b3ac526ca2.lovable.app",
+    ]);
+    const requestOrigin = (req.headers.get("origin") || "").replace(/\/+$/, "");
+    const origin = ALLOWED_ORIGINS.has(requestOrigin) ? requestOrigin : "https://www.empowereddld.com";
+    if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(String(resource_id))) {
+      return new Response(JSON.stringify({ error: "Invalid resource" }), {
+        status: 400,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
 
     // Create checkout session
     const session = await stripe.checkout.sessions.create({
