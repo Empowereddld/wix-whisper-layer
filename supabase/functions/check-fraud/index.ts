@@ -87,7 +87,7 @@ async function checkIPRateLimit(
 // Bounded, injection-safe check for sequential addresses (e.g. kid1@, kid2@)
 // from the same IP. The input is length-capped and validated with a simple
 // non-backtracking pattern, LIKE wildcards are escaped, and the lookup is a
-// prefix match on at most a handful of rows from one IP.
+// lookup is scoped to one IP address.
 const SIMPLE_EMAIL_RE = /^[^\s@]{1,64}@[^\s@]{1,190}$/;
 async function checkEmailPatterns(
   supabase: any,
@@ -105,7 +105,7 @@ async function checkEmailPatterns(
     .from("storybuilders_waitlist")
     .select("id", { count: "exact", head: true })
     .eq("ip_address", ipAddress)
-    .ilike("email", `${base}%`)
+    .ilike("email", `%${base}%`)
     .limit(10);
 
   if (error) {
