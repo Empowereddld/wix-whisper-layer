@@ -33,12 +33,7 @@ const syncHubUserToEmailOctopus = (user: User) => {
       lastName = parts.slice(1).join(" ");
     }
   }
-  syncToEmailOctopus({
-    email: user.email,
-    tag: "resource-hub",
-    firstName,
-    lastName,
-  });
+  syncToEmailOctopus({ source: "hub" });
 };
 
 interface Profile {
