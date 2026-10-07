@@ -1,3 +1,4 @@
+import { syncToEmailOctopus } from "@/lib/emailoctopus";
 import { useState, useEffect } from "react";
 import NoIndexHead from "@/components/NoIndexHead";
 import { useNavigate, Link } from "react-router-dom";
@@ -91,7 +92,7 @@ const SignupRole = () => {
     // A `false` row only means "no opt-in at this moment" — it never revokes
     // an earlier affirmative record. Fire-and-forget: never block onboarding.
     if (user.email) {
-      supabase.from("newsletter_consents").insert({
+      const consentWrite = supabase.from("newsletter_consents").insert({
         user_id: user.id,
         email: user.email.toLowerCase().trim(),
         consented: newsletterConsent,
@@ -103,18 +104,10 @@ const SignupRole = () => {
         if (consentError) console.warn("Consent record failed:", consentError);
       });
 
-      // If they opted in, add the newsletter tag right away (the hourly
-      // server sync skips users the browser fast-path already synced).
+      // If they opted in, add the newsletter tag right away once the consent
+      // row is saved (the server only adds "newsletter" when it finds consent).
       if (newsletterConsent) {
-        const meta = (user.user_metadata ?? {}) as Record<string, string>;
-        supabase.functions.invoke("emailoctopus-subscribe", {
-          body: {
-            email: user.email.toLowerCase().trim(),
-            tags: ["resource-hub", "newsletter"],
-            first_name: profile?.first_name || meta.first_name || "",
-            last_name: profile?.last_name || meta.last_name || "",
-          },
-        }).catch((e) => console.warn("Newsletter tag sync failed:", e));
+        consentWrite.then(() => syncToEmailOctopus({ source: "hub" }));
       }
     }
 
