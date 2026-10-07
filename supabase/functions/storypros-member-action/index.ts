@@ -9,6 +9,7 @@
 //   action = "voted_suggestions"
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { verifyDashboardToken } from "../_shared/dashboardToken.ts";
+import { eligibleRewardUrl } from "../_shared/rewardFile.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -65,6 +66,12 @@ Deno.serve(async (req) => {
         });
         if (error) throw error;
         return json(one(data) ?? { success: false });
+      }
+      case "reward_download": {
+        if (body?.reward_id !== "tier_2_ef_guide") return json({ success: false, message: "Unknown reward" }, 400);
+        const url = await eligibleRewardUrl(supabase, member.id);
+        if (!url) return json({ success: false, message: "Reach Tier 2 with a verified email to download this guide." }, 403);
+        return json({ success: true, url });
       }
       case "voted_suggestions": {
         const { data, error } = await supabase.rpc("get_user_voted_suggestions", { p_referral_code: code });
