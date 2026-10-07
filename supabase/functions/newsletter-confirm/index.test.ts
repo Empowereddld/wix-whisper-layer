@@ -3,7 +3,7 @@ import "https://deno.land/std@0.224.0/dotenv/load.ts";
 const URL_ = Deno.env.get("VITE_SUPABASE_URL")!;
 const KEY = Deno.env.get("VITE_SUPABASE_PUBLISHABLE_KEY")!;
 const SECRET = Deno.env.get("STORYPROS_DASHBOARD_SECRET");
-const EMAIL = Deno.env.get("B7_EMAIL") ?? "";
+const EMAIL = "delivered+b71791402284@resend.dev";
 
 const b64u = (s: string) =>
   btoa(String.fromCharCode(...new TextEncoder().encode(s))).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
