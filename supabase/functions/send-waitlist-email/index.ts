@@ -1030,6 +1030,29 @@ function renderEmailTemplate(
       };
     }
 
+    case "ef_guide_link_update": {
+      return {
+        subject: `Updated link to your Story Pros reward`,
+        html: `
+          <div style="${containerStyles}">
+            <div style="${cardStyles}">
+              <div style="${bodyPad}">
+                <p style="${baseStyles}">Hi ${name},</p>
+                <p style="${baseStyles}">We recently updated the download link for your Tier 2 Story Pros reward, <strong>Executive Function Skills for Your Child</strong>.</p>
+                <p style="${baseStyles}">The link in your earlier email is no longer active, so here is your updated personal download link:</p>
+                <div style="text-align: center;">
+                  <a href="${data.guide_download_url}" style="${buttonStyles}">Download your guide</a>
+                </div>
+                <p style="${baseStyles}">You can also access your reward anytime from your <a href="${dashboard}" style="color: ${brandColor};">Story Pros dashboard</a>.</p>
+                <p style="${baseStyles}">Thanks for being part of Story Pros!<br/>Camesha &amp; Jinean<br/>Empowered DLD</p>
+              </div>
+              ${footerBlock}
+            </div>
+          </div>
+        `,
+      };
+    }
+
     case "weekly_digest": {
       return {
         html: `
