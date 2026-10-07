@@ -353,7 +353,11 @@ Deno.serve(async (req) => {
       }
       // Public templates only send for a real, just-saved form submission,
       // using the stored values (never caller-supplied text or recipients).
-      const verified = await resolvePublicTemplate(req, payload.template, callerTo, payload.data || {});
+      // Exception: trusted server callers (e.g. newsletter-confirm after a
+      // verified confirmation click) may send the newsletter welcome directly.
+      const verified: Resolved = payload.template === "newsletter_welcome" && await isPrivileged(req)
+        ? { ok: true, to: callerTo.trim().toLowerCase(), data: { name: payload.data?.name ?? "" } }
+        : await resolvePublicTemplate(req, payload.template, callerTo, payload.data || {});
       if (!verified.ok) {
         return new Response(JSON.stringify({ error: verified.error }), {
           status: verified.status,

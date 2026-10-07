@@ -107,6 +107,7 @@ const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
 const TermsAndConditions = lazy(() => import("./pages/TermsAndConditions"));
 const Disclaimer = lazy(() => import("./pages/Disclaimer"));
 const Unsubscribe = lazy(() => import("./pages/Unsubscribe"));
+const NewsletterConfirm = lazy(() => import("./pages/NewsletterConfirm"));
 const DanAndThePaperAirplane = lazy(() => import("./pages/preview/DanAndThePaperAirplane"));
 const LanguageImpactChecklist = lazy(() => import("./pages/resources/LanguageImpactChecklist"));
 
@@ -173,6 +174,7 @@ const App = () => (
               <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
               <Route path="/disclaimer" element={<Disclaimer />} />
               <Route path="/unsubscribe" element={<Unsubscribe />} />
+              <Route path="/newsletter/confirm" element={<NewsletterConfirm />} />
               <Route path="/signup/role" element={<SignupRole />} />
               <Route path="/login" element={<Login />} />
               <Route path="/forgot-password" element={<ForgotPassword />} />
