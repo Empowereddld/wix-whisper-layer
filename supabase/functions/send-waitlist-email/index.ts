@@ -1174,11 +1174,11 @@ function renderEmailTemplate(
     }
 
     case "slp_claim_admin_alert": {
-      const claimantName = data.name || "Unknown";
-      const claimantEmail = data.claimant_email || "(no email)";
-      const refCode = data.referral_code || "(none)";
-      const claimedAt = data.claimed_at || new Date().toISOString();
-      const roleLabel = data.role_label || "Speech Professional";
+      const claimantName = escHtml(data.name || "Unknown");
+      const claimantEmail = escHtml(data.claimant_email || "(no email)");
+      const refCode = escHtml(data.referral_code || "(none)");
+      const claimedAt = escHtml(data.claimed_at || new Date().toISOString());
+      const roleLabel = escHtml(data.role_label || "Speech Professional");
       const queueUrl = `${SITE_BASE}/admin/waitlist`;
       return {
         subject: "[Action needed] New SLP self-claim — review in admin queue",
