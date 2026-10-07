@@ -49,7 +49,6 @@ const DISPOSABLE_EMAIL_DOMAINS = new Set([
 
 interface FraudCheckRequest {
   email: string;
-  ip_address: string;
 }
 
 interface FraudCheckResponse {
@@ -115,7 +114,7 @@ Deno.serve(async (req) => {
     if (typeof email !== "string" || !email || email.length > 254 ||
         (referred_by_code != null && (typeof referred_by_code !== "string" || referred_by_code.length > 32))) {
       return new Response(
-        JSON.stringify({ error: "email and ip_address are required" }),
+        JSON.stringify({ error: "valid email is required" }),
         {
           status: 400,
           headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -148,21 +147,7 @@ Deno.serve(async (req) => {
 
     const flagged = riskScore >= 30; // Flag if risk score is 30 or higher
 
-    // Log fraud attempt to database
-    if (flagged) {
-      try {
-        await supabase.from("waitlist_fraud_log").insert({
-          email: normalizedEmail,
-          ip_address,
-          risk_score: riskScore,
-          fraud_reasons: reasons, // Array of reason strings
-          user_agent: req.headers.get("user-agent"),
-        });
-      } catch (logError) {
-        console.error("Failed to log fraud attempt:", logError);
-        // Don't fail the request if logging fails
-      }
-    }
+    // Flagged results are logged (masked) by storybuilders-signup.
 
     const response: FraudCheckResponse = {
       flagged,
