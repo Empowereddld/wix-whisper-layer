@@ -5,7 +5,10 @@ import { issueRewardLinkToken } from "../_shared/rewardFile.ts";
 
 Deno.serve(async (req) => {
   const cron = Deno.env.get("CRON_SECRET");
-  if (!cron || req.headers.get("x-cron-secret") !== cron) return new Response("Forbidden", { status: 403 });
+  const svc = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+  const okCron = !!cron && req.headers.get("x-cron-secret") === cron;
+  const okSvc = !!svc && req.headers.get("authorization") === `Bearer ${svc}`;
+  if (!cron || (!okCron && !okSvc)) return new Response("Forbidden", { status: 403 });
   const { mode, only_id } = await req.json().catch(() => ({}));
   const url = Deno.env.get("SUPABASE_URL")!;
   const sb = createClient(url, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!);
@@ -24,6 +27,11 @@ Deno.serve(async (req) => {
   let list = got.filter((r: any) => !suppressed.has(String(r.email).toLowerCase()));
   if (only_id) list = list.filter((r: any) => r.id === only_id);
 
+  // Resume support: skip anyone already emailed in the interrupted first run.
+  const { data: done } = await sb.from("email_send_log").select("recipient_email")
+    .gte("created_at", "2026-10-07T11:56:00Z");
+  const already = new Set((done || []).map((d: any) => String(d.recipient_email).toLowerCase()));
+  list = list.filter((r: any) => !already.has(String(r.email).toLowerCase()));
   const links = await Promise.all(list.map(async (r: any) =>
     `${url}/functions/v1/storypros-reward-download?t=${encodeURIComponent(await issueRewardLinkToken(r.id))}`));
   const summary = {
