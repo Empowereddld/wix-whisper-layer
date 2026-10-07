@@ -84,34 +84,36 @@ async function checkIPRateLimit(
   };
 }
 
+// Bounded, injection-safe check for sequential addresses (e.g. kid1@, kid2@)
+// from the same IP. The input is length-capped and validated with a simple
+// non-backtracking pattern, LIKE wildcards are escaped, and the lookup is a
+// lookup is scoped to one IP address.
+const SIMPLE_EMAIL_RE = /^[^\s@]{1,64}@[^\s@]{1,190}$/;
 async function checkEmailPatterns(
   supabase: any,
   email: string,
   ipAddress: string
 ): Promise<boolean> {
-  const emailPattern = /(.+?)(\d+)@/;
-  const match = email.match(emailPattern);
+  if (email.length > 254 || !SIMPLE_EMAIL_RE.test(email)) return false;
+  const local = email.slice(0, email.indexOf("@"));
+  let end = local.length;
+  while (end > 0 && local.charCodeAt(end - 1) >= 48 && local.charCodeAt(end - 1) <= 57) end--;
+  if (end === local.length || end === 0) return false; // no trailing digits, or digits only
+  const base = local.slice(0, end).slice(0, 64).replace(/[\\%_]/g, (c) => "\\" + c);
 
-  if (!match) {
-    return false;
-  }
-
-  const baseEmail = match[1];
-  const emailRegex = new RegExp(`^${baseEmail}\\d+@`, "i");
-
-  const { data, error } = await supabase
+  const { count, error } = await supabase
     .from("storybuilders_waitlist")
-    .select("id")
+    .select("id", { count: "exact", head: true })
     .eq("ip_address", ipAddress)
-    .filter("email", "ilike", `%${baseEmail}%`);
+    .ilike("email", `%${base}%`)
+    .limit(10);
 
   if (error) {
-    console.error("Email pattern check error:", error);
+    console.error("Email pattern check error:", error.message);
     return false;
   }
-
   // If there are 3+ similar emails from same IP, flag it
-  return (data?.length ?? 0) >= 3;
+  return (count ?? 0) >= 3;
 }
 
 async function checkSelfReferral(
@@ -168,7 +170,9 @@ Deno.serve(async (req) => {
       referred_by_code?: string;
     };
 
-    if (!email || !ip_address) {
+    if (typeof email !== "string" || typeof ip_address !== "string" || !email || !ip_address ||
+        email.length > 254 || ip_address.length > 64 ||
+        (referred_by_code != null && (typeof referred_by_code !== "string" || referred_by_code.length > 32))) {
       return new Response(
         JSON.stringify({ error: "email and ip_address are required" }),
         {

@@ -702,11 +702,26 @@ export function useStorybuildersWaitlist() {
     [state.referralCode, state.dashboardToken, state.socialClaims, refreshStatsInternal]
   );
 
-  // Tier reward URLs / side-effects when claimed.
-  // EF Skills Guide PDF lives in the public 'resources' bucket.
-  const REWARD_URLS: Record<string, string> = {
-    tier_2_ef_guide:
-      "https://haafpznzuazanylcelse.supabase.co/storage/v1/object/public/resources/storypros/executive-function-skills-guide.pdf",
+  // Downloadable tier rewards. The file is private; the server checks
+  // eligibility and returns a short-lived link each time.
+  const DOWNLOAD_REWARDS = new Set(["tier_2_ef_guide"]);
+  const openRewardDownload = async (rewardId: string) => {
+    if (!DOWNLOAD_REWARDS.has(rewardId)) return;
+    const win = window.open("about:blank", "_blank");
+    try {
+      const { data } = await supabase.functions.invoke("storypros-member-action", {
+        body: { dashboard_token: state.dashboardToken, action: "reward_download", reward_id: rewardId },
+      });
+      if (data?.url) {
+        if (win) win.location.href = data.url; else window.location.href = data.url;
+      } else {
+        win?.close();
+        addNotification("error", data?.message || "Could not open the download. Try again.");
+      }
+    } catch {
+      win?.close();
+      addNotification("error", "Could not open the download. Try again.");
+    }
   };
 
   const claimReward = useCallback(
@@ -721,8 +736,7 @@ export function useStorybuildersWaitlist() {
       }
       if (state.rewardsClaimed[rewardId]) {
         // Re-trigger the side effect (e.g. re-download) without DB write
-        const url = REWARD_URLS[rewardId];
-        if (url) window.open(url, "_blank", "noopener,noreferrer");
+        await openRewardDownload(rewardId);
         addNotification("info", "Already claimed");
         return true;
       }
@@ -745,8 +759,7 @@ export function useStorybuildersWaitlist() {
           },
         }));
         // Trigger side effect (download)
-        const url = REWARD_URLS[rewardId];
-        if (url) window.open(url, "_blank", "noopener,noreferrer");
+        await openRewardDownload(rewardId);
         addNotification("success", "Reward claimed!");
         await refreshStatsInternal(state.dashboardToken);
         return true;

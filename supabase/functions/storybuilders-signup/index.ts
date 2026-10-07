@@ -182,6 +182,8 @@ async function checkFraud(
         ip_address: ipAddress,
         referred_by_code: referralCode,
       }),
+      // Never let the fraud screen hold up a signup.
+      signal: AbortSignal.timeout(4000),
     });
 
     if (!response.ok) {
