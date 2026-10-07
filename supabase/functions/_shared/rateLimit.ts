@@ -3,10 +3,11 @@
 // Records are purged after 2 days by a scheduled job.
 // deno-lint-ignore-file no-explicit-any
 
+// cf-connecting-ip is set by the edge network and cannot be overridden by the
+// browser; x-forwarded-for's first hop is also platform-set (client values are stripped).
 export function clientIp(req: Request): string {
-  const fwd = req.headers.get("x-forwarded-for") || "";
-  return fwd.split(",")[0]?.trim() || req.headers.get("cf-connecting-ip") ||
-    req.headers.get("x-real-ip") || "unknown";
+  return req.headers.get("cf-connecting-ip")?.trim() ||
+    (req.headers.get("x-forwarded-for") || "").split(",")[0]?.trim() || "unknown";
 }
 
 export async function hashId(value: string): Promise<string> {
