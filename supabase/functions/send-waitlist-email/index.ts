@@ -1,3 +1,4 @@
+import { maskEmail } from "../_shared/logRedact.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { escapeHtml as escHtml } from "../_shared/html.ts";
 import { unsubscribeUrl as signUnsubUrl } from "../_shared/unsubscribeToken.ts";
@@ -1313,7 +1314,7 @@ Deno.serve(async (req) => {
       .eq("email", normalizedTo)
       .maybeSingle();
     if (suppressed) {
-      console.log(`Suppressed send to ${normalizedTo} (reason: ${suppressed.reason}, template: ${template})`);
+      console.log(`Suppressed send to ${maskEmail(normalizedTo)} (reason: ${suppressed.reason}, template: ${template})`);
       return new Response(
         JSON.stringify({ success: true, suppressed: true, reason: suppressed.reason }),
         { headers: { ...corsHeaders, "Content-Type": "application/json" } }

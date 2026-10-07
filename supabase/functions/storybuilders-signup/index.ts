@@ -1,3 +1,4 @@
+import { maskEmail } from "../_shared/logRedact.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { escapeHtml as escHtml } from "../_shared/html.ts";
 import { issueDashboardToken } from "../_shared/dashboardToken.ts";
@@ -450,7 +451,7 @@ Deno.serve(async (req) => {
 
     // Note: fraud check result is informational only (no DB columns yet)
     if (fraudCheck.flagged) {
-      console.log("Fraud flagged:", normalizedEmail, fraudCheck.reasons.join("; "), "score:", fraudCheck.risk_score);
+      console.log("Fraud flagged:", maskEmail(normalizedEmail), fraudCheck.reasons.join("; "), "score:", fraudCheck.risk_score);
     }
 
     // Double opt-in: send ONLY the verification email on signup.
@@ -468,7 +469,7 @@ Deno.serve(async (req) => {
       }
     } catch (emailError) {
       const message = emailError instanceof Error ? emailError.message : "unknown verification email error";
-      console.error("Storybuilders signup verification email failure:", normalizedEmail, message);
+      console.error("Storybuilders signup verification email failure:", maskEmail(normalizedEmail), message);
 
       const { error: cleanupError } = await supabase
         .from("storybuilders_waitlist")

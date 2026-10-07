@@ -222,7 +222,7 @@ Deno.serve(async (req) => {
         }
         if (!dispatched) skipped.push(u.email);
       } catch (e) {
-        console.error(`Tier dispatch failed for ${u.email}:`, e);
+        console.error(`Tier dispatch failed for member ${u.id}:`, e);
         failed++;
       }
     }

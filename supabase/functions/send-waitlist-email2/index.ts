@@ -103,7 +103,7 @@ Deno.serve(async (req) => {
 
         sent++;
       } catch (e) {
-        console.error(`Failed Email 2 to ${user.email}:`, e);
+        console.error(`Failed Email 2 for member ${user.id}:`, e);
         failed++;
       }
     }

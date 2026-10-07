@@ -110,7 +110,7 @@ Deno.serve(async (req) => {
           .eq("id", u.id);
         sent++;
       } catch (e) {
-        console.error(`Scarcity failed for ${u.email}:`, e);
+        console.error(`Scarcity failed for member ${u.id}:`, e);
         failed++;
       }
     }

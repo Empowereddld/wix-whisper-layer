@@ -1,3 +1,4 @@
+import { maskEmail } from "../_shared/logRedact.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { issueDashboardToken } from "../_shared/dashboardToken.ts";
 import { awardReferralAfterVerify } from "../_shared/referralAward.ts";
@@ -331,7 +332,7 @@ Deno.serve(async (req) => {
 
     console.log("verify-email-waitlist: verified", {
       id: user.id,
-      email: user.email,
+      email: maskEmail(user.email),
       points_after: result.out_new_points,
       verified_at: new Date().toISOString(),
     });
