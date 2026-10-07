@@ -8,6 +8,7 @@
 //   Tier 5 = 250 pts  -> email6_tier5
 //   Tier 6 = 500 pts  -> email7_tier6_founder (first 20) OR email7b_tier6_legend
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { issueRewardLinkToken } from "../_shared/rewardFile.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -35,9 +36,10 @@ async function signClaimToken(id: string): Promise<string> {
   return `${id}.${exp}.${b64}`;
 }
 
-// EF guide download link surfaced in Email 3 (Tier 2 reward).
-const EF_GUIDE_URL =
-  "https://haafpznzuazanylcelse.supabase.co/storage/v1/object/public/resources/storypros/executive-function-skills-guide.pdf";
+// EF guide link in Email 3 (Tier 2 reward): a signed, per-member link to the
+// private copy, checked for eligibility on every click.
+const efGuideUrl = async (id: string) =>
+  `${Deno.env.get("SUPABASE_URL")}/functions/v1/storypros-reward-download?t=${encodeURIComponent(await issueRewardLinkToken(id))}`;
 
 type Tier = {
   threshold: number;
@@ -205,7 +207,7 @@ Deno.serve(async (req) => {
                 name: firstName,
                 referral_link: referralLink,
                 points_to_next: t.pointsToNext,
-                guide_download_url: t.template === "email3_tier2" ? EF_GUIDE_URL : undefined,
+                guide_download_url: t.template === "email3_tier2" ? await efGuideUrl(u.id) : undefined,
               },
             },
           });
