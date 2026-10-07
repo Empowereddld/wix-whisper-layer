@@ -82,9 +82,17 @@ const Footer = () => {
         }).catch((e) => console.warn("Welcome email failed:", e));
       }
 
-      syncToEmailOctopus({ source: "footer", email: email.trim() });
+      if (isDuplicate) {
+        // Already on file from another form: the inbox owner must confirm by
+        // email before the newsletter tag is added.
+        supabase.functions.invoke("newsletter-confirm", {
+          body: { action: "request", email: email.trim() },
+        }).catch((e) => console.warn("Newsletter confirmation failed:", e));
+      } else {
+        syncToEmailOctopus({ source: "footer", email: email.trim() });
+      }
 
-      toast({ title: "Welcome to the community! 🎉", description: "Check your inbox for a welcome note from us." });
+      toast({ title: "Welcome to the community! 🎉", description: "Check your inbox for a note from us." });
       setEmail("");
       setName("");
     }
