@@ -64,12 +64,7 @@ const EducationalApp = () => {
         toast({ title: "Something went wrong", description: "Please try again later.", variant: "destructive" });
       }
     } else {
-      syncToEmailOctopus({
-        email: email.trim(),
-        tag: "educational-app",
-        firstName: name.trim().split(" ")[0],
-        lastName: name.trim().split(" ").slice(1).join(" "),
-      });
+      syncToEmailOctopus({ source: "educational-app", email: email.trim() });
       setSubmitted(true);
       toast({ title: "You're on the list! 🎉", description: "We'll notify you as soon as the app launches." });
     }

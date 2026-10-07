@@ -283,35 +283,9 @@ Deno.serve(async (req) => {
     }
 
     if (existing) {
-      // Repeat signup with the newsletter box checked: record affirmative
-      // consent and add the newsletter tag (existing tags preserved, and the
-      // subscribe function never resubscribes an unsubscribed contact).
-      if (wantsNewsletter) {
-        try {
-          await supabase.from("newsletter_consents").insert({
-            waitlist_id: existing.id,
-            email: normalizedEmail,
-            consented: true,
-            source: "story-pros-waitlist",
-            wording_version: CONSENT_WORDING_VERSION,
-            checkbox_text: CONSENT_CHECKBOX_TEXT,
-            helper_text: CONSENT_HELPER_TEXT,
-          });
-          await fetch(`${supabaseUrl}/functions/v1/emailoctopus-subscribe`, {
-            method: "POST",
-            headers: {
-              "Authorization": `Bearer ${serviceKey}`,
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              email: normalizedEmail,
-              tags: ["story-pros", "newsletter"],
-            }),
-          });
-        } catch (e) {
-          console.error("Repeat-signup newsletter consent sync failed:", e);
-        }
-      }
+      // Repeat signup: never record newsletter consent here, because the
+      // person typing may not own this inbox. The owner is asked again on
+      // their own dashboard (signed pass required).
       return await neutralExistingResponse(supabase, supabaseUrl, serviceKey, req, existing);
     }
 

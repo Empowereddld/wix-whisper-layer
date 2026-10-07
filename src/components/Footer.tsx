@@ -82,12 +82,7 @@ const Footer = () => {
         }).catch((e) => console.warn("Welcome email failed:", e));
       }
 
-      syncToEmailOctopus({
-        email: email.trim(),
-        tag: "newsletter",
-        firstName: name.trim().split(" ")[0],
-        lastName: name.trim().split(" ").slice(1).join(" "),
-      });
+      syncToEmailOctopus({ source: "footer", email: email.trim() });
 
       toast({ title: "Welcome to the community! 🎉", description: "Check your inbox for a welcome note from us." });
       setEmail("");

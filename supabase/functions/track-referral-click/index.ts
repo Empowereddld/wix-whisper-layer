@@ -1,3 +1,4 @@
+import { clientIp } from "../_shared/rateLimit.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const corsHeaders = {
@@ -29,10 +30,8 @@ Deno.serve(async (req) => {
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
     );
 
-    const ipAddress =
-      req.headers.get("x-forwarded-for")?.split(",")[0].trim() ||
-      req.headers.get("cf-connecting-ip") ||
-      "unknown";
+    // Same trusted, edge-set address helper used by all rate limits.
+    const ipAddress = clientIp(req);
 
     const { data, error } = await supabase.rpc("record_referral_click", {
       p_referral_code: referral_code,

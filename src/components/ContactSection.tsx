@@ -84,12 +84,7 @@ const ContactSection = () => {
         },
       }).catch((e) => console.warn("Internal notification failed:", e));
 
-      syncToEmailOctopus({
-        email: data.email,
-        tag: "contact",
-        firstName: data.firstName,
-        lastName: data.lastName || "",
-      });
+      syncToEmailOctopus({ source: "contact", email: data.email });
 
       toast({ title: "Thank you for reaching out! 🙌", description: "We'll review your message and get back to you within 48 hours." });
       form.reset();

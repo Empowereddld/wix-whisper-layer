@@ -6,6 +6,7 @@
 import { createClient } from "npm:@supabase/supabase-js@2";
 import { corsHeaders } from "npm:@supabase/supabase-js@2/cors";
 import { createHash } from "node:crypto";
+import { verifyDashboardToken } from "../_shared/dashboardToken.ts";
 
 const WORDING_VERSION = "newsletter-consent-v1";
 const WORDING = {
@@ -100,12 +101,14 @@ Deno.serve(async (req) => {
     firstName = prof?.first_name ?? "";
     lastName = prof?.last_name ?? "";
   } else {
-    const code = typeof body.referral_code === "string" ? body.referral_code.trim() : "";
-    if (!code || code.length > 64) return json({ error: "referral_code required" }, 400);
+    // Only the member's signed dashboard pass identifies them. Referral codes
+    // are public (share links) and are never accepted here.
+    const v = await verifyDashboardToken(body.dashboard_token);
+    if ("error" in v) return json({ error: v.error }, 401);
     const { data: row } = await admin
       .from("storybuilders_waitlist")
       .select("id, email, name, email_verified, deleted_at")
-      .eq("referral_code", code)
+      .eq("id", v.id)
       .maybeSingle();
     if (!row || row.deleted_at || !row.email_verified) {
       return action === "status" ? json({ show: false }) : json({ error: "Not found" }, 404);

@@ -67,19 +67,19 @@ export const HubNewsletterPrompt = ({ userId }: { userId?: string }) => {
 const SP_SNOOZE_DAYS = 14;
 
 /** Story Pros: non-blocking card. Ignored = re-shown at most every 14 days. */
-export const StoryProsNewsletterPrompt = ({ referralCode }: { referralCode?: string }) => {
+export const StoryProsNewsletterPrompt = ({ referralCode, dashboardToken }: { referralCode?: string; dashboardToken?: string }) => {
   const [show, setShow] = useState(false);
   const [checked, setChecked] = useState(false);
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
-    if (!referralCode) return;
+    if (!referralCode || !dashboardToken) return;
     const key = `nl_prompt_seen_${referralCode}`;
     try {
       const last = Number(localStorage.getItem(key) || 0);
       if (last && Date.now() - last < SP_SNOOZE_DAYS * 86400000) return;
     } catch {}
-    callPrompt({ action: "status", kind: "storypros", referral_code: referralCode })
+    callPrompt({ action: "status", kind: "storypros", dashboard_token: dashboardToken })
       .then((d) => {
         if (d?.show) {
           setShow(true);
@@ -87,12 +87,12 @@ export const StoryProsNewsletterPrompt = ({ referralCode }: { referralCode?: str
         }
       })
       .catch(() => {});
-  }, [referralCode]);
+  }, [referralCode, dashboardToken]);
 
   const record = async (consented: boolean) => {
     setSaving(true);
     try {
-      await callPrompt({ action: "record", kind: "storypros", referral_code: referralCode, consented });
+      await callPrompt({ action: "record", kind: "storypros", dashboard_token: dashboardToken, consented });
     } catch {}
     setSaving(false);
     setShow(false);

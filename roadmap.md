@@ -41,3 +41,11 @@
 - [ ] Batch 4: B2 + B3 (report first: existing unsubscribe links use ?email= with no signed token)
 - [ ] Review function + outbound email logs for past abuse; then delete old waitlist_recovery_attempts rows
 - [ ] Retry deep scan
+
+## Security batch 6 (approved 2026-10-07)
+- [x] C1 newsletter prompt requires dashboard pass
+- [x] C2 mailing-list subscribe locked to trusted callers / fixed per-form tags
+- [x] W1 SLP staff alert escaped
+- [x] T1 click tracking uses shared address helper
+- [x] W2 repeat signup records no consent
+- [ ] T2 pre-create Stripe prices (deferred by user)

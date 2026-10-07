@@ -1,35 +1,23 @@
 import { supabase } from "@/integrations/supabase/client";
 
-export type EmailOctopusTag =
-  | "story-pros"
-  | "resource-hub"
-  | "newsletter"
-  | "workshop"
-  | "educational-app"
-  | "contact"
-  | "lead";
+/**
+ * Which form the signup came from. The server decides which mailing-list tags
+ * each source applies, and only syncs an email that form just saved.
+ * "hub" syncs the signed-in user's own email.
+ */
+export type EmailOctopusSource = "footer" | "workshop" | "educational-app" | "contact" | "lead" | "hub";
 
 /**
  * Fire-and-forget sync of a signup into EmailOctopus.
  * Never throws: a newsletter-platform hiccup must not affect the signup flow.
  */
-export function syncToEmailOctopus(params: {
-  email: string;
-  tag: EmailOctopusTag;
-  firstName?: string;
-  lastName?: string;
-}): void {
+export function syncToEmailOctopus(params: { source: EmailOctopusSource; email?: string }): void {
   const email = params.email?.trim();
-  if (!email) return;
+  if (params.source !== "hub" && !email) return;
 
   supabase.functions
     .invoke("emailoctopus-subscribe", {
-      body: {
-        email,
-        tag: params.tag,
-        first_name: params.firstName ?? "",
-        last_name: params.lastName ?? "",
-      },
+      body: params.source === "hub" ? { source: "hub" } : { source: params.source, email },
     })
     .catch((e) => console.warn("EmailOctopus sync failed:", e));
 }

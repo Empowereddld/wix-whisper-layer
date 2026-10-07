@@ -60,12 +60,7 @@ const ParentWorkshopWaitlistCard = () => {
       toast.error(error.message.includes("duplicate") ? "You're already on the list!" : "Something went wrong. Please try again.");
       return;
     }
-    syncToEmailOctopus({
-      email: email.trim(),
-      tag: "workshop",
-      firstName: name.trim().split(" ")[0],
-      lastName: name.trim().split(" ").slice(1).join(" "),
-    });
+    syncToEmailOctopus({ source: "workshop", email: email.trim() });
     setJoined(true);
     toast.success("You're on the list! We'll keep you posted.");
   };
