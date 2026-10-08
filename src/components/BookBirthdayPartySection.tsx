@@ -15,7 +15,7 @@ const BookBirthdayPartySection = () => {
             </h2>
             <div className="w-10 h-[2px] bg-foreground/20 mb-4" />
             <p className="text-[13px] md:text-[14px] text-muted-foreground leading-[1.7] max-w-[500px] mb-3">
-              Daria is excited for the party. But she's nervous too. What if she doesn't understand the rules to the party games? What if kids laugh at her?
+              Daria is excited for the party. But she's nervous too. What if she doesn't understand the rules of the party games? What if kids laugh at her?
             </p>
             <p className="text-[13px] md:text-[14px] text-muted-foreground leading-[1.7] max-w-[500px] mb-3">
               With the help of her "Pause Button" strategy, Daria learns that speaking up doesn't just help her. It makes the fun more inclusive for everyone.

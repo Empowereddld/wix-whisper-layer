@@ -17,7 +17,7 @@ const BookDanSection = () => {
           {/* Text */}
           <div className="flex-1 flex flex-col justify-center py-4 lg:py-8">
             <p className="text-[11px] md:text-[12px] font-semibold text-foreground tracking-wide mb-2">
-              <span className="font-bold">Book 1:</span> Living Life with Developmental Language Disorder Series
+              <span className="font-bold">Book 1</span> in the Living Life with DLD series.
             </p>
             <h2 className="text-[22px] md:text-[28px] lg:text-[32px] font-black text-foreground leading-[1.12] mb-3">
               Dan and the Paper Airplane

@@ -54,7 +54,7 @@ const BOOKS = [
   { id: "dan-and-daria-birthday-party", name: "Dan and Daria Go to a Birthday Party", image: coverParty, position: 3,
     description: "Explores what DLD looks like in social settings and helps children find their voice through the Pause Button strategy.",
     inLanguage: "en" },
-  { id: "dan-and-daria-theatre-exchange", name: "Dan & Daria and The Theatre Exchange", image: coverTheatre, position: 4,
+  { id: "dan-and-daria-theatre-exchange", name: "Dan & Daria and the Theatre Exchange", image: coverTheatre, position: 4,
     description: "A story about being brave when words are hard, exploring anxiety, self-advocacy, and finding people who understand DLD.",
     inLanguage: "en" },
 ];
