@@ -83,10 +83,10 @@ const Footer = () => {
       }
 
       if (isDuplicate) {
-        // Already on file from another form: the inbox owner must confirm by
-        // email before the newsletter tag is added.
+        // Already on file from another form: add the newsletter tag directly
+        // (server checks it is on file and not suppressed).
         supabase.functions.invoke("newsletter-confirm", {
-          body: { action: "request", email: email.trim() },
+          body: { action: "subscribe", email: email.trim() },
         }).catch((e) => console.warn("Newsletter confirmation failed:", e));
       } else {
         syncToEmailOctopus({ source: "footer", email: email.trim() });

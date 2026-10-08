@@ -10,4 +10,4 @@
 - The Story Pros Tier 2 guide lives only in the private bucket and is released by `_shared/rewardFile.ts` (signed email link or dashboard pass, verified 35+ points, 5-minute link), so reward files never sit at a public URL.
 
 - `emailoctopus-subscribe` trusts only the exact service key/CRON_SECRET for chosen tags; browser calls send `{source}` and get fixed server-side tags, form sources must match a just-saved row and `hub` uses the caller's own confirmed email, so the public can never subscribe arbitrary addresses or tags.
-- Footer newsletter signups for an address already on file never tag directly; `newsletter-confirm` emails a signed 7-day link and only the click (button press on `/newsletter/confirm`) records consent, adds the newsletter tag and sends the welcome, so a typed-in address can't subscribe someone else.
+- Footer newsletter signups for an address already on file go through `newsletter-confirm` action `subscribe` (on-file check, hashed rate limits, suppression respected, append-only consent, fixed newsletter tag only), so the footer never reaches arbitrary tags or unknown addresses; the signed-link `confirm` action stays for old emails.
