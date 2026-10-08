@@ -12,6 +12,8 @@ const SITE = "https://www.empowereddld.com";
 const TTL_S = 7 * 24 * 60 * 60;
 const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[A-Za-z]{2,}$/;
 const CONSENT_SOURCE = "footer-newsletter-confirmed";
+const FOOTER_SOURCE = "footer-newsletter";
+const FOOTER_TEXT = "Subscribe to Our Newsletter (footer form: Email, Name, Subscribe button).";
 const CONSENT_TEXT = "Footer newsletter form submitted, then confirmed by clicking the emailed confirmation link.";
 
 const json = (b: unknown, s = 200) =>
@@ -64,38 +66,14 @@ Deno.serve(async (req) => {
   const svc = { Authorization: `Bearer ${serviceKey}`, "Content-Type": "application/json" };
   const neutral = () => json({ success: true });
 
-  // Existing contact subscribing from the footer: add the newsletter tag right
-  // away (owner's choice: no extra confirmation step). Still limited to
-  // addresses already on file, rate limited, suppression respected.
-  if (body.action === "subscribe") {
-    const email = typeof body.email === "string" ? body.email.trim().toLowerCase() : "";
-    if (!EMAIL_RE.test(email) || email.length > 254) return json({ error: "A valid email address is required" }, 400);
-    const ok = await allow(admin, [
-      { bucket: "nl-direct:ip", id: clientIp(req), max: 5, windowMin: 60 },
-      { bucket: "nl-direct:email", id: email, max: 2, windowMin: 60 * 24 },
-    ]);
-    if (!ok) return json({ error: "Too many requests. Please try again later." }, 429);
-    const { data: rows } = await admin.from("waitlist").select("id").ilike("email", email.replace(/[\\%_]/g, (c) => `\\${c}`)).limit(1);
-    if (!rows?.length) return neutral();
-    return await subscribeExisting(email, "footer-newsletter-existing",
-      "Footer newsletter form submitted by an address already on file; newsletter tag added immediately.", "newsletter-direct-v1");
-  }
+  const esc = (e: string) => e.replace(/[\\%_]/g, (c) => `\\${c}`);
+  const isSuppressed = async (email: string) => {
+    const { data } = await admin.from("suppressed_emails").select("id").eq("email", email).limit(1);
+    return !!data?.length;
+  };
 
-  async function subscribeExisting(email: string, source: string, text: string, version: string) {
-    const { data: blocked } = await admin.from("suppressed_emails").select("id").eq("email", email).limit(1);
-    if (blocked?.length) return json({ success: true });
-    const { data: prior } = await admin.from("newsletter_consents").select("id")
-      .eq("email", email).in("source", [CONSENT_SOURCE, "footer-newsletter-existing"]).eq("consented", true).limit(1);
-    if (prior?.length) return json({ success: true, already: true });
-    const { error: insErr } = await admin.from("newsletter_consents").insert({
-      email, consented: true, source, wording_version: version, checkbox_text: text, helper_text: null,
-    });
-    if (insErr) {
-      console.error("newsletter-confirm: consent insert failed", insErr);
-      return json({ error: "Could not save" }, 500);
-    }
-    const { data: row } = await admin.from("waitlist").select("name")
-      .ilike("email", email.replace(/[\\%_]/g, (c) => `\\${c}`)).limit(1).maybeSingle();
+  async function tagAndWelcome(email: string) {
+    const { data: row } = await admin.from("waitlist").select("name").ilike("email", esc(email)).limit(1).maybeSingle();
     const parts = String(row?.name ?? "").trim().split(/\s+/).filter(Boolean);
     const sub = await fetch(`${url}/functions/v1/emailoctopus-subscribe`, {
       method: "POST", headers: svc,
@@ -107,25 +85,9 @@ Deno.serve(async (req) => {
       body: JSON.stringify({ template: "newsletter_welcome", to: email, data: { name: row?.name ?? "" } }),
     });
     await wel.text();
-    return json({ success: true });
   }
 
-  if (body.action === "request") {
-    const email = typeof body.email === "string" ? body.email.trim().toLowerCase() : "";
-    if (!EMAIL_RE.test(email) || email.length > 254) return json({ error: "A valid email address is required" }, 400);
-
-    const ok = await allow(admin, [
-      { bucket: "nl-confirm:ip", id: clientIp(req), max: 5, windowMin: 60 },
-      { bucket: "nl-confirm:email", id: email, max: 2, windowMin: 60 * 24 },
-    ]);
-    if (!ok) return json({ error: "Too many requests. Please try again later." }, 429);
-
-    // Only for addresses already on file; suppressed addresses get nothing.
-    const { data: rows } = await admin.from("waitlist").select("id").ilike("email", email.replace(/[\\%_]/g, (c) => `\\${c}`)).limit(1);
-    if (!rows?.length) return neutral();
-    const { data: blocked } = await admin.from("suppressed_emails").select("id").eq("email", email).limit(1);
-    if (blocked?.length) return neutral();
-
+  async function sendConfirmation(email: string) {
     const link = `${SITE}/newsletter/confirm?token=${encodeURIComponent(await issue(email))}`;
     const html = `<!doctype html><html><body style="margin:0;background:#ffffff;font-family:Arial,sans-serif;color:#333;">
       <div style="max-width:560px;margin:0 auto;padding:32px 24px;">
@@ -137,15 +99,44 @@ Deno.serve(async (req) => {
       </div></body></html>`;
     const r = await fetch(`${url}/functions/v1/send-email`, {
       method: "POST", headers: svc,
-      body: JSON.stringify({
-        to: email,
-        subject: "Confirm your Empowered DLD newsletter subscription",
-        html,
-        template_name: "newsletter_confirm",
-      }),
+      body: JSON.stringify({ to: email, subject: "Confirm your Empowered DLD newsletter subscription", html, template_name: "newsletter_confirm" }),
     });
     await r.text();
     if (!r.ok) console.error("newsletter-confirm: send failed", r.status);
+  }
+
+  // Footer submission. Order is fixed:
+  //  1. do-not-email list always wins (nothing happens)
+  //  2. brand-new footer row saved moments ago -> record the footer consent
+  //     (the footer itself sends the welcome and tags the new contact)
+  //  3. an existing "yes" consent record -> restore tag + welcome
+  //  4. otherwise (contact from another source / legacy) -> confirmation email
+  if (body.action === "subscribe" || body.action === "request") {
+    const email = typeof body.email === "string" ? body.email.trim().toLowerCase() : "";
+    if (!EMAIL_RE.test(email) || email.length > 254) return json({ error: "A valid email address is required" }, 400);
+    const ok = await allow(admin, [
+      { bucket: "nl-confirm:ip", id: clientIp(req), max: 5, windowMin: 60 },
+      { bucket: "nl-confirm:email", id: email, max: 3, windowMin: 60 * 24 },
+    ]);
+    if (!ok) return json({ error: "Too many requests. Please try again later." }, 429);
+
+    if (await isSuppressed(email)) return neutral();
+    const { data: rows } = await admin.from("waitlist").select("id, notes, created_at").ilike("email", esc(email)).limit(1);
+    const row = rows?.[0];
+    if (!row) return neutral();
+
+    const { data: consents } = await admin.from("newsletter_consents").select("id, source").eq("email", email).eq("consented", true).limit(20);
+    const fresh = row.notes === "footer newsletter" && Date.now() - new Date(row.created_at).getTime() < 10 * 60 * 1000;
+    if (fresh && !consents?.some((c) => c.source === FOOTER_SOURCE)) {
+      const { error } = await admin.from("newsletter_consents").insert({
+        email, consented: true, source: FOOTER_SOURCE, wording_version: "footer-newsletter-v1",
+        checkbox_text: FOOTER_TEXT, helper_text: null,
+      });
+      if (error) console.error("newsletter-confirm: footer consent insert failed", error);
+      return neutral();
+    }
+    if (consents?.length) { await tagAndWelcome(email); return neutral(); }
+    await sendConfirmation(email);
     return neutral();
   }
 
