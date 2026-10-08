@@ -145,7 +145,17 @@ Deno.serve(async (req) => {
     if ("error" in v) return json({ error: v.error }, 400);
     const email = v.email;
 
-    return await subscribeExisting(email, CONSENT_SOURCE, CONSENT_TEXT, "newsletter-confirm-v1");
+    if (await isSuppressed(email)) return json({ success: true });
+    const { data: prior } = await admin.from("newsletter_consents").select("id")
+      .eq("email", email).eq("source", CONSENT_SOURCE).eq("consented", true).limit(1);
+    if (prior?.length) return json({ success: true, already: true });
+    const { error: insErr } = await admin.from("newsletter_consents").insert({
+      email, consented: true, source: CONSENT_SOURCE, wording_version: "newsletter-confirm-v1",
+      checkbox_text: CONSENT_TEXT, helper_text: null,
+    });
+    if (insErr) { console.error("newsletter-confirm: consent insert failed", insErr); return json({ error: "Could not save" }, 500); }
+    await tagAndWelcome(email);
+    return json({ success: true });
   }
 
   return json({ error: "Invalid action" }, 400);
