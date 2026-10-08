@@ -9,7 +9,7 @@ const BookTheatreExchangeSection = () => {
           <div className="lg:w-[38%] flex-shrink-0">
             <img
               src={bookTheatreExchange}
-              alt="Cover of Dan & Daria and The Theatre Exchange, a children's book about DLD"
+              alt="Cover of Dan & Daria and the Theatre Exchange, a children's book about DLD"
               className="w-full h-auto object-contain rounded-xl"
             />
           </div>
@@ -20,17 +20,17 @@ const BookTheatreExchangeSection = () => {
               <span className="font-bold">Book 4:</span> A story about being brave when words are hard
             </p>
             <h2 className="text-[22px] md:text-[28px] lg:text-[32px] font-black text-foreground leading-[1.12] mb-3">
-              Dan & Daria and The Theatre Exchange
+              Dan & Daria and the Theatre Exchange
             </h2>
             <div className="w-10 h-[2px] bg-foreground/20 mb-4" />
             <p className="text-[13px] md:text-[14px] text-muted-foreground leading-[1.7] max-w-[500px] mb-3">
               It's Theatre Month and Dan is excited. But Daria is overwhelmed. Then Millen arrives, a confident new student from the UK who knows exactly what it feels like to have DLD, and everything shifts.
             </p>
             <p className="text-[13px] md:text-[14px] text-muted-foreground leading-[1.7] max-w-[500px] mb-3">
-              Together, Dan, Daria, and Millen navigate rehearsals, manage anxiety, share strategies, and build real confidence with support from their speech therapist. Because when you find people who truly understand, anything feels possible.
+              Together, Dan, Daria, and Millen navigate rehearsals, manage anxiety, share strategies, and build real confidence with support from their speech pathologist. Because when you find people who truly understand, anything feels possible.
             </p>
             <p className="text-[13px] md:text-[14px] text-muted-foreground leading-[1.7] max-w-[500px] mb-5">
-              This book introduces Millen, a real girl from the UK who won our global character contest, and features the theme "You can't see DLD" throughout the book. This is a story about bravery, belonging, and what happens when children with DLD keeping trying even when it's tough!
+              This book introduces Millen, a real girl from the UK who won our global character contest, and features the theme "You can't see DLD" throughout the book. This is a story about bravery, belonging, and what happens when children with DLD keep trying even when it's tough.
             </p>
             <div>
               <a

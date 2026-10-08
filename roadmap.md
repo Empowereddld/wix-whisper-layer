@@ -1,5 +1,9 @@
 # Roadmap
 
+## Books final copy cleanup and SEO audit (2026-10-08)
+- [x] Apply only the five approved wording corrections, keeping the existing design and other descriptions.
+- [x] Verify rendered corrections and report technical SEO, schema, images, and internal anchors; report-only SEO issues left unchanged.
+
 ## EmailOctopus integration updates — DONE (2026-10-01)
 1. Footer newsletter: duplicate emails now treated as success, `newsletter` tag still synced (src/components/Footer.tsx).
 2. Google sign-in name fallback in src/contexts/AuthContext.tsx (only when our fields are blank).
