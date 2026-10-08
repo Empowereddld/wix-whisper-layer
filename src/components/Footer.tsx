@@ -82,15 +82,13 @@ const Footer = () => {
         }).catch((e) => console.warn("Welcome email failed:", e));
       }
 
-      if (isDuplicate) {
-        // Already on file from another form: add the newsletter tag directly
-        // (server checks it is on file and not suppressed).
-        supabase.functions.invoke("newsletter-confirm", {
-          body: { action: "subscribe", email: email.trim() },
-        }).catch((e) => console.warn("Newsletter confirmation failed:", e));
-      } else {
-        syncToEmailOctopus({ source: "footer", email: email.trim() });
-      }
+      // Server decides: do-not-email list first, then records consent for a
+      // brand-new footer signup, restores tag for an existing "yes" consent,
+      // or emails a confirmation link to anyone else already on file.
+      supabase.functions.invoke("newsletter-confirm", {
+        body: { action: "subscribe", email: email.trim() },
+      }).catch((e) => console.warn("Newsletter consent failed:", e));
+      if (!isDuplicate) syncToEmailOctopus({ source: "footer", email: email.trim() });
 
       toast({ title: "Welcome to the community! 🎉", description: "Check your inbox for a note from us." });
       setEmail("");
