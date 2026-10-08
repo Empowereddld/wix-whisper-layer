@@ -177,6 +177,10 @@ const Footer = () => {
           {/* Newsletter */}
           <form onSubmit={handleNewsletterSubmit} className="flex flex-col gap-4 w-full lg:w-auto">
             <p className="font-serif italic text-lg text-primary-foreground/90">Subscribe to Our Newsletter</p>
+            <p className="text-[12px] leading-relaxed text-primary-foreground/60 -mt-2 max-w-[520px]">
+              Get practical DLD strategies, resources, and updates from Empowered DLD by email. You can unsubscribe anytime.
+            </p>
+
             <input
               type="email"
               required

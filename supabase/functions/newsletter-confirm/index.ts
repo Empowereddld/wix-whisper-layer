@@ -13,7 +13,7 @@ const TTL_S = 7 * 24 * 60 * 60;
 const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[A-Za-z]{2,}$/;
 const CONSENT_SOURCE = "footer-newsletter-confirmed";
 const FOOTER_SOURCE = "footer-newsletter";
-const FOOTER_TEXT = "Subscribe to Our Newsletter (footer form: Email, Name, Subscribe button).";
+const FOOTER_TEXT = "Get practical DLD strategies, resources, and updates from Empowered DLD by email. You can unsubscribe anytime.";
 const CONSENT_TEXT = "Footer newsletter form submitted, then confirmed by clicking the emailed confirmation link.";
 
 const json = (b: unknown, s = 200) =>
@@ -129,7 +129,7 @@ Deno.serve(async (req) => {
     const fresh = row.notes === "footer newsletter" && Date.now() - new Date(row.created_at).getTime() < 10 * 60 * 1000;
     if (fresh && !consents?.some((c) => c.source === FOOTER_SOURCE)) {
       const { error } = await admin.from("newsletter_consents").insert({
-        email, consented: true, source: FOOTER_SOURCE, wording_version: "footer-newsletter-v1",
+        email, consented: true, source: FOOTER_SOURCE, wording_version: "footer-newsletter-v2",
         checkbox_text: FOOTER_TEXT, helper_text: null,
       });
       if (error) console.error("newsletter-confirm: footer consent insert failed", error);
