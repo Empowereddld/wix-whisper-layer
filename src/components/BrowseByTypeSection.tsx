@@ -26,9 +26,16 @@ const types = [
   },
   {
     tag: "DOWNLOADABLE",
-    title: "Free Downloadable Resources",
-    description:
-      "Printable guides, checklists, and posters ready to use today. Everything you need to support a child with DLD right now for families, clinicians and teachers.",
+    title: "Downloadable Resources",
+    description: (
+      <>
+        Printable guides, checklists, and posters ready to use today, including{" "}
+        <Link to="/resources/language-impact-checklist" className="text-primary underline hover:no-underline">
+          our DLD checklist
+        </Link>
+        . Everything you need to support a child with DLD right now for families, clinicians and teachers.
+      </>
+    ),
     cta: "Browse Downloads",
     href: "/resources/downloadables",
     image: downloadImg,

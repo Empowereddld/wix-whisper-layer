@@ -119,7 +119,11 @@ const HubPreview = () => {
             Everything You Need to Support a Child with DLD
           </h1>
           <p className="text-[14px] md:text-[16px] text-foreground/55 leading-[1.7] max-w-[620px]">
-            Printable guides, checklists, and learning tools to support children with Developmental Language Disorder.
+            Printable guides, checklists, and learning tools to support children with Developmental Language Disorder. Not sure where to begin? Try the{" "}
+            <Link to="/resources/language-impact-checklist" className="text-primary underline hover:no-underline">
+              DLD Language Impact Checklist
+            </Link>
+            .
           </p>
           <p className="text-[13px] md:text-[14px] text-foreground/40">
             Join 4,300+ parents, therapists, and educators in the Developmental Language Disorder community.
