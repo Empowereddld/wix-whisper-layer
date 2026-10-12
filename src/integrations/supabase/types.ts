@@ -487,6 +487,48 @@ export type Database = {
         }
         Relationships: []
       }
+      merch_orders: {
+        Row: {
+          created_at: string
+          currency: string | null
+          customer_email: string | null
+          customer_name: string | null
+          financial_status: string | null
+          id: string
+          items: Json
+          order_name: string | null
+          ordered_at: string | null
+          shopify_order_id: string
+          total_price: number | null
+        }
+        Insert: {
+          created_at?: string
+          currency?: string | null
+          customer_email?: string | null
+          customer_name?: string | null
+          financial_status?: string | null
+          id?: string
+          items?: Json
+          order_name?: string | null
+          ordered_at?: string | null
+          shopify_order_id: string
+          total_price?: number | null
+        }
+        Update: {
+          created_at?: string
+          currency?: string | null
+          customer_email?: string | null
+          customer_name?: string | null
+          financial_status?: string | null
+          id?: string
+          items?: Json
+          order_name?: string | null
+          ordered_at?: string | null
+          shopify_order_id?: string
+          total_price?: number | null
+        }
+        Relationships: []
+      }
       newsletter_consents: {
         Row: {
           checkbox_text: string

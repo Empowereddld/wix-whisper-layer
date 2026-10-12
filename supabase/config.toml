@@ -73,3 +73,6 @@ verify_jwt = true
 
 [functions.newsletter-confirm]
 verify_jwt = false
+
+[functions.shopify-order-webhook]
+verify_jwt = false

@@ -57,6 +57,13 @@
       "when": 1791323149936,
       "tag": "0007_batch5c_points_authorization",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1791819625665,
+      "tag": "0008_merch_orders",
+      "breakpoints": true
     }
   ]
 }
