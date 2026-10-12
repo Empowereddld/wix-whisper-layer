@@ -1,7 +1,8 @@
 import { ExternalLink } from "lucide-react";
+import { Link } from "react-router-dom";
 import booksImg from "@/assets/resource-books-collection.webp";
 
-const ResourceBooksSection = () => {
+const ResourceBooksSection = ({ showContextualLink = false }: { showContextualLink?: boolean }) => {
   return (
     <section className="pb-16 md:pb-24 lg:pb-28">
       <div className="max-w-[1300px] mx-auto px-6 md:px-8">
@@ -28,6 +29,14 @@ const ResourceBooksSection = () => {
               Meet Dan, Daria, Ming, and Millen — four children with DLD who are learning to understand themselves, navigate challenges, and advocate for what they need.
               <br /><br />
               Trusted by families, therapists, and educators around the world.
+              {showContextualLink && (
+                <>
+                  {" "}Explore our{" "}
+                  <Link to="/shop/books" className="text-primary underline hover:no-underline">
+                    DLD stories and available language editions
+                  </Link>.
+                </>
+              )}
             </p>
             <a
               href="https://mybook.to/nwINcA"

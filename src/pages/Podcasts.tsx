@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+import { Link } from "react-router-dom";
 import Footer from "@/components/Footer";
 import ChoosePathCTA from "@/components/ChoosePathCTA";
 import { Button } from "@/components/ui/button";
@@ -142,6 +143,13 @@ const Podcasts = () => {
                   <span className="mt-2 w-2 h-2 rounded-full bg-foreground flex-shrink-0" />
                   <p className="text-[15px] md:text-[16px] text-foreground/80 leading-[1.75]">
                     {point}
+                    {i === 2 && (
+                      <>
+                        {" "}Explore the{" "}
+                        <Link to="/shop/books" className="text-primary underline hover:no-underline">Dan &amp; Daria book adventures</Link>
+                        {" "}for more stories to read and talk about together.
+                      </>
+                    )}
                   </p>
                 </li>
               ))}

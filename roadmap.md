@@ -1,5 +1,9 @@
 # Roadmap
 
+## Contextual books links (2026-10-12)
+- [x] Add the eight approved contextual links, preserving designs and existing purchase links.
+- [x] Verify all eight destinations and report anchors; do not create topic pages.
+
 ## Books final copy cleanup and SEO audit (2026-10-08)
 - [x] Apply only the five approved wording corrections, keeping the existing design and other descriptions.
 - [x] Verify rendered corrections and report technical SEO, schema, images, and internal anchors; report-only SEO issues left unchanged.
