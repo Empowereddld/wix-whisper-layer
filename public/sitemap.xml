@@ -121,12 +121,6 @@
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://www.empowereddld.com/resources/blog/top-3-books-supporting-kids-dld</loc>
-    <lastmod>2026-03-12</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://www.empowereddld.com/resources/blog/life-with-dld-dan-daria-podcast</loc>
     <lastmod>2026-03-13</lastmod>
     <changefreq>monthly</changefreq>
@@ -140,6 +134,12 @@
   </url>
   <url>
     <loc>https://www.empowereddld.com/resources/blog/understanding-your-childs-development-team</loc>
+    <lastmod>2026-03-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.empowereddld.com/resources/blog/top-3-books-supporting-kids-dld</loc>
     <lastmod>2026-03-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
