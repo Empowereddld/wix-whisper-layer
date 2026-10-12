@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const EducatorsFamiliarSection = () => {
   return (
     <section className="py-10 md:py-16 lg:py-[120px] bg-muted">
@@ -35,6 +37,9 @@ const EducatorsFamiliarSection = () => {
 
           <p className="text-[14px] md:text-[15px] text-muted-foreground leading-[1.7]">
             Empowered DLD gives your school the tools, training, and resources to identify and support these students — across every classroom and every language.
+            {" "}Our{" "}
+            <Link to="/shop/books" className="text-primary underline hover:no-underline">relatable stories for classroom discussions</Link>
+            {" "}can help students talk about communication, friendship, and asking for support.
           </p>
         </div>
       </div>

@@ -65,7 +65,7 @@ const AboutDLD = () => {
         <NotWholeStoryLamp />
         <DLDCommunityVideoCarousel />
         <DLDFaqSection />
-        <ResourceBooksSection />
+        <ResourceBooksSection showContextualLink />
         <ResourceLibraryCTA />
       </main>
       <Footer />

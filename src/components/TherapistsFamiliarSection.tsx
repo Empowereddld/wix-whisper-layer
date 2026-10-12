@@ -1,4 +1,5 @@
 import { useScrollFadeIn } from "@/hooks/useScrollFadeIn";
+import { Link } from "react-router-dom";
 
 const TherapistsFamiliarSection = () => {
   const barFade = useScrollFadeIn();
@@ -37,6 +38,9 @@ const TherapistsFamiliarSection = () => {
 
           <p className="text-[14px] md:text-[15px] text-muted-foreground leading-[1.7]">
             You need tools that work for the real families sitting in your therapy room.
+            {" "}Our{" "}
+            <Link to="/shop/books" className="text-primary underline hover:no-underline">illustrated stories about life with DLD</Link>
+            {" "}can open up conversations about communication and self-advocacy in therapy and at home.
           </p>
         </div>
       </div>
