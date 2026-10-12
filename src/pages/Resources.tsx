@@ -32,8 +32,8 @@ const Resources = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Free DLD Resources & Tools | Empowered DLD"
-        description="Free, practical tools to support every child with Developmental Language Disorder, for parents, educators, and therapists. Explore the Resource Library."
+        title="DLD Resources & Tools | Empowered DLD"
+        description="Practical tools to support every child with Developmental Language Disorder, for parents, educators, and therapists. Explore the Resource Library."
         path="/resources"
       />
       <Header />
