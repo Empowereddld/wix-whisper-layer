@@ -72,9 +72,14 @@ const LanguageImpactChecklist = () => {
   return (
     <>
       <SEOHead
-        title="Free Language Impact Checklist for DLD | Empowered DLD"
-        description="A free printable checklist that helps parents, educators, and SLPs notice how Developmental Language Disorder shows up in everyday moments at home and at school."
+        title="DLD Checklist: Language Impact Checklist | Empowered DLD"
+        description="A printable DLD checklist for parents, educators, and speech pathologists to notice how developmental language disorder affects everyday life at home and school."
         path="/resources/language-impact-checklist"
+        breadcrumbs={[
+          { name: "Home", path: "/" },
+          { name: "Resources", path: "/resources" },
+          { name: "Language Impact Checklist", path: "/resources/language-impact-checklist" },
+        ]}
       />
     <div style={{ fontFamily: fontBody, color: TEXT_DARK, background: "#fff", lineHeight: 1.6 }}>
       <style>{`
@@ -175,16 +180,16 @@ const LanguageImpactChecklist = () => {
         <section className="lic-hero">
           <div className="lic-container">
             <div className="lic-hero-inner">
-              <span className="lic-pill">Free clinical resource</span>
-              <h1 className="lic-h1">Language Impact Checklist</h1>
+              <span className="lic-pill">Practical DLD resource</span>
+              <h1 className="lic-h1">DLD Language Impact Checklist</h1>
               <p className="lic-sub">
-                A free clinical tool for identifying how language difficulties show up
-                across a student's school day.
+                A practical developmental language disorder (DLD) checklist to help you
+                notice how language difficulties show up at home, at school, and with friends.
               </p>
               <p className="lic-desc">
-                Covers comprehension, expression, attention, social use, and academic
-                impact across the school day. Use it in your next assessment, IEP meeting,
-                or parent conversation.
+                Covers understanding, talking, attention, social communication, and schoolwork.
+                Bring your notes to school conversations, IEP meetings, or a speech-language
+                assessment so everyone can see the same patterns.
               </p>
 
               <a
@@ -195,6 +200,11 @@ const LanguageImpactChecklist = () => {
               >
                 Download the Checklist (PDF)
               </a>
+
+              <p className="lic-credit">
+                This checklist is not a diagnostic tool. It can help you notice patterns
+                and share them with a speech pathologist, who can assess for DLD.
+              </p>
 
               <p className="lic-credit">
                 Created by Jinean Whitley, MSc.A S-LP and Camesha Russell, B.Ed. <br />

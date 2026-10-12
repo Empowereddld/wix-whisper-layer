@@ -9,7 +9,7 @@ const ResourcesHero = () => {
           RESOURCES
         </p>
         <h1 className="text-[32px] md:text-[48px] lg:text-[56px] font-black text-white leading-[1.1] max-w-[800px]">
-          Free Tools to Support Every Child With DLD
+          Practical Tools to Support Every Child With DLD
         </h1>
         <p className="text-[14px] md:text-[16px] text-white/80 leading-[1.7] max-w-[620px]">
           Podcasts, courses, and downloadables designed for parents, SLPs, and educators.
