@@ -41,6 +41,7 @@ const navItems = [
   { title: "Analytics", url: "/admin/analytics", icon: BarChart3 },
   { title: "Blog", url: "/admin/blog", icon: BookOpen },
   { title: "Purchases", url: "/admin/purchases", icon: ShoppingCart },
+  { title: "Merch Orders", url: "/admin/merch-orders", icon: Package },
   { title: "Discounts", url: "/admin/discounts", icon: Tag },
   { title: "Emails", url: "/admin/emails", icon: Mail },
   { title: "Newsletter", url: "/admin/newsletter", icon: Newspaper },
