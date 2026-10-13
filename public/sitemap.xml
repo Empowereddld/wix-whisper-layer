@@ -151,12 +151,6 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.empowereddld.com/resources/blog/could-my-child-have-dld</loc>
-    <lastmod>2026-03-12</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://www.empowereddld.com/resources/blog/navigating-holidays-with-communication-impairment</loc>
     <lastmod>2026-03-12</lastmod>
     <changefreq>monthly</changefreq>
@@ -164,6 +158,12 @@
   </url>
   <url>
     <loc>https://www.empowereddld.com/resources/blog/finding-peace-as-parent-of-child-with-dld</loc>
+    <lastmod>2026-03-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.empowereddld.com/resources/blog/could-my-child-have-dld</loc>
     <lastmod>2026-03-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
