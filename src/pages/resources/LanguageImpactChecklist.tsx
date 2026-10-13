@@ -187,7 +187,7 @@ const LanguageImpactChecklist = () => {
                 notice how language difficulties show up at home, at school, and with friends.
               </p>
               <p className="lic-desc">
-                Covers understanding, talking, attention, social communication, and schoolwork.
+                Covers understanding, expressing ideas, attention, social communication, and schoolwork.
                 Bring your notes to school conversations, IEP meetings, or a speech-language
                 assessment so everyone can see the same patterns.
               </p>
