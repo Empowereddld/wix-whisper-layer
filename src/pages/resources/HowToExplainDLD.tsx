@@ -353,7 +353,6 @@ const HowToExplainDLD = () => (
               </li>
             </ul>
 
-            <h2>Frequently asked questions</h2>
             <BlogFAQAccordion items={FAQS} />
 
             <div className="blog-sources">
