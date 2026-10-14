@@ -57,3 +57,4 @@
 - [x] T1 click tracking uses shared address helper
 - [x] W2 repeat signup records no consent
 - [ ] T2 pre-create Stripe prices (deferred by user)
+- [ ] Build 'How to Explain DLD to Your Child' page (preview only, awaiting review before publish)

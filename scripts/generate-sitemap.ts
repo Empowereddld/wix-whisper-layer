@@ -36,6 +36,7 @@ const staticEntries: SitemapEntry[] = [
   { path: "/resources/free-course", changefreq: "monthly", priority: "0.8" },
   { path: "/resources/downloadables", changefreq: "monthly", priority: "0.8" },
   { path: "/resources/language-impact-checklist", changefreq: "monthly", priority: "0.7" },
+  { path: "/resources/how-to-explain-dld-to-your-child", changefreq: "monthly", priority: "0.8" },
   { path: "/music", changefreq: "monthly", priority: "0.8" },
   { path: "/shop", changefreq: "weekly", priority: "0.8" },
   { path: "/shop/books", changefreq: "monthly", priority: "0.8" },
