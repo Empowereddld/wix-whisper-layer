@@ -1,110 +1,152 @@
-# Security review: current scan findings (report only, no changes)
+# New page: How to Explain DLD to Your Child
 
-The scan returns 23 raw entries. Several are repeats of the same issue (the same function flagged in different scan runs), so the panel shows them as 15. They are grouped below the same way. Everything was checked against the current code and the live database permissions.
+Content proposal for review. Nothing is built or published until approved.
 
-Summary: **3 issues are genuinely still open** (2 Critical, 1 Warning), **3 are small, low-risk gaps worth tidying**, and the rest are already fixed or are intended behavior.
+## 1. Page outline (headings)
 
----
+```text
+H1  How to Explain DLD to Your Child
+    Intro (2 short paragraphs)
+H2  Start with what your child already notices
+H2  A simple way to explain DLD
+H2  Words you can actually use
+    H3 When instructions feel hard
+    H3 When the right word won't come
+    H3 When they need more time
+    H3 When reading or writing feels hard
+    H3 Strengths and different ways to communicate
+H2  Adjust the conversation for your child
+    H3 Younger children
+    H3 School-aged children
+    H3 Older children and teens
+H2  Give DLD a name without making it their whole identity
+H2  What if my child becomes upset?
+H2  Teach self-advocacy alongside understanding
+H2  Keep the conversation going
+H2  Stories can make the conversation easier
+H2  Other ways to continue the conversation
+H2  Frequently asked questions
+```
 
-## Critical findings (7)
+Uses the site's existing article-style layout (same look as current resource and blog pages). No new design.
 
-### C1. "Anyone can access waitlist details using a referral code" (Critical, 3 repeat entries)
-- **Where:** newsletter-prompt function (Story Pros branch)
-- **What the scanner says:** the Story Pros newsletter prompt picks the member using only their referral code, which is public (it's in every share link). It then records a newsletter yes/no for that member and can add them to the mailing list.
-- **Exploitable now?** **Yes.** Someone with another member's share link can record a "yes" (adding them to the newsletter) or a "no" (hiding the prompt from them). It does not show their email to the caller.
-- **Covered by a batch?** No. Batch 3/3B moved the other member actions onto the signed dashboard pass, but this prompt was missed.
-- **Smallest fix:** require the signed dashboard pass (the same one used for rewards and suggestions) instead of the referral code. Update the Story Pros prompt on the dashboard to send the pass. The Resource Library version already requires sign-in and stays the same.
+## 2. Proposed copy
 
-### C2. "Anyone can subscribe arbitrary email addresses" (Critical)
-- **Where:** emailoctopus-subscribe function
-- **What the scanner says:** anyone can call it with any email address and tag, and it adds that address to your mailing list as subscribed.
-- **Exploitable now?** **Yes.** The function checks nobody. It's called straight from the browser by the footer, contact, parents workshop, educational app, Resource Library onboarding and sign-in code, so it can't simply be locked down without changing those.
-- **Covered by a batch?** No. Batch 4 removed public *unsubscribe* only; subscribe was left alone on purpose.
-- **Smallest fix:** allow only trusted callers (your server functions and the signed-in Resource Library user, for their own email). Move the public form syncs (footer, contact, lead, workshop, app) to the server, so the sync only happens after the form row is saved, the same way Batch 1 handled confirmation emails. Add hashed rate limits. Tags, existing contacts and unsubscribed contacts are handled as they are now.
+**Intro**
+Maybe your child has just been diagnosed with Developmental Language Disorder. Maybe they have started saying things like "I'm not smart" or "Nobody listens to me." Either way, you may be wondering what to say, and how much.
 
-### C3. "Anyone can send emails from your app" (Critical)
-- **Where:** send-waitlist-email
-- **What the scanner says:** it accepts a forged sign-in token that claims the "service role."
-- **Exploitable now?** No. The current check accepts only the cron secret, an exact match of the real server key, or a verified admin. Decoded claims are never trusted.
-- **Covered by:** Batch 1.
-- **Why it's still flagged:** this entry is from the October 5 scan and points at old line numbers. Safe to mark fixed.
+There is no perfect script. What helps most is honest, simple language, returned to often, in a way that leaves your child feeling understood rather than labelled.
 
-### C4. "Anyone can award themselves unlimited waitlist points" via the suggestion function (Critical)
-- **Where:** database function submit_waitlist_suggestion
-- **Exploitable now?** No. Visitors and signed-in users can no longer run this function (checked live). Suggestions go through the member-action function, which requires the dashboard pass and awards a fixed 5 points.
-- **Covered by:** Batch 3B and the Points batch.
-- **Why it's still flagged:** the scanner reads an old migration file that never revoked access. Later migrations did. Safe to mark fixed.
+**Start with what your child already notices**
+Children usually know some things feel harder long before anyone gives it a name. They notice when classmates follow directions faster, when a story gets stuck halfway, or when friends talk too quickly to keep up.
 
-### C5. "Anyone can grant arbitrary waitlist points" via award_waitlist_points (Critical)
-- **Exploitable now?** No. This database function **no longer exists** (checked live).
-- **Why it's still flagged:** it still appears in an old April migration file. Safe to mark fixed.
+Rather than starting with a definition, start with their experience. You might ask, "Have you noticed that sometimes it's tricky to find the words you want?" or "What feels hardest at school?" Listen first. Their answers will show you where to begin.
 
-### C6. "Anyone can award points to another member" (Critical)
-- **Where:** track-referral-click
-- **What the scanner says:** anyone can submit a member's referral code and earn that member click points.
-- **Exploitable now?** Only as designed: someone visiting a share link earns the owner 3 points, limited to once per network per day and 15 points per day. Visitors can't run the points function directly (checked live).
-- **Covered by:** the Points batch.
-- **Small gap:** this function reads the forwarded-address header *before* the edge-provided address, the opposite order to the shared helper. The anti-spoof test passed because the platform rewrites that header, but it should use the same helper. See T1.
+**A simple way to explain DLD**
+You could say something like:
 
-*(C1 counts as 3 raw entries. C1 to C6 make up the panel's 7 Critical items.)*
+> "Everyone's brain works a little differently. Your brain is great at lots of things. Language, which is understanding words and using words, takes your brain more work. That has a name. It's called DLD, which stands for Developmental Language Disorder. Lots of kids have it, and there are ways to make things easier."
 
----
+Keep it short. Every child with DLD is different, so describe what is true for your child rather than a list of everything DLD can affect. For some children that is understanding what others say; for others it is putting thoughts into words, reading, writing, or keeping up in conversations with friends. DLD is lifelong, and with understanding and the right strategies, people with DLD learn, grow and thrive.
 
-## Warnings (8)
+**Words you can actually use**
+- *Instructions:* "When someone gives lots of steps at once, your brain has to hold all of them. That's a lot! It's okay to ask for one step at a time."
+- *Word finding:* "You know the word, it's just hiding. You can describe it, point to it, or say 'give me a second.'"
+- *Processing time:* "Your brain is thinking carefully. You're allowed to take your time before you answer."
+- *Reading and writing:* "Reading and writing use language too, so they can take extra effort. That's not because you aren't trying."
+- *Strengths:* "You notice things other people miss. You're a great builder (or artist, helper, friend). Drawing, showing and acting things out are ways of communicating too."
 
-### W1. "Anyone can inject markup into admin alert emails" (Warning, 4 repeat entries)
-- **Where:** send-waitlist-email, "New SLP self-claim" staff alert
-- **Exploitable now?** **Yes, in a minor way.** The member's name, email and referral code go into this staff email without escaping. A crafted name could add fake links or formatting to an email that only staff receive. Nothing runs automatically.
-- **Covered by a batch?** No. The export/alert batch cleaned the other staff alerts but missed this one.
-- **Smallest fix:** run those four values through the shared escape helper. Punctuation, accents and non-English names display the same as now.
+**Adjust the conversation for your child**
+There are no strict age rules. Think about your child's language level, personality and what they already understand.
 
-### W2. "Anyone can subscribe another member to marketing emails" (Warning)
-- **Where:** storybuilders-signup, repeat signup with an existing email
-- **Exploitable now?** **Yes.** If someone types another person's existing email with the newsletter box checked, the system records a "yes" and adds them to the newsletter. It's rate limited, but it is still consent without proof the person owns the inbox.
-- **Smallest fix:** on a repeat signup, don't record consent right away. The neutral "check your email" message stays the same, and the newsletter question is asked again on the member's own dashboard (which needs the pass, after C1 is fixed).
+- *Younger children:* Keep it concrete and brief. Talk about what happens ("Sometimes words get stuck") rather than labels. Use play, pictures and stories.
+- *School-aged children:* Connect DLD to real moments at school and with friends. Introduce the name DLD and a few strategies they can use in class.
+- *Older children and teens:* Be more detailed and invite their questions. Talk about how DLD may affect learning, social situations and independence, and involve them in decisions about supports, including IEP meetings where appropriate.
 
-### W3. "Anyone can trigger verification emails / reset another signup's verification link" (Warning, 4 repeat entries)
-- **Where:** resend-verification-waitlist
-- **Exploitable now?** Only as intended. Typing an email sends the link to that inbox only, and the reply is always the same. Limits: 1 per 2 minutes, 3 per person per day, 10 per hour per network. Earlier links stay valid, so nobody gets locked out.
-- **Covered by:** Batch 1 and Batch 3B. Safe to mark reviewed as intended behavior.
+**Give DLD a name without making it their whole identity**
+A name can be a relief. It explains experiences that may have felt confusing or unfair, and it gives children words to ask for what they need.
 
-### W4. "Public recovery reads private waitlist data unauthenticated" (Warning)
-- **Where:** find-storypros-dashboard
-- **Exploitable now?** No. It returns the same message every time, emails only the account owner, and is rate limited. Covered by Batches 1 and 3. Safe to mark reviewed as intended behavior.
+At the same time, DLD is one part of who your child is. Talk about their interests, humour, kindness and talents just as often. "You have DLD" sits alongside "You're funny," "You're brave," and "You're a great friend."
 
-### W5. "Anyone can claim a professional signup bonus" (Warning)
-- **Exploitable now?** No. Claiming to be a speech professional now only flags the account. The +50 bonus is given only when an admin approves it (the approval function checks for the admin role). Covered by the Points batch. Safe to mark fixed.
+**What if my child becomes upset?**
+Your child might feel sad, embarrassed, angry or worried, or might not want to talk at all. These reactions are normal.
 
-### W6. "Anyone can award themselves referral points" via award_referral (Warning)
-- **Exploitable now?** No. Nobody can run it from the site (checked live). Referral points are awarded once, after the new member verifies. Covered by the Points batch. Safe to mark fixed.
+- Name the feeling: "It sounds like this feels frustrating."
+- Don't rush to fix it or insist everything is fine.
+- Let them know they can come back to it anytime.
+- Share how you or other people have handled hard things.
 
-### W7. "Anyone can earn points with spoofed referral clicks" (Warning)
-- Same function as C6. Not practically exploitable (the platform rewrites the address header), but tidy it up as described in T1.
+If worries persist or affect daily life, your child's speech pathologist, teacher or doctor can help.
 
-### W8. "Checkout lets a purchaser mutate a catalog product" (Warning)
-- **Where:** create-checkout
-- **Exploitable now?** No meaningful harm. If a product doesn't have a Stripe price saved yet, checkout creates one from the price stored on your server and saves it. The buyer can't choose the amount or the product details. Payment verification (Batch 5A) still checks the amount against Stripe.
-- Safe to mark reviewed. Optional tidy-up: T2.
+**Teach self-advocacy alongside understanding**
+Understanding DLD is most powerful when children know what to do in the moment. Practise a few short phrases at home, through role play, until they feel natural:
 
-### Ignored (2)
-Already set aside by you earlier. Not re-checked unless you want me to.
+- "Can you say that another way?"
+- "Can you show me?"
+- "I need more time."
+- "Can you give me one step at a time?"
 
----
+Celebrate when your child uses them, even imperfectly.
 
-## Proposed next batch (only after you approve)
+**Keep the conversation going**
+This isn't one big talk. Return to it naturally: after a hard day at school, before a new activity, when a friendship gets complicated, or as your child gets older and wants to understand more. Each conversation can go a little deeper.
 
-Must-fix:
-1. C1: newsletter prompt requires the dashboard pass.
-2. C2: lock down the mailing-list subscribe function to trusted callers, and move public form syncs to the server.
-3. W1: escape the SLP staff alert.
+**Stories can make the conversation easier**
+Sometimes it's easier to talk about a character than about yourself. When children see a character who finds words hard, asks for help, or feels left out, they can share feelings at a comfortable distance.
 
-Small tidy-ups:
-- T1: the click tracker uses the shared address helper.
-- W2: repeat signups don't record consent.
-- T2 (optional): create the missing Stripe prices ahead of time, so checkout never writes to the products list.
+That's why we created the [Living Life with DLD book series](/shop/books). In *Dan and the Paper Airplane*, Dan's ideas fly high even when his words don't come easily. The companion parent guidebook, *Discussing DLD with Your Child*, offers prompts and ideas for exactly this conversation.
 
-After that: mark C3 to C6, W5 and W6 fixed, and mark W3, W4 and W8 reviewed, each with a short note.
+**Other ways to continue the conversation**
+- Listen together to [the Dan & Daria podcast](/resources/podcasts).
+- Sing along to [our "What Is DLD?" song](/music).
+- Explore practical tools in [the DLD Resource Library](/hub/preview).
+- Notice everyday patterns with [the DLD Language Impact Checklist](/resources/language-impact-checklist), then share them with your child's speech pathologist or school team.
+- For a fuller overview, read [what Developmental Language Disorder is](/about-dld).
 
-Testing for each item: the normal flow still works (footer, contact, lead, workshop and Resource Library signups still reach the mailing list with the right tags; the Story Pros prompt works from the dashboard); forged or missing pass is refused; arbitrary emails are refused when sent directly; the alert shows a crafted name as plain text.
+## 3. FAQ answers
 
-Still deferred: Batch 5A real-money purchase test, refund handling, the 12 old recovery records.
+- **Should I tell my child they have DLD?** In most cases, yes. A name helps children understand their experiences and ask for help. Share it simply and positively, at a level that suits your child.
+- **What age should I explain DLD to my child?** There is no set age. Start with simple, concrete words whenever your child notices differences, and add detail as they grow.
+- **How do I explain DLD in simple words?** Try: "Your brain works hard to understand and use words. That's called DLD. There are ways to make it easier, and you're good at lots of things."
+- **What if my child does not want to talk about DLD?** Respect that and try again later. Stories, play or car rides often feel less pressured than a face-to-face talk.
+- **Can books help children understand DLD?** Yes. Characters with DLD let children explore feelings and strategies without the spotlight on themselves, and give families a shared starting point.
+- **How can I teach my child to advocate for what they need?** Practise short phrases like "Can you show me?" or "I need more time" at home, then encourage your child to try them at school.
+
+## 4. Internal links and anchor text
+
+| Destination | Anchor |
+|---|---|
+| /shop/books | Living Life with DLD book series (one link only) |
+| /resources/podcasts | the Dan & Daria podcast |
+| /music | our "What Is DLD?" song |
+| /hub/preview | the DLD Resource Library |
+| /resources/language-impact-checklist | the DLD Language Impact Checklist |
+| /about-dld | what Developmental Language Disorder is |
+
+Inbound (to propose later, after launch): one natural link each from `/for-parents`, `/about-dld`, and the `could-my-child-have-dld` article. Add the new URL to the sitemap.
+
+## 5. SEO metadata and structured data
+
+- URL: `/resources/how-to-explain-dld-to-your-child`
+- Title: How to Explain DLD to Your Child | Empowered DLD
+- Meta description: your proposed wording (156 characters, fits).
+- Canonical: self, www.
+- BreadcrumbList: Home > Resources > How to Explain DLD to Your Child.
+- Article schema (headline, description, author and publisher Empowered DLD, datePublished, dateModified, image).
+- FAQPage schema matching the visible FAQ word for word.
+- Image: optional existing illustration, e.g. parent reading with child; alt "Parent and child reading a book together and talking about DLD". Book cover alt: "Dan and the Paper Airplane book cover".
+
+## 6. Possible overlap
+
+- `/shop/books` and its guidebook section: product focused, different intent. Low risk; the new page links to it once.
+- `top-3-books-supporting-kids-dld` and `when-your-child-knows-more-than-they-can-say` articles: touch on reading together and understanding, not on explaining DLD. Low risk.
+- `/about-dld` and `what-is-developmental-language-disorder-dld` article: target "what is DLD". Different intent; we link to `/about-dld` for the fuller definition.
+- `/for-parents`: general parent hub, not a how-to. Good place for an inbound link.
+
+No existing page targets "how to explain DLD to a child", so cannibalization risk is low.
+
+## Questions to confirm
+
+- Confirm the guidebook description (prompts and ideas) is accurate.
+- Is it fine to use "kids" in the sample script? (Elsewhere we use "children" and note DLD is lifelong.)
+- Should the Resource Library link point to the public preview page, as proposed?
