@@ -26,6 +26,7 @@ export function safeCampaign(search: string) {
 }
 
 function campaign() {
+  if (!analyticsAllowed()) return {};
   try {
     const current = safeCampaign(location.search);
     if (current.utm_source || current.utm_campaign) sessionStorage.setItem(ATTRIBUTION_KEY, JSON.stringify(current));
@@ -110,9 +111,11 @@ export function trackGuidebookVisit() {
 
 export function trackGuidebookCheckout(redirect: () => void) {
   // Checkout has actually returned a Stripe URL; a failed button click is not a start.
-  const fallback = window.setTimeout(redirect, 1000);
+  let redirected = false;
+  const once = () => { if (!redirected) { redirected = true; redirect(); } };
+  const fallback = window.setTimeout(once, 1000);
   event("begin_checkout", { currency: "USD", value: 9.99, items: [{ ...item, price: 9.99 }] }, () => {
-    clearTimeout(fallback); redirect();
+    clearTimeout(fallback); once();
   });
 }
 

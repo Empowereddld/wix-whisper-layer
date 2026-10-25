@@ -2,6 +2,7 @@ import Stripe from "https://esm.sh/stripe@18.5.0";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { allow, clientIp } from "../_shared/rateLimit.ts";
 import { escapeHtml } from "../_shared/html.ts";
+import { guidebookMeasurement } from "../_shared/guidebookMeasurement.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -122,6 +123,7 @@ Deno.serve(async (req) => {
     const paymentIntentId = typeof session.payment_intent === "string"
       ? session.payment_intent
       : session.payment_intent?.id ?? null;
+    const analyticsPurchase = await guidebookMeasurement(session.id, resourceId, session.currency || "", amountPaid);
 
     // Guests get a short-lived signed URL for the private file; members use the hub.
     const guestDownloadUrl = async (): Promise<string | null> => {
@@ -149,11 +151,12 @@ Deno.serve(async (req) => {
       .limit(1)
       .maybeSingle();
     if (prior) {
-      if (!isGuest && prior.user_id !== user!.id) return json({ error: "Not your payment" }, 403);
+      if (!isGuest && prior.user_id !== user?.id) return json({ error: "Not your payment" }, 403);
       return json({
         success: true,
         already_recorded: true,
         resource_id: prior.resource_id,
+        analytics_purchase: analyticsPurchase,
         ...(isGuest ? { download_url: await guestDownloadUrl() } : {}),
       });
     }
@@ -162,7 +165,7 @@ Deno.serve(async (req) => {
 
     // Insert; unique indexes block duplicates even under concurrent calls.
     const { error: insertError } = await admin.from("purchases").insert({
-      user_id: isGuest ? null : user!.id,
+      user_id: isGuest ? null : user?.id,
       customer_email: isGuest ? customerEmail : null,
       resource_id: resourceId,
       product_id: product.id,
@@ -179,6 +182,7 @@ Deno.serve(async (req) => {
           success: true,
           already_recorded: true,
           resource_id: resourceId,
+          analytics_purchase: analyticsPurchase,
           ...(isGuest ? { download_url: await guestDownloadUrl() } : {}),
         });
       }
@@ -239,6 +243,7 @@ Deno.serve(async (req) => {
     return json({
       success: true,
       resource_id: resourceId,
+      analytics_purchase: analyticsPurchase,
       ...(isGuest ? { download_url: await guestDownloadUrl() } : {}),
     });
   } catch (err) {

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import { MessageCircleHeart, Ear, Compass, RefreshCw, Gift, ZoomIn } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { trackGuidebookCheckout } from "@/lib/guidebookAnalytics";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SEOHead from "@/components/SEOHead";
@@ -99,7 +100,7 @@ const BuyButton = ({ className = "" }: { className?: string }) => {
       if (error || !data?.url) {
         throw new Error(data?.error || "Checkout failed");
       }
-      window.location.href = data.url;
+      trackGuidebookCheckout(() => { window.location.href = data.url; });
     } catch {
       toast.error("Checkout could not be started. Please try again in a moment.");
       setLoading(false);

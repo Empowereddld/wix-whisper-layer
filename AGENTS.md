@@ -1,5 +1,7 @@
 # Project architecture rules
 
+- Guidebook GA4 uses analytics-only explicit browser opt-in, manually allowlisted URLs/events, and stable hashed transaction IDs returned only after server payment verification; no customer identifiers or visit tables, so measurement never replaces payment records or exposes checkout capabilities. Configure enhanced measurement off before activation.
+
 - Header purchase-focused styling is opt-in and announcement exclusions are exact route checks, so guidebook campaign refinements leave other pages unchanged.
 
 - Shared book-promotion sections make page-specific contextual links opt-in, so a targeted editorial change does not add links on unrelated pages.
