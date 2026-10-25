@@ -663,18 +663,27 @@ const HowToExplainDLD = () => (
             </p>
 
             <h3>Dan and the Paper Airplane</h3>
-            <div className="not-prose my-6 flex gap-4 items-start">
+            <div className="not-prose my-8 md:mx-[calc((700px-940px)/2)] md:max-w-[940px] rounded-xl border border-border bg-secondary/40 p-6 md:p-8 flex flex-col md:flex-row md:items-center gap-6 md:gap-10">
               <img
                 src={coverDan}
                 alt="Dan and the Paper Airplane book cover"
-                className="article-book-cover h-auto shadow-sm shrink-0"
+                className="article-feature-img h-auto shadow-sm shrink-0"
                 loading="lazy"
               />
-              <p className="m-0">
-                In <em>Dan and the Paper Airplane</em>, families meet a character navigating the experiences of
-                living with DLD. The story offers opportunities to talk about communication difficulties, emotions,
-                and strategies that can help.
-              </p>
+              <div className="flex-1">
+                <p className="m-0">
+                  In <em>Dan and the Paper Airplane</em>, families meet a character navigating the experiences of
+                  living with DLD. The story offers opportunities to talk about communication difficulties, emotions,
+                  and strategies that can help.
+                </p>
+                <Link
+                  to="/shop/books"
+                  className="inline-flex items-center gap-1.5 mt-4 font-semibold text-primary hover:underline"
+                >
+                  Explore the Living Life with DLD book series
+                  <span aria-hidden="true">→</span>
+                </Link>
+              </div>
             </div>
             <p>You might ask your child:</p>
             <ul>
@@ -686,14 +695,14 @@ const HowToExplainDLD = () => (
             <p>Your child doesn't need to answer every question. Enjoying the story together is valuable too.</p>
 
             <h3>Discussing DLD with Your Child: A Guide for Parents</h3>
-            <div className="not-prose my-6 flex gap-4 items-start">
+            <div className="not-prose my-8 md:mx-[calc((700px-940px)/2)] md:max-w-[940px] rounded-xl border border-border bg-secondary/40 p-6 md:p-8 flex flex-col md:flex-row md:items-center gap-6 md:gap-10">
               <img
                 src={coverGuide}
                 alt="Discussing DLD with Your Child parent guidebook cover"
-                className="article-book-cover h-auto shadow-sm shrink-0"
+                className="article-feature-img h-auto shadow-sm shrink-0"
                 loading="lazy"
               />
-              <p className="m-0">
+              <p className="m-0 flex-1">
                 For parents who would like more structured guidance, we created{" "}
                 <em>Discussing DLD with Your Child</em>, a companion guidebook to our children's book series. The
                 guidebook includes conversation prompts, activities, and practical ideas to help families explore
