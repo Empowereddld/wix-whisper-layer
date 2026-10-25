@@ -7,7 +7,7 @@ import Footer from "@/components/Footer";
 import SEOHead from "@/components/SEOHead";
 import BlogFAQAccordion from "@/components/BlogFAQAccordion";
 import cover from "@/assets/book-parent-guidebook.webp";
-import founders from "@/assets/founders-photo.webp";
+import founders from "@/assets/founders-circle.webp";
 import page4 from "@/assets/guidebook-p4.webp";
 import page6 from "@/assets/guidebook-p6.webp";
 
