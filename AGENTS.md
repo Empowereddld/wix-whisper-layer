@@ -1,5 +1,7 @@
 # Project architecture rules
 
+- Header purchase-focused styling is opt-in and announcement exclusions are exact route checks, so guidebook campaign refinements leave other pages unchanged.
+
 - Shared book-promotion sections make page-specific contextual links opt-in, so a targeted editorial change does not add links on unrelated pages.
 
 - Keep long-term music releases on the expandable `/music` page and isolate temporary promotions in dated home-page campaign components, so future songs do not require restructuring permanent content.- Public email-sending functions and Story Pros new signups rate limit through `supabase/functions/_shared/rateLimit.ts` (keyed hashes of the edge-set client address, 2-day purge job), so no raw IPs are stored and browsers cannot spoof the network.
