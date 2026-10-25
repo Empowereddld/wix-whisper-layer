@@ -99,10 +99,41 @@ const jsonLd = {
   ],
 };
 
-const Quote = ({ children }: { children: React.ReactNode }) => (
-  <blockquote>
+const Quote = ({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) => (
+  <blockquote className={className}>
     <p>{children}</p>
   </blockquote>
+);
+
+const SituationCard = ({
+  title,
+  support,
+  children,
+}: {
+  title: string;
+  support: string;
+  children: React.ReactNode;
+}) => (
+  <div className="my-7 md:my-8 rounded-2xl border border-border bg-card p-5 md:p-6">
+    <h3 className="!mt-0 !mb-4">{title}</h3>
+    <div className="rounded-xl bg-lavender p-4 md:p-5">
+      <p className="!mb-2">
+        <strong className="!text-primary">You might say:</strong>
+      </p>
+      <Quote className="!m-0 !bg-transparent !p-0 !pl-3">{children}</Quote>
+    </div>
+    <div className="mt-4 border-t border-border pt-4">
+      <p className="!mb-0">
+        <strong className="!text-primary">What you can do:</strong> {support}
+      </p>
+    </div>
+  </div>
 );
 
 const HowToExplainDLD = () => (
@@ -300,87 +331,53 @@ const HowToExplainDLD = () => (
             </p>
             <p>Here are some examples you can adapt for your child.</p>
 
-            <h3>When following instructions is difficult</h3>
-            <p>
-              <strong>You might say:</strong>
-            </p>
-            <Quote>
+            <SituationCard
+              title="When following instructions is difficult"
+              support="Break instructions into smaller steps. Use pictures or written reminders when helpful, and check in before adding more information."
+            >
               "Sometimes it's hard to remember lots of instructions at once. That happens because understanding and
-              remembering language can be tricky with DLD. We can ask for one step at a time, or write the steps
-              down."
-            </Quote>
-            <p>
-              <strong>What you can do:</strong> Break instructions into smaller steps. Use pictures or written
-              reminders when helpful, and check in before adding more information.
-            </p>
+              remembering language can be tricky with DLD. We can ask for one step at a time, or write the steps down."
+            </SituationCard>
 
-            <h3>When your child can't find a word</h3>
-            <p>
-              <strong>You might say:</strong>
-            </p>
-            <Quote>
-              "Sometimes you know what you want to say, but you can't think of the word in the moment. You can tell
-              me what it looks like, what it does, or show me what you mean. We can figure it out together."
-            </Quote>
-            <p>
-              <strong>What you can do:</strong> Give your child time. Avoid immediately guessing every word or
-              finishing their sentences unless they want that help. Encourage describing, drawing, gesturing, or
-              using another way to communicate.
-            </p>
+            <SituationCard
+              title="When your child can't find a word"
+              support="Give your child time. Avoid immediately guessing every word or finishing their sentences unless they want that help. Encourage describing, drawing, gesturing, or using another way to communicate."
+            >
+              "Sometimes you know what you want to say, but you can't think of the word in the moment. You can tell me
+              what it looks like, what it does, or show me what you mean. We can figure it out together."
+            </SituationCard>
 
-            <h3>When your child needs more time to respond</h3>
-            <p>
-              <strong>You might say:</strong>
-            </p>
-            <Quote>
-              "Sometimes you need extra time to understand a question or think about your answer. That's okay. You
-              can ask someone to give you more time."
-            </Quote>
-            <p>
-              <strong>What you can do:</strong> Pause after asking questions. Reduce the pressure to respond
-              quickly, especially when your child is being asked to explain something complicated.
-            </p>
+            <SituationCard
+              title="When your child needs more time to respond"
+              support="Pause after asking questions. Reduce the pressure to respond quickly, especially when your child is being asked to explain something complicated."
+            >
+              "Sometimes you need extra time to understand a question or think about your answer. That's okay. You can
+              ask someone to give you more time."
+            </SituationCard>
 
-            <h3>When reading or writing is challenging</h3>
-            <p>
-              <strong>You might say:</strong>
-            </p>
-            <Quote>
-              "Reading and writing use language too. That means they might be harder for you sometimes. It doesn't
-              mean you aren't smart or that you aren't trying. We can find ways to help you learn."
-            </Quote>
-            <p>
-              <strong>What you can do:</strong> Work with your child's school team to understand which parts of
-              reading and writing are difficult. Supports might include explicit teaching, visual organizers, extra
-              time, or other accommodations based on your child's needs.
-            </p>
+            <SituationCard
+              title="When reading or writing is challenging"
+              support="Work with your child's school team to understand which parts of reading and writing are difficult. Supports might include explicit teaching, visual organizers, extra time, or other accommodations based on your child's needs."
+            >
+              "Reading and writing use language too. That means they might be harder for you sometimes. It doesn't mean
+              you aren't smart or that you aren't trying. We can find ways to help you learn."
+            </SituationCard>
 
-            <h3>When friendships or conversations feel confusing</h3>
-            <p>
-              <strong>You might say:</strong>
-            </p>
-            <Quote>
+            <SituationCard
+              title="When friendships or conversations feel confusing"
+              support="Talk through specific situations without blaming your child. Help them understand unfamiliar expressions, practise joining conversations, and explore ways to handle misunderstandings."
+            >
               "Sometimes it's hard to follow everything people say, especially when lots of people are talking. That
               can make conversations confusing. You can ask someone to explain, and we can practise ways to help."
-            </Quote>
-            <p>
-              <strong>What you can do:</strong> Talk through specific situations without blaming your child. Help
-              them understand unfamiliar expressions, practise joining conversations, and explore ways to handle
-              misunderstandings.
-            </p>
+            </SituationCard>
 
-            <h3>When your child is learning to ask for help</h3>
-            <p>
-              <strong>You might say:</strong>
-            </p>
-            <Quote>
-              "You can tell people what helps you. Maybe you need them to slow down, explain something again, or
-              show you what they mean. We can practise how to ask."
-            </Quote>
-            <p>
-              <strong>What you can do:</strong> Model these requests yourself. When possible, make sure your child's
-              teachers and other important adults understand their communication needs too.
-            </p>
+            <SituationCard
+              title="When your child is learning to ask for help"
+              support="Model these requests yourself. When possible, make sure your child's teachers and other important adults understand their communication needs too."
+            >
+              "You can tell people what helps you. Maybe you need them to slow down, explain something again, or show
+              you what they mean. We can practise how to ask."
+            </SituationCard>
             <p>
               These examples are starting points, not scripts your child needs to memorize. Use language that feels
               natural to your family and meaningful to your child.
