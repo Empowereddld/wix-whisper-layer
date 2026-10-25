@@ -1,5 +1,6 @@
 import Stripe from "https://esm.sh/stripe@18.5.0";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { allow, clientIp } from "../_shared/rateLimit.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -7,45 +8,66 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+// Return links use only known Empowered DLD sites; anything else falls back to the main domain.
+const ALLOWED_ORIGINS = new Set([
+  "https://www.empowereddld.com",
+  "https://empowereddld.com",
+  "https://wix-whisper-layer.lovable.app",
+  "https://id-preview--51a660d5-acfd-48f5-86f4-38b3ac526ca2.lovable.app",
+]);
+
+const json = (body: unknown, status = 200) =>
+  new Response(JSON.stringify(body), {
+    status,
+    headers: { ...corsHeaders, "Content-Type": "application/json" },
+  });
+
+// Checkout works for signed-in hub members and for guests (no account).
+// Guests get no user_id anywhere; Stripe collects their email at checkout and
+// fulfillment is proven later by the unguessable checkout session id.
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    const authHeader = req.headers.get("Authorization");
-    if (!authHeader) {
-      return new Response(JSON.stringify({ error: "Unauthorized" }), {
-        status: 401,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
-    }
-
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
     const supabaseAnonKey = Deno.env.get("SUPABASE_ANON_KEY")!;
     const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-
-    // Verify user
-    const userClient = createClient(supabaseUrl, supabaseAnonKey, {
-      global: { headers: { Authorization: authHeader } },
-    });
-    const { data: { user }, error: authError } = await userClient.auth.getUser();
-    if (authError || !user?.email) {
-      return new Response(JSON.stringify({ error: "Unauthorized" }), {
-        status: 401,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
-    }
-
-    const { resource_id } = await req.json();
-    if (!resource_id) {
-      return new Response(JSON.stringify({ error: "resource_id required" }), {
-        status: 400,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
-    }
-
     const admin = createClient(supabaseUrl, serviceRoleKey);
+
+    // Optional auth: a valid token means a signed-in member, otherwise guest.
+    const authHeader = req.headers.get("Authorization");
+    let user: { id: string; email?: string } | null = null;
+    if (authHeader) {
+      const userClient = createClient(supabaseUrl, supabaseAnonKey, {
+        global: { headers: { Authorization: authHeader } },
+      });
+      const { data } = await userClient.auth.getUser();
+      user = data?.user ?? null;
+    }
+
+    // Guest checkout is public, so bound it per network (hashed, short retention).
+    if (!user) {
+      const ok = await allow(admin, [
+        { bucket: "create-checkout", id: clientIp(req), max: 10, windowMin: 60 },
+      ]);
+      if (!ok) return json({ error: "Too many attempts. Please try again later." }, 429);
+    }
+
+    let body: Record<string, unknown> = {};
+    try {
+      body = await req.json();
+    } catch {
+      return json({ error: "Invalid request" }, 400);
+    }
+    const resource_id = typeof body.resource_id === "string" ? body.resource_id.trim() : "";
+    if (!UUID_RE.test(resource_id)) {
+      return json({ error: "Invalid resource" }, 400);
+    }
+    const newsletterOptIn = body.newsletter_opt_in === true;
 
     // Get product and resource info
     const { data: product, error: prodErr } = await admin
@@ -56,10 +78,7 @@ Deno.serve(async (req) => {
       .single();
 
     if (prodErr || !product) {
-      return new Response(JSON.stringify({ error: "Product not found" }), {
-        status: 404,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
+      return json({ error: "Product not found" }, 404);
     }
 
     const { data: resource } = await admin
@@ -68,21 +87,20 @@ Deno.serve(async (req) => {
       .eq("id", resource_id)
       .single();
 
-    // Check if already purchased
-    const { data: existing } = await admin
-      .from("purchases")
-      .select("id")
-      .eq("user_id", user.id)
-      .eq("resource_id", resource_id)
-      .eq("status", "completed")
-      .limit(1)
-      .single();
+    // Signed-in members cannot buy the same resource twice.
+    if (user) {
+      const { data: existing } = await admin
+        .from("purchases")
+        .select("id")
+        .eq("user_id", user.id)
+        .eq("resource_id", resource_id)
+        .eq("status", "completed")
+        .limit(1)
+        .single();
 
-    if (existing) {
-      return new Response(JSON.stringify({ error: "Already purchased" }), {
-        status: 400,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
+      if (existing) {
+        return json({ error: "Already purchased" }, 400);
+      }
     }
 
     // Initialize Stripe
@@ -94,7 +112,6 @@ Deno.serve(async (req) => {
     let stripePriceId = product.stripe_price_id;
 
     if (!stripePriceId) {
-      // Create Stripe product and price
       const stripeProduct = await stripe.products.create({
         name: resource?.title || "DLD Resource",
         metadata: { resource_id, product_id: product.id },
@@ -108,62 +125,53 @@ Deno.serve(async (req) => {
 
       stripePriceId = stripePrice.id;
 
-      // Save stripe_price_id back to DB
       await admin
         .from("products")
         .update({ stripe_price_id: stripePriceId })
         .eq("id", product.id);
     }
 
-    // Check for existing Stripe customer
-    const customers = await stripe.customers.list({ email: user.email, limit: 1 });
-    const customerId = customers.data.length > 0 ? customers.data[0].id : undefined;
+    // Check for existing Stripe customer (signed-in members only)
+    let customerId: string | undefined;
+    if (user?.email) {
+      const customers = await stripe.customers.list({ email: user.email, limit: 1 });
+      customerId = customers.data.length > 0 ? customers.data[0].id : undefined;
+    }
 
-    // Return links use only known Empowered DLD sites; anything else falls back to the main domain.
-    const ALLOWED_ORIGINS = new Set([
-      "https://www.empowereddld.com",
-      "https://empowereddld.com",
-      "https://wix-whisper-layer.lovable.app",
-      "https://id-preview--51a660d5-acfd-48f5-86f4-38b3ac526ca2.lovable.app",
-    ]);
     const requestOrigin = (req.headers.get("origin") || "").replace(/\/+$/, "");
     const origin = ALLOWED_ORIGINS.has(requestOrigin) ? requestOrigin : "https://www.empowereddld.com";
-    if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(String(resource_id))) {
-      return new Response(JSON.stringify({ error: "Invalid resource" }), {
-        status: 400,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
-    }
 
     // Create checkout session
     const session = await stripe.checkout.sessions.create({
-      customer: customerId,
-      customer_email: customerId ? undefined : user.email,
-      client_reference_id: user.id,
+      ...(user
+        ? {
+            customer: customerId,
+            customer_email: customerId ? undefined : user.email,
+            client_reference_id: user.id,
+            payment_intent_data: { receipt_email: user.email },
+          }
+        : {}),
       line_items: [{ price: stripePriceId, quantity: 1 }],
       mode: "payment",
-      payment_intent_data: {
-        receipt_email: user.email,
-      },
-      success_url: `${origin}/hub/payment-success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${origin}/hub/resource/${resource_id}`,
+      success_url: user
+        ? `${origin}/hub/payment-success?session_id={CHECKOUT_SESSION_ID}`
+        : `${origin}/shop/payment-success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: user
+        ? `${origin}/hub/resource/${resource_id}`
+        : `${origin}/shop/parent-guidebook`,
       metadata: {
-        user_id: user.id,
+        ...(user ? { user_id: user.id } : { guest: "true" }),
         resource_id,
         product_id: product.id,
         amount: String(product.price),
         currency: product.currency,
+        newsletter_opt_in: newsletterOptIn ? "true" : "false",
       },
     });
 
-    return new Response(JSON.stringify({ url: session.url }), {
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-    });
+    return json({ url: session.url });
   } catch (err) {
     console.error("Checkout error:", err);
-    return new Response(JSON.stringify({ error: err instanceof Error ? err.message : "Internal server error" }), {
-      status: 500,
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-    });
+    return json({ error: err instanceof Error ? err.message : "Internal server error" }, 500);
   }
 });
