@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, MessagesSquare } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SEOHead, { BASE_URL } from "@/components/SEOHead";
@@ -165,6 +165,35 @@ const HowToExplainDLD = () => (
               In this guide, we'll share ways to introduce DLD, examples of what you can say in everyday moments,
               and strategies for helping your child feel understood and supported.
             </p>
+
+            <aside
+              aria-labelledby="where-to-begin-heading"
+              className="my-8 md:my-10 rounded-2xl border border-primary/20 bg-lavender p-5 md:p-7"
+            >
+              <div className="flex items-center gap-2.5">
+                <MessagesSquare
+                  size={18}
+                  strokeWidth={1.4}
+                  className="text-primary shrink-0"
+                  aria-hidden="true"
+                />
+                <h2
+                  id="where-to-begin-heading"
+                  className="!mt-0 !pt-0 !border-0 !mb-0 !text-[22px] md:!text-[26px] !leading-tight"
+                >
+                  Not sure where to begin?
+                </h2>
+              </div>
+              <p className="mt-3 md:mt-4 !mb-3 md:!mb-4">Here's one way to introduce DLD to your child:</p>
+              <p className="!mb-3 md:!mb-4 rounded-xl border border-border/70 bg-background p-4 md:p-5 text-foreground font-medium">
+                "There's a name for some of the language difficulties you've been having. It's called DLD. It means
+                that understanding or using language can be harder sometimes. We can find ways to help together."
+              </p>
+              <p className="!mb-0">
+                Start with this, pause, and give your child time to respond. Their questions and experiences can
+                guide what comes next.
+              </p>
+            </aside>
 
             <h2>How to begin talking about DLD</h2>
             <p>If you're unsure where to begin, you might start with something like this:</p>
