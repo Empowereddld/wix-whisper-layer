@@ -41,6 +41,7 @@ const Resources = lazy(() => import("./pages/Resources"));
 const Shop = lazy(() => import("./pages/Shop"));
 const Books = lazy(() => import("./pages/Books"));
 const ParentGuidebook = lazy(() => import("./pages/ParentGuidebook"));
+const ShopPaymentSuccess = lazy(() => import("./pages/ShopPaymentSuccess"));
 const BulkOrders = lazy(() => import("./pages/BulkOrders"));
 const ShopMerch = lazy(() => import("./pages/ShopMerch"));
 const ShopMerchProduct = lazy(() => import("./pages/ShopMerchProduct"));
