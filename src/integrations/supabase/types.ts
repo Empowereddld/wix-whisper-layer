@@ -702,6 +702,7 @@ export type Database = {
         Row: {
           amount_paid: number
           currency: string
+          customer_email: string | null
           id: string
           product_id: string
           purchased_at: string
@@ -709,11 +710,12 @@ export type Database = {
           status: string
           stripe_checkout_session_id: string | null
           stripe_payment_intent_id: string | null
-          user_id: string
+          user_id: string | null
         }
         Insert: {
           amount_paid?: number
           currency?: string
+          customer_email?: string | null
           id?: string
           product_id: string
           purchased_at?: string
@@ -721,11 +723,12 @@ export type Database = {
           status?: string
           stripe_checkout_session_id?: string | null
           stripe_payment_intent_id?: string | null
-          user_id: string
+          user_id?: string | null
         }
         Update: {
           amount_paid?: number
           currency?: string
+          customer_email?: string | null
           id?: string
           product_id?: string
           purchased_at?: string
@@ -733,7 +736,7 @@ export type Database = {
           status?: string
           stripe_checkout_session_id?: string | null
           stripe_payment_intent_id?: string | null
-          user_id?: string
+          user_id?: string | null
         }
         Relationships: [
           {
