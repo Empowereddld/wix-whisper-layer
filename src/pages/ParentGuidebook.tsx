@@ -149,10 +149,10 @@ const ParentGuidebook = () => {
               <p className="text-[18px] md:text-[20px] font-semibold text-foreground leading-[1.4] mb-4">
                 Find the words to talk about DLD, together.
               </p>
-              <p className="text-[15px] md:text-[16px] text-muted-foreground leading-[1.7] max-w-[520px] mb-3">
+              <p className="text-[16px] md:text-[17px] text-muted-foreground leading-[1.7] max-w-[520px] mb-3">
                 Talking with your child about Developmental Language Disorder (DLD) can raise a lot of questions. How do you explain the challenges while celebrating their strengths? Where do you begin?
               </p>
-              <p className="text-[15px] md:text-[16px] text-muted-foreground leading-[1.7] max-w-[520px] mb-3">
+              <p className="text-[16px] md:text-[17px] text-muted-foreground leading-[1.7] max-w-[520px] mb-3">
                 <em>Discussing DLD with Your Child</em> gives you practical guidance, suggested language, and activities to help you and your child explore DLD together, one conversation at a time.
               </p>
               <p className="text-[13px] md:text-[14px] font-semibold text-foreground mb-5">
@@ -189,16 +189,16 @@ const ParentGuidebook = () => {
             <h2 className="text-[26px] md:text-[34px] font-black text-foreground leading-[1.15] mb-5">
               You don't have to explain everything in one conversation.
             </h2>
-            <p className="text-[15px] md:text-[16px] text-muted-foreground leading-[1.7] mb-4">
+            <p className="text-[16px] md:text-[17px] text-muted-foreground leading-[1.7] mb-4">
               Understanding DLD takes time. Your child might ask a question while reading together, after a challenging day at school, or when they notice differences between themselves and their peers.
             </p>
-            <p className="text-[15px] md:text-[16px] text-muted-foreground leading-[1.7] mb-4">
+            <p className="text-[16px] md:text-[17px] text-muted-foreground leading-[1.7] mb-4">
                 Some conversations will be short. Others may bring unexpected questions. There's no need to cover everything at once.
             </p>
             <p className="text-[16px] md:text-[17px] font-semibold text-foreground leading-[1.6] mb-4">
               What matters is creating space for your child to understand their DLD, recognize their strengths, and talk openly about the support they need.
             </p>
-            <p className="text-[15px] md:text-[16px] text-muted-foreground leading-[1.7]">
+            <p className="text-[16px] md:text-[17px] text-muted-foreground leading-[1.7]">
                 The guidebook helps you create opportunities for these meaningful conversations, at your child's own pace.
             </p>
           </div>
@@ -219,7 +219,7 @@ const ParentGuidebook = () => {
                   <h3 className="text-[17px] md:text-[18px] font-bold text-foreground leading-[1.35] mb-2">
                     {b.title}
                   </h3>
-                  <p className="text-[14px] text-muted-foreground leading-[1.65]">{b.text}</p>
+                  <p className="text-[16px] text-muted-foreground leading-[1.7]">{b.text}</p>
                 </div>
               ))}
             </div>
@@ -232,7 +232,7 @@ const ParentGuidebook = () => {
             <h2 className="text-[26px] md:text-[34px] font-black text-foreground leading-[1.15] mb-3">
               A look inside the guidebook
             </h2>
-            <p className="text-[15px] text-muted-foreground leading-[1.7] max-w-[600px] mb-10">
+            <p className="text-[16px] md:text-[17px] text-muted-foreground leading-[1.7] max-w-[600px] mb-10">
               Every section is designed to help you move from wondering what to say to having a meaningful conversation with your child.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-[820px]">
@@ -251,7 +251,7 @@ const ParentGuidebook = () => {
                   </Button>
                   <figcaption className="mt-4">
                     <h3 className="text-[17px] font-bold text-foreground mb-1">{p.title}</h3>
-                    <p className="text-[14px] text-muted-foreground leading-[1.6]">{p.text}</p>
+                    <p className="text-[16px] text-muted-foreground leading-[1.7]">{p.text}</p>
                   </figcaption>
                 </figure>
               ))}
@@ -271,15 +271,15 @@ const ParentGuidebook = () => {
             <h3 className="text-[19px] md:text-[22px] font-bold text-foreground mt-8 mb-3">
               12 guided sections to explore together
             </h3>
-            <p className="text-[15px] text-muted-foreground leading-[1.7] max-w-[640px] mb-6">
+            <p className="text-[16px] md:text-[17px] text-muted-foreground leading-[1.7] max-w-[640px] mb-6">
               From the first conversations about DLD to building understanding and self-advocacy, the guidebook takes you through:
             </p>
-            <ol className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2 text-[14px] text-foreground list-decimal list-outside pl-5 max-w-[760px]">
+            <ol className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2 text-[16px] text-foreground list-decimal list-outside pl-5 max-w-[760px]">
               {SECTIONS.map((s) => (
                 <li key={s} className="leading-[1.6]">{s}</li>
               ))}
             </ol>
-            <p className="text-[15px] text-muted-foreground leading-[1.7] max-w-[640px] mt-6">
+            <p className="text-[16px] md:text-[17px] text-muted-foreground leading-[1.7] max-w-[640px] mt-6">
               You can work through the guidebook together or choose the sections that feel most relevant to your child right now.
             </p>
 
@@ -292,10 +292,10 @@ const ParentGuidebook = () => {
                   Plus 4 bonus resources
                 </h3>
               </div>
-              <p className="text-[14px] text-muted-foreground leading-[1.7] mb-4">
+              <p className="text-[16px] text-muted-foreground leading-[1.7] mb-4">
                 Practical tools you can print, reference, and share:
               </p>
-              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2 text-[14px] text-foreground list-disc list-outside pl-5">
+              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2 text-[16px] text-foreground list-disc list-outside pl-5">
                 {BONUS.map((b) => (
                   <li key={b} className="leading-[1.6]">{b}</li>
                 ))}
@@ -316,19 +316,19 @@ const ParentGuidebook = () => {
               <h2 className="text-[26px] md:text-[32px] font-black text-foreground leading-[1.15] mb-4">
                 Created by a Speech-Language Pathologist and an Educator
               </h2>
-              <p className="text-[15px] text-muted-foreground leading-[1.7] mb-3">
+              <p className="text-[16px] md:text-[17px] text-muted-foreground leading-[1.7] mb-3">
                 At Empowered DLD, we bring together clinical expertise, classroom experience, and a shared commitment to helping children with DLD understand themselves and feel supported.
               </p>
-              <p className="text-[15px] text-muted-foreground leading-[1.7] mb-3">
+              <p className="text-[16px] md:text-[17px] text-muted-foreground leading-[1.7] mb-3">
                 <strong className="text-foreground">Jinean Whitley, M.Sc.A.</strong>, is a Speech-Language Pathologist, and <strong className="text-foreground">Camesha Russell</strong> is an Educator.
               </p>
-              <p className="text-[15px] text-muted-foreground leading-[1.7] mb-3">
+              <p className="text-[16px] md:text-[17px] text-muted-foreground leading-[1.7] mb-3">
                 Together, we created this guidebook to support the conversations that happen beyond therapy sessions and classrooms, in the everyday moments children share with their families.
               </p>
-              <p className="text-[15px] text-muted-foreground leading-[1.7] mb-3">
+              <p className="text-[16px] md:text-[17px] text-muted-foreground leading-[1.7] mb-3">
                 We believe children deserve to understand their DLD without feeling defined by it. They deserve opportunities to explore their strengths, share their experiences, and learn that asking for support is something they can feel confident doing.
               </p>
-              <p className="text-[15px] text-muted-foreground leading-[1.7]">
+              <p className="text-[16px] md:text-[17px] text-muted-foreground leading-[1.7]">
                 And parents deserve practical guidance to help make those conversations possible.
               </p>
             </div>
@@ -348,10 +348,10 @@ const ParentGuidebook = () => {
             <h2 className="text-[24px] md:text-[30px] font-black text-foreground leading-[1.2] mb-4">
               Every child deserves to understand their DLD.
             </h2>
-            <p className="text-[15px] md:text-[16px] text-muted-foreground leading-[1.7] mb-3">
+            <p className="text-[16px] md:text-[17px] text-muted-foreground leading-[1.7] mb-3">
               And every family deserves support in finding the words to talk about it.
             </p>
-            <p className="text-[15px] md:text-[16px] text-muted-foreground leading-[1.7] mb-8">
+            <p className="text-[16px] md:text-[17px] text-muted-foreground leading-[1.7] mb-8">
               Whether you're preparing for your first conversation or looking for ways to keep the discussion going, this guidebook offers a thoughtful place to begin.
             </p>
             <BuyButton className="w-full sm:w-auto min-h-[56px] shadow-[var(--shadow-button)]" />
