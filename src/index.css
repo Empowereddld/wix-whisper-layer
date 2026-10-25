@@ -318,6 +318,18 @@
     margin: 2rem 0;
   }
 
+  .blog-content img.article-book-cover {
+    width: 5rem;
+    border-radius: 0.375rem;
+    margin: 0;
+  }
+
+  @media (min-width: 768px) {
+    .blog-content img.article-book-cover {
+      width: 6rem;
+    }
+  }
+
   .blog-content hr {
     border: none;
     border-top: 1px solid hsl(var(--border));
