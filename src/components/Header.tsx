@@ -48,7 +48,7 @@ const mobileNavLinks = [
   { label: "CONTACT", href: "/contact" },
 ];
 
-const Header = () => {
+const Header = ({ purchaseFocused = false }: { purchaseFocused?: boolean }) => {
   const { session } = useAuth();
   const signupHref = "/signup";
   const loginHref = "/login";
@@ -75,7 +75,7 @@ const Header = () => {
           <img src={logoImage} alt="Empowered DLD" className="h-[32px] lg:h-[38px] w-auto" />
         </Link>
 
-        <nav className="hidden xl:flex items-center gap-6" ref={dropdownRef}>
+        <nav className={`hidden xl:flex items-center gap-6 ${purchaseFocused ? "[&_a]:text-muted-foreground" : ""}`} ref={dropdownRef}>
           {navLinks.map((link) =>
             link.children ? (
               <div key={link.label} className="relative flex items-center">
@@ -139,7 +139,7 @@ const Header = () => {
               >
                 Log in
               </Link>
-              <Button asChild size="default" className="rounded-md h-10 px-5 text-[12px] font-semibold tracking-[0.08em] bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 whitespace-nowrap">
+              <Button asChild variant={purchaseFocused ? "outline" : "default"} size="default" className={`rounded-md h-10 px-5 text-[12px] font-semibold tracking-[0.08em] transition-all duration-300 whitespace-nowrap ${purchaseFocused ? "border-border text-muted-foreground bg-transparent" : "bg-primary text-primary-foreground hover:bg-primary/90"}`}>
                 <Link to={signupHref}>JOIN THE LIBRARY</Link>
               </Button>
             </div>
@@ -206,7 +206,7 @@ const Header = () => {
               </Button>
             ) : (
               <div className="flex-1 flex flex-col gap-2">
-                <Button asChild className="font-bold text-[12px] tracking-[0.1em]">
+                <Button asChild variant={purchaseFocused ? "outline" : "default"} className="font-bold text-[12px] tracking-[0.1em]">
                   <Link to={signupHref} onClick={() => setMobileOpen(false)}>JOIN THE LIBRARY</Link>
                 </Button>
                 <Link

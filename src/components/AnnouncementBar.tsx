@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { X } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
@@ -12,6 +12,7 @@ const AnnouncementBar = () => {
   const [visible, setVisible] = useState(false);
   const [status, setStatus] = useState<WaitlistStatus>("none");
   const { user } = useAuth();
+  const { pathname } = useLocation();
 
   useEffect(() => {
     if (sessionStorage.getItem(STORAGE_KEY) !== "1") setVisible(true);
@@ -40,7 +41,7 @@ const AnnouncementBar = () => {
     };
   }, [user?.email]);
 
-  if (!visible) return null;
+  if (!visible || pathname.replace(/\/+$/, "") === "/shop/parent-guidebook") return null;
 
   const dismiss = (e: React.MouseEvent) => {
     e.preventDefault();
