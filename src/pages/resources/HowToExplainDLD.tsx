@@ -159,7 +159,7 @@ const HowToExplainDLD = () => (
             <time dateTime={UPDATED}>October 25, 2026</time>
           </p>
 
-          <div className="max-w-[700px] mx-auto blog-content mt-10 md:mt-12">
+          <div className="max-w-[700px] mx-auto blog-content explain-dld-article mt-10 md:mt-12">
             <p>Maybe your child has recently been diagnosed with Developmental Language Disorder (DLD). Or perhaps you've known about their language difficulties for some time but haven't been sure how to explain them.</p>
             <p>You may have watched your child struggle to follow instructions, find the words they want to say, or explain an idea to someone who doesn't understand. You might be wondering how to help them make sense of these experiences without making them feel discouraged.</p>
             <p>Talking to your child about DLD is an opportunity to help them better understand themselves, recognize their strengths, and learn that support is available.</p>
