@@ -153,7 +153,7 @@ const App = () => (
               <Route path="/resources/blog/dld-vs-autism" element={<Navigate to="/resources/blog/autism-vs-dld-understand-the-difference" replace />} />
               <Route path="/shop" element={<Shop />} />
               <Route path="/shop/books" element={<Books />} />
-              <Route path="/shop/parent-guidebook" element={<ParentGuidebook />} />
+              {/* Hidden until stage 2 checkout is ready: <Route path="/shop/parent-guidebook" element={<ParentGuidebook />} /> */}
               <Route path="/shop/bulk-orders" element={<BulkOrders />} />
               <Route path="/shop/merch" element={<ShopMerch />} />
               <Route path="/shop/merch/:handle" element={<ShopMerchProduct />} />
