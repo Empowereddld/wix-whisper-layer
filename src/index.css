@@ -205,28 +205,6 @@
     color: hsl(var(--foreground));
     margin-top: 2.25rem;
     margin-bottom: 0.75rem;
-    position: relative;
-    padding-left: 0.9rem;
-  }
-
-  .blog-content h3::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0.35em;
-    bottom: 0.35em;
-    width: 3px;
-    border-radius: 2px;
-    background: hsl(var(--primary));
-  }
-
-  /* Explain DLD article: no accent bar on sub-headings */
-  .blog-content.explain-dld-article h3::before {
-    display: none;
-  }
-
-  .blog-content.explain-dld-article h3 {
-    padding-left: 0;
   }
 
   @media (min-width: 768px) {
