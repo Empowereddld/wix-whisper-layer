@@ -10,7 +10,6 @@ import cover from "@/assets/book-parent-guidebook.webp";
 import founders from "@/assets/founders-photo.webp";
 import page4 from "@/assets/guidebook-p4.webp";
 import page6 from "@/assets/guidebook-p6.webp";
-import page8 from "@/assets/guidebook-p8.webp";
 
 const PRICE = "$9.99 USD";
 const RESOURCE_ID = "1d54403b-1185-46dd-8307-b918a731e580";
@@ -18,7 +17,28 @@ const RESOURCE_ID = "1d54403b-1185-46dd-8307-b918a731e580";
 const PAGES = [
   { src: page4, title: "Celebrate their strengths", text: "Start with what your child is good at, so DLD is never the whole story.", alt: "Guidebook page 4, Celebrating Your Child's Talents, with prompts for noticing your child's strengths" },
   { src: page6, title: "Explain DLD together", text: "Simple, warm language for explaining the diagnosis, plus answers to questions children often ask.", alt: "Guidebook page 6, Explaining the DLD Diagnosis, with a sample explanation and common questions children ask" },
-  { src: page8, title: "Their choice about sharing", text: "Help your child decide who to tell about DLD, and how, in their own words.", alt: "Guidebook page 8, Sharing Your Diagnosis, about helping your child choose who to tell about their DLD" },
+];
+
+const SECTIONS = [
+  "Celebrating Your Child's Talents",
+  "Acknowledging Challenges",
+  "Explaining the DLD Diagnosis",
+  "Checking for Understanding",
+  "Sharing Your Diagnosis (If and When You're Ready)",
+  "Normalizing the Diagnosis",
+  "Finding Role Models",
+  "Accessing Support at School",
+  "Practicing Communication Skills",
+  "Creating a Helpful Tool",
+  "Helping Others Understand DLD",
+  "Looking Forward",
+];
+
+const BONUS = [
+  "Classroom Discussion Participation Strategies",
+  "Word Finding Strategies Poster",
+  "Descriptive & Connecting Words Guide",
+  "DLD Awareness Flyer",
 ];
 
 const FAQS = [
@@ -30,14 +50,14 @@ const FAQS = [
   { question: "Do I need an account?", answer: "No. You can check out as a guest with just your email address." },
 ];
 
-const BuyButton = ({ className = "", newsletterOptIn }: { className?: string; newsletterOptIn: boolean }) => {
+const BuyButton = ({ className = "" }: { className?: string }) => {
   const [loading, setLoading] = useState(false);
 
   const startCheckout = async () => {
     setLoading(true);
     try {
       const { data, error } = await supabase.functions.invoke("create-checkout", {
-        body: { resource_id: RESOURCE_ID, newsletter_opt_in: newsletterOptIn },
+        body: { resource_id: RESOURCE_ID },
       });
       if (error || !data?.url) {
         throw new Error(data?.error || "Checkout failed");
@@ -62,8 +82,6 @@ const BuyButton = ({ className = "", newsletterOptIn }: { className?: string; ne
 };
 
 const ParentGuidebook = () => {
-  const [newsletterOptIn, setNewsletterOptIn] = useState(false);
-
   return (
     <div className="min-h-screen flex flex-col">
       <SEOHead
@@ -98,18 +116,9 @@ const ParentGuidebook = () => {
                 <li>Created by a Speech-Language Pathologist and an Educator</li>
               </ul>
               <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-                <BuyButton className="w-full sm:w-auto" newsletterOptIn={newsletterOptIn} />
+                <BuyButton className="w-full sm:w-auto" />
                 <span className="text-[18px] font-bold text-foreground">{PRICE}</span>
               </div>
-              <label className="flex items-start gap-2.5 mt-4 text-[13px] text-muted-foreground leading-[1.5] max-w-[420px] cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={newsletterOptIn}
-                  onChange={(e) => setNewsletterOptIn(e.target.checked)}
-                  className="mt-0.5 h-4 w-4 shrink-0 accent-deep-purple"
-                />
-                Email me practical DLD strategies and new resources. You can unsubscribe anytime.
-              </label>
             </div>
             <div className="order-1 lg:order-2 w-full max-w-[320px] lg:max-w-none lg:w-[38%]">
               <img
@@ -131,7 +140,7 @@ const ParentGuidebook = () => {
             <p className="text-[15px] text-muted-foreground leading-[1.7] max-w-[600px] mb-10">
               Real pages from the guidebook. Each section is short, practical, and written to be used together with your child.
             </p>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-[760px]">
               {PAGES.map((p) => (
                 <figure key={p.title}>
                   <img src={p.src} alt={p.alt} loading="lazy" className="w-full h-auto rounded-lg border border-border shadow-sm bg-background" />
@@ -142,10 +151,30 @@ const ParentGuidebook = () => {
                 </figure>
               ))}
             </div>
-            <p className="text-[14px] text-muted-foreground mt-10 mb-4">
-              Also inside: ways to build self-advocacy and keep the conversation going as your child grows.
-            </p>
-            <BuyButton className="w-full sm:w-auto" newsletterOptIn={newsletterOptIn} />
+
+            {/* Section titles */}
+            <div className="mt-12 max-w-[760px]">
+              <h3 className="text-[20px] md:text-[24px] font-bold text-foreground mb-4">
+                The 12 guided sections
+              </h3>
+              <ol className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2 text-[14px] text-foreground list-decimal list-outside pl-5">
+                {SECTIONS.map((s) => (
+                  <li key={s} className="leading-[1.6]">{s}</li>
+                ))}
+              </ol>
+              <h3 className="text-[20px] md:text-[24px] font-bold text-foreground mt-10 mb-4">
+                Plus bonus tools
+              </h3>
+              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2 text-[14px] text-foreground list-disc list-outside pl-5">
+                {BONUS.map((b) => (
+                  <li key={b} className="leading-[1.6]">{b}</li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="mt-10">
+              <BuyButton className="w-full sm:w-auto" />
+            </div>
           </div>
         </section>
 
