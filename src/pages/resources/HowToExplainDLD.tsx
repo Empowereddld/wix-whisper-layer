@@ -667,7 +667,7 @@ const HowToExplainDLD = () => (
               <img
                 src={coverDan}
                 alt="Dan and the Paper Airplane book cover"
-                className="w-full max-w-[260px] mx-auto md:mx-0 md:w-[30%] md:max-w-none h-auto rounded-lg shadow-sm shrink-0"
+                className="article-feature-img h-auto shadow-sm shrink-0"
                 loading="lazy"
               />
               <div className="flex-1">
@@ -699,7 +699,7 @@ const HowToExplainDLD = () => (
               <img
                 src={coverGuide}
                 alt="Discussing DLD with Your Child parent guidebook cover"
-                className="w-full max-w-[260px] mx-auto md:mx-0 md:w-[30%] md:max-w-none h-auto rounded-lg shadow-sm shrink-0"
+                className="article-feature-img h-auto shadow-sm shrink-0"
                 loading="lazy"
               />
               <p className="m-0 flex-1">
