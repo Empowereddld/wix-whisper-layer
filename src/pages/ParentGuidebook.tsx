@@ -82,7 +82,7 @@ const FAQS = [
   { question: "Is this a digital or physical product?", answer: "This is a digital, printable PDF. No physical book will be shipped. You can read it on your device or print pages to use with your child." },
   { question: "Can I print the activities?", answer: "Yes! The guidebook is designed to be printable, so you can complete the activities together and revisit them as needed." },
   { question: "Do we need to complete every activity?", answer: "No. You can choose the sections that fit your child's interests, understanding, and readiness. You can also return to activities and conversations over time." },
-  { question: "Do I need Dan and the Paper Airplane to use it?", answer: "Some activities connect to *Dan and the Paper Airplane*. The storybook can provide helpful context for those conversations." },
+  { question: "Do I need Dan and the Paper Airplane to use it?", answer: "The guidebook was designed to be used alongside *Dan and the Paper Airplane*, and we recommend reading the story with your child to get the most out of the activities. However, the guidebook also includes practical guidance, conversation prompts, and activities you can use independently. Some activities refer directly to Dan's story." },
   { question: "How will I receive my purchase?", answer: "After payment, you will get a secure download link on the confirmation page and by email." },
   { question: "Do I need an account?", answer: "No. You can check out as a guest with just your email address." },
 ];
