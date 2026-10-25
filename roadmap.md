@@ -1,8 +1,8 @@
 # Roadmap
 
 ## Parent Guidebook GA4 preparation (2026-10-25)
-- [ ] Prepare analytics-only opt-in, safe visits/UTMs, checkout starts and verified deduplicated USD purchase reporting without extra database tables.
-- [ ] Test prepared tracking and privacy controls; report existing analytics and limitations without publishing.
+- [x] Prepare analytics-only opt-in, safe visits/UTMs, checkout starts and verified deduplicated USD purchase reporting without extra database tables.
+- [x] Test prepared tracking and privacy controls with 11 passing tests and synthetic browser flows; native analytics audit reported, nothing published or deployed.
 - [ ] Connect GA4, configure its web stream and verify receipt (waiting on Measurement ID).
 - [ ] Verify real paid download and receipt delivery (waiting on owner test purchase).
 

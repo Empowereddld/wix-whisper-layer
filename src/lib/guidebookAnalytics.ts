@@ -67,6 +67,7 @@ function initialize() {
     const script = document.createElement("script");
     script.id = "edld-ga4";
     script.async = true;
+    script.referrerPolicy = "no-referrer";
     script.src = `https://www.googletagmanager.com/gtag/js?id=${id}`;
     document.head.appendChild(script);
     configured = true;

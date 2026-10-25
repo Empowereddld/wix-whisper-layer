@@ -32,4 +32,5 @@ Native Lovable analytics Sep 25–Oct 25, 2026: 903 visits, 2,260 page views, 2.
 - Measurement ID, GA4 web-stream settings and provider receipt are unverified.
 - Real payment/download/receipt test is pending.
 - Native hosting analytics full collection/retention and visitor opt-out behavior are not verified through account settings.
+- Live homepage browser check found no visible GA/GTM scripts or `_ga`/`_gid`/`_gat` cookies in that visit; this does not establish the hosting analytics collection method or absence of other tracking.
 - Browser records are not centralized consent audit records and disappear if visitors clear local storage; no legal-compliance certification is claimed.
