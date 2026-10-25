@@ -15,7 +15,7 @@ const PrivacyPolicy = () => {
       <main className="py-16 md:py-24">
         <div className="container px-6 md:px-8 max-w-[800px] mx-auto">
           <h1 className="text-[32px] md:text-[42px] font-black text-foreground leading-[1.1] mb-8">Privacy Policy</h1>
-          <p className="text-[13px] text-muted-foreground mb-8">Last updated: March 17, 2026</p>
+          <p className="text-[13px] text-muted-foreground mb-8">Last updated: October 25, 2026</p>
 
           <div className="prose prose-sm max-w-none text-muted-foreground space-y-6 [&_h2]:text-foreground [&_h2]:text-[20px] [&_h2]:font-bold [&_h2]:mt-10 [&_h2]:mb-3 [&_p]:leading-[1.8] [&_ul]:space-y-1 [&_li]:leading-[1.8]">
             <h2>1. Information We Collect</h2>
@@ -42,7 +42,10 @@ const PrivacyPolicy = () => {
             <p>Your data is stored securely using industry-standard encryption and access controls. We use trusted third-party services to host our website and manage data. We do not sell, rent, or share your personal information with third parties for marketing purposes.</p>
 
             <h2>4. Cookies</h2>
-            <p>Our website may use essential cookies to ensure proper functionality. We do not use tracking cookies for advertising. If we implement analytics in the future, we will update this policy accordingly.</p>
+            <p>Essential cookies and browser storage support sign-in, checkout and your saved preferences. Our hosting platform provides website statistics, including visits, page views and traffic sources.</p>
+            <p>When enabled, Google Analytics 4 measures our Parent Guidebook campaign: page visits, campaign sources, checkout starts and verified purchases, including an opaque transaction identifier, USD purchase value and product details. Google receives browser identifiers, device and connection information, and approved campaign labels. We do not send customer names, email addresses, payment details, download links or sign-in tokens to Google Analytics. Stripe and our purchase records remain the source of truth for actual revenue.</p>
+            <p>Google Analytics is optional and loads only after you accept analytics, in every region. Declining does not affect purchases or downloads. We keep your choice, its time and the notice version in this browser, preserving previous choices when you withdraw. You can change or withdraw your choice using Cookie settings in the footer when analytics is enabled. We honor browser Do Not Track and Global Privacy Control signals for this integration. We do not enable advertising personalization, Google Signals or customer matching.</p>
+            <p>Google processes analytics information under its <a href="https://policies.google.com/privacy" className="text-primary hover:underline" target="_blank" rel="noopener noreferrer">Privacy Policy</a>, potentially outside your country. Browser blocking, declined consent and customers not returning after checkout can mean analytics reports fewer purchases than our payment records.</p>
 
             <h2>5. Third-Party Services</h2>
             <p>We may use third-party services such as payment processors (for digital product purchases) and email delivery platforms. These services have their own privacy policies and handle your data in accordance with their terms.</p>

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import NoIndexHead from "@/components/NoIndexHead";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
+import { trackVerifiedGuidebookPurchase } from "@/lib/guidebookAnalytics";
 import { CheckCircle, Loader2, XCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -32,6 +33,7 @@ const PaymentSuccess = () => {
 
         setResourceId(data.resource_id);
         setStatus("success");
+        trackVerifiedGuidebookPurchase(data.analytics_purchase);
       } catch {
         setStatus("error");
       }

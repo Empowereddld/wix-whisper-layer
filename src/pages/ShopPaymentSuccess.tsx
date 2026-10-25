@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams, Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
+import { trackVerifiedGuidebookPurchase } from "@/lib/guidebookAnalytics";
 import NoIndexHead from "@/components/NoIndexHead";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -35,6 +36,7 @@ const ShopPaymentSuccess = () => {
 
         setDownloadUrl(data.download_url ?? null);
         setStatus("success");
+        trackVerifiedGuidebookPurchase(data.analytics_purchase);
       } catch {
         setStatus("error");
       }

@@ -1,9 +1,15 @@
 # Roadmap
 
+## Parent Guidebook GA4 preparation (2026-10-25)
+- [x] Prepare analytics-only opt-in, safe visits/UTMs, checkout starts and verified deduplicated USD purchase reporting without extra database tables.
+- [x] Test prepared tracking and privacy controls with 11 passing tests and synthetic browser flows; native analytics audit reported, nothing published or deployed.
+- [ ] Connect GA4, configure its web stream and verify receipt (waiting on Measurement ID).
+- [ ] Verify real paid download and receipt delivery (waiting on owner test purchase).
+
 ## Parent Guidebook focused conversion refinement (2026-10-25)
 - [x] Apply the approved shorter hero and introduction, improve readability, and emphasize PDF format and closing purchase.
 - [x] Keep Story Pros hidden and library navigation secondary only on this page; verify layout, enlargement, FAQ and checkout.
-- [ ] Confirm with the owner whether Dan and the Paper Airplane is required (awaiting clarification).
+- [x] Use the owner's clarified FAQ: recommended alongside the story, some activities usable independently.
 
 ## Contextual books links (2026-10-12)
 - [x] Add the eight approved contextual links, preserving designs and existing purchase links.

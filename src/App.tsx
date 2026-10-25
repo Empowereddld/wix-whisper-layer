@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import ScrollToTop from "./components/ScrollToTop";
 import AnnouncementBar from "./components/AnnouncementBar";
+import AnalyticsPrivacy from "./components/AnalyticsPrivacy";
 import { useCartSync } from "@/hooks/useCartSync";
 import { useRegionStore } from "@/stores/regionStore";
 import { detectBuyerCountry } from "@/lib/shopify";
@@ -130,6 +131,7 @@ const App = () => (
 
         <AuthProvider>
           <ScrollToTop />
+          <AnalyticsPrivacy />
           <CartSync />
           <RegionDetect />
           <AnnouncementBar />

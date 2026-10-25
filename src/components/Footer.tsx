@@ -5,6 +5,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { syncToEmailOctopus } from "@/lib/emailoctopus";
 import RegionSelector from "@/components/RegionSelector";
+import { Button } from "@/components/ui/button";
+import { measurementId } from "@/lib/guidebookAnalytics";
 import logoWhite from "@/assets/empowered-logo-white.webp";
 
 
@@ -136,6 +138,7 @@ const Footer = () => {
                   </Link>
                 </li>
               ))}
+              {measurementId() && <li><Button variant="link" className="p-0 min-h-[44px] text-primary-foreground/75" onClick={() => window.dispatchEvent(new Event("edld-open-analytics-settings"))}>Cookie settings</Button></li>}
             </ul>
           </div>
 
