@@ -58,3 +58,6 @@
 - [x] W2 repeat signup records no consent
 - [ ] T2 pre-create Stripe prices (deferred by user)
 - [ ] Build 'How to Explain DLD to Your Child' page (preview only, awaiting review before publish)
+- [x] Parent Guidebook stage 2: guest checkout (create-checkout/verify-payment guest paths, purchases.user_id nullable + customer_email, /shop/payment-success, newsletter opt-in checkbox with consent record)
+- [ ] Real-money purchase test of guest guidebook checkout (batch 5A, deferred)
+- [ ] Decide when to make /shop/parent-guidebook indexable (currently noindex, not in sitemap)

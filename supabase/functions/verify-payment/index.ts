@@ -1,5 +1,7 @@
 import Stripe from "https://esm.sh/stripe@18.5.0";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { allow, clientIp } from "../_shared/rateLimit.ts";
+import { escapeHtml } from "../_shared/html.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -16,26 +18,29 @@ const json = (body: unknown, status = 200) =>
 const SESSION_ID_RE = /^cs_(test|live)_[A-Za-z0-9]{10,200}$/;
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
+// Exact checkbox wording shown on the guidebook page; stored with the consent record.
+const NEWSLETTER_CHECKBOX_TEXT =
+  "Email me practical DLD strategies and new resources. You can unsubscribe anytime.";
+
 // Fulfillment is decided only from the Stripe Checkout Session fetched server-side
 // with our secret key. The browser supplies nothing but the session id; every
 // other value (user, product, resource, amount) comes from Stripe and our DB.
+//
+// Two caller types:
+//  - Signed-in members: session metadata.user_id must match the caller.
+//  - Guests (metadata.guest = "true"): the unguessable checkout session id is the
+//    proof of purchase. Only the buyer receives it in the Stripe redirect, and the
+//    confirmation email links back to it. Guests get a short-lived signed
+//    download URL instead of hub access.
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
   if (req.method !== "POST") return json({ error: "Method not allowed" }, 405);
 
   try {
-    const authHeader = req.headers.get("Authorization");
-    if (!authHeader) return json({ error: "Unauthorized" }, 401);
-
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
     const supabaseAnonKey = Deno.env.get("SUPABASE_ANON_KEY")!;
     const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-
-    const userClient = createClient(supabaseUrl, supabaseAnonKey, {
-      global: { headers: { Authorization: authHeader } },
-    });
-    const { data: { user }, error: authError } = await userClient.auth.getUser();
-    if (authError || !user) return json({ error: "Unauthorized" }, 401);
+    const admin = createClient(supabaseUrl, serviceRoleKey);
 
     let body: Record<string, unknown> = {};
     try { body = await req.json(); } catch { /* handled below */ }
@@ -54,11 +59,32 @@ Deno.serve(async (req) => {
     }
 
     const metadata = session.metadata || {};
+    const isGuest = metadata.guest === "true";
 
-    // Must belong to the signed-in user (set server-side in create-checkout).
-    if (metadata.user_id !== user.id ||
-        (session.client_reference_id && session.client_reference_id !== user.id)) {
-      return json({ error: "Not your payment" }, 403);
+    // Optional auth: required for member purchases, ignored for guest ones.
+    let user: { id: string; email?: string } | null = null;
+    const authHeader = req.headers.get("Authorization");
+    if (authHeader) {
+      const userClient = createClient(supabaseUrl, supabaseAnonKey, {
+        global: { headers: { Authorization: authHeader } },
+      });
+      const { data } = await userClient.auth.getUser();
+      user = data?.user ?? null;
+    }
+
+    if (isGuest) {
+      // Public endpoint: bound verification attempts per network.
+      const ok = await allow(admin, [
+        { bucket: "verify-payment", id: clientIp(req), max: 30, windowMin: 60 },
+      ]);
+      if (!ok) return json({ error: "Too many attempts. Please try again later." }, 429);
+    } else {
+      // Member purchase: must belong to the signed-in user (set server-side in create-checkout).
+      if (!user) return json({ error: "Unauthorized" }, 401);
+      if (metadata.user_id !== user.id ||
+          (session.client_reference_id && session.client_reference_id !== user.id)) {
+        return json({ error: "Not your payment" }, 403);
+      }
     }
 
     // Must be a completed, paid, one-time payment.
@@ -71,8 +97,6 @@ Deno.serve(async (req) => {
     if (!resourceId || !productId || !UUID_RE.test(resourceId) || !UUID_RE.test(productId)) {
       return json({ error: "Invalid payment" }, 400);
     }
-
-    const admin = createClient(supabaseUrl, serviceRoleKey);
 
     // Product must be the one for this resource, and what was paid for must match it.
     const { data: product } = await admin
@@ -99,6 +123,20 @@ Deno.serve(async (req) => {
       ? session.payment_intent
       : session.payment_intent?.id ?? null;
 
+    // Guests get a short-lived signed URL for the private file; members use the hub.
+    const guestDownloadUrl = async (): Promise<string | null> => {
+      const { data: fileRow } = await admin
+        .from("resource_private_files")
+        .select("storage_path")
+        .eq("resource_id", resourceId)
+        .maybeSingle();
+      if (!fileRow?.storage_path) return null;
+      const { data: signed } = await admin.storage
+        .from("resources-private")
+        .createSignedUrl(fileRow.storage_path, 300);
+      return signed?.signedUrl ?? null;
+    };
+
     // Idempotency: this session/payment already fulfilled?
     const { data: prior } = await admin
       .from("purchases")
@@ -111,13 +149,21 @@ Deno.serve(async (req) => {
       .limit(1)
       .maybeSingle();
     if (prior) {
-      if (prior.user_id !== user.id) return json({ error: "Not your payment" }, 403);
-      return json({ success: true, already_recorded: true, resource_id: prior.resource_id });
+      if (!isGuest && prior.user_id !== user!.id) return json({ error: "Not your payment" }, 403);
+      return json({
+        success: true,
+        already_recorded: true,
+        resource_id: prior.resource_id,
+        ...(isGuest ? { download_url: await guestDownloadUrl() } : {}),
+      });
     }
+
+    const customerEmail = session.customer_details?.email || null;
 
     // Insert; unique indexes block duplicates even under concurrent calls.
     const { error: insertError } = await admin.from("purchases").insert({
-      user_id: user.id,
+      user_id: isGuest ? null : user!.id,
+      customer_email: isGuest ? customerEmail : null,
       resource_id: resourceId,
       product_id: product.id,
       amount_paid: amountPaid,
@@ -129,7 +175,12 @@ Deno.serve(async (req) => {
 
     if (insertError) {
       if ((insertError as { code?: string }).code === "23505") {
-        return json({ success: true, already_recorded: true, resource_id: resourceId });
+        return json({
+          success: true,
+          already_recorded: true,
+          resource_id: resourceId,
+          ...(isGuest ? { download_url: await guestDownloadUrl() } : {}),
+        });
       }
       console.error("Insert error:", insertError.message);
       return json({ error: "Failed to record purchase" }, 500);
@@ -139,19 +190,25 @@ Deno.serve(async (req) => {
     try {
       const { data: resource } = await admin
         .from("resources").select("title").eq("id", resourceId).maybeSingle();
+      const title = escapeHtml(resource?.title || "Resource");
       const amountStr = `$${(amountPaid / 100).toFixed(2)} ${(session.currency || "").toUpperCase()}`;
-      const customerEmail = session.customer_details?.email || user.email;
-      if (customerEmail) {
+      const to = customerEmail || user?.email;
+      if (to) {
+        const accessBlock = isGuest
+          ? `<p><a href="https://www.empowereddld.com/shop/payment-success?session_id=${session.id}" style="display:inline-block;background:#5B2D8E;color:#fff;padding:12px 24px;text-decoration:none;border-radius:6px;font-weight:600;">Download Your Resource</a></p>
+             <p>Keep this email. The link above takes you back to your download page anytime.</p>`
+          : `<p>Your resource is now unlocked in your Resource Library.</p>
+             <p><a href="https://www.empowereddld.com/hub/resource/${resourceId}" style="display:inline-block;background:#5B2D8E;color:#fff;padding:12px 24px;text-decoration:none;border-radius:6px;font-weight:600;">Access Your Resource</a></p>`;
         await admin.functions.invoke("send-email", {
           body: {
-            to: customerEmail,
-            subject: `Your Empowered DLD purchase: ${resource?.title || "Resource"}`,
+            to,
+            subject: `Your Empowered DLD purchase: ${title}`,
             bypass_suppression: true,
             html: `<p>Hi there,</p>
-              <p>Thanks for your purchase! Your resource is now unlocked in your Resource Library.</p>
-              <p><strong>Item:</strong> ${(resource?.title || "Resource").replace(/[<>&"]/g, "")}<br/>
+              <p>Thanks for your purchase!</p>
+              <p><strong>Item:</strong> ${title}<br/>
               <strong>Amount:</strong> ${amountStr}</p>
-              <p><a href="https://www.empowereddld.com/hub/resource/${resourceId}" style="display:inline-block;background:#5B2D8E;color:#fff;padding:12px 24px;text-decoration:none;border-radius:6px;font-weight:600;">Access Your Resource</a></p>
+              ${accessBlock}
               <p>Need help? Just reply to this email.</p>`,
           },
         });
@@ -160,7 +217,30 @@ Deno.serve(async (req) => {
       console.warn("Receipt email failed");
     }
 
-    return json({ success: true, resource_id: resourceId });
+    // Newsletter opt-in: only when the buyer explicitly checked the box at checkout.
+    // Record the affirmative consent first (append-only), then sync the tag.
+    if (isGuest && metadata.newsletter_opt_in === "true" && customerEmail) {
+      try {
+        await admin.from("newsletter_consents").insert({
+          email: customerEmail.toLowerCase(),
+          consented: true,
+          source: "guidebook-purchase",
+          wording_version: "guidebook-checkout-v1",
+          checkbox_text: NEWSLETTER_CHECKBOX_TEXT,
+        });
+        await admin.functions.invoke("emailoctopus-subscribe", {
+          body: { email: customerEmail, tags: ["newsletter"] },
+        });
+      } catch {
+        console.warn("Newsletter opt-in failed");
+      }
+    }
+
+    return json({
+      success: true,
+      resource_id: resourceId,
+      ...(isGuest ? { download_url: await guestDownloadUrl() } : {}),
+    });
   } catch (err) {
     console.error("Verify error:", err instanceof Error ? err.message : err);
     return json({ error: "Internal server error" }, 500);
