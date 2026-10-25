@@ -164,7 +164,7 @@ const HowToExplainDLD = () => (
             <p>You may have watched your child struggle to follow instructions, find the words they want to say, or explain an idea to someone who doesn't understand. You might be wondering how to help them make sense of these experiences without making them feel discouraged.</p>
             <p>Talking to your child about DLD is an opportunity to help them better understand themselves, recognize their strengths, and learn that support is available.</p>
             <p>You don't need to explain everything at once. What matters is beginning a conversation that can grow with your child.</p>
-                        <aside
+            <aside
               aria-labelledby="where-to-begin-heading"
               className="my-8 md:my-10 rounded-2xl border border-primary/20 bg-lavender p-5 md:p-7"
             >
@@ -184,7 +184,7 @@ const HowToExplainDLD = () => (
               </div>
               <p className="mt-3 md:mt-4 !mb-3 md:!mb-4">Here's one way to introduce DLD to your child:</p>
               <p className="!mb-3 md:!mb-4 rounded-xl border border-border/70 bg-background p-4 md:p-5 text-foreground font-medium">
-                re's one way to introduce DLD to your child:
+                "There's a name for some of the language difficulties you've been having. It's called Developmental Language Disorder, or DLD. It means that understanding what people say or finding the words to explain your ideas can sometimes be harder. We can find ways to help together."
               </p>
               <p className="!mb-0">
                 Start with this, pause, and give your child time to respond. Their questions and experiences can
