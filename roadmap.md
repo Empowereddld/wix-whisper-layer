@@ -1,8 +1,8 @@
 # Roadmap
 
 ## Explain DLD article approved replacement (2026-10-25)
-- [ ] Replace article copy exactly, retain approved callout/cards/product layouts and links, and align four FAQs with structured data.
-- [ ] Verify desktop/mobile content, images, links and accordions in preview only; do not publish.
+- [x] Replace article copy exactly, retain approved callout/cards/product layouts and links, and align four FAQs with structured data.
+- [x] Verify desktop/mobile content, images, links and accordions in preview only; do not publish.
 
 ## Parent Guidebook GA4 preparation (2026-10-25)
 - [x] Prepare analytics-only opt-in, safe visits/UTMs, checkout starts and verified deduplicated USD purchase reporting without extra database tables.
