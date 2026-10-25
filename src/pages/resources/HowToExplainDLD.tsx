@@ -667,7 +667,7 @@ const HowToExplainDLD = () => (
               <img
                 src={coverDan}
                 alt="Dan and the Paper Airplane book cover"
-                className="w-20 md:w-24 h-auto rounded-md shadow-sm shrink-0"
+                className="article-book-cover h-auto shadow-sm shrink-0"
                 loading="lazy"
               />
               <p className="m-0">
@@ -690,7 +690,7 @@ const HowToExplainDLD = () => (
               <img
                 src={coverGuide}
                 alt="Discussing DLD with Your Child parent guidebook cover"
-                className="w-20 md:w-24 h-auto rounded-md shadow-sm shrink-0"
+                className="article-book-cover h-auto shadow-sm shrink-0"
                 loading="lazy"
               />
               <p className="m-0">
