@@ -5,6 +5,7 @@ import { MessageCircleHeart, Ear, Compass, RefreshCw, Gift, ZoomIn } from "lucid
 import { supabase } from "@/integrations/supabase/client";
 import { trackGuidebookCheckout } from "@/lib/guidebookAnalytics";
 import Header from "@/components/Header";
+import ForParentsHero from "@/components/ForParentsHero";
 import Footer from "@/components/Footer";
 import SEOHead from "@/components/SEOHead";
 import BlogFAQAccordion from "@/components/BlogFAQAccordion";
@@ -136,6 +137,7 @@ const ParentGuidebook = () => {
       />
       <Header purchaseFocused />
       <main className="flex-1 [&_h1]:tracking-normal [&_h2]:tracking-normal [&_h3]:tracking-normal">
+        <ForParentsHero />
         {/* Hero */}
         <section className="py-8 lg:py-10">
           <div className="max-w-[1100px] mx-auto px-6 md:px-10 flex flex-col lg:flex-row items-center gap-8 lg:gap-10">
