@@ -33,7 +33,7 @@ const ForParentsHero = () => {
             <img
               src={guidebookWorkspace}
               alt="The Parent Guidebook displayed on a tablet beside printed activity sheets, a notebook and a cup of coffee on a sunlit desk"
-              className="w-full h-full object-cover object-center aspect-[16/9] lg:aspect-auto"
+              className="w-full h-full object-cover object-[75%_center] aspect-[16/9] lg:aspect-auto"
             />
           </div>
         </div>
