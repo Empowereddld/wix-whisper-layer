@@ -89,6 +89,12 @@ Deno.serve(async (req) => {
     }
 
     // Must be a completed, paid, one-time payment.
+    // Delayed methods (e.g. bank debits) finish checkout before money arrives:
+    // report "pending" so the page keeps waiting, never grant access early.
+    if (session.mode === "payment" && (session.status === "open" ||
+        (session.status === "complete" && session.payment_status === "unpaid"))) {
+      return json({ pending: true });
+    }
     if (session.mode !== "payment" || session.status !== "complete" || session.payment_status !== "paid") {
       return json({ error: "Payment not completed", status: session.payment_status }, 400);
     }
@@ -129,6 +135,16 @@ Deno.serve(async (req) => {
     // guidebook-download); members use the hub. The session id is only good
     // for this exchange shortly after checkout, never as a lasting key.
     const GUEST_EXCHANGE_WINDOW_S = 48 * 60 * 60;
+    const emailAccepted = async (): Promise<boolean> => {
+      const { data: row } = await admin.from("purchases")
+        .select("confirmation_email_status")
+        .eq("stripe_checkout_session_id", session.id).maybeSingle();
+      return row?.confirmation_email_status === "accepted";
+    };
+    const guestFields = async () => ({
+      access_token: await guestAccessToken(),
+      confirmation_email_accepted: await emailAccepted(),
+    });
     const guestAccessToken = async (): Promise<string | null> => {
       if (Math.floor(Date.now() / 1000) - (session.created ?? 0) > GUEST_EXCHANGE_WINDOW_S) return null;
       const { data: row } = await admin.from("purchases")
@@ -156,7 +172,7 @@ Deno.serve(async (req) => {
         already_recorded: true,
         resource_id: prior.resource_id,
         analytics_purchase: analyticsPurchase,
-        ...(isGuest ? { download_url: await guestDownloadUrl() } : {}),
+        ...(isGuest ? await guestFields() : {}),
       });
     }
 
@@ -182,7 +198,7 @@ Deno.serve(async (req) => {
           already_recorded: true,
           resource_id: resourceId,
           analytics_purchase: analyticsPurchase,
-          ...(isGuest ? { download_url: await guestDownloadUrl() } : {}),
+          ...(isGuest ? await guestFields() : {}),
         });
       }
       console.error("Insert error:", insertError.message);
@@ -243,7 +259,7 @@ Deno.serve(async (req) => {
       success: true,
       resource_id: resourceId,
       analytics_purchase: analyticsPurchase,
-      ...(isGuest ? { download_url: await guestDownloadUrl() } : {}),
+      ...(isGuest ? await guestFields() : {}),
     });
   } catch (err) {
     console.error("Verify error:", err instanceof Error ? err.message : err);
