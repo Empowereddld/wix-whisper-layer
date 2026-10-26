@@ -4,6 +4,7 @@
 // deno-lint-ignore-file no-explicit-any
 import type Stripe from "https://esm.sh/stripe@18.5.0";
 import { escapeHtml } from "./html.ts";
+import { sendGuidebookConfirmation } from "./guidebookEmail.ts";
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const NEWSLETTER_CHECKBOX_TEXT =
@@ -119,7 +120,12 @@ export async function fulfillCheckout(admin: any, session: Stripe.Checkout.Sessi
     return { kind: "ok", recordedNow: true, purchaseId: dup?.id ?? null, resourceId, isGuest, duplicatePayment: true };
   }
 
-  await sendReceipt(admin, { isGuest, resourceId, amountPaid, currency: session.currency || "",
+  if (isGuest) {
+    // Approved guidebook email; failures are retried by guidebook-email-retry.
+    if (inserted?.id) {
+      try { await sendGuidebookConfirmation(admin, inserted.id); } catch { console.warn("guidebook email error"); }
+    }
+  } else await sendReceipt(admin, { isGuest, resourceId, amountPaid, currency: session.currency || "",
     to: customerEmail || (isGuest ? null : await memberEmail(admin, userId!)), sessionId: session.id });
 
   if (isGuest && metadata.newsletter_opt_in === "true" && customerEmail) {
