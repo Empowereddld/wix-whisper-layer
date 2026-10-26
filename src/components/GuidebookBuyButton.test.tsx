@@ -33,5 +33,6 @@ describe("existing guidebook checkout wiring", () => {
     expect(mocks.track).not.toHaveBeenCalled();
     fireEvent.click(screen.getByRole("button"));
     expect(mocks.invoke).toHaveBeenCalledTimes(2);
+    await waitFor(() => expect(mocks.error).toHaveBeenCalledTimes(2));
   });
 });

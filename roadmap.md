@@ -1,8 +1,8 @@
 # Roadmap
 
 ## Parent Guidebook single hero (2026-10-26)
-- [ ] Remove the original hero at source, connect the new hero to the existing checkout button, and preserve other sections and /for-parents.
-- [ ] Check desktop/mobile previews, guest checkout initiation and single analytics call; do not publish.
+- [x] Remove the original hero at source, connect the new hero to the existing checkout button, and preserve other sections and /for-parents.
+- [x] Check desktop/mobile previews, guest checkout initiation and single analytics call; do not publish.
 
 ## Parent Guidebook hero photo swap (2026-10-26)
 - [x] Replace the shared hero photo with the user's sunlit desk flat-lay (guidebook on a tablet), keeping the same hero layout, and update its description.
