@@ -64,6 +64,13 @@
       "when": 1791819625665,
       "tag": "0008_merch_orders",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1793040133498,
+      "tag": "0009_migration",
+      "breakpoints": true
     }
   ]
 }
