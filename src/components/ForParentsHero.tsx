@@ -1,4 +1,4 @@
-import guidebookWorkspace from "@/assets/parent-guidebook-workspace.webp.asset.json";
+import guidebookWorkspace from "@/assets/parent-guidebook-workspace.webp";
 
 const ForParentsHero = () => {
   return (
@@ -31,7 +31,7 @@ const ForParentsHero = () => {
           {/* Image */}
           <div className="mt-4 lg:mt-0 lg:flex-1 rounded-xl overflow-hidden shadow-lg max-h-[260px] md:max-h-[380px] lg:max-h-none">
             <img
-              src={guidebookWorkspace.url}
+              src={guidebookWorkspace}
               alt="The Parent Guidebook displayed on a tablet beside printed activity sheets, a notebook and a cup of coffee on a sunlit desk"
               className="w-full h-full object-cover object-center aspect-[16/9] lg:aspect-auto"
             />
