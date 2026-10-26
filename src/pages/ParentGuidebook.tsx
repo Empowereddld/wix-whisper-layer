@@ -170,7 +170,7 @@ const ParentGuidebook = () => {
                 </p>
               </div>
               <div className="mt-4 lg:mt-0 lg:flex-1 rounded-xl overflow-hidden shadow-lg bg-secondary/60 flex flex-col items-center justify-center p-6 md:p-8">
-                <div className="grid grid-cols-[1.15fr_1fr] gap-3 items-center w-full max-w-[420px]">
+                <div className="grid grid-cols-[1.15fr_1fr] gap-3 items-center w-full max-w-[420px] lg:max-w-none">
                   <img
                     src={cover}
                     alt="Cover of Discussing DLD with Your Child, the parent guidebook for Dan and the Paper Airplane"
