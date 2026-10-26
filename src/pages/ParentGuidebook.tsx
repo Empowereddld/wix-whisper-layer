@@ -137,50 +137,48 @@ const ParentGuidebook = () => {
       <Header purchaseFocused />
       <main className="flex-1 [&_h1]:tracking-normal [&_h2]:tracking-normal [&_h3]:tracking-normal">
         {/* Hero */}
-        <section className="pt-6 md:pt-10 lg:pt-16 pb-14 md:pb-16">
-          <div className="container px-6 md:px-8">
-            <div className="flex flex-col lg:flex-row lg:items-stretch lg:gap-6">
-              <div className="bg-muted rounded-xl lg:rounded-2xl lg:w-[58%] lg:flex-shrink-0 pt-0 pb-10 md:pb-14 lg:pb-16 px-6 md:px-8 lg:px-14">
-                <div className="bg-hero-band rounded-t-xl lg:rounded-t-2xl -mx-6 md:-mx-8 lg:-mx-14 px-8 md:px-10 lg:px-14 py-5 md:py-6 lg:py-7 mb-8 md:mb-10 border-b-[3px] border-primary-foreground/10">
-                  <span className="text-primary-foreground text-[20px] md:text-[22px] lg:text-[24px] font-bold uppercase tracking-[0.18em]">
-                    Parent Guidebook
-                  </span>
-                </div>
-                <h1 className="text-[30px] md:text-[36px] lg:text-[44px] font-black text-foreground leading-[1.12] mb-3">
-                  How Do I Explain DLD to My Child?
-                </h1>
-                <p className="text-[18px] md:text-[20px] font-semibold text-foreground leading-[1.4] mb-4">
-                  Find the words to talk about DLD, together.
-                </p>
-                <p className="text-[16px] md:text-[17px] text-muted-foreground leading-[1.7] max-w-[560px] mb-3">
-                  Talking with your child about Developmental Language Disorder (DLD) can raise a lot of questions. How do you explain the challenges while celebrating their strengths? Where do you begin?
-                </p>
-                <p className="text-[16px] md:text-[17px] text-muted-foreground leading-[1.7] max-w-[560px] mb-3">
-                  <em>Discussing DLD with Your Child</em> gives you practical guidance, suggested language, and activities to help you and your child explore DLD together, one conversation at a time.
-                </p>
-                <p className="text-[13px] md:text-[14px] font-semibold text-foreground mb-5">
-                  27-page printable PDF | 12 guided sections | 4 bonus resources
-                </p>
+        <section className="py-8 lg:py-10">
+          <div className="max-w-[1100px] mx-auto px-6 md:px-10 flex flex-col lg:flex-row items-center gap-8 lg:gap-10">
+            <div className="flex-1 order-2 lg:order-1">
+              <p className="text-[11px] md:text-[12px] font-bold uppercase tracking-[0.2em] text-muted-foreground mb-3">
+                Parent Guidebook
+              </p>
+              <h1 className="text-[32px] md:text-[44px] font-black text-foreground leading-[1.08] mb-3">
+                How Do I Explain DLD to My Child?
+              </h1>
+              <p className="text-[18px] md:text-[20px] font-semibold text-foreground leading-[1.4] mb-4">
+                Find the words to talk about DLD, together.
+              </p>
+              <p className="text-[16px] md:text-[17px] text-muted-foreground leading-[1.7] max-w-[520px] mb-3">
+                Talking with your child about Developmental Language Disorder (DLD) can raise a lot of questions. How do you explain the challenges while celebrating their strengths? Where do you begin?
+              </p>
+              <p className="text-[16px] md:text-[17px] text-muted-foreground leading-[1.7] max-w-[520px] mb-3">
+                <em>Discussing DLD with Your Child</em> gives you practical guidance, suggested language, and activities to help you and your child explore DLD together, one conversation at a time.
+              </p>
+              <p className="text-[13px] md:text-[14px] font-semibold text-foreground mb-5">
+                27-page printable PDF | 12 guided sections | 4 bonus resources
+              </p>
+              <div className="flex flex-col sm:flex-row sm:items-center gap-4">
                 <BuyButton className="w-full sm:w-auto" />
-                <p className="text-[13px] text-muted-foreground mt-3">
-                  <em>Digital download. Print the activities or use the guide on your device.</em>
-                </p>
-                <p className="text-[14px] text-muted-foreground mt-3">
-                  Created by a speech-language pathologist and an educator.
-                </p>
               </div>
-              <div className="mt-4 lg:mt-0 lg:flex-1 rounded-xl overflow-hidden shadow-lg bg-secondary/60 flex flex-col items-center justify-center p-6 md:p-8">
-                <div className="grid grid-cols-[1.15fr_1fr] gap-3 items-center w-full max-w-[420px] lg:max-w-none">
-                  <img
-                    src={cover}
-                    alt="Cover of Discussing DLD with Your Child, the parent guidebook for Dan and the Paper Airplane"
-                    className="w-full h-auto rounded-lg"
-                    fetchPriority="high"
-                  />
-                  <img src={page4} alt={PAGES[0].alt} className="w-full h-auto rounded-md border border-border shadow-sm bg-background" />
-                </div>
-                <p className="text-[14px] font-semibold text-primary text-center mt-4">Printable PDF guidebook</p>
+              <p className="text-[13px] text-muted-foreground mt-3">
+                <em>Digital download. Print the activities or use the guide on your device.</em>
+              </p>
+              <p className="text-[14px] text-muted-foreground mt-3">
+                Created by a speech-language pathologist and an educator.
+              </p>
+            </div>
+            <div className="order-1 lg:order-2 w-full max-w-[360px] lg:max-w-none lg:w-[40%] shrink-0">
+              <div className="grid grid-cols-[1.15fr_1fr] gap-3 items-center">
+              <img
+                src={cover}
+                alt="Cover of Discussing DLD with Your Child, the parent guidebook for Dan and the Paper Airplane"
+                className="w-full h-auto rounded-lg"
+                fetchPriority="high"
+              />
+                <img src={page4} alt={PAGES[0].alt} className="w-full h-auto rounded-md border border-border shadow-sm" />
               </div>
+              <p className="text-[14px] font-semibold text-primary text-center mt-4">Printable PDF guidebook</p>
             </div>
           </div>
         </section>
