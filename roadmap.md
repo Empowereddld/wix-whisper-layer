@@ -29,8 +29,8 @@
 - [x] Apply the approved burgundy campaign banner with the exact wording, full-banner link to /shop/parent-guidebook, and preserved Story Pros config for restore.
 - [x] Bold only "Not sure how to talk to your child about DLD" at the user's request; verify desktop/mobile weight, colour and fit in preview.
 - [x] Unhide the landing page: noindex removed, /shop/parent-guidebook added to the sitemap, "Parent Guidebook" added to the Shop menu (desktop + mobile).
-- [ ] User to complete one real $9.99 test purchase, then confirm the download link and receipt email arrive.
-- [ ] Publish once the user approves (preview only so far).
+  - [x] User to complete one real $9.99 test purchase, then confirm the download link and receipt email arrive (done 2026-10-26, live Stripe).
+  - [ ] Publish once the user approves (preview only so far; the emailed access link points at the live domain, so it only works after publishing).
 
 ## Explain DLD article approved replacement (2026-10-25)
 - [x] Replace article copy exactly, retain approved callout/cards/product layouts and links, and align four FAQs with structured data.
