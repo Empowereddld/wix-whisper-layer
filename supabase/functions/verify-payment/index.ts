@@ -125,19 +125,19 @@ Deno.serve(async (req) => {
       : session.payment_intent?.id ?? null;
     const analyticsPurchase = await guidebookMeasurement(session.id, resourceId, session.currency || "", amountPaid);
 
-    // Guests get a short-lived signed URL for the private file; members use the hub.
-    const guestDownloadUrl = async (): Promise<string | null> => {
-      const { data: fileRow } = await admin
-        .from("resource_private_files")
-        .select("storage_path")
-        .eq("resource_id", resourceId)
-        .maybeSingle();
-      if (!fileRow?.storage_path) return null;
-      const { data: signed } = await admin.storage
-        .from("resources-private")
-        .createSignedUrl(fileRow.storage_path, 300);
-      return signed?.signedUrl ?? null;
+    // Guests get a per-purchase access pass (exchanged for a 5-minute link by
+    // guidebook-download); members use the hub. The session id is only good
+    // for this exchange shortly after checkout, never as a lasting key.
+    const GUEST_EXCHANGE_WINDOW_S = 48 * 60 * 60;
+    const guestAccessToken = async (): Promise<string | null> => {
+      if (Math.floor(Date.now() / 1000) - (session.created ?? 0) > GUEST_EXCHANGE_WINDOW_S) return null;
+      const { data: row } = await admin.from("purchases")
+        .select("id, status, access_status, access_token_version")
+        .eq("stripe_checkout_session_id", session.id).maybeSingle();
+      if (!row || row.status !== "completed" || row.access_status !== "active") return null;
+      return await issueAccessToken(row.id, row.access_token_version);
     };
+    const guestDownloadUrl = guestAccessToken;
 
     // Idempotency: this session/payment already fulfilled?
     const { data: prior } = await admin
