@@ -9,7 +9,7 @@
 - [x] Stage 4: exact confirmation email with per-customer link, safe retries
   - [x] After 6 failed attempts: purchase kept, admin can find and resend securely, no links/PII in logs
   - [x] Access link works after address-bar removal, including page refresh
-  - [x] Stage 5: full test pass (automated checks done; live download + receipt verified by owner purchase 2026-10-26; access-pass retrieval via emailed link on the published site confirmed 2026-10-26)
+  - [x] Stage 5: full test pass (automated checks done; live download + receipt verified by owner purchase 2026-10-26; access-pass retrieval via emailed link on the published site confirmed 2026-10-26; PDF download from the published access page confirmed 2026-10-26)
   - [ ] Stage 6: neutral, rate-limited lost-email recovery
   - [~] Refund test (refund a purchase and confirm access is removed) — deferred by user 2026-10-26
   - [x] Real $9.99 purchase test by owner (2026-10-26: live Stripe session, immediate download worked, exact confirmation email arrived, one purchase record, email accepted on first attempt)
