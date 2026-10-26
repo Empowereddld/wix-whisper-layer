@@ -20,7 +20,8 @@ Yes, understood: both your five technical requirements and the exact email are f
 ## Stage 3: Fulfillment even if the customer never returns (rollback point 3)
 - Stripe tells the site directly when a payment succeeds, so the purchase is recorded and the email is sent even if the Stripe tab is closed.
 - The confirmation page and Stripe's notification share one recording step, so a purchase is recorded once and the email is sent once, however many times either fires.
-- Refund notifications mark the purchase refunded.
+- Refunds and disputes: a full refund or an opened chargeback retires access; a partial refund keeps access (proposed default, tell me if you prefer otherwise); a dispute won by you restores access. Every change is recorded.
+- Delayed payment methods (bank debits and similar): access and the email happen only when Stripe confirms the money arrived; a failed delayed payment never grants access. The confirmation page shows "processing" meanwhile.
 - This needs one signing value from your Stripe account; I'll set up the receiving address first, then ask you for it with step-by-step instructions.
 
 ## Stage 4: Confirmation email (rollback point 4)
