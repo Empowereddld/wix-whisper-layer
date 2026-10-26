@@ -13,7 +13,11 @@ const GUIDEBOOK_CAMPAIGN = {
   storageKey: "announcement-guidebook-dismissed",
   to: "/shop/parent-guidebook",
   bgClass: "bg-campaign",
-  content: <>Not sure how to talk to your child about DLD? Our Parent Guidebook can help →</>,
+  content: (
+    <>
+      <strong>Not sure how to talk to your child about DLD</strong>? Our Parent Guidebook can help →
+    </>
+  ),
 };
 
 type WaitlistStatus = "none" | "verified" | "unverified";

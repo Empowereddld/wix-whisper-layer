@@ -1,5 +1,10 @@
 # Roadmap
 
+## Parent Guidebook announcement banner (2026-10-26)
+- [x] Apply the approved burgundy campaign banner with the exact wording, full-banner link to /shop/parent-guidebook, and preserved Story Pros config for restore.
+- [x] Bold only "Not sure how to talk to your child about DLD" at the user's request; verify desktop/mobile weight, colour and fit in preview.
+- [ ] Publish once the user approves (preview only so far; one real $9.99 test purchase still advised first).
+
 ## Explain DLD article approved replacement (2026-10-25)
 - [x] Replace article copy exactly, retain approved callout/cards/product layouts and links, and align four FAQs with structured data.
 - [x] Verify desktop/mobile content, images, links and accordions in preview only; do not publish.
