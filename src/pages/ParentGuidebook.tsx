@@ -105,23 +105,29 @@ const ParentGuidebook = () => {
         <GuidebookHero purchaseButton={<BuyButton hero className="w-full sm:w-auto" />} />
 
         {/* You don't have to explain everything */}
-        <section className="py-12 md:py-20 bg-secondary/40">
-          <div className="max-w-[760px] mx-auto px-6 md:px-10">
-            <h2 className="text-[26px] md:text-[34px] font-black text-foreground leading-[1.15] mb-5">
-              You don't have to explain everything in one conversation.
-            </h2>
-            <p className="text-[16px] md:text-[17px] text-muted-foreground leading-[1.7] mb-4">
-              Understanding DLD takes time. Your child might ask a question while reading together, after a challenging day at school, or when they notice differences between themselves and their peers.
-            </p>
-            <p className="text-[16px] md:text-[17px] text-muted-foreground leading-[1.7] mb-4">
+        <section className="py-10 md:py-16 lg:py-[120px] bg-muted">
+          <div className="bg-black text-white px-6 md:px-8 py-5 lg:py-8 mb-6 md:mb-8 lg:mb-12">
+            <div className="container px-0">
+              <h2 className="text-[20px] md:text-[26px] lg:text-[32px] font-black leading-[1.15]">
+                You don't have to explain everything in one conversation.
+              </h2>
+            </div>
+          </div>
+          <div className="container px-6 md:px-8">
+            <div className="max-w-[650px]">
+              <p className="text-[14px] md:text-[15px] text-muted-foreground leading-[1.7] mb-6">
+                Understanding DLD takes time. Your child might ask a question while reading together, after a challenging day at school, or when they notice differences between themselves and their peers.
+              </p>
+              <p className="text-[14px] md:text-[15px] text-muted-foreground leading-[1.7] mb-6">
                 Some conversations will be short. Others may bring unexpected questions. There's no need to cover everything at once.
-            </p>
-            <p className="text-[16px] md:text-[17px] font-semibold text-foreground leading-[1.6] mb-4">
-              What matters is creating space for your child to understand their DLD, recognize their strengths, and talk openly about the support they need.
-            </p>
-            <p className="text-[16px] md:text-[17px] text-muted-foreground leading-[1.7]">
+              </p>
+              <p className="text-[14px] md:text-[15px] font-semibold text-foreground leading-[1.7] mb-6">
+                What matters is creating space for your child to understand their DLD, recognize their strengths, and talk openly about the support they need.
+              </p>
+              <p className="text-[14px] md:text-[15px] text-muted-foreground leading-[1.7]">
                 The guidebook helps you create opportunities for these meaningful conversations, at your child's own pace.
-            </p>
+              </p>
+            </div>
           </div>
         </section>
 
