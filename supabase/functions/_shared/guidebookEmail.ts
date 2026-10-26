@@ -120,7 +120,9 @@ export async function sendGuidebookConfirmation(admin: any, purchaseId: string, 
         "Content-Type": "application/json",
         // Resend drops repeats of the same key for 24h. The pass inside the link
         // is identical for a given version, so repeats carry the same content.
-        "Idempotency-Key": `guidebook-confirm-${row.id}-v${row.access_token_version}`,
+        "Idempotency-Key": opts.manual
+          ? `guidebook-confirm-${row.id}-v${row.access_token_version}-manual-${attempts}`
+          : `guidebook-confirm-${row.id}-v${row.access_token_version}`,
       },
       body: JSON.stringify({
         from: FROM,
