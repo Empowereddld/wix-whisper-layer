@@ -56,6 +56,7 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        "hero-band": "hsl(var(--hero-band))",
         "deep-purple": {
           DEFAULT: "hsl(var(--deep-purple))",
           foreground: "hsl(var(--deep-purple-foreground))",
