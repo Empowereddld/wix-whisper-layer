@@ -4,7 +4,7 @@
 - [x] Audit guest checkout, paid verification, secure PDF delivery, receipt email, recording, analytics and later retrieval; report gaps and proposed fixes without changing checkout or publishing.
 - [x] Inspect the current stored PDF and correct the Resource Library's 26-page description only if 27 pages is confirmed.
 - [x] Stage 1: per-purchase guest access pass, secure 5-minute download, guest path fix (rollback point 1)
-- [ ] Stage 2: confirmation page processing state and exact thank-you wording
+- [x] Stage 2: confirmation page processing state and exact thank-you wording
 - [ ] Stage 3: Stripe notifications (closed tab, refunds, disputes, delayed payments); needs Stripe signing value from owner
 - [ ] Stage 4: exact confirmation email with per-customer link, safe retries
 - [ ] Stage 5: full test pass
