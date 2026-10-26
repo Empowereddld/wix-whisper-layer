@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { MessageCircleHeart, Ear, Compass, RefreshCw, Gift, ZoomIn } from "lucide-react";
+import { MessageCircleHeart, Ear, Compass, RefreshCw, Gift, ZoomIn, Sparkles, BookOpen, Users, Sunrise, ChevronDown } from "lucide-react";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import Header from "@/components/Header";
 import GuidebookHero from "@/components/GuidebookHero";
 import BuyButton from "@/components/GuidebookBuyButton";
@@ -67,6 +68,13 @@ const SECTIONS = [
   "Creating a Helpful Tool",
   "Helping Others Understand DLD",
   "Looking Forward",
+];
+
+const GROUPS = [
+  { icon: Sparkles, range: "Sections 1–2", title: "Celebrate their strengths", text: "Start with your child's talents and positive qualities while acknowledging challenges with care." },
+  { icon: BookOpen, range: "Sections 3–6", title: "Understand DLD together", text: "Explore what DLD means, check understanding, discuss sharing the diagnosis, and normalize learning differences." },
+  { icon: Users, range: "Sections 7–10", title: "Find support and practice", text: "Explore role models, trusted adults, communication practice, and helpful tools." },
+  { icon: Sunrise, range: "Sections 11–12", title: "Look toward the future", text: "Support your child in explaining DLD to others if and when they're ready, and exploring future goals." },
 ];
 
 const BONUS = [
@@ -196,31 +204,48 @@ const ParentGuidebook = () => {
           </div>
         </section>
 
-        {/* What's included */}
+        {/* What's inside */}
         <section className="py-12 md:py-20">
           <div className="max-w-[1100px] mx-auto px-6 md:px-10">
             <h2 className="text-[26px] md:text-[34px] font-black text-foreground leading-[1.15] mb-3">
-              What's included?
+              What's inside the guidebook?
             </h2>
-            <h3 className="text-[19px] md:text-[22px] font-bold text-foreground mt-8 mb-3">
-              12 guided sections to explore together
-            </h3>
-            <p className="text-[16px] md:text-[17px] text-muted-foreground leading-[1.7] max-w-[640px] mb-6">
-              From the first conversations about DLD to building understanding and self-advocacy, the guidebook takes you through:
+            <p className="text-[16px] md:text-[17px] text-muted-foreground leading-[1.7] max-w-[640px] mb-8">
+              12 guided sections designed to help you explore DLD with your child, one conversation at a time.
             </p>
-            <ol className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2 text-[16px] text-foreground list-decimal list-outside pl-5 max-w-[760px]">
-              {SECTIONS.map((s) => (
-                <li key={s} className="leading-[1.6]">{s}</li>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-5 max-w-[900px]">
+              {GROUPS.map((g) => (
+                <div key={g.title} className="rounded-xl border border-border bg-secondary/40 p-5 md:p-6">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                      <g.icon className="w-[18px] h-[18px] text-primary" strokeWidth={1.4} />
+                    </div>
+                    <span className="text-[12px] font-semibold uppercase tracking-wide text-primary">{g.range}</span>
+                  </div>
+                  <h3 className="text-[17px] md:text-[18px] font-bold text-foreground leading-[1.35] mb-1.5">{g.title}</h3>
+                  <p className="text-[15px] text-muted-foreground leading-[1.65]">{g.text}</p>
+                </div>
               ))}
-            </ol>
-            <p className="text-[16px] md:text-[17px] text-muted-foreground leading-[1.7] max-w-[640px] mt-6">
-              You can work through the guidebook together or choose the sections that feel most relevant to your child right now.
-            </p>
+            </div>
 
-            <div className="mt-10 rounded-xl border border-border bg-secondary/40 p-6 md:p-8 max-w-[760px]">
-              <div className="flex items-center gap-2.5 mb-3">
-                <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center">
-                  <Gift className="w-4.5 h-4.5 text-primary" />
+            <Collapsible className="mt-5 max-w-[900px] rounded-xl border border-border bg-background">
+              <CollapsibleTrigger className="group flex w-full items-center justify-between gap-3 px-5 md:px-6 py-4 min-h-[44px] text-left text-[16px] font-semibold text-foreground rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                View all 12 guided sections
+                <ChevronDown className="w-[18px] h-[18px] text-primary transition-transform group-data-[state=open]:rotate-180" strokeWidth={1.4} aria-hidden="true" />
+              </CollapsibleTrigger>
+              <CollapsibleContent>
+                <ol className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2 text-[15px] md:text-[16px] text-foreground list-decimal list-outside pl-10 pr-5 md:pr-6 pb-5">
+                  {SECTIONS.map((s) => (
+                    <li key={s} className="leading-[1.6]">{s}</li>
+                  ))}
+                </ol>
+              </CollapsibleContent>
+            </Collapsible>
+
+            <div className="mt-10 rounded-xl border border-border bg-secondary/40 p-6 md:p-8 max-w-[900px]">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center">
+                  <Gift className="w-[18px] h-[18px] text-primary" strokeWidth={1.4} />
                 </div>
                 <h3 className="text-[19px] md:text-[22px] font-bold text-foreground m-0">
                   Plus 4 bonus resources
@@ -235,10 +260,6 @@ const ParentGuidebook = () => {
                 ))}
               </ul>
             </div>
-
-            <p className="text-[16px] md:text-[17px] font-semibold text-foreground mt-10">
-              One guidebook. Twelve guided sections. Four additional resources. {PRICE}.
-            </p>
           </div>
         </section>
 
