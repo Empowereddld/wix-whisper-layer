@@ -137,7 +137,6 @@ Deno.serve(async (req) => {
       if (!row || row.status !== "completed" || row.access_status !== "active") return null;
       return await issueAccessToken(row.id, row.access_token_version);
     };
-    const guestDownloadUrl = guestAccessToken;
 
     // Idempotency: this session/payment already fulfilled?
     const { data: prior } = await admin
