@@ -31,7 +31,7 @@ const GuidebookBuyButton = ({ className = "", hero = false }: { className?: stri
       onClick={startCheckout}
       disabled={loading}
       className={`h-auto min-h-[52px] px-5 sm:px-8 py-3 whitespace-normal disabled:opacity-60 ${hero
-        ? "bg-foreground text-background text-[11px] md:text-[12px] lg:text-[13px] font-bold uppercase tracking-normal rounded-sm hover:bg-foreground/85"
+        ? "bg-foreground text-background text-[11px] md:text-[12px] lg:text-[13px] h-12 md:h-14 min-h-0 md:px-10 font-bold uppercase tracking-[0.12em] rounded-sm hover:bg-foreground/85"
         : "bg-deep-purple text-deep-purple-foreground text-[16px] font-semibold rounded-md hover:bg-deep-purple/90"} ${className}`}
     >
       {loading ? "Redirecting to checkout…" : hero ? "GET THE PARENT GUIDEBOOK - $9.99 USD" : "Get the Parent Guidebook · $9.99 USD"}

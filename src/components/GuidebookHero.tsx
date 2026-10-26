@@ -7,7 +7,7 @@ const GuidebookHero = ({ purchaseButton }: { purchaseButton?: ReactNode }) => {
       <div className="container px-6 md:px-8">
         <div className="flex flex-col lg:flex-row lg:items-stretch lg:gap-6">
           {/* Gray card background */}
-          <div className={`bg-muted rounded-xl lg:rounded-2xl lg:flex-shrink-0 pt-0 pb-10 md:pb-14 px-6 md:px-8 lg:px-16 ${purchaseButton ? "lg:w-[48%] lg:pb-12" : "lg:w-[58%] lg:pb-24"}`}>
+          <div className={`bg-muted rounded-xl lg:rounded-2xl lg:flex-shrink-0 pt-0 pb-10 md:pb-14 px-6 md:px-8 lg:px-16 lg:w-[58%] lg:pb-24`}>
             <div className="bg-[hsl(270,60%,22%)] rounded-t-xl lg:rounded-t-2xl -mx-6 md:-mx-8 lg:-mx-16 px-8 md:px-10 lg:px-16 py-5 md:py-6 lg:py-7 mb-10 md:mb-12 lg:mb-[48px] border-b-[3px] border-white/10">
               <span className="text-white text-[20px] md:text-[22px] lg:text-[24px] font-bold uppercase tracking-[0.18em]">
                 PARENT GUIDEBOOK
@@ -30,11 +30,11 @@ const GuidebookHero = ({ purchaseButton }: { purchaseButton?: ReactNode }) => {
           </div>
 
           {/* Image */}
-          <div className={purchaseButton ? "mt-4 lg:mt-0 lg:flex-1 min-w-0 lg:self-center rounded-xl overflow-hidden shadow-lg" : "mt-4 lg:mt-0 lg:flex-1 rounded-xl overflow-hidden shadow-lg max-h-[260px] md:max-h-[380px] lg:max-h-none"}>
+          <div className="mt-4 lg:mt-0 lg:flex-1 min-w-0 rounded-xl overflow-hidden shadow-lg max-h-[260px] md:max-h-[380px] lg:max-h-none">
             <img
               src={guidebookWorkspace}
               alt="The Parent Guidebook displayed on a tablet beside printed activity sheets, a notebook and a cup of coffee on a sunlit desk"
-              className={purchaseButton ? "w-full h-auto aspect-[1672/941] object-contain" : "w-full h-full object-cover object-[75%_center] aspect-[16/9] lg:aspect-auto"}
+              className="w-full h-full object-cover object-[75%_center] aspect-[16/9] lg:aspect-auto"
             />
           </div>
         </div>
