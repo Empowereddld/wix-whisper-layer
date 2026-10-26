@@ -1,6 +1,6 @@
 # Project architecture rules
 
-- Reuse ForParentsHero on the Parent Guidebook page above its existing product information, so both pages share the exact same parent introduction without duplicated presentation.
+- Use ForParentsHero as the Parent Guidebook page's sole hero with an opt-in purchase-button slot and uncropped image layout; defaults preserve /for-parents unchanged. All guidebook purchase placements reuse GuidebookBuyButton's existing checkout invocation and single analytics call, so presentation cannot fork payment behavior.
 
 - Keep previewed imagery as in-repo WebP imports rather than CDN asset pointers, because the local preview does not serve `/__l5e/` asset URLs and pointer-based images render broken during preview review.
 
