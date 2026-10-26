@@ -2,7 +2,7 @@
 
 ## Parent Guidebook parent introduction (2026-10-26)
 - [x] Add the exact existing For Parents hero above all guidebook information without changing the existing content.
-- [ ] Verify the shared hero and unchanged guidebook content in preview; do not publish.
+- [x] Verify the shared hero and unchanged guidebook content in preview; do not publish.
 
 ## Parent Guidebook announcement banner (2026-10-26)
 - [x] Apply the approved burgundy campaign banner with the exact wording, full-banner link to /shop/parent-guidebook, and preserved Story Pros config for restore.
