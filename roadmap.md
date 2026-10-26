@@ -11,6 +11,7 @@
   - [x] Access link works after address-bar removal, including page refresh
   - [ ] Stage 5: full test pass (automated checks done; live download + receipt verified by owner purchase 2026-10-26, access-pass retrieval via emailed link still to test after publish)
   - [ ] Stage 6: neutral, rate-limited lost-email recovery
+  - [~] Refund test (refund a purchase and confirm access is removed) — deferred by user 2026-10-26
   - [x] Real $9.99 purchase test by owner (2026-10-26: live Stripe session, immediate download worked, exact confirmation email arrived, one purchase record, email accepted on first attempt)
 
 ## Parent Guidebook single hero (2026-10-26)
@@ -39,7 +40,7 @@
 ## Parent Guidebook GA4 preparation (2026-10-25)
 - [x] Prepare analytics-only opt-in, safe visits/UTMs, checkout starts and verified deduplicated USD purchase reporting without extra database tables.
 - [x] Test prepared tracking and privacy controls with 11 passing tests and synthetic browser flows; native analytics audit reported, nothing published or deployed.
-  - [ ] Connect GA4, configure its web stream and verify receipt (waiting on Measurement ID).
+  - [ ] Connect GA4, configure its web stream and verify receipt (waiting on Measurement ID; deferred by user 2026-10-26)
   - [x] Verify real paid download and receipt delivery (owner test purchase 2026-10-26 succeeded).
 
 ## Parent Guidebook focused conversion refinement (2026-10-25)
@@ -106,5 +107,5 @@
 - [ ] T2 pre-create Stripe prices (deferred by user)
 - [ ] Build 'How to Explain DLD to Your Child' page (preview only, awaiting review before publish)
 - [x] Parent Guidebook stage 2: guest checkout (create-checkout/verify-payment guest paths, purchases.user_id nullable + customer_email, /shop/payment-success, newsletter opt-in checkbox with consent record)
-- [ ] Real-money purchase test of guest guidebook checkout (batch 5A, deferred)
+- [x] Real-money purchase test of guest guidebook checkout (batch 5A, done 2026-10-26 by owner)
 - [x] Make /shop/parent-guidebook indexable and add it to the sitemap and Shop menu (done 2026-10-26)
