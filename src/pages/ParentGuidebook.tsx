@@ -10,6 +10,7 @@ import BlogFAQAccordion from "@/components/BlogFAQAccordion";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import founders from "@/assets/founders-circle.webp";
+import motherDaughterReading from "@/assets/mother-daughter-reading.webp";
 import page4 from "@/assets/guidebook-p4.webp";
 import page6 from "@/assets/guidebook-p6.webp";
 
@@ -113,7 +114,7 @@ const ParentGuidebook = () => {
               </h2>
             </div>
           </div>
-          <div className="container px-6 md:px-8">
+          <div className="container px-6 md:px-8 flex flex-col lg:flex-row gap-10 lg:gap-16 items-center">
             <div className="max-w-[650px]">
               <p className="text-[14px] md:text-[15px] text-muted-foreground leading-[1.7] mb-6">
                 Understanding DLD takes time. Your child might ask a question while reading together, after a challenging day at school, or when they notice differences between themselves and their peers.
@@ -128,6 +129,12 @@ const ParentGuidebook = () => {
                 The guidebook helps you create opportunities for these meaningful conversations, at your child's own pace.
               </p>
             </div>
+            <img
+              src={motherDaughterReading}
+              alt="A mother and daughter reading a book together"
+              loading="lazy"
+              className="w-full lg:w-[40%] rounded-xl object-cover max-h-[500px]"
+            />
           </div>
         </section>
 
