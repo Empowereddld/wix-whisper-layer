@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { MessageCircleHeart, Ear, Compass, RefreshCw, Gift, ZoomIn } from "lucide-react";
 import Header from "@/components/Header";
-import ForParentsHero from "@/components/ForParentsHero";
+import GuidebookHero from "@/components/GuidebookHero";
 import BuyButton from "@/components/GuidebookBuyButton";
 import Footer from "@/components/Footer";
 import SEOHead from "@/components/SEOHead";
@@ -102,7 +102,7 @@ const ParentGuidebook = () => {
       />
       <Header purchaseFocused />
       <main className="flex-1 [&_h1]:tracking-normal [&_h2]:tracking-normal [&_h3]:tracking-normal">
-        <ForParentsHero purchaseButton={<BuyButton hero className="w-full sm:w-auto" />} />
+        <GuidebookHero purchaseButton={<BuyButton hero className="w-full sm:w-auto" />} />
 
         {/* You don't have to explain everything */}
         <section className="py-12 md:py-20 bg-secondary/40">
