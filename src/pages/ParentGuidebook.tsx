@@ -128,7 +128,6 @@ const ParentGuidebook = () => {
         title="Parent Guidebook: How to Explain DLD to Your Child | Empowered DLD"
         description="A printable 27-page guidebook to help parents explain Developmental Language Disorder to their child, celebrate strengths, and build self-advocacy."
         path="/shop/parent-guidebook"
-        noindex
         breadcrumbs={[
           { name: "Home", path: "/" },
           { name: "Shop", path: "/shop" },

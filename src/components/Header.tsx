@@ -22,6 +22,7 @@ const resourcesLinks = [
 
 const shopLinks = [
   { label: "Books", href: "/shop/books" },
+  { label: "Parent Guidebook", href: "/shop/parent-guidebook" },
   { label: "Bulk Orders", href: "/shop/bulk-orders" },
   { label: "Merch", href: "/shop/merch" },
   { label: "Educational App", href: "/storypros" },
