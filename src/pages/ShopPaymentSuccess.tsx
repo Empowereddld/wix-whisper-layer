@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useSearchParams, Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { trackVerifiedGuidebookPurchase } from "@/lib/guidebookAnalytics";
+import { isPlausiblePass, loadPass, savePass } from "@/lib/guidebookPass";
 import NoIndexHead from "@/components/NoIndexHead";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -41,7 +42,14 @@ const ShopPaymentSuccess = () => {
     // history, shared, or picked up by analytics.
     window.history.replaceState(null, "", window.location.pathname);
     if (!sessionId) {
-      setStatus("error");
+      // Refresh after the address was cleared: reuse this tab's saved pass.
+      const saved = loadPass();
+      if (saved) {
+        setAccessToken(saved);
+        setStatus("success");
+      } else {
+        setStatus("error");
+      }
       return;
     }
 
@@ -66,6 +74,7 @@ const ShopPaymentSuccess = () => {
           setStatus("error");
           return;
         }
+        if (isPlausiblePass(data.access_token)) savePass(data.access_token);
         setAccessToken(data.access_token ?? null);
         setEmailAccepted(data.confirmation_email_accepted === true);
         setStatus("success");

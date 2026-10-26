@@ -43,6 +43,7 @@ const Shop = lazy(() => import("./pages/Shop"));
 const Books = lazy(() => import("./pages/Books"));
 const ParentGuidebook = lazy(() => import("./pages/ParentGuidebook"));
 const ShopPaymentSuccess = lazy(() => import("./pages/ShopPaymentSuccess"));
+const GuidebookAccess = lazy(() => import("./pages/GuidebookAccess"));
 const BulkOrders = lazy(() => import("./pages/BulkOrders"));
 const ShopMerch = lazy(() => import("./pages/ShopMerch"));
 const ShopMerchProduct = lazy(() => import("./pages/ShopMerchProduct"));
@@ -158,6 +159,7 @@ const App = () => (
               <Route path="/shop/books" element={<Books />} />
               <Route path="/shop/parent-guidebook" element={<ParentGuidebook />} />
               <Route path="/shop/payment-success" element={<ShopPaymentSuccess />} />
+              <Route path="/shop/guidebook-access" element={<GuidebookAccess />} />
               <Route path="/shop/bulk-orders" element={<BulkOrders />} />
               <Route path="/shop/merch" element={<ShopMerch />} />
               <Route path="/shop/merch/:handle" element={<ShopMerchProduct />} />

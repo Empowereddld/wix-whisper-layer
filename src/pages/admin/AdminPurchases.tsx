@@ -87,6 +87,25 @@ const AdminPurchases = () => {
     },
   });
 
+  const resendMutation = useMutation({
+    mutationFn: async (id: string) => {
+      const { data, error } = await supabase.functions.invoke("guidebook-email-retry", { body: { purchase_id: id } });
+      if (error) throw error;
+      return data?.outcome as string;
+    },
+    onSuccess: (outcome) => {
+      qc.invalidateQueries({ queryKey: ["admin-purchases"] });
+      if (outcome === "accepted") toast.success("Confirmation email accepted by the email service");
+      else if (outcome === "skipped") toast.info("Not sent: already sent, in progress, or access is not active");
+      else toast.error("The email service did not accept it. Try again later.");
+    },
+    onError: () => toast.error("Resend failed"),
+  });
+
+  const emailLabel: Record<string, string> = {
+    accepted: "Email sent", pending: "Email pending", sending: "Sending", failed: "Retrying", gave_up: "Email failed",
+  };
+
   const formatPrice = (cents: number) => `CA$${(cents / 100).toFixed(2)}`;
 
   const exportCSV = () => {
@@ -177,7 +196,7 @@ const AdminPurchases = () => {
               {data.rows.map((r) => (
                 <TableRow key={r.id}>
                   <TableCell className="font-mono text-xs">{r.id.slice(0, 8)}…</TableCell>
-                  <TableCell>{r.customer_name}</TableCell>
+                  <TableCell>{r.user_id ? r.customer_name : (r.customer_email || "Guest")}</TableCell>
                   <TableCell>{r.product_title}</TableCell>
                   <TableCell>{formatPrice(r.amount_paid)}</TableCell>
                   <TableCell>{format(new Date(r.purchased_at), "MMM d, yyyy")}</TableCell>
@@ -186,7 +205,19 @@ const AdminPurchases = () => {
                       {r.status}
                     </span>
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="whitespace-nowrap">
+                    {!r.user_id && r.status === "completed" && (
+                      <>
+                        <span className={`text-xs mr-2 ${r.confirmation_email_status === "gave_up" ? "text-destructive font-semibold" : "text-muted-foreground"}`}>
+                          {emailLabel[r.confirmation_email_status] ?? r.confirmation_email_status}
+                        </span>
+                        {r.confirmation_email_status !== "accepted" && r.confirmation_email_status !== "sending" && (
+                          <Button variant="outline" size="sm" className="text-xs mr-1" disabled={resendMutation.isPending} onClick={() => resendMutation.mutate(r.id)}>
+                            Resend email
+                          </Button>
+                        )}
+                      </>
+                    )}
                     {r.status === "completed" && (
                       <Button variant="ghost" size="sm" className="text-destructive text-xs" onClick={() => refundMutation.mutate(r.id)}>
                         Refund
