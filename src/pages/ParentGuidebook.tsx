@@ -1,23 +1,19 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { toast } from "sonner";
 import { MessageCircleHeart, Ear, Compass, RefreshCw, Gift, ZoomIn } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
-import { trackGuidebookCheckout } from "@/lib/guidebookAnalytics";
 import Header from "@/components/Header";
 import ForParentsHero from "@/components/ForParentsHero";
+import BuyButton from "@/components/GuidebookBuyButton";
 import Footer from "@/components/Footer";
 import SEOHead from "@/components/SEOHead";
 import BlogFAQAccordion from "@/components/BlogFAQAccordion";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import cover from "@/assets/book-parent-guidebook.webp";
 import founders from "@/assets/founders-circle.webp";
 import page4 from "@/assets/guidebook-p4.webp";
 import page6 from "@/assets/guidebook-p6.webp";
 
 const PRICE = "$9.99 USD";
-const RESOURCE_ID = "1d54403b-1185-46dd-8307-b918a731e580";
 
 const PAGES = [
   {
@@ -89,37 +85,6 @@ const FAQS = [
   { question: "Do I need an account?", answer: "No. You can check out as a guest with just your email address." },
 ];
 
-const BuyButton = ({ className = "" }: { className?: string }) => {
-  const [loading, setLoading] = useState(false);
-
-  const startCheckout = async () => {
-    setLoading(true);
-    try {
-      const { data, error } = await supabase.functions.invoke("create-checkout", {
-        body: { resource_id: RESOURCE_ID },
-      });
-      if (error || !data?.url) {
-        throw new Error(data?.error || "Checkout failed");
-      }
-      trackGuidebookCheckout(() => { window.location.href = data.url; });
-    } catch {
-      toast.error("Checkout could not be started. Please try again in a moment.");
-      setLoading(false);
-    }
-  };
-
-  return (
-    <Button
-      type="button"
-      onClick={startCheckout}
-      disabled={loading}
-      className={`h-auto min-h-[52px] px-5 sm:px-8 py-3 whitespace-normal bg-deep-purple text-deep-purple-foreground text-[16px] font-semibold rounded-md hover:bg-deep-purple/90 disabled:opacity-60 ${className}`}
-    >
-      {loading ? "Redirecting to checkout…" : `Get the Parent Guidebook · ${PRICE}`}
-    </Button>
-  );
-};
-
 const ParentGuidebook = () => {
   const [enlarged, setEnlarged] = useState<(typeof PAGES)[number] | null>(null);
 
@@ -137,53 +102,7 @@ const ParentGuidebook = () => {
       />
       <Header purchaseFocused />
       <main className="flex-1 [&_h1]:tracking-normal [&_h2]:tracking-normal [&_h3]:tracking-normal">
-        <ForParentsHero />
-        {/* Hero */}
-        <section className="py-8 lg:py-10">
-          <div className="max-w-[1100px] mx-auto px-6 md:px-10 flex flex-col lg:flex-row items-center gap-8 lg:gap-10">
-            <div className="flex-1 order-2 lg:order-1">
-              <p className="text-[11px] md:text-[12px] font-bold uppercase tracking-[0.2em] text-muted-foreground mb-3">
-                Parent Guidebook
-              </p>
-              <h1 className="text-[32px] md:text-[44px] font-black text-foreground leading-[1.08] mb-3">
-                How Do I Explain DLD to My Child?
-              </h1>
-              <p className="text-[18px] md:text-[20px] font-semibold text-foreground leading-[1.4] mb-4">
-                Find the words to talk about DLD, together.
-              </p>
-              <p className="text-[16px] md:text-[17px] text-muted-foreground leading-[1.7] max-w-[520px] mb-3">
-                Talking with your child about Developmental Language Disorder (DLD) can raise a lot of questions. How do you explain the challenges while celebrating their strengths? Where do you begin?
-              </p>
-              <p className="text-[16px] md:text-[17px] text-muted-foreground leading-[1.7] max-w-[520px] mb-3">
-                <em>Discussing DLD with Your Child</em> gives you practical guidance, suggested language, and activities to help you and your child explore DLD together, one conversation at a time.
-              </p>
-              <p className="text-[13px] md:text-[14px] font-semibold text-foreground mb-5">
-                27-page printable PDF | 12 guided sections | 4 bonus resources
-              </p>
-              <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-                <BuyButton className="w-full sm:w-auto" />
-              </div>
-              <p className="text-[13px] text-muted-foreground mt-3">
-                <em>Digital download. Print the activities or use the guide on your device.</em>
-              </p>
-              <p className="text-[14px] text-muted-foreground mt-3">
-                Created by a speech-language pathologist and an educator.
-              </p>
-            </div>
-            <div className="order-1 lg:order-2 w-full max-w-[360px] lg:max-w-none lg:w-[40%] shrink-0">
-              <div className="grid grid-cols-[1.15fr_1fr] gap-3 items-center">
-              <img
-                src={cover}
-                alt="Cover of Discussing DLD with Your Child, the parent guidebook for Dan and the Paper Airplane"
-                className="w-full h-auto rounded-lg"
-                fetchPriority="high"
-              />
-                <img src={page4} alt={PAGES[0].alt} className="w-full h-auto rounded-md border border-border shadow-sm" />
-              </div>
-              <p className="text-[14px] font-semibold text-primary text-center mt-4">Printable PDF guidebook</p>
-            </div>
-          </div>
-        </section>
+        <ForParentsHero purchaseButton={<BuyButton hero className="w-full sm:w-auto" />} />
 
         {/* You don't have to explain everything */}
         <section className="py-12 md:py-20 bg-secondary/40">
