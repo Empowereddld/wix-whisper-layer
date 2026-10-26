@@ -1,5 +1,9 @@
 # Roadmap
 
+## Parent Guidebook hero photo swap (2026-10-26)
+- [x] Replace the shared hero photo with the user's sunlit desk flat-lay (guidebook on a tablet), keeping the same hero layout, and update its description.
+- [x] Verify the photo renders on desktop and phone with no overflow or errors; do not publish.
+
 ## Parent Guidebook parent introduction (2026-10-26)
 - [x] Add the exact existing For Parents hero above all guidebook information without changing the existing content.
 - [x] Verify the shared hero and unchanged guidebook content in preview; do not publish.
@@ -86,4 +90,4 @@
 - [ ] Build 'How to Explain DLD to Your Child' page (preview only, awaiting review before publish)
 - [x] Parent Guidebook stage 2: guest checkout (create-checkout/verify-payment guest paths, purchases.user_id nullable + customer_email, /shop/payment-success, newsletter opt-in checkbox with consent record)
 - [ ] Real-money purchase test of guest guidebook checkout (batch 5A, deferred)
-- [ ] Decide when to make /shop/parent-guidebook indexable (currently noindex, not in sitemap)
+- [x] Make /shop/parent-guidebook indexable and add it to the sitemap and Shop menu (done 2026-10-26)
