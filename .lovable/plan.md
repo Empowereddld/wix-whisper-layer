@@ -45,8 +45,18 @@ Preview checks at desktop and phone: processing state, thank-you wording, button
 
 Still needs your real $9.99 test purchase: the actual email arriving, opening the PDF from the email later, the 27-page file on your device, and the closed-tab case.
 
-## One thing to confirm
-The email names the product "Discussing DLD with Your Child", while the landing page headline is "How Do I Explain DLD to My Child?". I'll use the email exactly as written unless you tell me otherwise.
+## Stage 6: Recover access without the email (after the critical stages)
+- A "Lost your email?" form: the customer enters their email and, if it has a guidebook purchase, gets a fresh access link sent there.
+- The page always shows the same neutral message, so it never reveals whether an address bought anything.
+- Rate limited with the site's existing privacy-safe limiter (per email and per network).
+- Issuing a new link retires the old one.
+
+## Added safeguards
+- **Email retries:** the email service's own duplicate-prevention key per purchase, plus our once-only guard. This greatly reduces duplicates, but no email service guarantees exactly-once delivery, so I won't claim it.
+- **Stripe signing value:** stored only through the secure secrets form, with step-by-step Stripe Dashboard instructions. You never paste it into chat.
+- **Protecting the access link:** the pass is removed from the address bar as soon as the page loads, browsers are told not to pass the address to other sites, analytics never receives it, and server logs record only a short fingerprint. Shared links can be retired and reissued.
+- **Product name:** the email keeps "Discussing DLD with Your Child" exactly.
+- **One stage at a time:** results reported after each stage before moving on. No publishing, no unrelated changes.
 
 ## Technical details
 - Extend `verify-payment` into a shared idempotent `fulfillGuidebookPurchase` (in `_shared/`) used by both it and a new `stripe-webhook` function (`checkout.session.completed`, `charge.refunded`, signature-verified with `STRIPE_WEBHOOK_SECRET` via add_secret after deploy).
