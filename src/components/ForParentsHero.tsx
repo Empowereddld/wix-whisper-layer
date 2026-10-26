@@ -1,4 +1,4 @@
-import motherDaughterReading from "@/assets/mother-daughter-reading.webp";
+import guidebookWorkspace from "@/assets/parent-guidebook-workspace.webp.asset.json";
 
 const ForParentsHero = () => {
   return (
@@ -31,9 +31,9 @@ const ForParentsHero = () => {
           {/* Image */}
           <div className="mt-4 lg:mt-0 lg:flex-1 rounded-xl overflow-hidden shadow-lg max-h-[260px] md:max-h-[380px] lg:max-h-none">
             <img
-              src={motherDaughterReading}
-              alt="A mother and daughter reading together"
-              className="w-full h-full object-cover object-[center_30%] aspect-[16/9] lg:aspect-auto"
+              src={guidebookWorkspace.url}
+              alt="The Parent Guidebook displayed on a tablet beside printed activity sheets, a notebook and a cup of coffee on a sunlit desk"
+              className="w-full h-full object-cover object-center aspect-[16/9] lg:aspect-auto"
             />
           </div>
         </div>
