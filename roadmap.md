@@ -7,6 +7,8 @@
 - [x] Stage 2: confirmation page processing state and exact thank-you wording
 - [ ] Stage 3: Stripe notifications built and deployed (closed tab, refunds, disputes, delayed payments); waiting on owner to add Stripe destination + signing value
 - [ ] Stage 4: exact confirmation email with per-customer link, safe retries
+  - [ ] After 6 failed attempts: purchase kept, admin can find and resend securely, no links/PII in logs
+  - [ ] Access link works after address-bar removal, including page refresh
 - [ ] Stage 5: full test pass
 - [ ] Stage 6: neutral, rate-limited lost-email recovery
 - [ ] Real $9.99 purchase test by owner
