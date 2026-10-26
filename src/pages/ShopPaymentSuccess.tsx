@@ -7,13 +7,33 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { CheckCircle, Loader2, XCircle, Download } from "lucide-react";
 
-// Guest order confirmation. The Stripe checkout session id in the URL is the
-// proof of purchase; verify-payment checks it server-side and returns a
-// short-lived signed download URL for the private file.
+// Guest order confirmation. verify-payment checks the Stripe session server-side
+// and returns a per-purchase access pass; the pass is exchanged for a 5-minute
+// download link only when the customer clicks Download.
 const ShopPaymentSuccess = () => {
   const [searchParams] = useSearchParams();
   const [status, setStatus] = useState<"verifying" | "success" | "error">("verifying");
-  const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
+  const [accessToken, setAccessToken] = useState<string | null>(null);
+  const [downloading, setDownloading] = useState(false);
+  const [downloadError, setDownloadError] = useState<string | null>(null);
+  const downloadUrl = accessToken;
+
+  const handleDownload = async () => {
+    if (!accessToken) return;
+    setDownloading(true);
+    setDownloadError(null);
+    const w = window.open("", "_blank");
+    const { data, error } = await supabase.functions.invoke("guidebook-download", {
+      body: { access_token: accessToken },
+    });
+    setDownloading(false);
+    if (error || !data?.url) {
+      w?.close();
+      setDownloadError("We couldn't prepare your download. Please try again in a moment.");
+      return;
+    }
+    if (w) w.location.href = data.url; else window.location.href = data.url;
+  };
 
   useEffect(() => {
     const sessionId = searchParams.get("session_id");
@@ -29,12 +49,11 @@ const ShopPaymentSuccess = () => {
         });
 
         if (error || !data?.success) {
-          console.error("Verification failed:", data?.error || error);
           setStatus("error");
           return;
         }
 
-        setDownloadUrl(data.download_url ?? null);
+        setAccessToken(data.access_token ?? null);
         setStatus("success");
         trackVerifiedGuidebookPurchase(data.analytics_purchase);
       } catch {

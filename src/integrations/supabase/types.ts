@@ -700,12 +700,23 @@ export type Database = {
       }
       purchases: {
         Row: {
+          access_change_reason: string | null
+          access_changed_at: string | null
+          access_status: string
+          access_token_version: number
           amount_paid: number
+          amount_refunded: number
+          confirmation_email_attempts: number
+          confirmation_email_claimed_at: string | null
+          confirmation_email_last_error: string | null
+          confirmation_email_sent_at: string | null
+          confirmation_email_status: string
           currency: string
           customer_email: string | null
           id: string
           product_id: string
           purchased_at: string
+          refunded_at: string | null
           resource_id: string
           status: string
           stripe_checkout_session_id: string | null
@@ -713,12 +724,23 @@ export type Database = {
           user_id: string | null
         }
         Insert: {
+          access_change_reason?: string | null
+          access_changed_at?: string | null
+          access_status?: string
+          access_token_version?: number
           amount_paid?: number
+          amount_refunded?: number
+          confirmation_email_attempts?: number
+          confirmation_email_claimed_at?: string | null
+          confirmation_email_last_error?: string | null
+          confirmation_email_sent_at?: string | null
+          confirmation_email_status?: string
           currency?: string
           customer_email?: string | null
           id?: string
           product_id: string
           purchased_at?: string
+          refunded_at?: string | null
           resource_id: string
           status?: string
           stripe_checkout_session_id?: string | null
@@ -726,12 +748,23 @@ export type Database = {
           user_id?: string | null
         }
         Update: {
+          access_change_reason?: string | null
+          access_changed_at?: string | null
+          access_status?: string
+          access_token_version?: number
           amount_paid?: number
+          amount_refunded?: number
+          confirmation_email_attempts?: number
+          confirmation_email_claimed_at?: string | null
+          confirmation_email_last_error?: string | null
+          confirmation_email_sent_at?: string | null
+          confirmation_email_status?: string
           currency?: string
           customer_email?: string | null
           id?: string
           product_id?: string
           purchased_at?: string
+          refunded_at?: string | null
           resource_id?: string
           status?: string
           stripe_checkout_session_id?: string | null
