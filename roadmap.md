@@ -9,9 +9,9 @@
 - [x] Stage 4: exact confirmation email with per-customer link, safe retries
   - [x] After 6 failed attempts: purchase kept, admin can find and resend securely, no links/PII in logs
   - [x] Access link works after address-bar removal, including page refresh
-- [ ] Stage 5: full test pass
-- [ ] Stage 6: neutral, rate-limited lost-email recovery
-- [ ] Real $9.99 purchase test by owner
+  - [ ] Stage 5: full test pass (automated checks done; live download + receipt verified by owner purchase 2026-10-26, access-pass retrieval via emailed link still to test after publish)
+  - [ ] Stage 6: neutral, rate-limited lost-email recovery
+  - [x] Real $9.99 purchase test by owner (2026-10-26: live Stripe session, immediate download worked, exact confirmation email arrived, one purchase record, email accepted on first attempt)
 
 ## Parent Guidebook single hero (2026-10-26)
 - [x] Remove the original hero at source, connect the new hero to the existing checkout button, and preserve other sections and /for-parents.
@@ -29,8 +29,8 @@
 - [x] Apply the approved burgundy campaign banner with the exact wording, full-banner link to /shop/parent-guidebook, and preserved Story Pros config for restore.
 - [x] Bold only "Not sure how to talk to your child about DLD" at the user's request; verify desktop/mobile weight, colour and fit in preview.
 - [x] Unhide the landing page: noindex removed, /shop/parent-guidebook added to the sitemap, "Parent Guidebook" added to the Shop menu (desktop + mobile).
-- [ ] User to complete one real $9.99 test purchase, then confirm the download link and receipt email arrive.
-- [ ] Publish once the user approves (preview only so far).
+  - [x] User to complete one real $9.99 test purchase, then confirm the download link and receipt email arrive (done 2026-10-26, live Stripe).
+  - [ ] Publish once the user approves (preview only so far; the emailed access link points at the live domain, so it only works after publishing).
 
 ## Explain DLD article approved replacement (2026-10-25)
 - [x] Replace article copy exactly, retain approved callout/cards/product layouts and links, and align four FAQs with structured data.
@@ -39,8 +39,8 @@
 ## Parent Guidebook GA4 preparation (2026-10-25)
 - [x] Prepare analytics-only opt-in, safe visits/UTMs, checkout starts and verified deduplicated USD purchase reporting without extra database tables.
 - [x] Test prepared tracking and privacy controls with 11 passing tests and synthetic browser flows; native analytics audit reported, nothing published or deployed.
-- [ ] Connect GA4, configure its web stream and verify receipt (waiting on Measurement ID).
-- [ ] Verify real paid download and receipt delivery (waiting on owner test purchase).
+  - [ ] Connect GA4, configure its web stream and verify receipt (waiting on Measurement ID).
+  - [x] Verify real paid download and receipt delivery (owner test purchase 2026-10-26 succeeded).
 
 ## Parent Guidebook focused conversion refinement (2026-10-25)
 - [x] Apply the approved shorter hero and introduction, improve readability, and emphasize PDF format and closing purchase.
