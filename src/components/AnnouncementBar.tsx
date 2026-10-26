@@ -6,6 +6,16 @@ import { supabase } from "@/integrations/supabase/client";
 
 const STORAGE_KEY = "announcement-storypros-dismissed";
 
+// Temporary 60-day Parent Guidebook campaign (started Oct 2026).
+// Set CAMPAIGN_ACTIVE to false to restore the original Story Pros banner below.
+const CAMPAIGN_ACTIVE = true;
+const GUIDEBOOK_CAMPAIGN = {
+  storageKey: "announcement-guidebook-dismissed",
+  to: "/shop/parent-guidebook",
+  bgClass: "bg-campaign",
+  content: <>Not sure how to talk to your child about DLD? Our Parent Guidebook can help →</>,
+};
+
 type WaitlistStatus = "none" | "verified" | "unverified";
 
 const AnnouncementBar = () => {
@@ -13,12 +23,14 @@ const AnnouncementBar = () => {
   const [status, setStatus] = useState<WaitlistStatus>("none");
   const { user } = useAuth();
   const { pathname } = useLocation();
+  const storageKey = CAMPAIGN_ACTIVE ? GUIDEBOOK_CAMPAIGN.storageKey : STORAGE_KEY;
 
   useEffect(() => {
-    if (sessionStorage.getItem(STORAGE_KEY) !== "1") setVisible(true);
-  }, []);
+    if (sessionStorage.getItem(storageKey) !== "1") setVisible(true);
+  }, [storageKey]);
 
   useEffect(() => {
+    if (CAMPAIGN_ACTIVE) return;
     let cancelled = false;
     const check = async () => {
       if (!user?.email) {
@@ -46,11 +58,13 @@ const AnnouncementBar = () => {
   const dismiss = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    sessionStorage.setItem(STORAGE_KEY, "1");
+    sessionStorage.setItem(storageKey, "1");
     setVisible(false);
   };
 
+  // Original Story Pros banner configuration (restore by setting CAMPAIGN_ACTIVE = false).
   let to = "/storypros";
+  let bgClass = "bg-golden";
   let content: React.ReactNode = (
     <>
       <strong>Join the Story Pros App Waitlist:</strong> the first app built for kids with DLD →
@@ -65,8 +79,14 @@ const AnnouncementBar = () => {
     content = <>Almost there! Verify your email to unlock your Story Pros dashboard →</>;
   }
 
+  if (CAMPAIGN_ACTIVE) {
+    to = GUIDEBOOK_CAMPAIGN.to;
+    bgClass = GUIDEBOOK_CAMPAIGN.bgClass;
+    content = GUIDEBOOK_CAMPAIGN.content;
+  }
+
   return (
-    <div className="relative bg-golden text-white">
+    <div className={`relative ${bgClass} text-white`}>
       <Link
         to={to}
         className="block w-full px-10 py-2 text-center text-[12px] sm:text-[13px] font-medium leading-snug hover:opacity-90 transition-opacity"
