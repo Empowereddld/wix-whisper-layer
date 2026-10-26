@@ -5,7 +5,7 @@
 - [x] Inspect the current stored PDF and correct the Resource Library's 26-page description only if 27 pages is confirmed.
 - [x] Stage 1: per-purchase guest access pass, secure 5-minute download, guest path fix (rollback point 1)
 - [x] Stage 2: confirmation page processing state and exact thank-you wording
-- [ ] Stage 3: Stripe notifications (closed tab, refunds, disputes, delayed payments); needs Stripe signing value from owner
+- [ ] Stage 3: Stripe notifications built and deployed (closed tab, refunds, disputes, delayed payments); waiting on owner to add Stripe destination + signing value
 - [ ] Stage 4: exact confirmation email with per-customer link, safe retries
 - [ ] Stage 5: full test pass
 - [ ] Stage 6: neutral, rate-limited lost-email recovery
