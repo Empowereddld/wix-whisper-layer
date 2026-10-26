@@ -73,7 +73,6 @@ Deno.serve(async (req) => {
         };
         if (decision.status) {
           update.status = decision.status;
-          if (!charge.refunded && decision.reason === "full_refund") update.refunded_at = new Date().toISOString();
           if (decision.reason === "full_refund") update.refunded_at = new Date().toISOString();
         } else if (row.status === "refunded" && decision.reason === "dispute_won") {
           update.status = "completed";
