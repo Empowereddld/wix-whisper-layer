@@ -1,8 +1,9 @@
 # Roadmap
 
 ## Parent Guidebook pre-campaign purchase audit (2026-10-26)
-- [ ] Audit guest checkout, paid verification, secure PDF delivery, receipt email, recording, analytics and later retrieval; report gaps and proposed fixes without changing checkout or publishing.
-- [ ] Inspect the current stored PDF and correct the Resource Library's 26-page description only if 27 pages is confirmed.
+- [x] Audit guest checkout, paid verification, secure PDF delivery, receipt email, recording, analytics and later retrieval; report gaps and proposed fixes without changing checkout or publishing.
+- [x] Inspect the current stored PDF and correct the Resource Library's 26-page description only if 27 pages is confirmed.
+- [ ] Implement audit fixes only after owner approval: guest storage-path normalization, reliable paid fulfillment and receipt retries, entitlement-aware retrieval and duplicate-charge reconciliation.
 
 ## Parent Guidebook single hero (2026-10-26)
 - [x] Remove the original hero at source, connect the new hero to the existing checkout button, and preserve other sections and /for-parents.
