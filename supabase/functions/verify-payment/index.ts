@@ -94,9 +94,7 @@ Deno.serve(async (req) => {
     }
     if (result.kind === "error") return json({ error: "Failed to record purchase" }, 500);
 
-    const analyticsPurchase = result.recordedNow && !result.duplicatePayment
-      ? await guidebookMeasurement(session.id, result.resourceId, session.currency || "", session.amount_total ?? 0)
-      : await guidebookMeasurement(session.id, result.resourceId, session.currency || "", session.amount_total ?? 0);
+    const analyticsPurchase = await guidebookMeasurement(session.id, result.resourceId, session.currency || "", session.amount_total ?? 0);
 
     // Guests get a per-purchase access pass (exchanged for a 5-minute link by
     // guidebook-download). The session id is only good for this exchange
