@@ -13,10 +13,10 @@ const ForParentsHero = () => {
               </span>
             </div>
             <h1 className="text-[30px] md:text-[36px] lg:text-[48px] font-black text-foreground leading-[1.12] mb-4 md:mb-5 max-w-[500px]">
-              Does Your Child Struggle to Express Themself?
+              How Do I Explain DLD To My Child?
             </h1>
             <p className="text-[13px] md:text-[14px] lg:text-[15px] text-muted-foreground leading-[1.7] mb-6 md:mb-8 max-w-[500px]">
-              Join 5,000+ parents learning about language challenges, gaining practical strategies, and discovering they're not alone.
+              Find the words to talk about DLD together.
             </p>
             <a
               href="https://www.facebook.com/share/g/1GCdxhWtfB/"
@@ -24,7 +24,7 @@ const ForParentsHero = () => {
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center h-12 md:h-14 px-8 md:px-10 bg-black text-white text-[11px] md:text-[12px] lg:text-[13px] font-bold uppercase tracking-[0.12em] rounded-sm hover:bg-black/85 transition-colors duration-200"
             >
-              Join Our Community
+              GET THE PARENT GUIDEBOOK - $9.99 USD
             </a>
           </div>
 
