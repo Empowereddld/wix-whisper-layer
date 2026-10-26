@@ -5,10 +5,10 @@
 - [x] Inspect the current stored PDF and correct the Resource Library's 26-page description only if 27 pages is confirmed.
 - [x] Stage 1: per-purchase guest access pass, secure 5-minute download, guest path fix (rollback point 1)
 - [x] Stage 2: confirmation page processing state and exact thank-you wording
-- [ ] Stage 3: Stripe notifications built and deployed (closed tab, refunds, disputes, delayed payments); waiting on owner to add Stripe destination + signing value
-- [ ] Stage 4: exact confirmation email with per-customer link, safe retries
-  - [ ] After 6 failed attempts: purchase kept, admin can find and resend securely, no links/PII in logs
-  - [ ] Access link works after address-bar removal, including page refresh
+- [x] Stage 3: Stripe notifications built, signing secret stored (real delivery confirmed by purchase test)
+- [x] Stage 4: exact confirmation email with per-customer link, safe retries
+  - [x] After 6 failed attempts: purchase kept, admin can find and resend securely, no links/PII in logs
+  - [x] Access link works after address-bar removal, including page refresh
 - [ ] Stage 5: full test pass
 - [ ] Stage 6: neutral, rate-limited lost-email recovery
 - [ ] Real $9.99 purchase test by owner
