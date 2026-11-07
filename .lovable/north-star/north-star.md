@@ -2,8 +2,8 @@
 
 # North star
 
-Increase awareness and understanding of Developmental Language Disorder while connecting people with DLD, families, educators, and professionals with accessible resources, practical tools, and a supportive community.
+Help people understand DLD and find resources, strategies, and support.
 
 ## Metric
 
-Resources downloaded each month, counting each person's first download of each resource
+Resources purchased each month
