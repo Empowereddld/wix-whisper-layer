@@ -22,5 +22,5 @@ Amazon book sales happen on Amazon, so the site can't count them. I can count cl
 1. Set the goal to: "Help people understand DLD and find resources, strategies, and support."
 2. Set the headline number to "Resources purchased each month", unless you prefer another option above.
 3. Save your full mission word for word in project knowledge.
-4. Save the separate measures under three groups: business sustainability (revenue, purchases, conversion rate), meaningful engagement (downloads, newsletter signups, community referrals) and awareness (visitors, engagement with educational content).
+4. Save the separate measures under three groups: business sustainability (monthly revenue in USD reported separately from the purchase count, net of full and partial refunds and lost disputes where recorded; purchases; conversion rate), meaningful engagement (downloads, newsletter signups, community referrals) and awareness (visitors, engagement with educational content).
 5. Keep the three rules already saved: "Resource Library", never "Hub"; serving people with DLD at every age plus families, educators, SLPs and other professionals; mission, website purpose and business goals kept distinct.
