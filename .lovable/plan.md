@@ -1,20 +1,23 @@
-# Next steps after the successful test purchase
+# Update the site goal and terminology
 
-## 1. Publish
-- Publish the current preview so the personal access link in the confirmation email works on www.empowereddld.com.
-- After publishing: open the email link, confirm the access page shows the download button, refresh once, download the PDF.
+No changes to website content, layout or features.
 
-## 2. Stage 6: "Lost your email?" recovery (you approved it earlier)
-- Small form on the guidebook access page asking for the checkout email.
-- Always shows the same neutral message ("If this email has a purchase, we've sent a new link"), so it never reveals who bought.
-- Rate limited per email and per network.
-- A new link retires the old one.
-- Uses the same approved sender and the same per-purchase access page.
-- Preview only; reported after testing, then publish on your approval.
+## 1. Site goal
+Replace the current goal with your wording, exactly:
 
-## 3. Still waiting on you
-- GA4 Measurement ID (needed for campaign tracking).
-- Optional: a refund test on your $9.99 order to confirm access is removed.
+"Increase awareness and understanding of Developmental Language Disorder while connecting people with DLD, families, educators, and professionals with accessible resources, practical tools, and a supportive community."
 
-## Technical details
-- Recovery reuses `_shared/rateLimit.ts`, `_shared/guidebookAccess.ts` (version bump to retire old passes) and `_shared/guidebookEmail.ts` with a recovery idempotency key; no customer email or pass in logs.
+My one suggestion: a shorter version focused on what people end up with, without the "while connecting..." part, which describes how the site does it: "People with DLD, and those who support them, understand DLD and find the help they need." I'll use your wording unless you choose the shorter one.
+
+## 2. Measurement
+The goal file holds only one headline number. The other measures you listed stay separate, and none of them gets dropped:
+- Awareness: visitors, how far educational content reaches
+- Education: resource downloads, video views, use of tools
+- Community: visits from the Facebook group, newsletter signups
+- Empowerment: use of self-advocacy and lived-experience content
+- Sustainability: book and resource sales, revenue, how many visitors buy
+
+I'll leave the headline number as monthly downloads for now and report the other measures separately when you ask for results. None of these numbers can prove that someone's understanding or confidence improved.
+
+## 3. Terminology
+Save a project rule: call it the "Resource Library" in everything I write, never "Hub". Also save that Empowered DLD serves people with DLD at every age, plus parents, educators, SLPs and other professionals, and that mission, website purpose and sales goals stay separate.
