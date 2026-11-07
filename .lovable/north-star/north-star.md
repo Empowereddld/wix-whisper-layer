@@ -2,7 +2,7 @@
 
 # North star
 
-Families of children with DLD can help their child understand and talk about it.
+Increase awareness and understanding of Developmental Language Disorder while connecting people with DLD, families, educators, and professionals with accessible resources, practical tools, and a supportive community.
 
 ## Metric
 
