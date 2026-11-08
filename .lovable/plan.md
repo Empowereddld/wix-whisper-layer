@@ -6,4 +6,6 @@ Before July 6, 2026, the home page intro sentence read:
 
 The small label above the headline read "SUPPORTING CHILDREN WITH DLD" (now "PRACTICAL SUPPORT FOR DLD"). The headline has not changed.
 
+Why it changed: on July 6, 2026 you approved a home page and About rewrite. The new wording puts story-led books and practical next steps front and centre, and it is warmer than "ecosystem". You also asked for "speech-language pathologists" to be spelled out in full.
+
 Nothing on the website will be changed unless you ask.
