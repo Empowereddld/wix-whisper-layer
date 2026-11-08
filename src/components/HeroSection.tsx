@@ -41,7 +41,7 @@ const HeroSection = () => {
               Every child with DLD deserves to feel seen.
             </h1>
             <p className="text-[15px] sm:text-[16px] md:text-[17px] leading-[1.6] text-foreground/75 mb-5 md:mb-9 max-w-[340px] sm:max-w-[420px]">
-              Story-led books, resources, and training that help children with Developmental Language Disorder feel seen, and help the parents, educators, and speech-language pathologists around them know what to do next.
+              We partner with families, educators, clinicians, and organizations to bring clear, practical resources about Developmental Language Disorder into homes, schools, and communities.
             </p>
             <div>
               <a href="/who-we-serve">
