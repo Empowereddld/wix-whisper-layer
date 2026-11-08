@@ -12,6 +12,9 @@ interface SEOHeadProps {
   description: string;
   path: string;
   ogImage?: string;
+  /** Optional separate social sharing title/description (Open Graph + X/Twitter). Defaults to the SEO title/description. */
+  ogTitle?: string;
+  ogDescription?: string;
   type?: string;
   jsonLd?: Record<string, unknown>;
   breadcrumbs?: BreadcrumbItem[];
@@ -24,7 +27,7 @@ interface SEOHeadProps {
   noCanonical?: boolean;
 }
 
-const SEOHead = ({ title, description, path, ogImage, type = "website", jsonLd, breadcrumbs, noindex, noCanonical }: SEOHeadProps) => {
+const SEOHead = ({ title, description, path, ogImage, ogTitle, ogDescription, type = "website", jsonLd, breadcrumbs, noindex, noCanonical }: SEOHeadProps) => {
   const canonicalUrl = `${BASE_URL}${path}`;
   const defaultOgImage = "https://www.empowereddld.com/og-empowered-dld.png";
 
@@ -46,15 +49,15 @@ const SEOHead = ({ title, description, path, ogImage, type = "website", jsonLd, 
       {!noCanonical && <link rel="canonical" href={canonicalUrl} />}
       {noindex && <meta name="robots" content="noindex, nofollow" />}
 
-      <meta property="og:title" content={title} />
-      <meta property="og:description" content={description} />
+      <meta property="og:title" content={ogTitle || title} />
+      <meta property="og:description" content={ogDescription || description} />
       <meta property="og:url" content={canonicalUrl} />
       <meta property="og:type" content={type} />
       <meta property="og:image" content={ogImage || defaultOgImage} />
 
       <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content={title} />
-      <meta name="twitter:description" content={description} />
+      <meta name="twitter:title" content={ogTitle || title} />
+      <meta name="twitter:description" content={ogDescription || description} />
       <meta name="twitter:image" content={ogImage || defaultOgImage} />
 
       {jsonLd && (
