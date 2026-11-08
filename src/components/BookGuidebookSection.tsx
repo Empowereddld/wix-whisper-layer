@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import bookGuidebook from "@/assets/book-parent-guidebook.webp";
 
 const BookGuidebookSection = () => {
@@ -23,14 +24,20 @@ const BookGuidebookSection = () => {
             <p className="text-[13px] md:text-[14px] text-muted-foreground leading-[1.7] max-w-[500px] mb-5">
               Use it alongside Dan and the Paper Airplane.
             </p>
-            <div>
+            <div className="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-3">
+              <Link
+                to="/shop/parent-guidebook"
+                className="inline-flex items-center justify-center h-10 px-6 bg-deep-purple text-deep-purple-foreground text-[12px] font-semibold rounded-full hover:bg-deep-purple/90 transition-colors duration-200"
+              >
+                Buy Digital Guidebook
+              </Link>
               <a
                 href="https://mybook.to/nwINcA"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center h-10 px-6 bg-deep-purple text-deep-purple-foreground text-[12px] font-semibold rounded-sm hover:bg-deep-purple/90 transition-colors duration-200"
+                className="inline-flex items-center justify-center h-10 px-6 border border-deep-purple text-deep-purple text-[12px] font-semibold rounded-full hover:bg-deep-purple/10 transition-colors duration-200"
               >
-                Buy on Amazon
+                Buy Paperback on Amazon
               </a>
             </div>
           </div>
