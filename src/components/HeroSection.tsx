@@ -35,7 +35,7 @@ const HeroSection = () => {
           {/* Text */}
           <div className="z-10 pt-10 pb-4 md:py-0 px-6 sm:px-7 md:px-10 lg:px-14 xl:px-20 text-left flex flex-col justify-start md:justify-center md:min-h-[calc(100vh-70px)] lg:min-h-[calc(100vh-80px)]">
             <p className="text-[12px] sm:text-[13px] font-bold uppercase tracking-[0.18em] text-primary mb-3 md:mb-5">
-              PRACTICAL SUPPORT FOR DLD
+              SUPPORTING CHILDREN WITH DLD
             </p>
             <h1 className="text-[42px] sm:text-[48px] md:text-[52px] xl:text-[74px] leading-[1.05] font-black text-foreground mb-4 md:mb-6 max-w-[500px] tracking-[-0.025em]">
               Every child with DLD deserves to feel seen.
