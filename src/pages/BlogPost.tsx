@@ -22,7 +22,7 @@ interface ParsedBody {
 
 const parseFAQ = (body: string): ParsedBody => {
   // Match a "###### **FAQs**" (or FAQ) heading and capture everything until the next ###### heading or end of doc.
-  const re = /###### \*\*FAQs?\*\*\s*\n([\s\S]*?)(?=\n###### |\n?$)/i;
+  const re = /###### \*\*FAQs?\*\*\s*\n([\s\S]*?)(?=\n###### |\n## |\n?$)/i;
   const m = body.match(re);
   if (!m) return { before: body, faqs: [], after: "", afterIsSources: /^#{1,6}\s+\*\*Sources\*\*/i.test(body.trim()) };
   const before = body.slice(0, m.index).trimEnd();
