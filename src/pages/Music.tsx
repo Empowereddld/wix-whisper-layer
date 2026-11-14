@@ -58,20 +58,22 @@ const Music = () => (
 
       <section id="songs" className="py-20 md:py-[120px]">
         <div className="container px-6 md:px-8">
-          <h2 className="mb-12 text-[28px] md:text-[36px] font-bold text-foreground leading-[1.15]">Listen to Our Music</h2>
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 max-w-[900px]">
+          <h2 className="mb-10 text-[28px] md:text-[36px] font-bold text-foreground leading-[1.15]">Listen to Our Music</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {songs.map((s) => (
-              <article key={s.title} className="flex flex-col rounded-lg border border-border bg-secondary/40 overflow-hidden shadow-sm">
-                <img src={s.image} alt={`${s.title} song cover by Empowered DLD`} width={900} height={900} loading="lazy" className="w-full aspect-square object-cover" />
-                <div className="flex flex-1 flex-col p-6">
-                  <h3 className="mb-3 text-[18px] font-bold text-foreground">{s.title}</h3>
-                  <p className="mb-6 flex-1 text-[14px] leading-[1.7] text-foreground/75">{s.description}</p>
+              <article key={s.title} className="flex flex-col bg-muted rounded-xl border border-border/40 overflow-hidden pb-8">
+                <div className="relative aspect-square overflow-hidden">
+                  <img src={s.image} alt={`${s.title} song cover by Empowered DLD`} width={900} height={900} loading="lazy" className="w-full h-full object-cover" />
+                </div>
+                <div className="px-6 pt-5 flex flex-col flex-1">
+                  <h3 className="text-[20px] md:text-[22px] font-bold text-foreground leading-tight mb-2">{s.title}</h3>
+                  <p className="text-[14px] md:text-[15px] text-muted-foreground leading-relaxed mb-6 flex-1">{s.description}</p>
                   <a
                     href={s.href}
                     target="_blank"
                     rel="noreferrer"
                     onClick={() => trackStreamingClick("music-page")}
-                    className="inline-flex w-fit items-center gap-2 min-h-[44px] px-6 bg-foreground text-background text-[13px] font-semibold rounded-md hover:bg-foreground/85 transition-all"
+                    className="inline-flex w-fit items-center justify-center gap-2 h-11 px-7 bg-foreground text-background text-[13px] font-semibold tracking-[0.04em] rounded-md hover:opacity-90 transition-opacity duration-200 mt-auto"
                   >
                     <Headphones className="w-4 h-4" aria-hidden="true" /> Listen Now
                   </a>
