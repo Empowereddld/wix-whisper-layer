@@ -33,6 +33,7 @@ const navLinks = [
   { label: "WHO WE SERVE", href: "/who-we-serve", children: whoWeServeLinks },
   { label: "RESOURCES", href: "/resources", children: resourcesLinks },
   { label: "SHOP", href: "/shop", children: shopLinks },
+  { label: "MUSIC", href: "/music" },
   { label: "WORK WITH US", href: "/work-with-us" },
   { label: "ABOUT DLD", href: "/about-dld" },
   { label: "CONTACT", href: "/contact" },
@@ -43,6 +44,7 @@ const mobileNavLinks = [
   { label: "WHO WE SERVE", href: "/who-we-serve", children: whoWeServeLinks },
   { label: "RESOURCES", href: "/resources", children: resourcesLinks },
   { label: "SHOP", href: "/shop", children: shopLinks },
+  { label: "MUSIC", href: "/music" },
   { label: "WORK WITH US", href: "/work-with-us" },
   { label: "ABOUT DLD", href: "/about-dld" },
   { label: "WHY EMPOWERED DLD", href: "/why-empowered-dld" },
@@ -76,7 +78,7 @@ const Header = ({ purchaseFocused = false }: { purchaseFocused?: boolean }) => {
           <img src={logoImage} alt="Empowered DLD" className="h-[32px] lg:h-[38px] w-auto" />
         </Link>
 
-        <nav className={`hidden xl:flex items-center gap-6 ${purchaseFocused ? "[&_a]:text-muted-foreground" : ""}`} ref={dropdownRef}>
+        <nav className={`hidden xl:flex items-center gap-4 2xl:gap-6 ${purchaseFocused ? "[&_a]:text-muted-foreground" : ""}`} ref={dropdownRef}>
           {navLinks.map((link) =>
             link.children ? (
               <div key={link.label} className="relative flex items-center">
