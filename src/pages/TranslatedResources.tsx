@@ -104,7 +104,6 @@ const TranslatedResources = () => {
                   </button>
                 ))}
               </div>
-            </div>
           </div>
         </section>
 
