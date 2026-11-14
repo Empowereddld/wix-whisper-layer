@@ -59,7 +59,7 @@ const Music = () => (
       <section id="songs" className="py-20 md:py-[120px]">
         <div className="container px-6 md:px-8">
           <h2 className="mb-12 text-[28px] md:text-[36px] font-bold text-foreground leading-[1.15]">Listen to Our Music</h2>
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 max-w-[900px]">
             {songs.map((s) => (
               <article key={s.title} className="flex flex-col rounded-lg border border-border bg-secondary/40 overflow-hidden shadow-sm">
                 <img src={s.image} alt={`${s.title} song cover by Empowered DLD`} width={900} height={900} loading="lazy" className="w-full aspect-square object-cover" />
@@ -84,7 +84,7 @@ const Music = () => (
 
       <section className="pb-20 md:pb-[120px]">
         <div className="container px-6 md:px-8 grid gap-10 lg:grid-cols-2 lg:gap-16 items-center">
-          <img src={whyCreated} alt="Girl listening to music on headphones in her bedroom" width={900} height={1125} loading="lazy" className="w-full max-h-[500px] object-cover object-center rounded-xl" />
+          <img src={whyCreated} alt="Girl listening to music on headphones in her bedroom" width={900} height={1125} loading="lazy" className="w-full max-w-[380px] mx-auto aspect-[4/5] object-cover object-top rounded-xl" />
           <div className="space-y-5">
             <h2 className="text-[28px] md:text-[36px] font-bold text-foreground leading-[1.15]">Why We Created Our Music</h2>
             <p className={p}>As a speech-language pathologist and an educator, we know how much understanding matters for people living with DLD.</p>
