@@ -59,7 +59,7 @@ const Music = () => (
       <section id="songs" className="py-20 md:py-[120px]">
         <div className="container px-6 md:px-8">
           <h2 className="mb-12 text-[28px] md:text-[36px] font-bold text-foreground leading-[1.15]">Listen to Our Music</h2>
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 max-w-[900px] mx-auto">
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 max-w-[900px]">
             {songs.map((s) => (
               <article key={s.title} className="flex flex-col rounded-lg border border-border bg-secondary/40 overflow-hidden shadow-sm">
                 <img src={s.image} alt={`${s.title} song cover by Empowered DLD`} width={900} height={900} loading="lazy" className="w-full aspect-square object-cover" />
