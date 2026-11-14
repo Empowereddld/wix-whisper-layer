@@ -12,8 +12,6 @@ const SITE = "https://www.empowereddld.com";
 const TTL_S = 7 * 24 * 60 * 60;
 const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[A-Za-z]{2,}$/;
 const CONSENT_SOURCE = "footer-newsletter-confirmed";
-const FOOTER_SOURCE = "footer-newsletter";
-const FOOTER_TEXT = "Get practical DLD strategies, resources, and updates from Empowered DLD by email. You can unsubscribe anytime.";
 const CONSENT_TEXT = "Footer newsletter form submitted, then confirmed by clicking the emailed confirmation link.";
 
 const json = (b: unknown, s = 200) =>
