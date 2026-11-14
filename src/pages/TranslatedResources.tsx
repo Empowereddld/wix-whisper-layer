@@ -35,14 +35,14 @@ const languages: Language[] = [
 ];
 
 const btn =
-  "inline-flex w-fit items-center justify-center gap-2 h-11 px-6 bg-foreground text-background text-[13px] font-semibold tracking-[0.04em] rounded-md hover:opacity-90 transition-opacity duration-200 mt-auto";
+  "inline-flex w-fit items-center justify-center gap-2 h-11 px-3 bg-foreground text-background text-[12px] font-semibold tracking-[0.04em] rounded-md hover:opacity-90 transition-opacity duration-200 mt-auto";
 
 const Card = ({ item, cta, external }: { item: Item; cta: string; external?: boolean }) => (
-  <div className="flex flex-col bg-muted rounded-xl border border-border/40 overflow-hidden pb-6">
-    <div className="aspect-[3/4] overflow-hidden"><img src={item.image} alt={item.title} loading="lazy" className="w-full h-full object-cover" /></div>
-    <div className="px-5 pt-4 flex flex-col flex-1">
-      <h4 className="text-[17px] font-bold text-foreground leading-tight mb-2">{item.title}</h4>
-      <p className="text-[14px] text-muted-foreground leading-relaxed mb-5 flex-1">{item.description}</p>
+  <div className="flex flex-col bg-muted rounded-xl border border-border/40 overflow-hidden pb-4">
+    <div className="aspect-[4/5] overflow-hidden"><img src={item.image} alt={item.title} loading="lazy" className="w-full h-full object-cover object-top" /></div>
+    <div className="px-3 pt-3 flex flex-col flex-1">
+      <h4 className="text-[14px] font-bold text-foreground leading-tight mb-1">{item.title}</h4>
+      <p className="text-[12px] text-muted-foreground leading-snug mb-3 flex-1 line-clamp-3">{item.description}</p>
       <a href={item.href} target={external ? "_blank" : undefined} rel={external ? "noopener noreferrer" : undefined} download={external ? undefined : true} className={btn}>
         {external ? <ExternalLink size={16} /> : <Download size={16} />} {cta}
       </a>
@@ -56,7 +56,7 @@ const Category = ({ icon: Icon, title, items, cta, external }: { icon: typeof Bo
       <Icon size={18} strokeWidth={1.6} className="text-primary" />
       <h3 className="text-[15px] md:text-[16px] font-bold">{title}</h3>
     </div>
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
       {items.map((i) => <Card key={i.title} item={i} cta={cta} external={external} />)}
     </div>
   </div>
