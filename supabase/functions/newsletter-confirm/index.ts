@@ -107,10 +107,8 @@ Deno.serve(async (req) => {
 
   // Footer submission. Order is fixed:
   //  1. do-not-email list always wins (nothing happens)
-  //  2. brand-new footer row saved moments ago -> record the footer consent
-  //     (the footer itself sends the welcome and tags the new contact)
-  //  3. an existing "yes" consent record -> restore tag + welcome
-  //  4. otherwise (contact from another source / legacy) -> confirmation email
+  //  2. an existing "yes" consent record -> restore tag + welcome
+  //  3. otherwise -> confirmation email; consent is recorded only when the link is clicked
   if (body.action === "subscribe" || body.action === "request") {
     const email = typeof body.email === "string" ? body.email.trim().toLowerCase() : "";
     if (!EMAIL_RE.test(email) || email.length > 254) return json({ error: "A valid email address is required" }, 400);
@@ -126,15 +124,6 @@ Deno.serve(async (req) => {
     if (!row) return neutral();
 
     const { data: consents } = await admin.from("newsletter_consents").select("id, source").eq("email", email).eq("consented", true).limit(20);
-    const fresh = row.notes === "footer newsletter" && Date.now() - new Date(row.created_at).getTime() < 10 * 60 * 1000;
-    if (fresh && !consents?.some((c) => c.source === FOOTER_SOURCE)) {
-      const { error } = await admin.from("newsletter_consents").insert({
-        email, consented: true, source: FOOTER_SOURCE, wording_version: "footer-newsletter-v2",
-        checkbox_text: FOOTER_TEXT, helper_text: null,
-      });
-      if (error) console.error("newsletter-confirm: footer consent insert failed", error);
-      return neutral();
-    }
     if (consents?.length) { await tagAndWelcome(email); return neutral(); }
     await sendConfirmation(email);
     return neutral();
