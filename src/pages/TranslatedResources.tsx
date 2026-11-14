@@ -5,16 +5,28 @@ import Footer from "@/components/Footer";
 import SEOHead from "@/components/SEOHead";
 import danAndDaria from "@/assets/dan-and-daria.webp";
 
+import dldEverydayFr from "@/assets/translated/dld-everyday-french.webp";
+import dldEverydayIt from "@/assets/translated/dld-everyday-italian.webp";
+import selfAdvFr from "@/assets/translated/self-advocacy-french.webp";
+import selfAdvEs from "@/assets/translated/self-advocacy-spanish.webp";
+import selfAdvCa from "@/assets/translated/self-advocacy-catalan.webp";
+import wordFindFr from "@/assets/translated/word-finding-strategies-french.webp";
+import littleTalkersCy from "@/assets/translated/little-talkers-welsh.webp";
+
+const everyday = "A one-page poster showing what DLD can look like in daily life, with strategies people with DLD use.";
+const selfAdv = "A poster with self-advocacy phrases people with DLD can use to ask for what they need.";
+const pdf = (n: string) => `/downloads/translated/${n}.pdf`;
+
 type Item = { title: string; description: string; image: string; href: string };
 type Language = { id: string; native: string; english: string; dir?: "rtl"; books: Item[]; resources: Item[] };
 
 // Resources are connected in a later phase. Only add real, verified items here.
 const languages: Language[] = [
-  { id: "french", native: "Français", english: "French", books: [], resources: [] },
-  { id: "spanish", native: "Español", english: "Spanish", books: [], resources: [] },
-  { id: "italian", native: "Italiano", english: "Italian", books: [], resources: [] },
-  { id: "catalan", native: "Català", english: "Catalan", books: [], resources: [] },
-  { id: "welsh", native: "Cymraeg", english: "Welsh", books: [], resources: [] },
+  { id: "french", native: "Français", english: "French", books: [], resources: [{ title: "What DLD Looks Like Every Day", description: everyday, image: dldEverydayFr, href: pdf("dld-everyday-french") }, { title: "Self Advocacy", description: selfAdv, image: selfAdvFr, href: pdf("self-advocacy-french") }, { title: "Word Finding Strategies", description: "A poster of strategies to help when words get stuck.", image: wordFindFr, href: pdf("word-finding-strategies-french") }] },
+  { id: "spanish", native: "Español", english: "Spanish", books: [], resources: [{ title: "Self Advocacy", description: selfAdv, image: selfAdvEs, href: pdf("self-advocacy-spanish") }] },
+  { id: "italian", native: "Italiano", english: "Italian", books: [], resources: [{ title: "What DLD Looks Like Every Day", description: everyday, image: dldEverydayIt, href: pdf("dld-everyday-italian") }] },
+  { id: "catalan", native: "Català", english: "Catalan", books: [], resources: [{ title: "Self Advocacy", description: selfAdv, image: selfAdvCa, href: pdf("self-advocacy-catalan") }] },
+  { id: "welsh", native: "Cymraeg", english: "Welsh", books: [], resources: [{ title: "Daria's Tips for Little Talkers", description: "A poster of everyday language tips for families of young children.", image: littleTalkersCy, href: pdf("little-talkers-welsh") }] },
   { id: "persian", native: "فارسی", english: "Persian", dir: "rtl", books: [], resources: [] },
   { id: "arabic", native: "العربية", english: "Arabic", dir: "rtl", books: [], resources: [] },
   { id: "chinese", native: "中文", english: "Chinese", books: [], resources: [] },
@@ -31,7 +43,7 @@ const Card = ({ item, cta, external }: { item: Item; cta: string; external?: boo
     <div className="px-5 pt-4 flex flex-col flex-1">
       <h4 className="text-[17px] font-bold text-foreground leading-tight mb-2">{item.title}</h4>
       <p className="text-[14px] text-muted-foreground leading-relaxed mb-5 flex-1">{item.description}</p>
-      <a href={item.href} target={external ? "_blank" : undefined} rel={external ? "noopener noreferrer" : undefined} className={btn}>
+      <a href={item.href} target={external ? "_blank" : undefined} rel={external ? "noopener noreferrer" : undefined} download={external ? undefined : true} className={btn}>
         {external ? <ExternalLink size={16} /> : <Download size={16} />} {cta}
       </a>
     </div>
