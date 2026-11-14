@@ -1,4 +1,4 @@
-import { ArrowRight, Headphones, Mail } from "lucide-react";
+import { Headphones, Mail } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SEOHead from "@/components/SEOHead";
@@ -53,17 +53,10 @@ const Music = () => (
           <p className="text-[14px] md:text-[16px] text-white/80 leading-[1.7] max-w-[620px]">
             Our songs help people understand Developmental Language Disorder (DLD), one song at a time.
           </p>
-          <a
-            href="#songs"
-            onClick={(e) => { e.preventDefault(); document.getElementById("songs")?.scrollIntoView({ behavior: "smooth" }); }}
-            className="inline-flex items-center gap-2 min-h-[44px] px-8 bg-white text-deep-purple text-[13px] font-bold tracking-[0.04em] rounded-md hover:bg-white/90 transition-all mt-2"
-          >
-            Explore Our Songs <ArrowRight className="w-4 h-4" aria-hidden="true" />
-          </a>
         </div>
       </section>
 
-      <section id="songs" className="py-20 md:py-[120px] scroll-mt-24">
+      <section id="songs" className="py-20 md:py-[120px]">
         <div className="container px-6 md:px-8">
           <h2 className="mb-12 text-[28px] md:text-[36px] font-bold text-foreground leading-[1.15]">Listen to Our Music</h2>
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
