@@ -3,7 +3,6 @@ import { BookOpen, ChevronDown, Download, ExternalLink, FileText, Mail } from "l
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SEOHead from "@/components/SEOHead";
-import heroChar from "@/assets/char-dan-block-1.webp";
 
 type Item = { title: string; description: string; image: string; href: string };
 type Language = { id: string; native: string; english: string; dir?: "rtl"; books: Item[]; resources: Item[] };
@@ -70,8 +69,7 @@ const TranslatedResources = () => {
       <Header />
       <main>
         <section className="py-16 md:py-20">
-          <div className="container px-6 md:px-8 grid lg:grid-cols-[280px_1fr] gap-10 items-center">
-            <img src={heroChar} alt="" className="hidden lg:block w-full max-w-[280px] mx-auto" />
+          <div className="container px-6 md:px-8 max-w-[900px]">
             <div>
               <p className="text-[11px] md:text-[12px] font-bold uppercase tracking-[0.22em] text-primary mb-3">Translated Resources</p>
               <h1 className="text-[32px] md:text-[44px] font-black text-foreground leading-[1.1] mb-5">DLD Resources in Your Native Language</h1>
