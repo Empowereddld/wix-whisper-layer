@@ -69,18 +69,27 @@ const TranslatedResources = () => {
       />
       <Header />
       <main>
-        <section className="py-16 md:py-20">
-          <div className="container px-6 md:px-8 max-w-[900px]">
-            <div>
-              <p className="text-[11px] md:text-[12px] font-bold uppercase tracking-[0.22em] text-primary mb-3">Translated Resources</p>
-              <h1 className="text-[32px] md:text-[44px] font-black text-foreground leading-[1.1] mb-5">DLD Resources in Your Native Language</h1>
-              <p className="text-[15px] md:text-[16px] leading-[1.8] text-foreground/80 mb-3 max-w-[680px]">
-                Everyone deserves access to information about Developmental Language Disorder (DLD) in a language they understand.
-              </p>
-              <p className="text-[15px] md:text-[16px] leading-[1.8] text-foreground/80 mb-8 max-w-[680px]">
-                Explore our growing collection of translated children's books, strategy posters, and educational resources, made possible through collaborations with generous volunteers and partners around the world.
-              </p>
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
+        <section className="pt-8 pb-12 md:pt-12 md:pb-16">
+          <div className="container px-6 md:px-8">
+            <div className="grid lg:grid-cols-[minmax(0,400px)_1fr] gap-8 lg:gap-14 items-center">
+              <div className="order-1 flex justify-center">
+                <div className="relative w-full max-w-[240px] sm:max-w-[320px] lg:max-w-[400px]">
+                  <div aria-hidden="true" className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[94%] aspect-square bg-primary/10 rounded-full" />
+                  <img src={danAndDaria} alt="Dan and Daria, the Empowered DLD characters" className="relative w-full h-auto" />
+                </div>
+              </div>
+              <div className="order-2">
+                <p className="text-[11px] md:text-[12px] font-bold uppercase tracking-[0.22em] text-primary mb-3">Translated Resources</p>
+                <h1 className="text-[30px] md:text-[40px] lg:text-[44px] font-black text-foreground leading-[1.1] mb-5 max-w-[620px]">DLD Resources in Your Native Language</h1>
+                <p className="text-[15px] md:text-[16px] leading-[1.8] text-foreground/80 mb-3 max-w-[680px]">
+                  Everyone deserves access to information about Developmental Language Disorder (DLD) in a language they understand.
+                </p>
+                <p className="text-[15px] md:text-[16px] leading-[1.8] text-foreground/80 max-w-[680px]">
+                  Explore our growing collection of translated children's books, strategy posters, and educational resources, made possible through collaborations with generous volunteers and partners around the world.
+                </p>
+              </div>
+            </div>
+            <div className="mt-10 md:mt-12 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
                 {languages.map((l) => (
                   <button
                     key={l.id}
