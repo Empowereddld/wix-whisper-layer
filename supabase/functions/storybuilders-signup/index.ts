@@ -325,10 +325,9 @@ Deno.serve(async (req) => {
     // Generate verification token
     const verificationToken = crypto.randomUUID();
 
-    // Speech professionals get an automatic +50 bonus at signup (no manual approval).
-    // We trust self-identification at launch; verification can be re-introduced later if needed.
-    const SLP_AUTO_BONUS = 50;
-    const initialPoints = 10 + (isSpeechPro ? SLP_AUTO_BONUS : 0);
+    // Speech professional bonus is awarded only after admin approval
+    // (verify_speech_professional RPC), never from the self-claim at signup.
+    const initialPoints = 10;
 
     // Insert new entry
     const { data: newEntry, error: insertError } = await supabase
@@ -342,7 +341,7 @@ Deno.serve(async (req) => {
         verification_token: verificationToken,
         email_verified: false,
         is_speech_professional: isSpeechPro,
-        speech_professional_verified: isSpeechPro, // auto-verified at signup (Option A)
+        speech_professional_verified: false, // admin approves via SLP verification queue
         role: normalizedRole,
         role_other: normalizedRoleOther,
       })
