@@ -52,6 +52,7 @@ const AboutDLD = lazy(() => import("./pages/AboutDLD"));
 const WhyEmpoweredDLD = lazy(() => import("./pages/WhyEmpoweredDLD"));
 const ContactUs = lazy(() => import("./pages/ContactUs"));
 const Music = lazy(() => import("./pages/Music"));
+const TranslatedResources = lazy(() => import("./pages/TranslatedResources"));
 
 // Lazy-loaded: Blog
 const Blog = lazy(() => import("./pages/Blog"));
@@ -169,6 +170,7 @@ const App = () => (
               <Route path="/why-empowered-dld" element={<WhyEmpoweredDLD />} />
               <Route path="/contact" element={<ContactUs />} />
               <Route path="/music" element={<Music />} />
+              <Route path="/translated-resources" element={<TranslatedResources />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/storypros" element={<StoryBuilders />} />
               <Route path="/storypros/dashboard" element={<StoryProsDashboard />} />

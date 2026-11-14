@@ -18,6 +18,7 @@ const resourcesLinks = [
   { label: "Free Course", href: "/resources/free-course" },
   { label: "Downloadables", href: "/resources/downloadables" },
   { label: "Blogs", href: "/resources/blog" },
+  { label: "Translated Resources", href: "/translated-resources" },
 ];
 
 const shopLinks = [
