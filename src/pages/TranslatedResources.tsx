@@ -3,6 +3,7 @@ import { BookOpen, ChevronDown, Download, ExternalLink, FileText, Mail } from "l
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SEOHead from "@/components/SEOHead";
+import danAndDaria from "@/assets/dan-and-daria.webp";
 
 type Item = { title: string; description: string; image: string; href: string };
 type Language = { id: string; native: string; english: string; dir?: "rtl"; books: Item[]; resources: Item[] };
