@@ -905,6 +905,7 @@ export type Database = {
           created_at: string
           description: string | null
           download_count: number | null
+          file_format: string | null
           file_url: string | null
           great_for: string[] | null
           id: string
@@ -919,12 +920,14 @@ export type Database = {
           settings: string[] | null
           thumbnail_url: string | null
           title: string
+          translation_group_id: string | null
         }
         Insert: {
           age_ranges?: string[] | null
           created_at?: string
           description?: string | null
           download_count?: number | null
+          file_format?: string | null
           file_url?: string | null
           great_for?: string[] | null
           id?: string
@@ -939,12 +942,14 @@ export type Database = {
           settings?: string[] | null
           thumbnail_url?: string | null
           title: string
+          translation_group_id?: string | null
         }
         Update: {
           age_ranges?: string[] | null
           created_at?: string
           description?: string | null
           download_count?: number | null
+          file_format?: string | null
           file_url?: string | null
           great_for?: string[] | null
           id?: string
@@ -959,8 +964,17 @@ export type Database = {
           settings?: string[] | null
           thumbnail_url?: string | null
           title?: string
+          translation_group_id?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "resources_translation_group_id_fkey"
+            columns: ["translation_group_id"]
+            isOneToOne: false
+            referencedRelation: "resources"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       saved_resources: {
         Row: {

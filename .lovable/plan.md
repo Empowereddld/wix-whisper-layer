@@ -14,7 +14,8 @@
 - Include English plus all ten translated languages listed in the brief. Include additional languages when assigned to resources.
 - Preserve existing categories. Present poster and educational-resource labels without changing existing category assignments.
 - Extend the existing resource editor with language selection and an optional link to another translation of the same resource.
-- Keep each translation as a separate resource with its own permanent link, title, description, preview and PDF. Import the seven already supplied translated PDFs without duplicating any matching existing records.
+- Preserve the seven supplied translated posters as original PNG images, not PDFs. Support both image and PDF resource uploads in the existing editor, with languages, categories, translation links and publishing managed without code changes.
+- Defer importing the supplied posters until the separate full-integration stage. No existing resource files or records are replaced in Phase 2.
 
 ### 2. Individual resource pages
 - Keep the existing pages and show language alongside the current resource details and download button.
@@ -23,20 +24,18 @@
 - Keep **Back to Resource Library** and restore gallery filter, search, saved-only and sorting selections when returning.
 - Keep recommendation purchase actions attached to the recommended item without replacing the open page's details.
 
-### 3. Signed-in downloads
-- Route translated-page “Get Resource” buttons to the corresponding library resource page, through the existing sign-in process when needed. Retain the public translated page and its ten language sections.
-- Store translated PDFs privately and reuse the existing verified-account download service. Do not create a second download system.
-- Protect existing no-cost library PDFs too: copy and verify each file in private storage, retain its resource ID and metadata, then remove public downloadable copies only after successful verification. Do not delete resource records, accounts or purchases. Public previews remain available.
-- Remove publicly served translated PDF copies after their protected replacements are verified.
-- Preserve paid resource checks and the existing guest Parent Guidebook purchase journey.
-- Preserve the existing login, onboarding and optional newsletter consent. Account creation must not itself grant marketing consent.
+### 3. Selected-resource return and deferred file migration
+- Carry the exact selected resource through existing sign-in, signup, confirmation and required onboarding, then return directly to that resource rather than the gallery.
+- Preserve paid resource checks, the guest Parent Guidebook purchase journey and existing optional newsletter consent. Account creation must not itself grant marketing consent.
+- Private-file migration and translated-page download integration are separate future steps. Review backup, verification and rollback procedures with the owner before any live file changes.
+- Phase 2 does not copy, convert, remove, replace or migrate existing public or private files.
 
 ## Verification and release
 - Test combined language/type filters, additional-language handling, translation links, recommendation order and restoration of gallery selections.
-- Test signed-out download rejection and signed-in access to both an existing resource and a translated PDF.
+- Test signed-out selected-resource redirection and signed-in resource return. Defer private-download rejection and translated-file integration testing until the separate migration stage.
 - Check an existing account can still sign in, an existing paid purchase remains accessible, and all original resource IDs and purchase/account counts are preserved.
 - Verify desktop and phone layouts and existing consent safeguards.
-- Keep website changes unpublished. Private-file and resource-record changes affect the shared live library, so execute file protection in verified steps with rollback copies kept outside public serving paths.
+- Keep website changes unpublished. Phase 2 adds optional resource metadata fields but leaves existing resource records and files untouched. Private-file changes require a separately reviewed procedure.
 
 ## Technical approach
 - Reuse `resources.languages`, `resource_type`, existing gallery hooks, resource cards and `/hub/resource/:id` pages.

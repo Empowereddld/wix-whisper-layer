@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useAuth } from "@/contexts/AuthContext";
+import { authPath, getResourceReturn, rememberResourceReturn } from "@/lib/resourceReturn";
+import { useState, useEffect } from "react";
 import NoIndexHead from "@/components/NoIndexHead";
 import { useNavigate, Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -22,6 +24,12 @@ const GoogleIcon = () => (
 
 const Login = () => {
   const navigate = useNavigate();
+  const { user, profile, loading: authLoading } = useAuth();
+  const destination = getResourceReturn();
+  useEffect(() => { rememberResourceReturn(destination); }, [destination]);
+  useEffect(() => {
+    if (!authLoading && user && profile) navigate(profile.interests === null ? authPath("/signup/role", destination) : destination, { replace: true });
+  }, [authLoading, user, profile, navigate, destination]);
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
@@ -31,7 +39,7 @@ const Login = () => {
   const handleGoogleLogin = async () => {
     setGoogleLoading(true);
     const { error } = await lovable.auth.signInWithOAuth("google", {
-      redirect_uri: window.location.origin + "/hub",
+      redirect_uri: window.location.origin + authPath("/hub/login", destination),
     });
     if (error) {
       toast({ title: "Google sign-in failed. Please try again.", variant: "destructive" });
@@ -60,7 +68,7 @@ const Login = () => {
       });
       return;
     }
-    navigate("/hub");
+    navigate(destination);
   };
 
   return (
@@ -117,7 +125,7 @@ const Login = () => {
 
           <p className="text-center text-sm text-stone-ui">
             Don't have an account?{" "}
-            <Link to="/signup" className="text-coral font-medium hover:underline">Sign Up Free</Link>
+            <Link to={authPath("/signup", destination)} className="text-coral font-medium hover:underline">Sign Up Free</Link>
           </p>
         </div>
       </div>

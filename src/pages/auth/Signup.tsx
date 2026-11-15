@@ -1,3 +1,4 @@
+import { authPath, getResourceReturn, rememberResourceReturn } from "@/lib/resourceReturn";
 import { useState } from "react";
 import NoIndexHead from "@/components/NoIndexHead";
 import { useNavigate, Link, useSearchParams } from "react-router-dom";
@@ -34,6 +35,7 @@ const GoogleIcon = () => (
 
 const Signup = () => {
   const navigate = useNavigate();
+  const destination = getResourceReturn();
   const { toast } = useToast();
   const [searchParams] = useSearchParams();
   const [loading, setLoading] = useState(false);
@@ -51,7 +53,7 @@ const Signup = () => {
     // Store ref code in localStorage so we can capture it after redirect
     if (refCode) localStorage.setItem("empowered_ref", refCode);
     const { error } = await lovable.auth.signInWithOAuth("google", {
-      redirect_uri: window.location.origin + "/signup/role",
+      redirect_uri: window.location.origin + authPath("/hub/login", destination),
     });
     if (error) {
       toast({ title: "Google sign-in failed. Please try again.", variant: "destructive" });
@@ -67,6 +69,7 @@ const Signup = () => {
       return;
     }
 
+    rememberResourceReturn(destination);
     setLoading(true);
     const { error } = await supabase.auth.signUp({
       email: email.trim(),
@@ -77,7 +80,7 @@ const Signup = () => {
           last_name: lastName.trim(),
           ...(refCode ? { referred_by: refCode } : {}),
         },
-        emailRedirectTo: `${window.location.origin}/signup/role`,
+        emailRedirectTo: window.location.origin + authPath("/signup/role", destination),
       },
     });
     setLoading(false);
@@ -89,7 +92,7 @@ const Signup = () => {
         description:
           friendly.code === "already_exists" ? (
             <span>
-              <Link to="/login" className="underline font-medium">
+              <Link to={authPath("/login", destination)} className="underline font-medium">
                 Log in instead
               </Link>
               .
@@ -179,7 +182,7 @@ const Signup = () => {
 
           <p className="text-center text-sm text-stone-ui">
             Already have an account?{" "}
-            <Link to="/login" className="text-coral font-medium hover:underline">Log In</Link>
+            <Link to={authPath("/login", destination)} className="text-coral font-medium hover:underline">Log In</Link>
           </p>
         </div>
       </div>

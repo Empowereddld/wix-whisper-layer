@@ -1,6 +1,6 @@
 import { Download, Eye, FileText, Image, CheckSquare, BookOpen, Package, BarChart3, Lock, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import SharePopover from "./SharePopover";
 import type { Resource } from "@/hooks/useResources";
 
@@ -56,6 +56,12 @@ const ResourceCard = ({
 }: ResourceCardProps) => {
   const Icon = typeIcons[resource.resource_type] || FileText;
   const navigate = useNavigate();
+  const location = useLocation();
+  const viewResource = () => {
+    onView(resource);
+    const back = location.pathname === "/hub" ? location.pathname + location.search : new URLSearchParams(location.search).get("back") || "/hub";
+    navigate(`/hub/resource/${resource.id}?back=${encodeURIComponent(back)}`);
+  };
   const isPaid = price != null && price > 0;
   const isUnlocked = !isPaid || isPurchased;
   
@@ -101,7 +107,7 @@ const ResourceCard = ({
             </button>
           )}
           <SharePopover resourceId={resource.id} resourceTitle={resource.title} userId={userId} />
-          <Button size="sm" variant="outline" onClick={() => { onView(resource); navigate(`/hub/resource/${resource.id}`); }} className="border-thistle hover:bg-thistle/30">
+          <Button size="sm" variant="outline" onClick={viewResource} className="border-thistle hover:bg-thistle/30">
             <Eye className="h-4 w-4 mr-1" /> Preview
           </Button>
           {isUnlocked ? (
@@ -180,7 +186,7 @@ const ResourceCard = ({
             variant="outline"
             size="sm"
             className="flex-1 border-thistle hover:bg-thistle/30 hover:border-hub-lavender transition-all"
-            onClick={() => { onView(resource); navigate(`/hub/resource/${resource.id}`); }}
+            onClick={viewResource}
           >
             <Eye className="h-4 w-4 mr-1.5" /> Preview
           </Button>

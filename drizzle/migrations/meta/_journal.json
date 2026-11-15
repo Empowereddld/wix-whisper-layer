@@ -71,6 +71,13 @@
       "when": 1793040133498,
       "tag": "0009_migration",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1794770748176,
+      "tag": "0010_resource_translation_relationships",
+      "breakpoints": true
     }
   ]
 }

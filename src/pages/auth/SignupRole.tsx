@@ -1,3 +1,4 @@
+import { authPath, getResourceReturn } from "@/lib/resourceReturn";
 import { syncToEmailOctopus } from "@/lib/emailoctopus";
 import { useState, useEffect } from "react";
 import NoIndexHead from "@/components/NoIndexHead";
@@ -37,6 +38,7 @@ const NEWSLETTER_HELPER_TEXT = "Optional. You can unsubscribe at any time. Your 
 
 const SignupRole = () => {
   const navigate = useNavigate();
+  const destination = getResourceReturn();
   const { toast } = useToast();
   const { user, profile, loading: authLoading, refreshProfile } = useAuth();
   const [selectedRole, setSelectedRole] = useState<Role | undefined>(undefined);
@@ -47,13 +49,13 @@ const SignupRole = () => {
 
   useEffect(() => {
     if (!authLoading && !user) {
-      navigate("/hub/signup");
+      navigate(authPath("/hub/signup", destination));
     }
     // If user already completed onboarding (has interests set), go to hub
     if (!authLoading && profile && profile.interests !== null) {
-      navigate("/hub");
+      navigate(destination);
     }
-  }, [user, profile, authLoading, navigate]);
+  }, [user, profile, authLoading, navigate, destination]);
 
   const toggleInterest = (interest: string) => {
     setInterests((prev) =>
@@ -127,7 +129,7 @@ const SignupRole = () => {
       }).catch((e) => console.warn("Welcome email failed:", e));
     }
 
-    navigate("/hub");
+    navigate(destination);
   };
 
   const handleSkip = async () => {
@@ -136,7 +138,7 @@ const SignupRole = () => {
       await supabase.from("profiles").update({ interests: [] }).eq("id", user.id);
       await refreshProfile();
     }
-    navigate("/hub");
+    navigate(destination);
   };
 
   if (authLoading) {

@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback, useMemo } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import HubLayout from "@/components/hub/HubLayout";
 import PurchaseModal from "@/components/hub/PurchaseModal";
@@ -15,6 +15,8 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { secureDownload } from "@/lib/secureDownload";
+import { relatedResources, translationGroup, resourceFormat } from "@/lib/resourceOrganization";
+import { safeResourceReturn, clearResourceReturn } from "@/lib/resourceReturn";
 import type { Resource } from "@/hooks/useResources";
 import { useProducts, usePurchases } from "@/hooks/usePurchases";
 
@@ -35,6 +37,9 @@ const ResourceDetail = () => {
   const { id } = useParams<{ id: string }>();
   const { user } = useAuth();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const back = safeResourceReturn(searchParams.get("back")) || "/hub";
+  useEffect(() => { clearResourceReturn(); }, []);
   const [resource, setResource] = useState<Resource | null>(null);
   const [allResources, setAllResources] = useState<Resource[]>([]);
   const [loading, setLoading] = useState(true);
@@ -51,7 +56,7 @@ const ResourceDetail = () => {
         supabase.from("resources").select("*").eq("id", id).single(),
         supabase.from("resources").select("*").eq("is_published", true),
       ]);
-      if (res) setResource(res);
+      setResource(res || null);
       if (all) setAllResources(all as Resource[]);
       setLoading(false);
     };
@@ -62,21 +67,9 @@ const ResourceDetail = () => {
   const isPaid = product && product.price > 0;
   const isUnlocked = !isPaid || purchasedResourceIds.has(resource?.id || "");
 
-  const suggestedResources = useMemo(() => {
-    if (!resource) return [];
-    const currentRoles = resource.roles || [];
-    const others = allResources.filter((r) => r.id !== resource.id);
-
-    // Prefer same audience
-    const sameAudience = others.filter((r) =>
-      r.roles?.some((role) => currentRoles.includes(role))
-    );
-    const rest = others.filter(
-      (r) => !r.roles?.some((role) => currentRoles.includes(role))
-    );
-
-    return [...sameAudience, ...rest].slice(0, 3);
-  }, [resource, allResources]);
+  const suggestedResources = useMemo(() => resource ? relatedResources(resource, allResources) : [], [resource, allResources]);
+  const translations = useMemo(() => resource ? allResources.filter((candidate) => candidate.id !== resource.id && translationGroup(candidate) === translationGroup(resource)) : [], [resource, allResources]);
+  const [purchaseTarget, setPurchaseTarget] = useState<Resource | null>(null);
 
   const handleDownload = useCallback(async (res?: Resource) => {
     const target = res || resource;
@@ -122,7 +115,7 @@ const ResourceDetail = () => {
         <div className="max-w-6xl mx-auto px-4 py-20 text-center">
           <h1 className="text-2xl font-bold text-midnight mb-4">Resource Not Found</h1>
           <p className="text-stone-ui mb-6">The resource you're looking for doesn't exist or has been removed.</p>
-          <Button onClick={() => navigate("/hub")} className="bg-midnight text-midnight-foreground hover:bg-midnight/90">
+          <Button onClick={() => navigate(back)} className="bg-midnight text-midnight-foreground hover:bg-midnight/90">
             <ArrowLeft className="h-4 w-4 mr-2" /> Back to Resource Library
           </Button>
         </div>
@@ -138,7 +131,7 @@ const ResourceDetail = () => {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Back navigation */}
         <button
-          onClick={() => navigate("/hub")}
+          onClick={() => navigate(back)}
           className="flex items-center gap-2 text-stone-ui hover:text-midnight transition-colors mb-8 text-sm font-medium"
         >
           <ArrowLeft className="h-4 w-4" /> Back to Resource Library
@@ -161,12 +154,17 @@ const ResourceDetail = () => {
             <h1 className="text-2xl sm:text-3xl font-bold text-midnight leading-snug mb-3">
               {resource.title}
             </h1>
+            {(resource.languages || []).length > 0 && <p className="text-sm text-muted-foreground mb-4">Language: {resource.languages?.join(", ")}</p>}
+            {translations.length > 0 && <div className="flex flex-wrap items-center gap-2 mb-5">
+              <span className="text-sm text-muted-foreground">Other languages:</span>
+              {translations.map((translation) => <Button key={translation.id} variant="outline" size="sm" onClick={() => navigate(`/hub/resource/${translation.id}?back=${encodeURIComponent(back)}`)}>{translation.languages?.join(", ") || translation.title}</Button>)}
+            </div>}
 
             {/* Price badge */}
             <div className="mb-4">
               {isPaid && !isUnlocked ? (
                 <span className="inline-block text-sm px-3 py-1 rounded-full bg-deep-purple text-white font-semibold">
-                  {formatPrice(product!.price)}
+                  {formatPrice(product?.price ?? 0)}
                 </span>
               ) : isPaid && isUnlocked ? (
                 <span className="inline-block text-sm px-3 py-1 rounded-full bg-emerald-500 text-white font-medium">
@@ -195,7 +193,7 @@ const ResourceDetail = () => {
 
             {/* Format info — always show */}
             <p className="text-muted-foreground text-sm mb-5">
-              PDF · {resource.page_count || 1} {(resource.page_count || 1) === 1 ? "page" : "pages"} · Printable
+              {resourceFormat(resource)}{resource.page_count ? ` · ${resource.page_count} ${resource.page_count === 1 ? "page" : "pages"}` : ""} · Printable
             </p>
 
             {/* Full description */}
@@ -229,9 +227,9 @@ const ResourceDetail = () => {
                 <Button
                   size="lg"
                   className="bg-deep-purple text-white hover:bg-deep-purple/90 h-12 px-10 w-full sm:w-auto"
-                  onClick={() => setShowPurchase(true)}
+                  onClick={() => { setPurchaseTarget(resource); setShowPurchase(true); }}
                 >
-                  <Lock className="h-5 w-5 mr-2" /> Unlock for {formatPrice(product!.price)}
+                  <Lock className="h-5 w-5 mr-2" /> Unlock for {formatPrice(product?.price ?? 0)}
                 </Button>
               )}
             </div>
@@ -296,10 +294,10 @@ const ResourceDetail = () => {
         <SocialShareButtons resourceId={resource.id} resourceTitle={resource.title} userId={user?.id} />
         <hr className="border-border my-12" />
 
-        {/* You May Also Like */}
+        {/* You Might Also Like */}
         {suggestedResources.length > 0 && (
           <div>
-            <h2 className="text-xl font-bold text-midnight mb-6">You May Also Like</h2>
+            <h2 className="text-xl font-bold text-midnight mb-6">You Might Also Like</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {suggestedResources.map((r) => {
                 const rProduct = priceMap[r.id];
@@ -314,7 +312,7 @@ const ResourceDetail = () => {
                     onView={handleView}
                     onDownload={(res) => handleDownload(res)}
                     onUnlock={(res) => {
-                      setResource(res);
+                      setPurchaseTarget(res);
                       setShowPurchase(true);
                     }}
                     price={rPrice}
@@ -330,8 +328,8 @@ const ResourceDetail = () => {
       </div>
 
       <PurchaseModal
-        resource={resource}
-        product={product ?? null}
+        resource={purchaseTarget || resource}
+        product={purchaseTarget ? priceMap[purchaseTarget.id] ?? null : product ?? null}
         open={showPurchase}
         onClose={() => setShowPurchase(false)}
         onPurchased={refetchPurchases}

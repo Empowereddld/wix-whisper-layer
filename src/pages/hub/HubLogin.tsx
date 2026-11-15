@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useAuth } from "@/contexts/AuthContext";
+import { authPath, getResourceReturn, rememberResourceReturn } from "@/lib/resourceReturn";
+import { useState, useEffect } from "react";
 import NoIndexHead from "@/components/NoIndexHead";
 import { useNavigate, Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -13,6 +15,12 @@ import empoweredLogo from "@/assets/empowered-logo.webp";
 
 const HubLogin = () => {
   const navigate = useNavigate();
+  const { user, profile, loading: authLoading } = useAuth();
+  const destination = getResourceReturn();
+  useEffect(() => { rememberResourceReturn(destination); }, [destination]);
+  useEffect(() => {
+    if (!authLoading && user && profile) navigate(profile.interests === null ? authPath("/signup/role", destination) : destination, { replace: true });
+  }, [authLoading, user, profile, navigate, destination]);
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const [resetLoading, setResetLoading] = useState(false);
@@ -40,7 +48,7 @@ const HubLogin = () => {
       });
       return;
     }
-    navigate("/hub");
+    navigate(destination);
   };
 
   const handleForgotPassword = async () => {
@@ -103,7 +111,7 @@ const HubLogin = () => {
 
           <p className="text-center text-sm text-stone-ui">
             Don't have an account?{" "}
-            <Link to="/hub/signup" className="text-hub-lavender font-medium hover:underline">Sign up free</Link>
+            <Link to={authPath("/hub/signup", destination)} className="text-hub-lavender font-medium hover:underline">Sign up free</Link>
           </p>
         </div>
       </div>

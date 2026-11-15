@@ -1,3 +1,4 @@
+import { authPath, rememberResourceReturn } from "@/lib/resourceReturn";
 import { Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 
@@ -14,12 +15,16 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   }
 
   if (!session) {
-    return <Navigate to="/hub/login" replace />;
+    const destination = location.pathname + location.search;
+    rememberResourceReturn(destination);
+    return <Navigate to={authPath("/hub/login", destination)} replace />;
   }
 
   // Redirect new users who haven't completed onboarding
   if (profile && profile.interests === null && location.pathname !== "/signup/role") {
-    return <Navigate to="/signup/role" replace />;
+    const destination = location.pathname + location.search;
+    rememberResourceReturn(destination);
+    return <Navigate to={authPath("/signup/role", destination)} replace />;
   }
 
   return <>{children}</>;

@@ -1,5 +1,7 @@
 # Project architecture rules
 
+- Resource organization reuses existing resource records and categories; optional canonical-resource translation links connect versions, while URL gallery state and allowlisted tab-only authentication return paths preserve selections without changing payment or file access rules.
+
 - Use GuidebookHero (separate from the For Parents page hero) as the Parent Guidebook page's sole hero with an opt-in purchase-button slot and the same card/cropped-photo layout as the For Parents hero. All guidebook purchase placements reuse GuidebookBuyButton's existing checkout invocation and single analytics call, so presentation cannot fork payment behavior.
 
 - Keep previewed imagery as in-repo WebP imports rather than CDN asset pointers, because the local preview does not serve `/__l5e/` asset URLs and pointer-based images render broken during preview review.
