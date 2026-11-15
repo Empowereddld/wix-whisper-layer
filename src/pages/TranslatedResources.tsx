@@ -147,7 +147,7 @@ const TranslatedResources = () => {
                       ) : (
                         <div className={`grid gap-10 ${l.books.length && l.resources.length ? "lg:grid-cols-2" : ""}`}>
                           {l.books.length > 0 && <Category icon={BookOpen} title="Children's Books" items={l.books} cta="View / Buy Book" external />}
-                          {l.resources.length > 0 && <Category icon={FileText} title="Free Posters & Educational Resources" items={l.resources} cta="Get Free Resource" />}
+                          {l.resources.length > 0 && <Category icon={FileText} title="Free Posters & Educational Resources" items={l.resources} cta="Get Resource" />}
                         </div>
                       )}
                     </div>
