@@ -1,3 +1,4 @@
+import { RESOURCE_LANGUAGES, resourceTypeLabel, translationGroup } from "@/lib/resourceOrganization";
 import { useState } from "react";
 import AdminLayout from "@/components/admin/AdminLayout";
 import { useAdminResources } from "@/hooks/useAdminResources";
@@ -37,6 +38,9 @@ interface ResourceFormData {
   thumbnail_url: string;
   file_url: string;
   is_published: boolean;
+  languages: string[];
+  translation_group_id: string | null;
+  file_format: string | null;
 }
 
 const emptyForm: ResourceFormData = {
@@ -47,6 +51,9 @@ const emptyForm: ResourceFormData = {
   thumbnail_url: "",
   file_url: "",
   is_published: true,
+  languages: ["English"],
+  translation_group_id: null,
+  file_format: null,
 };
 
 const AdminResources = () => {
@@ -57,6 +64,7 @@ const AdminResources = () => {
   const [sheetOpen, setSheetOpen] = useState(false);
   const [form, setForm] = useState<ResourceFormData>(emptyForm);
   const [uploading, setUploading] = useState(false);
+  const [newLanguage, setNewLanguage] = useState("");
 
   const { data: resources, isLoading, togglePublish, deleteResource, saveResource } = useAdminResources({
     search,
@@ -76,6 +84,9 @@ const AdminResources = () => {
       thumbnail_url: r.thumbnail_url || "",
       file_url: r.file_url || "",
       is_published: r.is_published,
+      languages: r.languages || [],
+      translation_group_id: r.translation_group_id || null,
+      file_format: r.file_format || null,
     });
     setSheetOpen(true);
   };
@@ -90,7 +101,8 @@ const AdminResources = () => {
       toast({ title: "Title is required", variant: "destructive" });
       return;
     }
-    await saveResource.mutateAsync(form);
+    try { await saveResource.mutateAsync(form); }
+    catch (error) { toast({ title: "Resource could not be saved", description: error instanceof Error ? error.message : "Please try again.", variant: "destructive" }); return; }
     logAction.mutate(form.id ? `Updated resource: ${form.title}` : `Created resource: ${form.title}`);
     setSheetOpen(false);
     toast({ title: form.id ? "Resource updated" : "Resource created" });
@@ -107,8 +119,11 @@ const AdminResources = () => {
     const file = e.target.files?.[0];
     if (!file) return;
     setUploading(true);
-    const ext = file.name.split(".").pop();
-    const path = `${Date.now()}.${ext}`;
+    const ext = file.name.split(".").pop()?.toLowerCase();
+    if (field === "file_url" && !["pdf", "png", "jpg", "jpeg", "webp"].includes(ext || "")) {
+      toast({ title: "Choose a PDF, PNG, JPG or WebP file", variant: "destructive" }); setUploading(false); return;
+    }
+    const path = `${crypto.randomUUID()}.${ext}`;
     const { error } = await supabase.storage.from(bucket).upload(path, file);
     if (error) {
       toast({ title: "Upload failed", description: error.message, variant: "destructive" });
@@ -116,7 +131,7 @@ const AdminResources = () => {
       return;
     }
     const { data: urlData } = supabase.storage.from(bucket).getPublicUrl(path);
-    setForm((prev) => ({ ...prev, [field]: urlData.publicUrl }));
+    setForm((prev) => ({ ...prev, [field]: urlData.publicUrl, ...(field === "file_url" ? { file_format: ext || null } : {}) }));
     setUploading(false);
   };
 
@@ -133,7 +148,7 @@ const AdminResources = () => {
     <AdminLayout>
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
         <h1 className="text-2xl font-bold">Resources</h1>
-        <Button onClick={handleNew} className="bg-coral hover:bg-coral/90 text-white">
+        <Button onClick={handleNew} className="bg-primary hover:bg-primary/90 text-primary-foreground">
           <Plus className="h-4 w-4 mr-2" /> Add New Resource
         </Button>
       </div>
@@ -155,7 +170,7 @@ const AdminResources = () => {
           <SelectTrigger className="w-[140px]"><SelectValue placeholder="Type" /></SelectTrigger>
           <SelectContent>
             <SelectItem value="all">All Types</SelectItem>
-            {RESOURCE_TYPES.map((t) => <SelectItem key={t} value={t} className="capitalize">{t}</SelectItem>)}
+            {RESOURCE_TYPES.map((t) => <SelectItem key={t} value={t} className="capitalize">{resourceTypeLabel(t)}</SelectItem>)}
           </SelectContent>
         </Select>
         <Select value={filterStatus} onValueChange={(v) => setFilterStatus(v === "all" ? "" : v)}>
@@ -180,6 +195,7 @@ const AdminResources = () => {
                 <TableHead>Title</TableHead>
                 <TableHead>Audience</TableHead>
                 <TableHead>Type</TableHead>
+                <TableHead>Languages</TableHead>
                 <TableHead className="text-right">Downloads</TableHead>
                 <TableHead>Status</TableHead>
                 <TableHead className="text-right">Actions</TableHead>
@@ -199,7 +215,8 @@ const AdminResources = () => {
                   </TableCell>
                   <TableCell className="font-medium">{r.title}</TableCell>
                   <TableCell className="text-xs">{(r.roles || []).join(", ") || "All"}</TableCell>
-                  <TableCell className="capitalize text-xs">{r.resource_type}</TableCell>
+                  <TableCell className="text-xs">{resourceTypeLabel(r.resource_type)}</TableCell>
+                  <TableCell className="text-xs">{r.languages?.join(", ") || "Not assigned"}</TableCell>
                   <TableCell className="text-right">{r.download_count || 0}</TableCell>
                   <TableCell>
                     <Switch
@@ -224,7 +241,7 @@ const AdminResources = () => {
               ))}
               {(!resources || resources.length === 0) && (
                 <TableRow>
-                  <TableCell colSpan={7} className="text-center text-muted-foreground py-12">
+                  <TableCell colSpan={8} className="text-center text-muted-foreground py-12">
                     No resources found. Add your first resource!
                   </TableCell>
                 </TableRow>
@@ -272,7 +289,30 @@ const AdminResources = () => {
               <Select value={form.resource_type} onValueChange={(v) => setForm((p) => ({ ...p, resource_type: v }))}>
                 <SelectTrigger><SelectValue /></SelectTrigger>
                 <SelectContent>
-                  {RESOURCE_TYPES.map((t) => <SelectItem key={t} value={t} className="capitalize">{t}</SelectItem>)}
+                  {RESOURCE_TYPES.map((t) => <SelectItem key={t} value={t} className="capitalize">{resourceTypeLabel(t)}</SelectItem>)}
+                </SelectContent>
+              </Select>
+            </div>
+            <div>
+              <Label>Languages</Label>
+              <div className="flex flex-wrap gap-2 mt-2">
+                {[...new Set([...RESOURCE_LANGUAGES, ...(resources || []).flatMap((resource) => resource.languages || []), ...form.languages])].map((language) => (
+                  <Button key={language} type="button" variant={form.languages.includes(language) ? "default" : "outline"} size="sm" aria-pressed={form.languages.includes(language)} onClick={() => setForm((previous) => ({ ...previous, languages: previous.languages.includes(language) ? previous.languages.filter((value) => value !== language) : [...previous.languages, language] }))}>{language}</Button>
+                ))}
+              </div>
+              <div className="flex gap-2 mt-3">
+                <Input aria-label="New language" placeholder="Add another language" value={newLanguage} onChange={(event) => setNewLanguage(event.target.value)} maxLength={80} />
+                <Button type="button" variant="outline" disabled={!newLanguage.trim()} onClick={() => { const language = newLanguage.trim(); setForm((previous) => ({ ...previous, languages: [...new Set([...previous.languages, language])] })); setNewLanguage(""); }}><Plus className="h-4 w-4 mr-1" />Add</Button>
+              </div>
+            </div>
+            <div>
+              <Label>Translation of</Label>
+              <Select value={form.translation_group_id || "none"} onValueChange={(value) => setForm((previous) => ({ ...previous, translation_group_id: value === "none" ? null : value }))}>
+                <SelectTrigger aria-label="Translation of"><SelectValue placeholder="Not linked" /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="none">Not linked</SelectItem>
+                  {(resources || []).filter((resource) => resource.id !== form.id && (!form.id || translationGroup(resource) !== form.id)).map((resource) => <SelectItem key={resource.id} value={resource.id}>{resource.title} ({resource.languages?.join(", ") || "Not assigned"})</SelectItem>)}
+                  {form.translation_group_id === form.id && form.id && <SelectItem value={form.id}>Original resource in this translation group</SelectItem>}
                 </SelectContent>
               </Select>
             </div>
@@ -282,15 +322,15 @@ const AdminResources = () => {
               {form.thumbnail_url && <img src={form.thumbnail_url} className="h-20 mt-2 rounded" />}
             </div>
             <div>
-              <Label>Resource File (PDF)</Label>
-              <Input type="file" accept=".pdf" onChange={(e) => handleFileUpload(e, "resources", "file_url")} />
+              <Label>Resource File (PDF or image)</Label>
+              <Input type="file" accept=".pdf,.png,.jpg,.jpeg,.webp" onChange={(e) => handleFileUpload(e, "resources", "file_url")} />
               {form.file_url && <p className="text-xs text-muted-foreground mt-1 truncate">{form.file_url}</p>}
             </div>
             <div className="flex items-center gap-2">
               <Switch checked={form.is_published} onCheckedChange={(v) => setForm((p) => ({ ...p, is_published: v }))} />
               <Label>{form.is_published ? "Published" : "Draft"}</Label>
             </div>
-            <Button onClick={handleSave} disabled={saveResource.isPending || uploading} className="w-full bg-coral hover:bg-coral/90 text-white">
+            <Button onClick={handleSave} disabled={saveResource.isPending || uploading} className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
               {saveResource.isPending ? "Saving..." : "Save Resource"}
             </Button>
           </div>

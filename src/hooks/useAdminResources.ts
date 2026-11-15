@@ -1,3 +1,4 @@
+import { translationGroup } from "@/lib/resourceOrganization";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -64,7 +65,16 @@ export const useAdminResources = (filters?: {
       thumbnail_url?: string;
       file_url?: string;
       is_published: boolean;
+      languages: string[];
+      translation_group_id: string | null;
+      file_format: string | null;
     }) => {
+      let group = resource.translation_group_id;
+      if (group && group !== resource.id) {
+        const { data: original, error: originalError } = await supabase.from("resources").select("id,translation_group_id").eq("id", group).single();
+        if (originalError) throw originalError;
+        group = translationGroup(original);
+      }
       if (resource.id) {
         const { error } = await supabase
           .from("resources")
@@ -76,6 +86,9 @@ export const useAdminResources = (filters?: {
             thumbnail_url: resource.thumbnail_url,
             file_url: resource.file_url,
             is_published: resource.is_published,
+            languages: resource.languages,
+            translation_group_id: group,
+            file_format: resource.file_format,
           })
           .eq("id", resource.id);
         if (error) throw error;
@@ -88,6 +101,9 @@ export const useAdminResources = (filters?: {
           thumbnail_url: resource.thumbnail_url,
           file_url: resource.file_url,
           is_published: resource.is_published,
+            languages: resource.languages,
+            translation_group_id: group,
+            file_format: resource.file_format,
         });
         if (error) throw error;
       }

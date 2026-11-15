@@ -1,3 +1,4 @@
+import { authPath, getResourceReturn, rememberResourceReturn } from "@/lib/resourceReturn";
 import { Button } from "@/components/ui/button";
 import { lovable } from "@/integrations/lovable/index";
 import { useState } from "react";
@@ -9,9 +10,11 @@ const SocialLoginButtons = () => {
   const { toast } = useToast();
 
   const handleOAuth = async (provider: "google" | "apple") => {
+    const destination = getResourceReturn();
+    rememberResourceReturn(destination);
     setLoading(provider);
     const { error } = await lovable.auth.signInWithOAuth(provider, {
-      redirect_uri: window.location.origin + "/signup/role",
+      redirect_uri: window.location.origin + authPath("/hub/login", destination),
     });
     if (error) {
       console.error("OAuth error:", error);

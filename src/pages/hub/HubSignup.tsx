@@ -1,3 +1,4 @@
+import { authPath, getResourceReturn, rememberResourceReturn } from "@/lib/resourceReturn";
 import { useState } from "react";
 import NoIndexHead from "@/components/NoIndexHead";
 import { useNavigate, Link, useSearchParams } from "react-router-dom";
@@ -13,6 +14,7 @@ import empoweredLogo from "@/assets/empowered-logo.webp";
 
 const HubSignup = () => {
   const navigate = useNavigate();
+  const destination = getResourceReturn();
   const { toast } = useToast();
   const [searchParams] = useSearchParams();
   const refCode = searchParams.get("ref");
@@ -52,6 +54,7 @@ const HubSignup = () => {
       return;
     }
 
+    rememberResourceReturn(destination);
     setLoading(true);
     const { data, error } = await supabase.auth.signUp({
       email: form.email.trim(),
@@ -61,7 +64,7 @@ const HubSignup = () => {
           first_name: form.first_name.trim(),
           ...(refCode ? { referred_by: refCode } : {}),
         },
-        emailRedirectTo: window.location.origin + "/signup/role",
+        emailRedirectTo: window.location.origin + authPath("/signup/role", destination),
       },
     });
     setLoading(false);
@@ -73,7 +76,7 @@ const HubSignup = () => {
         description:
           friendly.code === "already_exists" ? (
             <span>
-              <Link to="/hub/login" className="underline font-medium">
+              <Link to={authPath("/hub/login", destination)} className="underline font-medium">
                 Log in instead
               </Link>
               .
@@ -98,7 +101,7 @@ const HubSignup = () => {
       return;
     }
 
-    navigate("/signup/role");
+    navigate(authPath("/signup/role", destination));
   };
 
   return (
@@ -153,7 +156,7 @@ const HubSignup = () => {
 
           <p className="text-center text-sm text-stone-ui">
             Already have an account?{" "}
-            <Link to="/hub/login" className="text-hub-lavender font-medium hover:underline">Log in</Link>
+            <Link to={authPath("/hub/login", destination)} className="text-hub-lavender font-medium hover:underline">Log in</Link>
           </p>
         </div>
       </div>
