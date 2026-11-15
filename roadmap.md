@@ -1,5 +1,8 @@
 # Roadmap
 
+## Music heading comparison (2026-11-15)
+- [x] Compare Music title sizing with similarly styled purple page banners; report only, no page changes or publishing.
+
 ## Parent Guidebook pre-campaign purchase audit (2026-10-26)
 - [x] Audit guest checkout, paid verification, secure PDF delivery, receipt email, recording, analytics and later retrieval; report gaps and proposed fixes without changing checkout or publishing.
 - [x] Inspect the current stored PDF and correct the Resource Library's 26-page description only if 27 pages is confirmed.
