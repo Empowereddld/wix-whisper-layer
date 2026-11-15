@@ -1,4 +1,6 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
+import { useSearchParams } from "react-router-dom";
+import { matchesLanguageAndType } from "@/lib/resourceOrganization";
 import { supabase } from "@/integrations/supabase/client";
 import type { Tables } from "@/integrations/supabase/types";
 
@@ -29,8 +31,32 @@ const EMPTY_FILTERS: Filters = {
 export function useResources(userRole?: string) {
   const [resources, setResources] = useState<Resource[]>([]);
   const [loading, setLoading] = useState(true);
-  const [filters, setFilters] = useState<Filters>(EMPTY_FILTERS);
-  const [sort, setSort] = useState<SortOption | "">("");
+  const [params, setParams] = useSearchParams();
+  const filters: Filters = {
+    ...EMPTY_FILTERS,
+    roles: params.getAll("role"), resourceTypes: params.getAll("type"),
+    settings: params.getAll("setting"), ageRanges: params.getAll("age"),
+    languages: params.getAll("language"), search: params.get("q") || "",
+    audienceTab: params.get("audience") || "",
+  };
+  const sort = (params.get("sort") || "") as SortOption | "";
+  const setSort = useCallback((value: SortOption | "") => setParams((previous) => {
+    const next = new URLSearchParams(previous);
+    if (value) next.set("sort", value); else next.delete("sort");
+    return next;
+  }, { replace: true }), [setParams]);
+  const setFilters = useCallback((update: (previous: Filters) => Filters) => setParams((previous) => {
+    const current: Filters = { ...EMPTY_FILTERS, roles: previous.getAll("role"), resourceTypes: previous.getAll("type"), settings: previous.getAll("setting"), ageRanges: previous.getAll("age"), languages: previous.getAll("language"), search: previous.get("q") || "", audienceTab: previous.get("audience") || "" };
+    const value = update(current);
+    const next = new URLSearchParams(previous);
+    for (const [field, key] of [["roles", "role"], ["resourceTypes", "type"], ["settings", "setting"], ["ageRanges", "age"], ["languages", "language"]] as const) {
+      next.delete(key); value[field].forEach((item) => next.append(key, item));
+    }
+    for (const [key, text] of [["q", value.search], ["audience", value.audienceTab]]) {
+      if (text) next.set(key, text); else next.delete(key);
+    }
+    return next;
+  }, { replace: true }), [setParams]);
 
   useEffect(() => {
     const fetchResources = async () => {
@@ -48,7 +74,7 @@ export function useResources(userRole?: string) {
 
   const clearFilters = useCallback(
     () => setFilters((prev) => ({ ...EMPTY_FILTERS, audienceTab: prev.audienceTab })),
-    []
+    [setFilters]
   );
 
   const toggleFilter = useCallback(
@@ -63,18 +89,18 @@ export function useResources(userRole?: string) {
         };
       });
     },
-    []
+    [setFilters]
   );
 
   const setSearch = useCallback(
     (search: string) => setFilters((prev) => ({ ...prev, search })),
-    []
+    [setFilters]
   );
 
   const setAudienceTab = useCallback(
     (audienceTab: string) =>
       setFilters((prev) => ({ ...prev, audienceTab, roles: [] })),
-    []
+    [setFilters]
   );
 
   const hasActiveFilters = useMemo(
@@ -115,12 +141,7 @@ export function useResources(userRole?: string) {
       );
     }
 
-    // Resource type filter
-    if (filters.resourceTypes.length > 0) {
-      result = result.filter((r) =>
-        filters.resourceTypes.includes(r.resource_type)
-      );
-    }
+    result = result.filter((r) => matchesLanguageAndType(r, filters.languages, filters.resourceTypes));
 
     // Setting filter
     if (filters.settings.length > 0) {
@@ -136,12 +157,7 @@ export function useResources(userRole?: string) {
       );
     }
 
-    // Language filter
-    if (filters.languages.length > 0) {
-      result = result.filter((r) =>
-        r.languages?.some((l) => filters.languages.includes(l))
-      );
-    }
+
 
     // Sort
     switch (sort) {

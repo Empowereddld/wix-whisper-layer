@@ -3,7 +3,7 @@ import { motion } from "motion/react";
 import { useAuth } from "@/contexts/AuthContext";
 import HubLayout from "@/components/hub/HubLayout";
 import ResourceCard from "@/components/hub/ResourceCard";
-import ResourceDetailModal from "@/components/hub/ResourceDetailModal";
+import { RESOURCE_LANGUAGES, RESOURCE_TYPES, resourceTypeLabel } from "@/lib/resourceOrganization";
 import PurchaseModal from "@/components/hub/PurchaseModal";
 import ResourceRequestModal from "@/components/hub/ResourceRequestModal";
 import { useResources, type SortOption, type Resource } from "@/hooks/useResources";
@@ -31,10 +31,12 @@ const AUDIENCE_PILLS = [
 
 const HubDashboard = () => {
   const { profile, user, refreshProfile } = useAuth();
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const {
     resources: filtered,
+    allResources,
+    toggleFilter,
     loading,
     filters,
     sort,
@@ -49,11 +51,16 @@ const HubDashboard = () => {
   const { savedIds, toggle: toggleSave } = useSavedResources(user?.id);
   const { viewedIds, markViewed } = useResourceViews(user?.id);
 
-  const [selectedResource, setSelectedResource] = useState<Resource | null>(null);
   const [purchaseResource, setPurchaseResource] = useState<Resource | null>(null);
   const [requestModalOpen, setRequestModalOpen] = useState(false);
   const [isReturning, setIsReturning] = useState(false);
-  const [showSavedOnly, setShowSavedOnly] = useState(false);
+  const showSavedOnly = searchParams.get("saved") === "1";
+  const setShowSavedOnly = (value: boolean | ((previous: boolean) => boolean)) => setSearchParams((previous) => {
+    const next = new URLSearchParams(previous);
+    const enabled = typeof value === "function" ? value(previous.get("saved") === "1") : value;
+    if (enabled) next.set("saved", "1"); else next.delete("saved");
+    return next;
+  }, { replace: true });
 
   // Handle purchase success URL param
   useEffect(() => {
@@ -88,7 +95,6 @@ const HubDashboard = () => {
 
   const handleView = useCallback((resource: Resource) => {
     markViewed(resource.id);
-    setSelectedResource(resource);
   }, [markViewed]);
 
   const isResourceNew = useCallback((resource: Resource) => {
@@ -185,6 +191,30 @@ const HubDashboard = () => {
           Supporting a child with DLD is a team effort. Many of these resources are useful across all roles.
         </p>
 
+        <div className="flex flex-wrap gap-3 mb-6">
+          <Select value={filters.languages[0] || "all"} onValueChange={(value) => {
+            filters.languages.forEach((language) => toggleFilter("languages", language));
+            if (value !== "all" && !filters.languages.includes(value)) toggleFilter("languages", value);
+          }}>
+            <SelectTrigger aria-label="Language" className="w-full sm:w-52 border-border"><SelectValue placeholder="Language" /></SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Languages</SelectItem>
+              {[...new Set([...RESOURCE_LANGUAGES, ...allResources.flatMap((resource) => resource.languages || [])])].map((language) => <SelectItem key={language} value={language}>{language}</SelectItem>)}
+            </SelectContent>
+          </Select>
+          <Select value={filters.resourceTypes[0] || "all"} onValueChange={(value) => {
+            filters.resourceTypes.forEach((type) => toggleFilter("resourceTypes", type));
+            if (value !== "all" && !filters.resourceTypes.includes(value)) toggleFilter("resourceTypes", value);
+          }}>
+            <SelectTrigger aria-label="Resource type" className="w-full sm:w-56 border-border"><SelectValue placeholder="Resource type" /></SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Resource Types</SelectItem>
+              {RESOURCE_TYPES.map((type) => <SelectItem key={type} value={type}>{resourceTypeLabel(type)}</SelectItem>)}
+            </SelectContent>
+          </Select>
+          {(filters.languages.length > 0 || filters.resourceTypes.length > 0 || filters.search) && <Button variant="outline" onClick={clearFilters}>Clear Filters</Button>}
+        </div>
+
         {/* Toolbar */}
         <div className="flex items-center justify-between mb-5 gap-3 flex-wrap">
           <h2 className="text-xl font-bold text-midnight">
@@ -249,8 +279,6 @@ const HubDashboard = () => {
         })()}
       </div>
 
-      {/* Detail Modal */}
-      <ResourceDetailModal resource={selectedResource} open={!!selectedResource} onClose={() => setSelectedResource(null)} onDownload={handleDownload} />
 
       {/* Purchase Modal */}
       <PurchaseModal
