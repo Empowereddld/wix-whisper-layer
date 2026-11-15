@@ -36,7 +36,7 @@ const HubDashboard = () => {
   const {
     resources: filtered,
     allResources,
-    toggleFilter,
+    setFilterValues,
     loading,
     filters,
     sort,
@@ -192,20 +192,14 @@ const HubDashboard = () => {
         </p>
 
         <div className="flex flex-wrap gap-3 mb-6">
-          <Select value={filters.languages[0] || "all"} onValueChange={(value) => {
-            filters.languages.forEach((language) => toggleFilter("languages", language));
-            if (value !== "all" && !filters.languages.includes(value)) toggleFilter("languages", value);
-          }}>
+          <Select value={filters.languages[0] || "all"} onValueChange={(value) => setFilterValues("languages", value === "all" ? [] : [value])}>
             <SelectTrigger aria-label="Language" className="w-full sm:w-52 border-border"><SelectValue placeholder="Language" /></SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All Languages</SelectItem>
               {[...new Set([...RESOURCE_LANGUAGES, ...allResources.flatMap((resource) => resource.languages || [])])].map((language) => <SelectItem key={language} value={language}>{language}</SelectItem>)}
             </SelectContent>
           </Select>
-          <Select value={filters.resourceTypes[0] || "all"} onValueChange={(value) => {
-            filters.resourceTypes.forEach((type) => toggleFilter("resourceTypes", type));
-            if (value !== "all" && !filters.resourceTypes.includes(value)) toggleFilter("resourceTypes", value);
-          }}>
+          <Select value={filters.resourceTypes[0] || "all"} onValueChange={(value) => setFilterValues("resourceTypes", value === "all" ? [] : [value])}>
             <SelectTrigger aria-label="Resource type" className="w-full sm:w-56 border-border"><SelectValue placeholder="Resource type" /></SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All Resource Types</SelectItem>

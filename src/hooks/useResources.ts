@@ -92,6 +92,10 @@ export function useResources(userRole?: string) {
     [setFilters]
   );
 
+  const setFilterValues = useCallback((category: "languages" | "resourceTypes", values: string[]) => {
+    setFilters((previous) => ({ ...previous, [category]: values }));
+  }, [setFilters]);
+
   const setSearch = useCallback(
     (search: string) => setFilters((prev) => ({ ...prev, search })),
     [setFilters]
@@ -210,6 +214,7 @@ export function useResources(userRole?: string) {
     sort,
     setSort,
     toggleFilter,
+    setFilterValues,
     setSearch,
     setAudienceTab,
     clearFilters,
