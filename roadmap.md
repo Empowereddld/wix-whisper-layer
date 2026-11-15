@@ -1,5 +1,12 @@
 # Roadmap
 
+## Resource Library language organization (2026-11-15)
+- [x] Inspect existing resources, account access, gallery, individual pages and downloads.
+- [ ] Add combined language/type filters and preserve return-to-gallery selections.
+- [ ] Add editable language and translation relationships using existing resource records.
+- [ ] Connect translated PDFs to signed-in resource pages and protected downloads.
+- [ ] Prioritize same-language recommendations; verify existing accounts/resources and do not publish.
+
 ## Music heading comparison (2026-11-15)
 - [x] Compare Music title sizing with similarly styled purple page banners; report only, no page changes or publishing.
 
