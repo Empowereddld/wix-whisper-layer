@@ -4,7 +4,8 @@
 - [x] Inspect existing resources, account access, gallery, individual pages and downloads.
 - [ ] Add combined language/type filters and preserve return-to-gallery selections.
 - [ ] Add editable language and translation relationships using existing resource records.
-- [ ] Connect translated PDFs to signed-in resource pages and protected downloads.
+- [ ] Full integration and private-file migration: deferred for separate backup, verification and rollback review; preserve seven original PNG posters and support PNG/PDF uploads.
+- [ ] Phase 2: self-service language/category/translation editing and exact selected-resource return through login/signup/onboarding; no existing file changes.
 - [ ] Prioritize same-language recommendations; verify existing accounts/resources and do not publish.
 
 ## Music heading comparison (2026-11-15)
