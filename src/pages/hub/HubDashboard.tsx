@@ -153,7 +153,7 @@ const HubDashboard = () => {
           {AUDIENCE_PILLS.map((pill) => (
             <button
               key={pill.value}
-              onClick={() => { setAudienceTab(pill.value); setShowSavedOnly(false); }}
+              onClick={() => setAudienceTab(pill.value)}
               className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-all ${
                 !showSavedOnly && filters.audienceTab === pill.value
                   ? "bg-midnight text-white border-midnight"

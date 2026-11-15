@@ -2,11 +2,11 @@
 
 ## Resource Library language organization (2026-11-15)
 - [x] Inspect existing resources, account access, gallery, individual pages and downloads.
-- [ ] Add combined language/type filters and preserve return-to-gallery selections.
-- [ ] Add editable language and translation relationships using existing resource records.
+- [x] Add combined language/type filters and preserve return-to-gallery selections.
+- [x] Add editable language and translation relationships using existing resource records.
 - [ ] Full integration and private-file migration: deferred for separate backup, verification and rollback review; preserve seven original PNG posters and support PNG/PDF uploads.
-- [ ] Phase 2: self-service language/category/translation editing and exact selected-resource return through login/signup/onboarding; no existing file changes.
-- [ ] Prioritize same-language recommendations; verify existing accounts/resources and do not publish.
+- [x] Phase 2: self-service language/category/translation editing and exact selected-resource return through login/signup/onboarding; no existing file changes.
+- [x] Prioritize same-language recommendations; verify authenticated existing resource and editor flows, counts and automated logic tests; no publishing. Live signup email/provider flows and file migration remain separately unverified.
 
 ## Music heading comparison (2026-11-15)
 - [x] Compare Music title sizing with similarly styled purple page banners; report only, no page changes or publishing.

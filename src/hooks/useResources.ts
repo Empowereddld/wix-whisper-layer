@@ -102,9 +102,14 @@ export function useResources(userRole?: string) {
   );
 
   const setAudienceTab = useCallback(
-    (audienceTab: string) =>
-      setFilters((prev) => ({ ...prev, audienceTab, roles: [] })),
-    [setFilters]
+    (audienceTab: string) => setParams((previous) => {
+      const next = new URLSearchParams(previous);
+      next.delete("role");
+      next.delete("saved");
+      if (audienceTab) next.set("audience", audienceTab); else next.delete("audience");
+      return next;
+    }, { replace: true }),
+    [setParams]
   );
 
   const hasActiveFilters = useMemo(
