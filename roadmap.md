@@ -1,6 +1,7 @@
 # Roadmap
 
 ## Resource Library language organization (2026-11-15)
+- [ ] Remaining checks: create/edit an unpublished translated draft with uploads and translation linkage; verify email-confirmed registration returns to the selected resource; confirm existing-user download. No publishing or private-file migration.
 - [x] Inspect existing resources, account access, gallery, individual pages and downloads.
 - [x] Add combined language/type filters and preserve return-to-gallery selections.
 - [x] Add editable language and translation relationships using existing resource records.
