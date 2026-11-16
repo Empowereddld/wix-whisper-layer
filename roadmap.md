@@ -1,5 +1,12 @@
 # Roadmap
 
+## Phase 3 translated-page connection (2026-11-16)
+- [x] Language accordions derive from published Library records and every Get Free Resource opens the corresponding /hub/resource/:id. Seven original PNG posters added once to the existing Library, all downloaded bytes verified against originals; existing records/files and unpublished editor test draft preserved.
+- [ ] Six product-specific book destinations reused from existing Books page (French, Spanish, Welsh, Persian), but Amazon blocks independent automated verification (500/503). Existing Czech link resolves to a Persian listing, so no Czech purchase card added. Correct Czech destination and independent retail verification remain outstanding; no invented URLs or changes to Books page.
+- [x] Signed-in direct translated-poster access and signed-out poster-to-login-to-signup exact next path verified. Desktop/393px layouts checked, previews loaded and no horizontal overflow. Twelve automated grouping, exact-link, book-destination and existing resource-return tests pass.
+- [ ] Full new-account journey NOT PASSED: prior approved Jinean signup remains unconfirmed. New confirmation successfully sent for selected French Word Finding Strategies poster (10ff43d4-5181-4b67-9d12-059fba417205). Actual newest-email click, email confirmation, required onboarding and final exact-poster arrival await owner action; no minted session or bypass used for this test.
+- [x] No website publishing or private-file migration; no account, purchase, authentication or editor changes. Adding published resource rows makes the seven posters available in the existing live Library as well as preview, since they share the same backend.
+
 ## Verification email visual refinements (2026-11-16)
 - [x] Signup confirmation centred in responsive 560px container with balanced spacing, purple button, unchanged copy and confirmation URL. Deployed auth-email-hook only; deployed preview checked at 1280px and 375px, no images or horizontal overflow. Eight resource/return tests passed; no website publishing.
 - [ ] DNS check: managed notify sender active; root SPF authorizes Google, delegated notify SPF authorizes mailgun.org; root and notify DMARC each p=none (monitoring). Google root DKIM key exists, but actual managed-message DKIM selector/signature and SPF/DMARC alignment require received email headers; not independently verified. No DNS changes made or proposed without this evidence.

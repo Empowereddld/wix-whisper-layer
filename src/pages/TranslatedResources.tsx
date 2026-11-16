@@ -1,51 +1,42 @@
 import { useRef, useState } from "react";
-import { BookOpen, ChevronDown, Download, ExternalLink, FileText, Mail } from "lucide-react";
+import { BookOpen, ChevronDown, ArrowRight, ExternalLink, FileText, Mail } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { useResources } from "@/hooks/useResources";
+import { translationsForLanguage, translatedResourcePath } from "@/lib/translatedResources";
+import { TRANSLATED_BOOKS } from "@/lib/translatedBooks";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SEOHead from "@/components/SEOHead";
 import danAndDaria from "@/assets/dan-and-daria.webp";
 
-import dldEverydayFr from "@/assets/translated/dld-everyday-french.webp";
-import dldEverydayIt from "@/assets/translated/dld-everyday-italian.webp";
-import selfAdvFr from "@/assets/translated/self-advocacy-french.webp";
-import selfAdvEs from "@/assets/translated/self-advocacy-spanish.webp";
-import selfAdvCa from "@/assets/translated/self-advocacy-catalan.webp";
-import wordFindFr from "@/assets/translated/word-finding-strategies-french.webp";
-import littleTalkersCy from "@/assets/translated/little-talkers-welsh.webp";
-
-const everyday = "A one-page poster showing what DLD can look like in daily life, with strategies people with DLD use.";
-const selfAdv = "A poster with self-advocacy phrases people with DLD can use to ask for what they need.";
-const pdf = (n: string) => `/downloads/translated/${n}.pdf`;
-
-type Item = { title: string; description: string; image: string; href: string };
-type Language = { id: string; native: string; english: string; dir?: "rtl"; books: Item[]; resources: Item[] };
-
-// Resources are connected in a later phase. Only add real, verified items here.
-const languages: Language[] = [
-  { id: "french", native: "Français", english: "French", books: [], resources: [{ title: "What DLD Looks Like Every Day", description: everyday, image: dldEverydayFr, href: pdf("dld-everyday-french") }, { title: "Self Advocacy", description: selfAdv, image: selfAdvFr, href: pdf("self-advocacy-french") }, { title: "Word Finding Strategies", description: "A poster of strategies to help when words get stuck.", image: wordFindFr, href: pdf("word-finding-strategies-french") }] },
-  { id: "spanish", native: "Español", english: "Spanish", books: [], resources: [{ title: "Self Advocacy", description: selfAdv, image: selfAdvEs, href: pdf("self-advocacy-spanish") }] },
-  { id: "italian", native: "Italiano", english: "Italian", books: [], resources: [{ title: "What DLD Looks Like Every Day", description: everyday, image: dldEverydayIt, href: pdf("dld-everyday-italian") }] },
-  { id: "catalan", native: "Català", english: "Catalan", books: [], resources: [{ title: "Self Advocacy", description: selfAdv, image: selfAdvCa, href: pdf("self-advocacy-catalan") }] },
-  { id: "welsh", native: "Cymraeg", english: "Welsh", books: [], resources: [{ title: "Daria's Tips for Little Talkers", description: "A poster of everyday language tips for families of young children.", image: littleTalkersCy, href: pdf("little-talkers-welsh") }] },
-  { id: "persian", native: "فارسی", english: "Persian", dir: "rtl", books: [], resources: [] },
-  { id: "arabic", native: "العربية", english: "Arabic", dir: "rtl", books: [], resources: [] },
-  { id: "chinese", native: "中文", english: "Chinese", books: [], resources: [] },
-  { id: "czech", native: "Čeština", english: "Czech", books: [], resources: [] },
-  { id: "jamaican-creole", native: "Patwa", english: "Jamaican Creole", books: [], resources: [] },
+type Item = { id?: string; title: string; description: string; image?: string | null; href: string };
+type Language = { id: string; native: string; english: string; dir?: "rtl" };
+const languageLabels: Language[] = [
+  { id: "french", native: "Français", english: "French" },
+  { id: "spanish", native: "Español", english: "Spanish" },
+  { id: "italian", native: "Italiano", english: "Italian" },
+  { id: "catalan", native: "Català", english: "Catalan" },
+  { id: "welsh", native: "Cymraeg", english: "Welsh" },
+  { id: "persian", native: "فارسی", english: "Persian", dir: "rtl" },
+  { id: "arabic", native: "العربية", english: "Arabic", dir: "rtl" },
+  { id: "chinese", native: "中文", english: "Chinese" },
+  { id: "czech", native: "Čeština", english: "Czech" },
+  { id: "jamaican-creole", native: "Patwa", english: "Jamaican Creole" },
 ];
 
 const btn =
-  "inline-flex w-fit items-center justify-center gap-2 h-11 px-3 bg-foreground text-background text-[12px] font-semibold tracking-[0.04em] rounded-md hover:opacity-90 transition-opacity duration-200 mt-auto";
+  "inline-flex w-full sm:w-fit whitespace-normal items-center justify-center gap-2 h-auto min-h-11 px-2 py-2 bg-foreground text-background text-[12px] font-semibold rounded-md hover:opacity-90 transition-opacity duration-200 mt-auto";
 
 const Card = ({ item, cta, external }: { item: Item; cta: string; external?: boolean }) => (
   <div className="flex flex-col bg-muted rounded-xl border border-border/40 overflow-hidden pb-4">
-    <div className="aspect-[4/5] overflow-hidden"><img src={item.image} alt={item.title} loading="lazy" className="w-full h-full object-cover object-top" /></div>
+    {item.image && <div className="aspect-[4/5] overflow-hidden"><img src={item.image} alt={item.title} loading="lazy" className="w-full h-full object-contain object-top" /></div>}
     <div className="px-3 pt-3 flex flex-col flex-1">
       <h4 className="text-[14px] font-bold text-foreground leading-tight mb-1">{item.title}</h4>
       <p className="text-[12px] text-muted-foreground leading-snug mb-3 flex-1 line-clamp-3">{item.description}</p>
-      <a href={item.href} target={external ? "_blank" : undefined} rel={external ? "noopener noreferrer" : undefined} download={external ? undefined : true} className={btn}>
-        {external ? <ExternalLink size={16} /> : <Download size={16} />} {cta}
-      </a>
+      <Button asChild className={btn}>
+        {external ? <a href={item.href} target="_blank" rel="noopener noreferrer"><ExternalLink size={16} /> {cta}</a> : <Link to={item.href}><ArrowRight size={16} /> {cta}</Link>}
+      </Button>
     </div>
   </div>
 );
@@ -57,12 +48,20 @@ const Category = ({ icon: Icon, title, items, cta, external }: { icon: typeof Bo
       <h3 className="text-[15px] md:text-[16px] font-bold">{title}</h3>
     </div>
     <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-      {items.map((i) => <Card key={i.title} item={i} cta={cta} external={external} />)}
+      {items.map((i) => <Card key={i.id || i.href} item={i} cta={cta} external={external} />)}
     </div>
   </div>
 );
 
 const TranslatedResources = () => {
+  const { allResources, loading } = useResources();
+  const languages = languageLabels.map((language) => ({
+    ...language,
+    books: TRANSLATED_BOOKS[language.english] || [],
+    resources: translationsForLanguage(allResources, language.english).map((resource) => ({
+      id: resource.id, title: resource.title, description: resource.description || "", image: resource.thumbnail_url, href: translatedResourcePath(resource),
+    })),
+  }));
   const [open, setOpen] = useState<string | null>(null);
   const refs = useRef<Record<string, HTMLDivElement | null>>({});
 
@@ -103,17 +102,18 @@ const TranslatedResources = () => {
             </div>
             <div className="mt-10 md:mt-12 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
                 {languages.map((l) => (
-                  <button
+                  <Button
+                    variant="ghost"
                     key={l.id}
                     onClick={() => select(l.id)}
                     aria-pressed={open === l.id}
-                    className={`min-h-[64px] rounded-lg border px-3 py-2 flex flex-col items-center justify-center transition-colors ${
+                    className={`h-auto min-h-[64px] whitespace-normal rounded-lg border px-3 py-2 flex flex-col items-center justify-center transition-colors ${
                       open === l.id ? "bg-primary text-primary-foreground border-primary" : "bg-muted border-border/40 text-foreground hover:border-primary"
                     }`}
                   >
                     <span lang={l.id} dir={l.dir} className="text-[16px] font-bold leading-tight">{l.native}</span>
                     <span className={`text-[12px] ${open === l.id ? "text-primary-foreground/80" : "text-muted-foreground"}`}>{l.english}</span>
-                  </button>
+                  </Button>
                 ))}
               </div>
           </div>
@@ -126,28 +126,29 @@ const TranslatedResources = () => {
               const empty = l.books.length === 0 && l.resources.length === 0;
               return (
                 <div key={l.id} ref={(el) => (refs.current[l.id] = el)} className="scroll-mt-28 rounded-xl border border-border/40 overflow-hidden">
-                  <button
+                  <Button
+                    variant="ghost"
                     onClick={() => setOpen(isOpen ? null : l.id)}
                     aria-expanded={isOpen}
-                    className={`w-full flex items-center justify-between gap-4 px-5 md:px-8 py-4 md:py-5 text-left transition-colors ${
-                      isOpen ? "bg-deep-purple text-white" : "bg-muted text-foreground hover:bg-primary/10"
+                    className={`h-auto min-h-14 whitespace-normal w-full flex items-center justify-between gap-4 px-5 md:px-8 py-4 md:py-5 text-left transition-colors ${
+                      isOpen ? "bg-deep-purple text-deep-purple-foreground" : "bg-muted text-foreground hover:bg-primary/10"
                     }`}
                   >
                     <span className="text-[18px] md:text-[24px] font-bold">
                       <span dir={l.dir}>{l.native}</span> | {l.english}
                     </span>
                     <ChevronDown size={22} className={`shrink-0 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`} />
-                  </button>
+                  </Button>
                   {isOpen && (
                     <div className="bg-background px-5 md:px-8 py-8">
-                      {empty ? (
+                      {loading ? <p role="status" className="text-muted-foreground">Loading resources...</p> : empty ? (
                         <p className="text-[15px] text-muted-foreground leading-relaxed">
                           {l.english} resources are being prepared and will be added here soon.
                         </p>
                       ) : (
-                        <div className={`grid gap-10 ${l.books.length && l.resources.length ? "lg:grid-cols-2" : ""}`}>
+                        <div className="grid gap-10">
                           {l.books.length > 0 && <Category icon={BookOpen} title="Children's Books" items={l.books} cta="View / Buy Book" external />}
-                          {l.resources.length > 0 && <Category icon={FileText} title="Free Posters & Educational Resources" items={l.resources} cta="Get Resource" />}
+                          {l.resources.length > 0 && <Category icon={FileText} title="Free Posters & Educational Resources" items={l.resources} cta="Get Free Resource" />}
                         </div>
                       )}
                     </div>

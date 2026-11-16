@@ -3,6 +3,7 @@
 - Cloud authentication emails use the managed scaffolded auth-email-hook and action-specific templates; signup copy changes never rewrite confirmation URLs or app-email templates, so authentication and unrelated product messages remain separate.
 
 - Resource organization reuses existing resource records and categories; optional canonical-resource translation links connect versions, while URL gallery state and allowlisted tab-only authentication return paths preserve selections without changing payment or file access rules.
+- The public translated page derives posters from published Resource Library records and links by resource ID; book editions use product-specific purchase destinations with mismatches excluded, so no duplicate catalogue or alternative download/authentication path is introduced.
 
 - Use GuidebookHero (separate from the For Parents page hero) as the Parent Guidebook page's sole hero with an opt-in purchase-button slot and the same card/cropped-photo layout as the For Parents hero. All guidebook purchase placements reuse GuidebookBuyButton's existing checkout invocation and single analytics call, so presentation cannot fork payment behavior.
 
