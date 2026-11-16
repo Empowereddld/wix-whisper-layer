@@ -15,7 +15,7 @@ import { z } from "zod";
 
 const signupSchema = z.object({
   firstName: z.string().trim().min(1, "First name is required").max(50),
-  lastName: z.string().trim().min(1, "Last name is required").max(50),
+  lastName: z.string().trim().max(50),
   email: z.string().trim().email("Please enter a valid email").max(255),
   password: z.string().min(8, "Password must be at least 8 characters"),
   confirmPassword: z.string(),
@@ -146,11 +146,11 @@ const Signup = () => {
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <Label htmlFor="firstName" className="text-midnight font-medium">First Name</Label>
-                <Input id="firstName" type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} placeholder="Jane" className="h-12 mt-1" required />
+                <Input id="firstName" type="text" autoComplete="given-name" maxLength={50} value={firstName} onChange={(e) => setFirstName(e.target.value)} placeholder="Jane" className="h-12 mt-1" required />
               </div>
               <div>
-                <Label htmlFor="lastName" className="text-midnight font-medium">Last Name</Label>
-                <Input id="lastName" type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} placeholder="Doe" className="h-12 mt-1" required />
+                <Label htmlFor="lastName" className="text-midnight font-medium">Last Name (optional)</Label>
+                <Input id="lastName" type="text" autoComplete="family-name" maxLength={50} value={lastName} onChange={(e) => setLastName(e.target.value)} placeholder="Doe" className="h-12 mt-1" />
               </div>
             </div>
             <div>

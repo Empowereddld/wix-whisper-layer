@@ -1,5 +1,13 @@
 # Roadmap
 
+## Phase 3 registration and download follow-up (2026-11-16)
+- [x] Owner confirmed actual email verification, onboarding and arrival at the exact French Word-Finding Strategies poster. This is a manual pass of the previous journey.
+- [ ] Collect required first name and optional last name on registration and new-member onboarding, using existing profiles only; existing completed accounts unchanged.
+- [ ] Repair shared PNG/PDF delivery with descriptive filenames; test existing-member desktop/mobile downloads and exact-resource signup handoff.
+- [ ] Retest real new-account name saving; actual emailed-link click and onboarding require owner verification if mailbox access is unavailable.
+- [ ] Document private-file migration proposal, backup, rollback and signed-out denial tests; do not move or delete storage files without separate approval.
+- [ ] No publishing; deferred email review remains deferred.
+
 ## Phase 3 translated-page connection (2026-11-16)
 - [x] Language accordions derive from published Library records and every Get Free Resource opens the corresponding /hub/resource/:id. Seven original PNG posters added once to the existing Library, all downloaded bytes verified against originals; existing records/files and unpublished editor test draft preserved.
 - [ ] Six product-specific book destinations reused from existing Books page (French, Spanish, Welsh, Persian), but Amazon blocks independent automated verification (500/503). Existing Czech link resolves to a Persian listing, so no Czech purchase card added. Correct Czech destination and independent retail verification remain outstanding; no invented URLs or changes to Books page.
