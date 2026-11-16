@@ -160,7 +160,7 @@ const TranslatedResources = () => {
 
         <section className="bg-deep-purple py-16 md:py-24">
           <div className="container px-6 md:px-8 flex flex-col items-center text-center gap-5">
-            <h2 className="text-[28px] md:text-[40px] font-black text-white leading-[1.15]">Help Us Translate More Resources</h2>
+            <h2 className="text-[28px] md:text-[40px] font-black text-white leading-[1.15]">Want to Help Us Translate More Resources?</h2>
             <p className="text-[15px] md:text-[16px] text-white/80 leading-[1.7] max-w-[640px]">
               Thank you to the volunteers and collaborators who have helped make our resources accessible in more languages. If you would like to help translate our educational materials, we would love to hear from you.
             </p>
