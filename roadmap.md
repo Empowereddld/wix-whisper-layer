@@ -1,5 +1,9 @@
 # Roadmap
 
+## Resource Library verification email wording (2026-11-16)
+- [ ] Apply approved signup email wording through managed auth templates, preserve confirmation links and selected-resource return, deploy emails only; no website publishing.
+- [ ] Resend confirmation to the approved test account and verify delivery/confirmation; complete account return test with owner email click.
+
 ## Resource Library language organization (2026-11-15)
 - [x] Draft editor check: created, uploaded PNG download + preview, assigned French and Strategy poster category, linked original, saved, edited and reloaded. Test draft remains unpublished.
 - [x] Existing-account session and download: original resource opened and Download returned a valid 758,010-byte PDF; nine automated tests passed. Password login itself not exercised.
