@@ -1,5 +1,11 @@
 # Roadmap
 
+## Verification email visual refinements (2026-11-16)
+- [x] Signup confirmation centred in responsive 560px container with balanced spacing, purple button, unchanged copy and confirmation URL. Deployed auth-email-hook only; deployed preview checked at 1280px and 375px, no images or horizontal overflow. Eight resource/return tests passed; no website publishing.
+- [ ] DNS check: managed notify sender active; root SPF authorizes Google, delegated notify SPF authorizes mailgun.org; root and notify DMARC each p=none (monitoring). Google root DKIM key exists, but actual managed-message DKIM selector/signature and SPF/DMARC alignment require received email headers; not independently verified. No DNS changes made or proposed without this evidence.
+- [ ] Jinean account remains unconfirmed; updated confirmation resent successfully with hosted preview /signup/role?next pointing to exact Dan and Daria resource. Signed-out resource-to-signup link preserves that same next destination. Waiting for Jinean to click newest email and complete account questions; verification was not bypassed.
+- [ ] Later phase: review welcome, password-reset and other account emails for consistent branding and accurate wording. Deferred by user, do not redesign now.
+
 ## Resource Library verification email wording (2026-11-16)
 - [x] Applied exact approved signup email subject/body/button through managed auth templates and deployed auth-email-hook only. Confirmation URL forwarding unchanged; unrelated app/product email functions unchanged; eight resource/return tests passed.
 - [ ] Updated-email delivery and confirmation test: managed auth emails active, first resend accepted during activation but no custom send log; resend after activation hit over_email_send_rate_limit. Retry after hourly cap clears, then owner reviews email and clicks confirmation. Auth limits unchanged; no website publishing or file migration.
