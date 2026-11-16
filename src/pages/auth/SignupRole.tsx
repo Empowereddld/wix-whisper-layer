@@ -12,6 +12,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
 import empoweredLogo from "@/assets/empowered-logo.webp";
+import { Input } from "@/components/ui/input";
+import { accountNameSchema } from "@/lib/accountName";
 
 type Role = "parent" | "slp" | "educator" | "school_leader" | "other";
 
@@ -46,6 +48,15 @@ const SignupRole = () => {
   const [resourceWish, setResourceWish] = useState("");
   const [newsletterConsent, setNewsletterConsent] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+
+  useEffect(() => {
+    if (profile && profile.interests === null) {
+      setFirstName(profile.first_name || "");
+      setLastName(profile.last_name || "");
+    }
+  }, [profile]);
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -65,10 +76,17 @@ const SignupRole = () => {
 
   const handleSubmit = async () => {
     if (!user) return;
+    const names = accountNameSchema.safeParse({ first_name: firstName, last_name: lastName });
+    if (!names.success) {
+      toast({ title: names.error.errors[0].message, variant: "destructive" });
+      return;
+    }
     setLoading(true);
 
     const storedRef = localStorage.getItem("empowered_ref");
     const updateData: Record<string, any> = {
+      first_name: names.data.first_name,
+      last_name: names.data.last_name || null,
       interests,
       resource_wish: resourceWish.trim() || null,
     };
@@ -163,6 +181,14 @@ const SignupRole = () => {
         </div>
 
         <div className="bg-white rounded-2xl shadow-lg p-8 space-y-6">
+          <div>
+            <Label htmlFor="onboarding_first_name">First Name *</Label>
+            <Input id="onboarding_first_name" autoComplete="given-name" maxLength={50} required value={firstName} onChange={(e) => setFirstName(e.target.value)} className="h-12 mt-1" />
+          </div>
+          <div>
+            <Label htmlFor="onboarding_last_name">Last Name (optional)</Label>
+            <Input id="onboarding_last_name" autoComplete="family-name" maxLength={50} value={lastName} onChange={(e) => setLastName(e.target.value)} className="h-12 mt-1" />
+          </div>
           {/* Role Dropdown */}
           <div>
             <Label className="text-midnight font-medium">I am a...</Label>

@@ -11,6 +11,7 @@ import PasswordInput from "@/components/hub/PasswordInput";
 import { useToast } from "@/hooks/use-toast";
 import { getFriendlyAuthError } from "@/lib/auth-errors";
 import empoweredLogo from "@/assets/empowered-logo.webp";
+import { accountNameSchema } from "@/lib/accountName";
 
 const HubSignup = () => {
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ const HubSignup = () => {
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
     first_name: "",
+    last_name: "",
     email: "",
     password: "",
     confirm_password: "",
@@ -40,8 +42,9 @@ const HubSignup = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.first_name.trim() || !form.email.trim()) {
-      toast({ title: "Please fill in all required fields", variant: "destructive" });
+    const names = accountNameSchema.safeParse(form);
+    if (!names.success) {
+      toast({ title: names.error.errors[0].message, variant: "destructive" });
       return;
     }
     const pwError = validatePassword(form.password);
@@ -61,7 +64,8 @@ const HubSignup = () => {
       password: form.password,
       options: {
         data: {
-          first_name: form.first_name.trim(),
+          first_name: names.data.first_name,
+          last_name: names.data.last_name || null,
           ...(refCode ? { referred_by: refCode } : {}),
         },
         emailRedirectTo: window.location.origin + authPath("/signup/role", destination),
@@ -131,7 +135,11 @@ const HubSignup = () => {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <Label htmlFor="first_name" className="text-midnight font-medium">First Name *</Label>
-              <Input id="first_name" value={form.first_name} onChange={(e) => setForm({ ...form, first_name: e.target.value })} placeholder="Your first name" className="h-12 mt-1" required />
+              <Input id="first_name" autoComplete="given-name" maxLength={50} value={form.first_name} onChange={(e) => setForm({ ...form, first_name: e.target.value })} placeholder="Your first name" className="h-12 mt-1" required />
+            </div>
+            <div>
+              <Label htmlFor="last_name" className="text-midnight font-medium">Last Name (optional)</Label>
+              <Input id="last_name" autoComplete="family-name" maxLength={50} value={form.last_name} onChange={(e) => setForm({ ...form, last_name: e.target.value })} placeholder="Your last name" className="h-12 mt-1" />
             </div>
             <div>
               <Label htmlFor="email" className="text-midnight font-medium">Email Address *</Label>

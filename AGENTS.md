@@ -1,5 +1,8 @@
 # Project architecture rules
 
+- Shared `secureDownload` fetches original bytes through existing public or authorized signed URLs and delivers named files; touch delivery uses a ready-to-save action to preserve Safari activation, while previews and payment authorization stay unchanged.
+- Registration and incomplete onboarding collect validated names into existing profiles; completed members bypass onboarding unchanged, so name collection never becomes a forced account migration.
+
 - Cloud authentication emails use the managed scaffolded auth-email-hook and action-specific templates; signup copy changes never rewrite confirmation URLs or app-email templates, so authentication and unrelated product messages remain separate.
 
 - Resource organization reuses existing resource records and categories; optional canonical-resource translation links connect versions, while URL gallery state and allowlisted tab-only authentication return paths preserve selections without changing payment or file access rules.

@@ -77,8 +77,7 @@ const ResourceDetail = () => {
     // Fire-and-forget tracking
     supabase.from("user_downloads").insert({ user_id: user.id, resource_id: target.id }).then(() => {});
     supabase.rpc("increment_download_count", { resource_id: target.id }).then(() => {});
-    // Secure download (signed URL for paid, direct for free)
-    await secureDownload(target.id, { file_url: target.file_url, is_private: (target as any).is_private });
+    await secureDownload(target.id, target);
   }, [user, resource]);
 
   const handleView = useCallback(async (res: Resource) => {

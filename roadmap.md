@@ -1,10 +1,19 @@
 # Roadmap
 
+## Phase 3 registration and download follow-up (2026-11-16)
+- [x] Owner confirmed actual email verification, onboarding and arrival at the exact French Word-Finding Strategies poster. This is a manual pass of the previous journey.
+- [x] Collect required first name and optional last name on both registration pages and new-member onboarding, using existing profiles only; completed accounts continue bypassing onboarding unchanged.
+- [x] Shared PNG/PDF delivery downloads original bytes with descriptive title/language filenames, without changing previews. Desktop 1280px, mobile 393px and touch Save file flows return valid PNG (2,103,076 bytes) and PDF (758,010 bytes). Download click produced zero console/page/request errors. Eighteen automated tests pass.
+- [x] Real signup via selected French poster saved ResourceTest / Verification into the existing profile and reached the verification-required screen; email confirmation remains false, no bypass. New test sent to jinean+resource-test-20261116@empowereddld.com (alias delivery unverified).
+- [ ] Post-change actual emailed-link click, onboarding name edit/save and final exact-poster arrival require owner verification; no mailbox access. Physical iOS Safari share sheet/save also requires manual check.
+- [x] Private-file migration review and proposed backup/rollback/denial tests documented in the Phase 3 test report; public files still accessible directly, no migration or deletion. Separate approval remains required.
+- [x] No publishing; deferred email review remains deferred. Website changes are preview-only; the new test account is in the shared backend.
+
 ## Phase 3 translated-page connection (2026-11-16)
 - [x] Language accordions derive from published Library records and every Get Free Resource opens the corresponding /hub/resource/:id. Seven original PNG posters added once to the existing Library, all downloaded bytes verified against originals; existing records/files and unpublished editor test draft preserved.
 - [ ] Six product-specific book destinations reused from existing Books page (French, Spanish, Welsh, Persian), but Amazon blocks independent automated verification (500/503). Existing Czech link resolves to a Persian listing, so no Czech purchase card added. Correct Czech destination and independent retail verification remain outstanding; no invented URLs or changes to Books page.
 - [x] Signed-in direct translated-poster access and signed-out poster-to-login-to-signup exact next path verified. Desktop/393px layouts checked, previews loaded and no horizontal overflow. Twelve automated grouping, exact-link, book-destination and existing resource-return tests pass.
-- [ ] Full new-account journey NOT PASSED: prior approved Jinean signup remains unconfirmed. New confirmation successfully sent for selected French Word Finding Strategies poster (10ff43d4-5181-4b67-9d12-059fba417205). Actual newest-email click, email confirmation, required onboarding and final exact-poster arrival await owner action; no minted session or bypass used for this test.
+- [x] Prior full new-account journey passed by owner report: actual email confirmation, onboarding and final French Word Finding Strategies poster arrival. Post-change named-account retest remains separately pending above; no verification bypass used.
 - [x] No website publishing or private-file migration; no account, purchase, authentication or editor changes. Adding published resource rows makes the seven posters available in the existing live Library as well as preview, since they share the same backend.
 
 ## Verification email visual refinements (2026-11-16)
