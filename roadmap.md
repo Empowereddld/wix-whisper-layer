@@ -152,7 +152,7 @@
 - [x] Make /shop/parent-guidebook indexable and add it to the sitemap and Shop menu (done 2026-10-26)
 
 ## Pre-migration review (checks only)
-- [ ] Phase 3 verification (Jinean email click, authorized-account sign-in, iPhone checklist)
-- [ ] Preview image resolution review + no-watermark recommendation
-- [ ] Migration inventory + public links that would break (incl. externally shared)
-- [ ] Explain record count changes (resources/profiles/purchases)
+- [ ] Phase 3 verification — waiting on user: iPhone + own-account sign-in, confirm landing page
+- [x] Preview image resolution review + no-watermark recommendation
+- [x] Migration inventory + public links that would break (incl. externally shared)
+- [x] Explain record count changes (resources/profiles/purchases)
