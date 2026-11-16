@@ -3,7 +3,7 @@
 ## Resource Library language organization (2026-11-15)
 - [x] Draft editor check: created, uploaded PNG download + preview, assigned French and Strategy poster category, linked original, saved, edited and reloaded. Test draft remains unpublished.
 - [x] Existing-account session and download: original resource opened and Download returned a valid 758,010-byte PDF; nine automated tests passed. Password login itself not exercised.
-- [ ] Complete new registration, actual email confirmation and exact-resource return: waiting for an unused user-controlled test email inbox. Selected-resource-to-signup handoff verified; no confirmation bypass or auth setting changes.
+- [ ] Complete new registration, actual email confirmation and exact-resource return: approved test account created through signup, confirmation email sent, no immediate session; waiting for owner to click email and complete preview onboarding. Local test email redirect mapped to allowlisted hosted preview, no hosted settings changed. Selected-resource-to-signup handoff verified.
 - [ ] Phase 3 public Translated Resources connection: waits for complete registration test; private-file migration remains separately approval-gated. No publishing.
 - [x] Inspect existing resources, account access, gallery, individual pages and downloads.
 - [x] Add combined language/type filters and preserve return-to-gallery selections.
