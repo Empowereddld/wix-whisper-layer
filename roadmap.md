@@ -1,5 +1,11 @@
 # Roadmap
 
+## Phase 3 translated-page connection (2026-11-16)
+- [ ] Populate language accordions from published Resource Library records and link every resource to its exact individual page, preserving authentication return.
+- [ ] Connect translated books only to verified language-specific purchase pages; identify missing destinations rather than inventing links.
+- [ ] Test signed-in and signed-out navigation, automatic language grouping, original file preservation, and the actual new-account confirmation/onboarding/resource journey. Report untested steps explicitly.
+- [ ] No website publishing or private-file migration; preserve accounts, purchases and existing editor.
+
 ## Verification email visual refinements (2026-11-16)
 - [x] Signup confirmation centred in responsive 560px container with balanced spacing, purple button, unchanged copy and confirmation URL. Deployed auth-email-hook only; deployed preview checked at 1280px and 375px, no images or horizontal overflow. Eight resource/return tests passed; no website publishing.
 - [ ] DNS check: managed notify sender active; root SPF authorizes Google, delegated notify SPF authorizes mailgun.org; root and notify DMARC each p=none (monitoring). Google root DKIM key exists, but actual managed-message DKIM selector/signature and SPF/DMARC alignment require received email headers; not independently verified. No DNS changes made or proposed without this evidence.
