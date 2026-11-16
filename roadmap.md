@@ -1,9 +1,9 @@
 # Roadmap
 
 ## Verification email visual refinements (2026-11-16)
-- [ ] Centre signup confirmation in a responsive 560px container, balance spacing and preserve purple button, exact copy and confirmation URL. No images or changes to other templates; deploy email change only, no website publishing.
-- [ ] Check SPF, DKIM and DMARC for noreply@empowereddld.com; explain any proposed DNS changes before making them.
-- [ ] Continue actual email verification and exact-resource return test with Jinean's account; do not bypass confirmation.
+- [x] Signup confirmation centred in responsive 560px container with balanced spacing, purple button, unchanged copy and confirmation URL. Deployed auth-email-hook only; deployed preview checked at 1280px and 375px, no images or horizontal overflow. Eight resource/return tests passed; no website publishing.
+- [ ] DNS check: managed notify sender active; root SPF authorizes Google, delegated notify SPF authorizes mailgun.org; root and notify DMARC each p=none (monitoring). Google root DKIM key exists, but actual managed-message DKIM selector/signature and SPF/DMARC alignment require received email headers; not independently verified. No DNS changes made or proposed without this evidence.
+- [ ] Jinean account remains unconfirmed; updated confirmation resent successfully with hosted preview /signup/role?next pointing to exact Dan and Daria resource. Signed-out resource-to-signup link preserves that same next destination. Waiting for Jinean to click newest email and complete account questions; verification was not bypassed.
 - [ ] Later phase: review welcome, password-reset and other account emails for consistent branding and accurate wording. Deferred by user, do not redesign now.
 
 ## Resource Library verification email wording (2026-11-16)
