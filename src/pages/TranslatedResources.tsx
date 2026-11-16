@@ -26,7 +26,7 @@ const languageLabels: Language[] = [
 ];
 
 const btn =
-  "inline-flex w-fit items-center justify-center gap-2 h-11 px-3 bg-foreground text-background text-[12px] font-semibold tracking-[0.04em] rounded-md hover:opacity-90 transition-opacity duration-200 mt-auto";
+  "inline-flex w-full sm:w-fit whitespace-normal items-center justify-center gap-2 h-auto min-h-11 px-2 py-2 bg-foreground text-background text-[12px] font-semibold rounded-md hover:opacity-90 transition-opacity duration-200 mt-auto";
 
 const Card = ({ item, cta, external }: { item: Item; cta: string; external?: boolean }) => (
   <div className="flex flex-col bg-muted rounded-xl border border-border/40 overflow-hidden pb-4">
