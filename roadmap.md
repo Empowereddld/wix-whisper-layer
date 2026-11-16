@@ -1,8 +1,8 @@
 # Roadmap
 
 ## Resource Library verification email wording (2026-11-16)
-- [ ] Apply approved signup email wording through managed auth templates, preserve confirmation links and selected-resource return, deploy emails only; no website publishing.
-- [ ] Resend confirmation to the approved test account and verify delivery/confirmation; complete account return test with owner email click.
+- [x] Applied exact approved signup email subject/body/button through managed auth templates and deployed auth-email-hook only. Confirmation URL forwarding unchanged; unrelated app/product email functions unchanged; eight resource/return tests passed.
+- [ ] Fresh confirmation resent to approved test account; waiting for delivered email review and owner click to complete account return test. No website publishing or file migration.
 
 ## Resource Library language organization (2026-11-15)
 - [x] Draft editor check: created, uploaded PNG download + preview, assigned French and Strategy poster category, linked original, saved, edited and reloaded. Test draft remains unpublished.
