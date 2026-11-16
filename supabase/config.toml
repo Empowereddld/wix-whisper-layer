@@ -1,78 +1,55 @@
 project_id = "haafpznzuazanylcelse"
 
-[functions.generate-download-url]
-verify_jwt = false
-
-[functions.create-checkout]
-verify_jwt = false
-
-[functions.verify-payment]
-verify_jwt = false
-
-[functions.storybuilders-signup]
-verify_jwt = false
-
-[functions.send-waitlist-email]
-verify_jwt = false
-
-[functions.verify-email-waitlist]
-verify_jwt = false
-
-[functions.check-fraud]
-verify_jwt = false
-
-[functions.track-referral-click]
-verify_jwt = false
-
-[functions.resend-webhook]
-verify_jwt = false
-
-[functions.send-email]
-verify_jwt = false
-
-[functions.send-waitlist-email2]
-verify_jwt = false
-
-[functions.email-unsubscribe]
-verify_jwt = false
-
-[functions.lookup-storypros-by-ref]
-verify_jwt = false
-
-[functions.find-storypros-dashboard]
-verify_jwt = false
-
-[functions.weekly-app-summary]
-verify_jwt = false
-
-[functions.claim-founder-package]
-verify_jwt = false
-
-[functions.send-nudge-emails]
-verify_jwt = false
-
-[functions.send-founder-scarcity-email]
-verify_jwt = false
-
-[functions.send-inactivity-emails]
-verify_jwt = false
-
-[functions.waitlist-email-healthcheck]
-verify_jwt = false
-
-[functions.monitor-cron-abuse]
-verify_jwt = false
-
-[functions.storypros-reward-download]
-verify_jwt = false
-
-
-
-[functions.process-email-queue]
-verify_jwt = true
-
-[functions.newsletter-confirm]
-verify_jwt = false
-
-[functions.shopify-order-webhook]
-verify_jwt = false
+[functions]
+  [functions.auth-email-hook]
+    verify_jwt = false
+  [functions.check-fraud]
+    verify_jwt = false
+  [functions.claim-founder-package]
+    verify_jwt = false
+  [functions.create-checkout]
+    verify_jwt = false
+  [functions.email-unsubscribe]
+    verify_jwt = false
+  [functions.find-storypros-dashboard]
+    verify_jwt = false
+  [functions.generate-download-url]
+    verify_jwt = false
+  [functions.lookup-storypros-by-ref]
+    verify_jwt = false
+  [functions.monitor-cron-abuse]
+    verify_jwt = false
+  [functions.newsletter-confirm]
+    verify_jwt = false
+  [functions.process-email-queue]
+    verify_jwt = true
+  [functions.resend-webhook]
+    verify_jwt = false
+  [functions.send-email]
+    verify_jwt = false
+  [functions.send-founder-scarcity-email]
+    verify_jwt = false
+  [functions.send-inactivity-emails]
+    verify_jwt = false
+  [functions.send-nudge-emails]
+    verify_jwt = false
+  [functions.send-waitlist-email]
+    verify_jwt = false
+  [functions.send-waitlist-email2]
+    verify_jwt = false
+  [functions.shopify-order-webhook]
+    verify_jwt = false
+  [functions.storybuilders-signup]
+    verify_jwt = false
+  [functions.storypros-reward-download]
+    verify_jwt = false
+  [functions.track-referral-click]
+    verify_jwt = false
+  [functions.verify-email-waitlist]
+    verify_jwt = false
+  [functions.verify-payment]
+    verify_jwt = false
+  [functions.waitlist-email-healthcheck]
+    verify_jwt = false
+  [functions.weekly-app-summary]
+    verify_jwt = false
