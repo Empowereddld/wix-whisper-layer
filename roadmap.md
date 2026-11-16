@@ -150,3 +150,9 @@
 - [x] Parent Guidebook stage 2: guest checkout (create-checkout/verify-payment guest paths, purchases.user_id nullable + customer_email, /shop/payment-success, newsletter opt-in checkbox with consent record)
 - [x] Real-money purchase test of guest guidebook checkout (batch 5A, done 2026-10-26 by owner)
 - [x] Make /shop/parent-guidebook indexable and add it to the sitemap and Shop menu (done 2026-10-26)
+
+## Pre-migration review (checks only)
+- [ ] Phase 3 verification — waiting on user: iPhone + own-account sign-in, confirm landing page
+- [x] Preview image resolution review + no-watermark recommendation
+- [x] Migration inventory + public links that would break (incl. externally shared)
+- [x] Explain record count changes (resources/profiles/purchases)
