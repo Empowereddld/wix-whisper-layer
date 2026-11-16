@@ -89,8 +89,7 @@ const HubDashboard = () => {
     // Fire-and-forget tracking
     supabase.from("user_downloads").insert({ user_id: user.id, resource_id: resource.id }).then(() => {});
     supabase.rpc("increment_download_count", { resource_id: resource.id }).then(() => {});
-    // Secure download (signed URL for paid, direct for free)
-    await secureDownload(resource.id, { file_url: resource.file_url, is_private: (resource as any).is_private });
+    await secureDownload(resource.id, resource);
   }, [user, markViewed]);
 
   const handleView = useCallback((resource: Resource) => {
