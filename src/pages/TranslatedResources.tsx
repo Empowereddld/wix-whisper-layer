@@ -103,10 +103,11 @@ const TranslatedResources = () => {
             <div className="mt-10 md:mt-12 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
                 {languages.map((l) => (
                   <Button
+                    variant="ghost"
                     key={l.id}
                     onClick={() => select(l.id)}
                     aria-pressed={open === l.id}
-                    className={`min-h-[64px] rounded-lg border px-3 py-2 flex flex-col items-center justify-center transition-colors ${
+                    className={`h-auto min-h-[64px] whitespace-normal rounded-lg border px-3 py-2 flex flex-col items-center justify-center transition-colors ${
                       open === l.id ? "bg-primary text-primary-foreground border-primary" : "bg-muted border-border/40 text-foreground hover:border-primary"
                     }`}
                   >
@@ -126,9 +127,10 @@ const TranslatedResources = () => {
               return (
                 <div key={l.id} ref={(el) => (refs.current[l.id] = el)} className="scroll-mt-28 rounded-xl border border-border/40 overflow-hidden">
                   <Button
+                    variant="ghost"
                     onClick={() => setOpen(isOpen ? null : l.id)}
                     aria-expanded={isOpen}
-                    className={`w-full flex items-center justify-between gap-4 px-5 md:px-8 py-4 md:py-5 text-left transition-colors ${
+                    className={`h-auto min-h-14 whitespace-normal w-full flex items-center justify-between gap-4 px-5 md:px-8 py-4 md:py-5 text-left transition-colors ${
                       isOpen ? "bg-deep-purple text-deep-purple-foreground" : "bg-muted text-foreground hover:bg-primary/10"
                     }`}
                   >
