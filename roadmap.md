@@ -1,5 +1,11 @@
 # Roadmap
 
+## Verification email visual refinements (2026-11-16)
+- [ ] Centre signup confirmation in a responsive 560px container, balance spacing and preserve purple button, exact copy and confirmation URL. No images or changes to other templates; deploy email change only, no website publishing.
+- [ ] Check SPF, DKIM and DMARC for noreply@empowereddld.com; explain any proposed DNS changes before making them.
+- [ ] Continue actual email verification and exact-resource return test with Jinean's account; do not bypass confirmation.
+- [ ] Later phase: review welcome, password-reset and other account emails for consistent branding and accurate wording. Deferred by user, do not redesign now.
+
 ## Resource Library verification email wording (2026-11-16)
 - [x] Applied exact approved signup email subject/body/button through managed auth templates and deployed auth-email-hook only. Confirmation URL forwarding unchanged; unrelated app/product email functions unchanged; eight resource/return tests passed.
 - [ ] Updated-email delivery and confirmation test: managed auth emails active, first resend accepted during activation but no custom send log; resend after activation hit over_email_send_rate_limit. Retry after hourly cap clears, then owner reviews email and clicks confirmation. Auth limits unchanged; no website publishing or file migration.
