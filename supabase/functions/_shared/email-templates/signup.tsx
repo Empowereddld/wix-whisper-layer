@@ -64,6 +64,7 @@ const container = {
   textAlign: 'center' as const,
 }
 const h1 = {
+  textAlign: 'left' as const,
   fontSize: '22px',
   fontWeight: 'bold' as const,
   color: 'hsl(0, 0%, 7%)',
@@ -71,6 +72,7 @@ const h1 = {
   margin: '0 0 24px',
 }
 const text = {
+  textAlign: 'left' as const,
   fontSize: '16px',
   color: 'hsl(0, 0%, 33%)',
   lineHeight: '1.65',
