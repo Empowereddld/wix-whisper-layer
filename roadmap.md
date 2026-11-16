@@ -2,11 +2,12 @@
 
 ## Phase 3 registration and download follow-up (2026-11-16)
 - [x] Owner confirmed actual email verification, onboarding and arrival at the exact French Word-Finding Strategies poster. This is a manual pass of the previous journey.
-- [ ] Collect required first name and optional last name on registration and new-member onboarding, using existing profiles only; existing completed accounts unchanged.
-- [ ] Repair shared PNG/PDF delivery with descriptive filenames; test existing-member desktop/mobile downloads and exact-resource signup handoff.
-- [ ] Retest real new-account name saving; actual emailed-link click and onboarding require owner verification if mailbox access is unavailable.
-- [ ] Document private-file migration proposal, backup, rollback and signed-out denial tests; do not move or delete storage files without separate approval.
-- [ ] No publishing; deferred email review remains deferred.
+- [x] Collect required first name and optional last name on both registration pages and new-member onboarding, using existing profiles only; completed accounts continue bypassing onboarding unchanged.
+- [x] Shared PNG/PDF delivery downloads original bytes with descriptive title/language filenames, without changing previews. Desktop 1280px, mobile 393px and touch Save file flows return valid PNG (2,103,076 bytes) and PDF (758,010 bytes). Download click produced zero console/page/request errors. Eighteen automated tests pass.
+- [x] Real signup via selected French poster saved ResourceTest / Verification into the existing profile and reached the verification-required screen; email confirmation remains false, no bypass. New test sent to jinean+resource-test-20261116@empowereddld.com (alias delivery unverified).
+- [ ] Post-change actual emailed-link click, onboarding name edit/save and final exact-poster arrival require owner verification; no mailbox access. Physical iOS Safari share sheet/save also requires manual check.
+- [x] Private-file migration review and proposed backup/rollback/denial tests documented in the Phase 3 test report; public files still accessible directly, no migration or deletion. Separate approval remains required.
+- [x] No publishing; deferred email review remains deferred. Website changes are preview-only; the new test account is in the shared backend.
 
 ## Phase 3 translated-page connection (2026-11-16)
 - [x] Language accordions derive from published Library records and every Get Free Resource opens the corresponding /hub/resource/:id. Seven original PNG posters added once to the existing Library, all downloaded bytes verified against originals; existing records/files and unpublished editor test draft preserved.
