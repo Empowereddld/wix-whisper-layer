@@ -2,7 +2,7 @@
 
 ## Resource Library verification email wording (2026-11-16)
 - [x] Applied exact approved signup email subject/body/button through managed auth templates and deployed auth-email-hook only. Confirmation URL forwarding unchanged; unrelated app/product email functions unchanged; eight resource/return tests passed.
-- [ ] Fresh confirmation resent to approved test account; waiting for delivered email review and owner click to complete account return test. No website publishing or file migration.
+- [ ] Updated-email delivery and confirmation test: managed auth emails active, first resend accepted during activation but no custom send log; resend after activation hit over_email_send_rate_limit. Retry after hourly cap clears, then owner reviews email and clicks confirmation. Auth limits unchanged; no website publishing or file migration.
 
 ## Resource Library language organization (2026-11-15)
 - [x] Draft editor check: created, uploaded PNG download + preview, assigned French and Strategy poster category, linked original, saved, edited and reloaded. Test draft remains unpublished.
